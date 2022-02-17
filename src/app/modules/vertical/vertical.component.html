@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+
+      <app-vertical-view (editVerticalData)="sendEditVerticalData($event)"></app-vertical-view>
+    </div>
+
+    <div class="col-md-5">
+      <app-vertical-create [item]="itemToEdit"></app-vertical-create>
+      <!-- <app-vertical-pending></app-vertical-pending> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <app-vertical-pending></app-vertical-pending>
+    </div>
+
+  </div>
+
+</div>

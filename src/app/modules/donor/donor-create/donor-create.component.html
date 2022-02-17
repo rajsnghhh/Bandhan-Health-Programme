@@ -1,0 +1,18 @@
+<div class="white_box QA_section mb_30">
+    <h2 class="page-title">Create/Edit Donors</h2>
+    <form #donorForm="ngForm" (submit)="saveDonor(donorForm)">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Donor Name:</label>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="donorMasterName" minlength="3" maxlength="50" (keypress)=" validationService.nameValidation($event)" style="text-transform:capitalize;" [(ngModel)]="saveObj.donorMasterName" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary" [disabled]="!donorForm.valid">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

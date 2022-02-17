@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Pending Projects</h2>
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table class="table lms_table_active dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 705px;">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Project Name</th>
+                                        <th>Project Code</th>
+                                        <th>SubVertical Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of projectService.pendingProjects | slice: (page-1) * pageSize : page * pageSize; index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.projectName}}</td>
+                                        <td>{{item.projectCode}}</td>
+                                        <td>{{item.subVerticalMasterDTO.subVerticalName}}</td>
+                                        <td>{{item.projectStartDate}}</td>
+                                        <td>{{item.projectEndDate}}</td>
+
+                                        <td>
+                                            <i class="fa fa-check" (click)="approveProject(item)"></i>
+                                            <i class="fas fa-ban"></i>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <ngb-pagination class="d-flex justify-content-end p-1" [(page)]="page" [pageSize]="pageSize" [collectionSize]="projectService.pendingProjects?.length"></ngb-pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

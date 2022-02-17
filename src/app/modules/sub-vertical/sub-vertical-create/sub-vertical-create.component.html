@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create/Edit Sub-Verticals</h2>
+                <form #subVerticalForm="ngForm" (submit)="saveSubVertical(subVerticalForm)">
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Sub-Vertical Name:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="subVerticalName" style="text-transform:capitalize;" [(ngModel)]="saveObj.subVerticalName" minlength="3" maxlength="50" (keypress)="validationService.nameValidation($event)" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Sub-Vertical Code:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="subVerticalCode" [(ngModel)]="saveObj.subVerticalCode" (keypress)="validationService.onlyChars($event)" (keyup)="validationService.allCaps($event)" minlength="3" maxlength="50" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Vertical:</label>
+                        </div>
+
+                        <div class="col-md-7">
+                            <select name="" id="" class="form-select" name="vertical" [(ngModel)]="saveObj.verticalMasterDataDTO.verticalMasterId">
+                                <option [ngValue]="0">-- Please Select a Vertical --</option>
+                                <option [ngValue]="item.verticalMasterId"
+                                    *ngFor="let item of activeVerticals">{{item.verticalName}}
+                                    ({{item.verticalCode}})</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" [disabled]="!subVerticalForm.valid">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

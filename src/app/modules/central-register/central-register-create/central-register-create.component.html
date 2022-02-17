@@ -1,0 +1,496 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create Central Register</h2>
+
+                <form class="form-signin" [formGroup]="centralRegister">
+
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">HH Info</legend>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="district">District
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="district" id="district" [ngClass]="{ 'is-invalid': f.district.invalid && f.district.touched,
+                            'is-valid': f.district.valid && (f.district.dirty || f.district.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.district.errors" class="invalid-feedback">
+                                    <div *ngIf="f.district.errors.required">District is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="block">Block
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                            'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.block.errors" class="invalid-feedback">
+                                    <div *ngIf="f.block.errors.required">Block is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="gp">GP
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                            'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.gp.errors.required">GP is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="gram">GS/ Ward/ Village/ Locality
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                            'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                    <div *ngIf="f.gram.errors.required">Selection is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="swasthyaSahayika">
+                                    Name of SS
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika"
+                                    [ngClass]="{ 'is-invalid': f.swasthyaSahayika.invalid && f.swasthyaSahayika.touched,
+                                        'is-valid': f.swasthyaSahayika.valid && (f.swasthyaSahayika.dirty || f.swasthyaSahayika.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.swasthyaSahayika.errors" class="invalid-feedback">
+                                    <div *ngIf="f.swasthyaSahayika.errors.required">
+                                        Name of Swasthya Sahayika/ Health Volunteer is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="family">Family Type:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                                <select class="form-select" formControlName="family" id="family" [ngClass]="{ 'is-invalid': f.family.invalid && f.family.touched,
+                                        'is-valid': f.family.valid && (f.family.dirty || f.family.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option value="">Single Family</option>
+                                    <option value="">Joint Family</option>
+                                </select>
+                                <div *ngIf="f.family.errors" class="invalid-feedback">
+                                    <div *ngIf="f.family.errors.required">
+                                        Selection of family is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="household">Household:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="2"
+                                    (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                                    placeholder="Total Member of All Family" formControlName="household"
+                                    [ngClass]="{ 'is-invalid': f.household.invalid && f.household.touched,
+                                'is-valid': f.household.valid && (f.household.dirty || f.household.touched) }">
+                                <div *ngIf="f.household.errors" class="invalid-feedback">
+                                    <div *ngIf="f.household.errors.required">Total Member of Household is required</div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </fieldset>
+
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Family Info</legend>
+                        <div class="row">
+
+                            <div class="form-group col-md">
+                                <label for="firstName">First Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="20"
+                                    (keypress)="validationService.onlyAlphabets($event)"
+                                    style="text-transform:capitalize;" placeholder="Enter First Name"
+                                    formControlName="firstName" [ngClass]="{ 'is-invalid': f.firstName.invalid && f.firstName.touched,
+                                'is-valid': f.firstName.valid && (f.firstName.dirty || f.firstName.touched) }">
+                                <div *ngIf="f.firstName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                                    <div *ngIf="f.firstName.errors.minlength">
+                                        Minimum length should be 3
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="middleName">Middle Name:</label>
+                                <input type="text" class="form-control"
+                                    (keypress)="validationService.onlyAlphabets($event)"
+                                    style="text-transform:capitalize;" placeholder="Enter Middle Name" maxlength="20"
+                                    formControlName="middleName"
+                                    [ngClass]="{ 'is-invalid': f.middleName.invalid && f.middleName.touched}">
+                                <div *ngIf="f.middleName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.middleName.errors.minlength">
+                                        Minimum length should be 3
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="lastName">Last Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control"
+                                    (keypress)="validationService.onlyAlphabets($event)"
+                                    style="text-transform:capitalize;" placeholder="Enter Last Name" maxlength="20"
+                                    formControlName="lastName" [ngClass]="{ 'is-invalid': f.lastName.invalid && f.lastName.touched,
+                                'is-valid': f.lastName.valid && (f.lastName.dirty || f.lastName.touched) }">
+                                <div *ngIf="f.lastName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                                    <div *ngIf="f.lastName.errors.minlength">
+                                        Minimum length should be 3
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="age">Age:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="" class="form-control" (keypress)="validationService.onlyInteger($event)"
+                                    maxlength="2" (keydown)="restrictZero($event)" placeholder="Enter Age"
+                                    formControlName="age" [ngClass]="{ 'is-invalid': f.age.invalid && f.age.touched,
+                                'is-valid': f.age.valid && (f.age.dirty || f.age.touched) }">
+                                <div *ngIf="f.age.errors" class="invalid-feedback">
+                                    <div *ngIf="f.age.errors.required">Age is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group col-md-3">
+                                <label for="husbandName">Husband Name:&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="20"
+                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                    style="text-transform:capitalize;" placeholder="Enter Husband Name"
+                                    formControlName="husbandName" [ngClass]="{ 'is-invalid': f.husbandName.invalid && f.husbandName.touched,
+                                'is-valid': f.husbandName.valid && (f.husbandName.dirty || f.husbandName.touched) }">
+                                <div *ngIf="f.husbandName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.husbandName.errors.required">Husband Name is required</div>
+                                    <div *ngIf="f.husbandName.errors.minlength">
+                                        Minimum length should be 3
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="mobile">Mobile No:</label>
+                                <input type="" class="form-control" maxlength="10"
+                                    (keypress)="validationService.onlyInteger($event)" placeholder="Enter Mobile Number"
+                                    formControlName="mobile"
+                                    [ngClass]="{ 'is-invalid': f.mobile.invalid && f.mobile.touched}">
+                                <div *ngIf="f.mobile.errors" class="invalid-feedback">
+                                    <div *ngIf="f.mobile.errors.minlength">
+                                        Mobile No. should be of 10 digit
+                                    </div>
+                                    <div *ngIf="f.mobile.errors.pattern">
+                                        Mobile No. should be starting with 6, 7, 8 or 9
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="idtype">ID Type:</label>
+                                <select class="form-select" formControlName="idtype"
+                                    (change)=IdType($event.target.value)>
+                                    <option value="">-- Select --</option>
+                                    <option *ngFor="let item of cardDetails; index as i"
+                                        value="{{item.identityCardTypesMasterId}}">{{item.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md" *ngIf="idTypeField == 1">
+                                <label for="aadhar">AADHAAR CARD NO :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="14"
+                                    (keypress)="validationService.onlyIntegerAndSpace($event)"
+                                    placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{ 'is-invalid': f.aadhar.invalid && f.aadhar.touched,
+                                    'is-valid': f.aadhar.valid && (f.aadhar.dirty || f.aadhar.touched)}">
+                                <div *ngIf="f.aadhar.errors" class="invalid-feedback">
+                                    <div *ngIf="f.aadhar.errors.required"> AADHAAR CARD Number is required</div>
+                                    <div *ngIf="f.aadhar.errors.minlength || f.aadhar.errors.pattern ">
+                                        AADHAAR CARD Number Invalid !
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md" *ngIf="idTypeField == 2">
+                                <label for="pan">PAN CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="10"
+                                    (keypress)="validationService.charnum($event)" placeholder="Like BBHPM5672K"
+                                    formControlName="pan" [ngClass]="{ 'is-invalid': f.pan.invalid && f.pan.touched,
+                                     'is-valid': f.pan.valid && (f.pan.dirty || f.pan.touched)}">
+                                <div *ngIf="f.pan.errors" class="invalid-feedback">
+                                    <div *ngIf="f.pan.errors.required"> PAN Number is required</div>
+                                    <div *ngIf="f.pan.errors.minlength || f.pan.errors.pattern">
+                                        PAN Number Invalid !
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md" *ngIf="idTypeField == 3">
+                                <label for="voter"> VOTER CARD NO :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="10"
+                                    (keypress)="validationService.charnum($event)" placeholder="Like NDF1758462"
+                                    formControlName="voter" [ngClass]="{ 'is-invalid': f.voter.invalid && f.voter.touched,
+                                    'is-valid': f.voter.valid && (f.voter.dirty || f.voter.touched)}">
+                                <div *ngIf="f.voter.errors" class="invalid-feedback">
+                                    <div *ngIf="f.voter.errors.required"> VOTER CARD Number is required</div>
+                                    <div *ngIf="f.voter.errors.minlength || f.voter.errors.pattern">
+                                        VOTER CARD Number Invalid !
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md">
+                                <label for="religion">Religion
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="religion" id="religion" [ngClass]="{ 'is-invalid': f.religion.invalid && f.religion.touched,
+                            'is-valid': f.religion.valid && (f.religion.dirty || f.religion.touched) }">
+                                    <option value="">-- Select Religion --</option>
+                                    <option *ngFor="let item of religionDetails; index as i"
+                                        value="{{item.religionMasterId}}">{{item.religionMasterDescription}}</option>
+
+                                </select>
+                                <div *ngIf="f.religion.errors" class="invalid-feedback">
+                                    <div *ngIf="f.religion.errors.required">Religion is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="caste">Caste
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="caste" id="caste" [ngClass]="{ 'is-invalid': f.caste.invalid && f.caste.touched,
+                            'is-valid': f.caste.valid && (f.caste.dirty || f.caste.touched) }">
+                                    <option value="">-- Select Caste --</option>
+                                    <option *ngFor="let item of casteList; index as i"
+                                        value="{{item.casteTypeMasterId}}">{{item.casteTypeDescription}}</option>
+                                </select>
+                                <div *ngIf="f.caste.errors" class="invalid-feedback">
+                                    <div *ngIf="f.caste.errors.required">Caste is required</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md">
+                                <label for="monthly">Monthly Family Income
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="monthly" id="monthly" [ngClass]="{ 'is-invalid': f.monthly.invalid && f.monthly.touched,
+                            'is-valid': f.monthly.valid && (f.monthly.dirty || f.monthly.touched) }">
+                                    <option value="">-- Select Income --</option>
+                                    <option *ngFor="let item of monthlyIncomeDetails; index as i"
+                                        value="{{item.monthlyIncomeMasterId}}">{{item.incomeRange}}</option>
+                                </select>
+                                <div *ngIf="f.monthly.errors" class="invalid-feedback">
+                                    <div *ngIf="f.monthly.errors.required">Income Range is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="education">Education Level
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="education" id="education" [ngClass]="{ 'is-invalid': f.education.invalid && f.education.touched,
+                            'is-valid': f.education.valid && (f.education.dirty || f.education.touched) }">
+                                    <option value="">-- Select Education --</option>
+                                    <option *ngFor="let item of educationList; index as i"
+                                        value="{{item.educationalQualificationMasterId}}">{{item.qualification}}
+                                    </option>
+                                </select>
+                                <div *ngIf="f.education.errors" class="invalid-feedback">
+                                    <div *ngIf="f.education.errors.required">Education Level is required</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-3">
+                                <label for="children">
+                                    Total Number of Children:</label>
+                                <input type="text" class="form-control" maxlength="2"
+                                    (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                                    placeholder="Enter Total No. of Children" formControlName="children">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="pregnant">Are you pregnant now?
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="pregnant" id="pregnant" [ngClass]="{ 'is-invalid': f.pregnant.invalid && f.pregnant.touched,
+                            'is-valid': f.pregnant.valid && (f.pregnant.dirty || f.pregnant.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                    <option value="NA">N/A</option>
+
+                                </select>
+                                <div *ngIf="f.pregnant.errors" class="invalid-feedback">
+                                    <div *ngIf="f.pregnant.errors.required">Pregnant women is required</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label for="breastFeeding">Are you breast-feeding?
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="breastFeeding" id="breastFeeding"
+                                    [ngClass]="{ 'is-invalid': f.breastFeeding.invalid && f.breastFeeding.touched,
+                            'is-valid': f.breastFeeding.valid && (f.breastFeeding.dirty || f.breastFeeding.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                    <option value="NA">N/A</option>
+
+                                </select>
+                                <div *ngIf="f.breastFeeding.errors" class="invalid-feedback">
+                                    <div *ngIf="f.breastFeeding.errors.required">Breast Feeding selection is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="sanitary"> Do you have sanitary latrine at your house premise?&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+
+                                <div class="form-check-inline">
+                                    <input value="Y" class="form-check-input" type="radio" name="sanitary" id="yes"
+                                        formControlName='sanitary' (change)="changesanitary($event)">
+                                    <label class="form-check-label" for="sanitary"> &nbsp;&nbsp;Yes</label>
+
+                                    <div class="form-check-inline">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input value="N" class="form-check-input" type="radio" name="sanitary" id="no"
+                                            formControlName='sanitary' (change)="changesanitary($event)" checked>
+                                        <label class="form-check-label" for="sanitary"> &nbsp;&nbsp;No</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="addChild" class="btn btn-link" (click)="openModal(child)">Child
+                                    Details:</label>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <!-- [disabled]='!centralRegister.valid' -->
+                    <div class="text-center">
+                        <button class="btn btn-primary m-1" (click)="saveCentralRegister()"><i
+                                class="fas fa-check-circle m-1"></i>Save</button>
+                        <button class="btn btn-secondary m-1" (click)="resetCentralRegister()"><i
+                                class="fa fa-refresh m-1"></i>Reset</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #child let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h4 class="modal-title" id="modal-basic-title">Child Details</h4>
+                </div>
+
+                <div class="col-md-3">
+                    <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer;" title="Add Child"></i>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="childModalDismiss()" title="close"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper">
+                    <thead>
+
+                        <tr style="text-align: center;">
+                            <th>Child Name</th>
+                            <th>Date of Birth</th>
+                            <th>Sex</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of childDetails.childInfo; index as i">
+                            <td> <input type="text" class="form-control" maxlength="20"
+                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                    style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
+                                    placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
+                            </td>
+                            <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
+                                    [min]="minDate" [max]="today">
+                            </td>
+                            <td>
+                                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others</option>
+
+                                </select>
+
+                            </td>
+                            <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
+                                        class="fas fa-minus-circle"></i></button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class=" btn btn-primary bttn" (click)="saveChild()"
+                        [disabled]="!checkChildDisabled()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</ng-template>

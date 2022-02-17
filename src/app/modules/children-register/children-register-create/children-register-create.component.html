@@ -1,0 +1,299 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create Child Info</h2>
+
+                <form class="form-signin" [formGroup]="childRegister">
+
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label for="block">Block
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                        'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.block.errors" class="invalid-feedback">
+                                <div *ngIf="f.block.errors.required">Block is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="gp">GP
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                        'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                <div *ngIf="f.gp.errors.required">GP is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="gram">Gram Sansad/ Ward/ Village/ Locality:&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                            'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                <div *ngIf="f.gram.errors.required">Above Selection is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Household<br> No.</th>
+                                            <th>Family <br>No.</th>
+                                            <th>Name</th>
+                                            <th>Husband</th>
+                                            <th>Existing <br>Child</th>
+                                            <th>Add <br>Child</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let item of existingFamilyList ; index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.familyNumber.slice(0,item.familyNumber.indexOf("."))}}
+                                            </td>
+                                            <td>{{item.familyNumber}}</td>
+                                            <td>{{item.firstName }} {{item.middleName}}
+                                                {{item.lastName}}</td>
+                                            <td>{{item.husbandOrGuardianName}}</td>
+                                            <td class="btn-link"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="openModal(viewExistingChild, item.familyDetailId)">View</td>
+                                            <td class="btn-link"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="openModals(addNewChild, item.familyDetailId)">Add</td>
+                                            <!-- <td *ngIf="checkChildCount.totalNumberOfChildren == 0">Add</td> -->
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewExistingChild let-modal>
+
+    <div class="modal-content">
+
+        <div class="modal-header" style="height: 90px;">
+            <div class="white_box QA_section mb_30" style="height: 30px; padding: 20px;">
+                <h2 class="page-title">View Existing Child</h2>
+                <span class="closes" title="Close" (click)="modal.dismiss('Cross click')"
+                    style="cursor: pointer;font-size: 35px">&times;</span>
+            </div>
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper" style="overflow-y: auto;table-layout: fixed;">
+                    <thead>
+                        <tr style=" text-align: center;">
+                            <th>SL No</th>
+                            <th>Child Name</th>
+                            <th>Date of Birth</th>
+                            <th>Age</th>
+                            <th>Sex</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody style="text-align: center;">
+
+                        <tr *ngFor="let items of existingChildList; index  as i">
+                            <td>{{i+1}}</td>
+                            <td>{{items.childName}}</td>
+                            <td>{{items.dob.substring(0,10).split('-').reverse().join('-')}}</td>
+                            <td>{{items.age}}</td>
+                            <td>{{items.sex}}</td>
+                            <td><i class="fas fa-edit" title="Edit Child" (click)="editChild(items, i, EditChild)"></i>
+                                <i class="fas fa-trash" title="Delete Child" (click)="deleteChild(items, i)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #addNewChild let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title">Add Child</h3>
+                </div>
+
+                <div class="col-md-3">
+                    <i class="fas fa-plus-circle" (click)="addMoreChild()" style="cursor: pointer;"></i>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="childModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>Child Name</th>
+                            <th>Date of Birth</th>
+                            <th>Sex</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of childDetails.childInfo; index as i">
+                            <td> <input type="text" class="form-control" maxlength="20"
+                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                    style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
+                                    placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
+                            </td>
+                            <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
+                                    [min]="minDate" [max]="today" onkeydown="return false">
+                            </td>
+                            <td>
+                                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others</option>
+                                </select>
+
+                            </td>
+                            <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
+                                        class="fas fa-minus-circle"></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class=" btn btn-primary bttn" (click)="saveAddChild()"
+                        [disabled]="!checkChildDisabled()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+<ng-template #EditChild let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title"> Edit Child</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="clos" (click)="childModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>Child Name</th>
+                            <th>Date of Birth</th>
+                            <th>Sex</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of childDetails.childInfo; index as i">
+                            <td> <input type="text" class="form-control" maxlength="20"
+                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                    style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
+                                    placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
+                            </td>
+                            <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
+                                    [min]="minDate" [max]="today" onkeydown="return false">
+                            </td>
+                            <td>
+                                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others</option>
+                                </select>
+
+                            </td>
+                            <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
+                                        class="fas fa-minus-circle"></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class=" btn btn-primary bttn" (click)="saveEditChild()"
+                        [disabled]="!checkChildDisabled()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>

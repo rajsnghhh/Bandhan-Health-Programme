@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2 class="page-title">Active Mou</h2>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="box_right d-flex lms_block">
+                            <div class="serach_field_2">
+                                <div class="search_inner">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search" placeholder="Search mou here..."
+                                                [(ngModel)]="mouSearch">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="add_button ">
+                                <a [routerLink]="['create']" data-toggle="modal" data-target="#addcategory"
+                                    class="btn btn-primary">Add Mou</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table class="table lms_table_active dataTable no-footer dtr-inline collapsed" role="grid"
+                                aria-describedby="DataTables_Table_0_info" style="width: 705px;">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Mou Name</th>
+                                        <th>Mou Number</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Donor</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of mouService.activeMou | filter:mouSearch | slice: (page-1) * pageSize : page * pageSize; index as i"
+                                        style="height: 20px;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.mouName}}</td>
+                                        <td>{{item.mouNumber}}</td>
+                                        <td>{{item.mouStartDate}}</td>
+                                        <td>{{item.mouEndDate}}</td>
+                                        <td>
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title">Donor List</h3>
+                                                <div class="popover__content">
+                                                    <div class="card-header">Donor list of {{item.mouName}}</div>
+
+                                                    <li *ngFor="let donor_item of item.donorList">{{donor_item.
+                                                        donorMasterName}}</li>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <i class="fas fa-edit" [routerLink]="['create',item.mouMasterId]"
+                                                (click)="setData(item)"></i>
+                                            <i class="fas fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ngb-pagination class="d-flex justify-content-end p-1" [(page)]="page" [pageSize]="pageSize"
+                                [collectionSize]="mouService.activeMou?.length"></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

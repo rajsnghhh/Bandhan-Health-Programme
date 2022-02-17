@@ -1,0 +1,26 @@
+<div class="white_box QA_section mb_30">
+    <h2 class="page-title">Create/Edit Verticals</h2>
+    <form #verticalForm="ngForm" (submit)="saveVertical(verticalForm)">
+        <div class="row mb-3">
+            <div class="col-md-5">
+                <label for="">Vertical Name:</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" class="form-control" name="verticalName" style="text-transform:capitalize;" [(ngModel)]="saveObj.verticalName" minlength="3" maxlength="50" (keypress)="validationService.nameValidation($event)" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-5">
+                <label for="">Vertical Code:</label>
+            </div>
+            <div class="col-md-7">
+                <input type="text" class="form-control" name="verticalCode" [(ngModel)]="saveObj.verticalCode" (keypress)="validationService.onlyChars($event)" (keyup)="validationService.allCaps($event)" minlength="3" maxlength="50" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary" [disabled]="!verticalForm.valid">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

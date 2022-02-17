@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 ">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create/Edit Dynamic Form</h2>
+                <form #dynamicForm="ngForm" (submit)="saveForm(dynamicForm)" id="myForm" >
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="">Question:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="quesForm" required
+                                [(ngModel)]="createObj.quesName">
+                            <!-- style="text-transform:capitalize;" minlength="3" maxlength="50" (keypress)="validationService.nameValidation($event)" -->
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="">Type:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select name="typeForm" id="" class="form-select" [(ngModel)]="createObj.typeId">
+                                <!-- (change)="onChangeType($event.target.value)"  -->
+                                <option value="">-- Please Select a Type --</option>
+                                <option value="Text">Text</option>
+                                <option value="Edit">Edit</option>
+                                <option value="Radio">Radio</option>
+                                <option value="DropDown">DropDown</option>
+                                <option value="CheckBox">CheckBox</option>
+                                <option value="Button">Button</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-3">
+                            <label for="">Option:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="hidden" [(ngModel)]="createObj.question_master_id"
+                                [ngModelOptions]="{standalone: true}">
+                            <div class="col-md-12" *ngFor="let items of createObj.addAnswers; index as i">
+
+                                <input type="text" class="form-control" required
+                                    [(ngModel)]="createObj.addAnswers[i].title_info"
+                                    [ngModelOptions]="{standalone: true}">
+
+                                <div class="" style="float:right;margin-top: 5px;">
+
+                                    <i class="fas fa-minus-circle remove" (click)="removeAns(i)"></i>
+
+                                    <i class="fas fa-plus-circle" *ngIf="i == 0" (click)="addmoreAns()"></i>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary"
+                                    [disabled]="!dynamicForm.valid">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

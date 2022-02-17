@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create/Edit Mou</h2>
+
+                <form class="form-signin" [formGroup]="MouFormData">
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="" class="required">
+                                Mou Name :</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" placeholder="Enter Mou Name"
+                                style="text-transform:capitalize;" formControlName="mouName"
+                                (keypress)="validationService.nameValidation($event)" [ngClass]="{ 'is-invalid': f.mouName.invalid && f.mouName.touched,
+                            'is-valid': f.mouName.valid && (f.mouName.dirty || f.mouName.touched) }">
+                            <div *ngIf="f.mouName.errors" class="invalid-feedback">
+                                <div *ngIf="f.mouName.errors.required">Mou Name is required</div>
+                                <div *ngIf="f.mouName.errors.minlength">
+                                    Minimum length should be 3
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="" class="required">Mou Number :</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" placeholder="Enter Mou Number"
+                                formControlName="mouNumber" (keypress)="validationService.charnum($event)" [ngClass]="{ 'is-invalid': f.mouNumber.invalid && f.mouNumber.touched,
+                            'is-valid': f.mouNumber.valid && (f.mouNumber.dirty || f.mouNumber.touched) }">
+                            <div *ngIf="f.mouNumber.errors" class="invalid-feedback">
+                                <div *ngIf="f.mouNumber.errors.required">Mou Number is required</div>
+                                <div *ngIf="f.mouNumber.errors.minlength">
+                                    Minimum length should be 3
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="" class="required">Start Date :</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="date" class="form-control" formControlName="mouStartDate" [ngClass]="{ 'is-invalid': f.mouStartDate.invalid && f.mouStartDate.touched,
+                            'is-valid': f.mouStartDate.valid && (f.mouStartDate.dirty || f.mouStartDate.touched) }">
+                            <div *ngIf="f.mouStartDate.errors" class="invalid-feedback">
+                                <div *ngIf="f.mouStartDate.errors.required">Start Date is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="" class="required">End Date :</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="date" class="form-control" formControlName="mouEndDate" [ngClass]="{ 'is-invalid': f.mouEndDate.invalid && f.mouEndDate.touched,
+                            'is-valid': f.mouEndDate.valid && (f.mouEndDate.dirty || f.mouEndDate.touched) }">
+                            <div *ngIf="f.mouEndDate.errors" class="invalid-feedback">
+                                <div *ngIf="f.mouEndDate.errors.required">End Date is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="" class="required">Donor :</label>
+                        </div>
+
+                        <div class="col-md-7">
+                            <ng-multiselect-dropdown placeholder="-- Select Donor(s) --" [settings]="dropdownSettings"
+                                [data]="donorList" formControlName="donorList" (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)" (onDeSelect)="onItemDeSelect($event)"
+                                (onDeSelectAll)="onItemDeSelectAll($event)"
+                                class="form-control dropdown-multiselect__caret" [ngClass]="{ 'is-invalid': f.donorList.invalid && f.donorList.touched,
+                                'is-valid': f.donorList.valid && (f.donorList.dirty || f.donorList.touched) }">
+                            </ng-multiselect-dropdown>
+
+                            <div *ngIf="f.donorList.errors" class="invalid-feedback">
+                                <div *ngIf="f.donorList.errors.required">Donor is required</div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-md-4 ">
+                                <button type="submit " class="btn btn-primary " (click)="saveMou()"
+                                    [disabled]="!MouFormData.valid">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

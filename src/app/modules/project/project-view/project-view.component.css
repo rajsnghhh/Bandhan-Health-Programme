@@ -1,0 +1,79 @@
+    .search_inner button {
+        padding-right: 1px;
+    }
+    
+    li {
+        list-style-type: decimal;
+        text-align: start;
+    }
+    
+    .search_inner input {
+        width: 105%;
+    }
+    
+    .add_button {
+        margin-left: 5%;
+    }
+    
+    .highlight-search-text {
+        color: black;
+        font-weight: 600;
+    }
+    
+    .popover__title {
+        font-size: 20px;
+        line-height: 36px;
+        font-weight: 400;
+        text-decoration: none;
+        color: #828BB2;
+        text-align: center;
+    }
+    
+    .popover__wrapper {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .popover__content {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        width: 220px !important;
+        transform: translate(0, 10px);
+        background-color: #499;
+        font-style: italic;
+        color: black;
+        padding: 1.5rem;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+    
+    .popover__content:before {
+        position: absolute;
+        z-index: -1;
+        content: "";
+        left: calc(10% - 10px);
+        top: -10px;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #bfbfbf transparent;
+        transition-duration: 0.3s;
+        transition-property: transform;
+    }
+    
+    .popover__wrapper:hover .popover__content {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        transform: translate(0, -20px);
+        transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+    }
+    
+    .QA_section .QA_table tbody th,
+    .QA_section .QA_table tbody td {
+        color: #7e7172;
+        font-size: 15px;
+        color: #828BB2;
+        padding: 18px;
+        font-weight: 400;
+    }

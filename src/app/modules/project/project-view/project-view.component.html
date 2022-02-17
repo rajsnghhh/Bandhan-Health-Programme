@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2 class="page-title">Active Projects </h2>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="box_right d-flex lms_block">
+                            <div class="serach_field_2">
+                                <div class="search_inner">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search" placeholder="Search projects here..."
+                                                [(ngModel)]="projectSearch">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="add_button ">
+                                <a [routerLink]="['create']" data-toggle="modal" data-target="#addcategory"
+                                    class="btn btn-primary">Add Project</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table class="table lms_table_active dataTable no-footer dtr-inline collapsed" role="grid"
+                                aria-describedby="DataTables_Table_0_info" style="width: 705px;">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Project Name</th>
+                                        <th>Project Code</th>
+                                        <th>SubVertical Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of projectService.activeProjects | filter:projectSearch  | slice: (page-1) * pageSize : page * pageSize; index as i"
+                                        style="height: 20px;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.projectName}}</td>
+                                        <td>{{item.projectCode}}</td>
+                                        <td>{{item.subVerticalMasterDTO.subVerticalName}}</td>
+                                        <td>{{item.projectStartDate}}</td>
+                                        <td>{{item.projectEndDate}}</td>
+                                        <td>
+                                            <i class="fas fa-edit" [routerLink]="['create',item.projectMasterId]"
+                                                (click)="setData(item)"></i>
+                                            <i class="fas fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end p-1" [(page)]="page" [pageSize]="pageSize"
+                                [collectionSize]="projectService.activeProjects?.length"></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

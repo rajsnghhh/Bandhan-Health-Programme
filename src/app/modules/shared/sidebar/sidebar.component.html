@@ -1,0 +1,162 @@
+<nav class="sidebar">
+    <div class="logo d-flex justify-content-between">
+        <a href="index.html"><img src="../../../../assets/bk_logo.png" alt="" style="height: 50px; width: 80px;"></a>
+    </div>
+
+    <nav class="navigation">
+        <ul class="mainmenu">
+            <li style=" margin-bottom: -38px; margin-left: -20px;">
+                <input type="checkbox" id="phase1">
+                <label style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;"
+                    for="phase1">
+                    <h3>Project Setup <span><i class="fas fa-caret-down" style="margin-top: 5%;"></i></span></h3>
+                </label>
+
+                <ul class="submenu">
+                    <li>
+                        <label for="Donor" [routerLink]="['donor']">
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-donate"></i></div>
+                                <div class="col-md-5">Donor</div>
+                            </div>
+                        </label>
+                        <input type="checkbox" id="Donor">
+                    </li>
+
+                    <li><label for="Role Access" [routerLink]="['role-access']">
+                            <div class="row">
+                                <div class="col-md-2"> <i class="fas fa-user-tag"></i></div>
+                                <div class="col-md-5">Role Access</div>
+                            </div>
+                        </label><input type="checkbox" id="Role Access">
+                    </li>
+
+                    <li><label for="Vertical" [routerLink]="['vertical']">
+                            <div class="row">
+                                <div class="col-md-2"> <i class="fas fa-ruler-vertical"></i></div>
+                                <div class="col-md-5">Vertical</div>
+                            </div>
+                        </label><input type="checkbox" id="Vertical">
+                    </li>
+
+                    <li><label for="Sub-Vertical">
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-arrows-alt-v"></i></div>
+                                <div class="col-md-6"> Sub-Vertical</div>
+                            </div>
+                        </label><input type="checkbox" id="Sub-Vertical">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['sub-vertical']">Active Sub-Vertical</a></li>
+                            <li><a [routerLink]="['sub-vertical/create']"> Create Sub-Vertical</a></li>
+                            <li><a [routerLink]="['sub-vertical/pending']">Pending Sub-Vertical</a></li>
+                        </ul>
+                    </li>
+
+                    <li><label for="Project">
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-project-diagram"></i></div>
+                                <div class="col-md-5">Project</div>
+                            </div>
+                        </label><input type="checkbox" id="Project">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['project']">Active Project</a></li>
+                            <li><a [routerLink]="['project/create']"> Create Project</a></li>
+                            <li><a [routerLink]="['project/pending']">Pending Project</a></li>
+                        </ul>
+                    </li>
+
+                    <li><label for="Mou">
+                            <div class="row">
+                                <div class="col-md-2"> <i class="fab fa-wpforms"></i></div>
+                                <div class="col-md-5">Mou</div>
+                            </div>
+                        </label><input type="checkbox" id="Mou">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['mou']">Active Mou</a></li>
+                            <li><a [routerLink]="['mou/create']"> Create Mou</a></li>
+                            <li><a [routerLink]="['mou/pending']">Pending Mou</a></li>
+                        </ul>
+                    </li>
+
+                    <li><label for="Dynamic Form">
+                            <div class="row">
+                                <div class="col-md-2"> <i class="fab fa-wpforms"></i></div>
+                                <div class="col-md-5"> Dynamic Form</div>
+                            </div>
+                        </label><input type="checkbox" id="Dynamic Form">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['dynamic-form']">View Dynamic Form</a></li>
+                            <li><a [routerLink]="['dynamic-form/create']"> Create Dynamic Form</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li style="margin-left: -20px;">
+                <input type="checkbox" id="phase2" checked>
+                <label for="phase2"
+                    style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;">
+                    <h3>Household Info<span><i class="fas fa-caret-down" style="margin-top: 5%;"></i></span></h3>
+                </label>
+
+                <ul class="submenu">
+
+                    <li><label for="Baseline Survey">
+
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-poll"></i></div>
+                                <div class="col-md-6">Baseline Survey</div>
+                            </div>
+
+                        </label><input type="checkbox" id="Baseline Survey">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['Baseline-Survey/create']">Create Baseline Survey</a></li>
+                            <li><a [routerLink]="['Baseline-Survey/view']"> View Baseline Survey</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li><label for="Central Register">
+
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-registered"></i></div>
+                                <div class="col-md-6"> Central Register</div>
+                            </div>
+
+                        </label><input type="checkbox" id="Central Register">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['central-register/create']">Create Central Register</a></li>
+                            <li><a [routerLink]="['central-register/view']"> View Central Register</a></li>
+                        </ul>
+                    </li>
+
+                    <li><label for="Children Register">
+
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-male"></i></div>
+                                <div class="col-md-6" [routerLink]="['children-register/create']">Children Info</div>
+                            </div>
+
+                        </label><input type="checkbox" id="Children Register">
+
+                    </li>
+
+                    <li><label for="Muac Register">
+
+                            <div class="row">
+                                <div class="col-md-2"><i class="fas fa-tape"></i></div>
+                                <div class="col-md-6"> All Child Register</div>
+                            </div>
+
+                        </label><input type="checkbox" id="Muac Register">
+                        <ul class="submenu">
+                            <li><a [routerLink]="['muac-register/create']">Muac Camp Creation</a></li>
+                            <li><a [routerLink]="['']">ACR Child</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</nav>

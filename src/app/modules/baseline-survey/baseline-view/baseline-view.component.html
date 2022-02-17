@@ -1,0 +1,181 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">View Household Info</h2>
+
+                <form class="form-signin" [formGroup]="baselineSurvey">
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">Region:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched,
+                                'is-valid': f.region.valid && (f.region.dirty || f.region.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Above Selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="branch" id="branch" [ngClass]="{ 'is-invalid': f.branch.invalid && f.branch.touched,
+                                'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">Above Selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                                'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
+                                <option value="">-- Select --</option>
+                                <option>gg</option>
+                            </select>
+                            <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                <div *ngIf="f.gram.errors.required">Above Selection is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div class="search_inner">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search household info here..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Household<br> No.</th>
+                                            <th>Village/ Ward/<br> Gram Sansad</th>
+                                            <th>GP/<br> Municipality</th>
+                                            <th>Family<br> Type</th>
+                                            <th>Family<br> Count</th>
+                                            <th>Total Member<br> of Household</th>
+                                            <th>View<br>Family</th>
+                                            <th>Add<br>Family</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr
+                                            *ngFor="let item of baselineDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{item.houseHoldNumber}}
+                                            </td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>{{item.familyType}}</td>
+                                            <td>{{item.numberOfFamily}}</td>
+                                            <td>{{item.totalMembers}}</td>
+                                            <td class="btn-link"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="openModal(viewFamily, item.familyDetailDTOList, i)">View</td>
+
+                                            <td class="btn-link" *ngIf="item.familyType == 'J'"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="gotoFamily(item)">Add</td>
+                                            <td *ngIf="item.familyType == 'S'">Add</td>
+
+
+                                            <td> <i class="fas fa-edit" title="Edit Household"
+                                                    (click)="editHousehold(item,i)"> </i> <i class="fas fa-trash"
+                                                    title="Delete Household" (click)="deleteHousehold(item, i)"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewFamily let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header" style="height: 80px;">
+
+            <div class="white_box QA_section mb_30" style="height: 100px;">
+                <h2 class="page-title">Family Details</h2>
+                <span class="close" title="Close" (click)="modal.dismiss('Cross click')"
+                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+            </div>
+
+        </div>
+
+        <div id="table_wrapper">
+            <table class="table table-striped" id="table_wrapper" style="table-layout: fixed;">
+
+                <thead>
+                    <tr>
+                        <th>SL <br>No</th>
+                        <th>Family<br> Number</th>
+                        <th>Name</th>
+                        <th>Husband</th>
+                        <th>Family <br>Member Count</th>
+                        <th>Total Child <br>Count</th>
+                        <th>Child Below 18 <br>yr. entered</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody style="text-align: center;">
+
+                    <tr *ngFor="let item of familyDetails ; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{item.familyNumber}}</td>
+                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                        <td>{{item.husbandOrGuardianName}}</td>
+                        <td>{{item.totaFamilyMemberFemales + item.totaFamilyMemberMales}}</td>
+                        <td>{{item.totalNumberOfChildren}}</td>
+                        <td>{{item.existingChildCount}}</td>
+                        <td>
+                            <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"> </i>
+                            <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"></i>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</ng-template>

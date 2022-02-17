@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="white_box QA_section mb_30">
+        <h2 class="page-title">Role Menu Map</h2>
+        <div class="row my-3">
+            <div class="col">
+                <label for="" class="col-form-label">Main Function: </label>
+            </div>
+            <div class="col-md-4">
+                <select name="" id="" class="form-select" [(ngModel)]="mainFunctionId" (change)="getSubFunctions()">
+                    <option value="">-- Main Function --</option>
+                    <option [ngValue]="item.mainFunctionMasterId"
+                        *ngFor="let item of roleAccessData[0].mainFunctionDTOList">
+                        {{item.mainFunctionName}}</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label for="" class="col-form-label">Sub Function: </label>
+            </div>
+            <div class="col-md-4">
+                <select name="" id="" class="form-select" [(ngModel)]="selectedSubFunction"
+                    (change)="createTableRows()">
+                    <option value="">-- Sub Function --</option>
+                    <option [ngValue]="item" *ngFor="let item of subFunctionsDropDown">{{item}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="white_box_tittle list_header">
+            <div class="QA_table ">
+                <div class="dataTables_wrapper">
+                    <table class="table no-footer dtr-inline collapsed" role="grid">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let item of roleAccessData">{{item.roleMasterDTO.roleDescription}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let action_item of actionTypes; index as i">
+                                <td>{{action_item.accessType.charAt(0).toUpperCase() +
+                                    action_item.accessType.substring(1)}}
+                                </td>
+                                <td *ngFor="let role_item of roleAccessData; index as role_index">
+                                    <label class="primary_checkbox d-flex mr-12 ">
+                                        <input type="checkbox" [checked]="checkStatus(
+                                                action_item.subFunctionMasterId, role_index)" (change)="assignAccess(
+                                                action_item.subFunctionMasterId, role_index, $event)">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="selectedSubFunction">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

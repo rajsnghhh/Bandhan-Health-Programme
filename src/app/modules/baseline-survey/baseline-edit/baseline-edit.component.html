@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Edit Household Info</h2>
+
+                <form class="form-signin" [formGroup]="baselineSurvey">
+
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">HH Info</legend>
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <label for="block">Block
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                                    'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
+                                    <option value="">-- Select Block --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.block.errors" class="invalid-feedback">
+                                    <div *ngIf="f.block.errors.required">Block is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="gp">GP/ Municipality
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                                    'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                    <option value="">-- Select GP/ Municipality --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.gp.errors.required">GP/ Municipality is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                                    'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                                <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                    <div *ngIf="f.gram.errors.required">Above Selection is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="swasthyaSahayika">
+                                    Name of SS/ Health Volunteer :</label>
+                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika">
+                                    <option value="">-- Select --</option>
+                                    <option>gg</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-6">
+                                <label for="family">Family Type:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="family" id="family" [(ngModel)]="famType"
+                                    [ngClass]="{ 'is-invalid': f.family.invalid && f.family.touched,
+                                        'is-valid': f.family.valid && (f.family.dirty || f.family.touched) }"
+                                    (change)=familyType($event.target.value)>
+                                    <option value="">-- Select Family Type --</option>
+                                    <option value="S">Single Family</option>
+                                    <option value="J">Joint Family</option>
+                                </select>
+                                <div *ngIf="f.family.errors" class="invalid-feedback">
+                                    <div *ngIf="f.family.errors.required">
+                                        Selection of family is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3" *ngIf="familyField == 'J'">
+                                <label for="totalFamily">Total Family:&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="2"
+                                    (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                                    (keyup)="familyNo($event)" placeholder="Total Number of Family"
+                                    formControlName="totalFamily" [(ngModel)]="totalFamili"
+                                    [ngClass]="{ 'is-invalid': f.totalFamily.invalid && f.totalFamily.touched }">
+                                <div *ngIf="f.totalFamily.errors" class="invalid-feedback">
+                                    <div *ngIf="f.totalFamily.errors.required">Total Number of Family is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3" *ngIf="familyField == 'S'">
+                                <label for="households">Total Member Household:&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="2"
+                                    (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                                    placeholder="Total Member of All family" formControlName="households"
+                                    [(ngModel)]="totalMembers" [ngClass]="{ 'is-invalid': f.households.invalid && f.households.touched,
+                                    'is-valid': f.households.valid && (f.households.dirty || f.households.touched) }">
+                                <div *ngIf="f.households.errors" class="invalid-feedback">
+                                    <div *ngIf="f.households.errors.required">Total Member of Household is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3" *ngIf="familyField == 'J'">
+                                <label for="households">Total Member Household:&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" maxlength="2"
+                                    (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                                    (keyup)="checkFamily()" placeholder="Total Member of All family"
+                                    formControlName="households" [(ngModel)]="totalMembers"
+                                    [ngClass]="{ 'is-invalid': f.households.invalid && f.households.touched}">
+                                <div *ngIf="f.households.errors" class="invalid-feedback">
+                                    <div *ngIf="f.households.errors.required">Total Member of Household is required
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                    <div class="text-center">
+
+                        <button class="btn btn-primary m-1" (click)="saveEditHousehold()"><i
+                                class="fas fa-check-circle m-1"></i>Save</button>
+                        <button class="btn btn-secondary m-1" (click)="backEditHousehold()"><i
+                                class="fa fa-arrow-left m-1"></i>Back</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- <div class="white_box QA_section mb_30">
+                <div class="white_box_tittle list_header">
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table class="table lms_table_active dataTable no-footer dtr-inline collapsed"
+                                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info"
+                                style="width: 705px;">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <app-donor-view (editDonorData)="sendEditDonorData($event)"></app-donor-view>
+        </div>
+
+        <div class="col-md-6">
+            <app-donor-create [item]="itemToEdit"></app-donor-create>
+            <app-donor-pending></app-donor-pending>
+        </div>
+    </div>
+
+</div>

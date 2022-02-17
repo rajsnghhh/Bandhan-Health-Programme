@@ -1,0 +1,14 @@
+.fa-plus-circle {
+    color: #3e7758 !important;
+    font-size: 30px;
+}
+
+.remove {
+    color: red;
+    font-size: 30px;
+}
+
+#myForm {
+    height: 250px; 
+    overflow-x: hidden;
+}

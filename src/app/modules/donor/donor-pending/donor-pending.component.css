@@ -1,0 +1,13 @@
+th,
+td {
+    text-align: center;
+}
+
+th {
+    font-size: 15px !important;
+}
+
+i {
+    margin-right: 10px;
+    font-size: large;
+}

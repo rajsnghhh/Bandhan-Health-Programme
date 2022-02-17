@@ -1,0 +1,11 @@
+.add_button {
+    margin-left: 1%;
+}
+
+.search_inner input {
+    width: 100%;
+}
+
+.search_inner button {
+    padding-right: 1px;
+}

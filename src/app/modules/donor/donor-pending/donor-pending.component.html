@@ -1,0 +1,27 @@
+<div class="white_box QA_section mb_30">
+    <h2 class="page-title">Pending Donors</h2>
+    <!-- <a [routerLink]="['create']">Create New</a> -->
+    <div class="white_box_tittle list_header">
+
+        <div class="QA_table ">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table lms_table_active dataTable no-footer dtr-inline collapsed" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 705px;">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of donorService.pendingDonors; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{item.donorMasterName}}</td>
+                            <td><i class="fa fa-check" (click)="approveDonor(item)"></i><i class="fas fa-ban"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

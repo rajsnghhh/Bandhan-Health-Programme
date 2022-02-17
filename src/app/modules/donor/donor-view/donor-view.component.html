@@ -1,0 +1,45 @@
+<div class="white_box QA_section mb_30">
+    <div class="row">
+        <div class="col-md-5">
+            <h2 class="page-title">Active Donors</h2>
+        </div>
+        <div class="col-md-7">
+            <div class="box_right d-flex lms_block">
+                <div class="serach_field_2">
+                    <div class="search_inner">
+                        <form active="#">
+                            <div class="search_field">
+                                <input type="text" name="search" placeholder="Search donors here..." [(ngModel)]="donorsSearch">
+                            </div>
+                            <button type="submit"> <i class="fa fa-search"></i> </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="white_box_tittle list_header">
+
+        <div class="QA_table ">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table lms_table_active dataTable no-footer dtr-inline collapsed" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 705px;">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of donorService.activeDonors | filter:donorsSearch| slice: (page-1) * pageSize : page * pageSize; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{item.donorMasterName}}</td>
+                            <td><i class="fas fa-edit" (click)="editDonor(item)"></i><i class="fas fa-trash"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ngb-pagination class="d-flex justify-content-end p-1" [(page)]="page" [pageSize]="pageSize" [collectionSize]="donorService.activeDonors?.length"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

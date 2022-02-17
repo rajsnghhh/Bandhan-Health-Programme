@@ -1,0 +1,114 @@
+<div class="container">
+    <div class="white_box QA_section mb_30">
+        <h2 class="page-title">Muac Camp Creation</h2>
+
+        <div style="float: right;">
+            <div class="add_button ">
+                <a class="btn btn-primary" (click)="openModal(createMuac)">Add
+                    Muac</a>
+            </div>
+        </div>
+
+        <div class="white_box_tittle list_header">
+
+            <div class="QA_table">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+
+                    <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                        role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                        <thead>
+                            <tr>
+                                <th>SL No</th>
+                                <th>Camp Number</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of muacCampList; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.campNumber}}</td>
+                                <td>{{item.endDate}}</td>
+                                <td>{{item.startDate}}</td>
+                                <td><i class="fas fa-edit" title="Edit Muac"></i>
+                                    <i class="fas fa-trash" title="Delete Muac"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #createMuac let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title">Create Muac</h3>
+                </div>
+
+                <div class="col-md-3">
+                    <i class="fas fa-plus-circle" (click)="addMoreMuac()" style="cursor: pointer;"></i>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="muacModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of muacDetails.muacInfo; index as i" style="text-align: center;">
+                            <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].startDate"
+                                    onkeydown="return false" [min]="minDate" [max]="maxDate">
+                            </td>
+
+                            <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].endDate"
+                                    onkeydown="return false" [min]="minDate" [max]="maxDate">
+                            </td>
+
+                            <td><button type="button" class="btn btn-remove" (click)="removeMuac(i)"><i
+                                        class="fas fa-minus-circle"></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class=" btn btn-primary bttn" (click)="saveMuac()">Submit</button>
+                    <!--  [disabled]="!checkMuacDisabled()" -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>

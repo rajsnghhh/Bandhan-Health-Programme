@@ -1,0 +1,54 @@
+
+  .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.fa-plus-circle {
+  color: #3e7758 !important;
+  font-size: 25px;
+  margin-left: -180px
+  
+}
+
+.fa-minus-circle {
+  color: red !important;
+  font-size: 25px;
+}
+
+#child {
+  margin: -18px 0 0 -570px;
+}
+#girl {
+  margin: -18px 0 0 -500px;
+}
+
+#table_wrapper .table thead  {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #499;
+}
+
+
+.modal-content {
+  height: 300px; 
+  overflow-x: auto;
+  width: 750px;
+}
+
+.btn-link {
+  text-decoration: none;
+}
+
+.close {
+  margin-left: 290px;
+}
+

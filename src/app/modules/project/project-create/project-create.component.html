@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Create/Edit Projects</h2>
+                <form #projectForm="ngForm" (submit)="saveProject(projectForm)">
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Project Name:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="projectName"
+                                style="text-transform:capitalize;" [(ngModel)]="saveObj.projectName" minlength="3"
+                                maxlength="50" (keypress)="validationService.nameValidation($event)" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Project Code:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="projectCode" [(ngModel)]="saveObj.projectCode"
+                                (keypress)="validationService.onlyChars($event)"
+                                (keyup)="validationService.allCaps($event)" minlength="3" maxlength="20" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">Start Date:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="date" name="startDate" class="form-control"
+                                [(ngModel)]="saveObj.projectStartDate">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="">End Date:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="date" name="endDate" class="form-control" [(ngModel)]="saveObj.projectEndDate">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="">Sub-Vertical:</label>
+                        </div>
+
+                        <div class="col-md-7">
+                            <select name="" id="" class="form-select" name="subVertical"
+                                [(ngModel)]="saveObj.subVerticalMasterDTO.subVerticalMasterId">
+                                <option [ngValue]="0">-- Select a Sub-Vertical --</option>
+                                <option *ngFor="let item of subVerticalList" [ngValue]="item.subVerticalMasterId">
+                                    {{item.subVerticalName}} ({{item.subVerticalCode}})</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" [disabled]="!projectForm.valid">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
