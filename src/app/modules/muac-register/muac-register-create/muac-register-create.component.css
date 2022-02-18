@@ -1,11 +1,11 @@
 .modal-content {
     height: 300px;
     overflow-x: hidden;
-    width: 650px;
+    width: 700px;
   }
 
   .close {
-    margin-left: 240px;
+    margin-left: 260px;
   }
   
 #table_wrapper .table thead {
@@ -28,7 +28,7 @@
 .fa-plus-circle {
   color: #3e7758 !important;
   font-size: 25px;
-  margin-left: -145px;
+  margin-left: -155px;
 }
 
 .fa-minus-circle {

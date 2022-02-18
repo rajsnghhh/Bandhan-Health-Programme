@@ -20,6 +20,8 @@ export class MuacRegisterCreateComponent implements OnInit {
   muacSave: any;
   minDate: any;
   maxDate: any;
+  start: any;
+  end: any;
 
   constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal) { }
 
@@ -57,13 +59,25 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   addMoreMuac() {
-    this.muacDetails.muacInfo.push({
-      muacCampId: 0,
-      startDate: '',
-      endDate: '',
-      userId: 100,
-      createdDateTime: new Date().toISOString().slice(0, 10)
-    });
+    this.muacDetails.muacInfo.forEach((item) => {
+      this.start = item.startDate;
+      this.end = item.endDate;
+    })
+
+    if (this.start == '') {
+      console.log('error');
+    } else if (this.end == '') {
+      console.log('error');
+    } else {
+      this.muacDetails.muacInfo.push({
+        muacCampId: 0,
+        startDate: '',
+        endDate: '',
+        userId: 100,
+        createdDateTime: new Date().toISOString().slice(0, 10)
+      });
+    }
+
   }
 
   muacModalDismiss() {
@@ -74,21 +88,21 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.muacDetails.muacInfo.splice(i, 1)
   }
 
-  // checkMuacDisabled() {
-  //   let flag = true;
+  checkMuacDisabled() {
+    let flag = true;
 
-  //   // if (this.muacDetails.muacInfo.length == 0) {
-  //   //   flag = false;
-  //   // }
+    if (this.muacDetails.muacInfo.length == 0) {
+      flag = false;
+    }
 
-  //   this.muacDetails.muacInfo.forEach((item) => {
-  //     if (!item.startDate || !item.endDate) {
-  //       flag = false;
-  //     }
-  //   });
+    this.muacDetails.muacInfo.forEach((item) => {
+      if (!item.startDate || !item.endDate) {
+        flag = false;
+      }
+    });
 
-  //   return flag;
-  // }
+    return flag;
+  }
 
   saveMuac() {
     console.log('raj', this.muacList);
@@ -126,5 +140,5 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.maxDate = muacList.projectEndDate
   }
 
-
+// rajmani singh
 }
