@@ -2,7 +2,7 @@
     <app-sidebar></app-sidebar>
 </nav>
 
-<section class="main_content dashboard_part" [ngClass]="{'abc': abc}">
+<section class="main_content dashboard_part" >
 
     <div class="container-fluid no-gutters">
         <div class="row">
@@ -12,15 +12,15 @@
                         <i class="ti-menu"></i>
                     </div>
 
-                    <div class="col-lg-12">
-                        <h1 style="color: #499; font-size: 250%; display: flex; margin-left: 50%;">Bandhan Health Program</h1> 
+                    <div class="col-lg-12 header_text">
+                        <h1>Bandhan Health Program</h1> 
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-    <div class="main_content_inner">
+    <div class="main_content_inner"  >
         <router-outlet></router-outlet>
     </div>
 

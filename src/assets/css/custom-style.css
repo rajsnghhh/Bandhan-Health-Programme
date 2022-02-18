@@ -3013,6 +3013,12 @@ table.dataTable.dtr-inline.collapsed
   margin-left: -50%;
 }
 
+.header_text h1 {
+  color: #499;
+  font-size: 250%;
+  display: flex;
+  margin-left: 32%;
+}
 @media (max-width: 575.98px) {
   /* line 2, H:/admin_project/hospital/scss/_header.scss */
   .header_iner {
@@ -4310,9 +4316,7 @@ body::-webkit-scrollbar-thumb {
 .sidebar.hidden {
   width: 5%;
 }
-.abc {
-  width: 5%;
-}
+
 /* line 483, H:/admin_project/hospital/scss/_sidebar.scss */
 
 body::-webkit-scrollbar {
@@ -4515,7 +4519,7 @@ body::-webkit-scrollbar {
 /* line 2, H:/admin_project/hospital/scss/_main_content.scss */
 
 .main_content {
-  padding-left: 250px;
+  padding-left: 20%;
   width: 100%;
   padding-top: 0px !important;
   transition: 0.5s;
