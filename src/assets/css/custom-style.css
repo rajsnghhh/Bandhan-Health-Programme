@@ -4310,7 +4310,9 @@ body::-webkit-scrollbar-thumb {
 .sidebar.hidden {
   width: 5%;
 }
-
+.abc {
+  width: 5%;
+}
 /* line 483, H:/admin_project/hospital/scss/_sidebar.scss */
 
 body::-webkit-scrollbar {
