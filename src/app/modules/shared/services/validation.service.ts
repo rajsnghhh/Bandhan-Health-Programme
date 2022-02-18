@@ -100,14 +100,4 @@ export class ValidationService {
       event.target.value = this.firstCaps(event.target.value);
     }
   }
-
-  onlyIntegerAndSpace(event) {
-    const charCode = event.keyCode;
-    if ((charCode >= 48 && charCode <= 57) || charCode == 32) {
-      return true;
-    } else {
-      event.preventDefault();
-      return false;
-    }
-  }
 }

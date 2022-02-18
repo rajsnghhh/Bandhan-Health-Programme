@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -39,7 +39,7 @@ export class BaselineCreateComponent implements OnInit {
   childDetails = {
     childInfo: [],
   };
-
+  @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   // requestBody = {
   //   dataAccessDTO: {},
@@ -103,6 +103,22 @@ export class BaselineCreateComponent implements OnInit {
       this.cardDetails = response.responseObject;
       console.log(this.cardDetails);
     })
+  }
+
+  aadharcardValidation(event) {
+    let data;
+    if (event.keyCode !== 8 && event.keyCode !== 46) {
+      data = this.aadhaarId.nativeElement.value
+        .replace(/[^0-9]/g, '')
+        .replace(/\W/gi, '')
+        .replace(/(.{4})/g, '$1 ')
+        .trim();
+    } else {
+      data = this.aadhaarId.nativeElement.value;
+    }
+    let q: any = this.aadhaarId.nativeElement;
+    q.value = data;
+    return data;
   }
 
   getMinDate() {

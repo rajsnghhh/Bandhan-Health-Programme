@@ -1,6 +1,13 @@
-<nav class="sidebar">
-    <div class="logo d-flex justify-content-between">
-        <a href="index.html"><img src="../../../../assets/bk_logo.png" alt="" style="height: 50px; width: 80px;"></a>
+<nav class="sidebar"  [ngClass]="{'hidden': hideSideNav}">
+    <div class="d-flex justify-content-end" style="margin-top: 5px;">
+        <a style="background-color: #499; border: 1.5px solid #499;color: #ffffff;border-radius: 3px;" (click)="hideSideBar()">         
+            <span *ngIf="!hide"><i class="fas fa-angle-double-right fa-2x " style=" margin: 0px auto; "></i></span>
+            <span *ngIf="hide"><i class="fas fa-angle-double-left fa-2x " style="display: flex; margin: 0px auto; "></i></span>
+        </a>
+    </div>
+    <div *ngIf="hide" >
+    <div class="logo d-flex justify-content-start" style="height: 100px; width: 200px;">
+        <a href="index.html"><img src="../../../../assets/bk_logo.png" alt="" ></a>
     </div>
 
     <nav class="navigation">
@@ -159,4 +166,5 @@
             </li>
         </ul>
     </nav>
+    </div>
 </nav>

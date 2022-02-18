@@ -1,71 +1,69 @@
-
 .navigation {
-    width: 300px;
-    height: auto;
-  }
-  
-  .mainmenu,
-  .submenu{
-    position: relative;
-    list-style: none;
-    padding: 0px;
-    margin: 0;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  
-  .mainmenu a,
-  .mainmenu label {
-    position: relative;
-    display: block;
-    background-color: #ffff;
-    text-decoration: none;
-    padding: 10px;
-    color: #000;
-    cursor: pointer;
-  }
-  
-  .mainmenu input {
-    display: none;
-  }
-  
-  .mainmenu a:hover {
-    background-color: #C5C5C5;
-  }
-  
-  .mainmenu input:checked~.submenu{
-    display:block;
-    max-height: 1000px;
-  }
-  
-  .submenu a {
-    background-color: #ffffff;
-  }
-  
-  .submenu a:hover {
-    background-color: #95d0d0;
-  }
-  
-  .submenu {
-    overflow: hidden;
-    max-height: 0;
-    -webkit-transition: all 0.2s ease-out;
-  }
+  width: 350px;
+  height: auto;
+}
 
-  h3 {
-    color: #ffffff;
-  }
-  
-  .navigation .mainmenu input:checked + label h3 span i {
-    position: sticky;
-    float:right;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .navigation .mainmenu label h3 span i {
-    float: right;
-    top: 50%;
-    transform: translateY(-50%) rotate(-180deg);
-  }
+.mainmenu,
+.submenu {
+  position: relative;
+  list-style: none;
+  padding: 0px;
+  margin: 0;
+  margin-left: 20px;
+  cursor: pointer;
+}
 
+.mainmenu a,
+.mainmenu label {
+  position: relative;
+  display: block;
+  background-color: #ffff;
+  text-decoration: none;
+  padding: 10px;
+  color: #000;
+  cursor: pointer;
+}
+
+.mainmenu input {
+  display: none;
+}
+
+.mainmenu a:hover {
+  background-color: #c5c5c5;
+}
+
+.mainmenu input:checked ~ .submenu {
+  display: block;
+  max-height: 1000px;
+}
+
+.submenu a {
+  background-color: #ffffff;
+}
+
+.submenu a:hover {
+  background-color: #95d0d0;
+}
+
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.2s ease-out;
+}
+
+h3 {
+  color: #ffffff;
+}
+
+.navigation .mainmenu input:checked + label h3 span i {
+  position: sticky;
+  float: right;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navigation .mainmenu label h3 span i {
+  float: right;
+  top: 50%;
+  transform: translateY(-50%) rotate(-180deg);
+}
