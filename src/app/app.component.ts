@@ -6,13 +6,16 @@ import { ValidationService } from './modules/shared/services/validation.service'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'bhp-web';
+  fullscreenData:boolean;
 
-  constructor(public validationService: ValidationService){}
+  constructor(){}
 
-  ngOnInit(): void {
-  }
   
+  
+  fullscreenMethod(data){
+    this.fullscreenData = data;
+  }
   
 }

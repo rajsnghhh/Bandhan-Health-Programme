@@ -3008,7 +3008,7 @@ table.dataTable.dtr-inline.collapsed
   position: fixed;
   top: 0;
   z-index: 99;
-  padding: 20px;
+  padding: 5px;
   position: relative;
   margin-left: -50%;
 }
@@ -4527,6 +4527,15 @@ body::-webkit-scrollbar {
   min-height: 100vh;
   padding-bottom: 90px;
 }
+.main_content_fullscreen {
+  padding-left: 7%;
+  width: 100%;
+  padding-top: 0px !important;
+  transition: 0.5s;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 90px;
+}
 
 .main_content_inner {
   padding-left: 10px;
@@ -5525,11 +5534,14 @@ body::-webkit-scrollbar {
   padding-bottom: 40px;
   padding-top: 6px;
   background: transparent;
-  padding-left: 250px;
-  position: absolute;
+  padding-left: 5%;
+  position: relative;
   left: 0;
   right: 0;
-  /* bottom: 0; */
+}
+
+.footer_part_fullscreen {
+  padding-left: 7%;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {
@@ -5542,7 +5554,7 @@ body::-webkit-scrollbar {
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   /* line 2, H:/admin_project/hospital/scss/_footer.scss */
   .footer_part {
-    padding-left: 20%;
+    padding-left: 5%;
   }
 }
 

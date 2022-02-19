@@ -1,8 +1,8 @@
 <nav>
-    <app-sidebar></app-sidebar>
+    <app-sidebar (valueChange)="fullscreenMethod($event)"></app-sidebar>
 </nav>
 
-<section class="main_content dashboard_part" >
+<section class=" dashboard_part" [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'" >
 
     <div class="container-fluid no-gutters">
         <div class="row">
