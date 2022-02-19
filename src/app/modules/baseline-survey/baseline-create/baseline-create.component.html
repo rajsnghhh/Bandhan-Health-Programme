@@ -226,38 +226,25 @@
                             </div>
 
                             <div class="form-group col-md" *ngIf="idTypeField == 1">
-                                <label for="aadhar"
-                                  >AADHAAR CARD NO :&nbsp;<span class="text-danger"
-                                    >*&nbsp;</span
-                                  ></label
-                                >
-                                <input
-                                  #aadhaarId
-                                  type="text"
-                                  class="form-control"
-                                  maxlength="14"
-                                  (keyup)="aadharcardValidation($event)"
-                                  maxlength="14"
-                                  (input)="event.keyCode >= 48 && event.keyCode <= 57"
-                                  placeholder="Like 2104 0533 7065"
-                                  formControlName="aadhar"
-                                  [ngClass]="{
+                                <label for="aadhar">AADHAAR CARD NO :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <input #aadhaarId type="text" class="form-control" maxlength="14"
+                                    (keyup)="aadharcardValidation($event)" maxlength="14"
+                                    (input)="event.keyCode >= 48 && event.keyCode <= 57"
+                                    placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{
                                     'is-invalid': f.aadhar.invalid && f.aadhar.touched,
                                     'is-valid':
                                       f.aadhar.valid && (f.aadhar.dirty || f.aadhar.touched)
-                                  }"
-                                />
+                                  }" />
                                 <div *ngIf="f.aadhar.errors" class="invalid-feedback">
-                                  <div *ngIf="f.aadhar.errors.required">
-                                    AADHAAR CARD Number is required
-                                  </div>
-                                  <div
-                                    *ngIf="f.aadhar.errors.minlength || f.aadhar.errors.pattern"
-                                  >
-                                    AADHAAR CARD Number Invalid !
-                                  </div>
+                                    <div *ngIf="f.aadhar.errors.required">
+                                        AADHAAR CARD Number is required
+                                    </div>
+                                    <div *ngIf="f.aadhar.errors.minlength || f.aadhar.errors.pattern">
+                                        AADHAAR CARD Number Invalid !
+                                    </div>
                                 </div>
-                              </div>
+                            </div>
 
                             <div class="form-group col-md" *ngIf="idTypeField == 2">
                                 <label for="pan">PAN CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -386,8 +373,8 @@
                                         class="text-danger">*&nbsp;</span></label>
                                 <input type="text" class="form-control"
                                     (keypress)="validationService.onlyInteger($event)" maxlength="2"
-                                    placeholder="Enter Total Senior Citizen" formControlName="fsenior" (change)="checkChildren()"
-                                    (keyup)="familyCountChecking()" [ngClass]="{ 'is-invalid': f.fsenior.invalid && f.fsenior.touched,
+                                    placeholder="Enter Total Senior Citizen" formControlName="fsenior"
+                                    (change)="checkChildren()" (keyup)="familyCountChecking()" [ngClass]="{ 'is-invalid': f.fsenior.invalid && f.fsenior.touched,
                                     'is-valid': f.fsenior.valid && (f.fsenior.dirty || f.fsenior.touched) }">
                                 <div *ngIf="f.fsenior.errors" class="invalid-feedback">
                                     <div *ngIf="f.fsenior.errors.required">Senior Citizen is required</div>
