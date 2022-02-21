@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { MuacRegisterService } from '../muac-register.service';
 
@@ -27,12 +29,10 @@ export class MuacRegisterCreateComponent implements OnInit {
   day: any;
   year: any;
 
-
-  constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal) { }
+  constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal,
+    private toaster: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
-
-
     this.muacDetails.muacInfo.push({
       muacCampId: 0,
       startDate: '',
@@ -87,6 +87,13 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   muacModalDismiss() {
     this.modalReference.close();
+    this.muacDetails.muacInfo = [{
+      muacCampId: 0,
+      startDate: '',
+      endDate: '',
+      userId: 100,
+      createdDateTime: new Date().toISOString().slice(0, 10)
+    }];
   }
 
   // removeMuac(i) {
@@ -124,11 +131,30 @@ export class MuacRegisterCreateComponent implements OnInit {
       branchCloseDate: this.muacList.branchCloseDate,
       muacCampDTOList: this.muacDetails.muacInfo
     }
-    console.log(postBody)
+    console.log(postBody);
     //API call for save muac
     this.muacService.saveMuac(postBody).subscribe((response: any) => {
       this.muacSave = response;
       console.log(this.muacSave);
+
+      if (response.message == 'Success') {
+        this.showSuccess(response.message);
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([currentUrl]);
+        });
+        this.muacDetails.muacInfo = [{
+          muacCampId: 0,
+          startDate: '',
+          endDate: '',
+          userId: 100,
+          createdDateTime: new Date().toISOString().slice(0, 10)
+        }];
+
+      } else {
+        this.showError(response.message);
+      }
+
     })
 
 
@@ -145,7 +171,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
     let lastMuacDate = muacList.muaccampDetailList
     const muacEndDate = lastMuacDate[lastMuacDate.length - 1];
-    const muacEndDateSet = muacEndDate.endDate
+    const muacEndDateSet = muacEndDate?.endDate
     const muacDate = moment(muacEndDateSet).add(1, "days").format("YYYY-MM-DD")
 
     if (muacList.muaccampDetailList.length == 0) {
@@ -168,6 +194,27 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.selStartDate = maxDate;
   }
 
+  editMuac(item, createMuac) {
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(createMuac, {
+      windowClass: 'createMuac',
+    });
+    console.log(item);
+    this.muacDetails.muacInfo[0].startDate = item.startDate;
+    this.muacDetails.muacInfo[0].endDate = item.endDate;
 
+    
+  }
 
+  showSuccess(message) {
+    this.toaster.success(message, 'Muac Camp Save', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Muac Camp Save', {
+      timeOut: 3000,
+    });
+  }
 }

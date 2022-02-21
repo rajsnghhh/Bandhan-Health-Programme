@@ -33,7 +33,7 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td><i class="fas fa-edit" title="Edit Muac"></i>
+                                <td><i class="fas fa-edit" title="Edit Muac" (click)="editMuac(item,createMuac)"></i>
                                     <i class="fas fa-trash" title="Delete Muac"></i>
                                 </td>
                             </tr>
@@ -53,7 +53,7 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Create Muac</h3>
+                    <h3 class="modal-title" id="modal-basic-title">Edit/Create Muac</h3>
                 </div>
 
                 <!-- <div class="col-md-3">
