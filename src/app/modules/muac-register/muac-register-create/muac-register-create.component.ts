@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -29,8 +30,9 @@ export class MuacRegisterCreateComponent implements OnInit {
   day: any;
   year: any;
 
-  constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal,
-    private toaster: ToastrService, private router: Router) { }
+
+  constructor(private http: HttpService, private muacService: MuacRegisterService,
+     private modalService: NgbModal, private toaster: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.muacDetails.muacInfo.push({
@@ -206,14 +208,59 @@ export class MuacRegisterCreateComponent implements OnInit {
     
   }
 
+  // showSuccess(message) {
+  //   this.toaster.success(message, 'Muac Camp Save', {
+  //     timeOut: 3000,
+  //   });
+  // }
+
+  // showError(message) {
+  //   this.toaster.error(message, 'Muac Camp Save', {
+  //     timeOut: 3000,
+  //   });
+  // }
+
+  deleteMuac(item, i) {
+    console.log(item);
+    const post = {
+      activeStatus: "A",
+      dataAccessDTO: this.http.dataAccessDTO,
+      branchId: 1,
+      muacCampId: item.muacCampId,
+      status: 'D',
+      userId: 100,
+      createdDateTime: item.startDate
+    }
+
+    if (i === (this.muacList.muaccampDetailList.length - 1)) {
+      if (confirm('Do you want to delete household :' + item.campNumber)) {
+        this.muacService.deleteMuac(post).subscribe((response: any) => {
+          if (response.status === true) {
+            this.muacList.muaccampDetailList.splice(i, 1);
+            this.showSuccess(response.message);
+          }
+
+          else {
+            this.showError(response.message);
+          }
+
+        })
+      }
+    }
+
+    else {
+      this.showError('Always delete last one');
+    }
+  }
+
   showSuccess(message) {
-    this.toaster.success(message, 'Muac Camp Save', {
+    this.toaster.success(message, 'Muac Delete', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Muac Camp Save', {
+    this.toaster.error(message, 'Muac Delete', {
       timeOut: 3000,
     });
   }

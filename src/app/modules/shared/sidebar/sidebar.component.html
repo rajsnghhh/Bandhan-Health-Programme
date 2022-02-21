@@ -9,14 +9,52 @@
     <div class="logo d-flex justify-content-start" style="height: 100px; width: 200px;">
         <a href="index.html"><img src="../../../../assets/bk_logo.png" alt="" ></a>
     </div>
-
-    <nav class="navigation">
-        <ul class="mainmenu">
+    <!-- <div class="navigation" style="margin-top: 50px;">
+    <ngb-accordion [closeOthers]="true" >
+        <ngb-panel id="static-1" title="Simple" > 
+            <ng-template ngbPanelContent>
+            <ngb-accordion [closeOthers]="true">
+                <ngb-panel id="static-1" title="Simple">
+                    <ng-template ngbPanelContent>
+                        
+                            <li><a [routerLink]="['central-register/create']">Create Central Register</a></li>
+                            <li><a [routerLink]="['central-register/view']"> View Central Register</a></li>
+                        
+                      </ng-template>
+                    
+                </ngb-panel>
+        
+                <ngb-panel id="static-2">
+                  <ng-template ngbPanelTitle style="color: black; text-decoration: none">
+                    <span >Fancy title</span>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    nderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                  </ng-template>
+                </ngb-panel>
+        
+              </ngb-accordion>
+            </ng-template>
+        </ngb-panel>
+    
+            <ngb-panel id="static-2">
+              <ng-template ngbPanelTitle >
+                <a class="aa">Fancy title</a>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                nderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              </ng-template>
+            </ngb-panel>
+    
+          </ngb-accordion> 
+    </div> -->
+      <nav class="navigation">
+         <ul class="mainmenu">
             <li style=" margin-bottom: -38px; margin-left: -20px;">
-                <input type="checkbox" id="phase1">
+                <input type="checkbox" id="phase1" [checked]="aaa" (click)="collapseaaa()" #aa>
                 <label style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;"
-                    for="phase1">
-                    <h3>Project Setup <span><i class="fas fa-caret-down" style="margin-top: 5%;"></i></span></h3>
+                    for="phase1" >
+                    <h3>Project Setup <span><i class="fas fa-caret-down" style="margin-top: 5%;" ></i></span></h3>
                 </label>
 
                 <ul class="submenu">
@@ -100,10 +138,10 @@
             </li>
 
             <li style="margin-left: -20px;">
-                <input type="checkbox" id="phase2" checked>
+                <input type="checkbox" id="phase2" [checked]="bbb" (click)="collapsebbb()" #bb>
                 <label for="phase2"
                     style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;">
-                    <h3>Household Info<span><i class="fas fa-caret-down" style="margin-top: 5%;"></i></span></h3>
+                    <h3>Household Info<span><i class="fas fa-caret-down" style="margin-top: 5%;" ></i></span></h3>
                 </label>
 
                 <ul class="submenu">
@@ -164,7 +202,7 @@
 
                 </ul>
             </li>
-        </ul>
-    </nav>
+        </ul> 
+    </nav> 
     </div>
 </nav>

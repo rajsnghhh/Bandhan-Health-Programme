@@ -15,4 +15,9 @@ export class MuacRegisterService {
   saveMuac(obj): any {
     return this.http.post('http://192.168.153.56:6181/bhp/api/v1/muaccamp/saveOrUpdate', obj)
   }
+
+  deleteMuac(obj): any {
+    return this.http.post('http://192.168.153.56:6181/bhp/api/v1/muaccamp/delete', obj)
+
+  }
 }
