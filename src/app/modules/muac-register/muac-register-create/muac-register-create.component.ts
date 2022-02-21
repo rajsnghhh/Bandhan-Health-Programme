@@ -254,13 +254,13 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Muac Delete', {
+    this.toaster.success(message, 'Muac Camp', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Muac Delete', {
+    this.toaster.error(message, 'Muac Camp', {
       timeOut: 3000,
     });
   }
