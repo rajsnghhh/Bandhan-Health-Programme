@@ -34,7 +34,7 @@
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
                                 <td><i class="fas fa-edit" title="Edit Muac"></i>
-                                    <i class="fas fa-trash" title="Delete Muac"></i>
+                                    <i class="fas fa-trash" title="Delete Muac" (click)="deleteMuac(item, i)"></i>
                                 </td>
                             </tr>
                         </tbody>

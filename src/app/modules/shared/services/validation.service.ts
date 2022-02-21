@@ -101,5 +101,14 @@ export class ValidationService {
     }
   }
 
+  onlyIntegerAndSpace(event) {
+    const charCode = event.keyCode;
+    if ((charCode >= 48 && charCode <= 57) || charCode == 32) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
 
 }

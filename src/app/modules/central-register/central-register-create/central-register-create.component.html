@@ -221,6 +221,7 @@
                                 <label for="aadhar">AADHAAR CARD NO :&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
                                 <input type="text" class="form-control" maxlength="14"
+                                    (keyup)="aadharcardValidation($event)"
                                     (keypress)="validationService.onlyIntegerAndSpace($event)"
                                     placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{ 'is-invalid': f.aadhar.invalid && f.aadhar.touched,
                                     'is-valid': f.aadhar.valid && (f.aadhar.dirty || f.aadhar.touched)}">

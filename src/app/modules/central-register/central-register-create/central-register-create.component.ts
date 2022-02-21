@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +30,7 @@ export class CentralRegisterCreateComponent implements OnInit {
   minYear: any;
   maxYear: any;
   idTypeField: number = 0;
+  @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   childDetails = {
     childInfo: [],
@@ -87,6 +88,22 @@ export class CentralRegisterCreateComponent implements OnInit {
       console.log(this.cardDetails);
     })
 
+  }
+
+  aadharcardValidation(event) {
+    let data;
+    if (event.keyCode !== 8 && event.keyCode !== 46) {
+      data = this.aadhaarId.nativeElement.value
+        .replace(/[^0-9]/g, '')
+        .replace(/\W/gi, '')
+        .replace(/(.{4})/g, '$1 ')
+        .trim();
+    } else {
+      data = this.aadhaarId.nativeElement.value;
+    }
+    let q: any = this.aadhaarId.nativeElement;
+    q.value = data;
+    return data;
   }
 
   restrictZero(event: any) {

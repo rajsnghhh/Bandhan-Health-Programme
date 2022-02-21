@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { MuacRegisterService } from '../muac-register.service';
 
@@ -28,7 +30,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   year: any;
 
 
-  constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal) { }
+  constructor(private http: HttpService, private muacService: MuacRegisterService, private modalService: NgbModal, private toaster: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -144,7 +146,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.maxDate = muacList.projectEndDate
 
     let lastMuacDate = muacList.muaccampDetailList
-    const muacEndDate = lastMuacDate[lastMuacDate.length - 1];
+    const muacEndDate = lastMuacDate[lastMuacDate?.length - 1];
     const muacEndDateSet = muacEndDate.endDate
     const muacDate = moment(muacEndDateSet).add(1, "days").format("YYYY-MM-DD")
 
@@ -168,6 +170,48 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.selStartDate = maxDate;
   }
 
+  deleteMuac(item, i) {
+    console.log(item);
+    const post = {
+      activeStatus: "A",
+      dataAccessDTO: this.http.dataAccessDTO,
+      branchId: 1,
+      muacCampId: item.muacCampId,
+      status: 'D',
+      userId: 100,
+      createdDateTime: item.startDate
+    }
 
+    if (i === (this.muacList.muaccampDetailList.length - 1)) {
+      if (confirm('Do you want to delete household :' + item.campNumber)) {
+        this.muacService.deleteMuac(post).subscribe((response: any) => {
+          if (response.status === true) {
+            this.muacList.muaccampDetailList.splice(i, 1);
+            this.showSuccess(response.message);
+          }
 
+          else {
+            this.showError(response.message);
+          }
+
+        })
+      }
+    }
+
+    else {
+      this.showError('Always delete last one');
+    }
+  }
+
+  showSuccess(message) {
+    this.toaster.success(message, 'Muac Delete', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Muac Delete', {
+      timeOut: 3000,
+    });
+  }
 }

@@ -230,7 +230,7 @@
                                         class="text-danger">*&nbsp;</span></label>
                                 <input #aadhaarId type="text" class="form-control" maxlength="14"
                                     (keyup)="aadharcardValidation($event)" maxlength="14"
-                                    (input)="event.keyCode >= 48 && event.keyCode <= 57"
+                                    (keypress)="validationService.onlyIntegerAndSpace($event)"
                                     placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{
                                     'is-invalid': f.aadhar.invalid && f.aadhar.touched,
                                     'is-valid':
