@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { ValidationService } from '../../shared/services/validation.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
 
 @Component({
@@ -12,7 +14,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   templateUrl: './baseline-view.component.html',
   styleUrls: ['./baseline-view.component.css']
 })
-export class BaselineViewComponent implements OnInit {
+export class BaselineViewComponent implements OnInit, DoCheck {
   baselineSurvey: FormGroup;
   baselineDetails: any;
   modalContent: any;
@@ -23,12 +25,19 @@ export class BaselineViewComponent implements OnInit {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
+  branchNames: any[] = [];
+  aaa: boolean;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    private confirmationDialogService: ConfirmationDialogService, private route: Router) { }
-
+    private confirmationDialogService: ConfirmationDialogService, private route: Router, private httpBranch: BranchService,
+    public validationService: ValidationService) { }
+  ngDoCheck(): void {
+    this.aaa = this.validationService.val;
+  }
   ngOnInit(): void {
+
+
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -42,6 +51,14 @@ export class BaselineViewComponent implements OnInit {
     });
 
     this.createForm();
+
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.branchNames.push(arr.villageName);
+      })
+      console.log(this.branchNames);
+    });
+
   }
 
   createForm() {

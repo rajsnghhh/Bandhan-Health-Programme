@@ -5,16 +5,3 @@
 .col-md-9 {
   min-width: 81%;
 }
-
-.aa:hover,
-.aa:visited,
-.aa:link,
-.aa:active {
-  color: rgb(0, 0, 0);
-  text-decoration: none !important;
-  border: none !important;
-}
-.aa {
-  color: rgb(0, 0, 0);
-  text-decoration: underline white;
-}

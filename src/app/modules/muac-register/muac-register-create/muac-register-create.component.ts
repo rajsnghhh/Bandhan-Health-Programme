@@ -32,7 +32,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
 
   constructor(private http: HttpService, private muacService: MuacRegisterService,
-     private modalService: NgbModal, private toaster: ToastrService, private router: Router) { }
+    private modalService: NgbModal, private toaster: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.muacDetails.muacInfo.push({
@@ -205,7 +205,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.muacDetails.muacInfo[0].startDate = item.startDate;
     this.muacDetails.muacInfo[0].endDate = item.endDate;
 
-    
+
   }
 
   // showSuccess(message) {
@@ -221,7 +221,6 @@ export class MuacRegisterCreateComponent implements OnInit {
   // }
 
   deleteMuac(item, i) {
-    console.log(item);
     const post = {
       activeStatus: "A",
       dataAccessDTO: this.http.dataAccessDTO,

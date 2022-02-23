@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { CentralRegisterService } from '../central-register.service';
@@ -19,9 +20,12 @@ export class CentralRegisterViewComponent implements OnInit {
   modalIndex: any;
   moreDetails: any;
   registerSearch: String;
+  branchNames: string[];
+
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
-    private modalService: NgbModal, private route: Router, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+    private modalService: NgbModal, private route: Router, private toaster: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService, private httpBranch: BranchService) { }
 
   ngOnInit(): void {
 
@@ -37,6 +41,11 @@ export class CentralRegisterViewComponent implements OnInit {
       console.log(this.centralDetails);
     })
 
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.branchNames = [arr.branchCode];
+      })
+    });
   }
 
   // gotoFamily(item) {

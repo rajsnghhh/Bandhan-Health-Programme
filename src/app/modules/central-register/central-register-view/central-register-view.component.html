@@ -29,6 +29,7 @@
                         class="text-danger">*&nbsp;</span></label>
                 <select class="form-select form-select-md" id="branch">
                     <option value="">-- Select Branch --</option>
+                    <option *ngFor="let branchName of branchNames">{{branchName}}</option>
                     <!-- <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
                             {{region.regionName}}
                         </option> -->
