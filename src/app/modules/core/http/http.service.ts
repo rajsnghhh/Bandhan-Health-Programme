@@ -20,12 +20,11 @@ export class HttpService {
   dataAccessDTOO = {
     userId: 5,
     userName: 'BK000005'
-
   }
+
   constructor(private http: HttpClient) { }
 
   postRequest(url, body): Observable<any> {
     return this.http.post(this.testUrl + url, body, { headers: this.headers })
   }
-  
 }

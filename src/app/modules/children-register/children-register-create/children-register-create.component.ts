@@ -250,9 +250,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
         this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
       }
-      console.log(this.showAge);
+      // console.log(this.showAge);
     })
-
 
     const postBody = {
       childDetailDTOList: [

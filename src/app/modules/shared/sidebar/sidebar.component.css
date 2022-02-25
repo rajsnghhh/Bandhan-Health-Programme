@@ -67,3 +67,31 @@ h3 {
   top: 50%;
   transform: translateY(-50%) rotate(-180deg);
 }
+
+.header {
+  color: rgb(0, 0, 0);
+  text-decoration: underline rgb(255, 255, 255);
+}
+
+.accordion-body {
+  padding: 0px 5px 0px 20px;
+}
+
+.accordion-item {
+  border: 1px solid #499;
+  background-color: #499;
+}
+
+.box {
+  color: #000;
+  padding-left: 25px;
+  padding-top: 10px;
+  display: inline-block;
+  width: 100%;
+}
+.box:hover {
+  background-color: #499;
+}
+.accordion-button {
+  padding: 0px 0px 0px 20px;
+}

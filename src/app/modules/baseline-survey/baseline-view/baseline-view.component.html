@@ -24,7 +24,7 @@
                             <select class="form-select" formControlName="branch" id="branch" [ngClass]="{ 'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <option *ngFor="let branchName of branchNames">{{branchName}}</option>
                             </select>
                             <div *ngIf="f.branch.errors" class="invalid-feedback">
                                 <div *ngIf="f.branch.errors.required">Above Selection is required</div>
@@ -48,7 +48,7 @@
 
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
-                            <div class="search_inner">
+                            <div  [ngClass]="aaa ? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
                                         <input type="text" name="search" placeholder="Search household info here..."
@@ -86,7 +86,7 @@
 
                                     <tbody>
 
-                                        <tr
+                                        <tr 
                                             *ngFor="let item of baselineDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{item.houseHoldNumber}}

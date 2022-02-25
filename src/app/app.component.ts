@@ -1,21 +1,21 @@
-import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ValidationService } from './modules/shared/services/validation.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent{
+export class AppComponent {
   title = 'bhp-web';
-  fullscreenData:boolean;
+  fullscreenData: boolean;
 
-  constructor(){}
+  constructor(public validationService: ValidationService) { }
 
-  
-  
-  fullscreenMethod(data){
+  fullscreenMethod(data) {
     this.fullscreenData = data;
+    this.validationService.val = this.fullscreenData;
   }
-  
+
 }

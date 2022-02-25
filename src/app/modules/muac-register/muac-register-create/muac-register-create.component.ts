@@ -275,7 +275,6 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   deleteMuac(item, i) {
-    console.log(item);
     const post = {
       activeStatus: "A",
       dataAccessDTO: this.http.dataAccessDTO,
