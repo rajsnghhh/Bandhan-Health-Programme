@@ -79,6 +79,7 @@ h3 {
 
 .accordion-item {
   border: 1px solid #499;
+  border-bottom: 1.5px solid white;
   background-color: #499;
 }
 

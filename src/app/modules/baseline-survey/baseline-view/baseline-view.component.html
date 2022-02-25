@@ -24,7 +24,7 @@
                             <select class="form-select" formControlName="branch" id="branch" [ngClass]="{ 'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched) }">
                                 <option value="">-- Select --</option>
-                                <option *ngFor="let branchName of branchNames">{{branchName}}</option>
+                                <option>gg</option>
                             </select>
                             <div *ngIf="f.branch.errors" class="invalid-feedback">
                                 <div *ngIf="f.branch.errors.required">Above Selection is required</div>
@@ -37,7 +37,7 @@
                             <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                 'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <option *ngFor="let villageName of villageNames">{{villageName}}</option>
                             </select>
                             <div *ngIf="f.gram.errors" class="invalid-feedback">
                                 <div *ngIf="f.gram.errors.required">Above Selection is required</div>
@@ -48,7 +48,7 @@
 
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
-                            <div  [ngClass]="aaa ? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <div  [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
                                         <input type="text" name="search" placeholder="Search household info here..."
@@ -65,7 +65,7 @@
 
                         <div class="QA_table ">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
+                                <table 
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 

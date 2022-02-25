@@ -8,12 +8,11 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
   declarations: [SharedComponent, SidebarComponent, ConfirmationDialogComponent],
   imports: [
     CommonModule,
-    AppRoutingModule,NgbModule,NgMultiSelectDropDownModule.forRoot()
+    AppRoutingModule, NgbModule, NgMultiSelectDropDownModule.forRoot()
   ],
 
   exports: [SidebarComponent]

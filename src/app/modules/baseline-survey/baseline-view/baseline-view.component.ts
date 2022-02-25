@@ -25,19 +25,19 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
-  branchNames: any[] = [];
-  aaa: boolean;
+  villageNames: any[] = [];
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private confirmationDialogService: ConfirmationDialogService, private route: Router, private httpBranch: BranchService,
     public validationService: ValidationService) { }
+
   ngDoCheck(): void {
-    this.aaa = this.validationService.val;
+    this.searchFullscreen = this.validationService.val;
   }
+
   ngOnInit(): void {
-
-
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -54,9 +54,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
-        this.branchNames.push(arr.villageName);
+        this.villageNames.push(arr.villageName);
       })
-      console.log(this.branchNames);
     });
 
   }
@@ -154,20 +153,17 @@ export class BaselineViewComponent implements OnInit, DoCheck {
           totalMembers: item.totalMembers
         }
       }
-
       this.baselineService.saveBaselineSurvey(post).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
-          this.showSuccess(response.message);
+        if (response.status == true) {
           this.baselineDetails.splice(i, 1);
+          this.showSuccess(response.message);
         }
         else {
           this.showError(response.responseObject);
         }
-
       })
     }
-
   }
 
   deleteFamily(item, i) {
