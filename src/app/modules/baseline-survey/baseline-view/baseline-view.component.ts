@@ -25,17 +25,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
-<<<<<<< HEAD
   villageNames: any[] = [];
   searchFullscreen: boolean;
-=======
-<<<<<<< HEAD
   householdId: any;
-=======
-  branchNames: any[] = [];
   aaa: boolean;
->>>>>>> 20501aed09de2e29b8278b0603498355360ff2e7
->>>>>>> de2b6eb936854ebba99cc38026c75e00c7959904
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -172,25 +165,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       this.baselineService.saveBaselineSurvey(post).subscribe((response: any) => {
         console.log(response);
         if (response.status == true) {
-<<<<<<< HEAD
           this.baselineDetails.splice(i, 1);
           this.showSuccess(response.message);
-=======
-          this.showSuccess(response.message);
-          // this.baselineDetails.splice(i, 1);
-          let obj = {
-            activeStatus: "A",
-            dataAccessDTO: this.httpService.dataAccessDTO,
-            id: 888
-          }
-
-          //API call for viewing HouseholdWithFamilyDetails
-          this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
-            this.baselineDetails = response.responseObject;
-            console.log(this.baselineDetails);
-          });
-
->>>>>>> de2b6eb936854ebba99cc38026c75e00c7959904
         }
         else {
           this.showError(response.responseObject);
