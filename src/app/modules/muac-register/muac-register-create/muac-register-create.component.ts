@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -23,18 +23,26 @@ export class MuacRegisterCreateComponent implements OnInit {
   muacSave: any;
   minDate: any;
   maxDate: any;
+  editMaxDate: any;
+  editMinDate: any;
   start: any;
   end: any;
   selStartDate: any;
   month: any;
   day: any;
   year: any;
+  muacEditInfo: any;
+
+  ProjectStartDate: any;
+  ProjectEndDate: any;
+  MuacList: any;
 
 
   constructor(private http: HttpService, private muacService: MuacRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
+
     this.muacDetails.muacInfo.push({
       muacCampId: 0,
       startDate: '',
@@ -58,34 +66,47 @@ export class MuacRegisterCreateComponent implements OnInit {
     })
   }
 
-  openModal(createMuac) {
+  createModal(createMuac) {
     this.modalContent = '';
     this.modalReference = this.modalService.open(createMuac, {
       windowClass: 'createMuac',
     });
   }
 
-  // addMoreMuac() {
-  //   this.muacDetails.muacInfo.forEach((item) => {
-  //     this.start = item.startDate;
-  //     this.end = item.endDate;
-  //   })
+  editModal(editMuac, item) {
+    this.muacEditInfo = item;
+    this.muacDetails.muacInfo[0].startDate = item.startDate;
+    this.muacDetails.muacInfo[0].endDate = item.endDate;
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(editMuac, {
+      windowClass: 'editMuac',
+    });
 
-  //   if (this.start == '') {
-  //     console.log('error');
-  //   } else if (this.end == '') {
-  //     console.log('error');
-  //   } else {
-  //     this.muacDetails.muacInfo.push({
-  //       muacCampId: 0,
-  //       startDate: '',
-  //       endDate: '',
-  //       userId: 100,
-  //       createdDateTime: new Date().toISOString().slice(0, 10)
-  //     });
-  //   }
+    var index = this.MuacList.muaccampDetailList.findIndex(function (items) { return items.muacCampId === item.muacCampId })
+    console.log(index, 'index')
 
-  // }
+    if (index == 0) {
+      this.editMinDate = this.ProjectStartDate;
+      var secondindexstartdate = this.MuacList.muaccampDetailList.filter((items, index) => index == 1)
+      console.log(secondindexstartdate[0]?.startDate, 'secondindex')
+      this.editMaxDate = moment(secondindexstartdate[0]?.startDate).subtract(1, "days").format("YYYY-MM-DD")
+    }
+
+    else if (index == this.MuacList.muaccampDetailList.length - 1) {
+      this.editMaxDate = this.ProjectEndDate;
+      var secondlastindexstartdate = this.MuacList.muaccampDetailList.filter((items, index) => index == this.MuacList.muaccampDetailList.length - 2)
+      console.log(secondlastindexstartdate[0]?.endDate, 'secondindex')
+      this.editMinDate = moment(secondlastindexstartdate[0]?.endDate).add(1, "days").format("YYYY-MM-DD")
+    }
+
+    else {
+      var afterindex = this.MuacList.muaccampDetailList.filter((items, indexs) => indexs == index + 1)
+      this.editMaxDate = moment(afterindex[0]?.startDate).subtract(1, "days").format("YYYY-MM-DD")
+      var beforeindex = this.MuacList.muaccampDetailList.filter((items, indexs) => indexs == index - 1)
+      this.editMinDate = moment(beforeindex[0]?.endDate).add(1, "days").format("YYYY-MM-DD")
+    }
+
+  }
 
   muacModalDismiss() {
     this.modalReference.close();
@@ -97,10 +118,6 @@ export class MuacRegisterCreateComponent implements OnInit {
       createdDateTime: new Date().toISOString().slice(0, 10)
     }];
   }
-
-  // removeMuac(i) {
-  //   this.muacDetails.muacInfo.splice(i, 1)
-  // }
 
   checkMuacDisabled() {
     let flag = true;
@@ -119,7 +136,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   saveMuac() {
-    console.log('raj', this.muacList);
+
     let postBody = {
       activeStatus: 'A',
       dataAccessDTO: this.http.dataAccessDTO,
@@ -131,15 +148,20 @@ export class MuacRegisterCreateComponent implements OnInit {
       branchName: this.muacList.branchName,
       branchOpenDate: this.muacList.branchOpenDate,
       branchCloseDate: this.muacList.branchCloseDate,
-      muacCampDTOList: this.muacDetails.muacInfo
+      muacCampDTOList: this.muacDetails.muacInfo,
     }
-    console.log(postBody);
-    //API call for save muac
+
+    if ((this.muacDetails.muacInfo[0].startDate) > (this.muacDetails.muacInfo[0].endDate)) {
+      this.showError('End date should be after the start date');
+      return;
+    }
+
+    // API call for save muac
     this.muacService.saveMuac(postBody).subscribe((response: any) => {
       this.muacSave = response;
       console.log(this.muacSave);
 
-      if (response.message == 'Success') {
+      if (response.status === true) {
         this.showSuccess(response.message);
         let currentUrl = this.router.url;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -159,14 +181,16 @@ export class MuacRegisterCreateComponent implements OnInit {
 
     })
 
-
   }
 
   getMinDate(muacList) {
     console.log('projectStartDate', muacList.projectStartDate);
     console.log('projectEndDate', muacList.projectEndDate);
+    this.ProjectStartDate = muacList.projectStartDate
+    this.ProjectEndDate = muacList.projectEndDate
+    this.MuacList = muacList
     var dateString = muacList.projectStartDate;
-    var projectDate = moment(dateString).add(1, "days").format("YYYY-MM-DD")
+    var projectDate: any = moment(dateString).add(1, "days").format("YYYY-MM-DD")
 
     this.minDate = projectDate;
     this.maxDate = muacList.projectEndDate
@@ -185,7 +209,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
-  expect(e) {
+  expectEndDate(e) {
     var dtStartDate = new Date(e.target.value);
     this.month = dtStartDate.getMonth() + 1;
     this.day = dtStartDate.getDate() + 1;
@@ -196,29 +220,59 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.selStartDate = maxDate;
   }
 
-  editMuac(item, createMuac) {
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(createMuac, {
-      windowClass: 'createMuac',
-    });
-    console.log(item);
-    this.muacDetails.muacInfo[0].startDate = item.startDate;
-    this.muacDetails.muacInfo[0].endDate = item.endDate;
+  saveEditMuac() {
+    let postBody = {
+      activeStatus: 'A',
+      dataAccessDTO: this.http.dataAccessDTO,
+      branchId: 1,
+      projectMasterId: this.muacList.projectMasterId,
+      projectName: this.muacList.projectName,
+      projectStartDate: this.muacList.projectStartDate,
+      projectEndDate: this.muacList.projectEndDate,
+      branchName: this.muacList.branchName,
+      branchOpenDate: this.muacList.branchOpenDate,
+      branchCloseDate: this.muacList.branchCloseDate,
+      muacCampDTOList: [{
+        muacCampId: this.muacEditInfo.muacCampId,
+        startDate: this.muacDetails.muacInfo[0].startDate,
+        endDate: this.muacDetails.muacInfo[0].endDate,
+        userId: 100,
+        createdDateTime: new Date().toISOString().slice(0, 10)
+      }],
+    }
+    console.log(postBody);
 
+    if ((this.muacDetails.muacInfo[0].startDate) > (this.muacDetails.muacInfo[0].endDate)) {
+      this.showError('End date should be after the start date');
+      return;
+    }
+
+    // API call for Edit muac
+    this.muacService.saveMuac(postBody).subscribe((response: any) => {
+      this.muacSave = response;
+      console.log(this.muacSave);
+
+      if (response.status === true) {
+        this.showSuccess(response.message);
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([currentUrl]);
+        });
+        this.muacDetails.muacInfo = [{
+          muacCampId: 0,
+          startDate: '',
+          endDate: '',
+          userId: 100,
+          createdDateTime: new Date().toISOString().slice(0, 10)
+        }];
+
+      } else {
+        this.showError(response.message);
+      }
+
+    })
 
   }
-
-  // showSuccess(message) {
-  //   this.toaster.success(message, 'Muac Camp Save', {
-  //     timeOut: 3000,
-  //   });
-  // }
-
-  // showError(message) {
-  //   this.toaster.error(message, 'Muac Camp Save', {
-  //     timeOut: 3000,
-  //   });
-  // }
 
   deleteMuac(item, i) {
     const post = {
@@ -232,7 +286,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     }
 
     if (i === (this.muacList.muaccampDetailList.length - 1)) {
-      if (confirm('Do you want to delete household :' + item.campNumber)) {
+      if (confirm('Do you want to delete muac camp :' + item.campNumber)) {
         this.muacService.deleteMuac(post).subscribe((response: any) => {
           if (response.status === true) {
             this.muacList.muaccampDetailList.splice(i, 1);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -45,13 +45,21 @@ export class FamilyInfoCreateComponent implements OnInit {
   famData: any;
   moreFamData: any;
   cname: any;
-  familyid: any
-
+  familyid: any;
+  idCard: any;
+  cardData: any;
+  familyStatus: any;
   childDetails = {
     childInfo: [],
   };
 
+  totalmale: any;
+  totalfemale: any;
+  deleteChild: any;
+  finalDelChild: any;
   showChildDetails = false;
+
+  @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private route: Router, private modalService: NgbModal,
     private familyService: FamilyInfoService, private httpService: HttpService, public validationService: ValidationService,
@@ -61,14 +69,17 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     this.routes.queryParams.subscribe(params => {
       this.famData = params;
-      // console.log(this.famData);
+      console.log(this.famData, 'famdata');
     });
 
-    if (this.famData.familyDetailId) {
+
+    if (this.famData.famid) {
+      console.log(this.famData, 'adds');
+
       let post = {
         activeStatus: "A",
         dataAccessDTO: this.httpService.dataAccessDTO,
-        id: this.famData.familyDetailId
+        id: this.famData.famid
       }
 
       this.familyService.viewFamilyDetails(post).subscribe((res) => {
@@ -87,8 +98,8 @@ export class FamilyInfoCreateComponent implements OnInit {
         }
 
       })
-
     }
+
 
 
     this.routes.queryParams.subscribe(params => {
@@ -99,6 +110,7 @@ export class FamilyInfoCreateComponent implements OnInit {
       this.totalFamilyCount = params['tFamilyCount'];
       this.totalFamilyMembersCount = params['tFamilyMembersCount'];
     });
+
 
     this.getMinDate();
     this.createForm(this.moreFamData);
@@ -171,6 +183,8 @@ export class FamilyInfoCreateComponent implements OnInit {
   }
 
   createForm(data: any) {
+    this.totalmale = data?.totaFamilyMemberMales;
+    this.totalfemale = data?.totaFamilyMemberFemales;
     if (data?.haveChild == 'Y') {
       this.haveChildren = 'Y'
     } else {
@@ -201,10 +215,10 @@ export class FamilyInfoCreateComponent implements OnInit {
       age: [data?.age ? data?.age : '', Validators.compose([Validators.required, Validators.maxLength(2)])],
       husbandName: [data?.husbandOrGuardianName ? data?.husbandOrGuardianName : '', Validators.compose([Validators.required, Validators.minLength(3)])],
       mobile: [data?.mobileNumber ? data?.mobileNumber : '', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
-      idtype: [''],
-      aadhar: ['', Validators.compose([Validators.required, Validators.minLength(12), Validators.pattern("[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}")])],
-      pan: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{5}[0-9]{4}[A-Z]{1}")])],
-      voter: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{3}[0-9]{7}")])],
+      idtype: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId ? data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId : ''],
+      aadhar: [data?.identityCardDTOList[0]?.number ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(12), Validators.pattern("[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}")])],
+      pan: [data?.identityCardDTOList[0]?.number ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{5}[0-9]{4}[A-Z]{1}")])],
+      voter: [data?.identityCardDTOList[0]?.number ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{3}[0-9]{7}")])],
       religion: [data?.religionMasterDTO?.religionMasterId ? data?.religionMasterDTO?.religionMasterId : '', Validators.required],
       caste: [data?.casteTypeMasterDTO?.casteTypeMasterId ? data?.casteTypeMasterDTO?.casteTypeMasterId : '', Validators.required],
       education: [data?.educationalQualificationMasterDTO?.educationalQualificationMasterId ? data?.educationalQualificationMasterDTO?.educationalQualificationMasterId : ''],
@@ -345,9 +359,29 @@ export class FamilyInfoCreateComponent implements OnInit {
       }
     }
 
+    if (item.idtype != 1 || item.idtype != 2 || item.idtype != 3) {
+      this.idCard = []
+    }
+
+    if (item.idtype == 1 || item.idtype == 2 || item.idtype == 3) {
+      this.idCard = [
+        {
+          familyIdentityCardMapId: 0,
+          identityCardTypesMasterDTO: {
+            identityCardTypesMasterId: item.idtype,
+            name: this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name
+          },
+          number: idValue
+        }
+      ]
+    }
+
     let postBody = {
 
-      dataAccessDTO: this.httpService.dataAccessDTO,
+      dataAccessDTO: {
+        userId: "100",
+        userName: "BK000001"
+      },
       familyDetailDTO: {
         age: item.age,
         bbMicroGroupMembership: item.bbMicro,
@@ -375,17 +409,7 @@ export class FamilyInfoCreateComponent implements OnInit {
         haveSanitaryLatrine: item.sanitary,
         householdDetailsId: this.moreFamData?.householdDetailsId ? this.moreFamData?.householdDetailsId : this.houseHoldId,
         husbandOrGuardianName: item.husbandName,
-        identityCardDTOList: [
-          {
-            familyIdentityCardMapId: 0,
-            identityCardTypesMasterDTO: {
-              identityCardTypesMasterId: item.idtype ? item.idtype : 0,
-              name: this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name ?
-                this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name : ''
-            },
-            number: idValue
-          }
-        ],
+        identityCardDTOList: this.idCard,
         institutionalDelivery: item.institutional ? item.institutional : 'NA',
         lactetingMother: item.breastFeeding,
         lastName: item.lastName,
@@ -470,20 +494,35 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     }
 
+
     if (this.baselineSurvey.value.idtype) {
       if (this.idTypeField == 1) {
         if (!this.baselineSurvey.value.aadhar) {
           this.showError('Please Enter Aadhaar Card No.');
           return;
         }
+
+        var regexp = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+        var x = this.baselineSurvey.value.aadhar;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Aadhaar Card No!');
+          return;
+        }
       }
 
     }
+
 
     if (this.baselineSurvey.value.idtype) {
       if (this.idTypeField == 2) {
         if (!this.baselineSurvey.value.pan) {
           this.showError('Please Enter PAN Card No');
+          return;
+        }
+        var regexp = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        var x = this.baselineSurvey.value.pan;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Pan Card No!');
           return;
         }
 
@@ -496,8 +535,16 @@ export class FamilyInfoCreateComponent implements OnInit {
           this.showError('Please Enter Voter Card No');
           return;
         }
+
+        var regexp = /^([A-Z]){3}([0-9]){7}?$/;
+        var x = this.baselineSurvey.value.voter;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Voter Card No!');
+          return;
+        }
       }
     }
+
 
     if (!this.baselineSurvey.value.religion) {
       this.showError('Please select Religion');
@@ -627,8 +674,6 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     }
 
-
-
     if (this.baselineSurvey.value.breastFeeding == 'Y' || this.baselineSurvey.value.breastFeeding == 'N') {
 
       let isvalid = 0;
@@ -680,10 +725,10 @@ export class FamilyInfoCreateComponent implements OnInit {
       return;
     }
 
-    if (this.famData.familyDetailId) {
+    if (this.famData.famid) {
       this.familyService.saveFamily(postBody).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSuccess(response.message);
           this.route.navigate(['Baseline-Survey/view']);
         }
@@ -698,7 +743,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     else {
       this.familyService.saveFamily(postBody).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSuccess(response.message);
           this.resetBaselineCreate();
         }
@@ -736,7 +781,29 @@ export class FamilyInfoCreateComponent implements OnInit {
   }
 
   removeNewChild(i) {
-    this.childDetails.childInfo.splice(i, 1);
+
+    if (this.famData.famid > 0) {
+      this.childDetails.childInfo[i] = {
+        age: 'string',
+        childDetailId: this.childDetails.childInfo[i].childDetailId,
+        childName: this.childDetails.childInfo[i].childName,
+        createdOn: 'string',
+        dob: this.childDetails.childInfo[i].dob,
+        familyDetailId: this.childDetails.childInfo[i].familyDetailId,
+        sex: this.childDetails.childInfo[i].sex,
+        status: 'D'
+      };
+
+      this.deleteChild = this.childDetails.childInfo.splice(i, 1);
+
+      this.finalDelChild = this.childDetails.childInfo.concat(this.deleteChild)
+      console.log(this.finalDelChild, 'arrayList')
+
+
+      // else {
+      //   this.childDetails.childInfo.splice(i, 1);
+      // }
+    }
   }
 
   restrictZero(event: any) {
@@ -758,6 +825,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     let totalMale: number = 0;
     let totalFemale: number = 0;
     let totalsenior: number = 0;
+
 
     let item = this.baselineSurvey.value;
     if (item.fmale != '' && item.fmale != undefined) {
@@ -827,31 +895,67 @@ export class FamilyInfoCreateComponent implements OnInit {
 
   addMF() {
     let item = this.baselineSurvey.value;
+
     let male = item.fmale == '' ? 0 : parseInt(item.fmale);
     let female = item.ffemale == '' ? 0 : parseInt(item.ffemale);
     this.addSum = male + female;
+
     this.checkHousehold();
   }
 
   checkHousehold() {
-    let totalHousehold = this.totalFamilyMembersCount - this.createdFamilyMembersCount;
-    let totalMale: number = 0;
-    let totalFemale: number = 0;
-    let item = this.baselineSurvey.value;
+    if (this.famData.famid > 0) {
+      var SumForMaleFemaleCheck = this.totalmale + this.totalfemale
+      console.log(SumForMaleFemaleCheck, 'checkData');
 
-    if (item.fmale != '' && item.fmale != undefined) {
-      totalMale = parseInt(item.fmale);
-    }
-    if (item.ffemale != '' && item.ffemale != undefined) {
-      totalFemale = parseInt(item.ffemale);
+      var forEditHouseHoldMemberCount = this.createdFamilyMembersCount - SumForMaleFemaleCheck
+      console.log(forEditHouseHoldMemberCount, 'addd');
+
+      let totalHousehold = this.totalFamilyMembersCount - forEditHouseHoldMemberCount;
+      let totalMale: number = 0;
+      let totalFemale: number = 0;
+      let item = this.baselineSurvey.value;
+
+      if (item.fmale != '' && item.fmale != undefined) {
+        totalMale = parseInt(item.fmale);
+      }
+      if (item.ffemale != '' && item.ffemale != undefined) {
+        totalFemale = parseInt(item.ffemale);
+      }
+      console.log(totalHousehold, 'avvf');
+
+
+      if (totalHousehold < (totalMale + totalFemale) && totalHousehold != (totalMale + totalFemale)) {
+        this.baselineSurvey.controls.fmale.setValue('');
+        this.baselineSurvey.controls.ffemale.setValue('');
+        this.addSum = 0;
+        this.showError('Total Member of Household must be greater than or equal to sum of Total Male & Total Female');
+      }
+    } else {
+      let totalHousehold = this.totalFamilyMembersCount - this.createdFamilyMembersCount;
+      console.log(this.addSum, 'addd');
+      let totalMale: number = 0;
+      let totalFemale: number = 0;
+      let item = this.baselineSurvey.value;
+
+      if (item.fmale != '' && item.fmale != undefined) {
+        totalMale = parseInt(item.fmale);
+      }
+      if (item.ffemale != '' && item.ffemale != undefined) {
+        totalFemale = parseInt(item.ffemale);
+      }
+      console.log(totalHousehold, 'avvs');
+
+
+      if (totalHousehold < (totalMale + totalFemale) && totalHousehold != (totalMale + totalFemale)) {
+        this.baselineSurvey.controls.fmale.setValue('');
+        this.baselineSurvey.controls.ffemale.setValue('');
+        this.addSum = 0;
+        this.showError('Total Member of Household must be greater than or equal to sum of Total Male & Total Female');
+      }
     }
 
-    if (totalHousehold < (totalMale + totalFemale) && totalHousehold != (totalMale + totalFemale)) {
-      this.baselineSurvey.controls.fmale.setValue('');
-      this.baselineSurvey.controls.ffemale.setValue('');
-      this.addSum = 0;
-      this.showError('Total Member of Household must be greater than or equal to sum of Total Male & Total Female');
-    }
+
 
   }
 
@@ -900,5 +1004,20 @@ export class FamilyInfoCreateComponent implements OnInit {
 
   }
 
+  aadharcardValidation(event) {
+    let data;
+    if (event.keyCode !== 8 && event.keyCode !== 46) {
+      data = this.aadhaarId.nativeElement.value
+        .replace(/[^0-9]/g, '')
+        .replace(/\W/gi, '')
+        .replace(/(.{4})/g, '$1 ')
+        .trim();
+    } else {
+      data = this.aadhaarId.nativeElement.value;
+    }
+    let q: any = this.aadhaarId.nativeElement;
+    q.value = data;
+    return data;
+  }
 
 }

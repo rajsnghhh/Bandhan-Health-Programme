@@ -60,26 +60,6 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     });
   }
 
-  // gotoFamily(item) {
-
-  //   this.confirmationDialogService.confirm('', 'Do you really want to add more family ?')
-  //     .then(() => this.route.navigate(['/family-info/create'], {
-  //       queryParams: {
-  //         id: item.householdDetailsId,
-  //         type: item.familyType, cFamilyCount: item.familyDetailRemaingStatusDTO.createdFamilyCount,
-  //         cFamilyMembersCount: item.familyDetailRemaingStatusDTO.createdFamilyMambersCount,
-  //         tFamilyCount: item.familyDetailRemaingStatusDTO.totalFamilyCount,
-  //         tFamilyMembersCount: item.familyDetailRemaingStatusDTO.totalFamilyMambersCount
-  //       }
-  //     }))
-  //     .catch(() => '');
-  // }
-
-  // if (confirm('Do you want to add more family')) {
-  //   this.route.navigate(['/family-info/create', { id }]);
-  // }
-  // }
-
   getMoreDetails(id) {
 
     let postBody = {
@@ -183,7 +163,6 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
         }
 
       }
-
 
       this.centralService.deleteFamily(post).subscribe((response: any) => {
         console.log(response);

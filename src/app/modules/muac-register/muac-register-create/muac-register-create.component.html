@@ -4,7 +4,7 @@
 
         <div style="float: right;">
             <div class="add_button ">
-                <a class="btn btn-primary" (click)="openModal(createMuac)">Add
+                <a class="btn btn-primary" (click)="createModal(createMuac)">Add
                     Muac</a>
             </div>
         </div>
@@ -33,11 +33,9 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td><i class="fas fa-edit" title="Edit Muac" (click)="editMuac(item,createMuac)"></i>
+                                <td><i class="fas fa-edit" title="Edit Muac" (click)="editModal(editMuac, item)"></i>
                                     <i class="fas fa-trash" title="Delete Muac" (click)="deleteMuac(item, i)"></i>
                                 </td>
-
-
                             </tr>
                         </tbody>
 
@@ -55,12 +53,8 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Edit/Create Muac</h3>
+                    <h3 class="modal-title" id="modal-basic-title">Create Muac</h3>
                 </div>
-
-                <!-- <div class="col-md-3">
-                    <i class="fas fa-plus-circle" (click)="addMoreMuac()" style="cursor: pointer;"></i>
-                </div> -->
 
                 <div class="col-md-2">
                     <span class="close" (click)="muacModalDismiss()"
@@ -78,7 +72,6 @@
                         <tr style="text-align: center;">
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <!-- <th>Remove</th> -->
                         </tr>
                     </thead>
 
@@ -86,17 +79,14 @@
 
                         <tr *ngFor="let items of muacDetails.muacInfo; index as i" style="text-align: center;">
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].startDate"
-                                    onkeydown="return false" [min]="minDate" [max]="maxDate" (change)="expect($event)">
+                                    onkeydown="return false" [min]="minDate" [max]="maxDate"
+                                    (change)="expectEndDate($event)">
                             </td>
 
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].endDate"
                                     onkeydown="return false" [min]="selStartDate" [max]="maxDate"
                                     [disabled]="!muacDetails.muacInfo[i].startDate">
                             </td>
-
-                            <!-- <td><button type="button" class="btn btn-remove" (click)="removeMuac(i)"><i
-                                        class="fas fa-minus-circle"></i></button>
-                            </td> -->
                         </tr>
 
                     </tbody>
@@ -107,6 +97,66 @@
                 <div class="col-md-12">
                     <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
                         (click)="saveMuac()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #editMuac let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title">Edit Muac</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="muacModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="table_wrapper">
+                <table class="table table-striped" id="table_wrapper">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of muacDetails.muacInfo; index as i" style="text-align: center;">
+                            <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].startDate"
+                                    onkeydown="return false" [min]="editMinDate" [max]="editMaxDate"
+                                    (change)="expectEndDate($event)">
+                            </td>
+
+                            <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].endDate"
+                                    onkeydown="return false" [min]="selStartDate" [max]="editMaxDate"
+                                    >
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
+                        (click)="saveEditMuac()">Submit</button>
                 </div>
             </div>
 

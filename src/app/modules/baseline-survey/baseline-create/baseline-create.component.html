@@ -229,7 +229,7 @@
                                 <label for="aadhar">AADHAAR CARD NO :&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
                                 <input #aadhaarId type="text" class="form-control" maxlength="14"
-                                    (keyup)="aadharcardValidation($event)" maxlength="14"
+                                    (keyup)="aadharcardValidation($event)"
                                     (keypress)="validationService.onlyIntegerAndSpace($event)"
                                     placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{
                                     'is-invalid': f.aadhar.invalid && f.aadhar.touched,
@@ -249,7 +249,7 @@
                             <div class="form-group col-md" *ngIf="idTypeField == 2">
                                 <label for="pan">PAN CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                                 <input type="text" class="form-control" maxlength="10"
-                                    (keypress)="validationService.charnum($event)" (change)=IdType($event.target.value)
+                                    (keypress)="validationService.charnum($event)" 
                                     placeholder="Like BBHPM5672K" formControlName="pan" [ngClass]="{ 'is-invalid': f.pan.invalid && f.pan.touched,
                                  'is-valid': f.pan.valid && (f.pan.dirty || f.pan.touched)}">
                                 <div *ngIf="f.pan.errors" class="invalid-feedback">
@@ -567,66 +567,11 @@
                     </fieldset>
 
                     <div class="text-center">
-                        <!-- <button class="btn btn-success m-1" (click)="saveMoreBaselineCreate()" *ngIf="!houseHoldId"><i
-                                class="fa fa-plus m-1"></i>Add More
-                            Family</button>
-                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
-                            *ngIf="!houseHoldId"><i class="fas fa-check-circle m-1"></i>Save
-                            single Family</button>
-                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
-                            *ngIf="houseHoldId"><i class="fas fa-check-circle m-1"></i>Save</button>
-                        <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()"><i
-                                class="fa fa-refresh m-1"></i>Reset</button>
-                        <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()" *ngIf="houseHoldId"><i
-                                class="fa fa-arrow-left m-1"></i>Back</button> -->
                         <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate()"><i
                                 class="fas fa-check-circle m-1"></i>Save</button>
                         <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()"><i
                                 class="fa fa-refresh m-1"></i>Reset</button>
-                        <!-- <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()"><i
-                                class="fa fa-arrow-left m-1"></i>Back</button> -->
                     </div>
-
-                    <!-- <div class="white_box_tittle list_header"
-                        *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0">
-
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Husband</th>
-                                            <th>Pregnant <br>women</th>
-                                            <th>Lactating mother<br>(Up to 2 yr)</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr
-                                            *ngFor="let item of requestBody.houseHoldDetailDTO.familyDetailDTOList ; index as i">
-                                            <td>{{item.firstName}} {{item.middleName}}
-                                                {{item.lastName}}</td>
-                                            <td>{{item.age}}</td>
-                                            <td>{{item.husbandOrGuardianName}}</td>
-                                            <td>{{item.pregnantWoman}}</td>
-                                            <td>{{item.lactetingMother}}</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="text-center">
-                        <button class="btn btn-primary m-1" (click)="saveBaselineCreate()"
-                            *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0"><i
-                                class="fas fa-check-circle m-1"></i>Save Multiple Family</button>
-                    </div> -->
 
                 </form>
             </div>
@@ -712,3 +657,59 @@
     </div>
 
 </ng-template>
+
+<!-- <button class="btn btn-success m-1" (click)="saveMoreBaselineCreate()" *ngIf="!houseHoldId"><i
+                                class="fa fa-plus m-1"></i>Add More
+                            Family</button>
+                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
+                            *ngIf="!houseHoldId"><i class="fas fa-check-circle m-1"></i>Save
+                            single Family</button>
+                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
+                            *ngIf="houseHoldId"><i class="fas fa-check-circle m-1"></i>Save</button>
+                        <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()"><i
+                                class="fa fa-refresh m-1"></i>Reset</button>
+                        <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()" *ngIf="houseHoldId"><i
+                                class="fa fa-arrow-left m-1"></i>Back</button> -->
+<!-- <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()"><i
+                                class="fa fa-arrow-left m-1"></i>Back</button> -->
+
+<!-- <div class="white_box_tittle list_header"
+                        *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Husband</th>
+                                            <th>Pregnant <br>women</th>
+                                            <th>Lactating mother<br>(Up to 2 yr)</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of requestBody.houseHoldDetailDTO.familyDetailDTOList ; index as i">
+                                            <td>{{item.firstName}} {{item.middleName}}
+                                                {{item.lastName}}</td>
+                                            <td>{{item.age}}</td>
+                                            <td>{{item.husbandOrGuardianName}}</td>
+                                            <td>{{item.pregnantWoman}}</td>
+                                            <td>{{item.lactetingMother}}</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
+
+<!-- <div class="text-center">
+                        <button class="btn btn-primary m-1" (click)="saveBaselineCreate()"
+                            *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0"><i
+                                class="fas fa-check-circle m-1"></i>Save Multiple Family</button>
+                    </div> -->
