@@ -220,7 +220,7 @@
                             <div class="form-group col-md" *ngIf="idTypeField == 1">
                                 <label for="aadhar">AADHAAR CARD NO :&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
-                                <input type="text" class="form-control" maxlength="14"
+                                <input #aadhaarId type="text" class="form-control" maxlength="14"
                                     (keyup)="aadharcardValidation($event)"
                                     (keypress)="validationService.onlyIntegerAndSpace($event)"
                                     placeholder="Like 2104 0533 7065" formControlName="aadhar" [ngClass]="{ 'is-invalid': f.aadhar.invalid && f.aadhar.touched,

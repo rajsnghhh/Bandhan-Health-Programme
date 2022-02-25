@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
-import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { CentralRegisterService } from '../central-register.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class CentralRegisterViewComponent implements OnInit {
   registerSearch: String;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
-    private modalService: NgbModal, private route: Router, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+    private modalService: NgbModal, private route: Router, private toaster: ToastrService) { }
 
   ngOnInit(): void {
 
@@ -38,26 +37,6 @@ export class CentralRegisterViewComponent implements OnInit {
     })
 
   }
-
-  // gotoFamily(item) {
-
-  //   this.confirmationDialogService.confirm('', 'Do you really want to add more family ?')
-  //     .then(() => this.route.navigate(['/family-info/create'], {
-  //       queryParams: {
-  //         id: item.householdDetailsId,
-  //         type: item.familyType, cFamilyCount: item.familyDetailRemaingStatusDTO.createdFamilyCount,
-  //         cFamilyMembersCount: item.familyDetailRemaingStatusDTO.createdFamilyMambersCount,
-  //         tFamilyCount: item.familyDetailRemaingStatusDTO.totalFamilyCount,
-  //         tFamilyMembersCount: item.familyDetailRemaingStatusDTO.totalFamilyMambersCount
-  //       }
-  //     }))
-  //     .catch(() => '');
-  // }
-
-  // if (confirm('Do you want to add more family')) {
-  //   this.route.navigate(['/family-info/create', { id }]);
-  // }
-  // }
 
   getMoreDetails(id) {
 
@@ -162,7 +141,6 @@ export class CentralRegisterViewComponent implements OnInit {
         }
 
       }
-
 
       this.centralService.deleteFamily(post).subscribe((response: any) => {
         console.log(response);

@@ -39,14 +39,8 @@ export class BaselineCreateComponent implements OnInit {
   childDetails = {
     childInfo: [],
   };
+  idCard: any;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
-
-  // requestBody = {
-  //   dataAccessDTO: {},
-  //   houseHoldDetailDTO: {
-  //     familyDetailDTOList: []
-  //   }
-  // };
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService) { }
@@ -71,37 +65,37 @@ export class BaselineCreateComponent implements OnInit {
     // API call for getting caste
     this.baselineService.getCasteView(obj).subscribe((response: any) => {
       this.casteList = response.responseObject;
-      console.log(this.casteList);
+      // console.log(this.casteList);
     })
 
     //API call for getting education details
     this.baselineService.getEducationDetails(obj).subscribe((response: any) => {
       this.educationList = response.responseObject;
-      console.log(this.educationList);
+      // console.log(this.educationList);
     })
 
     //API call for getting monthlyIncomeDetails
     this.baselineService.monthlyIncomeDetails(obj).subscribe((response: any) => {
       this.householdIncomeDetails = response.responseObject;
-      console.log(this.householdIncomeDetails);
+      // console.log(this.householdIncomeDetails);
     })
 
     //API call for getting religionDetails
     this.baselineService.religionDetails(obj).subscribe((response: any) => {
       this.religionDetails = response.responseObject;
-      console.log(this.religionDetails);
+      // console.log(this.religionDetails);
     })
 
     //API call for getting occupationDetails
     this.baselineService.occupationDetails(obj).subscribe((response: any) => {
       this.occupationDetails = response.responseObject;
-      console.log(this.occupationDetails);
+      // console.log(this.occupationDetails);
     })
 
     //API call for getting idCardDetails
     this.baselineService.getIdCardDetails(obj).subscribe((response: any) => {
       this.cardDetails = response.responseObject;
-      console.log(this.cardDetails);
+      // console.log(this.cardDetails);
     })
   }
 
@@ -297,6 +291,24 @@ export class BaselineCreateComponent implements OnInit {
       tfamily = '';
     }
 
+
+    if (item.idtype != 1 || item.idtype != 2 || item.idtype != 3) {
+      this.idCard = []
+    }
+
+    if (item.idtype == 1 || item.idtype == 2 || item.idtype == 3) {
+      this.idCard = [
+        {
+          familyIdentityCardMapId: 0,
+          identityCardTypesMasterDTO: {
+            identityCardTypesMasterId: item.idtype,
+            name: this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name
+          },
+          number: idValue
+        }
+      ]
+    }
+
     const postBody = {
 
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -338,17 +350,7 @@ export class BaselineCreateComponent implements OnInit {
             haveSanitaryLatrine: item.sanitary,
             householdDetailsId: 0,
             husbandOrGuardianName: item.husbandName,
-            identityCardDTOList: [
-              {
-                familyIdentityCardMapId: 0,
-                identityCardTypesMasterDTO: {
-                  identityCardTypesMasterId: item.idtype ? item.idtype : 0,
-                  name: this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name ?
-                    this.cardDetails.filter((x) => x.identityCardTypesMasterId == item.idtype)[0]?.name : ''
-                },
-                number: idValue
-              }
-            ],
+            identityCardDTOList: this.idCard,
             institutionalDelivery: item.institutional ? item.institutional : 'NA',
             lactetingMother: item.breastFeeding,
             lastName: item.lastName,
@@ -489,14 +491,28 @@ export class BaselineCreateComponent implements OnInit {
           this.showError('Please Enter Aadhaar Card No.');
           return;
         }
+
+        var regexp = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+        var x = this.baselineSurvey.value.aadhar;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Aadhaar Card No!');
+          return;
+        }
       }
 
     }
+
 
     if (this.baselineSurvey.value.idtype) {
       if (this.idTypeField == 2) {
         if (!this.baselineSurvey.value.pan) {
           this.showError('Please Enter PAN Card No');
+          return;
+        }
+        var regexp = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        var x = this.baselineSurvey.value.pan;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Pan Card No!');
           return;
         }
 
@@ -509,8 +525,16 @@ export class BaselineCreateComponent implements OnInit {
           this.showError('Please Enter Voter Card No');
           return;
         }
+      
+        var regexp =   /^([A-Z]){3}([0-9]){7}?$/;
+        var x = this.baselineSurvey.value.voter;
+        if (!regexp.test(x)) {
+          this.showError('Invalid Voter Card No!');
+          return;
+        }
       }
     }
+
 
     if (!this.baselineSurvey.value.religion) {
       this.showError('Please select Religion');
@@ -674,10 +698,10 @@ export class BaselineCreateComponent implements OnInit {
     }
 
     let maleData = this.childDetails.childInfo.filter((x) => x.sex == 'M')
-    console.log(maleData.length);
+    // console.log(maleData.length);
 
     let femaleData = this.childDetails.childInfo.filter((x) => x.sex == 'F')
-    console.log(femaleData.length);
+    // console.log(femaleData.length);
 
     if (this.baselineSurvey.value.fmale < maleData.length) {
       this.showError('Total Male child should not be more than Total Family Member Male');
@@ -701,45 +725,6 @@ export class BaselineCreateComponent implements OnInit {
 
     })
 
-
-    // this.requestBody.dataAccessDTO = postBody.dataAccessDTO;
-
-    // if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
-    //   this.requestBody.houseHoldDetailDTO.familyDetailDTOList.push(postBody.houseHoldDetailDTO.familyDetailDTOList[0]);
-    // } else {
-    //   this.requestBody.houseHoldDetailDTO = postBody.houseHoldDetailDTO;
-    // }
-
-    // if (single) {
-    //   this.saveBaselineCreate();
-    // }
-
-    // console.log(this.requestBody);
-    // this.resetBaselineCreate();
-
-
-    // saveBaselineCreate() {
-
-    //   if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
-    //     this.baselineService.saveBaselineSurvey(this.requestBody).subscribe((response: any) => {
-    //       console.log(response);
-    //       if (response.message == "Success") {
-    //         this.showSuccess(response.message);
-    //         this.resetBaselineCreate();
-    //         this.requestBody = {
-    //           dataAccessDTO: {},
-    //           houseHoldDetailDTO: {
-    //             familyDetailDTOList: []
-    //           }
-    //         };
-    //       }
-
-    //     })
-    //   } else {
-    //     this.showError('Please Enter the form')
-    //   }
-
-    // }
   }
 
   openModal(child) {
@@ -948,7 +933,6 @@ export class BaselineCreateComponent implements OnInit {
 
   }
 
-
   saveChild() {
     let totalChildren: number = 0;
 
@@ -968,3 +952,51 @@ export class BaselineCreateComponent implements OnInit {
   }
 
 }
+
+
+ // requestBody = {
+  //   dataAccessDTO: {},
+  //   houseHoldDetailDTO: {
+  //     familyDetailDTOList: []
+  //   }
+  // };
+
+  
+    // this.requestBody.dataAccessDTO = postBody.dataAccessDTO;
+
+    // if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
+    //   this.requestBody.houseHoldDetailDTO.familyDetailDTOList.push(postBody.houseHoldDetailDTO.familyDetailDTOList[0]);
+    // } else {
+    //   this.requestBody.houseHoldDetailDTO = postBody.houseHoldDetailDTO;
+    // }
+
+    // if (single) {
+    //   this.saveBaselineCreate();
+    // }
+
+    // console.log(this.requestBody);
+    // this.resetBaselineCreate();
+
+
+    // saveBaselineCreate() {
+
+    //   if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
+    //     this.baselineService.saveBaselineSurvey(this.requestBody).subscribe((response: any) => {
+    //       console.log(response);
+    //       if (response.message == "Success") {
+    //         this.showSuccess(response.message);
+    //         this.resetBaselineCreate();
+    //         this.requestBody = {
+    //           dataAccessDTO: {},
+    //           houseHoldDetailDTO: {
+    //             familyDetailDTOList: []
+    //           }
+    //         };
+    //       }
+
+    //     })
+    //   } else {
+    //     this.showError('Please Enter the form')
+    //   }
+
+    // }

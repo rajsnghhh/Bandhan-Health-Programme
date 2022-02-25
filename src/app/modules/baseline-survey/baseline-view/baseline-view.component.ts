@@ -23,6 +23,7 @@ export class BaselineViewComponent implements OnInit {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
+  householdId: any;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -56,8 +57,9 @@ export class BaselineViewComponent implements OnInit {
     return this.baselineSurvey.controls;
   }
 
-  openModal(viewFamily, familyDetailDTOList) {
-    console.log(familyDetailDTOList);
+  openModal(viewFamily, familyDetailDTOList, items) {
+    console.log(items.householdDetailId, 'ccdd');
+    this.householdId = items.householdDetailId;
     this.familyDetails = familyDetailDTOList
     this.modalContent = '';
     this.modalReference = this.modalService.open(viewFamily, {
@@ -80,6 +82,12 @@ export class BaselineViewComponent implements OnInit {
 
 
   deleteHousehold(item, i) {
+    // console.log(item.familyDetailDTOList);
+    // if (confirm('Do you want to delete household :' + item.houseHoldNumber + '\n' + 
+    // item.familyDetailDTOList[i]?.firstName +
+    //   item.familyDetailDTOList[i]?.familyNumber)) { }
+
+
     if (confirm('Do you want to delete household :' + item.houseHoldNumber)) {
       const post = {
         dataAccessDTO: this.httpService.dataAccessDTO,
@@ -94,7 +102,7 @@ export class BaselineViewComponent implements OnInit {
               age: item.age,
               bbMicroGroupMembership: item.familyDetailDTOList[0].bbMicroGroupMembership,
               casteTypeMasterDTO: item.familyDetailDTOList[0].casteTypeMasterDTO,
-              childDetailDTOList: item.familyDetailDTOList[0].childDetailDTOList,
+              childDetailDTOList: item.familyDetailDTOList[0].childDetailDTOList ? item.familyDetailDTOList[0].childDetailDTOList : [],
               childrenBelow18: item.familyDetailDTOList[0].childrenBelow18 ? item.familyDetailDTOList[0].childrenBelow18 : 'NA',
               childrenBelow5: item.familyDetailDTOList[0].childrenBelow5 ? item.familyDetailDTOList[0].childrenBelow5 : 'NA',
               createdOn: item.familyDetailDTOList[0].createdOn,
@@ -108,7 +116,7 @@ export class BaselineViewComponent implements OnInit {
               haveSanitaryLatrine: item.familyDetailDTOList[0].haveSanitaryLatrine,
               householdDetailsId: item.familyDetailDTOList[0].householdDetailsId,
               husbandOrGuardianName: item.familyDetailDTOList[0].husbandOrGuardianName,
-              identityCardDTOList: item.familyDetailDTOList[0].identityCardDTOList,
+              identityCardDTOList: item.familyDetailDTOList[0].identityCardDTOList ? item.familyDetailDTOList[0].identityCardDTOList : [],
               institutionalDelivery: item.familyDetailDTOList[0].institutionalDelivery ? 'NA' : 'NA',
               lactetingMother: item.familyDetailDTOList[0].lactetingMother,
               lastName: item.familyDetailDTOList[0].lastName,
@@ -140,9 +148,21 @@ export class BaselineViewComponent implements OnInit {
 
       this.baselineService.saveBaselineSurvey(post).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSuccess(response.message);
-          this.baselineDetails.splice(i, 1);
+          // this.baselineDetails.splice(i, 1);
+          let obj = {
+            activeStatus: "A",
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            id: 888
+          }
+
+          //API call for viewing HouseholdWithFamilyDetails
+          this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
+            this.baselineDetails = response.responseObject;
+            console.log(this.baselineDetails);
+          });
+
         }
         else {
           this.showError(response.responseObject);
@@ -171,9 +191,28 @@ export class BaselineViewComponent implements OnInit {
 
   editFamily(item) {
     console.log(item, 'item');
-    this.modalReference.close();
-    this.route.navigate(['/family-info/create'], { queryParams: item, skipLocationChange: true });
+    let postBody = {
+      activeStatus: "A",
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      id: this?.householdId
+    }
 
+    this.baselineService.baselineSurveyStatus(postBody).subscribe((response) => {
+      this.familyStatus = response.responseObject.familyDetailRemaingStatusDTO;
+      console.log(this.familyStatus);
+      this.modalReference.close();
+      this.route.navigate(['/family-info/create'], {
+        skipLocationChange: true, queryParams: {
+          id: item.householdDetailId,
+          famid: item.familyDetailId,
+          type: item.familyType,
+          cFamilyCount: this.familyStatus?.createdFamilyCount,
+          cFamilyMembersCount: this.familyStatus?.createdFamilyMambersCount,
+          tFamilyCount: this.familyStatus?.totalFamilyCount,
+          tFamilyMembersCount: this.familyStatus?.totalFamilyMambersCount
+        }
+      });
+    });
   }
 
   delFam(delDetails, i) {
@@ -248,7 +287,7 @@ export class BaselineViewComponent implements OnInit {
 
       this.baselineService.deleteFamily(post).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSucces(response.message);
           this.familyDetails.splice(i, 1);
         }

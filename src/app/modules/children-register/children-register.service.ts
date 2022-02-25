@@ -11,25 +11,24 @@ export class ChildrenRegisterService {
   public sendData = new BehaviorSubject<any>('');
   editChildData = this.sendData.asObservable();
 
-  
   baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   viewExistingFamilyLists(obj): any {
-    return this.http.post(`${this.baseURL}centralregister/baselinesurvey/view`, obj)
+    return this.http.post(`${this.baseURL}baselinesurvey/view`, obj)
   }
 
   viewExistingFamilyDetails(obj): any {
-    return this.http.post(`${this.baseURL}centralregister/familydetail/view`, obj)
+    return this.http.post(`${this.baseURL}familydetail/view`, obj)
   }
 
   saveChild(obj) : any {
-    return this.http.post(`${this.baseURL}centralregister/childdetail/saveOrUpdate`, obj)
+    return this.http.post(`${this.baseURL}childdetail/saveOrUpdate`, obj)
   }
 
   childStatus(obj) : any {
-    return this.http.post(`${this.baseURL}centralregister/familydetail/childstatus`, obj)
+    return this.http.post(`${this.baseURL}familydetail/childstatus`, obj)
   }
 
   editChild(value) {

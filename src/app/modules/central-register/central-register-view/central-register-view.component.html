@@ -82,7 +82,6 @@
                                 <th>Pregnant <br>women</th>
                                 <th style="padding: 0px;">Lactating mother<br>(Up to 2 yr)</th>
                                 <th style="padding: 0px;">Family <br>Details</th>
-                                <!-- <th style="padding: 0px;">Add <br>Family</th> -->
                                 <th style="padding: 0px;">Action</th>
                             </tr>
                         </thead>
@@ -99,33 +98,17 @@
                                 <td style="padding: 0px;">{{item.lactetingMother}}</td>
                                 <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                     (click)="openModal(viewDetails, item.familyDetailId)">View</td>
-                                <!-- <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                    (click)="gotoFamily(item)"
-                                    *ngIf="item.familyType == 'J' && item.familyDetailRemaingStatusDTO.totalFamilyMambersCount -item.familyDetailRemaingStatusDTO.createdFamilyMambersCount > 0 &&  
-                                    item.familyDetailRemaingStatusDTO.totalFamilyCount - item.familyDetailRemaingStatusDTO.createdFamilyCount > 0 ">
-                                    Add
-                                </td>
-                                <td
-                                    *ngIf="item.familyType == 'J' && item.familyDetailRemaingStatusDTO.totalFamilyMambersCount -item.familyDetailRemaingStatusDTO.createdFamilyMambersCount ==0 ">
-                                    Add
-                                </td>
-                                <td
-                                    *ngIf="item.familyType == 'J' && item.familyDetailRemaingStatusDTO.totalFamilyMambersCount - item.familyDetailRemaingStatusDTO.createdFamilyMambersCount < 0 ">
-                                    Add
-                                </td>
-
-                                <td *ngIf="item.familyType == 'S' ">Add</td> -->
-
-                                <td style="padding: 0px;"
+                                <!-- <td style="padding: 0px;"
                                     *ngIf="item.familyType == 'J' && item.familyDetailRemaingStatusDTO.createdFamilyCount > 1">
-                                    <i class="fas fa-edit" title="Edit Family"> </i> <i class="fas fa-trash"
-                                        title="Delete Family" (click)="deleteFamily(item.familyDetailId,i)"></i>
+                                    <i class="fas fa-edit" title="Edit Family"> </i> 
+                                    <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item.familyDetailId,i)"></i>
                                 </td>
-
                                 <td style="padding: 0px;"
                                     *ngIf="item.familyType !='J' || item.familyDetailRemaingStatusDTO.createdFamilyCount == 1">
                                     <i class="fas fa-edit" title="Edit Family"> </i> <i class="fas fa-trash"></i>
-                                </td>
+                                </td> -->
+                                <td style="padding: 0px;"> <i class="fas fa-edit" title="Edit Family"> </i> 
+                                    <i class="fas fa-trash" title="Delete Family"></i></td>
                             </tr>
                         </tbody>
 

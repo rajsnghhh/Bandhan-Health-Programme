@@ -20,7 +20,7 @@ export class BaselineEditComponent implements OnInit {
   totalFamili: any;
   householdNumber: any;
   familyStatus: any;
-  tFamily:any;
+  tFamily: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
     public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService) { }
@@ -121,11 +121,11 @@ export class BaselineEditComponent implements OnInit {
   }
 
   saveEditHousehold() {
-    
+
     if (this.familyField == 'J') {
-     this.tFamily =  this.totalFamili;
+      this.tFamily = this.totalFamili;
     } else if (this.familyField == 'S') {
-    this.tFamily = 1;
+      this.tFamily = 1;
     }
 
     const postBody = {
@@ -137,11 +137,11 @@ export class BaselineEditComponent implements OnInit {
           branchName: "Kestopur",
         },
         branchVillageMapId: 888,
-        familyDetailDTOList: null,
+        familyDetailDTOList: [],
         familyType: this.famType,
         houseHoldNumber: this.householdNumber,
         householdDetailId: this.houseHoldId,
-        numberOfFamily:  this.tFamily,
+        numberOfFamily: this.tFamily,
         status: "A",
         swasthyaSahayikaDTO: {
           name: "ABC",
@@ -209,11 +209,9 @@ export class BaselineEditComponent implements OnInit {
       return;
     }
 
-
-
     this.baselineService.saveBaselineSurvey(postBody).subscribe((response: any) => {
       console.log(response);
-      if (response.message == "Success") {
+      if (response.status == true) {
         this.showSuccess(response.message);
         this.backEditHousehold();
       }

@@ -219,9 +219,16 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       }
     }
 
+    if (this.existingFamilyDetails.childrenBelow5 == 'Y' && this.existingFamilyDetails.lactetingMother == 'NA') {
+      if (this.showAge < 2) {
+        this.showError('This family does have any child below 2 years')
+        return;
+      }
+    }
+
     this.childService.saveChild(postBody).subscribe((response: any) => {
       console.log(response);
-      if (response.message == "Success") {
+      if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
         // this.viewExistingChild.dismiss('Cross click')
@@ -285,6 +292,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       existsmalelength = existsmalelength + 1;
     }
 
+    console.log(existsfemalelength);
+    console.log(this.checkTotalFemale);
+
+
     if (this.checkTotalMale < existsmalelength) {
       this.showError('Total Male child should not be more than Total Family Member Male')
       return;
@@ -297,7 +308,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
     this.childService.saveChild(postBody).subscribe((response: any) => {
       console.log(response, 'response');
-      if (response.message == "Success") {
+      if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
         this.openModal(this.childViewExistingChild, this.childFamId);
@@ -471,7 +482,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
       this.childService.saveChild(postBody).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSuccesss(response.message);
           this.existingChildList.splice(i, 1);
 
