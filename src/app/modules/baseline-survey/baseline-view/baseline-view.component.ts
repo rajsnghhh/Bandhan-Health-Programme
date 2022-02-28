@@ -25,12 +25,9 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
-<<<<<<< HEAD
   householdId: any;
-=======
   branchNames: any[] = [];
   aaa: boolean;
->>>>>>> 20501aed09de2e29b8278b0603498355360ff2e7
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -41,7 +38,18 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   }
   ngOnInit(): void {
 
+    this.createForm();
+    this.householdFamDetails();
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.branchNames.push(arr.villageName);
+      })
+      console.log(this.branchNames);
+    });
 
+  }
+
+  householdFamDetails() {
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -53,17 +61,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       this.baselineDetails = response.responseObject;
       console.log(this.baselineDetails);
     });
-
-    this.createForm();
-
-    this.httpBranch.listOfBranchUser().subscribe((res) => {
-      res.responseObject.map((arr) => {
-        this.branchNames.push(arr.villageName);
-      })
-      console.log(this.branchNames);
-    });
-
   }
+
 
   createForm() {
     this.baselineSurvey = this.fb.group({
@@ -170,19 +169,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         console.log(response);
         if (response.status == true) {
           this.showSuccess(response.message);
-          // this.baselineDetails.splice(i, 1);
-          let obj = {
-            activeStatus: "A",
-            dataAccessDTO: this.httpService.dataAccessDTO,
-            id: 888
-          }
-
-          //API call for viewing HouseholdWithFamilyDetails
-          this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
-            this.baselineDetails = response.responseObject;
-            console.log(this.baselineDetails);
-          });
-
+          this.householdFamDetails();
         }
         else {
           this.showError(response.responseObject);
