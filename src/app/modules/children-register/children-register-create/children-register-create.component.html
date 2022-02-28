@@ -1,3 +1,5 @@
+<app-loader [hidden]="loader"></app-loader>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -193,7 +195,7 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
                             <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false">
+                                    [min]="minDate" [max]="today" onkeydown="return false" >
                             </td>
                             <td>
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
@@ -206,6 +208,8 @@
                             </td>
                             <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
                                         class="fas fa-minus-circle"></i></button>
+                                <button type="button" class="btn btn-remove" (click)="blur()"><i
+                                    class="fas "></i>blur</button>
                             </td>
                         </tr>
 

@@ -6,6 +6,8 @@ import { CentralRegisterViewComponent } from './central-register-view/central-re
 import { CentralRegisterCreateComponent } from './central-register-create/central-register-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -15,7 +17,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     CentralRegisterRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng2SearchPipeModule
-  ]
+    Ng2SearchPipeModule, MatProgressSpinnerModule, LoaderModule
+  ],
 })
 export class CentralRegisterModule { }

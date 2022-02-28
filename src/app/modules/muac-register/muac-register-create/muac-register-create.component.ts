@@ -36,6 +36,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   ProjectStartDate: any;
   ProjectEndDate: any;
   MuacList: any;
+  loader: boolean = false;
 
 
   constructor(private http: HttpService, private muacService: MuacRegisterService,
@@ -58,12 +59,16 @@ export class MuacRegisterCreateComponent implements OnInit {
     }
 
     //API call for viewing muacList
-    this.muacService.muacCampList(obj).subscribe((response: any) => {
-      this.muacList = response.responseObject;
-      this.muacCampList = response.responseObject.muaccampDetailList;
-      console.log(this.muacList);
-      this.getMinDate(this.muacList);
-    })
+    setTimeout(() => {
+      this.muacService.muacCampList(obj).subscribe((response: any) => {
+        this.loader = true;
+        this.muacList = response.responseObject;
+        this.muacCampList = response.responseObject.muaccampDetailList;
+        console.log(this.muacList);
+        this.getMinDate(this.muacList);
+      })
+    }, 1000);
+
   }
 
   createModal(createMuac) {

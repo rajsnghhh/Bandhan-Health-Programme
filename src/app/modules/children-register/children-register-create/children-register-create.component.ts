@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -36,7 +36,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   };
   childViewExistingChild: any;
   childFamId: any;
-
+  loader: boolean = false;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
@@ -62,15 +62,17 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       id: 888
     }
 
-    this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
-      this.existingFamilyList = response.responseObject;
-
-      console.log(this.existingFamilyList);
-      this.existingFamilyList?.forEach(item => {
-        this.ide = item.familyDetailId
-        // console.log(item.familyDetailId)
+    setTimeout(() => {
+      this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
+        this.loader = true;
+        this.existingFamilyList = response.responseObject;
+        console.log(this.existingFamilyList);
+        this.existingFamilyList?.forEach(item => {
+          this.ide = item.familyDetailId
+          // console.log(item.familyDetailId)
+        })
       })
-    })
+    }, 1000);
 
   }
 

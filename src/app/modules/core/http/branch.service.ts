@@ -6,10 +6,6 @@ import { Injectable } from '@angular/core';
 })
 export class BranchService {
 
-  // dataAccessDTO = {
-  //   userId: '1',
-  //   userName: 'BK000001'
-  // }
   dataAccessDTO = {
     userId: '100',
     userName: 'bk103586',
@@ -21,10 +17,6 @@ export class BranchService {
   }
 
   constructor(private http: HttpClient) { }
-
-  // listOfBranchUser(): any {
-  //   return this.http.post('http://192.168.153.56:6181/bhp/api/v1/branch/getListOfBranchesOfUser', this.Dto)
-  // }
 
   listOfBranchUser(): any {
     return this.http.post('http://192.168.153.56:6181/bhp/api/v1/village/getVillagesOfABranch', this.Dto)

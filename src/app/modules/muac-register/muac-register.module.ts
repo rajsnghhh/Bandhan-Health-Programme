@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MuacRegisterRoutingModule } from './muac-register-routing.module';
 import { MuacRegisterCreateComponent } from './muac-register-create/muac-register-create.component';
 import { FormsModule } from '@angular/forms';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MuacRegisterRoutingModule,
-    FormsModule
+    FormsModule, LoaderModule
   ]
 })
 export class MuacRegisterModule { }

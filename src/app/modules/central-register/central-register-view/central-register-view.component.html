@@ -1,3 +1,5 @@
+<app-loader [hidden]="loader"></app-loader>
+
 <div class="container">
     <div class="white_box QA_section mb_30">
         <h2 class="page-title">View Central Register</h2>
@@ -41,6 +43,7 @@
                         class="text-danger">*&nbsp;</span></label>
                 <select class="form-select form-select-md" id="village*">
                     <option value="">-- Select Village--</option>
+                    <option *ngFor="let villageName of villageNames">{{villageName}}</option>
                     <!-- <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
                             {{region.regionName}}
                         </option> -->
@@ -51,7 +54,7 @@
 
         <div class="box_right d-flex lms_block col-md-6">
             <div class="serach_field_2">
-                <div class="search_inner">
+                <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                     <form active="#">
                         <div class="search_field">
                             <input type="text" name="search" placeholder="Search register details here..."

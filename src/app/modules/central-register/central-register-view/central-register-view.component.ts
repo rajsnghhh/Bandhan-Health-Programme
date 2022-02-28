@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
+import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { ValidationService } from '../../shared/services/validation.service';
 import { CentralRegisterService } from '../central-register.service';
 
 @Component({
   selector: 'app-central-register-view',
   templateUrl: './central-register-view.component.html',
-  styleUrls: ['./central-register-view.component.css']
+  styleUrls: ['./central-register-view.component.css'],
 })
 
-export class CentralRegisterViewComponent implements OnInit {
+export class CentralRegisterViewComponent implements OnInit, DoCheck {
   centralDetails: any;
   modalContent: any;
   modalReference: any;
@@ -20,13 +22,21 @@ export class CentralRegisterViewComponent implements OnInit {
   moreDetails: any;
   registerSearch: String;
   branchNames: string[];
-
+  loader: boolean = false;
+  villageNames: any[] = [];
+  searchFullscreen: boolean;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
-    private modalService: NgbModal, private route: Router, private toaster: ToastrService, private httpBranch: BranchService) { }
+    private modalService: NgbModal, private route: Router, private toaster: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService, private httpBranch: BranchService,
+    public validationService: ValidationService
+  ) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
-
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.http.dataAccessDTO,
@@ -34,14 +44,18 @@ export class CentralRegisterViewComponent implements OnInit {
     }
 
     //API call for viewing centralRegister
-    this.centralService.viewCentralRegister(obj).subscribe((response: any) => {
-      this.centralDetails = response.responseObject;
-      console.log(this.centralDetails);
-    })
+    setTimeout(() => {
+      this.centralService.viewCentralRegister(obj).subscribe((response: any) => {
+        this.loader = true;
+        this.centralDetails = response.responseObject;
+        console.log(this.centralDetails);
+      })
+    }, 1000);
+
 
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
-        this.branchNames = [arr.branchCode];
+        this.villageNames.push(arr.villageName);
       })
     });
   }
@@ -152,7 +166,7 @@ export class CentralRegisterViewComponent implements OnInit {
 
       this.centralService.deleteFamily(post).subscribe((response: any) => {
         console.log(response);
-        if (response.message == "Success") {
+        if (response.status == true) {
           this.showSuccess(response.message);
           this.centralDetails.splice(i, 1);
         }

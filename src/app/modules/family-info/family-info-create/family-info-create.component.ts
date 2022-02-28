@@ -96,7 +96,7 @@ export class FamilyInfoCreateComponent implements OnInit {
           this.childDetails.childInfo = this.moreFamData.childDetailDTOList;
 
         }
-
+        this.baselineSurvey.markAllAsTouched();
       })
     }
 
