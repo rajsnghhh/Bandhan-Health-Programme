@@ -7,6 +7,7 @@ import { BaselineViewComponent } from './baseline-view/baseline-view.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BaselineEditComponent } from './baseline-edit/baseline-edit.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 @NgModule({
   declarations: [BaselineCreateComponent, BaselineViewComponent, BaselineEditComponent],
@@ -18,6 +19,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    LoaderModule
   ]
 
 })

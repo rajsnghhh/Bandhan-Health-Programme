@@ -29,6 +29,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   searchFullscreen: boolean;
   householdId: any;
   aaa: boolean;
+  loader: boolean = false;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -47,10 +48,14 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
 
     //API call for viewing HouseholdWithFamilyDetails
-    this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
-      this.baselineDetails = response.responseObject;
-      console.log(this.baselineDetails);
-    });
+    setTimeout(() => {
+      this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
+        this.loader = true;
+        this.baselineDetails = response.responseObject;
+        console.log(this.baselineDetails);
+      });
+    }, 1000);
+
 
     this.createForm();
 
