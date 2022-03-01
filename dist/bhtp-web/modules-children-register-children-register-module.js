@@ -464,6 +464,8 @@ class ChildrenRegisterCreateComponent {
                     this.ide = item.familyDetailId;
                     // console.log(item.familyDetailId)
                 });
+            }, (err) => {
+                this.loader = true;
             });
         }, 1000);
     }

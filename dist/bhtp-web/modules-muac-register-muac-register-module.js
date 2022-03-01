@@ -8219,6 +8219,8 @@ class MuacRegisterCreateComponent {
                 this.muacCampList = response.responseObject.muaccampDetailList;
                 console.log(this.muacList);
                 this.getMinDate(this.muacList);
+            }, (err) => {
+                this.loader = true;
             });
         }, 1000);
     }

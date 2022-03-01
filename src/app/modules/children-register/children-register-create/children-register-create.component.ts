@@ -37,11 +37,19 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   childViewExistingChild: any;
   childFamId: any;
   loader: boolean = false;
+  page = 1;
+  pageSize = 6;
+  registerSearch:any;
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
     private httpService: HttpService, private toaster: ToastrService) { }
 
+    ngDoCheck(): void {
+      this.searchFullscreen = this.validationService.val;
+    }
+  
   ngOnInit(): void {
     this.createForm();
     this.getMinDate();
@@ -348,6 +356,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       timeOut: 2000,
     });
   }
+
+  p(event) { }
 
   addMoreChild() {
     this.childDetails.childInfo.push({

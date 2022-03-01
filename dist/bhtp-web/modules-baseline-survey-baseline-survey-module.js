@@ -3206,8 +3206,10 @@ class BaselineViewComponent {
                 this.loader = true;
                 this.baselineDetails = response.responseObject;
                 console.log(this.baselineDetails);
+            }, (err) => {
+                this.loader = true;
             });
-        }, 0);
+        }, 1000);
         // this.createForm();
         this.httpBranch.listOfBranchUser().subscribe((res) => {
             res.responseObject.map((arr) => {

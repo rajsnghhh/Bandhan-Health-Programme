@@ -25,6 +25,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   loader: boolean = false;
   villageNames: any[] = [];
   searchFullscreen: boolean;
+  page = 1;
+  pageSize = 6;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
     private modalService: NgbModal, private route: Router, private toaster: ToastrService,
@@ -194,4 +196,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     });
   }
 
+  p(event) { }
+
+  
 }

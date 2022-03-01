@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoaderModule } from '../shared/loader/loader.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { LoaderModule } from '../shared/loader/loader.module';
     CentralRegisterRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng2SearchPipeModule, MatProgressSpinnerModule, LoaderModule
+    Ng2SearchPipeModule, MatProgressSpinnerModule, LoaderModule,
+    NgxPaginationModule,
   ],
 })
 export class CentralRegisterModule { }
