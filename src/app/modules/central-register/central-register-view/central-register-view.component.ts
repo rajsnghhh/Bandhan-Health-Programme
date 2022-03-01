@@ -49,7 +49,10 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
         this.loader = true;
         this.centralDetails = response.responseObject;
         console.log(this.centralDetails);
-      })
+      },
+        (err) => {
+          this.loader = true;
+        })
     }, 1000);
 
 

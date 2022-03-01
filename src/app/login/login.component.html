@@ -1,16 +1,21 @@
 <div class="container">
   <div class="wrap-login">
     <div class="row">
-      <div class="col-md-6"></div>
-      <div class="col-md-6">
-        <form action="">
+      <div class="col-md-12">
+        <form action="" [formGroup]="loginForm">
           <span class="login100-form-title">
             Member Login
           </span>
-          <input class="input100" type="text" name="email" placeholder="Email">
-          <span class="symbol-input100">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-            </span>
+          <label> User Name <span class="text-danger">*</span></label>
+          <input class="input100" type="text"  placeholder="User Name" formControlName="username"> 
+          <br>
+          <label>Password <span class="text-danger">*</span></label>
+          <input class="input100" [type]="show ? 'text' : 'password'"  placeholder="Password" formControlName="password"> 
+          <div *ngIf="show; else elseblock">
+          <i class="fa fa-eye" aria-hidden="true" (click)="password()" *ngIf="show"></i>
+         </div>
+          <ng-template #elseblock><i class="fa fa-eye-slash" aria-hidden="true" (click)="password()" ></i></ng-template>
+          <button type="button" class="btn btn-primary" style="margin: 10px 0px 0px 170px;" (click)="login()">LogIn</button>
         </form>
       </div>
     </div>

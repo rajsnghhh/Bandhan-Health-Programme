@@ -71,7 +71,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
           this.ide = item.familyDetailId
           // console.log(item.familyDetailId)
         })
-      })
+      },
+        (err) => {
+          this.loader = true;
+        })
     }, 1000);
 
   }

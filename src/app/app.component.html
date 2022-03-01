@@ -1,3 +1,9 @@
+<div *ngIf="loginValue; else dashboard">
+<app-login [parentData]="loginValue"></app-login>
+</div>
+
+<ng-template #dashboard>
+
 <nav>
     <app-sidebar (valueChange)="fullscreenMethod($event)"></app-sidebar>
 </nav>
@@ -43,3 +49,4 @@
     </div>
 
 </section>
+</ng-template>

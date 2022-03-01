@@ -10,6 +10,7 @@ import { ValidationService } from './modules/shared/services/validation.service'
 export class AppComponent {
   title = 'bhp-web';
   fullscreenData: boolean;
+  loginValue: boolean = false;
 
   constructor(public validationService: ValidationService) { }
 
