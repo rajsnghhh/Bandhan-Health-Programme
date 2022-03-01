@@ -39,7 +39,7 @@
                             <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                 'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                 <option value="">-- Select --</option>
-                                <option *ngFor="let villageName of villageNames">{{villageName}}</option>
+                                <option *ngFor="let villageName of villageNames" value="villageMasterId">{{villageName}}</option>
                             </select>
                             <div *ngIf="f.gram.errors" class="invalid-feedback">
                                 <div *ngIf="f.gram.errors.required">Above Selection is required</div>

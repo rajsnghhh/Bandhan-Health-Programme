@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
@@ -40,12 +41,28 @@ export class BaselineCreateComponent implements OnInit {
     childInfo: [],
   };
   idCard: any;
+  blockNames: any[] = [];
+  gpNames: any[] =[];
+  villageNames: any[] =[];
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
-    private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService) { }
+    private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
+    private httpBranch: BranchService) { }
 
   ngOnInit(): void {
+
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.blockNames.push(arr);
+        this.gpNames.push(arr.gpDtoList);
+        this.villageNames.push(arr);
+
+      })
+      console.log(res.responseObject);
+      
+    });
+
     this.getMinDate();
     this.createForm();
     this.childDetails.childInfo = [];
