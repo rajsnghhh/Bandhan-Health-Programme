@@ -25,17 +25,12 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
-<<<<<<< HEAD
   householdId: any;
   branchNames: any[] = [];
   aaa: boolean;
-=======
   villageNames: any[] = [];
   searchFullscreen: boolean;
-  householdId: any;
-  aaa: boolean;
   loader: boolean = false;
->>>>>>> 095c4f75747d730cccab8d72e79c555dd601d28c
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -45,7 +40,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
   }
-<<<<<<< HEAD
+
   ngOnInit(): void {
 
     this.createForm();
@@ -60,10 +55,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   }
 
   householdFamDetails() {
-=======
-
-  ngOnInit(): void {
->>>>>>> 095c4f75747d730cccab8d72e79c555dd601d28c
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -71,22 +62,20 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
 
     //API call for viewing HouseholdWithFamilyDetails
-<<<<<<< HEAD
     this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
       this.baselineDetails = response.responseObject;
       console.log(this.baselineDetails);
     });
-=======
     setTimeout(() => {
       this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
         this.loader = true;
         this.baselineDetails = response.responseObject;
         console.log(this.baselineDetails);
       });
-    }, 1000);
+    }, 0);
 
 
-    this.createForm();
+    // this.createForm();
 
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
@@ -94,7 +83,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       })
     });
 
->>>>>>> 095c4f75747d730cccab8d72e79c555dd601d28c
   }
 
 
@@ -203,10 +191,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         if (response.status == true) {
           this.baselineDetails.splice(i, 1);
           this.showSuccess(response.message);
-<<<<<<< HEAD
           this.householdFamDetails();
-=======
->>>>>>> 095c4f75747d730cccab8d72e79c555dd601d28c
         }
         else {
           this.showError(response.responseObject);

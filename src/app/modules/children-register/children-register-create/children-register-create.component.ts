@@ -288,9 +288,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     let existsmalelength = 0;
     let existsfemalelength = 0;
     if (currentSex == 'F') {
-      existsfemalelength = existsfemalelength + 1;
+      existsfemalelength = existsfemalelength ;
     } else if (currentSex == 'M') {
-      existsmalelength = existsmalelength + 1;
+      existsmalelength = existsmalelength ;
     }
 
     console.log(existsfemalelength);
@@ -312,7 +312,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
-        this.openModal(this.childViewExistingChild, this.childFamId);
+        // this.openModal(this.childViewExistingChild, this.childFamId);
         this.getMoreDetails(this.existingFamilyDetails.familyDetailId);
       } else {
         this.showError(response.message);

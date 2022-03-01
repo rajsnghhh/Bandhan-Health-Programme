@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -58,16 +58,15 @@ export class FamilyInfoCreateComponent implements OnInit {
   deleteChild: any;
   finalDelChild: any;
   showChildDetails = false;
+  childSetData: any;
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
-  constructor(private fb: FormBuilder, private route: Router, private modalService: NgbModal,
+  constructor(private fb: FormBuilder, private modalService: NgbModal,
     private familyService: FamilyInfoService, private httpService: HttpService, public validationService: ValidationService,
-    private toaster: ToastrService, private routes: ActivatedRoute) { }
+    private toaster: ToastrService, private routes: ActivatedRoute, private route: Router) { }
 
   ngOnInit(): void {
-
-
     this.routes.queryParams.subscribe(params => {
       this.famData = params;
       console.log(this.famData, 'famdata');
@@ -201,6 +200,15 @@ export class FamilyInfoCreateComponent implements OnInit {
       this.childbelow5 = 'N'
     }
 
+
+    if (data?.totaFamilyMemberMales == 0) {
+      var setMaleCount = "0";
+    }
+
+    else {
+      setMaleCount = data?.totaFamilyMemberMales;
+    }
+
     if (data?.totaFamilyMemberSrcitizen == 0) {
       var setSeniorCount = "0";
     }
@@ -225,7 +233,7 @@ export class FamilyInfoCreateComponent implements OnInit {
       education: [data?.educationalQualificationMasterDTO?.educationalQualificationMasterId ? data?.educationalQualificationMasterDTO?.educationalQualificationMasterId : ''],
       household: [data?.monthlyIncomeMasterDTO?.monthlyIncomeMasterId ? data?.monthlyIncomeMasterDTO?.monthlyIncomeMasterId : ''],
       occupation: [data?.occupationMasterDTO?.occupationMasterId ? data?.occupationMasterDTO?.occupationMasterId : ''],
-      fmale: [data?.totaFamilyMemberMales ? data?.totaFamilyMemberMales : '', Validators.required],
+      fmale: [setMaleCount, Validators.required],
       ffemale: [data?.totaFamilyMemberFemales ? data?.totaFamilyMemberFemales : '', Validators.required],
       fsenior: [setSeniorCount, Validators.required],
       bbMicro: [data?.bbMicroGroupMembership ? data?.bbMicroGroupMembership : '', Validators.required],
@@ -240,6 +248,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     });
     this.addMF();
     this.IdType(data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId);
+
   }
 
   get f() {
@@ -379,6 +388,15 @@ export class FamilyInfoCreateComponent implements OnInit {
       ]
     }
 
+    if (this.finalDelChild != undefined) {
+      this.childSetData = this.finalDelChild ? this.finalDelChild : this.moreFamData?.childDetailDTOList;
+    }
+
+    else {
+      this.childSetData = this.childDetails.childInfo
+    }
+
+
     let postBody = {
 
       dataAccessDTO: {
@@ -393,7 +411,7 @@ export class FamilyInfoCreateComponent implements OnInit {
             this.casteList.filter((x) => x.casteTypeMasterId == item.caste)[0]?.casteTypeDescription : '',
           casteTypeMasterId: item.caste ? item.caste : 0
         },
-        childDetailDTOList: this.childDetails.childInfo,
+        childDetailDTOList: this.childSetData,
         childrenBelow18: item.childbelow18 ? item.childbelow18 : 'NA',
         childrenBelow5: item.childbelow5 ? item.childbelow5 : 'NA',
         createdOn: this.moreFamData?.createdOn ? this.moreFamData?.createdOn : 'string',
@@ -441,7 +459,6 @@ export class FamilyInfoCreateComponent implements OnInit {
         totalNumberOfChildren: item.child ? item.child : 0
       }
     }
-
 
     console.log(postBody);
 
@@ -726,35 +743,35 @@ export class FamilyInfoCreateComponent implements OnInit {
       return;
     }
 
-    // if (this.famData.famid) {
-    //   this.familyService.saveFamily(postBody).subscribe((response: any) => {
-    //     console.log(response);
-    //     if (response.status == true) {
-    //       this.showSuccess(response.message);
-    //       this.route.navigate(['Baseline-Survey/view']);
-    //     }
-    //     else {
-    //       this.showError(response.responseObject);
-    //     }
+    if (this.famData.famid) {
+      this.familyService.saveFamily(postBody).subscribe((response: any) => {
+        console.log(response);
+        if (response.status == true) {
+          this.showSuccess(response.message);
+          this.route.navigate(['Baseline-Survey/view']);
+        }
+        else {
+          this.showError(response.responseObject);
+        }
 
-    //   })
+      })
 
-    // }
+    }
 
-    // else {
-    //   this.familyService.saveFamily(postBody).subscribe((response: any) => {
-    //     console.log(response);
-    //     if (response.status == true) {
-    //       this.showSuccess(response.message);
-    //       this.resetBaselineCreate();
-    //     }
-    //     else {
-    //       this.showError(response.responseObject);
-    //     }
+    else {
+      this.familyService.saveFamily(postBody).subscribe((response: any) => {
+        console.log(response);
+        if (response.status == true) {
+          this.showSuccess(response.message);
+          this.resetBaselineCreate();
+        }
+        else {
+          this.showError(response.responseObject);
+        }
 
-    //   })
+      })
 
-    // }
+    }
   }
 
   openModal(child) {
@@ -800,11 +817,12 @@ export class FamilyInfoCreateComponent implements OnInit {
       this.finalDelChild = this.childDetails.childInfo.concat(this.deleteChild)
       console.log(this.finalDelChild, 'arrayList')
 
-
-      // else {
-      //   this.childDetails.childInfo.splice(i, 1);
-      // }
     }
+
+    else {
+      this.childDetails.childInfo.splice(i, 1);
+    }
+
   }
 
   restrictZero(event: any) {
@@ -997,6 +1015,8 @@ export class FamilyInfoCreateComponent implements OnInit {
       // return;
     } else {
       console.log(this.childDetails);
+      console.log(this.finalDelChild);
+
       this.modalReference.close();
     }
 
