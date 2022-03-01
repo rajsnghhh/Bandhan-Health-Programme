@@ -53,7 +53,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         this.loader = true;
         this.baselineDetails = response.responseObject;
         console.log(this.baselineDetails);
-      });
+      },
+        (err) => {
+          this.loader = true;
+        });
     }, 1000);
 
 
