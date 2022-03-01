@@ -12,7 +12,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   hide: boolean = true;
   hideSideNav: boolean = false;
   fullscreen: boolean = false;
-
+  panelOpenState = false;
   @Output() public valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }

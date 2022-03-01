@@ -85,14 +85,27 @@ h3 {
 
 .box {
   color: #000;
-  padding-left: 25px;
+  padding-left: 10px;
   padding-top: 10px;
   display: inline-block;
   width: 100%;
 }
-.box:hover {
+/* .box:hover {
   background-color: #499;
-}
+} */
 .accordion-button {
   padding: 0px 0px 0px 20px;
+}
+
+/* .mat-expansion-panel .mat-expanded {
+  padding-bottom: -20px;
+  background-color: red;
+} */
+.mat-expansion-panel-body {
+  padding: 0px;
+}
+.box:focus {
+  /* font-weight: bold; */
+  font-size: 15px;
+  text-shadow: 1px 1px #499;
 }
