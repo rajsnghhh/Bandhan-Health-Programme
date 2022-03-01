@@ -6,7 +6,7 @@ import { RoleAccessComponent } from './role-access/role-access.component';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  //{ path: '', component: LoginComponent },
   { path: 'donor', loadChildren: () => import('./modules/donor/donor.module').then(m => m.DonorModule) },
   { path: 'role-access', component: RoleAccessComponent, resolve: { roleAcess: RoleAcessResolver } },
   { path: 'vertical', loadChildren: () => import('./modules/vertical/vertical.module').then(m => m.VerticalModule) },
