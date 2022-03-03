@@ -1,13 +1,13 @@
 <nav class="sidebar"  [ngClass]="{'hidden': hideSideNav}" >
-    <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 10px;">
+    <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 10px; z-index: 99999;">
         <a style="background-color: #499; border: 1.5px solid #499;color: #ffffff;border-radius: 3px;z-index: 999;" (click)="hideSideBar()">         
             <span *ngIf="!hide"><i class="fas fa-angle-double-right fa-2x " style=" margin: 0px auto; "></i></span>
             <span *ngIf="hide"><i class="fas fa-angle-double-left fa-2x " style="display: flex; margin: 0px auto; "></i></span>
         </a>
     </div>
     <div *ngIf="hide" >
-    <div class="logo d-flex justify-content-start" style="height: 100px; width: 240px; ">
-        <a><img src="assets/bk_logo1.png" alt="" ></a>
+    <div class="logo d-flex justify-content-start" style="width: 110%; margin: -45px -3px 0px -4px; ">
+        <a><img src="assets/bk_logo.png" alt="" ></a>
     </div>
     <!-- <div class="accordion accordion-flush" id="accordionExample" style="width: 100%; height: 20px; margin-top: 50px;"> 
         
@@ -308,12 +308,12 @@
             </li>
         </ul> 
     </nav>  -->
-    <div class="matacco" style="margin-top: 72px;">
+    <div class="matacco" style="margin-top: -15px;">
     <mat-accordion >
         <mat-expansion-panel (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">
       <mat-expansion-panel-header style="background-color: #499;">
-      <mat-panel-title>
+      <mat-panel-title style="color: #ffffff;">
         Project Setup
       </mat-panel-title>
       </mat-expansion-panel-header>
@@ -413,7 +413,7 @@
       <mat-expansion-panel  (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">
       <mat-expansion-panel-header style="background-color: #499;">
-      <mat-panel-title>
+      <mat-panel-title style="color: #ffffff;">
         Household Info
       </mat-panel-title>
       </mat-expansion-panel-header>
