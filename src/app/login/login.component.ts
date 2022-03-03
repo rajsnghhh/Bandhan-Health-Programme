@@ -99,6 +99,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data: RootObject) => {
+          console.log("menudata",data)
           console.log(data.message, 'loginData')
           if (data.message.indexOf("first") !== -1) {
             localStorage.clear();

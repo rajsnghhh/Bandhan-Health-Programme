@@ -1,477 +1,211 @@
-<nav class="sidebar"  [ngClass]="{'hidden': hideSideNav}" >
+<nav class="sidebar" [ngClass]="{'hidden': hideSideNav}">
     <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 10px; z-index: 99999;">
-        <a style="background-color: #499; border: 1.5px solid #499;color: #ffffff;border-radius: 3px;z-index: 999;" (click)="hideSideBar()">         
+        <a style="background-color: #499; border: 1.5px solid #499;color: #ffffff;border-radius: 3px;z-index: 999;"
+            (click)="hideSideBar()">
             <span *ngIf="!hide"><i class="fas fa-angle-double-right fa-2x " style=" margin: 0px auto; "></i></span>
-            <span *ngIf="hide"><i class="fas fa-angle-double-left fa-2x " style="display: flex; margin: 0px auto; "></i></span>
+            <span *ngIf="hide"><i class="fas fa-angle-double-left fa-2x "
+                    style="display: flex; margin: 0px auto; "></i></span>
         </a>
     </div>
-    <div *ngIf="hide" >
-    <div class="logo d-flex justify-content-start" style="width: 110%; margin: -45px -3px 0px -4px; ">
-        <a><img src="assets/bk_logo.png" alt="" ></a>
-    </div>
-    <!-- <div class="accordion accordion-flush" id="accordionExample" style="width: 100%; height: 20px; margin-top: 50px;"> 
-        
-        <div class="accordion-item" > 
-          <h2 class="accordion-header" id="headingTwo">
-            <button style=" background-color: #499; color: #ffffff;
-            " class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Project Setup
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" >
-            <div class="accordion-body">
 
-                <ngb-accordion  [closeOthers]="true" >
-                    <ngb-panel id="static-1">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-donate"></i>&nbsp;&nbsp;&nbsp;Donor</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a  class="box" [routerLink]="['donor']">Donor</a></li>
-                          </ng-template>
-                    </ngb-panel>
-                
-                    <ngb-panel id="static-2">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-user-tag"></i> Role Access</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['role-access']">Role Access</a></li>
-                          </ng-template>
-                    </ngb-panel>
-
-                    <ngb-panel id="static-3">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"> <i class="fas fa-ruler-vertical"></i>&nbsp;&nbsp;&nbsp;&nbsp;Vertical</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['vertical']">Vertical</a></li>
-                          </ng-template>
-                    </ngb-panel>
-
-                    <ngb-panel id="static-4" class="box">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-arrows-alt-v"></i> &nbsp;&nbsp;&nbsp;Sub-Vertical</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['sub-vertical']">Active Sub-Vertical</a></li>
-                            <li><a class="box" [routerLink]="['sub-vertical/create']"> Create Sub-Vertical</a></li>
-                            <li><a class="box" [routerLink]="['sub-vertical/pending']">Pending Sub-Vertical</a></li>
-                        </ng-template>
-                    </ngb-panel>
-
-                    <ngb-panel id="static-5" class="box">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-project-diagram"></i> Project</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['project']">Active Project</a></li>
-                            <li><a class="box" [routerLink]="['project/create']"> Create Project</a></li>
-                            <li><a class="box" [routerLink]="['project/pending']">Pending Project</a></li>
-                        </ng-template>
-                    </ngb-panel>
-
-                    <ngb-panel id="static-6" class="box">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fab fa-wpforms"></i> &nbsp;Mou</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['mou']">Active Mou</a></li>
-                            <li><a class="box" [routerLink]="['mou/create']"> Create Mou</a></li>
-                            <li><a class="box" [routerLink]="['mou/pending']">Pending Mou</a></li>
-                        </ng-template>
-                    </ngb-panel>
-
-                    <ngb-panel id="static-7" class="box">
-                        <ng-template ngbPanelTitle >
-                            <a class="header"> <i class="fab fa-wpforms"></i> &nbsp;Dynamic Form</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['dynamic-form']">View Dynamic Form</a></li>
-                            <li><a class="box" [routerLink]="['dynamic-form/create']"> Create Dynamic Form</a></li>
-                        </ng-template>
-                    </ngb-panel>
-                </ngb-accordion> 
-
-            </div>
-          </div>
+    <div *ngIf="hide">
+        <div class="logo d-flex justify-content-start" style="width: 110%; margin: -45px -3px 0px -4px; ">
+            <a><img src="assets/bk_logo.png" alt=""></a>
         </div>
-        <div class="accordion-item" >
-          <h2 class="accordion-header " id="headingThree" >
-            <button style="  background-color: #499; color: #ffffff;padding-bottom: 11px;
-            " class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Household Info
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" >
-            <div class="accordion-body" style="width: 100%;">
-                
-                <ngb-accordion  [closeOthers]="true" >
-                    <ngb-panel id="static-1" >
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-poll"></i> &nbsp;&nbsp;&nbsp;&nbsp;Baseline Survey</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent >
-                            <li><a class="box" [routerLink]="['Baseline-Survey/create']">Create Baseline Survey</a></li>
-                            <li><a class="box" [routerLink]="['Baseline-Survey/view']"> View Baseline Survey</a></li>
-                          </ng-template>
-                    </ngb-panel>
-               
-                    <ngb-panel id="static-2" >
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-registered"></i> &nbsp;&nbsp;&nbsp;Central Register</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <li><a class="box" [routerLink]="['central-register/create']">Create Central Register</a></li>
-                            <li><a class="box" [routerLink]="['central-register/view']"> View Central Register</a></li>
-                          </ng-template>
-                    </ngb-panel>
 
-                    <ngb-panel id="static-3" class="box" >
-                        <ng-template ngbPanelTitle >
-                            <a class="header"><i class="fas fa-male"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Children Register</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                                <li><a class="box" [routerLink]="['children-register/create']">Children Info</a></li>
-                        </ng-template>
-                    </ngb-panel>
+        <div class="matacco" style="margin-top: -15px;">
 
-                    <ngb-panel id="static-4">
-                        <ng-template ngbPanelTitle>
-                            <a class="header" ><i class="fas fa-tape"></i>&nbsp; All Child Register</a>
-                        </ng-template>
-                        <ng-template ngbPanelContent >
-                            <li><a class="box" [routerLink]="['muac-register/create']">Muac Camp Creation</a></li>
-                            <li><a class="box" [routerLink]="['']">ACR Child</a></li>
-                          </ng-template>
-                    </ngb-panel>
-                </ngb-accordion> 
-                  
-            </div>
-          </div>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngFor="let menu of menuList; index as i" (click)="menuClick(i)">
+
+                    <mat-expansion-panel-header style="background-color: #499;">
+                        <mat-panel-title style="color: #ffffff;">
+                            {{menu.functionShortName}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div style=" margin-left: -22px;">
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false" *ngFor="let submenu of subMenuList"  >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{submenu.subFunctionShortName}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                        </mat-expansion-panel>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
         </div>
-      </div> -->
-      
-      <!-- <nav class="navigation">
-         <ul class="mainmenu">
-            <li style=" margin-bottom: -38px; margin-left: -20px;">
-                <input type="checkbox" id="phase1" [checked]="aaa" (click)="collapseaaa()" #aa>
-                <label style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;"
-                    for="phase1" >
-                    <h3>Project Setup <span><i class="fas fa-caret-down" style="margin-top: 5%;" ></i></span></h3>
-                </label>
-
-                <ul class="submenu">
-                    <li>
-                        <label for="Donor" [routerLink]="['donor']">
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-donate"></i></div>
-                                <div class="col-md-5">Donor</div>
-                            </div>
-                        </label>
-                        <input type="checkbox" id="Donor">
-                    </li>
-
-                    <li><label for="Role Access" [routerLink]="['role-access']">
-                            <div class="row">
-                                <div class="col-md-2"> <i class="fas fa-user-tag"></i></div>
-                                <div class="col-md-5">Role Access</div>
-                            </div>
-                        </label><input type="checkbox" id="Role Access">
-                    </li>
-
-                    <li><label for="Vertical" [routerLink]="['vertical']">
-                            <div class="row">
-                                <div class="col-md-2"> <i class="fas fa-ruler-vertical"></i></div>
-                                <div class="col-md-5">Vertical</div>
-                            </div>
-                        </label><input type="checkbox" id="Vertical">
-                    </li>
-
-                    <li><label for="Sub-Vertical">
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-arrows-alt-v"></i></div>
-                                <div class="col-md-6"> Sub-Vertical</div>
-                            </div>
-                        </label><input type="checkbox" id="Sub-Vertical">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['sub-vertical']">Active Sub-Vertical</a></li>
-                            <li><a [routerLink]="['sub-vertical/create']"> Create Sub-Vertical</a></li>
-                            <li><a [routerLink]="['sub-vertical/pending']">Pending Sub-Vertical</a></li>
-                        </ul>
-                    </li>
-
-                    <li><label for="Project">
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-project-diagram"></i></div>
-                                <div class="col-md-5">Project</div>
-                            </div>
-                        </label><input type="checkbox" id="Project">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['project']">Active Project</a></li>
-                            <li><a [routerLink]="['project/create']"> Create Project</a></li>
-                            <li><a [routerLink]="['project/pending']">Pending Project</a></li>
-                        </ul>
-                    </li>
-
-                    <li><label for="Mou">
-                            <div class="row">
-                                <div class="col-md-2"> <i class="fab fa-wpforms"></i></div>
-                                <div class="col-md-5">Mou</div>
-                            </div>
-                        </label><input type="checkbox" id="Mou">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['mou']">Active Mou</a></li>
-                            <li><a [routerLink]="['mou/create']"> Create Mou</a></li>
-                            <li><a [routerLink]="['mou/pending']">Pending Mou</a></li>
-                        </ul>
-                    </li>
-
-                    <li><label for="Dynamic Form">
-                            <div class="row">
-                                <div class="col-md-2"> <i class="fab fa-wpforms"></i></div>
-                                <div class="col-md-5"> Dynamic Form</div>
-                            </div>
-                        </label><input type="checkbox" id="Dynamic Form">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['dynamic-form']">View Dynamic Form</a></li>
-                            <li><a [routerLink]="['dynamic-form/create']"> Create Dynamic Form</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-
-            <li style="margin-left: -20px;">
-                <input type="checkbox" id="phase2" [checked]="bbb" (click)="collapsebbb()" #bb>
-                <label for="phase2"
-                    style="background-color: #499; height:40px; margin-top:39px; width: 250px; color: #ffffff;">
-                    <h3>Household Info<span><i class="fas fa-caret-down" style="margin-top: 5%;" ></i></span></h3>
-                </label>
-
-                <ul class="submenu">
-
-                    <li><label for="Baseline Survey">
-
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-poll"></i></div>
-                                <div class="col-md-6">Baseline Survey</div>
-                            </div>
-
-                        </label><input type="checkbox" id="Baseline Survey">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['Baseline-Survey/create']">Create Baseline Survey</a></li>
-                            <li><a [routerLink]="['Baseline-Survey/view']"> View Baseline Survey</a></li>
-                        </ul>
-
-                    </li>
-
-                    <li><label for="Central Register">
-
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-registered"></i></div>
-                                <div class="col-md-6"> Central Register</div>
-                            </div>
-
-                        </label><input type="checkbox" id="Central Register">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['central-register/create']">Create Central Register</a></li>
-                            <li><a [routerLink]="['central-register/view']"> View Central Register</a></li>
-                        </ul>
-                    </li>
-
-                    <li><label for="Children Register">
-
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-male"></i></div>
-                                <div class="col-md-6" [routerLink]="['children-register/create']">Children Info</div>
-                            </div>
-
-                        </label><input type="checkbox" id="Children Register">
-
-                    </li>
-
-                    <li><label for="Muac Register">
-
-                            <div class="row">
-                                <div class="col-md-2"><i class="fas fa-tape"></i></div>
-                                <div class="col-md-6"> All Child Register</div>
-                            </div>
-
-                        </label><input type="checkbox" id="Muac Register">
-                        <ul class="submenu">
-                            <li><a [routerLink]="['muac-register/create']">Muac Camp Creation</a></li>
-                            <li><a [routerLink]="['']">ACR Child</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </li>
-        </ul> 
-    </nav>  -->
-    <div class="matacco" style="margin-top: -15px;">
-    <mat-accordion >
-        <mat-expansion-panel (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
-      <mat-expansion-panel-header style="background-color: #499;">
-      <mat-panel-title style="color: #ffffff;">
-        Project Setup
-      </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div style=" margin-left: -22px;" > 
-      <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-      <mat-panel-title>
-        <i class="fas fa-donate"></i> Donor
-      </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ul>
-        <li> <a  class="box" [routerLink]="['donor']"><i class="fa fa-genderless"></i>Donor</a> </li>
-      </ul>
-      </mat-expansion-panel>
-
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-      <mat-panel-title>
-        <i class="fas fa-user-tag"></i> Role Access
-      </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ul>
-        <li> <a class="box" [routerLink]="['role-access']"><i class="fa fa-genderless"></i>Role Access</a> </li>
-      </ul>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-      (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-    <mat-panel-title>
-        <i class="fas fa-ruler-vertical"></i> Vertical
-    </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ul>
-      <li> <a class="box" [routerLink]="['vertical']"><i class="fa fa-genderless"></i>Vertical</a> </li>
-    </ul>
-     </mat-expansion-panel>
-
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-      (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-    <mat-panel-title>
-        <i class="fas fa-arrows-alt-v"></i> Sub-Vertical
-    </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ul>
-        <li><a class="box" [routerLink]="['sub-vertical']"><i class="fa fa-genderless"></i>Active Sub-Vertical</a></li>
-        <li><a class="box" [routerLink]="['sub-vertical/create']"> <i class="fa fa-genderless"></i>Create Sub-Vertical</a></li>
-        <li><a class="box" [routerLink]="['sub-vertical/pending']"><i class="fa fa-genderless"></i>Pending Sub-Vertical</a></li>
-    </ul>
-     </mat-expansion-panel>
-
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-      (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-    <mat-panel-title>
-        <i class="fas fa-project-diagram"></i> Project
-    </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ul>
-        <li><a class="box" [routerLink]="['project']"><i class="fa fa-genderless"></i>Active Project</a></li>
-        <li><a class="box" [routerLink]="['project/create']"><i class="fa fa-genderless"></i> Create Project</a></li>
-        <li><a class="box" [routerLink]="['project/pending']"><i class="fa fa-genderless"></i>Pending Project</a></li>
-    </ul>
-     </mat-expansion-panel>
-
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-     (closed)="panelOpenState = false">
-   <mat-expansion-panel-header>
-   <mat-panel-title>
-      <i class="fab fa-wpforms"></i> Mou
-   </mat-panel-title>
-   </mat-expansion-panel-header>
-   <ul>
-    <li><a class="box" [routerLink]="['mou']"><i class="fa fa-genderless"></i>Active Mou</a></li>
-    <li><a class="box" [routerLink]="['mou/create']"><i class="fa fa-genderless"></i> Create Mou</a></li>
-    <li><a class="box" [routerLink]="['mou/pending']"><i class="fa fa-genderless"></i>Pending Mou</a></li>
-   </ul>
-     </mat-expansion-panel>
-    <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-    (closed)="panelOpenState = false">
-  <mat-expansion-panel-header>
-  <mat-panel-title>
-    <i class="fab fa-wpforms"></i> &nbsp;Dynamic Form
-  </mat-panel-title>
-  </mat-expansion-panel-header>
-  <ul>
-    <li><a class="box" [routerLink]="['dynamic-form']"><i class="fa fa-genderless"></i>View Dynamic Form</a></li>
-    <li><a class="box" [routerLink]="['dynamic-form/create']"> <i class="fa fa-genderless"></i>Create Dynamic Form</a></li>
-  </ul>
-   </mat-expansion-panel>
-</div>
-</mat-expansion-panel>
-      
-      <mat-expansion-panel  (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
-      <mat-expansion-panel-header style="background-color: #499;">
-      <mat-panel-title style="color: #ffffff;">
-        Household Info
-      </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div style=" margin-left: -22px;" >
-
-
-      <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-     (closed)="panelOpenState = false">
-   <mat-expansion-panel-header>
-   <mat-panel-title>
-    <i class="fas fa-poll"></i> Baseline Survey
-   </mat-panel-title>
-   </mat-expansion-panel-header>
-   <ul>
-    <li><a class="box" [routerLink]="['Baseline-Survey/create']"><i class="fa fa-genderless"></i>Create Baseline Survey</a></li>
-    <li><a class="box" [routerLink]="['Baseline-Survey/view']"><i class="fa fa-genderless"></i> View Baseline Survey</a></li>
-   </ul>
-     </mat-expansion-panel>
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-     (closed)="panelOpenState = false">
-   <mat-expansion-panel-header>
-   <mat-panel-title>
-    <i class="fas fa-registered"></i> &nbsp;&nbsp;&nbsp;Central Register
-   </mat-panel-title>
-   </mat-expansion-panel-header>
-   <ul>
-    <li><a class="box" [routerLink]="['central-register/create']"><i class="fa fa-genderless"></i>Create Central Register</a></li>
-    <li><a class="box" [routerLink]="['central-register/view']"> <i class="fa fa-genderless"></i>View Central Register</a></li>
-   </ul>
-     </mat-expansion-panel>
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-     (closed)="panelOpenState = false">
-   <mat-expansion-panel-header>
-   <mat-panel-title>
-    <i class="fas fa-male"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Children Register
-   </mat-panel-title>
-   </mat-expansion-panel-header>
-   <ul>
-    <li><a class="box" [routerLink]="['children-register/create']"><i class="fa fa-genderless"></i>Children Info</a></li>
-   </ul>
-     </mat-expansion-panel>
-     <mat-expansion-panel style=" width: 250px;"(opened)="panelOpenState = true"
-     (closed)="panelOpenState = false">
-   <mat-expansion-panel-header>
-   <mat-panel-title>
-    <i class="fas fa-tape"></i>&nbsp; All Child Register
-   </mat-panel-title>
-   </mat-expansion-panel-header>
-   <ul>
-    <li><a class="box" [routerLink]="['muac-register/create']"><i class="fa fa-genderless"></i>Muac Camp Creation</a></li>
-    <li><a class="box" [routerLink]="['']"><i class="fa fa-genderless"></i>ACR Child</a></li>
-   </ul>
-     </mat-expansion-panel>
-    </div >
-
-      </mat-expansion-panel>
-      </mat-accordion>
     </div>
-</div>
 
 </nav>
+<!-- <ul>
+                                <li> <a class="box" [routerLink]="['donor']"><i class="fa fa-genderless"></i>Donor</a>
+                                </li>
+                            </ul> -->
+
+<!-- <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-user-tag"></i> Role Access
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li> <a class="box" [routerLink]="['role-access']"><i class="fa fa-genderless"></i>Role
+                                        Access</a> </li>
+                            </ul>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-ruler-vertical"></i> Vertical
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li> <a class="box" [routerLink]="['vertical']"><i
+                                            class="fa fa-genderless"></i>Vertical</a> </li>
+                            </ul>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-arrows-alt-v"></i> Sub-Vertical
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['sub-vertical']"><i
+                                            class="fa fa-genderless"></i>Active Sub-Vertical</a></li>
+                                <li><a class="box" [routerLink]="['sub-vertical/create']"> <i
+                                            class="fa fa-genderless"></i>Create Sub-Vertical</a></li>
+                                <li><a class="box" [routerLink]="['sub-vertical/pending']"><i
+                                            class="fa fa-genderless"></i>Pending Sub-Vertical</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-project-diagram"></i> Project
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['project']"><i class="fa fa-genderless"></i>Active
+                                        Project</a></li>
+                                <li><a class="box" [routerLink]="['project/create']"><i class="fa fa-genderless"></i>
+                                        Create Project</a></li>
+                                <li><a class="box" [routerLink]="['project/pending']"><i
+                                            class="fa fa-genderless"></i>Pending Project</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fab fa-wpforms"></i> Mou
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['mou']"><i class="fa fa-genderless"></i>Active Mou</a>
+                                </li>
+                                <li><a class="box" [routerLink]="['mou/create']"><i class="fa fa-genderless"></i> Create
+                                        Mou</a></li>
+                                <li><a class="box" [routerLink]="['mou/pending']"><i
+                                            class="fa fa-genderless"></i>Pending Mou</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fab fa-wpforms"></i> &nbsp;Dynamic Form
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['dynamic-form']"><i class="fa fa-genderless"></i>View
+                                        Dynamic Form</a></li>
+                                <li><a class="box" [routerLink]="['dynamic-form/create']"> <i
+                                            class="fa fa-genderless"></i>Create Dynamic Form</a></li>
+                            </ul>
+                        </mat-expansion-panel> -->
+<!-- </div>
+                </mat-expansion-panel> -->
+
+<!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header style="background-color: #499;">
+                        <mat-panel-title style="color: #ffffff;">
+                            Household Info
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div style=" margin-left: -22px;">
+
+
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-poll"></i> Baseline Survey
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['Baseline-Survey/create']"><i
+                                            class="fa fa-genderless"></i>Create Baseline Survey</a></li>
+                                <li><a class="box" [routerLink]="['Baseline-Survey/view']"><i
+                                            class="fa fa-genderless"></i> View Baseline Survey</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-registered"></i> &nbsp;&nbsp;&nbsp;Central Register
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['central-register/create']"><i
+                                            class="fa fa-genderless"></i>Create Central Register</a></li>
+                                <li><a class="box" [routerLink]="['central-register/view']"> <i
+                                            class="fa fa-genderless"></i>View Central Register</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-male"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Children Register
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['children-register/create']"><i
+                                            class="fa fa-genderless"></i>Children Info</a></li>
+                            </ul>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-tape"></i>&nbsp; All Child Register
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li><a class="box" [routerLink]="['muac-register/create']"><i
+                                            class="fa fa-genderless"></i>Muac Camp Creation</a></li>
+                                <li><a class="box" [routerLink]="['']"><i class="fa fa-genderless"></i>ACR Child</a>
+                                </li>
+                            </ul>
+                        </mat-expansion-panel>
+                    </div>
+
+                </mat-expansion-panel> -->
+<!-- </mat-accordion> -->
