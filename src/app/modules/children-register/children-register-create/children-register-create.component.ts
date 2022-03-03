@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { ChildrenRegisterService } from '../children-register.service';
@@ -37,12 +38,33 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   childViewExistingChild: any;
   childFamId: any;
   loader: boolean = false;
+  page = 1;
+  pageSize = 6;
+  registerSearch: any;
+  searchFullscreen: boolean;
+  blockNames: any[] = [];
+  gpNames: any[] = [];
+  villageNames: any[] = [];
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
-    private httpService: HttpService, private toaster: ToastrService) { }
+    private httpService: HttpService, private toaster: ToastrService, private httpBranch: BranchService) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.blockNames.push(arr.blockDTO);
+        this.gpNames.push(arr.gpDTO);
+        this.villageNames.push(arr);
+
+      })
+      console.log(res.responseObject);
+    });
+
     this.createForm();
     this.getMinDate();
 
@@ -247,7 +269,13 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   saveEditChild() {
-
+    console.log(this.childDetails);
+    console.log(this.existingFamilyDetails);
+    console.log(this.setChild);
+    this.childDetails.childInfo[0].familyDetailId = this.setChild.familyDetailId;
+    this.childDetails.childInfo[0].childDetailId = this.setChild.childDetailId;
+    console.log(this.childDetails);
+    let firstCopyOFEFD = JSON.stringify(this.existingFamilyDetails);
     this.childDetails.childInfo.forEach((item) => {
       let ageCheck = item.dob
       if (ageCheck) {
@@ -282,31 +310,63 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
     }
 
-    this.maleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'M');
-    // console.log(this.maleLen.length, 'maleLens');
+    if (this.existingFamilyDetails.lactetingMother == 'NA') {
+      if (this.showAge < 2) {
+        this.showError('This family does have any child below 2 years')
+        return;
+      }
 
-    this.femaleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'F');
-    // console.log(this.femaleLen.length, 'femaleLens');
-    let currentSex = this.childDetails.childInfo[0].sex;
-    let existsmalelength = 0;
-    let existsfemalelength = 0;
-    if (currentSex == 'F') {
-      existsfemalelength = existsfemalelength + 1;
-    } else if (currentSex == 'M') {
-      existsmalelength = existsmalelength + 1;
+    }
+    let copyOfexistingFamilyDetails : any = this.existingFamilyDetails;
+    // copyOfexistingFamilyDetails =  {
+    //   ...copyOfexistingFamilyDetails,
+    //   this.existingFamilyDetails
+    // };
+    // this.existingFamilyDetails.childDetailDTOList.filter(x=>x.childDetailId == this.childDetails.childInfo[0].childDetailId);
+    for(let i = 0 ; i <copyOfexistingFamilyDetails.childDetailDTOList.length ;i++){
+        if(copyOfexistingFamilyDetails.childDetailDTOList[i].childDetailId == this.childDetails.childInfo[0].childDetailId){
+          copyOfexistingFamilyDetails.childDetailDTOList[i] = this.childDetails.childInfo[0];
+        }
     }
 
-    console.log(existsfemalelength);
-    console.log(this.checkTotalFemale);
+    console.log(copyOfexistingFamilyDetails);
+    console.log(this.existingFamilyDetails);console.log("**********",firstCopyOFEFD);
+    
+    let femaleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x=>x.sex == "F");
+    let maleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x=>x.sex == "M");
+    let femaleLength = femaleList.length;
+    let maleLength = maleList.length;
+    console.log(femaleLength,maleLength);
+    // this.maleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'M');
+    // // console.log(this.maleLen.length, 'maleLens');
+
+    // this.femaleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'F');
+    // // console.log(this.femaleLen.length, 'femaleLens');
+    // let currentSex = this.childDetails.childInfo[0].sex;
+    // let existsmalelength = 0;
+    // let existsfemalelength = 0;
+    // if (currentSex == 'F') {
+    //   existsfemalelength = existsfemalelength + 1;
+    // } else if (currentSex == 'M') {
+    //   existsmalelength = existsmalelength + 1;
+    // }
+
+    // console.log(existsfemalelength);
+    // console.log(this.checkTotalFemale);
 
 
-    if (this.checkTotalMale < existsmalelength) {
-      this.showError('Total Male child should not be more than Total Family Member Male')
+    if (this.existingFamilyDetails.totaFamilyMemberFemales == femaleLength || this.existingFamilyDetails.totaFamilyMemberFemales < femaleLength) {
+      this.showError('Total Female child should not be more than or equal to Total Family Member Female')
+      this.existingFamilyDetails = JSON.parse(firstCopyOFEFD);
+      this.existingChildList = this.existingFamilyDetails.childDetailDTOList;
+      console.log(this.existingFamilyDetails);
       return;
     }
 
-    if (this.checkTotalFemale <= existsfemalelength) {
-      this.showError('Total Female child should not be more than or equal to Total Family Member Female')
+    if (this.existingFamilyDetails.totaFamilyMemberMales < maleLength) {
+      this.showError('Total Male child should not be more than Total Family Member Male');
+      this.existingFamilyDetails = JSON.parse(firstCopyOFEFD);
+      this.existingChildList = this.existingFamilyDetails.childDetailDTOList;
       return;
     }
 
@@ -315,7 +375,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
-        this.openModal(this.childViewExistingChild, this.childFamId);
+        // this.openModal(this.childViewExistingChild, this.childFamId);
         this.getMoreDetails(this.existingFamilyDetails.familyDetailId);
       } else {
         this.showError(response.message);
@@ -348,6 +408,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       timeOut: 2000,
     });
   }
+
+  p(event) { }
 
   addMoreChild() {
     this.childDetails.childInfo.push({

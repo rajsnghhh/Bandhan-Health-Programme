@@ -4,6 +4,8 @@ import { ChildrenRegisterRoutingModule } from './children-register-routing.modul
 import { ChildrenRegisterCreateComponent } from './children-register-create/children-register-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../shared/loader/loader.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -12,7 +14,7 @@ import { LoaderModule } from '../shared/loader/loader.module';
     CommonModule,
     ChildrenRegisterRoutingModule,
     ReactiveFormsModule,
-    FormsModule, LoaderModule
+    FormsModule, LoaderModule, NgxPaginationModule, Ng2SearchPipeModule
   ]
 })
 export class ChildrenRegisterModule { }

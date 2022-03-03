@@ -16,7 +16,8 @@
                             <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
                         'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <!-- <option *ngFor="let block of blockNames" value="block.blockMasterId">
+                                    {{block.blockName}}</option> -->
                             </select>
                             <div *ngIf="f.block.errors" class="invalid-feedback">
                                 <div *ngIf="f.block.errors.required">Block is required</div>
@@ -29,7 +30,8 @@
                             <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
                         'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <!-- <option *ngFor="let gp of gpNames" value="gp.gpMunicipalId">
+                                    {{gp.name}}</option> -->
                             </select>
                             <div *ngIf="f.gp.errors" class="invalid-feedback">
                                 <div *ngIf="f.gp.errors.required">GP is required</div>
@@ -42,10 +44,26 @@
                             <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                             'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <!-- <option *ngFor="let vill of villageNames" value="vill.villageMasterId">
+                                    {{vill.villageName}}</option> -->
                             </select>
                             <div *ngIf="f.gram.errors" class="invalid-feedback">
                                 <div *ngIf="f.gram.errors.required">Above Selection is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div  [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search household info here..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
                             </div>
                         </div>
 
@@ -72,9 +90,9 @@
                                     </thead>
 
                                     <tbody>
-
-                                        <tr *ngFor="let item of existingFamilyList ; index as i">
-                                            <td>{{i+1}}</td>
+                                        <tr
+                                            *ngFor="let item of existingFamilyList | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{item.familyNumber.slice(0,item.familyNumber.indexOf("."))}}
                                             </td>
                                             <td>{{item.familyNumber}}</td>
@@ -92,6 +110,9 @@
                                     </tbody>
 
                                 </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                            </pagination-controls>
                             </div>
                         </div>
                     </div>
@@ -195,7 +216,7 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
                             <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false" >
+                                    [min]="minDate" [max]="today" onkeydown="return false">
                             </td>
                             <td>
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
@@ -208,8 +229,6 @@
                             </td>
                             <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
                                         class="fas fa-minus-circle"></i></button>
-                                <button type="button" class="btn btn-remove" (click)="blur()"><i
-                                    class="fas "></i>blur</button>
                             </td>
                         </tr>
 

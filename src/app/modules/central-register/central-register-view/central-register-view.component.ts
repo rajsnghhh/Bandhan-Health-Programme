@@ -24,7 +24,10 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   branchNames: string[];
   loader: boolean = false;
   villageNames: any[] = [];
+  stateNames: any[] = [];
   searchFullscreen: boolean;
+  page = 1;
+  pageSize = 6;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
     private modalService: NgbModal, private route: Router, private toaster: ToastrService,
@@ -59,7 +62,10 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
         this.villageNames.push(arr.villageName);
+        // this.stateNames.push(arr.stateDTO.stateName)
       })
+      console.log(res.responseObject);
+
     });
   }
 
@@ -193,5 +199,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       timeOut: 3000,
     });
   }
+
+  p(event) { }
+
 
 }

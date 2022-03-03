@@ -7,7 +7,6 @@
   color: #3e7758 !important;
   font-size: 25px;
   margin-left: -180px
-  
 }
 
 .fa-minus-circle {
@@ -37,18 +36,18 @@
   background: #499;
 }
 
-
 .modal-content {
   height: 300px; 
   overflow-x: auto;
   width: 750px;
 }
 
-.btn-link {
-  text-decoration: none;
+.close {
+  margin-left: 370px;
 }
 
-.close {
+.clos {
   margin-left: 290px;
 }
+
 

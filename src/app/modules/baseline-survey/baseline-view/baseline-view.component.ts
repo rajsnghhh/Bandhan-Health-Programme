@@ -25,10 +25,11 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   pageSize = 6;
   familyStatus: any;
   registerSearch: String;
+  householdId: any;
+  branchNames: any[] = [];
+  aaa: boolean;
   villageNames: any[] = [];
   searchFullscreen: boolean;
-  householdId: any;
-  aaa: boolean;
   loader: boolean = false;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
@@ -41,6 +42,19 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+
+    this.createForm();
+    this.householdFamDetails();
+    this.httpBranch.listOfBranchUser().subscribe((res) => {
+      res.responseObject.map((arr) => {
+        this.branchNames.push(arr.villageName);
+      })
+      console.log(this.branchNames);
+    });
+
+  }
+
+  householdFamDetails() {
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -48,6 +62,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
 
     //API call for viewing HouseholdWithFamilyDetails
+    this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
+      this.baselineDetails = response.responseObject;
+      console.log(this.baselineDetails);
+    });
     setTimeout(() => {
       this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
         this.loader = true;
@@ -60,7 +78,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }, 1000);
 
 
-    this.createForm();
+    // this.createForm();
 
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
@@ -69,6 +87,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     });
 
   }
+
 
   createForm() {
     this.baselineSurvey = this.fb.group({
@@ -175,6 +194,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         if (response.status == true) {
           this.baselineDetails.splice(i, 1);
           this.showSuccess(response.message);
+          this.householdFamDetails();
         }
         else {
           this.showError(response.responseObject);

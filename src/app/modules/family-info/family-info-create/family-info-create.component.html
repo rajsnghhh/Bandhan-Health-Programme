@@ -323,7 +323,7 @@
                     <div class="row">
 
                         <div class="form-group col-md-3" *ngIf="haveChildren === 'Y' ">
-                            <label for="child"> How Many Children Do You Have?&nbsp;<span
+                            <label for="child"> How many children do you have?&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
 
                             <input type="text" class="form-control" placeholder="Enter Children "
@@ -430,7 +430,7 @@
                     <div class="form-group col-md-6">
                         <button for="" class="btn btn-link" (click)="openModal(child)"
                             [disabled]="!showChildDetails">Child
-                            Details :</button>
+                            Details</button>
                     </div>
 
                     <div class="text-center">
@@ -459,15 +459,21 @@
                     <h4 class="modal-title" id="modal-basic-title">Child Details</h4>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3" *ngIf="!this.famData.famid">
                     <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer;"
                         title="Add Child"></i>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="!this.famData.famid">
+                    <span class="clos" (click)="childModalDismiss()" title="close"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+
+                <div class="col-md-2" *ngIf="this.famData.famid">
                     <span class="close" (click)="childModalDismiss()" title="close"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
+
             </div>
 
         </div>
