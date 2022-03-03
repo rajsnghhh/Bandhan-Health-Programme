@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AppComponent } from './app.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { LoginComponent } from './login/login.component';
 import { RoleAccessComponent } from './role-access/role-access.component'
 import { CoreModule } from './modules/core/core.module';
 import { RoleAcessResolver } from './role-access/role-access-resolver.service';
@@ -18,12 +17,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RoleAccessComponent
+    RoleAccessComponent,
   ],
   imports: [
     BrowserModule,
