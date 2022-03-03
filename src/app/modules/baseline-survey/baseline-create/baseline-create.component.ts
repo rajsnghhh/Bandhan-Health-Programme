@@ -59,7 +59,7 @@ export class BaselineCreateComponent implements OnInit {
         this.villageNames.push(arr);
 
       })
-      console.log(res.responseObject);
+      // console.log(res.responseObject);
       
     });
 

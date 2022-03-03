@@ -14,7 +14,8 @@ export class AppComponent {
   fullscreenData: boolean;
   user: User;
   constructor(public validationService: ValidationService, private accountService: LoginService) {
-    this.accountService.user.subscribe((x) => { this.user = x; console.log(this.user, 'appComponent') });
+    this.accountService.user.subscribe((x) => { this.user = x; });
+    // console.log(this.user, 'appComponent')
   }
 
   fullscreenMethod(data) {
