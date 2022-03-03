@@ -1,31 +1,150 @@
-<div class="card">
-    <h4 class="card-header">Register</h4>
-    <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
-                </div>
+<!-- <div class="card">
+  <h4 class="card-header">Register</h4>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="newPassword"
+          >New Password<span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          formControlName="newPassword"
+          class="form-control"
+          (keypress)="validationService.onlyInteger($event)"
+          [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }"
+        />
+        <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+          <div *ngIf="f.newPassword.errors.required">Password is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword"
+          >Confirm Password<span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          class="form-control"
+          (keypress)="validationService.onlyInteger($event)"
+          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+        />
+        <div
+          *ngIf="submitted && f.confirmPassword.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.confirmPassword.errors.required">
+            Password is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Register
+        </button>
+        <a routerLink="../login" class="btn btn-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<div
+  class="card"
+  style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+  "
+>
+  <h4 class="card-header" style="background-color: #499; color: #ffffff;" >Reset Password</h4>
+  <div class="card-body" style="padding: 0rem 1rem">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+     
+        <div class="form-group ">
+            <label for="newPassword">New Password <span class="text-danger">*</span></label>
+            <div style="display: grid; grid-template-columns: 5fr -0.1fr;">
+             
+            <input
+              [type]="show ? 'text' : 'password'"
+              style="border: 1px solid black;"
+              formControlName="newPassword"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }"
+            />
+            <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
+              <div *ngIf="show; else elseblock">
+                <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
+              </div>
+              <ng-template #elseblock
+                ><i class="fa fa-eye-slash" (click)="password()"></i
+              ></ng-template>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Register
-                </button>
-                <a routerLink="../login" class="btn btn-link">Cancel</a>
-            </div>
-        </form>
-    </div>
+        <div></div>
+          <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.newPassword.errors.required" style="margin-left: 41px;">Password is required</div>
+          </div>
+        </div>
+          </div>
+     <br>
+      <div class="form-group ">
+        <label for="confirmPassword">Confirm Password &nbsp;<span class="text-danger">*</span></label>
+         
+        <input
+          type="password"
+          style="border: 1px solid black;"
+          formControlName="confirmPassword"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+        />
+        <!-- <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
+          <div *ngIf="show; else elseblock">
+            <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
+          </div>
+          <ng-template #elseblock
+            ><i class="fa fa-eye-slash" (click)="password()"></i
+          ></ng-template>
+        </div> -->
+      <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+        <div *ngIf="f.confirmPassword.errors.required" style="margin-left: 41px;">Password is required</div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <button
+          [disabled]="loading"
+          class="btn btn-primary"
+          style="
+            margin-left: 35%;
+            margin-top: 34px;
+            transform: translate(-50%, -50%);
+            padding: 4px 14px 4px 14px;
+          "
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          <span class="fa-passwd-reset fa-stack">
+            <i class="fa fa-undo fa-stack-2x"></i>
+            <i class="fa fa-lock" style="margin-left: 12px;"></i>
+        </span>
+          Reset
+        </button>
+
+        <button type="button" class="btn btn-danger" routerLink="../login" style="padding: 8px 14px 8px 14px;
+        margin: 0px 0px 8px -36px;">
+            <i class="fa fa-times fa-lg" aria-hidden="true"></i> Cancel
+        </button>
+        
+
+      </div>
+    </form>
+  </div>
 </div>
 

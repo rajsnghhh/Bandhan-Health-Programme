@@ -11,7 +11,7 @@ import { User } from './user';
     providedIn: 'root'
 })
 export class LoginService {
-
+    userFirstTime: any;
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
 
@@ -58,8 +58,12 @@ export class LoginService {
         this.router.navigate(['/']);
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+    register(password) {
+        let requestBody = {
+            userId: this.userFirstTime.responseObject.userdetailDTO.userId,
+            newPassword: password
+        };
+        return this.http.post(`${environment.apiUrl}user/resetPassword`, requestBody);
     }
 
     getAll() {

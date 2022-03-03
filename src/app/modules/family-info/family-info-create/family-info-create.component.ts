@@ -301,7 +301,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   }
 
   saveBaselineCreateBack() {
-    window.history.go(-1);
+    this.route.navigate(['/Baseline-Survey/view'])
   }
 
   resetBaselineCreate() {

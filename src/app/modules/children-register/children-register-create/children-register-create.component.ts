@@ -317,26 +317,26 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       }
 
     }
-    let copyOfexistingFamilyDetails : any = this.existingFamilyDetails;
+    let copyOfexistingFamilyDetails: any = this.existingFamilyDetails;
     // copyOfexistingFamilyDetails =  {
     //   ...copyOfexistingFamilyDetails,
     //   this.existingFamilyDetails
     // };
     // this.existingFamilyDetails.childDetailDTOList.filter(x=>x.childDetailId == this.childDetails.childInfo[0].childDetailId);
-    for(let i = 0 ; i <copyOfexistingFamilyDetails.childDetailDTOList.length ;i++){
-        if(copyOfexistingFamilyDetails.childDetailDTOList[i].childDetailId == this.childDetails.childInfo[0].childDetailId){
-          copyOfexistingFamilyDetails.childDetailDTOList[i] = this.childDetails.childInfo[0];
-        }
+    for (let i = 0; i < copyOfexistingFamilyDetails.childDetailDTOList.length; i++) {
+      if (copyOfexistingFamilyDetails.childDetailDTOList[i].childDetailId == this.childDetails.childInfo[0].childDetailId) {
+        copyOfexistingFamilyDetails.childDetailDTOList[i] = this.childDetails.childInfo[0];
+      }
     }
 
     console.log(copyOfexistingFamilyDetails);
-    console.log(this.existingFamilyDetails);console.log("**********",firstCopyOFEFD);
-    
-    let femaleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x=>x.sex == "F");
-    let maleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x=>x.sex == "M");
+    console.log(this.existingFamilyDetails); console.log("**********", firstCopyOFEFD);
+
+    let femaleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "F");
+    let maleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "M");
     let femaleLength = femaleList.length;
     let maleLength = maleList.length;
-    console.log(femaleLength,maleLength);
+    console.log(femaleLength, maleLength);
     // this.maleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'M');
     // // console.log(this.maleLen.length, 'maleLens');
 

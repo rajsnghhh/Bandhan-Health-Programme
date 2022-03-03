@@ -4,9 +4,9 @@
 
 <section class=" dashboard_part" [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'" >
 
-    <mat-toolbar style="background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 50%;">
+    <mat-toolbar *ngIf="user" style="background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;">
         <span style="color: #499; font-size: 30px;">Bandhan Health Program</span>
-        <a *ngIf="user" class="nav-item nav-link text-danger" style="margin-left: 45%;" (click)="logout()">
+        <a  class="nav-item nav-link text-danger" style="margin-left: 57%;" (click)="logout()">
             <i  class="fa fa-power-off" ></i>Logout</a>
         
       </mat-toolbar>

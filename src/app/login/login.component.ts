@@ -101,7 +101,8 @@ export class LoginComponent implements OnInit {
         (data: RootObject) => {
           console.log(data.message, 'loginData')
           if (data.message.indexOf("first") !== -1) {
-            localStorage.clear();
+            this.accountService.logout();
+            this.accountService.userFirstTime = data;
             this.router.navigate(['/register']);
           } else {
             this.router.navigate(['/Baseline-Survey/create']);
@@ -109,7 +110,6 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          // this.alertService.error(error);
           this.accountService.logout();
           this.loading = false;
           this.showError('User Name & Password not Correct');

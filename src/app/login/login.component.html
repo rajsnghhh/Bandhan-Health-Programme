@@ -1,27 +1,4 @@
-<!-- <div class="container">
-  <div class="wrap-login">
-    <div class="row">
-      <div class="col-md-12">
-        <form action="" [formGroup]="loginForm">
-          <span class="login100-form-title">
-            Member Login
-          </span>
-          <label> User Name <span class="text-danger">*</span></label>
-          <input class="input100" type="text"  placeholder="User Name" formControlName="username"> 
-          <br>
-          <label>Password <span class="text-danger">*</span></label>
-          <input class="input100" [type]="show ? 'text' : 'password'"  placeholder="Password" formControlName="password"> 
-          <div *ngIf="show; else elseblock">
-          <i class="fa fa-eye" aria-hidden="true" (click)="password()" *ngIf="show"></i>
-         </div>
-          <ng-template #elseblock><i class="fa fa-eye-slash" aria-hidden="true" (click)="password()" ></i></ng-template>
-          <button type="button" class="btn btn-primary" style="margin: 10px 0px 0px 170px;" (click)="login()">LogIn</button>
-          <a routerLink="/account/register" class="btn btn-link">Register</a>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
+<img src="../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh; margin-left: -530px;" >
 <div
   class="card"
   style="
@@ -40,11 +17,21 @@
         <label for="username">Username <span class="text-danger">*</span></label>
 
         <div style="display: grid; grid-template-columns: 0.1fr 1fr;">
-          <p style="margin: 8px 0px 7px 12px; font-weight: bold;z-index: 99999;">BK - </p>
+          <p style="margin: 1px 0px 4px 0px;
+          font-weight: bold;
+          border-bottom: 1px solid black;
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          padding: 6px 1px 1px 13px;
+          border-radius: 5px 0px 0px 5px;">BK  </p>
           <input
           style="display: block;" 
           type="text"
-          style="border: 1px solid black;margin: 1px 7px 4px -1px;"
+          style="border-bottom: 1px solid black;
+          border-top: 1px solid black;
+          border-right: 1px solid black;
+          margin: 1px 7px 4px -1px;
+          border-radius: 0px 5px 5px 0px;"
           (keypress)="validationService.onlyInteger($event)"
           formControlName="username"
           class="form-control"
@@ -57,24 +44,11 @@
         </div>
       </div>
       </div>
-      <!-- <div class="form-group">
-        <label for='txt'>BK
-          <input type="text" id='txt' type="text"
-          style="border: 1px solid black;"
-          (keypress)="validationService.onlyInteger($event)"
-          formControlName="username"
-          class="form-control"
-          [maxlength]="20"
-          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-          <div></div>
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-          <div *ngIf="f.username.errors.required">Username is required</div>
-        </div>
-        </label>
-      </div> -->
+      
+     <br>
       <div class="form-group ">
         <label for="password">Password <span class="text-danger">*</span></label>
-        <div style="display: grid; grid-template-columns: 1fr 0.1fr;">
+        <div style="display: grid; grid-template-columns: 5fr -0.1fr;">
          
         <input
           [type]="show ? 'text' : 'password'"
@@ -83,7 +57,7 @@
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <div style="margin: 9px 0px 0px 8px;z-index: 99999;">
+        <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
           <div *ngIf="show; else elseblock">
             <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
           </div>
@@ -93,7 +67,7 @@
         </div>
     <div></div>
       <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-        <div *ngIf="f.password.errors.required">Password is required</div>
+        <div *ngIf="f.password.errors.required" style="margin-left: 41px;">Password is required</div>
       </div>
     </div>
       </div>
@@ -116,7 +90,6 @@
           Login
         </button>
 
-        <!-- <a routerLink="../register" class="btn btn-link">Register</a> -->
       </div>
     </form>
   </div>
