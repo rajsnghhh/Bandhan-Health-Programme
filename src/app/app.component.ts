@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { LoginService } from './login/login.service';
+import { User } from './login/user';
 import { ValidationService } from './modules/shared/services/validation.service';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,20 @@ import { ValidationService } from './modules/shared/services/validation.service'
 export class AppComponent {
   title = 'bhp-web';
   fullscreenData: boolean;
-  loginValue: boolean = false;
-
-  constructor(public validationService: ValidationService) { }
+  user: User;
+  constructor(public validationService: ValidationService, private accountService: LoginService) {
+    this.accountService.user.subscribe((x) => { this.user = x; console.log(this.user, 'appComponent') });
+  }
 
   fullscreenMethod(data) {
     this.fullscreenData = data;
     this.validationService.val = this.fullscreenData;
+  }
+
+  logout() {
+    if (confirm('Are you sure, you want to Logout ?')) {
+      this.accountService.logout();
+    }
   }
 
 }

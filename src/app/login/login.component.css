@@ -73,3 +73,10 @@ input {
   box-shadow: 0 0;
   color: rgba(87, 184, 70, 0.8);
 }
+
+#txt:focus {
+  border: none;
+}
+label[for="txt"] {
+  border: solid 1px #000000;
+}
