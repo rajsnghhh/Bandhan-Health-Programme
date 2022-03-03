@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment, environment1 } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { User } from './user';
 
@@ -59,19 +59,19 @@ export class LoginService {
     }
 
     register(user: User) {
-        return this.http.post(`${environment1.apiUrl}/users/register`, user);
+        return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
     getAll() {
-        return this.http.get<User[]>(`${environment1.apiUrl}/users`);
+        return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
     getById(id: string) {
-        return this.http.get<User>(`${environment1.apiUrl}/users/${id}`);
+        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
 
     update(id, params) {
-        return this.http.put(`${environment1.apiUrl}/users/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/users/${id}`, params)
             .pipe(map(x => {
                 // update stored user if the logged in user updated their own record
                 if (id == this.userValue.responseObject.userdetailDTO.userId) {
