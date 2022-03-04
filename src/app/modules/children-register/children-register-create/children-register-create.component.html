@@ -56,7 +56,7 @@
 
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
-                            <div  [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
                                         <input type="text" name="search" placeholder="Search household info here..."
@@ -114,8 +114,8 @@
 
                                 </table>
                                 <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                            </pagination-controls>
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
                             </div>
                         </div>
                     </div>

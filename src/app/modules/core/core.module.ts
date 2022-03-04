@@ -11,6 +11,5 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CoreRoutingModule,
   ]
 
-  
 })
 export class CoreModule { }

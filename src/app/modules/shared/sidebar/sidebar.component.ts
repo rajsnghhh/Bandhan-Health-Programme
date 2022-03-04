@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   user: any;
   menuList: any
   subMenuList: any;
+  accessList: any;
 
   @Output() public valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -27,7 +28,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loginService.user.subscribe(res => {
       console.log(res);
-      
+
       this.menuList = res.responseObject.menuDetailList;
       console.log(this.menuList, 'menuList');
     });
@@ -40,6 +41,56 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     console.log(this.subMenuList);
   }
 
+  subMenuClick(submenu) {
+
+    var routeId = submenu.subFunctionMasterId
+    console.log(routeId);
+    console.log(submenu.subFunctionShortName);
+
+    if (routeId == 5) {
+      this.router.navigate(['/role-access']);
+    }
+
+    if (routeId == 9) {
+      this.router.navigate(['/vertical']);
+    }
+
+    if (routeId == 13) {
+      this.router.navigate(['/sub-vertical']);
+    }
+
+    if (routeId == 17) {
+      this.router.navigate(['/donor']);
+    }
+
+    if (routeId == 21) {
+      this.router.navigate(['/project']);
+    }
+
+    if (routeId == 25) {
+      this.router.navigate(['/mou']);
+    }
+
+    if (routeId == 65) {
+      this.router.navigate(['/Baseline-Survey/create']);
+    }
+
+    if (routeId == 73) {
+      this.router.navigate(['/Baseline-Survey/view']);
+    }
+
+    if (routeId == 81) {
+      this.router.navigate(['/children-register/create']);
+    }
+
+    if (routeId == 89) {
+      this.router.navigate(['/central-register/view']);
+    }
+
+    if (routeId == 97) {
+      this.router.navigate(['/muac-register/create']);
+    }
+  }
 
 
   ngAfterViewInit(): void {

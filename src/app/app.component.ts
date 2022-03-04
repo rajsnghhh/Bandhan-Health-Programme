@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { User } from './login/user';
+import { ConfirmationDialogService } from './modules/shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from './modules/shared/services/validation.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,8 @@ export class AppComponent {
   title = 'bhp-web';
   fullscreenData: boolean;
   user: User;
-  constructor(public validationService: ValidationService, private accountService: LoginService) {
+
+  constructor(public validationService: ValidationService, private accountService: LoginService, private confirmationDialogService: ConfirmationDialogService) {
     this.accountService.user.subscribe((x) => { this.user = x; });
     // console.log(this.user, 'appComponent')
   }
@@ -24,9 +25,12 @@ export class AppComponent {
   }
 
   logout() {
-    if (confirm('Are you sure, you want to Logout ?')) {
-      this.accountService.logout();
-    }
+
+    this.confirmationDialogService.confirm('', 'Are you sure you want to log out ?')
+      .then(() => this.accountService.logout()
+      )
+
+      .catch(() => '');
   }
 
 }

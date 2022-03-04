@@ -99,21 +99,21 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data: RootObject) => {
-          console.log("menudata",data)
+          console.log("menudata", data)
           console.log(data.message, 'loginData')
           if (data.message.indexOf("first") !== -1) {
             this.accountService.logout();
             this.accountService.userFirstTime = data;
             this.router.navigate(['/register']);
           } else {
-            this.router.navigate(['/Baseline-Survey/create']);
-            this.showSuccess('You are LogIn');
+            this.router.navigate(['/core']);
+            this.showSuccess('Login Successful');
           }
         },
         error => {
           this.accountService.logout();
           this.loading = false;
-          this.showError('User Name & Password not Correct');
+          this.showError('Please Enter Valid credentials');
         });
   }
 
@@ -122,13 +122,13 @@ export class LoginComponent implements OnInit {
   }
 
   showError(message) {
-    this.toaster.error(message, 'Error In LogIn', {
+    this.toaster.error(message, 'Login Failed', {
       timeOut: 3000,
     });
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'WelCome', {
+    this.toaster.success(message, 'Welcome', {
       timeOut: 3000,
     });
   }

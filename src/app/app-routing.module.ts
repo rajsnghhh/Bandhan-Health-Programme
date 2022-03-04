@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'children-register', loadChildren: () => import('./modules/children-register/children-register.module').then(m => m.ChildrenRegisterModule), canActivate: [AuthGuard] },
   { path: 'family-info', loadChildren: () => import('./modules/family-info/family-info.module').then(m => m.FamilyInfoModule), canActivate: [AuthGuard] },
   { path: 'muac-register', loadChildren: () => import('./modules/muac-register/muac-register.module').then(m => m.MuacRegisterModule), canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' }
+  { path: 'core', loadChildren: () => import('./modules/core/core.module').then(m => m.CoreModule), canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

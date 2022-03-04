@@ -10,24 +10,28 @@
 
     <div *ngIf="hide">
         <div class="logo d-flex justify-content-start" style="width: 110%; margin: -45px -3px 0px -4px; ">
-            <a><img src="assets/bk_logo.png" alt=""></a>
+            <a><img src="assets/bk_logo.png" alt="" [routerLink]="['/core']"></a>
         </div>
 
         <div class="matacco" style="margin-top: -15px;">
 
             <mat-accordion>
+
                 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                     *ngFor="let menu of menuList; index as i" (click)="menuClick(i)">
 
                     <mat-expansion-panel-header style="background-color: #499;">
+
                         <mat-panel-title style="color: #ffffff;">
                             {{menu.functionShortName}}
                         </mat-panel-title>
+
                     </mat-expansion-panel-header>
 
                     <div style=" margin-left: -22px;">
                         <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false" *ngFor="let submenu of subMenuList"  >
+                            (closed)="panelOpenState = false" *ngFor="let submenu of subMenuList; index as i"
+                            (click)="subMenuClick(submenu)">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     {{submenu.subFunctionShortName}}
@@ -39,173 +43,7 @@
 
                 </mat-expansion-panel>
             </mat-accordion>
-
         </div>
     </div>
 
 </nav>
-<!-- <ul>
-                                <li> <a class="box" [routerLink]="['donor']"><i class="fa fa-genderless"></i>Donor</a>
-                                </li>
-                            </ul> -->
-
-<!-- <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-user-tag"></i> Role Access
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li> <a class="box" [routerLink]="['role-access']"><i class="fa fa-genderless"></i>Role
-                                        Access</a> </li>
-                            </ul>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-ruler-vertical"></i> Vertical
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li> <a class="box" [routerLink]="['vertical']"><i
-                                            class="fa fa-genderless"></i>Vertical</a> </li>
-                            </ul>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-arrows-alt-v"></i> Sub-Vertical
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['sub-vertical']"><i
-                                            class="fa fa-genderless"></i>Active Sub-Vertical</a></li>
-                                <li><a class="box" [routerLink]="['sub-vertical/create']"> <i
-                                            class="fa fa-genderless"></i>Create Sub-Vertical</a></li>
-                                <li><a class="box" [routerLink]="['sub-vertical/pending']"><i
-                                            class="fa fa-genderless"></i>Pending Sub-Vertical</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-project-diagram"></i> Project
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['project']"><i class="fa fa-genderless"></i>Active
-                                        Project</a></li>
-                                <li><a class="box" [routerLink]="['project/create']"><i class="fa fa-genderless"></i>
-                                        Create Project</a></li>
-                                <li><a class="box" [routerLink]="['project/pending']"><i
-                                            class="fa fa-genderless"></i>Pending Project</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fab fa-wpforms"></i> Mou
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['mou']"><i class="fa fa-genderless"></i>Active Mou</a>
-                                </li>
-                                <li><a class="box" [routerLink]="['mou/create']"><i class="fa fa-genderless"></i> Create
-                                        Mou</a></li>
-                                <li><a class="box" [routerLink]="['mou/pending']"><i
-                                            class="fa fa-genderless"></i>Pending Mou</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fab fa-wpforms"></i> &nbsp;Dynamic Form
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['dynamic-form']"><i class="fa fa-genderless"></i>View
-                                        Dynamic Form</a></li>
-                                <li><a class="box" [routerLink]="['dynamic-form/create']"> <i
-                                            class="fa fa-genderless"></i>Create Dynamic Form</a></li>
-                            </ul>
-                        </mat-expansion-panel> -->
-<!-- </div>
-                </mat-expansion-panel> -->
-
-<!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header style="background-color: #499;">
-                        <mat-panel-title style="color: #ffffff;">
-                            Household Info
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div style=" margin-left: -22px;">
-
-
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-poll"></i> Baseline Survey
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['Baseline-Survey/create']"><i
-                                            class="fa fa-genderless"></i>Create Baseline Survey</a></li>
-                                <li><a class="box" [routerLink]="['Baseline-Survey/view']"><i
-                                            class="fa fa-genderless"></i> View Baseline Survey</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-registered"></i> &nbsp;&nbsp;&nbsp;Central Register
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['central-register/create']"><i
-                                            class="fa fa-genderless"></i>Create Central Register</a></li>
-                                <li><a class="box" [routerLink]="['central-register/view']"> <i
-                                            class="fa fa-genderless"></i>View Central Register</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-male"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Children Register
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['children-register/create']"><i
-                                            class="fa fa-genderless"></i>Children Info</a></li>
-                            </ul>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <i class="fas fa-tape"></i>&nbsp; All Child Register
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ul>
-                                <li><a class="box" [routerLink]="['muac-register/create']"><i
-                                            class="fa fa-genderless"></i>Muac Camp Creation</a></li>
-                                <li><a class="box" [routerLink]="['']"><i class="fa fa-genderless"></i>ACR Child</a>
-                                </li>
-                            </ul>
-                        </mat-expansion-panel>
-                    </div>
-
-                </mat-expansion-panel> -->
-<!-- </mat-accordion> -->
