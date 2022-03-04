@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
 
 @Component({
@@ -41,27 +42,33 @@ export class BaselineCreateComponent implements OnInit {
     childInfo: [],
   };
   idCard: any;
-  blockNames: any[] = [];
-  gpNames: any[] =[];
-  villageNames: any[] =[];
+  // blockNames: any[] = [];
+  // gpNames: any[] =[];
+  // villageNames: any[] =[];
+  villagesOfBranch: Array<any> = [];
+  gpDtoList: Array<any> = [];
+  villageDtoList: Array<any> = [];
+  ssList: Array<any> = [];
+  swasthyaSahayika:Array<any> = [];
+  selectedBlock: String = "--Choose Block--";
+  selectedGp: String = "--Choose GP/ Municipality--";
+  branchId:any;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
-    private httpBranch: BranchService) { }
+    private httpBranch: BranchService,private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
 
-    this.httpBranch.listOfBranchUser().subscribe((res) => {
-      res.responseObject.map((arr) => {
-        this.blockNames.push(arr);
-        this.gpNames.push(arr.gpDtoList);
-        this.villageNames.push(arr);
-
-      })
-      // console.log(res.responseObject);
-      
-    });
+    // this.httpBranch.listOfBranchUser().subscribe((res) => {
+    //   res.responseObject.map((arr) => {
+    //     this.blockNames.push(arr);
+    //     this.gpNames.push(arr.gpDtoList);
+    //     this.villageNames.push(arr);
+    //   })
+    //    console.log(res.responseObject);
+    // });
 
     this.getMinDate();
     this.createForm();
@@ -113,6 +120,53 @@ export class BaselineCreateComponent implements OnInit {
     this.baselineService.getIdCardDetails(obj).subscribe((response: any) => {
       this.cardDetails = response.responseObject;
       // console.log(this.cardDetails);
+    })
+
+    let dataAccessDTO = {
+      userId: this.sidebarService.userId,
+      userName: this.sidebarService.loginId,
+    }
+    
+    let Dto = {
+      dataAccessDTO: dataAccessDTO,
+      branchId: this.sidebarService.branchId
+    }
+    
+    this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch , 'villagesOfBranch');
+    })
+    
+  }
+ 
+  changeBlock(blockname){
+    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname).gpDtoList;
+    this.baselineSurvey.get('gp').reset();
+    this.baselineSurvey.get('gram').reset();
+    this.baselineSurvey.get('swasthyaSahayika').reset();
+  }
+  changeGp(gpName){
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock).gpDtoList.find(gp => gp.name == gpName).villageDtoList;
+    this.baselineSurvey.get('gram').reset();
+    this.baselineSurvey.get('swasthyaSahayika').reset();
+  }
+  changeVillage(villagename){
+    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock).gpDtoList.find(gp => gp.name == this.selectedGp).villageDtoList.find(vill=>vill.villageName == villagename).villageMasterId;
+    let req ={
+      dataAccessDTO : {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      villageId: villId,
+      userId:this.sidebarService.userId
+    }
+    this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
+      console.log(res.responseObject)
+      let val:any = []; 
+      for(let i =0; i< res.responseObject.length; i++){
+        val.push(res.responseObject[i].SwasthyaSahayikaDetail.swasthyaSahayikaName);
+      }
+      this.swasthyaSahayika = val
     })
   }
 

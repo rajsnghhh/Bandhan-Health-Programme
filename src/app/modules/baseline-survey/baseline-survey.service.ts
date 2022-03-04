@@ -58,6 +58,13 @@ export class BaselineSurveyService {
     return this.http.post(`${this.baseURL}baselinesurvey/status`, obj)
   }
 
+  villagesOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
+  }
+
+  ssVillageWiseList(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj)
+  }
 
 }
 
