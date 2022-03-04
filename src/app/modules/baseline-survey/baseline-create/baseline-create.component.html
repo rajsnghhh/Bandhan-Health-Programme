@@ -12,10 +12,10 @@
                             <div class="form-group col-md">
                                 <label for="block">Block
                                     :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                                <select class="form-select" [(ngModel)]="selectedBlock" (change)="changeBlock($event.target.value)" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
                                     'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
                                     <option value="">-- Select Block --</option>
-                                    <option *ngFor="let block of blockNames" value="block.blockMasterId">
+                                    <option *ngFor="let block of villagesOfBranch" >
                                         {{block.blockName}}</option>
                                 </select>
                                 <div *ngIf="f.block.errors" class="invalid-feedback">
@@ -26,10 +26,10 @@
                             <div class="form-group col-md">
                                 <label for="gp">GP/ Municipality
                                     :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                                <select class="form-select" [(ngModel)]="selectedGp" formControlName="gp" (change)="changeGp($event.target.value)" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
                                     'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
                                     <option value="">-- Select GP/ Municipality --</option>
-                                    <option *ngFor="let gp of gpNames" value="gp.gpMunicipalId">
+                                    <option *ngFor="let gp of gpDtoList">
                                         {{gp.name}}</option>
                                 </select>
                                 <div *ngIf="f.gp.errors" class="invalid-feedback">
@@ -40,11 +40,11 @@
                             <div class="form-group col-md">
                                 <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                                <select class="form-select" formControlName="gram" (change)="changeVillage($event.target.value)" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                     'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
-                                    <option value="">-- Select --</option>
-                                    <!-- <option *ngFor="let vill of villageNames" value="vill.villageMasterId">
-                                        {{vill.villageName}}</option> -->
+                                    <option value="">-- Select Village --</option>
+                                    <option *ngFor="let vill of villageDtoList" >
+                                        {{vill.villageName}}</option>
                                 </select>
                                 <div *ngIf="f.gram.errors" class="invalid-feedback">
                                     <div *ngIf="f.gram.errors.required">Above Selection is required</div>
@@ -54,9 +54,11 @@
                             <div class="form-group col-md">
                                 <label for="swasthyaSahayika">
                                     Name of SS/ Health Volunteer :</label>
-                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika">
+                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika"[ngClass]="{ 'is-invalid': f.swasthyaSahayika.invalid && f.swasthyaSahayika.touched,
+                                'is-valid': f.swasthyaSahayika.valid && (f.swasthyaSahayika.dirty || f.swasthyaSahayika.touched) }">
                                     <option value="">-- Select --</option>
-                                    <option>gg</option>
+                                    <option *ngFor="let ss of swasthyaSahayika" >
+                                        {{ss}}</option>
                                 </select>
                             </div>
 

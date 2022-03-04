@@ -1,12 +1,13 @@
-<img src="../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh; margin-left: -530px;" >
+<img src="../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;     margin-left: -551px;
+margin-top: -54px;" >
 <div
   class="card"
   style="
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 33%;
+    left: 85%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 25%;
   "
 >
   <h4 class="card-header" style="background-color: #499;" >Login</h4>
@@ -22,7 +23,7 @@
           border-bottom: 1px solid black;
           border-top: 1px solid black;
           border-left: 1px solid black;
-          padding: 6px 1px 1px 13px;
+          padding: 6px 7px 0px 7px;
           border-radius: 5px 0px 0px 5px;">BK  </p>
           <input
           style="display: block;" 
@@ -55,9 +56,10 @@
           style="border: 1px solid black;"
           formControlName="password"
           class="form-control"
+          [maxlength]="20"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
+        <div style="margin: -26px 0px 0px 255px;z-index: 99999;">
           <div *ngIf="show; else elseblock">
             <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
           </div>
