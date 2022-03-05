@@ -10,11 +10,17 @@ export class SidebarService {
   loginId: string;
   userId: any;
   branchId: any;
+  RoleDTOName: string;
+  listOfRegion: any = [];
   baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-
+  //HCO ** TL
   listOfBranchesOfUser(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, obj)
+  }
+  //Other Higher lavel
+  listOfRegionsOfUser(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj)
   }
 }

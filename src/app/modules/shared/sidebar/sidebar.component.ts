@@ -31,19 +31,32 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       console.log(res);
       this.sidebarService.loginId = res.responseObject.userdetailDTO.loginId;
       this.sidebarService.userId = res.responseObject.userdetailDTO.userId;
+      this.sidebarService.RoleDTOName = res.responseObject.RoledetailDTO.roleShortName;
       this.menuList = res.responseObject.menuDetailList;
       console.log(this.menuList, 'menuList');
     });
 
+
+    this.checkRoledetailDTO();
+
+  }
+
+  checkRoledetailDTO() {
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       }
     }
-    this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-      this.sidebarService.branchId = res.responseObject[0].branchId
-    })
+    if (this.sidebarService.RoleDTOName === 'HCO' || this.sidebarService.RoleDTOName === 'TL') {
+      this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
+        this.sidebarService.branchId = res.responseObject[0].branchId
+      })
+    } else {
+      this.sidebarService.listOfRegionsOfUser(req).subscribe((res) => {
+        this.sidebarService.listOfRegion = res.responseObject;
+      })
+    }
   }
 
   menuClick(i) {
