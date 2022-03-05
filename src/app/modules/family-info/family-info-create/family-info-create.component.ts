@@ -267,16 +267,12 @@ export class FamilyInfoCreateComponent implements OnInit {
     this.baselineSurvey.controls.childbelow5.setValue('');
     this.baselineSurvey.controls.institutional.setValue('');
     this.baselineSurvey.controls.breastFeeding.setValue('NA');
-    this.childDetails.childInfo = [{
-      age: 'string',
-      childDetailId: 0,
-      childName: '',
-      createdOn: 'string',
-      dob: '',
-      familyDetailId: this.famData.familyDetailId,
-      sex: '',
-      status: 'A'
-    }]
+    if (this.famData.famid > 0) {
+      this.childDetails.childInfo.filter((v) => v.status = 'D')
+    }
+    else {
+      this.childDetails.childInfo = [];
+    }
   }
 
   childBelow18(e) {
@@ -284,6 +280,12 @@ export class FamilyInfoCreateComponent implements OnInit {
     this.baselineSurvey.controls.childbelow5.setValue('');
     this.baselineSurvey.controls.institutional.setValue('');
     this.baselineSurvey.controls.breastFeeding.setValue('NA');
+    if (this.famData.famid > 0) {
+      this.childDetails.childInfo.filter((v) => v.status = 'D')
+    }
+    else {
+      this.childDetails.childInfo = [];
+    }
   }
 
   childBelow5(e) {
