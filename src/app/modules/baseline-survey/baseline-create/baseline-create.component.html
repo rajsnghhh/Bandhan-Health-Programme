@@ -1,3 +1,5 @@
+<app-loader [hidden]="loader"></app-loader>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -40,7 +42,6 @@
                 >
                 <select
                   class="form-select"
-                  [(ngModel)]="selectedBranch"
                   (change)="changeBranch($event.target.value)"
                   formControlName="branch"
                   id="branch"
@@ -50,8 +51,8 @@
                       f.branch.valid && (f.branch.dirty || f.branch.touched)
                   }"
                 >
-                  <option value="-- Select Branch --">-- Select Branch --</option>
-                  <option *ngFor="let branch of branchList">
+                  <option value="">-- Select Branch --</option>
+                  <option *ngFor="let branch of branchList" >
                     {{ branch.branchName }}
                   </option>
                 </select>
@@ -68,7 +69,6 @@
                 >
                 <select
                   class="form-select"
-                  [(ngModel)]="selectedBlock"
                   (change)="changeBlock($event.target.value)"
                   formControlName="block"
                   id="block"
@@ -78,8 +78,8 @@
                       f.block.valid && (f.block.dirty || f.block.touched)
                   }"
                 >
-                  <option value="-- Select Block --">-- Select Block --</option>
-                  <option *ngFor="let block of villagesOfBranch">
+                  <option value="">-- Select Block --</option>
+                  <option *ngFor="let block of villagesOfBranch" >
                     {{ block.blockName }}
                   </option>
                 </select>
@@ -96,7 +96,6 @@
                 >
                 <select
                   class="form-select"
-                  [(ngModel)]="selectedGp"
                   formControlName="gp"
                   (change)="changeGp($event.target.value)"
                   id="gp"
@@ -105,7 +104,7 @@
                     'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
                   }"
                 >
-                  <option value="-- Select GP/ Municipality --">-- Select GP/ Municipality --</option>
+                  <option value="">-- Select GP/ Municipality --</option>
                   <option *ngFor="let gp of gpDtoList">
                     {{ gp.name }}
                   </option>
@@ -161,7 +160,7 @@
                       (f.swasthyaSahayika.dirty || f.swasthyaSahayika.touched)
                   }"
                 >
-                  <option value="">-- Select --</option>
+                  <option value="">-- Select SS --</option>
                   <option *ngFor="let ss of swasthyaSahayika">
                     {{ ss }}
                   </option>

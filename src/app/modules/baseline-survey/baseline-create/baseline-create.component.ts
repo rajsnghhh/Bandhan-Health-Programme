@@ -50,11 +50,11 @@ export class BaselineCreateComponent implements OnInit {
   villageDtoList: Array<any> = [];
   ssList: Array<any> = [];
   swasthyaSahayika:Array<any> = [];
-  selectedBranch:string = "-- Select Branch --";
-  selectedBlock: String = "-- Select Block --";
-  selectedGp: String = "-- Select GP/ Municipality --";
+  selectedBlock: String;
+  selectedGp: String;
   branchId:any;
   regionBranchHide:boolean;
+  loader: boolean = true;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
@@ -133,21 +133,35 @@ export class BaselineCreateComponent implements OnInit {
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
   changeRegion(region){
-    let regionId = this.regionList.find(reg => reg.regionName == region).regionMasterId;
+    let regionId = this.regionList.find(reg => reg.regionName == region)?.regionMasterId;
     let req ={
       dataAccessDTO : {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
+        userId: this.sidebarService?.userId,
+        userName: this.sidebarService?.loginId,
       },
       regionId: regionId
     }
-    this.baselineService.listOfBranchesOfARegion(req).subscribe((res)=>{
-      this.branchList = res.responseObject;
-    })
-
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.listOfBranchesOfARegion(req).subscribe((res)=>{
+        this.loader = true;
+        this.branchList = res?.responseObject;
+      },(error) => {
+        this.loader = true;
+        this.branchList = null;
+      }
+      )
+    }, 500);
+    this.baselineSurvey.get('branch').reset();
+    this.baselineSurvey.get('block').reset() ;
+    this.baselineSurvey.get('gp').reset();
+    this.baselineSurvey.get('gram').reset();
+    this.baselineSurvey.get('swasthyaSahayika').reset();
   }
+
+  
   changeBranch(branch){
-    let branchId = this.branchList.find(bran => bran.branchName == branch).branchId;
+    let branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     let Dto = {
       dataAccessDTO : {
         userId: this.sidebarService.userId,
@@ -155,28 +169,34 @@ export class BaselineCreateComponent implements OnInit {
       },
       branchId: branchId
     }
-    this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch , 'villagesOfBranch2');
-    })
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
+        this.loader = true;
+        this.villagesOfBranch = res.responseObject;
+        console.log(this.villagesOfBranch , 'villagesOfBranch2');
+      })
+    }, 500);
     this.baselineSurvey.get('block').reset();
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
   changeBlock(blockname){
-    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname).gpDtoList;
+    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
+    this.selectedBlock = this.baselineSurvey.get('block').value;
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
   changeGp(gpName){
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock).gpDtoList.find(gp => gp.name == gpName).villageDtoList;
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.selectedGp = this.baselineSurvey.get('gp').value;
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
   changeVillage(villagename){
-    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock).gpDtoList.find(gp => gp.name == this.selectedGp).villageDtoList.find(vill=>vill.villageName == villagename).villageMasterId;
+    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill=>vill.villageName == villagename)?.villageMasterId;
     let req ={
       dataAccessDTO : {
         userId: this.sidebarService.userId,
@@ -185,13 +205,21 @@ export class BaselineCreateComponent implements OnInit {
       villageId: villId,
       userId:this.sidebarService.userId
     }
-    this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
-      let val:any = []; 
-      for(let i =0; i< res.responseObject.length; i++){
-        val.push(res.responseObject[i].SwasthyaSahayikaDetail.swasthyaSahayikaName);
-      }
-      this.swasthyaSahayika = val
-    })
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
+        this.loader = true;
+        let val:any = []; 
+        for(let i =0; i< res.responseObject?.length; i++){
+          val.push(res.responseObject[i].swasthyaSahayikaName);
+        }
+        this.swasthyaSahayika = val
+      },(error) => {
+        this.loader = true;
+        this.swasthyaSahayika = null;
+      })
+    }, 500);
+    
   }
 
   aadharcardValidation(event) {

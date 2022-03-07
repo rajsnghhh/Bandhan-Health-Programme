@@ -17,6 +17,7 @@ export class ResetComponent implements OnInit {
   loading = false;
   submitted = false;
   show: boolean = false;
+  loader: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,26 +53,30 @@ export class ResetComponent implements OnInit {
     }
 
     this.loading = true;
-    this.accountService.reset(this.f.newPassword.value)
-      .pipe(first())
-      .subscribe(
-        (data: Reset) => {
-          console.log(data, 'registerData');
-          if (data.status === true) {
-            this.showSuccess('Success');
-            this.router.navigate(['/'], { relativeTo: this.route });
-          } else if (newPassword != confirmPassword) {
-            this.loading = false;
-            this.checkBothPasswordSame('Error');
-          } else {
-            this.loading = false;
-            this.showError('Error');
-          }
-        },
-        error => {
-          this.showError('Error');
-          this.loading = false;
-        });
+    setTimeout(() => {
+      if (newPassword == confirmPassword) {
+        this.accountService.reset(this.f.newPassword.value)
+          .pipe(first())
+          .subscribe(
+            (data: Reset) => {
+              console.log(data, 'resetData');
+              if ((data.status === true)) {
+                this.showSuccess('Success');
+                this.router.navigate(['/'], { relativeTo: this.route });
+              }
+              this.loader = true;
+            },
+            error => {
+              this.loader = true;
+              this.showError('Error');
+              this.loading = false;
+            });
+      } else {
+        this.loading = false;
+        this.checkBothPasswordSame('Error');
+      }
+    }, 1000);
+
   }
 
   password() {

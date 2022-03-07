@@ -29,10 +29,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loginService.user.subscribe(res => {
       console.log(res);
-      this.sidebarService.loginId = res.responseObject.userdetailDTO.loginId;
-      this.sidebarService.userId = res.responseObject.userdetailDTO.userId;
-      this.sidebarService.RoleDTOName = res.responseObject.RoledetailDTO.roleShortName;
-      this.menuList = res.responseObject.menuDetailList;
+      this.sidebarService.loginId = res?.responseObject?.userdetailDTO?.loginId;
+      this.sidebarService.userId = res?.responseObject?.userdetailDTO?.userId;
+      this.sidebarService.RoleDTOName = res?.responseObject?.RoledetailDTO?.roleShortName;
+      this.menuList = res?.responseObject.menuDetailList;
       console.log(this.menuList, 'menuList');
     });
 

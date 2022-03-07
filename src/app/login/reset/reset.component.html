@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <img src="../../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;     margin-left: -551px;
 margin-top: -54px;" >
 <div
@@ -25,6 +26,7 @@ margin-top: -54px;" >
               formControlName="newPassword"
               class="form-control"
               [maxlength]="20"
+              [minlength]="4"
               [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }"
             />
             <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
@@ -52,6 +54,7 @@ margin-top: -54px;" >
           placeholder="Enter again"
           class="form-control"
           [maxlength]="20"
+          [minlength]="4"
           [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
         />
         

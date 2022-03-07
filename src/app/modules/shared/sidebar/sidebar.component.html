@@ -28,6 +28,9 @@
 
                     </mat-expansion-panel-header>
 
+                    <!-- <ul *ngFor="let submenu of subMenuList; index as i">
+                        <li (click)="subMenuClick(submenu)">{{submenu.subFunctionShortName}}</li>
+                    </ul> -->
                     <div style=" margin-left: -22px;">
                         <mat-expansion-panel style=" width: 250px;" (opened)="panelOpenState = true"
                             (closed)="panelOpenState = false" *ngFor="let submenu of subMenuList; index as i"

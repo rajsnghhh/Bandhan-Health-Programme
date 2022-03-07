@@ -14,46 +14,12 @@ import { RootObject } from './user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  // loginForm: FormGroup;
-  // show: boolean = false;
-  // get f(): any {
-  //   return this.loginForm.controls;
-  // }
-
-  // dataAccessDTO = {
-  //   deviceType: "W",
-  //   loginId: "BK000001",
-  //   password: "1234"
-  // }
-
-  // constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
-
-  // ngOnInit(): void {
-  //   this.loginForm = this.fb.group({
-  //     username: [null, Validators.required],
-  //     password: [null, Validators.required]
-  //   });
-
-
-  // }
-  // password() {
-  //   this.show = !this.show;
-  // }
-
-  // login() {
-  //   console.log(this.f.username.value);
-
-  //   this.http.post('http://192.168.153.56:6181/bhp/api/v1/user/login', this.dataAccessDTO).subscribe((res) => {
-  //     console.log(res);
-  //     this.router.navigate(['./Baseline-Survey/create']);
-  //   })
-  // }
-
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
   show: boolean = false;
+  loader: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,11 +28,10 @@ export class LoginComponent implements OnInit {
     private accountService: LoginService,
     public validationService: ValidationService,
     private toaster: ToastrService
-    // private alertService: AlertService
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
-      this.router.navigate(['/Baseline-Survey/create']);
+      this.router.navigate(['/core']);
     }
   }
 
@@ -85,36 +50,39 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    // reset alerts on submit
-    // this.alertService.clear();
-
+    this.loader = false;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.loader = true;
       return;
     }
+    this.loading = false;
 
-    this.loading = true;
-    this.accountService.login(("BK" + this.f.username.value), this.f.password.value)
-      .pipe(first())
-      .subscribe(
-        (data: RootObject) => {
-          console.log("menudata", data)
-          console.log(data.message, 'loginData')
-          if (data.message.indexOf("first") !== -1) {
+    setTimeout(() => {
+      this.accountService.login(("BK" + this.f.username.value), this.f.password.value)
+        .pipe(first())
+        .subscribe(
+          (data: RootObject) => {
+            console.log("menudata", data)
+            console.log(data.message, 'loginData')
+            if (data.message.indexOf("first") !== -1) {
+              this.accountService.logout();
+              this.accountService.userFirstTime = data;
+              this.router.navigate(['/reset']);
+            } else {
+              this.router.navigate(['/core']);
+              this.showSuccess('Login Successful');
+            }
+            this.loader = true;
+          },
+          error => {
+            this.loader = true;
             this.accountService.logout();
-            this.accountService.userFirstTime = data;
-            this.router.navigate(['/reset']);
-          } else {
-            this.router.navigate(['/core']);
-            this.showSuccess('Login Successful');
-          }
-        },
-        error => {
-          this.accountService.logout();
-          this.loading = false;
-          this.showError('Please Enter Valid credentials');
-        });
+            this.loading = false;
+            this.showError('Please Enter Valid credentials');
+          });
+    }, 2000);
+
   }
 
   password() {
