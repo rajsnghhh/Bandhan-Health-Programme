@@ -12,6 +12,7 @@ export class SidebarService {
   branchId: any;
   RoleDTOName: string;
   listOfRegion: any = [];
+  regionBranchHide: boolean;
   baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }

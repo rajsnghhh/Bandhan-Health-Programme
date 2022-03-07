@@ -51,11 +51,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if (this.sidebarService.RoleDTOName === 'HCO' || this.sidebarService.RoleDTOName === 'TL') {
       this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
         this.sidebarService.branchId = res.responseObject[0].branchId
-      })
+      });
+      this.sidebarService.regionBranchHide = false;
     } else {
       this.sidebarService.listOfRegionsOfUser(req).subscribe((res) => {
         this.sidebarService.listOfRegion = res.responseObject;
-      })
+      });
+      this.sidebarService.regionBranchHide = true;
     }
   }
 

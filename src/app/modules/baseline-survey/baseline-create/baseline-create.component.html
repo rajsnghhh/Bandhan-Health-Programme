@@ -7,15 +7,14 @@
         <form class="form-signin" [formGroup]="baselineSurvey">
           <fieldset class="scheduler-border">
             <legend class="scheduler-border">HH Info</legend>
-            <div class="row">
 
+            <div  class="row" *ngIf="regionBranchHide">
               <div class="form-group col-md">
                 <label for="region"
                   >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
                 >
                 <select
                   class="form-select"
-                  [(ngModel)]="selectedRegion"
                   (change)="changeRegion($event.target.value)"
                   formControlName="region"
                   id="region"
@@ -51,7 +50,7 @@
                       f.branch.valid && (f.branch.dirty || f.branch.touched)
                   }"
                 >
-                  <option value="">-- Select Branch --</option>
+                  <option value="-- Select Branch --">-- Select Branch --</option>
                   <option *ngFor="let branch of branchList">
                     {{ branch.branchName }}
                   </option>
@@ -60,7 +59,9 @@
                   <div *ngIf="f.branch.errors.required">Branch is required</div>
                 </div>
               </div>
+            </div>
 
+            <div class="row">
               <div class="form-group col-md">
                 <label for="block"
                   >Block :&nbsp;<span class="text-danger">*&nbsp;</span></label
@@ -77,7 +78,7 @@
                       f.block.valid && (f.block.dirty || f.block.touched)
                   }"
                 >
-                  <option value="">-- Select Block --</option>
+                  <option value="-- Select Block --">-- Select Block --</option>
                   <option *ngFor="let block of villagesOfBranch">
                     {{ block.blockName }}
                   </option>
@@ -104,7 +105,7 @@
                     'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
                   }"
                 >
-                  <option value="">-- Select GP/ Municipality --</option>
+                  <option value="-- Select GP/ Municipality --">-- Select GP/ Municipality --</option>
                   <option *ngFor="let gp of gpDtoList">
                     {{ gp.name }}
                   </option>
@@ -118,7 +119,7 @@
 
               <div class="form-group col-md">
                 <label for="gram"
-                  >GS/ Ward/ Village/ Locality:&nbsp;<span class="text-danger"
+                  >GS/ Ward/ Village:&nbsp;<span class="text-danger"
                     >*&nbsp;</span
                   ></label
                 >
@@ -146,7 +147,7 @@
 
               <div class="form-group col-md">
                 <label for="swasthyaSahayika">
-                  Name of SS/ Health Volunteer :</label
+                  Name of SS :</label
                 >
                 <select
                   class="form-select"

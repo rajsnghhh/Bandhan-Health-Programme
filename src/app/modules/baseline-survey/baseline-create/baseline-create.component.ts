@@ -43,9 +43,6 @@ export class BaselineCreateComponent implements OnInit {
     childInfo: [],
   };
   idCard: any;
-  // blockNames: any[] = [];
-  // gpNames: any[] =[];
-  // villageNames: any[] =[];
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -53,11 +50,11 @@ export class BaselineCreateComponent implements OnInit {
   villageDtoList: Array<any> = [];
   ssList: Array<any> = [];
   swasthyaSahayika:Array<any> = [];
-  selectedRegion: string = "-- Select Region --";
   selectedBranch:string = "-- Select Branch --";
-  selectedBlock: String = "--Choose Block--";
-  selectedGp: String = "--Choose GP/ Municipality--";
+  selectedBlock: String = "-- Select Block --";
+  selectedGp: String = "-- Select GP/ Municipality --";
   branchId:any;
+  regionBranchHide:boolean;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
@@ -65,16 +62,6 @@ export class BaselineCreateComponent implements OnInit {
     private httpBranch: BranchService,private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
-
-    // this.httpBranch.listOfBranchUser().subscribe((res) => {
-    //   res.responseObject.map((arr) => {
-    //     this.blockNames.push(arr);
-    //     this.gpNames.push(arr.gpDtoList);
-    //     this.villageNames.push(arr);
-    //   })
-    //    console.log(res.responseObject);
-    // });
-
     this.getMinDate();
     this.createForm();
     this.childDetails.childInfo = [];
@@ -143,9 +130,9 @@ export class BaselineCreateComponent implements OnInit {
     })
     
     this.regionList = this.sidebarService.listOfRegion;
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
   changeRegion(region){
-    console.log(this.regionList);
     let regionId = this.regionList.find(reg => reg.regionName == region).regionMasterId;
     let req ={
       dataAccessDTO : {
@@ -155,14 +142,12 @@ export class BaselineCreateComponent implements OnInit {
       regionId: regionId
     }
     this.baselineService.listOfBranchesOfARegion(req).subscribe((res)=>{
-      console.log(res.responseObject);
       this.branchList = res.responseObject;
     })
 
   }
   changeBranch(branch){
     let branchId = this.branchList.find(bran => bran.branchName == branch).branchId;
-    //this.sidebarService.branchId = branchId;
     let Dto = {
       dataAccessDTO : {
         userId: this.sidebarService.userId,
@@ -201,7 +186,6 @@ export class BaselineCreateComponent implements OnInit {
       userId:this.sidebarService.userId
     }
     this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
-      console.log(res.responseObject)
       let val:any = []; 
       for(let i =0; i< res.responseObject.length; i++){
         val.push(res.responseObject[i].SwasthyaSahayikaDetail.swasthyaSahayikaName);
