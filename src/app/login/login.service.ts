@@ -58,7 +58,7 @@ export class LoginService {
         this.router.navigate(['/']);
     }
 
-    register(password) {
+    reset(password) {
         let requestBody = {
             userId: this.userFirstTime.responseObject.userdetailDTO.userId,
             newPassword: password

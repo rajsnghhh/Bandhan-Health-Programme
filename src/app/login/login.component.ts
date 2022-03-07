@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
           if (data.message.indexOf("first") !== -1) {
             this.accountService.logout();
             this.accountService.userFirstTime = data;
-            this.router.navigate(['/register']);
+            this.router.navigate(['/reset']);
           } else {
             this.router.navigate(['/core']);
             this.showSuccess('Login Successful');
