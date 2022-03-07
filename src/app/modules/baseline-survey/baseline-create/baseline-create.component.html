@@ -12,10 +12,12 @@
                             <div class="form-group col-md">
                                 <label for="block">Block
                                     :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" [(ngModel)]="selectedBlock" (change)="changeBlock($event.target.value)" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                                <select class="form-select" [(ngModel)]="selectedBlock"
+                                    (change)="changeBlock($event.target.value)" formControlName="block" id="block"
+                                    [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
                                     'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
                                     <option value="">-- Select Block --</option>
-                                    <option *ngFor="let block of villagesOfBranch" >
+                                    <option *ngFor="let block of villagesOfBranch">
                                         {{block.blockName}}</option>
                                 </select>
                                 <div *ngIf="f.block.errors" class="invalid-feedback">
@@ -26,7 +28,8 @@
                             <div class="form-group col-md">
                                 <label for="gp">GP/ Municipality
                                     :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" [(ngModel)]="selectedGp" formControlName="gp" (change)="changeGp($event.target.value)" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                                <select class="form-select" [(ngModel)]="selectedGp" formControlName="gp"
+                                    (change)="changeGp($event.target.value)" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
                                     'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
                                     <option value="">-- Select GP/ Municipality --</option>
                                     <option *ngFor="let gp of gpDtoList">
@@ -40,10 +43,11 @@
                             <div class="form-group col-md">
                                 <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="gram" (change)="changeVillage($event.target.value)" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                                <select class="form-select" formControlName="gram"
+                                    (change)="changeVillage($event.target.value)" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                     'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                     <option value="">-- Select Village --</option>
-                                    <option *ngFor="let vill of villageDtoList" >
+                                    <option *ngFor="let vill of villageDtoList">
                                         {{vill.villageName}}</option>
                                 </select>
                                 <div *ngIf="f.gram.errors" class="invalid-feedback">
@@ -54,10 +58,11 @@
                             <div class="form-group col-md">
                                 <label for="swasthyaSahayika">
                                     Name of SS/ Health Volunteer :</label>
-                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika"[ngClass]="{ 'is-invalid': f.swasthyaSahayika.invalid && f.swasthyaSahayika.touched,
+                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika"
+                                    [ngClass]="{ 'is-invalid': f.swasthyaSahayika.invalid && f.swasthyaSahayika.touched,
                                 'is-valid': f.swasthyaSahayika.valid && (f.swasthyaSahayika.dirty || f.swasthyaSahayika.touched) }">
                                     <option value="">-- Select --</option>
-                                    <option *ngFor="let ss of swasthyaSahayika" >
+                                    <option *ngFor="let ss of swasthyaSahayika">
                                         {{ss}}</option>
                                 </select>
                             </div>
@@ -191,7 +196,7 @@
                             <div class="form-group col-md-3">
                                 <label for="husbandName">Husband/Guardian’s:&nbsp;<span
                                         class="text-danger">*&nbsp;</span></label>
-                                <input type="text" class="form-control" maxlength="20" placeholder="Enter Husband Name"
+                                <input type="text" class="form-control" maxlength="60" placeholder="Enter Husband Name"
                                     formControlName="husbandName"
                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                     style="text-transform:capitalize;" [ngClass]="{ 'is-invalid': f.husbandName.invalid && f.husbandName.touched,
@@ -631,7 +636,7 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
                             <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false">
+                                    [min]="minDate" [max]="today" (keydown)="restrictTypeOfDate()">
                             </td>
                             <td>
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
@@ -662,59 +667,3 @@
     </div>
 
 </ng-template>
-
-<!-- <button class="btn btn-success m-1" (click)="saveMoreBaselineCreate()" *ngIf="!houseHoldId"><i
-                                class="fa fa-plus m-1"></i>Add More
-                            Family</button>
-                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
-                            *ngIf="!houseHoldId"><i class="fas fa-check-circle m-1"></i>Save
-                            single Family</button>
-                        <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate(true)"
-                            *ngIf="houseHoldId"><i class="fas fa-check-circle m-1"></i>Save</button>
-                        <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()"><i
-                                class="fa fa-refresh m-1"></i>Reset</button>
-                        <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()" *ngIf="houseHoldId"><i
-                                class="fa fa-arrow-left m-1"></i>Back</button> -->
-<!-- <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()"><i
-                                class="fa fa-arrow-left m-1"></i>Back</button> -->
-
-<!-- <div class="white_box_tittle list_header"
-                        *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0">
-
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Husband</th>
-                                            <th>Pregnant <br>women</th>
-                                            <th>Lactating mother<br>(Up to 2 yr)</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr
-                                            *ngFor="let item of requestBody.houseHoldDetailDTO.familyDetailDTOList ; index as i">
-                                            <td>{{item.firstName}} {{item.middleName}}
-                                                {{item.lastName}}</td>
-                                            <td>{{item.age}}</td>
-                                            <td>{{item.husbandOrGuardianName}}</td>
-                                            <td>{{item.pregnantWoman}}</td>
-                                            <td>{{item.lactetingMother}}</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div> -->
-
-<!-- <div class="text-center">
-                        <button class="btn btn-primary m-1" (click)="saveBaselineCreate()"
-                            *ngIf="requestBody.houseHoldDetailDTO && requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0"><i
-                                class="fas fa-check-circle m-1"></i>Save Multiple Family</button>
-                    </div> -->

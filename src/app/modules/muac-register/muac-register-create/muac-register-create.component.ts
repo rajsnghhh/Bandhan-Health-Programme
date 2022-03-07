@@ -325,4 +325,8 @@ export class MuacRegisterCreateComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
+  restrictTypeOfDate() {
+    return false;
+  }
 }

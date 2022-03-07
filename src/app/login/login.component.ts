@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
         error => {
           this.accountService.logout();
           this.loading = false;
-          this.showError('Please Enter Valid credentials');
+          this.showError('Please Enter Valid Credentials');
         });
   }
 

@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class BranchService {
+
+  baseURL = environment.apiUrl;
 
   dataAccessDTO = {
     userId: '100',
@@ -19,6 +23,6 @@ export class BranchService {
   constructor(private http: HttpClient) { }
 
   listOfBranchUser(): any {
-    return this.http.post('http://192.168.153.56:6181/bhp/api/v1/village/getVillagesOfABranch', this.Dto)
+    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, this.Dto)
   }
 }

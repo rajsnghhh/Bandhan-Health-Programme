@@ -498,15 +498,25 @@
                     <tbody>
 
                         <tr *ngFor="let items of childDetails.childInfo; index as i">
-                            <td> <input type="text" class="form-control" maxlength="20"
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="text" class="form-control" maxlength="20"
                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                     style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
-                            <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false">
+                            <td *ngIf="childDetails.childInfo[i].status == 'D'"> <input type="text" class="form-control"
+                                    maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                    style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
+                                    placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName"
+                                    readonly>
                             </td>
-                            <td>
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
+                                    [min]="minDate" [max]="today" (keydown)="restrictTypeOfDate()">
+                            </td>
+                            <td *ngIf="childDetails.childInfo[i].status == 'D'"> <input type="date" class="form-control"
+                                    [(ngModel)]="childDetails.childInfo[i].dob" [min]="minDate" [max]="today"
+                                    (keydown)="restrictTypeOfDate()" readonly>
+                            </td>
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'">
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
                                     <option value="">-- Select Sex --</option>
                                     <option value="M">Male</option>
@@ -514,8 +524,20 @@
                                     <option value="O">Others</option>
                                 </select>
                             </td>
-                            <td><button type="button" class="btn btn-remove" (click)="removeNewChild(i)"><i
+                            <td *ngIf="childDetails.childInfo[i].status == 'D'" style="pointer-events:none">
+                                <select class="form-select" style="background-color:#e9ecef" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others</option>
+                                </select >
+                            </td>
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'"><button type="button"
+                                    class="btn btn-remove" (click)="removeNewChild(i)"><i
                                         class="fas fa-minus-circle"></i></button>
+                            </td>
+                            <td *ngIf="childDetails.childInfo[i].status == 'D'"><span style="color: red;"> Selected for
+                                    delete</span>
                             </td>
 
                         </tr>

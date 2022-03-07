@@ -105,15 +105,6 @@
                                 <td style="padding: 0px;">{{item.lactetingMother}}</td>
                                 <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                     (click)="openModal(viewDetails, item.familyDetailId)">View</td>
-                                <!-- <td style="padding: 0px;"
-                                    *ngIf="item.familyType == 'J' && item.familyDetailRemaingStatusDTO.createdFamilyCount > 1">
-                                    <i class="fas fa-edit" title="Edit Family"> </i> 
-                                    <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item.familyDetailId,i)"></i>
-                                </td>
-                                <td style="padding: 0px;"
-                                    *ngIf="item.familyType !='J' || item.familyDetailRemaingStatusDTO.createdFamilyCount == 1">
-                                    <i class="fas fa-edit" title="Edit Family"> </i> <i class="fas fa-trash"></i>
-                                </td> -->
                                 <td style="padding: 0px;"> <i class="fas fa-edit" title="Edit Family"> </i>
                                     <i class="fas fa-trash" title="Delete Family"></i>
                                 </td>
@@ -121,7 +112,6 @@
                         </tbody>
 
                     </table>
-
                     <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
                         (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
                     </pagination-controls>
