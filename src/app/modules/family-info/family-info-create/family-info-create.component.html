@@ -459,20 +459,22 @@
                     <h4 class="modal-title" id="modal-basic-title">Child Details</h4>
                 </div>
 
-                <div class="col-md-3" *ngIf="!this.famData.famid">
+                <div class="col-md-3">
+                    <!-- *ngIf="!this.famData.famid" -->
                     <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer;"
                         title="Add Child"></i>
                 </div>
 
-                <div class="col-md-2" *ngIf="!this.famData.famid">
+                <div class="col-md-2">
+                    <!-- *ngIf="!this.famData.famid" -->
                     <span class="clos" (click)="childModalDismiss()" title="close"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
 
-                <div class="col-md-2" *ngIf="this.famData.famid">
+                <!-- <div class="col-md-2" *ngIf="this.famData.famid">
                     <span class="close" (click)="childModalDismiss()" title="close"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
-                </div>
+                </div> -->
 
             </div>
 
