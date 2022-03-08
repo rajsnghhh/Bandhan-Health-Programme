@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -45,6 +45,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   blockNames: any[] = [];
   gpNames: any[] = [];
   villageNames: any[] = [];
+  childIndexId: any
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
@@ -283,8 +284,53 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
         this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
       }
-      // console.log(this.showAge);
+      item.age = this.showAge;
+      this.existingChildList[this.childIndexId] = item
+      console.log(this.existingChildList, 'newChild');
+
     })
+    
+
+    this.existingChildList.filter((i) => {
+      let ageCheck = i.dob
+      if (ageCheck) {
+        const convertAge = new Date(ageCheck);
+        const timeDiff = Math.abs(Date.now() - convertAge.getTime());
+        this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+      }
+      i.age = this.showAge
+    })
+
+    if ((this.existingFamilyDetails.lactetingMother == 'Y' || this.existingFamilyDetails.lactetingMother == 'N')) {
+      if (this.existingChildList.filter((v) => v.age <= 2).length < 1) {
+        this.showError('Child list must contain atleast one child below 2 years');
+        return;
+      }
+    }
+
+    if ((this.existingFamilyDetails.childrenBelow5 == 'Y' && this.existingFamilyDetails.lactetingMother == 'NA')) {
+      if (this.existingChildList.filter((v) => v.age <= 5 && v.age > 2).length < 1) {
+        this.showError('Child list must contain atleast one child below 5 years & more than 2 years');
+        return;
+      }
+
+      if (this.existingChildList.filter((v) => v.age < 2).length > 0) {
+        this.showError('Child list should not contain any child below 2 years');
+        return;
+      }
+    }
+
+    if ((this.existingFamilyDetails.childrenBelow18 == 'Y' && this.existingFamilyDetails.childrenBelow5 == 'N')) {
+      if (this.existingChildList.filter((v) => v.age > 5 && v.age <= 18).length < 1) {
+        this.showError('Child list must contain atleast one child below 18 years & more than 5 years');
+        return;
+      }
+
+      if (this.existingChildList.filter((v) => v.age <= 5).length > 0) {
+        this.showError('Child list should not contain any child below 5 years');
+        return;
+      }
+    }
 
     const postBody = {
       childDetailDTOList: [
@@ -318,11 +364,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
     }
     let copyOfexistingFamilyDetails: any = this.existingFamilyDetails;
-    // copyOfexistingFamilyDetails =  {
-    //   ...copyOfexistingFamilyDetails,
-    //   this.existingFamilyDetails
-    // };
-    // this.existingFamilyDetails.childDetailDTOList.filter(x=>x.childDetailId == this.childDetails.childInfo[0].childDetailId);
+
     for (let i = 0; i < copyOfexistingFamilyDetails.childDetailDTOList.length; i++) {
       if (copyOfexistingFamilyDetails.childDetailDTOList[i].childDetailId == this.childDetails.childInfo[0].childDetailId) {
         copyOfexistingFamilyDetails.childDetailDTOList[i] = this.childDetails.childInfo[0];
@@ -337,23 +379,6 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     let femaleLength = femaleList.length;
     let maleLength = maleList.length;
     console.log(femaleLength, maleLength);
-    // this.maleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'M');
-    // // console.log(this.maleLen.length, 'maleLens');
-
-    // this.femaleLen = this.existingFamilyDetails.childDetailDTOList.filter((x) => x.sex == 'F');
-    // // console.log(this.femaleLen.length, 'femaleLens');
-    // let currentSex = this.childDetails.childInfo[0].sex;
-    // let existsmalelength = 0;
-    // let existsfemalelength = 0;
-    // if (currentSex == 'F') {
-    //   existsfemalelength = existsfemalelength + 1;
-    // } else if (currentSex == 'M') {
-    //   existsmalelength = existsmalelength + 1;
-    // }
-
-    // console.log(existsfemalelength);
-    // console.log(this.checkTotalFemale);
-
 
     if (this.existingFamilyDetails.totaFamilyMemberFemales == femaleLength || this.existingFamilyDetails.totaFamilyMemberFemales < femaleLength) {
       this.showError('Total Female child should not be more than or equal to Total Family Member Female')
@@ -375,7 +400,6 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
-        // this.openModal(this.childViewExistingChild, this.childFamId);
         this.getMoreDetails(this.existingFamilyDetails.familyDetailId);
       } else {
         this.showError(response.message);
@@ -564,6 +588,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   editChild(items, i, EditChild) {
     this.openModall(EditChild);
     this.setData(items);
+    this.childIndexId = i;
+    console.log(this.childIndexId, 'abc');
+
   }
 
   setData(data) {

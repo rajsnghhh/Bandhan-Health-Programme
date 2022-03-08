@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -59,6 +59,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   finalDelChild: any;
   showChildDetails = false;
   childSetData: any;
+  activeChild: any;
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
@@ -317,16 +318,6 @@ export class FamilyInfoCreateComponent implements OnInit {
     this.showChildDetails = false;
     this.createForm(this.moreFamData);
     this.addSum = 0;
-    // this.childDetails.childInfo = [{
-    //   age: 'string',
-    //   childDetailId: 0,
-    //   childName: '',
-    //   createdOn: 'string',
-    //   dob: '',
-    //   familyDetailId: 0,
-    //   sex: '',
-    //   status: 'A'
-    // }];
   }
 
   saveFamilyCreate() {
@@ -650,9 +641,12 @@ export class FamilyInfoCreateComponent implements OnInit {
       }
     })
 
+    this.activeChild = this.childDetails.childInfo.filter((x) => x.status == 'A')
+    console.log(this.activeChild.length);
+
 
     if (this.baselineSurvey.value.childbelow18 == 'Y' || this.baselineSurvey.value.breastFeeding == 'Y' || this.baselineSurvey.value.breastFeeding == 'N' || this.baselineSurvey.value.childbelow5 == 'Y') {
-      if (this.childDetails.childInfo.length == 0) {
+      if (this.activeChild.length == 0) {
         this.showError('Please add child details');
         return;
       }
@@ -731,9 +725,9 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     }
 
-    let maleData = this.childDetails.childInfo.filter((x) => x.sex == 'M')
+    let maleData = this.childDetails.childInfo.filter((x) => x.sex == 'M' && x.status == 'A')
 
-    let femaleData = this.childDetails.childInfo.filter((x) => x.sex == 'F')
+    let femaleData = this.childDetails.childInfo.filter((x) => x.sex == 'F' && x.status == 'A')
 
     if (this.baselineSurvey.value.fmale < maleData.length) {
       this.showError('Total Male child should not be more than Total Family Member Male');
@@ -814,10 +808,11 @@ export class FamilyInfoCreateComponent implements OnInit {
         status: 'D'
       };
 
-      this.deleteChild = this.childDetails.childInfo.splice(i, 1);
+      this.finalDelChild = this.childDetails.childInfo;
 
-      this.finalDelChild = this.childDetails.childInfo.concat(this.deleteChild)
       console.log(this.finalDelChild, 'arrayList')
+
+      // this.childDetails.childInfo.splice(i, 1);
 
     }
 
@@ -1038,6 +1033,10 @@ export class FamilyInfoCreateComponent implements OnInit {
     let q: any = this.aadhaarId.nativeElement;
     q.value = data;
     return data;
+  }
+
+  restrictTypeOfDate() {
+    return false;
   }
 
 }

@@ -1201,7 +1201,7 @@
                   [(ngModel)]="childDetails.childInfo[i].dob"
                   [min]="minDate"
                   [max]="today"
-                  onkeydown="return false"
+                  (keydown)="restrictTypeOfDate()"
                 />
               </td>
               <td>

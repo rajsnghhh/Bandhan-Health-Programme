@@ -219,7 +219,7 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
                             <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false">
+                                    [min]="minDate" [max]="today" (keydown)="restrictTypeOfDate()">
                             </td>
                             <td>
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
@@ -291,7 +291,7 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
                             <td> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" onkeydown="return false">
+                                    [min]="minDate" [max]="today" (keydown)="restrictTypeOfDate()">
                             </td>
                             <td>
                                 <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">

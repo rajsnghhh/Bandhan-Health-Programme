@@ -49,19 +49,19 @@ export class BaselineCreateComponent implements OnInit {
   gpDtoList: Array<any> = [];
   villageDtoList: Array<any> = [];
   ssList: Array<any> = [];
-  swasthyaSahayika:Array<any> = [];
+  swasthyaSahayika: Array<any> = [];
   selectedBlock: String;
   selectedGp: String;
-  branchId:any;
-  regionBranchHide:boolean;
+  branchId: any;
+  regionBranchHide: boolean;
   loader: boolean = true;
-  branchId1:any;
-  branchVillageMapId:any;
+  branchId1: any;
+  branchVillageMapId: any;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
-    private httpBranch: BranchService,private sidebarService: SidebarService) { }
+    private httpBranch: BranchService, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.getMinDate();
@@ -120,24 +120,24 @@ export class BaselineCreateComponent implements OnInit {
       userId: this.sidebarService.userId,
       userName: this.sidebarService.loginId,
     }
-    
+
     let Dto = {
       dataAccessDTO: dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
-    
-    this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
+
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch , 'villagesOfBranch1');
+      console.log(this.villagesOfBranch, 'villagesOfBranch1');
     })
-    
+
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
-  changeRegion(region){
+  changeRegion(region) {
     let regionId = this.regionList.find(reg => reg.regionName == region)?.regionMasterId;
-    let req ={
-      dataAccessDTO : {
+    let req = {
+      dataAccessDTO: {
         userId: this.sidebarService?.userId,
         userName: this.sidebarService?.loginId,
       },
@@ -145,27 +145,27 @@ export class BaselineCreateComponent implements OnInit {
     }
     this.loader = false;
     setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe((res)=>{
+      this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
         this.loader = true;
         this.branchList = res?.responseObject;
-      },(error) => {
+      }, (error) => {
         this.loader = true;
         this.branchList = null;
       }
       )
     }, 500);
     this.baselineSurvey.get('branch').reset();
-    this.baselineSurvey.get('block').reset() ;
+    this.baselineSurvey.get('block').reset();
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
 
-  
-  changeBranch(branch){
+
+  changeBranch(branch) {
     this.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     let Dto = {
-      dataAccessDTO : {
+      dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
@@ -173,10 +173,10 @@ export class BaselineCreateComponent implements OnInit {
     }
     this.loader = false;
     setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
         this.loader = true;
         this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch , 'villagesOfBranch2');
+        console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
     this.baselineSurvey.get('block').reset();
@@ -184,42 +184,42 @@ export class BaselineCreateComponent implements OnInit {
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
-  changeBlock(blockname){
+  changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
     this.selectedBlock = this.baselineSurvey.get('block').value;
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
-  changeGp(gpName){
+  changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.baselineSurvey.get('gp').value;
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
-  changeVillage(villagename){
-    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill=>vill.villageName == villagename)?.villageMasterId;
-    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill=>vill.villageName == villagename)?.branchVillageMapId
-    let req ={
-      dataAccessDTO : {
+  changeVillage(villagename) {
+    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
+    let req = {
+      dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
       villageId: villId,
-      userId:this.sidebarService.userId
+      userId: this.sidebarService.userId
     }
     this.loader = false;
     setTimeout(() => {
-      this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
+      this.baselineService.ssVillageWiseList(req).subscribe((res) => {
         console.log(res);
         this.loader = true;
         this.swasthyaSahayika = res.responseObject;
-      },(error) => {
+      }, (error) => {
         this.loader = true;
         this.swasthyaSahayika = null;
       })
     }, 500);
-    
+
   }
 
   aadharcardValidation(event) {
@@ -328,6 +328,16 @@ export class BaselineCreateComponent implements OnInit {
     this.baselineSurvey.controls.childbelow5.setValue('');
     this.baselineSurvey.controls.institutional.setValue('');
     this.baselineSurvey.controls.breastFeeding.setValue('NA');
+    this.childDetails.childInfo = [{
+      age: 'string',
+      childDetailId: 0,
+      childName: '',
+      createdOn: 'string',
+      dob: '',
+      familyDetailId: 0,
+      sex: '',
+      status: 'A'
+    }]
   }
 
   childBelow5(e) {
@@ -509,8 +519,8 @@ export class BaselineCreateComponent implements OnInit {
         numberOfFamily: tfamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.swasthyaSahayika.find(i=> i.swasthyaSahayikaId == item.swasthyaSahayika)?.swasthyaSahayikaName,
-          swasthyaSahayikaId: parseInt(item.swasthyaSahayika) 
+          name: this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == item.swasthyaSahayika)?.swasthyaSahayikaName,
+          swasthyaSahayikaId: parseInt(item.swasthyaSahayika)
         },
         totalMembers: item.households
       }
@@ -650,8 +660,8 @@ export class BaselineCreateComponent implements OnInit {
           this.showError('Please Enter Voter Card No');
           return;
         }
-      
-        var regexp =   /^([A-Z]){3}([0-9]){7}?$/;
+
+        var regexp = /^([A-Z]){3}([0-9]){7}?$/;
         var x = this.baselineSurvey.value.voter;
         if (!regexp.test(x)) {
           this.showError('Invalid Voter Card No!');
@@ -1076,52 +1086,9 @@ export class BaselineCreateComponent implements OnInit {
 
   }
 
+  restrictTypeOfDate() {
+    return false;
+  }
+
 }
 
-
- // requestBody = {
-  //   dataAccessDTO: {},
-  //   houseHoldDetailDTO: {
-  //     familyDetailDTOList: []
-  //   }
-  // };
-
-  
-    // this.requestBody.dataAccessDTO = postBody.dataAccessDTO;
-
-    // if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
-    //   this.requestBody.houseHoldDetailDTO.familyDetailDTOList.push(postBody.houseHoldDetailDTO.familyDetailDTOList[0]);
-    // } else {
-    //   this.requestBody.houseHoldDetailDTO = postBody.houseHoldDetailDTO;
-    // }
-
-    // if (single) {
-    //   this.saveBaselineCreate();
-    // }
-
-    // console.log(this.requestBody);
-    // this.resetBaselineCreate();
-
-
-    // saveBaselineCreate() {
-
-    //   if (this.requestBody.houseHoldDetailDTO && this.requestBody.houseHoldDetailDTO.familyDetailDTOList.length > 0) {
-    //     this.baselineService.saveBaselineSurvey(this.requestBody).subscribe((response: any) => {
-    //       console.log(response);
-    //       if (response.message == "Success") {
-    //         this.showSuccess(response.message);
-    //         this.resetBaselineCreate();
-    //         this.requestBody = {
-    //           dataAccessDTO: {},
-    //           houseHoldDetailDTO: {
-    //             familyDetailDTOList: []
-    //           }
-    //         };
-    //       }
-
-    //     })
-    //   } else {
-    //     this.showError('Please Enter the form')
-    //   }
-
-    // }

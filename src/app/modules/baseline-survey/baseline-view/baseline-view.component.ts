@@ -78,8 +78,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }, 1000);
 
 
-    // this.createForm();
-
     this.httpBranch.listOfBranchUser().subscribe((res) => {
       res.responseObject.map((arr) => {
         this.villageNames.push(arr.villageName);
@@ -126,11 +124,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
 
   deleteHousehold(item, i) {
-    // console.log(item.familyDetailDTOList);
-    // if (confirm('Do you want to delete household :' + item.houseHoldNumber + '\n' + 
-    // item.familyDetailDTOList[i]?.firstName +
-    //   item.familyDetailDTOList[i]?.familyNumber)) { }
-
 
     if (confirm('Do you want to delete household :' + item.houseHoldNumber)) {
       const post = {

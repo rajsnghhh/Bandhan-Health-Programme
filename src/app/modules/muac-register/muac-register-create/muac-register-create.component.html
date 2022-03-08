@@ -81,12 +81,12 @@
 
                         <tr *ngFor="let items of muacDetails.muacInfo; index as i" style="text-align: center;">
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].startDate"
-                                    onkeydown="return false" [min]="minDate" [max]="maxDate"
+                                     (keydown)="restrictTypeOfDate()" [min]="minDate" [max]="maxDate"
                                     (change)="expectEndDate($event)">
                             </td>
 
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].endDate"
-                                    onkeydown="return false" [min]="selStartDate" [max]="maxDate"
+                                     (keydown)="restrictTypeOfDate()" [min]="selStartDate" [max]="maxDate"
                                     [disabled]="!muacDetails.muacInfo[i].startDate">
                             </td>
                         </tr>
@@ -141,12 +141,12 @@
 
                         <tr *ngFor="let items of muacDetails.muacInfo; index as i" style="text-align: center;">
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].startDate"
-                                    onkeydown="return false" [min]="editMinDate" [max]="editMaxDate"
+                                     (keydown)="restrictTypeOfDate()" [min]="editMinDate" [max]="editMaxDate"
                                     (change)="expectEndDate($event)">
                             </td>
 
                             <td> <input type="date" class="form-control" [(ngModel)]="muacDetails.muacInfo[i].endDate"
-                                    onkeydown="return false" [min]="selStartDate" [max]="editMaxDate"
+                                     (keydown)="restrictTypeOfDate()" [min]="selStartDate" [max]="editMaxDate"
                                     >
                             </td>
                         </tr>
