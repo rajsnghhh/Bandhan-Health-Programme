@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class HttpService {
   })
   testUrl = `http://192.168.149.221:8085/`;
   dataAccessDTO = {
-    userId: 100,
-    userName: 'BK000001'
+    userId: this.sidebarService.userId,
+    userName: this.sidebarService.loginId,
   }
 
   dataAccessDTOO = {
@@ -22,7 +23,7 @@ export class HttpService {
     userName: 'BK000005'
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private sidebarService: SidebarService) { }
 
   postRequest(url, body): Observable<any> {
     return this.http.post(this.testUrl + url, body, { headers: this.headers })

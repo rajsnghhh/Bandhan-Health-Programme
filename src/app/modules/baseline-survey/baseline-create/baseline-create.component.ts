@@ -55,6 +55,8 @@ export class BaselineCreateComponent implements OnInit {
   branchId:any;
   regionBranchHide:boolean;
   loader: boolean = true;
+  branchId1:any;
+  branchVillageMapId:any;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
@@ -161,13 +163,13 @@ export class BaselineCreateComponent implements OnInit {
 
   
   changeBranch(branch){
-    let branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     let Dto = {
       dataAccessDTO : {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      branchId: branchId
+      branchId: this.branchId1
     }
     this.loader = false;
     setTimeout(() => {
@@ -197,6 +199,7 @@ export class BaselineCreateComponent implements OnInit {
   }
   changeVillage(villagename){
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill=>vill.villageName == villagename)?.villageMasterId;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill=>vill.villageName == villagename)?.branchVillageMapId
     let req ={
       dataAccessDTO : {
         userId: this.sidebarService.userId,
@@ -208,12 +211,9 @@ export class BaselineCreateComponent implements OnInit {
     this.loader = false;
     setTimeout(() => {
       this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
+        console.log(res);
         this.loader = true;
-        let val:any = []; 
-        for(let i =0; i< res.responseObject?.length; i++){
-          val.push(res.responseObject[i].swasthyaSahayikaName);
-        }
-        this.swasthyaSahayika = val
+        this.swasthyaSahayika = res.responseObject;
       },(error) => {
         this.loader = true;
         this.swasthyaSahayika = null;
@@ -373,11 +373,12 @@ export class BaselineCreateComponent implements OnInit {
   }
 
   saveMoreBaselineCreate() {
-
+    console.log(this.baselineSurvey.value)
     let item = this.baselineSurvey.value;
     let idValue = '';
     let tfamily;
 
+    // console.log(thiitem.branch == this.baselineSurvey.get('branch').value)
     item.firstName = this.validationService.firstCaps(
       item.firstName.trim()
     );
@@ -435,14 +436,13 @@ export class BaselineCreateComponent implements OnInit {
     }
 
     const postBody = {
-
       dataAccessDTO: this.httpService.dataAccessDTO,
       houseHoldDetailDTO: {
         branchDTO: {
-          branchId: 15,
-          branchName: "Kestopur",
+          branchId: this.branchId1,
+          branchName: item.branch,
         },
-        branchVillageMapId: 888,
+        branchVillageMapId: this.branchVillageMapId,
         familyDetailDTOList: [
           {
             age: item.age,
@@ -509,8 +509,8 @@ export class BaselineCreateComponent implements OnInit {
         numberOfFamily: tfamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: "ABC",
-          swasthyaSahayikaId: 1
+          name: this.swasthyaSahayika.find(i=> i.swasthyaSahayikaId == item.swasthyaSahayika)?.swasthyaSahayikaName,
+          swasthyaSahayikaId: parseInt(item.swasthyaSahayika) 
         },
         totalMembers: item.households
       }

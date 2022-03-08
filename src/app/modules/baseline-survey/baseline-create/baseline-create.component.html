@@ -161,8 +161,8 @@
                   }"
                 >
                   <option value="">-- Select SS --</option>
-                  <option *ngFor="let ss of swasthyaSahayika">
-                    {{ ss }}
+                  <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
+                    {{ ss.swasthyaSahayikaName }}
                   </option>
                 </select>
               </div>
