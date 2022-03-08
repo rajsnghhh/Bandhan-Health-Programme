@@ -9,53 +9,7 @@
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border">HH Info</legend>
                         <div class="row">
-                            <div class="form-group col-md">
-                                <label for="block">Block
-                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
-                                    'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
-                                    <option value="">-- Select Block --</option>
-                                    <option>gg</option>
-                                </select>
-                                <div *ngIf="f.block.errors" class="invalid-feedback">
-                                    <div *ngIf="f.block.errors.required">Block is required</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md">
-                                <label for="gp">GP/ Municipality
-                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="gp" id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
-                                    'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
-                                    <option value="">-- Select GP/ Municipality --</option>
-                                    <option>gg</option>
-                                </select>
-                                <div *ngIf="f.gp.errors" class="invalid-feedback">
-                                    <div *ngIf="f.gp.errors.required">GP/ Municipality is required</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md">
-                                <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
-                                        class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
-                                    'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
-                                    <option value="">-- Select --</option>
-                                    <option>gg</option>
-                                </select>
-                                <div *ngIf="f.gram.errors" class="invalid-feedback">
-                                    <div *ngIf="f.gram.errors.required">Above Selection is required</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md">
-                                <label for="swasthyaSahayika">
-                                    Name of SS/ Health Volunteer :</label>
-                                <select class="form-select" formControlName="swasthyaSahayika" id="swasthyaSahayika">
-                                    <option value="">-- Select --</option>
-                                    <option>gg</option>
-                                </select>
-                            </div>
+                            <app-location ></app-location>
 
                         </div>
 

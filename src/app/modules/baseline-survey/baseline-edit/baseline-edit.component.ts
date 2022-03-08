@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class BaselineEditComponent implements OnInit {
   tFamily: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
-    public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService) { }
+    public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService
+    , private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.routes.queryParams.subscribe(params => {
@@ -43,6 +45,7 @@ export class BaselineEditComponent implements OnInit {
     }
 
     this.baselineService.baselineSurveyStatus(postBody).subscribe((response) => {
+      console.log(response);
       this.familyStatus = response.responseObject.familyDetailRemaingStatusDTO;
       console.log(this.familyStatus);
     })
@@ -51,10 +54,10 @@ export class BaselineEditComponent implements OnInit {
 
   createForm() {
     this.baselineSurvey = this.fb.group({
-      block: ['', Validators.required],
-      gp: ['', Validators.required],
-      gram: ['', Validators.required],
-      swasthyaSahayika: ['', Validators.required],
+      // block: ['', Validators.required],
+      // gp: ['', Validators.required],
+      // gram: ['', Validators.required],
+      // swasthyaSahayika: ['', Validators.required],
       family: ['', Validators.required],
       totalFamily: ['', Validators.required],
       households: ['', Validators.required]
@@ -133,10 +136,10 @@ export class BaselineEditComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       houseHoldDetailDTO: {
         branchDTO: {
-          branchId: 15,
-          branchName: "Kestopur",
+          branchId: this.sidebarService.branchId1,
+          branchName: this.sidebarService.branchName,
         },
-        branchVillageMapId: 888,
+        branchVillageMapId: this.sidebarService.branchVillageMapId,
         familyDetailDTOList: [],
         familyType: this.famType,
         houseHoldNumber: this.householdNumber,
@@ -144,8 +147,8 @@ export class BaselineEditComponent implements OnInit {
         numberOfFamily: this.tFamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: "ABC",
-          swasthyaSahayikaId: 1
+          name: this.sidebarService.swasthyaSahayikaName,
+          swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId)
         },
         totalMembers: this.totalMembers
       }

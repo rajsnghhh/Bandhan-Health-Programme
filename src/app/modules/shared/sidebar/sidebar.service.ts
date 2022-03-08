@@ -14,6 +14,11 @@ export class SidebarService {
   listOfRegion: any = [];
   regionBranchHide: boolean;
   baseURL = environment.apiUrl;
+  branchVillageMapId: any;
+  branchId1: any;
+  branchName: any;
+  swasthyaSahayikaId: any
+  swasthyaSahayikaName: any;
 
   constructor(private http: HttpClient) { }
   //HCO ** TL

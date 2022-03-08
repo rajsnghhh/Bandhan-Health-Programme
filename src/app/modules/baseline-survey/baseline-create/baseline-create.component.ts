@@ -43,20 +43,7 @@ export class BaselineCreateComponent implements OnInit {
     childInfo: [],
   };
   idCard: any;
-  regionList: Array<any> = [];
-  branchList: Array<any> = [];
-  villagesOfBranch: Array<any> = [];
-  gpDtoList: Array<any> = [];
-  villageDtoList: Array<any> = [];
-  ssList: Array<any> = [];
-  swasthyaSahayika: Array<any> = [];
-  selectedBlock: String;
-  selectedGp: String;
-  branchId: any;
-  regionBranchHide: boolean;
   loader: boolean = true;
-  branchId1: any;
-  branchVillageMapId: any;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
@@ -116,110 +103,6 @@ export class BaselineCreateComponent implements OnInit {
       // console.log(this.cardDetails);
     })
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
-
-    let Dto = {
-      dataAccessDTO: dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch1');
-    })
-
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
-  }
-  changeRegion(region) {
-    let regionId = this.regionList.find(reg => reg.regionName == region)?.regionMasterId;
-    let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
-      regionId: regionId
-    }
-    this.loader = false;
-    setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-        this.loader = true;
-        this.branchList = res?.responseObject;
-      }, (error) => {
-        this.loader = true;
-        this.branchList = null;
-      }
-      )
-    }, 500);
-    this.baselineSurvey.get('branch').reset();
-    this.baselineSurvey.get('block').reset();
-    this.baselineSurvey.get('gp').reset();
-    this.baselineSurvey.get('gram').reset();
-    this.baselineSurvey.get('swasthyaSahayika').reset();
-  }
-
-
-  changeBranch(branch) {
-    this.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
-      branchId: this.branchId1
-    }
-    this.loader = false;
-    setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.loader = true;
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch2');
-      })
-    }, 500);
-    this.baselineSurvey.get('block').reset();
-    this.baselineSurvey.get('gp').reset();
-    this.baselineSurvey.get('gram').reset();
-    this.baselineSurvey.get('swasthyaSahayika').reset();
-  }
-  changeBlock(blockname) {
-    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
-    this.selectedBlock = this.baselineSurvey.get('block').value;
-    this.baselineSurvey.get('gp').reset();
-    this.baselineSurvey.get('gram').reset();
-    this.baselineSurvey.get('swasthyaSahayika').reset();
-  }
-  changeGp(gpName) {
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
-    this.selectedGp = this.baselineSurvey.get('gp').value;
-    this.baselineSurvey.get('gram').reset();
-    this.baselineSurvey.get('swasthyaSahayika').reset();
-  }
-  changeVillage(villagename) {
-    let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
-    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
-    let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
-      villageId: villId,
-      userId: this.sidebarService.userId
-    }
-    this.loader = false;
-    setTimeout(() => {
-      this.baselineService.ssVillageWiseList(req).subscribe((res) => {
-        console.log(res);
-        this.loader = true;
-        this.swasthyaSahayika = res.responseObject;
-      }, (error) => {
-        this.loader = true;
-        this.swasthyaSahayika = null;
-      })
-    }, 500);
-
   }
 
   aadharcardValidation(event) {
@@ -256,12 +139,6 @@ export class BaselineCreateComponent implements OnInit {
 
   createForm() {
     this.baselineSurvey = this.fb.group({
-      region: ['', Validators.required],
-      branch: ['', Validators.required],
-      block: ['', Validators.required],
-      gp: ['', Validators.required],
-      gram: ['', Validators.required],
-      swasthyaSahayika: ['', Validators.required],
       family: ['', Validators.required],
       totalFamily: ['', Validators.required],
       households: ['', Validators.required],
@@ -449,10 +326,10 @@ export class BaselineCreateComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       houseHoldDetailDTO: {
         branchDTO: {
-          branchId: this.branchId1,
-          branchName: item.branch,
+          branchId: this.sidebarService.branchId1,
+          branchName: this.sidebarService.branchName,
         },
-        branchVillageMapId: this.branchVillageMapId,
+        branchVillageMapId: this.sidebarService.branchVillageMapId,
         familyDetailDTOList: [
           {
             age: item.age,
@@ -519,8 +396,8 @@ export class BaselineCreateComponent implements OnInit {
         numberOfFamily: tfamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == item.swasthyaSahayika)?.swasthyaSahayikaName,
-          swasthyaSahayikaId: parseInt(item.swasthyaSahayika)
+          name: this.sidebarService.swasthyaSahayikaName,
+          swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId)
         },
         totalMembers: item.households
       }
