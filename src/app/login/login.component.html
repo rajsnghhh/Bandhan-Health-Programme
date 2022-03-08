@@ -1,11 +1,11 @@
-<img src="../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;     margin-left: -551px;
+<img src="../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;margin-left: -551px;
 margin-top: -54px;" >
 <div
   class="card"
   style="
     position: absolute;
-    top: 33%;
-    left: 85%;
+    top: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 25%;
   "
@@ -35,6 +35,7 @@ margin-top: -54px;" >
           border-radius: 0px 5px 5px 0px;"
           (keypress)="validationService.onlyInteger($event)"
           formControlName="username"
+          placeholder="Enter Username"
           class="form-control"
           [maxlength]="20"
           [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
@@ -55,6 +56,7 @@ margin-top: -54px;" >
           [type]="show ? 'text' : 'password'"
           style="border: 1px solid black;"
           formControlName="password"
+          placeholder="Enter password"
           class="form-control"
           [maxlength]="20"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"

@@ -5,13 +5,14 @@ import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
 import { ValidationService } from 'src/app/modules/shared/services/validation.service';
 import { LoginService } from '../login.service';
+import { Reset } from '../user';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-reset',
+  templateUrl: './reset.component.html',
+  styleUrls: ['./reset.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class ResetComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
@@ -24,7 +25,6 @@ export class RegisterComponent implements OnInit {
     private accountService: LoginService,
     private toaster: ToastrService,
     public validationService: ValidationService,
-    // private alertService: AlertService
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
@@ -44,33 +44,32 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    let newPassword = this.form.get('newPassword').value;
+    let confirmPassword = this.form.get('confirmPassword').value;
 
-    // reset alerts on submit
-    // this.alertService.clear();
-
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
 
     this.loading = true;
-    this.accountService.register(this.f.newPassword.value)
+    this.accountService.reset(this.f.newPassword.value)
       .pipe(first())
       .subscribe(
-        (data) => {
-          // console.log(data, 'registerData');
-          //  if(data.status === true){
-          //  this.showSuccess('success');
-          //   this.router.navigate(['/'], { relativeTo: this.route });
-          //  }else{
-          //   this.showError('error');
-          //  }
-          // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-          this.router.navigate(['/'], { relativeTo: this.route });
+        (data: Reset) => {
+          console.log(data, 'registerData');
+          if (data.status === true) {
+            this.showSuccess('Success');
+            this.router.navigate(['/'], { relativeTo: this.route });
+          } else if (newPassword != confirmPassword) {
+            this.loading = false;
+            this.checkBothPasswordSame('Error');
+          } else {
+            this.loading = false;
+            this.showError('Error');
+          }
         },
         error => {
-          console.log('error reset')
-          // this.alertService.error(error);
+          this.showError('Error');
           this.loading = false;
         });
   }
@@ -80,13 +79,19 @@ export class RegisterComponent implements OnInit {
   }
 
   showError(message) {
-    this.toaster.error(message, 'Error In password reset', {
+    this.toaster.error(message, 'Error in password reset', {
       timeOut: 3000,
     });
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Password reset', {
+    this.toaster.success(message, 'Password reset successful', {
+      timeOut: 3000,
+    });
+  }
+
+  checkBothPasswordSame(message) {
+    this.toaster.error(message, 'New Password & Confirm Password does not match ', {
       timeOut: 3000,
     });
   }

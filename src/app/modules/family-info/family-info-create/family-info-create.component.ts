@@ -59,6 +59,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   finalDelChild: any;
   showChildDetails = false;
   childSetData: any;
+  activeChild: any;
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
@@ -640,9 +641,12 @@ export class FamilyInfoCreateComponent implements OnInit {
       }
     })
 
+    this.activeChild = this.childDetails.childInfo.filter((x) => x.status == 'A')
+    console.log(this.activeChild.length);
+
 
     if (this.baselineSurvey.value.childbelow18 == 'Y' || this.baselineSurvey.value.breastFeeding == 'Y' || this.baselineSurvey.value.breastFeeding == 'N' || this.baselineSurvey.value.childbelow5 == 'Y') {
-      if (this.childDetails.childInfo.length == 0) {
+      if (this.activeChild.length == 0) {
         this.showError('Please add child details');
         return;
       }
@@ -721,9 +725,9 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     }
 
-    let maleData = this.childDetails.childInfo.filter((x) => x.sex == 'M')
+    let maleData = this.childDetails.childInfo.filter((x) => x.sex == 'M' && x.status == 'A')
 
-    let femaleData = this.childDetails.childInfo.filter((x) => x.sex == 'F')
+    let femaleData = this.childDetails.childInfo.filter((x) => x.sex == 'F' && x.status == 'A')
 
     if (this.baselineSurvey.value.fmale < maleData.length) {
       this.showError('Total Male child should not be more than Total Family Member Male');

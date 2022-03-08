@@ -301,11 +301,6 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       i.age = this.showAge
     })
 
-    if(this.showError) {
-      console.log('true');
-      
-    }
-
     if ((this.existingFamilyDetails.lactetingMother == 'Y' || this.existingFamilyDetails.lactetingMother == 'N')) {
       if (this.existingChildList.filter((v) => v.age <= 2).length < 1) {
         this.showError('Child list must contain atleast one child below 2 years');

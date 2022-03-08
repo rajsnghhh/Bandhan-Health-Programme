@@ -58,5 +58,11 @@ export interface RootObject {
     responseObject: ResponseObject;
 }
 
+export interface Reset {
+    sessionDTO: SessionDTO;
+    status: boolean;
+    message: string;
+    responseObject: string;
+}
 
 
