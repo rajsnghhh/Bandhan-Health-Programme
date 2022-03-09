@@ -127,14 +127,14 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   changeBranch(branch) {
-    this.sidebarService.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      branchId: this.sidebarService.branchId1
+      branchId: this.sidebarService.branchId
     }
     this.loader = false;
     setTimeout(() => {

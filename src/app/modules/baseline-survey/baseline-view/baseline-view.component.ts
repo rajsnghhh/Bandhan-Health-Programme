@@ -16,7 +16,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   styleUrls: ['./baseline-view.component.css']
 })
 export class BaselineViewComponent implements OnInit, DoCheck {
-  baselineSurvey: FormGroup;
+  locationForm: FormGroup;
   baselineDetails: any;
   modalContent: any;
   modalReference: any;
@@ -27,14 +27,20 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   familyStatus: any;
   registerSearch: String;
   householdId: any;
-  branchNames: any[] = [];
   aaa: boolean;
-  villageNames: any[] = [];
   searchFullscreen: boolean;
   loader: boolean = false;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
+  gpDtoList: Array<any> = [];
+  villageDtoList: Array<any> = [];
+  ssList: Array<any> = [];
+  swasthyaSahayika: Array<any> = [];
+  selectedBlock: String;
+  selectedGp: String;
+  branchId: any;
+  regionBranchHide: boolean;
   branchVillageMapId: any;
   modalTitle: string = 'V';
   toggleBool: boolean = true;
@@ -54,12 +60,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
     this.createForm();
     this.householdFamDetails();
-    this.httpBranch.listOfBranchUser().subscribe((res) => {
-      res.responseObject.map((arr) => {
-        this.branchNames.push(arr.villageName);
-      })
-      console.log(this.branchNames);
-    });
 
     let dataAccessDTO = {
       userId: this.sidebarService.userId,
@@ -72,10 +72,14 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
 
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch1');
+      if (res.sessionDTO.status == true) {
+        this.villagesOfBranch = res?.responseObject[0]?.gpDtoList[0]?.villageDtoList;
+        console.log(this.villagesOfBranch, 'villagesOfBranch1');
+      }
+
     })
     this.regionList = this.sidebarService.listOfRegion;
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   changeRegion(region) {
@@ -102,31 +106,45 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         }
       );
     }, 500);
-    this.baselineSurvey.get('branch').reset();
-    this.baselineSurvey.get('gram').reset();
+    this.locationForm.get('branch').reset();
+    this.locationForm.get('gram').reset();
   }
 
   changeBranch(branch) {
-    this.sidebarService.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      branchId: this.sidebarService.branchId1
+      branchId: this.sidebarService.branchId
     }
     this.loader = false;
     setTimeout(() => {
       this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
         this.loader = true;
-        this.villagesOfBranch = res.responseObject[0].gpDtoList[0].villageDtoList;
+        this.villagesOfBranch = res.responseObject[0]?.gpDtoList[0]?.villageDtoList;
+        console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
-    this.baselineSurvey.get('gram').reset();
+    this.locationForm.get('gram').reset();
   }
 
+  // changeBlock(blockname) {
+  //   this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
+  //   this.selectedBlock = this.locationForm.get('block').value;
+  //   this.locationForm.get('gp').reset();
+  //   this.locationForm.get('gram').reset();
+  // }
+  // changeGp(gpName) {
+  //   this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+  //   this.selectedGp = this.locationForm.get('gp').value;
+  //   this.locationForm.get('gram').reset();
+  // }
   changeVillage(villagename) {
     this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
+    console.log(this.branchVillageMapId);
     this.householdFamDetails(this.branchVillageMapId);
   }
 
@@ -153,25 +171,20 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         });
     }, 1000);
 
-
-    this.httpBranch.listOfBranchUser().subscribe((res) => {
-      res.responseObject.map((arr) => {
-        this.villageNames.push(arr.villageName);
-      })
-    });
-
   }
 
   createForm() {
-    this.baselineSurvey = this.fb.group({
+    this.locationForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
+      block: ['', Validators.required],
+      gp: ['', Validators.required],
       gram: ['', Validators.required],
     });
   }
 
   get f() {
-    return this.baselineSurvey.controls;
+    return this.locationForm.controls;
   }
 
   openModal(viewFamily, familyDetailDTOList, item, title, i) {

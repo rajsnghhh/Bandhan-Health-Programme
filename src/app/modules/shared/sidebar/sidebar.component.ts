@@ -50,7 +50,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
     if (this.sidebarService.RoleDTOName === 'HCO' || this.sidebarService.RoleDTOName === 'TL') {
       this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-        this.sidebarService.branchId = res.responseObject[0].branchId
+        console.log(res, 'abc')
+        this.sidebarService.branchId = res.responseObject[0].branchId;
+        this.sidebarService.branchName = res.responseObject[0].branchName;
       });
       this.sidebarService.regionBranchHide = false;
     } else {
@@ -110,7 +112,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     if (routeId == 89 || routeId == 91) {
-       this.router.navigate(['/central-register/view']);
+      this.router.navigate(['/central-register/view']);
     }
 
     if (routeId == 97) {

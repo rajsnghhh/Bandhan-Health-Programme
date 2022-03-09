@@ -136,7 +136,7 @@ export class BaselineEditComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       houseHoldDetailDTO: {
         branchDTO: {
-          branchId: this.sidebarService.branchId1,
+          branchId: this.sidebarService.branchId,
           branchName: this.sidebarService.branchName,
         },
         branchVillageMapId: this.sidebarService.branchVillageMapId,

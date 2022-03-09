@@ -15,7 +15,6 @@ export class SidebarService {
   regionBranchHide: boolean;
   baseURL = environment.apiUrl;
   branchVillageMapId: any;
-  branchId1: any;
   branchName: any;
   swasthyaSahayikaId: any
   swasthyaSahayikaName: any;
