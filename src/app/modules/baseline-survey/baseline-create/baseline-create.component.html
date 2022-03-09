@@ -81,6 +81,7 @@
                   maxlength="2"
                   (keypress)="validationService.onlyInteger($event)"
                   (keydown)="restrictZero($event)"
+                  (keyup)="zeroMembers()"
                   placeholder="Total Member of All family"
                   formControlName="households"
                   [ngClass]="{
@@ -212,6 +213,7 @@
                   maxlength="2"
                   (keypress)="validationService.onlyInteger($event)"
                   (keydown)="restrictZero($event)"
+                  (keyup)="zeroAge()"
                   placeholder="Enter Age"
                   formControlName="age"
                   [ngClass]="{

@@ -1,4 +1,4 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -783,6 +783,24 @@ export class BaselineCreateComponent implements OnInit {
 
   }
 
+  zeroAge() {
+    if (this.baselineSurvey.value.age.startsWith(0)) {
+      this.showError('Age should not be zero');
+      this.baselineSurvey.controls.age.setValue('');
+      return;
+    }
+
+  }
+
+  zeroMembers() {
+    if (this.baselineSurvey.value.households.startsWith(0)) {
+      this.showError('Members should not be zero');
+      this.baselineSurvey.controls.households.setValue('');
+      return;
+    }
+
+  }
+
   familyCountChecking() {
     let totalMale: number = 0;
     let totalFemale: number = 0;
@@ -935,6 +953,13 @@ export class BaselineCreateComponent implements OnInit {
       this.showError('Children count should be less than or equal to (Male + Female) – (Sr.Citizen)');
       this.baselineSurvey.controls.child.setValue('');
     }
+
+    if (this.baselineSurvey.value.child.startsWith(0)) {
+      this.showError('Child count should not be zero');
+      this.baselineSurvey.controls.child.setValue('');
+      return;
+    }
+
   }
 
   familyNo(e) {

@@ -828,6 +828,16 @@ export class FamilyInfoCreateComponent implements OnInit {
     }
   }
 
+
+  zeroAge() {
+    if (this.baselineSurvey.value.age.startsWith(0)) {
+      this.showError('Age should not be zero');
+      this.baselineSurvey.controls.age.setValue('');
+      return;
+    }
+
+  }
+
   zeroFemale() {
     if (this.baselineSurvey.value.ffemale.startsWith(0)) {
       this.showError('Female count should not be zero');
@@ -995,6 +1005,13 @@ export class FamilyInfoCreateComponent implements OnInit {
     if (totalChildren > ((totalMale + totalFemale) - totalSenior) && totalChildren != ((totalMale + totalFemale) - totalSenior)) {
       this.showError('Children count should be less than or equal to (Male + Female) – (Sr.Citizen)');
       this.baselineSurvey.controls.child.setValue('');
+    }
+
+
+    if (this.baselineSurvey.value.child.startsWith(0)) {
+      this.showError('Child count should not be zero');
+      this.baselineSurvey.controls.child.setValue('');
+      return;
     }
   }
 
