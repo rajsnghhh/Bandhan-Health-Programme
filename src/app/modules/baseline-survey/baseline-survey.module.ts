@@ -9,9 +9,10 @@ import { BaselineEditComponent } from './baseline-edit/baseline-edit.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { LocationComponent } from './location/location.component';
+import { LocationModule } from './location/location.module';
 
 @NgModule({
-  declarations: [BaselineCreateComponent, BaselineViewComponent, BaselineEditComponent, LocationComponent],
+  declarations: [BaselineCreateComponent, BaselineViewComponent, BaselineEditComponent],
   imports: [
     CommonModule,
     BaselineSurveyRoutingModule,
@@ -20,7 +21,7 @@ import { LocationComponent } from './location/location.component';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    LoaderModule
+    LoaderModule, LocationModule
   ]
 
 })

@@ -11,10 +11,12 @@
                     <div class="row">
                         <div class="form-group col-md">
                             <label for="region">Region:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched,
+                            <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched,
                                 'is-valid': f.region.valid && (f.region.dirty || f.region.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <option *ngFor="let region of regionList">
+                                    {{region.regionName}}
+                                  </option>
                             </select>
                             <div *ngIf="f.region.errors" class="invalid-feedback">
                                 <div *ngIf="f.region.errors.required">Above Selection is required</div>
@@ -23,10 +25,12 @@
 
                         <div class="form-group col-md">
                             <label for="branch">Branch:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" formControlName="branch" id="branch" [ngClass]="{ 'is-invalid': f.branch.invalid && f.branch.touched,
+                            <select class="form-select" formControlName="branch" (change)="changeBranch($event.target.value)" id="branch" [ngClass]="{ 'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched) }">
                                 <option value="">-- Select --</option>
-                                <option>gg</option>
+                                <option *ngFor="let branch of branchList" >
+                                    {{ branch.branchName }}
+                                  </option>
                             </select>
                             <div *ngIf="f.branch.errors" class="invalid-feedback">
                                 <div *ngIf="f.branch.errors.required">Above Selection is required</div>
@@ -36,10 +40,10 @@
                         <div class="form-group col-md">
                             <label for="gram">GS/ Ward/ Village/ Locality:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
+                            <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                 'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                 <option value="">-- Select --</option>
-                                <option *ngFor="let villageName of villageNames" value="villageMasterId">{{villageName}}</option>
+                                <option *ngFor="let village of villagesOfBranch" >{{village.villageName}}</option>
                             </select>
                             <div *ngIf="f.gram.errors" class="invalid-feedback">
                                 <div *ngIf="f.gram.errors.required">Above Selection is required</div>

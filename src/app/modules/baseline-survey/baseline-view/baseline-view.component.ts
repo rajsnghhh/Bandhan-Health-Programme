@@ -7,6 +7,7 @@ import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
 
 @Component({
@@ -31,11 +32,15 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   villageNames: any[] = [];
   searchFullscreen: boolean;
   loader: boolean = false;
+  regionList: Array<any> = [];
+  branchList: Array<any> = [];
+  villagesOfBranch: Array<any> = [];
+  branchVillageMapId: any;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private confirmationDialogService: ConfirmationDialogService, private route: Router, private httpBranch: BranchService,
-    public validationService: ValidationService) { }
+    public validationService: ValidationService, private sidebarService: SidebarService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -52,13 +57,80 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       console.log(this.branchNames);
     });
 
+    let dataAccessDTO = {
+      userId: this.sidebarService.userId,
+      userName: this.sidebarService.loginId,
+    }
+
+    let Dto = {
+      dataAccessDTO: dataAccessDTO,
+      branchId: this.sidebarService.branchId
+    }
+
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    })
+    this.regionList = this.sidebarService.listOfRegion;
   }
 
-  householdFamDetails() {
+  changeRegion(region) {
+    let regionId = this.regionList.find(
+      (reg) => reg.regionName == region
+    )?.regionMasterId;
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService?.userId,
+        userName: this.sidebarService?.loginId,
+      },
+      regionId: regionId,
+    };
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.listOfBranchesOfARegion(req).subscribe(
+        (res) => {
+          this.loader = true;
+          this.branchList = res?.responseObject;
+        },
+        (error) => {
+          this.loader = true;
+          this.branchList = null;
+        }
+      );
+    }, 500);
+    this.baselineSurvey.get('branch').reset();
+    this.baselineSurvey.get('gram').reset();
+  }
+
+  changeBranch(branch) {
+    this.sidebarService.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    let Dto = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId1
+    }
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        this.loader = true;
+        this.villagesOfBranch = res.responseObject[0].gpDtoList[0].villageDtoList;
+      })
+    }, 500);
+    this.baselineSurvey.get('gram').reset();
+  }
+
+  changeVillage(villagename) {
+    this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
+    this.householdFamDetails(this.branchVillageMapId);
+  }
+
+  householdFamDetails(branchVillageMapId = null) {
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
-      id: 888
+      id: branchVillageMapId
     }
 
     //API call for viewing HouseholdWithFamilyDetails
@@ -187,7 +259,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         if (response.status == true) {
           this.baselineDetails.splice(i, 1);
           this.showSuccess(response.message);
-          this.householdFamDetails();
+          this.householdFamDetails(this.branchVillageMapId);
         }
         else {
           this.showError(response.responseObject);

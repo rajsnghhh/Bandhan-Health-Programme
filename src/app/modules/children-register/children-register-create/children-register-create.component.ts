@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { ChildrenRegisterService } from '../children-register.service';
 
 @Component({
@@ -14,7 +16,7 @@ import { ChildrenRegisterService } from '../children-register.service';
 })
 
 export class ChildrenRegisterCreateComponent implements OnInit {
-  childRegister: FormGroup;
+  locationForm: FormGroup;
   today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10);
   minDate: any;
   modalContent: any
@@ -37,35 +39,32 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   };
   childViewExistingChild: any;
   childFamId: any;
-  loader: boolean = false;
+  loader: boolean = true;
   page = 1;
   pageSize = 6;
   registerSearch: any;
   searchFullscreen: boolean;
-  blockNames: any[] = [];
-  gpNames: any[] = [];
-  villageNames: any[] = [];
-  childIndexId: any
+  childIndexId: any;
+  regionList: Array<any> = [];
+  branchList: Array<any> = [];
+  villagesOfBranch: Array<any> = [];
+  gpDtoList: Array<any> = [];
+  villageDtoList: Array<any> = [];
+  selectedBlock: String;
+  selectedGp: String;
+  branchId: any;
+  regionBranchHide: boolean;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
-    private httpService: HttpService, private toaster: ToastrService, private httpBranch: BranchService) { }
+    private httpService: HttpService, private toaster: ToastrService, private httpBranch: BranchService,
+    private sidebarService: SidebarService, private baselineService: BaselineSurveyService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
   }
 
   ngOnInit(): void {
-    this.httpBranch.listOfBranchUser().subscribe((res) => {
-      res.responseObject.map((arr) => {
-        this.blockNames.push(arr.blockDTO);
-        this.gpNames.push(arr.gpDTO);
-        this.villageNames.push(arr);
-
-      })
-      console.log(res.responseObject);
-    });
-
     this.createForm();
     this.getMinDate();
 
@@ -79,12 +78,96 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       status: 'A'
     });
 
+    let dataAccessDTO = {
+      userId: this.sidebarService.userId,
+      userName: this.sidebarService.loginId,
+    }
+
+    let Dto = {
+      dataAccessDTO: dataAccessDTO,
+      branchId: this.sidebarService.branchId
+    }
+
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject;
+    })
+    this.regionList = this.sidebarService.listOfRegion;
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+  }
+
+  changeRegion(region) {
+    let regionId = this.regionList.find(
+      (reg) => reg.regionName == region
+    )?.regionMasterId;
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService?.userId,
+        userName: this.sidebarService?.loginId,
+      },
+      regionId: regionId,
+    };
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.listOfBranchesOfARegion(req).subscribe(
+        (res) => {
+          this.loader = true;
+          this.branchList = res?.responseObject;
+        },
+        (error) => {
+          this.loader = true;
+          this.branchList = null;
+        }
+      );
+    }, 500);
+    this.locationForm.get('branch').reset();
+    this.locationForm.get('block').reset();
+    this.locationForm.get('gp').reset();
+    this.locationForm.get('gram').reset();
+  }
+
+  changeBranch(branch) {
+    this.sidebarService.branchId1 = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.sidebarService.branchName = this.locationForm.get('branch').value
+    let Dto = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId1
+    }
+    this.loader = false;
+    setTimeout(() => {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        this.loader = true;
+        this.villagesOfBranch = res.responseObject;
+      })
+    }, 500);
+    this.locationForm.get('block').reset();
+    this.locationForm.get('gp').reset();
+    this.locationForm.get('gram').reset();
+  }
+
+  changeBlock(blockname) {
+    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
+    this.selectedBlock = this.locationForm.get('block').value;
+    this.locationForm.get('gp').reset();
+    this.locationForm.get('gram').reset();
+  }
+  changeGp(gpName) {
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.selectedGp = this.locationForm.get('gp').value;
+    this.locationForm.get('gram').reset();
+  }
+
+  changeVillage(villagename) {
+    let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.http.dataAccessDTO,
-      id: 888
+      id: branchVillageMapId
     }
-
+    this.loader = false;
     setTimeout(() => {
       this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
         this.loader = true;
@@ -92,16 +175,17 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         console.log(this.existingFamilyList);
         this.existingFamilyList?.forEach(item => {
           this.ide = item.familyDetailId
-          // console.log(item.familyDetailId)
         })
       },
         (err) => {
           this.loader = true;
         })
     }, 1000);
-
   }
 
+  get f() {
+    return this.locationForm.controls;
+  }
   getMinDate() {
     let date = new Date();
     let toDate: any = date.getDate();
@@ -119,15 +203,13 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   createForm() {
-    this.childRegister = this.fb.group({
+    this.locationForm = this.fb.group({
+      region: ['', Validators.required],
+      branch: ['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required]
     });
-  }
-
-  get f() {
-    return this.childRegister.controls;
   }
 
   openModal(viewExistingChild, famid: any) {
@@ -289,7 +371,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       console.log(this.existingChildList, 'newChild');
 
     })
-    
+
 
     this.existingChildList.filter((i) => {
       let ageCheck = i.dob

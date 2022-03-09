@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
@@ -8,7 +8,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.css'],
 })
-export class LocationComponent implements OnInit, OnDestroy {
+export class LocationComponent implements OnInit {
   locationForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
@@ -159,7 +159,5 @@ export class LocationComponent implements OnInit, OnDestroy {
     return this.locationForm.controls;
   }
 
-  ngOnDestroy(): void {
-    console.log(this.locationForm.value, 'destroy');
-  }
+
 }
