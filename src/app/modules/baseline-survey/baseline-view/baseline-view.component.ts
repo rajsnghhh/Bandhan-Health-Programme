@@ -31,6 +31,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   villageNames: any[] = [];
   searchFullscreen: boolean;
   loader: boolean = false;
+  modalTitle: string = 'V';
+  toggleBool: boolean = true;
+  finalDelHH: any;
+  moreDetails: any;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -58,7 +62,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     let obj = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
-      id: 888
+      id: 1
     }
 
     //API call for viewing HouseholdWithFamilyDetails
@@ -86,7 +90,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
   }
 
-
   createForm() {
     this.baselineSurvey = this.fb.group({
       region: ['', Validators.required],
@@ -99,14 +102,62 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     return this.baselineSurvey.controls;
   }
 
-  openModal(viewFamily, familyDetailDTOList, items) {
-    console.log(items.householdDetailId, 'ccdd');
-    this.householdId = items.householdDetailId;
+  openModal(viewFamily, familyDetailDTOList, item, title, i) {
+
+    title = this.modalTitle;
+    console.log(title);
+
+    console.log(item.householdDetailId, 'ccdd');
+    this.householdId = item.householdDetailId;
     this.familyDetails = familyDetailDTOList
     this.modalContent = '';
     this.modalReference = this.modalService.open(viewFamily, {
       windowClass: 'viewFamily',
     });
+  }
+
+  familyModal(viewDetails, id) {
+    this.modalDismiss();
+    this.getMoreDetails(id);
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(viewDetails, {
+      windowClass: 'viewDetails',
+    });
+  }
+
+  getMoreDetails(id) {
+
+    let postBody = {
+      activeStatus: "A",
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      id: id
+    }
+
+    //API call for viewing Details of centralRegister
+    this.baselineService.viewMoreFamilyDetails(postBody).subscribe((response: any) => {
+      this.moreDetails = response.responseObject;
+      console.log(this.moreDetails)
+    })
+
+  }
+
+  modalDismiss() {
+    console.log('true');
+
+    if (this.modalTitle == 'D') {
+      this.modalReference.close();
+      let currentUrl = this.route.url;
+      this.route
+        .navigateByUrl('/', { skipLocationChange: true })
+        .then(() => {
+          this.route.navigate([currentUrl]);
+        });
+    }
+
+    else {
+      this.modalReference.close();
+    }
+
   }
 
   editHousehold(item) {
@@ -123,77 +174,90 @@ export class BaselineViewComponent implements OnInit, DoCheck {
   }
 
 
-  deleteHousehold(item, i) {
+  deleteHousehold(item, i, familyDetailDTOList, viewFamily, title) {
+    this.finalDelHH = item;
+    title = 'D';
+    this.modalTitle = title;
 
-    if (confirm('Do you want to delete household :' + item.houseHoldNumber)) {
-      const post = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        houseHoldDetailDTO: {
-          branchDTO: {
-            branchId: 15,
-            branchName: "Kestopur",
-          },
-          branchVillageMapId: 888,
-          familyDetailDTOList: [
-            {
-              age: item.age,
-              bbMicroGroupMembership: item.familyDetailDTOList[0].bbMicroGroupMembership,
-              casteTypeMasterDTO: item.familyDetailDTOList[0].casteTypeMasterDTO,
-              childDetailDTOList: item.familyDetailDTOList[0].childDetailDTOList ? item.familyDetailDTOList[0].childDetailDTOList : [],
-              childrenBelow18: item.familyDetailDTOList[0].childrenBelow18 ? item.familyDetailDTOList[0].childrenBelow18 : 'NA',
-              childrenBelow5: item.familyDetailDTOList[0].childrenBelow5 ? item.familyDetailDTOList[0].childrenBelow5 : 'NA',
-              createdOn: item.familyDetailDTOList[0].createdOn,
-              educationalQualificationMasterDTO: item.familyDetailDTOList[0].educationalQualificationMasterDTO,
-              familyDetailId: item.familyDetailDTOList[0].familyDetailId,
-              familyDetailRemaingStatusDTO: item.familyDetailDTOList[0].familyDetailRemaingStatusDTO,
-              familyNumber: item.familyDetailDTOList[0].familyNumber,
-              familyType: item.familyDetailDTOList[0].familyType,
-              firstName: item.familyDetailDTOList[0].firstName,
-              haveChild: item.familyDetailDTOList[0].haveChild,
-              haveSanitaryLatrine: item.familyDetailDTOList[0].haveSanitaryLatrine,
-              householdDetailsId: item.familyDetailDTOList[0].householdDetailsId,
-              husbandOrGuardianName: item.familyDetailDTOList[0].husbandOrGuardianName,
-              identityCardDTOList: item.familyDetailDTOList[0].identityCardDTOList ? item.familyDetailDTOList[0].identityCardDTOList : [],
-              institutionalDelivery: item.familyDetailDTOList[0].institutionalDelivery ? 'NA' : 'NA',
-              lactetingMother: item.familyDetailDTOList[0].lactetingMother,
-              lastName: item.familyDetailDTOList[0].lastName,
-              middleName: item.familyDetailDTOList[0].middleName,
-              mobileNumber: item.familyDetailDTOList[0].mobileNumber ? item.familyDetailDTOList[0].mobileNumber : '',
-              monthlyIncomeMasterDTO: item.familyDetailDTOList[0].monthlyIncomeMasterDTO,
-              occupationMasterDTO: item.familyDetailDTOList[0].occupationMasterDTO,
-              pregnantWoman: item.familyDetailDTOList[0].pregnantWoman,
-              religionMasterDTO: item.familyDetailDTOList[0].religionMasterDTO,
-              status: item.familyDetailDTOList[0].status,
-              totaFamilyMemberFemales: item.familyDetailDTOList[0].totaFamilyMemberFemales,
-              totaFamilyMemberMales: item.familyDetailDTOList[0].totaFamilyMemberMales,
-              totaFamilyMemberSrcitizen: item.familyDetailDTOList[0].totaFamilyMemberSrcitizen,
-              totalNumberOfChildren: item.familyDetailDTOList[0].totalNumberOfChildren
-            }
-          ],
-          familyType: item.familyType,
-          houseHoldNumber: item.houseHoldNumber,
-          householdDetailId: item.householdDetailId,
-          numberOfFamily: item.numberOfFamily,
-          status: "D",
-          swasthyaSahayikaDTO: {
-            name: "ABC",
-            swasthyaSahayikaId: 1
-          },
-          totalMembers: item.totalMembers
-        }
+    this.openModal(familyDetailDTOList, viewFamily, item, title, i);
+    console.log(this.modalTitle);
+
+  }
+
+  deleteHH() {
+    var item = this.finalDelHH;
+
+    const post = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      houseHoldDetailDTO: {
+        branchDTO: {
+          branchId: 15,
+          branchName: "Kestopur",
+        },
+        branchVillageMapId: 888,
+        familyDetailDTOList: [
+          {
+            age: item.age,
+            bbMicroGroupMembership: item.familyDetailDTOList[0].bbMicroGroupMembership,
+            casteTypeMasterDTO: item.familyDetailDTOList[0].casteTypeMasterDTO,
+            childDetailDTOList: item.familyDetailDTOList[0].childDetailDTOList ? item.familyDetailDTOList[0].childDetailDTOList : [],
+            childrenBelow18: item.familyDetailDTOList[0].childrenBelow18 ? item.familyDetailDTOList[0].childrenBelow18 : 'NA',
+            childrenBelow5: item.familyDetailDTOList[0].childrenBelow5 ? item.familyDetailDTOList[0].childrenBelow5 : 'NA',
+            createdOn: item.familyDetailDTOList[0].createdOn,
+            educationalQualificationMasterDTO: item.familyDetailDTOList[0].educationalQualificationMasterDTO,
+            familyDetailId: item.familyDetailDTOList[0].familyDetailId,
+            familyDetailRemaingStatusDTO: item.familyDetailDTOList[0].familyDetailRemaingStatusDTO,
+            familyNumber: item.familyDetailDTOList[0].familyNumber,
+            familyType: item.familyDetailDTOList[0].familyType,
+            firstName: item.familyDetailDTOList[0].firstName,
+            haveChild: item.familyDetailDTOList[0].haveChild,
+            haveSanitaryLatrine: item.familyDetailDTOList[0].haveSanitaryLatrine,
+            householdDetailsId: item.familyDetailDTOList[0].householdDetailsId,
+            husbandOrGuardianName: item.familyDetailDTOList[0].husbandOrGuardianName,
+            identityCardDTOList: item.familyDetailDTOList[0].identityCardDTOList ? item.familyDetailDTOList[0].identityCardDTOList : [],
+            institutionalDelivery: item.familyDetailDTOList[0].institutionalDelivery ? 'NA' : 'NA',
+            lactetingMother: item.familyDetailDTOList[0].lactetingMother,
+            lastName: item.familyDetailDTOList[0].lastName,
+            middleName: item.familyDetailDTOList[0].middleName,
+            mobileNumber: item.familyDetailDTOList[0].mobileNumber ? item.familyDetailDTOList[0].mobileNumber : '',
+            monthlyIncomeMasterDTO: item.familyDetailDTOList[0].monthlyIncomeMasterDTO,
+            occupationMasterDTO: item.familyDetailDTOList[0].occupationMasterDTO,
+            pregnantWoman: item.familyDetailDTOList[0].pregnantWoman,
+            religionMasterDTO: item.familyDetailDTOList[0].religionMasterDTO,
+            status: item.familyDetailDTOList[0].status,
+            totaFamilyMemberFemales: item.familyDetailDTOList[0].totaFamilyMemberFemales,
+            totaFamilyMemberMales: item.familyDetailDTOList[0].totaFamilyMemberMales,
+            totaFamilyMemberSrcitizen: item.familyDetailDTOList[0].totaFamilyMemberSrcitizen,
+            totalNumberOfChildren: item.familyDetailDTOList[0].totalNumberOfChildren
+          }
+        ],
+        familyType: item.familyType,
+        houseHoldNumber: item.houseHoldNumber,
+        householdDetailId: item.householdDetailId,
+        numberOfFamily: item.numberOfFamily,
+        status: "D",
+        swasthyaSahayikaDTO: {
+          name: "ABC",
+          swasthyaSahayikaId: 1
+        },
+        totalMembers: item.totalMembers
       }
-      this.baselineService.saveBaselineSurvey(post).subscribe((response: any) => {
-        console.log(response);
-        if (response.status == true) {
-          this.baselineDetails.splice(i, 1);
-          this.showSuccess(response.message);
-          this.householdFamDetails();
-        }
-        else {
-          this.showError(response.responseObject);
-        }
-      })
+
     }
+
+    this.baselineService.saveBaselineSurvey(post).subscribe((response: any) => {
+      console.log(response);
+      if (response.status == true) {
+        this.modalDismiss();
+        this.showSuccess(response.message);
+        this.householdFamDetails();
+      }
+      else {
+        this.showError(response.responseObject);
+      }
+    })
+
+
   }
 
   deleteFamily(item, i) {
@@ -349,6 +413,18 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
   p(event) { }
 
+  changeEvent(event) {
+    if (event.target.checked) {
+      this.toggleBool = false;
+      console.log(this.toggleBool);
+
+    }
+    else {
+      this.toggleBool = true;
+      console.log(this.toggleBool);
+    }
+
+  }
 
   gotoFamily(item) {
 

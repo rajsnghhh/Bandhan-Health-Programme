@@ -1,4 +1,4 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -49,12 +49,12 @@ export class BaselineCreateComponent implements OnInit {
   gpDtoList: Array<any> = [];
   villageDtoList: Array<any> = [];
   ssList: Array<any> = [];
-  swasthyaSahayika:Array<any> = [];
-  selectedBranch:string = "-- Select Branch --";
+  swasthyaSahayika: Array<any> = [];
+  selectedBranch: string = "-- Select Branch --";
   selectedBlock: String = "-- Select Block --";
   selectedGp: String = "-- Select GP/ Municipality --";
-  branchId:any;
-  regionBranchHide:boolean;
+  branchId: any;
+  regionBranchHide: boolean;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
@@ -126,45 +126,45 @@ export class BaselineCreateComponent implements OnInit {
 
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch , 'villagesOfBranch1');
+      console.log(this.villagesOfBranch, 'villagesOfBranch1');
     })
-    
+
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
-  changeRegion(region){
+  changeRegion(region) {
     let regionId = this.regionList.find(reg => reg.regionName == region).regionMasterId;
-    let req ={
-      dataAccessDTO : {
+    let req = {
+      dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
       regionId: regionId
     }
-    this.baselineService.listOfBranchesOfARegion(req).subscribe((res)=>{
+    this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
       this.branchList = res.responseObject;
     })
 
   }
-  changeBranch(branch){
+  changeBranch(branch) {
     let branchId = this.branchList.find(bran => bran.branchName == branch).branchId;
     let Dto = {
-      dataAccessDTO : {
+      dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
       branchId: branchId
     }
-    this.baselineService.villagesOfBranch(Dto).subscribe((res)=>{
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch , 'villagesOfBranch2');
+      console.log(this.villagesOfBranch, 'villagesOfBranch2');
     })
     this.baselineSurvey.get('block').reset();
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
     this.baselineSurvey.get('swasthyaSahayika').reset();
   }
-  changeBlock(blockname){
+  changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname).gpDtoList;
     this.baselineSurvey.get('gp').reset();
     this.baselineSurvey.get('gram').reset();
@@ -185,9 +185,9 @@ export class BaselineCreateComponent implements OnInit {
       villageId: villId,
       userId: this.sidebarService.userId
     }
-    this.baselineService.ssVillageWiseList(req).subscribe((res)=>{
-      let val:any = []; 
-      for(let i =0; i< res.responseObject.length; i++){
+    this.baselineService.ssVillageWiseList(req).subscribe((res) => {
+      let val: any = [];
+      for (let i = 0; i < res.responseObject.length; i++) {
         val.push(res.responseObject[i].SwasthyaSahayikaDetail.swasthyaSahayikaName);
       }
       this.swasthyaSahayika = val
@@ -878,6 +878,24 @@ export class BaselineCreateComponent implements OnInit {
 
   }
 
+  zeroAge() {
+    if (this.baselineSurvey.value.age.startsWith(0)) {
+      this.showError('Age should not be zero');
+      this.baselineSurvey.controls.age.setValue('');
+      return;
+    }
+
+  }
+
+  zeroMembers() {
+    if (this.baselineSurvey.value.households.startsWith(0)) {
+      this.showError('Members should not be zero');
+      this.baselineSurvey.controls.households.setValue('');
+      return;
+    }
+
+  }
+
   familyCountChecking() {
     let totalMale: number = 0;
     let totalFemale: number = 0;
@@ -1030,6 +1048,13 @@ export class BaselineCreateComponent implements OnInit {
       this.showError('Children count should be less than or equal to (Male + Female) – (Sr.Citizen)');
       this.baselineSurvey.controls.child.setValue('');
     }
+
+    if (this.baselineSurvey.value.child.startsWith(0)) {
+      this.showError('Child count should not be zero');
+      this.baselineSurvey.controls.child.setValue('');
+      return;
+    }
+
   }
 
   familyNo(e) {

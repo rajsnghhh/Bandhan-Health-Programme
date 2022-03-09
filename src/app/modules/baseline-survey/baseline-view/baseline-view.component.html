@@ -39,7 +39,8 @@
                             <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                                 'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
                                 <option value="">-- Select --</option>
-                                <option *ngFor="let villageName of villageNames" value="villageMasterId">{{villageName}}</option>
+                                <option *ngFor="let villageName of villageNames" value="villageMasterId">{{villageName}}
+                                </option>
                             </select>
                             <div *ngIf="f.gram.errors" class="invalid-feedback">
                                 <div *ngIf="f.gram.errors.required">Above Selection is required</div>
@@ -50,7 +51,7 @@
 
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
-                            <div  [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
                                         <input type="text" name="search" placeholder="Search household info here..."
@@ -67,7 +68,7 @@
 
                         <div class="QA_table ">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table 
+                                <table
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
@@ -88,7 +89,7 @@
 
                                     <tbody>
 
-                                        <tr 
+                                        <tr
                                             *ngFor="let item of baselineDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{item.houseHoldNumber}}
@@ -100,7 +101,8 @@
                                             <td>{{item.totalMembers}}</td>
                                             <td class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                                (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View</td>
+                                                (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View
+                                            </td>
 
                                             <td class="btn-link" *ngIf="item.familyType == 'J'"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
@@ -110,7 +112,8 @@
 
                                             <td> <i class="fas fa-edit" title="Edit Household"
                                                     (click)="editHousehold(item,i)"> </i> <i class="fas fa-trash"
-                                                    title="Delete Household" (click)="deleteHousehold(item, i)"></i>
+                                                    title="Delete Household"
+                                                    (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -137,7 +140,7 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">Family Details</h2>
-                <span class="close" title="Close" (click)="modal.dismiss('Cross click')"
+                <span class="close" title="close" (click)="modalDismiss()"
                     style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
             </div>
 
@@ -155,7 +158,8 @@
                         <th>Family <br>Member Count</th>
                         <th>Total Child <br>Count</th>
                         <th>Child Below 18 <br>yr. entered</th>
-                        <th>Action</th>
+                        <th>Family <br>Details</th>
+                        <th *ngIf="modalTitle == 'V' ">Action</th>
                     </tr>
                 </thead>
 
@@ -169,15 +173,444 @@
                         <td>{{item.totaFamilyMemberFemales + item.totaFamilyMemberMales}}</td>
                         <td>{{item.totalNumberOfChildren}}</td>
                         <td>{{item.existingChildCount}}</td>
-                        <td>
+                        <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                            (click)="familyModal(viewDetails, item.familyDetailId)">View</td>
+                        <td *ngIf="modalTitle == 'V' ">
                             <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"> </i>
                             <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"></i>
                         </td>
                     </tr>
 
                 </tbody>
-
             </table>
+
+            <div class="form-check" *ngIf="modalTitle == 'D' ">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                    (change)="changeEvent($event)">
+                <label class="form-check-label" for="flexCheckDefault">&nbsp;
+                    Select this checkbox for deleting Household <br>
+                    <span class="text-danger">! Important : All family in this household will be deleted</span>
+                </label>
+            </div>
+
+            <div *ngIf="modalTitle == 'D' && toggleBool == false " (click)="deleteHH()"> <button class="btn btn-danger"
+                    id="deleteButton"> <i class="fas fa-trash" aria-hidden="true"></i>Delete
+                    Household</button>
+            </div>
+            <div *ngIf="modalTitle == 'D' &&  toggleBool == true "> <button class="btn btn-danger" disabled
+                    id="deleteButton"> <i class="fas fa-trash" aria-hidden="true"></i>Delete
+                    Household</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #viewDetails let-modal>
+
+    <div class="modal-content" style="height: 500px;">
+        <div class="modal-header" style="height: 80px;">
+
+            <div class="white_box QA_section mb_30" style="height: 100px;">
+                <h2 class="page-title">Family Details View</h2>
+                <span class="closes" title="close" (click)="modal.dismiss('Cross click')"
+                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">HH Info</legend>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Family No:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.familyNumber}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Family Type:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.familyType}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Name:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.firstName}} {{moreDetails?.middleName}}
+                                    {{moreDetails?.lastName}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Age:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.age}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Husband Name:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.husbandOrGuardianName}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Mobile:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.mobileNumber}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">ID Type:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">
+                                    {{moreDetails?.identityCardDTOList[0]?.identityCardTypesMasterDTO?.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">ID Number:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">{{moreDetails?.identityCardDTOList[0]?.number}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Religion:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.religionMasterDTO.religionMasterDescription}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Caste:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.casteTypeMasterDTO.casteTypeDescription}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Occupation:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.occupationMasterDTO.occupationDescription}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Income:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.monthlyIncomeMasterDTO.incomeRange}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Education:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.educationalQualificationMasterDTO.qualification}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">BB Micro Group:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.bbMicroGroupMembership}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Sanitary Latrine: </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.haveSanitaryLatrine}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Pregnant Woman:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.pregnantWoman}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Have Children: </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.haveChild}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Child below 5 yrs:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.childrenBelow5}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Child below 18 yrs:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.childrenBelow18}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col">
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Institutional Delivery:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.institutionalDelivery}}</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Lacteting Mother:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.lactetingMother}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Total No. of children:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.totalNumberOfChildren}}</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Total Family Member (Male): </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.totaFamilyMemberMales}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Total Family Member (Female): </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.totaFamilyMemberFemales}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Total Family Member (Senior Citizen): </label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.totaFamilyMemberSrcitizen}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Child Info</legend>
+                <div id="table_wrapper">
+                    <table class="table table-striped" id="table_wrapper">
+
+                        <thead>
+                            <tr>
+                                <th>SL No</th>
+                                <th>Child Name</th>
+                                <th>DOB</th>
+                                <th>sex</th>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
+
+                        <tbody style="text-align: center;">
+
+                            <tr *ngFor="let item of moreDetails?.childDetailDTOList; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.childName}}</td>
+                                <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
+                                <td>{{item.sex}}</td>
+                                <td>{{item.age}}</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </fieldset>
         </div>
     </div>
 </ng-template>

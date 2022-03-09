@@ -109,8 +109,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/children-register/create']);
     }
 
-    if (routeId == 89) {
-      this.router.navigate(['/central-register/view']);
+    if (routeId == 89 || routeId == 91) {
+       this.router.navigate(['/central-register/view']);
     }
 
     if (routeId == 97) {

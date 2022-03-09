@@ -53,7 +53,7 @@
                             <label for="age">Age:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="" class="form-control" maxlength="2"
                                 (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
-                                placeholder="Enter Age" formControlName="age" [ngClass]="{ 'is-invalid': f.age.invalid && f.age.touched,
+                                (keyup)="zeroAge()" placeholder="Enter Age" formControlName="age" [ngClass]="{ 'is-invalid': f.age.invalid && f.age.touched,
                                 'is-valid': f.age.valid && (f.age.dirty || f.age.touched) }">
                             <div *ngIf="f.age.errors" class="invalid-feedback">
                                 <div *ngIf="f.age.errors.required">Age is required</div>
@@ -498,8 +498,8 @@
                     <tbody>
 
                         <tr *ngFor="let items of childDetails.childInfo; index as i">
-                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="text" class="form-control" maxlength="20"
-                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="text" class="form-control"
+                                    maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                     style="text-transform:capitalize;" (keypress)="validationService.titleCase($event)"
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName">
                             </td>
@@ -509,8 +509,9 @@
                                     placeholder="Enter Child Name" [(ngModel)]="childDetails.childInfo[i].childName"
                                     readonly>
                             </td>
-                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob"
-                                    [min]="minDate" [max]="today" (keydown)="restrictTypeOfDate()">
+                            <td *ngIf="childDetails.childInfo[i].status == 'A'"> <input type="date" class="form-control"
+                                    [(ngModel)]="childDetails.childInfo[i].dob" [min]="minDate" [max]="today"
+                                    (keydown)="restrictTypeOfDate()">
                             </td>
                             <td *ngIf="childDetails.childInfo[i].status == 'D'"> <input type="date" class="form-control"
                                     [(ngModel)]="childDetails.childInfo[i].dob" [min]="minDate" [max]="today"
@@ -525,12 +526,13 @@
                                 </select>
                             </td>
                             <td *ngIf="childDetails.childInfo[i].status == 'D'" style="pointer-events:none">
-                                <select class="form-select" style="background-color:#e9ecef" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
+                                <select class="form-select" style="background-color:#e9ecef" id="sex"
+                                    [(ngModel)]="childDetails.childInfo[i].sex">
                                     <option value="">-- Select Sex --</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
                                     <option value="O">Others</option>
-                                </select >
+                                </select>
                             </td>
                             <td *ngIf="childDetails.childInfo[i].status == 'A'"><button type="button"
                                     class="btn btn-remove" (click)="removeNewChild(i)"><i
