@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         userName: this.sidebarService.loginId,
       }
     }
-    if (this.sidebarService.RoleDTOName === 'HCO' || this.sidebarService.RoleDTOName === 'TL') {
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
       this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
         this.sidebarService.branchId = res.responseObject[0].branchId;
         this.sidebarService.branchName = res.responseObject[0].branchName;

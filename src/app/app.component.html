@@ -10,9 +10,12 @@
         <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
         </span>
 
-        <span>Welcome {{user.responseObject.userdetailDTO.userFirstName}} {{user.responseObject.userdetailDTO.userLastName}} ({{user.responseObject.RoledetailDTO.roleShortName}})</span>
-        <button class="btn btn-danger" style="margin-left: 1%;" (click)="logout()"> <i
-                class="fa fa-power-off"></i>Logout</button>
+        <div >
+            <span style="font-size: 75%;">Welcome {{user.responseObject.userdetailDTO.userFirstName}} {{user.responseObject.userdetailDTO.userLastName}} ({{user.responseObject.RoledetailDTO.roleShortName}})</span>
+            <button class="btn btn-danger" style="margin-left: 1%;" (click)="logout()"> <i
+                    class="fa fa-power-off"></i>Logout</button>
+        </div>
+    
 
     </mat-toolbar>
 
