@@ -117,9 +117,9 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }
-  changeVillage(villagename) {
 
-    
+
+  changeVillage(villagename) {
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.sidebarService.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
     let req = {
@@ -144,10 +144,13 @@ export class LocationComponent implements OnInit {
 
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }
+
+
   changeSS(ss) {
     this.sidebarService.swasthyaSahayikaId = ss;
     this.sidebarService.swasthyaSahayikaName = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName
   }
+  
   createForm() {
     this.locationForm = this.fb.group({
       region: ['', Validators.required],
@@ -155,7 +158,7 @@ export class LocationComponent implements OnInit {
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
-      swasthyaSahayika: ['', Validators.required],
+      swasthyaSahayika: [''],
     });
   }
 
