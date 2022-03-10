@@ -151,36 +151,52 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
     this.selectedBlock = this.locationForm.get('block').value;
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.block == '') {
+      this.showError('No Data Found');
+      this.existingFamilyList = [];
+    }
   }
+
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.gp == '') {
+      this.showError('No Data Found');
+      this.existingFamilyList = [];
+    }
   }
 
   changeVillage(villagename) {
-    let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
-    let obj = {
-      activeStatus: "A",
-      dataAccessDTO: this.http.dataAccessDTO,
-      id: branchVillageMapId
+    if (this.locationForm.value.gram == '') {
+      this.showError('No Data Found');
+      this.existingFamilyList = [];
     }
-    this.loader = false;
-    setTimeout(() => {
-      this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
-        this.loader = true;
-        this.existingFamilyList = response.responseObject;
-        console.log(this.existingFamilyList);
-        this.existingFamilyList?.forEach(item => {
-          this.ide = item.familyDetailId
-        })
-      },
-        (err) => {
+    else {
+
+      let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
+      let obj = {
+        activeStatus: "A",
+        dataAccessDTO: this.http.dataAccessDTO,
+        id: branchVillageMapId
+      }
+      this.loader = false;
+      setTimeout(() => {
+        this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
           this.loader = true;
-        })
-    }, 1000);
+          this.existingFamilyList = response.responseObject;
+          console.log(this.existingFamilyList);
+          this.existingFamilyList?.forEach(item => {
+            this.ide = item.familyDetailId
+          })
+        },
+          (err) => {
+            this.loader = true;
+          })
+      }, 1000);
+    }
   }
 
   get f() {

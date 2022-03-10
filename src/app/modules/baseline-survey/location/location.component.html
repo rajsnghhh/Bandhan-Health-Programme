@@ -23,7 +23,7 @@
         </option>
       </select>
       <div *ngIf="f.region.errors" class="invalid-feedback">
-        <div *ngIf="f.region.errors.required">Region is required</div>
+        <div *ngIf="f.region.errors.required">Region selection is required</div>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
         </option>
       </select>
       <div *ngIf="f.branch.errors" class="invalid-feedback">
-        <div *ngIf="f.branch.errors.required">Branch is required</div>
+        <div *ngIf="f.branch.errors.required">Branch selection is required</div>
       </div>
     </div>
 </div>
@@ -75,7 +75,7 @@
         </option>
       </select>
       <div *ngIf="f.block.errors" class="invalid-feedback">
-        <div *ngIf="f.block.errors.required">Block is required</div>
+        <div *ngIf="f.block.errors.required">Block selection is required</div>
       </div>
     </div>
 
@@ -102,7 +102,7 @@
       </select>
       <div *ngIf="f.gp.errors" class="invalid-feedback">
         <div *ngIf="f.gp.errors.required">
-          GP/ Municipality is required
+          GP selection is required
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
       </select>
       <div *ngIf="f.gram.errors" class="invalid-feedback">
         <div *ngIf="f.gram.errors.required">
-          Above Selection is required
+          Village selection is required
         </div>
       </div>
     </div>
@@ -157,6 +157,11 @@
           {{ ss.swasthyaSahayikaName }}
         </option>
       </select>
+      <div *ngIf="f.swasthyaSahayika.errors" class="invalid-feedback">
+        <div *ngIf="f.swasthyaSahayika.errors.required">
+          Swasthya Sahayika Selection is required
+        </div>
+      </div>
     </div>
 </div>
 <br>

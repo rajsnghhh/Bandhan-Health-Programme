@@ -107,17 +107,19 @@ export class LocationComponent implements OnInit {
   changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
     this.selectedBlock = this.locationForm.get('block').value;
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
   changeVillage(villagename) {
+
+    
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.sidebarService.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
     let req = {
@@ -139,6 +141,8 @@ export class LocationComponent implements OnInit {
         this.swasthyaSahayika = null;
       })
     }, 500);
+
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
   changeSS(ss) {
     this.sidebarService.swasthyaSahayikaId = ss;
