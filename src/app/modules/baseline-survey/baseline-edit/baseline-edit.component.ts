@@ -161,8 +161,8 @@ export class BaselineEditComponent implements OnInit {
         numberOfFamily: this.tFamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.ss,
-          swasthyaSahayikaId: this.swasthyaSahayikaId
+          name: this.ss ? this.ss : '',
+          swasthyaSahayikaId: this.swasthyaSahayikaId ? this.swasthyaSahayikaId : 0
         },
         totalMembers: this.totalMembers
       }

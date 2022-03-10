@@ -79,11 +79,11 @@ export class LocationComponent implements OnInit {
         }
       );
     }, 500);
-    this.locationForm.get('branch').reset();
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
 
   changeBranch(branch) {
@@ -104,10 +104,10 @@ export class LocationComponent implements OnInit {
         console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
 
   changeBlock(blockname) {

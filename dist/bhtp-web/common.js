@@ -30,44 +30,82 @@ class VerticalMasterViewDTO {
 
 /***/ }),
 
-/***/ "aQtA":
-/*!***********************************************************************************!*\
-  !*** ./src/app/modules/shared/confirmation-dialog/confirmation-dialog.service.ts ***!
-  \***********************************************************************************/
-/*! exports provided: ConfirmationDialogService */
+/***/ "SMi9":
+/*!********************************************************************!*\
+  !*** ./src/app/modules/baseline-survey/baseline-survey.service.ts ***!
+  \********************************************************************/
+/*! exports provided: BaselineSurveyService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmationDialogService", function() { return ConfirmationDialogService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaselineSurveyService", function() { return BaselineSurveyService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _confirmation_dialog_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./confirmation-dialog.component */ "V8h6");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "1kSV");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
 
 
 
 
-class ConfirmationDialogService {
-    constructor(modalService) {
-        this.modalService = modalService;
+class BaselineSurveyService {
+    constructor(http) {
+        this.http = http;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
     }
-    confirm(title, message, btnOkText = 'OK', btnCancelText = 'Cancel', dialogSize = 'sm') {
-        const modalRef = this.modalService.open(_confirmation_dialog_component__WEBPACK_IMPORTED_MODULE_1__["ConfirmationDialogComponent"], { size: dialogSize });
-        modalRef.componentInstance.title = title;
-        modalRef.componentInstance.message = message;
-        modalRef.componentInstance.btnOkText = btnOkText;
-        modalRef.componentInstance.btnCancelText = btnCancelText;
-        return modalRef.result;
+    getCasteView(obj) {
+        return this.http.post(`${this.baseURL}castemaster/view`, obj);
+    }
+    getEducationDetails(obj) {
+        return this.http.post(`${this.baseURL}educationalqualificationmaster/view`, obj);
+    }
+    monthlyIncomeDetails(obj) {
+        return this.http.post(`${this.baseURL}monthlyincomemaster/view`, obj);
+    }
+    religionDetails(obj) {
+        return this.http.post(`${this.baseURL}religionmaster/view`, obj);
+    }
+    occupationDetails(obj) {
+        return this.http.post(`${this.baseURL}occupationmaster/view`, obj);
+    }
+    getIdCardDetails(obj) {
+        return this.http.post(`${this.baseURL}identitycardtypes/view`, obj);
+    }
+    saveBaselineSurvey(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/saveOrUpdate`, obj);
+    }
+    baselineView(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/view`, obj);
+    }
+    baselineViewDetail(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/view/detail`, obj);
+    }
+    deleteFamily(obj) {
+        return this.http.post(`${this.baseURL}familydetail/saveOrUpdate`, obj);
+    }
+    viewMoreFamilyDetails(obj) {
+        return this.http.post(`${this.baseURL}familydetail/view`, obj);
+    }
+    baselineSurveyStatus(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/status`, obj);
+    }
+    villagesOfBranch(obj) {
+        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
+    }
+    ssVillageWiseList(obj) {
+        return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj);
+    }
+    listOfBranchesOfARegion(obj) {
+        return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
     }
 }
-ConfirmationDialogService.ɵfac = function ConfirmationDialogService_Factory(t) { return new (t || ConfirmationDialogService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"])); };
-ConfirmationDialogService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: ConfirmationDialogService, factory: ConfirmationDialogService.ɵfac, providedIn: 'root' });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ConfirmationDialogService, [{
+BaselineSurveyService.ɵfac = function BaselineSurveyService_Factory(t) { return new (t || BaselineSurveyService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
+BaselineSurveyService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BaselineSurveyService, factory: BaselineSurveyService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BaselineSurveyService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
 
 
 /***/ }),
@@ -122,13 +160,16 @@ class SubVerticalMasterViewDTO {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BranchService", function() { return BranchService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 
 
 class BranchService {
     constructor(http) {
         this.http = http;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
         this.dataAccessDTO = {
             userId: '100',
             userName: 'bk103586',
@@ -139,17 +180,17 @@ class BranchService {
         };
     }
     listOfBranchUser() {
-        return this.http.post('http://192.168.153.56:6181/bhp/api/v1/village/getVillagesOfABranch', this.Dto);
+        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, this.Dto);
     }
 }
-BranchService.ɵfac = function BranchService_Factory(t) { return new (t || BranchService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
+BranchService.ɵfac = function BranchService_Factory(t) { return new (t || BranchService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
 BranchService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BranchService, factory: BranchService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BranchService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
 
 
 /***/ }),
