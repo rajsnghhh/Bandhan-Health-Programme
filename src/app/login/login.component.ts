@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     this.loading = false;
 
     setTimeout(() => {
-      this.accountService.login(("BK" + this.f.username.value), this.f.password.value)
+      this.accountService.login(("BK" + this.f.username.value).trim(), this.f.password.value)
         .pipe(first())
         .subscribe(
           (data: RootObject) => {
