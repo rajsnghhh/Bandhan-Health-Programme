@@ -79,11 +79,11 @@ export class LocationComponent implements OnInit {
         }
       );
     }, 500);
-    this.locationForm.get('branch').reset();
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
 
   changeBranch(branch) {
@@ -104,10 +104,10 @@ export class LocationComponent implements OnInit {
         console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
-    this.locationForm.get('swasthyaSahayika').reset();
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.swasthyaSahayika.setValue('');
   }
 
   changeBlock(blockname) {
@@ -123,9 +123,9 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }
+
+
   changeVillage(villagename) {
-
-
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.sidebarService.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
     let req = {
@@ -150,10 +150,13 @@ export class LocationComponent implements OnInit {
 
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }
+
+
   changeSS(ss) {
     this.sidebarService.swasthyaSahayikaId = ss;
     this.sidebarService.swasthyaSahayikaName = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName
   }
+  
   createForm() {
     this.locationForm = this.fb.group({
       region: ['', Validators.required],
@@ -161,7 +164,7 @@ export class LocationComponent implements OnInit {
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
-      swasthyaSahayika: ['', Validators.required],
+      swasthyaSahayika: [''],
     });
   }
 

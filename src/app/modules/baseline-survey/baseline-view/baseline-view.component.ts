@@ -71,13 +71,17 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       branchId: this.sidebarService.branchId
     }
 
-    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-      if (res.sessionDTO.status == true) {
-        this.villagesOfBranch = res?.responseObject[0]?.gpDtoList[0]?.villageDtoList;
-        console.log(this.villagesOfBranch, 'villagesOfBranch1');
-      }
 
-    })
+    setTimeout(() => {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        if (res.sessionDTO.status == true) {
+          this.villagesOfBranch = res?.responseObject[0]?.gpDtoList[0]?.villageDtoList;
+          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+        }
+      })
+    }, 500);
+
+
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
@@ -106,8 +110,13 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         }
       );
     }, 500);
-    this.locationForm.get('branch').reset();
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.gram.setValue('');
+
+    if (this.locationForm.value.region == '') {
+      this.showError('No Data Found');
+      this.baselineDetails = [];
+    }
   }
 
   changeBranch(branch) {
@@ -128,12 +137,21 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.gram.setValue('');
+
+    if (this.locationForm.value.branch == '') {
+      this.showError('No Data Found');
+      this.baselineDetails = [];
+    }
   }
 
   changeVillage(villagename) {
     this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
     this.householdFamDetails(this.branchVillageMapId);
+    if (this.locationForm.value.gram == '') {
+      this.showError('No Data Found');
+      this.baselineDetails = [];
+    }
   }
 
   householdFamDetails(branchVillageMapId = null) {
@@ -149,7 +167,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
         this.loader = true;
         this.baselineDetails = response.responseObject;
-        console.log(this.baselineDetails);
+        // console.log(this.baselineDetails);
       },
         (err) => {
           this.loader = true;

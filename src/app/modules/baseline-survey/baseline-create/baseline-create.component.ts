@@ -400,8 +400,8 @@ export class BaselineCreateComponent implements OnInit {
         numberOfFamily: tfamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.sidebarService.swasthyaSahayikaName,
-          swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId)
+          name: this.sidebarService.swasthyaSahayikaName ?  this.sidebarService.swasthyaSahayikaName : '',
+          swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId) ? parseInt(this.sidebarService.swasthyaSahayikaId) : 0
         },
         totalMembers: item.households
       }
@@ -834,7 +834,7 @@ export class BaselineCreateComponent implements OnInit {
   }
 
   showError(message) {
-    this.toaster.error(message, 'Baseline Register Save', {
+    this.toaster.error(message, 'Baseline Register', {
       timeOut: 3000,
     });
   }
