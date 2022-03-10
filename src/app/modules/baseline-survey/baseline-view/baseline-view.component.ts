@@ -241,7 +241,9 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         hhNo: item.houseHoldNumber,
         bName: item.branchDTO.branchName,
         vName: this.villagesOfBranch.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
-        ssName: item.swasthyaSahayikaDTO.name
+        vId: item.branchVillageMapId,
+        ssName: item.swasthyaSahayikaDTO.name,
+        ssId: item.swasthyaSahayikaDTO.swasthyaSahayikaId
       }
     });
   }

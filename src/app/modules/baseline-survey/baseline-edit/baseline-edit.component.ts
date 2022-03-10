@@ -24,6 +24,8 @@ export class BaselineEditComponent implements OnInit {
   tFamily: any;
   branch: any;
   village: any;
+  branchVillageMapId: any;
+  swasthyaSahayikaId: any;
   ss: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
@@ -35,12 +37,14 @@ export class BaselineEditComponent implements OnInit {
       this.houseHoldId = params['id'];
       this.branch = params['bName'];
       this.village = params['vName'];
-      this.ss = params['ssName']
+      this.branchVillageMapId = params['vId'];
+      this.ss = params['ssName'];
+      this.swasthyaSahayikaId = params['ssId'];
       this.famType = params['type'];
       this.totalMembers = params['tMem'];
       this.totalFamili = params['tFam'];
       this.householdNumber = params['hhNo'];
-      console.log(params)
+      console.log(params, 'abccccccccc');
       this.familyType(this.famType);
     });
     this.createForm();
@@ -149,7 +153,7 @@ export class BaselineEditComponent implements OnInit {
           branchId: this.sidebarService.branchId,
           branchName: this.sidebarService.branchName,
         },
-        branchVillageMapId: this.sidebarService.branchVillageMapId,
+        branchVillageMapId: this.branchVillageMapId,
         familyDetailDTOList: [],
         familyType: this.famType,
         houseHoldNumber: this.householdNumber,
@@ -157,8 +161,8 @@ export class BaselineEditComponent implements OnInit {
         numberOfFamily: this.tFamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.sidebarService.swasthyaSahayikaName,
-          swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId)
+          name: this.ss,
+          swasthyaSahayikaId: this.swasthyaSahayikaId
         },
         totalMembers: this.totalMembers
       }
