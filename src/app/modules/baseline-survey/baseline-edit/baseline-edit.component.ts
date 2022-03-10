@@ -22,6 +22,9 @@ export class BaselineEditComponent implements OnInit {
   householdNumber: any;
   familyStatus: any;
   tFamily: any;
+  branch: any;
+  village: any;
+  ss: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
     public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService
@@ -30,13 +33,21 @@ export class BaselineEditComponent implements OnInit {
   ngOnInit(): void {
     this.routes.queryParams.subscribe(params => {
       this.houseHoldId = params['id'];
+      this.branch = params['bName'];
+      this.village = params['vName'];
+      this.ss = params['ssName']
       this.famType = params['type'];
       this.totalMembers = params['tMem'];
       this.totalFamili = params['tFam'];
       this.householdNumber = params['hhNo'];
+      console.log(params)
       this.familyType(this.famType);
     });
     this.createForm();
+
+    this.baselineSurvey.get('branchName').disable();
+    this.baselineSurvey.get('villageName').disable();
+    this.baselineSurvey.get('ssName').disable();
 
     let postBody = {
       activeStatus: "A",
@@ -54,10 +65,9 @@ export class BaselineEditComponent implements OnInit {
 
   createForm() {
     this.baselineSurvey = this.fb.group({
-      // block: ['', Validators.required],
-      // gp: ['', Validators.required],
-      // gram: ['', Validators.required],
-      // swasthyaSahayika: ['', Validators.required],
+      branchName: ['', Validators.required],
+      villageName: ['', Validators.required],
+      ssName: ['', Validators.required],
       family: ['', Validators.required],
       totalFamily: ['', Validators.required],
       households: ['', Validators.required]

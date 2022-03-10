@@ -1,0 +1,7 @@
+.subMenu {
+  cursor: pointer;
+  padding: 5px 0px;
+}
+.subMenu:hover {
+  font-weight: bold;
+}

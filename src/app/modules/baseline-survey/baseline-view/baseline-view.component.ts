@@ -133,7 +133,6 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
   changeVillage(villagename) {
     this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
-    console.log(this.branchVillageMapId);
     this.householdFamDetails(this.branchVillageMapId);
   }
 
@@ -240,6 +239,9 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         tMem: item.totalMembers,
         tFam: item.numberOfFamily,
         hhNo: item.houseHoldNumber,
+        bName: item.branchDTO.branchName,
+        vName: this.villagesOfBranch.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
+        ssName: item.swasthyaSahayikaDTO.name
       }
     });
   }
