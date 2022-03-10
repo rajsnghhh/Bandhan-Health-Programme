@@ -1281,7 +1281,7 @@ class CoreComponent {
     }
 }
 CoreComponent.ɵfac = function CoreComponent_Factory(t) { return new (t || CoreComponent)(); };
-CoreComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CoreComponent, selectors: [["app-core"]], decls: 3, vars: 0, consts: [["src", "../../assets/core_image.jpg", "alt", "", 2, "width", "80vw", "height", "80vh"]], template: function CoreComponent_Template(rf, ctx) { if (rf & 1) {
+CoreComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CoreComponent, selectors: [["app-core"]], decls: 3, vars: 0, consts: [["src", "assets/core_image.jpg", "alt", "", 2, "width", "80vw", "height", "80vh"]], template: function CoreComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h2");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "The goal of Bandhan Health Program is to create health awareness among mothers and adolescent girls, to ensure easy accessibility to health services available at the government and non government level in a sustainable level. In addition, Bandhan Health Program works to reduce health expenditure of poor families, as well as to develop health entrepreneurs/volunteers.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();

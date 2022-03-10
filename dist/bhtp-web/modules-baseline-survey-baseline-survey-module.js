@@ -2938,11 +2938,11 @@ class LocationComponent {
                 this.branchList = null;
             });
         }, 500);
-        this.locationForm.get('branch').reset();
-        this.locationForm.get('block').reset();
-        this.locationForm.get('gp').reset();
-        this.locationForm.get('gram').reset();
-        this.locationForm.get('swasthyaSahayika').reset();
+        this.locationForm.controls.branch.setValue('');
+        this.locationForm.controls.block.setValue('');
+        this.locationForm.controls.gp.setValue('');
+        this.locationForm.controls.gram.setValue('');
+        this.locationForm.controls.swasthyaSahayika.setValue('');
     }
     changeBranch(branch) {
         var _a, _b;
@@ -2963,10 +2963,10 @@ class LocationComponent {
                 console.log(this.villagesOfBranch, 'villagesOfBranch2');
             });
         }, 500);
-        this.locationForm.get('block').reset();
-        this.locationForm.get('gp').reset();
-        this.locationForm.get('gram').reset();
-        this.locationForm.get('swasthyaSahayika').reset();
+        this.locationForm.controls.block.setValue('');
+        this.locationForm.controls.gp.setValue('');
+        this.locationForm.controls.gram.setValue('');
+        this.locationForm.controls.swasthyaSahayika.setValue('');
     }
     changeBlock(blockname) {
         var _a;
@@ -4097,13 +4097,15 @@ class BaselineViewComponent {
             dataAccessDTO: dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-            var _a, _b;
-            if (res.sessionDTO.status == true) {
-                this.villagesOfBranch = (_b = (_a = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.gpDtoList[0]) === null || _b === void 0 ? void 0 : _b.villageDtoList;
-                console.log(this.villagesOfBranch, 'villagesOfBranch1');
-            }
-        });
+        setTimeout(() => {
+            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+                var _a, _b;
+                if (res.sessionDTO.status == true) {
+                    this.villagesOfBranch = (_b = (_a = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.gpDtoList[0]) === null || _b === void 0 ? void 0 : _b.villageDtoList;
+                    console.log(this.villagesOfBranch, 'villagesOfBranch1');
+                }
+            });
+        }, 500);
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
     }
@@ -4127,8 +4129,12 @@ class BaselineViewComponent {
                 this.branchList = null;
             });
         }, 500);
-        this.locationForm.get('branch').reset();
-        this.locationForm.get('gram').reset();
+        this.locationForm.controls.branch.setValue('');
+        this.locationForm.controls.gram.setValue('');
+        if (this.locationForm.value.region == '') {
+            this.showError('No Data Found');
+            this.baselineDetails = [];
+        }
     }
     changeBranch(branch) {
         var _a, _b;
@@ -4150,12 +4156,20 @@ class BaselineViewComponent {
                 console.log(this.villagesOfBranch, 'villagesOfBranch2');
             });
         }, 500);
-        this.locationForm.get('gram').reset();
+        this.locationForm.controls.gram.setValue('');
+        if (this.locationForm.value.branch == '') {
+            this.showError('No Data Found');
+            this.baselineDetails = [];
+        }
     }
     changeVillage(villagename) {
         var _a;
         this.branchVillageMapId = (_a = this.villagesOfBranch.find(i => i.villageName == villagename)) === null || _a === void 0 ? void 0 : _a.branchVillageMapId;
         this.householdFamDetails(this.branchVillageMapId);
+        if (this.locationForm.value.gram == '') {
+            this.showError('No Data Found');
+            this.baselineDetails = [];
+        }
     }
     householdFamDetails(branchVillageMapId = null) {
         let obj = {
@@ -4169,7 +4183,7 @@ class BaselineViewComponent {
             this.baselineService.baselineViewDetail(obj).subscribe((response) => {
                 this.loader = true;
                 this.baselineDetails = response.responseObject;
-                console.log(this.baselineDetails);
+                // console.log(this.baselineDetails);
             }, (err) => {
                 this.loader = true;
             });
