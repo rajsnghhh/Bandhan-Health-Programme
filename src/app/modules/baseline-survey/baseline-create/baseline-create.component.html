@@ -11,27 +11,17 @@
             <legend class="scheduler-border">HH Info</legend>
 
             <div class="row">
-              <app-location ></app-location>
+              <app-location></app-location>
             </div>
-            
+
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="family"
-                  >Family Type:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <select
-                  class="form-select"
-                  formControlName="family"
-                  id="family"
-                  [ngClass]="{
+                <label for="family">Family Type:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="family" id="family" [ngClass]="{
                     'is-invalid': f.family.invalid && f.family.touched,
                     'is-valid':
                       f.family.valid && (f.family.dirty || f.family.touched)
-                  }"
-                  (change)="familyType($event.target.value)"
-                >
+                  }" (change)="familyType($event.target.value)">
                   <option value="">-- Select Family Type --</option>
                   <option value="S">Single Family</option>
                   <option value="J">Joint Family</option>
@@ -44,24 +34,12 @@
               </div>
 
               <div class="form-group col-md-3" *ngIf="familyField == 'J'">
-                <label for="totalFamily"
-                  >Total Family:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="2"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="familyNo($event)"
-                  placeholder="Total Number of Family"
-                  formControlName="totalFamily"
-                  [ngClass]="{
+                <label for="totalFamily">Total Family:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="2" (keypress)="validationService.onlyInteger($event)"
+                  (keydown)="restrictZero($event)" (keyup)="familyNo($event)" placeholder="Total Number of Family"
+                  formControlName="totalFamily" [ngClass]="{
                     'is-invalid': f.totalFamily.invalid && f.totalFamily.touched
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.totalFamily.errors" class="invalid-feedback">
                   <div *ngIf="f.totalFamily.errors.required">
                     Total Number of Family is required
@@ -70,27 +48,15 @@
               </div>
 
               <div class="form-group col-md-3" *ngIf="familyField == 'S'">
-                <label for="households"
-                  >Total Member Household:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="2"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="zeroMembers()"
-                  placeholder="Total Member of All family"
-                  formControlName="households"
-                  [ngClass]="{
+                <label for="households">Total Member Household:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="2" (keypress)="validationService.onlyInteger($event)"
+                  (keydown)="restrictZero($event)" (keyup)="zeroMembers()" placeholder="Total Member of All family"
+                  formControlName="households" [ngClass]="{
                     'is-invalid': f.households.invalid && f.households.touched,
                     'is-valid':
                       f.households.valid &&
                       (f.households.dirty || f.households.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.households.errors" class="invalid-feedback">
                   <div *ngIf="f.households.errors.required">
                     Total Member of Household is required
@@ -99,24 +65,12 @@
               </div>
 
               <div class="form-group col-md-3" *ngIf="familyField == 'J'">
-                <label for="households"
-                  >Total Member Household:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="2"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="checkFamily()"
-                  placeholder="Total Member of All family"
-                  formControlName="households"
-                  [ngClass]="{
+                <label for="households">Total Member Household:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="2" (keypress)="validationService.onlyInteger($event)"
+                  (keydown)="restrictZero($event)" (keyup)="checkFamily()" placeholder="Total Member of All family"
+                  formControlName="households" [ngClass]="{
                     'is-invalid': f.households.invalid && f.households.touched
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.households.errors" class="invalid-feedback">
                   <div *ngIf="f.households.errors.required">
                     Total Member of Household is required
@@ -131,26 +85,15 @@
 
             <div class="row">
               <div class="form-group col-md">
-                <label for="firstName"
-                  >First Name:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter First Name"
-                  formControlName="firstName"
-                  maxlength="20"
-                  (keypress)="validationService.onlyAlphabets($event)"
-                  style="text-transform: capitalize"
+                <label for="firstName">First Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" placeholder="Enter First Name" formControlName="firstName"
+                  maxlength="20" (keypress)="validationService.onlyAlphabets($event)" style="text-transform: capitalize"
                   [ngClass]="{
                     'is-invalid': f.firstName.invalid && f.firstName.touched,
                     'is-valid':
                       f.firstName.valid &&
                       (f.firstName.dirty || f.firstName.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.firstName.errors" class="invalid-feedback">
                   <div *ngIf="f.firstName.errors.required">
                     First Name is required
@@ -163,18 +106,11 @@
 
               <div class="form-group col-md">
                 <label for="middleName">Middle Name:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="20"
-                  (keypress)="validationService.onlyAlphabets($event)"
-                  style="text-transform: capitalize"
-                  placeholder="Enter Middle Name"
-                  formControlName="middleName"
-                  [ngClass]="{
+                <input type="text" class="form-control" maxlength="20"
+                  (keypress)="validationService.onlyAlphabets($event)" style="text-transform: capitalize"
+                  placeholder="Enter Middle Name" formControlName="middleName" [ngClass]="{
                     'is-invalid': f.middleName.invalid && f.middleName.touched
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.middleName.errors" class="invalid-feedback">
                   <div *ngIf="f.middleName.errors.minlength">
                     Minimum length should be 3
@@ -184,18 +120,11 @@
 
               <div class="form-group col-md">
                 <label for="lastName">Last Name:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="20"
-                  (keypress)="validationService.onlyAlphabets($event)"
-                  style="text-transform: capitalize"
-                  placeholder="Enter Last Name"
-                  formControlName="lastName"
-                  [ngClass]="{
+                <input type="text" class="form-control" maxlength="20"
+                  (keypress)="validationService.onlyAlphabets($event)" style="text-transform: capitalize"
+                  placeholder="Enter Last Name" formControlName="lastName" [ngClass]="{
                     'is-invalid': f.lastName.invalid && f.lastName.touched
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.lastName.errors" class="invalid-feedback">
                   <div *ngIf="f.lastName.errors.minlength">
                     Minimum length should be 3
@@ -204,23 +133,13 @@
               </div>
 
               <div class="form-group col-md">
-                <label for="age"
-                  >Age:&nbsp;<span class="text-danger">*&nbsp;</span></label
-                >
-                <input
-                  type=""
-                  class="form-control"
-                  maxlength="2"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="zeroAge()"
-                  placeholder="Enter Age"
-                  formControlName="age"
+                <label for="age">Age:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="" class="form-control" maxlength="2" (keypress)="validationService.onlyInteger($event)"
+                  (keydown)="restrictZero($event)" (keyup)="zeroAge()" placeholder="Enter Age" formControlName="age"
                   [ngClass]="{
                     'is-invalid': f.age.invalid && f.age.touched,
                     'is-valid': f.age.valid && (f.age.dirty || f.age.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.age.errors" class="invalid-feedback">
                   <div *ngIf="f.age.errors.required">Age is required</div>
                 </div>
@@ -229,27 +148,16 @@
 
             <div class="row">
               <div class="form-group col-md-3">
-                <label for="husbandName"
-                  >Husband/Guardian’s:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="20"
-                  placeholder="Enter Husband Name"
-                  formControlName="husbandName"
-                  (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                  style="text-transform: capitalize"
-                  [ngClass]="{
+                <label for="husbandName">Husband/Guardian’s:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="20" placeholder="Enter Husband Name"
+                  formControlName="husbandName" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                  style="text-transform: capitalize" [ngClass]="{
                     'is-invalid':
                       f.husbandName.invalid && f.husbandName.touched,
                     'is-valid':
                       f.husbandName.valid &&
                       (f.husbandName.dirty || f.husbandName.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.husbandName.errors" class="invalid-feedback">
                   <div *ngIf="f.husbandName.errors.required">
                     Husband/Guardian’s Name is required
@@ -262,17 +170,10 @@
 
               <div class="form-group col-md-3">
                 <label for="mobile">Mobile No:</label>
-                <input
-                  type=""
-                  class="form-control"
-                  maxlength="10"
-                  (keypress)="validationService.onlyInteger($event)"
-                  placeholder="Enter Mobile No"
-                  formControlName="mobile"
-                  [ngClass]="{
+                <input type="" class="form-control" maxlength="10" (keypress)="validationService.onlyInteger($event)"
+                  placeholder="Enter Mobile No" formControlName="mobile" [ngClass]="{
                     'is-invalid': f.mobile.invalid && f.mobile.touched
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.mobile.errors" class="invalid-feedback">
                   <div *ngIf="f.mobile.errors.minlength">
                     Mobile No. should be of 10 digit
@@ -285,72 +186,40 @@
 
               <div class="form-group col-md">
                 <label for="idtype">ID Type:</label>
-                <select
-                  class="form-select"
-                  formControlName="idtype"
-                  (change)="IdType($event.target.value)"
-                >
+                <select class="form-select" formControlName="idtype" (change)="IdType($event.target.value)">
                   <option value="">-- Select --</option>
-                  <option
-                    *ngFor="let item of cardDetails; index as i"
-                    value="{{ item.identityCardTypesMasterId }}"
-                  >
+                  <option *ngFor="let item of cardDetails; index as i" value="{{ item.identityCardTypesMasterId }}">
                     {{ item.name }}
                   </option>
                 </select>
               </div>
 
               <div class="form-group col-md" *ngIf="idTypeField == 1">
-                <label for="aadhar"
-                  >AADHAAR CARD NO :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  #aadhaarId
-                  type="text"
-                  class="form-control"
-                  maxlength="14"
-                  (keyup)="aadharcardValidation($event)"
-                  (keypress)="validationService.onlyIntegerAndSpace($event)"
-                  placeholder="Like 2104 0533 7065"
-                  formControlName="aadhar"
-                  [ngClass]="{
+                <label for="aadhar">AADHAAR CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input #aadhaarId type="text" class="form-control" maxlength="14" (keyup)="aadharcardValidation($event)"
+                  (keypress)="validationService.onlyIntegerAndSpace($event)" placeholder="Like 2104 0533 7065"
+                  formControlName="aadhar" [ngClass]="{
                     'is-invalid': f.aadhar.invalid && f.aadhar.touched,
                     'is-valid':
                       f.aadhar.valid && (f.aadhar.dirty || f.aadhar.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.aadhar.errors" class="invalid-feedback">
                   <div *ngIf="f.aadhar.errors.required">
                     AADHAAR CARD Number is required
                   </div>
-                  <div
-                    *ngIf="f.aadhar.errors.minlength || f.aadhar.errors.pattern"
-                  >
+                  <div *ngIf="f.aadhar.errors.minlength || f.aadhar.errors.pattern">
                     AADHAAR CARD Number Invalid !
                   </div>
                 </div>
               </div>
 
               <div class="form-group col-md" *ngIf="idTypeField == 2">
-                <label for="pan"
-                  >PAN CARD NO :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="10"
-                  (keypress)="validationService.charnum($event)"
-                  placeholder="Like BBHPM5672K"
-                  formControlName="pan"
-                  [ngClass]="{
+                <label for="pan">PAN CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="10" (keypress)="validationService.charnum($event)"
+                  placeholder="Like BBHPM5672K" formControlName="pan" [ngClass]="{
                     'is-invalid': f.pan.invalid && f.pan.touched,
                     'is-valid': f.pan.valid && (f.pan.dirty || f.pan.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.pan.errors" class="invalid-feedback">
                   <div *ngIf="f.pan.errors.required">
                     PAN Number is required
@@ -363,30 +232,18 @@
 
               <div class="form-group col-md" *ngIf="idTypeField == 3">
                 <label for="voter">
-                  VOTER CARD NO :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="10"
-                  (keypress)="validationService.charnum($event)"
-                  placeholder="Like NDF1758462"
-                  formControlName="voter"
-                  [ngClass]="{
+                  VOTER CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" maxlength="10" (keypress)="validationService.charnum($event)"
+                  placeholder="Like NDF1758462" formControlName="voter" [ngClass]="{
                     'is-invalid': f.voter.invalid && f.voter.touched,
                     'is-valid':
                       f.voter.valid && (f.voter.dirty || f.voter.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.voter.errors" class="invalid-feedback">
                   <div *ngIf="f.voter.errors.required">
                     VOTER CARD Number is required
                   </div>
-                  <div
-                    *ngIf="f.voter.errors.minlength || f.voter.errors.pattern"
-                  >
+                  <div *ngIf="f.voter.errors.minlength || f.voter.errors.pattern">
                     VOTER CARD Number Invalid !
                   </div>
                 </div>
@@ -395,27 +252,15 @@
 
             <div class="row">
               <div class="form-group col-md">
-                <label for="religion"
-                  >Religion :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <select
-                  class="form-select"
-                  formControlName="religion"
-                  id="religion"
-                  [ngClass]="{
+                <label for="religion">Religion :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="religion" id="religion" [ngClass]="{
                     'is-invalid': f.religion.invalid && f.religion.touched,
                     'is-valid':
                       f.religion.valid &&
                       (f.religion.dirty || f.religion.touched)
-                  }"
-                >
+                  }">
                   <option value="">-- Select Religion --</option>
-                  <option
-                    *ngFor="let item of religionDetails; index as i"
-                    value="{{ item.religionMasterId }}"
-                  >
+                  <option *ngFor="let item of religionDetails; index as i" value="{{ item.religionMasterId }}">
                     {{ item.religionMasterDescription }}
                   </option>
                 </select>
@@ -427,24 +272,14 @@
               </div>
 
               <div class="form-group col-md">
-                <label for="caste"
-                  >Caste :&nbsp;<span class="text-danger">*&nbsp;</span></label
-                >
-                <select
-                  class="form-select"
-                  formControlName="caste"
-                  id="caste"
-                  [ngClass]="{
+                <label for="caste">Caste :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="caste" id="caste" [ngClass]="{
                     'is-invalid': f.caste.invalid && f.caste.touched,
                     'is-valid':
                       f.caste.valid && (f.caste.dirty || f.caste.touched)
-                  }"
-                >
+                  }">
                   <option value="">-- Select Caste --</option>
-                  <option
-                    *ngFor="let item of casteList; index as i"
-                    value="{{ item.casteTypeMasterId }}"
-                  >
+                  <option *ngFor="let item of casteList; index as i" value="{{ item.casteTypeMasterId }}">
                     {{ item.casteTypeDescription }}
                   </option>
                 </select>
@@ -455,16 +290,10 @@
 
               <div class="form-group col-md">
                 <label for="education">Education Level:</label>
-                <select
-                  class="form-select"
-                  formControlName="education"
-                  id="education"
-                >
+                <select class="form-select" formControlName="education" id="education">
                   <option value="">-- Select Education --</option>
-                  <option
-                    *ngFor="let item of educationList; index as i"
-                    value="{{ item.educationalQualificationMasterId }}"
-                  >
+                  <option *ngFor="let item of educationList; index as i"
+                    value="{{ item.educationalQualificationMasterId }}">
                     {{ item.qualification }}
                   </option>
                 </select>
@@ -472,16 +301,10 @@
 
               <div class="form-group col-md">
                 <label for="household">Monthly Family Income: </label>
-                <select
-                  class="form-select"
-                  formControlName="household"
-                  id="household"
-                >
+                <select class="form-select" formControlName="household" id="household">
                   <option value="">-- Select Income --</option>
-                  <option
-                    *ngFor="let item of householdIncomeDetails; index as i"
-                    value="{{ item.monthlyIncomeMasterId }}"
-                  >
+                  <option *ngFor="let item of householdIncomeDetails; index as i"
+                    value="{{ item.monthlyIncomeMasterId }}">
                     {{ item.incomeRange }}
                   </option>
                 </select>
@@ -491,16 +314,9 @@
             <div class="row">
               <div class="form-group col-md">
                 <label for="occupation">Occupation:</label>
-                <select
-                  class="form-select"
-                  formControlName="occupation"
-                  id="occupation"
-                >
+                <select class="form-select" formControlName="occupation" id="occupation">
                   <option value="">-- Select --</option>
-                  <option
-                    *ngFor="let item of occupationDetails; index as i"
-                    value="{{ item.occupationMasterId }}"
-                  >
+                  <option *ngFor="let item of occupationDetails; index as i" value="{{ item.occupationMasterId }}">
                     {{ item.occupationDescription }}
                   </option>
                 </select>
@@ -508,26 +324,14 @@
 
               <div class="form-group col-md">
                 <label for="fmale">
-                  Total Male Family Member:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  (keypress)="validationService.onlyInteger($event)"
-                  maxlength="2"
-                  (keyup)="addMF()"
-                  (change)="checkChildren()"
-                  (keyup)="familyCountChecking()"
-                  placeholder="Child, Adult, and Senior"
-                  formControlName="fmale"
-                  [ngClass]="{
+                  Total Male Family Member:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" (keypress)="validationService.onlyInteger($event)" maxlength="2"
+                  (keyup)="addMF()" (change)="checkChildren()" (keyup)="familyCountChecking()"
+                  placeholder="Child, Adult, and Senior" formControlName="fmale" [ngClass]="{
                     'is-invalid': f.fmale.invalid && f.fmale.touched,
                     'is-valid':
                       f.fmale.valid && (f.fmale.dirty || f.fmale.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.fmale.errors" class="invalid-feedback">
                   <div *ngIf="f.fmale.errors.required">Male is required</div>
                 </div>
@@ -535,29 +339,15 @@
 
               <div class="form-group col-md">
                 <label for="ffemale">
-                  Total Female Family Member:&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Child, Adult, and Senior"
-                  maxlength="2"
-                  formControlName="ffemale"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keyup)="addMF()"
-                  (change)="checkChildren()"
-                  (keyup)="familyCountChecking()"
-                  (keyup)="checkHousehold()"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="zeroFemale()"
-                  [ngClass]="{
+                  Total Female Family Member:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" placeholder="Child, Adult, and Senior" maxlength="2"
+                  formControlName="ffemale" (keypress)="validationService.onlyInteger($event)" (keyup)="addMF()"
+                  (change)="checkChildren()" (keyup)="familyCountChecking()" (keyup)="checkHousehold()"
+                  (keydown)="restrictZero($event)" (keyup)="zeroFemale()" [ngClass]="{
                     'is-invalid': f.ffemale.invalid && f.ffemale.touched,
                     'is-valid':
                       f.ffemale.valid && (f.ffemale.dirty || f.ffemale.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.ffemale.errors" class="invalid-feedback">
                   <div *ngIf="f.ffemale.errors.required">
                     Female is required
@@ -568,25 +358,14 @@
 
               <div class="form-group col-md">
                 <label for="fsenior">
-                  Total Senior Citizen :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  (keypress)="validationService.onlyInteger($event)"
-                  maxlength="2"
-                  placeholder="Enter Total Senior Citizen"
-                  formControlName="fsenior"
-                  (change)="checkChildren()"
-                  (keyup)="familyCountChecking()"
-                  [ngClass]="{
+                  Total Senior Citizen :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="text" class="form-control" (keypress)="validationService.onlyInteger($event)" maxlength="2"
+                  placeholder="Enter Total Senior Citizen" formControlName="fsenior" (change)="checkChildren()"
+                  (keyup)="familyCountChecking()" [ngClass]="{
                     'is-invalid': f.fsenior.invalid && f.fsenior.touched,
                     'is-valid':
                       f.fsenior.valid && (f.fsenior.dirty || f.fsenior.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.fsenior.errors" class="invalid-feedback">
                   <div *ngIf="f.fsenior.errors.required">
                     Senior Citizen is required
@@ -598,20 +377,12 @@
             <div class="row">
               <div class="form-group col-md">
                 <label for="bbMicro">
-                  Micro Group :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <select
-                  class="form-select"
-                  formControlName="bbMicro"
-                  id="bbMicro"
-                  [ngClass]="{
+                  Micro Group :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="bbMicro" id="bbMicro" [ngClass]="{
                     'is-invalid': f.bbMicro.invalid && f.bbMicro.touched,
                     'is-valid':
                       f.bbMicro.valid && (f.bbMicro.dirty || f.bbMicro.touched)
-                  }"
-                >
+                  }">
                   <option value="">-- Micro Group --</option>
                   <option value="Y">Member</option>
                   <option value="N">Non-Member</option>
@@ -624,22 +395,13 @@
               </div>
 
               <div class="form-group col-md">
-                <label for="pregnancy"
-                  >Are you pregnant now? :&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
-                <select
-                  class="form-select"
-                  formControlName="pregnancy"
-                  id="pregnancy"
-                  [ngClass]="{
+                <label for="pregnancy">Are you pregnant now? :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="pregnancy" id="pregnancy" [ngClass]="{
                     'is-invalid': f.pregnancy.invalid && f.pregnancy.touched,
                     'is-valid':
                       f.pregnancy.valid &&
                       (f.pregnancy.dirty || f.pregnancy.touched)
-                  }"
-                >
+                  }">
                   <option value="">-- Select Pregnancy --</option>
                   <option value="Y">Yes</option>
                   <option value="N">No</option>
@@ -655,76 +417,40 @@
               <div class="form-group col-md">
                 <label for="sanitary">
                   Do you have sanitary latrine at your house premise?&nbsp;<span
-                    class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
+                    class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    name="sanitary"
-                    type="radio"
-                    id="yes"
-                    value="Y"
-                    formControlName="sanitary"
-                    (change)="changesanitary($event)"
-                  />
+                  <input class="form-check-input" name="sanitary" type="radio" id="yes" value="Y"
+                    formControlName="sanitary" (change)="changesanitary($event)" />
                   <label class="form-check-label" for="">
-                    &nbsp;&nbsp;Yes</label
-                  >
+                    &nbsp;&nbsp;Yes</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="no"
-                      value="N"
-                      formControlName="sanitary"
-                      (change)="changesanitary($event)"
-                    />
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="sanitary"
+                      (change)="changesanitary($event)" />
                     <label class="form-check-label" for="">
-                      &nbsp;&nbsp;No</label
-                    >
+                      &nbsp;&nbsp;No</label>
                   </div>
                 </div>
               </div>
 
               <div class="form-group col-md">
                 <label for="haveChildren">
-                  Do you have any child?&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
+                  Do you have any child?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    name="haveChildren"
-                    type="radio"
-                    id="yes"
-                    value="Y"
-                    formControlName="haveChildren"
-                    (change)="havesChildren($event)"
-                  />
+                  <input class="form-check-input" name="haveChildren" type="radio" id="yes" value="Y"
+                    formControlName="haveChildren" (change)="havesChildren($event)" />
                   <label class="form-check-label" for="">
-                    &nbsp;&nbsp;Yes</label
-                  >
+                    &nbsp;&nbsp;Yes</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="no"
-                      value="N"
-                      formControlName="haveChildren"
-                      (change)="havesChildren($event)"
-                    />
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="haveChildren"
+                      (change)="havesChildren($event)" />
                     <label class="form-check-label" for="">
-                      &nbsp;&nbsp;No</label
-                    >
+                      &nbsp;&nbsp;No</label>
                   </div>
                 </div>
               </div>
@@ -733,26 +459,15 @@
             <div class="row">
               <div class="form-group col-md-3" *ngIf="haveChildren === 'Y'">
                 <label for="child">
-                  How many children do you have?&nbsp;<span class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
+                  How many children do you have?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Children "
-                  formControlName="child"
-                  (keypress)="validationService.onlyInteger($event)"
-                  (keydown)="restrictZero($event)"
-                  (keyup)="checkChildren()"
-                  maxlength="2"
-                  [ngClass]="{
+                <input type="text" class="form-control" placeholder="Enter Children " formControlName="child"
+                  (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
+                  (keyup)="checkChildren()" maxlength="2" [ngClass]="{
                     'is-invalid': f.child.invalid && f.child.touched,
                     'is-valid':
                       f.child.valid && (f.child.dirty || f.child.touched)
-                  }"
-                />
+                  }" />
                 <div *ngIf="f.child.errors" class="invalid-feedback">
                   <div *ngIf="f.child.errors.required">
                     Children count is required
@@ -762,222 +477,116 @@
 
               <div class="form-group col-md-3" *ngIf="haveChildren === 'Y'">
                 <label for="childbelow18">
-                  Do you have any child below 18 years?&nbsp;<span
-                    class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
+                  Do you have any child below 18 years?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    name="childbelow18"
-                    type="radio"
-                    id="yes"
-                    value="Y"
-                    formControlName="childbelow18"
-                    (change)="childBelow18($event)"
-                    [checked]="showChildDetails"
-                    (click)="radioValueCheck(1)"
-                  />
+                  <input class="form-check-input" name="childbelow18" type="radio" id="yes" value="Y"
+                    formControlName="childbelow18" (change)="childBelow18($event)" [checked]="showChildDetails"
+                    (click)="radioValueCheck(1)" />
                   <label class="form-check-label" for="">
-                    &nbsp;&nbsp;Yes</label
-                  >
+                    &nbsp;&nbsp;Yes</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="no"
-                      value="N"
-                      formControlName="childbelow18"
-                      (change)="childBelow18($event)"
-                      [checked]="!showChildDetails"
-                      (click)="radioValueCheck(2)"
-                    />
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="childbelow18"
+                      (change)="childBelow18($event)" [checked]="!showChildDetails" (click)="radioValueCheck(2)" />
                     <label class="form-check-label" for="">
-                      &nbsp;&nbsp;No</label
-                    >
+                      &nbsp;&nbsp;No</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="form-group col-md-3"
-                *ngIf="childbelow18 === 'Y' && haveChildren === 'Y'"
-              >
+              <div class="form-group col-md-3" *ngIf="childbelow18 === 'Y' && haveChildren === 'Y'">
                 <label for="childbelow5">
-                  Do you have children below 5 years?&nbsp;<span
-                    class="text-danger"
-                    >*&nbsp;</span
-                  ></label
-                >
+                  Do you have children below 5 years?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    name="childbelow5"
-                    type="radio"
-                    id="yes"
-                    value="Y"
-                    formControlName="childbelow5"
-                    (change)="childBelow5($event)"
-                    [checked]="showChildDetails"
-                  />
+                  <input class="form-check-input" name="childbelow5" type="radio" id="yes" value="Y"
+                    formControlName="childbelow5" (change)="childBelow5($event)" [checked]="showChildDetails" />
                   <label class="form-check-label" for="">
-                    &nbsp;&nbsp;Yes</label
-                  >
+                    &nbsp;&nbsp;Yes</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="no"
-                      value="N"
-                      formControlName="childbelow5"
-                      (change)="childBelow5($event)"
-                      [checked]="!showChildDetails"
-                    />
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="childbelow5"
+                      (change)="childBelow5($event)" [checked]="!showChildDetails" />
                     <label class="form-check-label" for="">
-                      &nbsp;&nbsp;No</label
-                    >
+                      &nbsp;&nbsp;No</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="form-group col-md-3"
-                *ngIf="
+              <div class="form-group col-md-3" *ngIf="
                   childbelow5 === 'Y' &&
                   haveChildren === 'Y' &&
                   childbelow18 === 'Y'
-                "
-              >
-                <label for="institutional"
-                  >In the case of the last delivery, where did it has been taken
-                  place?&nbsp;<span class="text-danger">*&nbsp;</span></label
-                >
+                ">
+                <label for="institutional">In the case of the last delivery, where did it has been taken
+                  place?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="institutional"
-                    id="yes"
-                    value="I"
-                    formControlName="institutional"
-                    (change)="institutionallDelivery($event)"
-                  />
+                  <input class="form-check-input" type="radio" name="institutional" id="yes" value="I"
+                    formControlName="institutional" (change)="institutionallDelivery($event)" />
                   <label class="form-check-label" for="institutional">
-                    &nbsp;&nbsp;Institution</label
-                  >
+                    &nbsp;&nbsp;Institution</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="institutional"
-                      id="no"
-                      (change)="institutionallDelivery($event)"
-                      value="H"
-                      formControlName="institutional"
-                    />
+                    <input class="form-check-input" type="radio" name="institutional" id="no"
+                      (change)="institutionallDelivery($event)" value="H" formControlName="institutional" />
                     <label class="form-check-label" for="institutional">
-                      &nbsp;&nbsp;Home</label
-                    >
+                      &nbsp;&nbsp;Home</label>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div
-                class="form-group col-md-3"
-                *ngIf="
+              <div class="form-group col-md-3" *ngIf="
                   childbelow5 === 'Y' &&
                   haveChildren === 'Y' &&
                   childbelow18 === 'Y'
-                "
-              >
+                ">
                 <label for="breastFeeding">
                   Are you breastfeeding your child aged below 2 years till
-                  now?&nbsp;<span class="text-danger">*&nbsp;</span></label
-                >
+                  now?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="breastFeeding"
-                    id="yes"
-                    value="Y"
-                    formControlName="breastFeeding"
-                    (change)="breastFeeding($event)"
-                  />
+                  <input class="form-check-input" type="radio" name="breastFeeding" id="yes" value="Y"
+                    formControlName="breastFeeding" (change)="breastFeeding($event)" />
                   <label class="form-check-label" for="breastFeeding">
-                    &nbsp;&nbsp;Yes</label
-                  >
+                    &nbsp;&nbsp;Yes</label>
 
                   <div class="form-check-inline">
                     &nbsp;&nbsp;&nbsp;
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="breastFeeding"
-                      id="no"
-                      (change)="breastFeeding($event)"
-                      value="N"
-                      formControlName="breastFeeding"
-                    />
+                    <input class="form-check-input" type="radio" name="breastFeeding" id="no"
+                      (change)="breastFeeding($event)" value="N" formControlName="breastFeeding" />
                     <label class="form-check-label" for="breastFeeding">
-                      &nbsp;&nbsp;No</label
-                    >
+                      &nbsp;&nbsp;No</label>
                   </div>
 
                   <div class="form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="breastFeeding"
-                      id="na"
-                      (change)="breastFeeding($event)"
-                      value="NA"
-                      formControlName="breastFeeding"
-                    />
+                    <input class="form-check-input" type="radio" name="breastFeeding" id="na"
+                      (change)="breastFeeding($event)" value="NA" formControlName="breastFeeding" />
                     <label class="form-check-label" for="breastFeeding">
-                      &nbsp;&nbsp;N/A</label
-                    >
+                      &nbsp;&nbsp;N/A</label>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="form-group col-md-6">
-              <button
-                for=""
-                class="btn btn-link"
-                (click)="openModal(child)"
-                [disabled]="!showChildDetails"
-              >
+              <button for="" class="btn btn-link" (click)="openModal(child)" [disabled]="!showChildDetails">
                 Child Details
               </button>
             </div>
           </fieldset>
 
           <div class="text-center">
-            <button
-              class="btn btn-primary m-1"
-              (click)="saveMoreBaselineCreate()"
-            >
+            <button class="btn btn-primary m-1" (click)="saveMoreBaselineCreate()">
               <i class="fas fa-check-circle m-1"></i>Save
             </button>
-            <button
-              class="btn btn-secondary m-1"
-              (click)="resetBaselineCreate()"
-            >
+            <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()">
               <i class="fa fa-refresh m-1"></i>Reset
             </button>
           </div>
@@ -996,22 +605,12 @@
         </div>
 
         <div class="col-md-3">
-          <i
-            class="fas fa-plus-circle"
-            (click)="addNewChild()"
-            style="cursor: pointer"
-            title="Add Child"
-          ></i>
+          <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer" title="Add Child"></i>
         </div>
 
         <div class="col-md-2">
-          <span
-            class="close"
-            (click)="childModalDismiss()"
-            title="close"
-            style="cursor: pointer; font-size: 35px"
-            >&times;</span
-          >
+          <span class="close" (click)="childModalDismiss()" title="close"
+            style="cursor: pointer; font-size: 35px">&times;</span>
         </div>
       </div>
     </div>
@@ -1031,33 +630,17 @@
           <tbody>
             <tr *ngFor="let items of childDetails.childInfo; index as i">
               <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="20"
-                  (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                  style="text-transform: capitalize"
-                  (keypress)="validationService.titleCase($event)"
-                  placeholder="Enter Child Name"
-                  [(ngModel)]="childDetails.childInfo[i].childName"
-                />
+                <input type="text" class="form-control" maxlength="20"
+                  (keypress)="validationService.onlyAlphabetsAndSpace($event)" style="text-transform: capitalize"
+                  (keypress)="validationService.titleCase($event)" placeholder="Enter Child Name"
+                  [(ngModel)]="childDetails.childInfo[i].childName" />
               </td>
               <td>
-                <input
-                  type="date"
-                  class="form-control"
-                  [(ngModel)]="childDetails.childInfo[i].dob"
-                  [min]="minDate"
-                  [max]="today"
-                  (keydown)="restrictTypeOfDate()"
-                />
+                <input type="date" class="form-control" [(ngModel)]="childDetails.childInfo[i].dob" [min]="minDate"
+                  [max]="today" (keydown)="restrictTypeOfDate()" />
               </td>
               <td>
-                <select
-                  class="form-select"
-                  id="sex"
-                  [(ngModel)]="childDetails.childInfo[i].sex"
-                >
+                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
                   <option value="">-- Select Sex --</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option>
@@ -1065,11 +648,7 @@
                 </select>
               </td>
               <td>
-                <button
-                  type="button"
-                  class="btn btn-remove"
-                  (click)="removeNewChild(i)"
-                >
+                <button type="button" class="btn btn-remove" (click)="removeNewChild(i)">
                   <i class="fas fa-minus-circle"></i>
                 </button>
               </td>
@@ -1079,12 +658,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button
-            type="button"
-            class="btn btn-primary bttn"
-            (click)="saveChild()"
-            [disabled]="!checkChildDisabled()"
-          >
+          <button type="button" class="btn btn-primary bttn" (click)="saveChild()" [disabled]="!checkChildDisabled()">
             Submit
           </button>
         </div>
