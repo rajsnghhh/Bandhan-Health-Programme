@@ -58,36 +58,34 @@
                             <div *ngIf="f.branch.errors.required">Branch is required</div>
                           </div>
                         </div>
-
-                        <div class="form-group col-md">
-                            <label for="gram"
-                              >GS/ Ward/ Village:&nbsp;<span class="text-danger"
-                                >*&nbsp;</span
-                              ></label
-                            >
-                            <select
-                              class="form-select"
-                              (change)="changeVillage($event.target.value)"
-                              formControlName="gram"
-                              id="gram"
-                              [ngClass]="{
-                                'is-invalid': f.gram.invalid && f.gram.touched,
-                                'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
-                              }"
-                            >
-                              <option value="">-- Select Village --</option>
-                              <option *ngFor="let vill of villagesOfBranch">
-                                {{ vill.villageName }}
-                              </option>
-                            </select>
-                            <div *ngIf="f.gram.errors" class="invalid-feedback">
-                              <div *ngIf="f.gram.errors.required">
-                                Above Selection is required
-                              </div>
-                            </div>
-                          </div>
                     </div>
-                        
+                    <div class="form-group col-6">
+                        <label for="gram"
+                          >GS/ Ward/ Village:&nbsp;<span class="text-danger"
+                            >*&nbsp;</span
+                          ></label
+                        >
+                        <select
+                          class="form-select"
+                          (change)="changeVillage($event.target.value)"
+                          formControlName="gram"
+                          id="gram"
+                          [ngClass]="{
+                            'is-invalid': f.gram.invalid && f.gram.touched,
+                            'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
+                          }"
+                        >
+                          <option value="">-- Select Village --</option>
+                          <option *ngFor="let vill of villagesOfBranch">
+                            {{ vill.villageName }}
+                          </option>
+                        </select>
+                        <div *ngIf="f.gram.errors" class="invalid-feedback">
+                          <div *ngIf="f.gram.errors.required">
+                            Above Selection is required
+                          </div>
+                        </div>
+                      </div>
 
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">

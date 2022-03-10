@@ -131,20 +131,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     this.locationForm.get('gram').reset();
   }
 
-  // changeBlock(blockname) {
-  //   this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
-  //   this.selectedBlock = this.locationForm.get('block').value;
-  //   this.locationForm.get('gp').reset();
-  //   this.locationForm.get('gram').reset();
-  // }
-  // changeGp(gpName) {
-  //   this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
-  //   this.selectedGp = this.locationForm.get('gp').value;
-  //   this.locationForm.get('gram').reset();
-  // }
   changeVillage(villagename) {
     this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
-    console.log(this.branchVillageMapId);
     this.householdFamDetails(this.branchVillageMapId);
   }
 
@@ -156,10 +144,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
 
     //API call for viewing HouseholdWithFamilyDetails
-    this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
-      this.baselineDetails = response.responseObject;
-      console.log(this.baselineDetails);
-    });
+    this.loader = false;
     setTimeout(() => {
       this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
         this.loader = true;
@@ -253,7 +238,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         type: item.familyType,
         tMem: item.totalMembers,
         tFam: item.numberOfFamily,
-        hhNo: item.houseHoldNumber
+        hhNo: item.houseHoldNumber,
+        bName: item.branchDTO.branchName,
+        vName: this.villagesOfBranch.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
+        ssName: item.swasthyaSahayikaDTO.name
       }
     });
   }
