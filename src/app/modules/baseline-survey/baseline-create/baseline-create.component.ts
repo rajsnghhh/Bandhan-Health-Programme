@@ -8,6 +8,7 @@ import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
+import { LocationComponent } from '../location/location.component';
 
 @Component({
   selector: 'app-baseline-create',
@@ -45,6 +46,7 @@ export class BaselineCreateComponent implements OnInit {
   idCard: any;
   loader: boolean = true;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
+  @ViewChild(LocationComponent) locationComponent: LocationComponent;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
@@ -246,6 +248,7 @@ export class BaselineCreateComponent implements OnInit {
     this.institutionalDelivery = '';
     this.showChildDetails = false;
     this.createForm();
+    this.locationComponent.createForm();
     this.addSum = 0;
     this.childDetails.childInfo = [{
       age: 'string',
@@ -264,7 +267,8 @@ export class BaselineCreateComponent implements OnInit {
     let item = this.baselineSurvey.value;
     let idValue = '';
     let tfamily;
-
+    this.locationComponent.locationForm.markAllAsTouched();
+    this.baselineSurvey.markAllAsTouched();
     // console.log(thiitem.branch == this.baselineSurvey.get('branch').value)
     item.firstName = this.validationService.firstCaps(
       item.firstName.trim()

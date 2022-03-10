@@ -31,22 +31,28 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
+    setTimeout(() => {
+      this.getLocationHco();
+    }, 500);
+    this.regionList = this.sidebarService.listOfRegion;
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
+  }
 
-    let Dto = {
-      dataAccessDTO: dataAccessDTO,
+  getLocationHco() {
+    let dto = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
       branchId: this.sidebarService.branchId
     }
 
-    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+    this.baselineService.villagesOfBranch(dto).subscribe((res) => {
+      console.log(res, 'res list');
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch1');
-    })
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
+    }
+    )
   }
 
   changeRegion(region) {
@@ -119,7 +125,7 @@ export class LocationComponent implements OnInit {
   }
   changeVillage(villagename) {
 
-    
+
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.sidebarService.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
     let req = {
