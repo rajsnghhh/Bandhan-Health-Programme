@@ -87,10 +87,11 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       dataAccessDTO: dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
-
-    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-      this.villagesOfBranch = res.responseObject;
-    })
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        this.villagesOfBranch = res.responseObject;
+      })
+    }
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
 
@@ -120,10 +121,14 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         }
       );
     }, 500);
-    this.locationForm.get('branch').reset();
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.region == '') {
+      this.showError('No Data Found');
+      this.existingFamilyList = [];
+    }
   }
 
   changeBranch(branch) {
@@ -143,9 +148,13 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         this.villagesOfBranch = res.responseObject;
       })
     }, 500);
-    this.locationForm.get('block').reset();
-    this.locationForm.get('gp').reset();
-    this.locationForm.get('gram').reset();
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.branch == '') {
+      this.showError('No Data Found');
+      this.existingFamilyList = [];
+    }
   }
 
   changeBlock(blockname) {

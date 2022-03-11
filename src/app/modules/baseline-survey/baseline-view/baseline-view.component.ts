@@ -15,7 +15,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   templateUrl: './baseline-view.component.html',
   styleUrls: ['./baseline-view.component.css']
 })
-export class BaselineViewComponent implements OnInit, AfterViewInit {
+export class BaselineViewComponent implements OnInit {
   locationForm: FormGroup;
   baselineDetails: any;
   modalContent: any;
@@ -73,21 +73,19 @@ export class BaselineViewComponent implements OnInit, AfterViewInit {
 
 
     setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
-        }
-      })
+      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch1');
+          }
+        })
+      }
     }, 500);
 
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   changeRegion(region) {
@@ -313,10 +311,10 @@ export class BaselineViewComponent implements OnInit, AfterViewInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       houseHoldDetailDTO: {
         branchDTO: {
-          branchId: 15,
-          branchName: "Kestopur",
+          branchId: this.sidebarService.branchId,
+          branchName: this.sidebarService.branchName,
         },
-        branchVillageMapId: 888,
+        branchVillageMapId: this.branchVillageMapId,
         familyDetailDTOList: [
           {
             age: item.age,
@@ -359,8 +357,8 @@ export class BaselineViewComponent implements OnInit, AfterViewInit {
         numberOfFamily: item.numberOfFamily,
         status: "D",
         swasthyaSahayikaDTO: {
-          name: "ABC",
-          swasthyaSahayikaId: 1
+          name: "",
+          swasthyaSahayikaId: 0
         },
         totalMembers: item.totalMembers
       }
