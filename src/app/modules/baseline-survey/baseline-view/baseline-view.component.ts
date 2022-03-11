@@ -79,7 +79,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
           console.log(this.villagesOfBranch, 'villagesOfBranch1');
         }
       })
-    }, 500);
+    }, 1000);
 
 
     this.regionList = this.sidebarService.listOfRegion;
