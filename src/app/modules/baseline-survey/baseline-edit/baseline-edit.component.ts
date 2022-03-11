@@ -23,10 +23,13 @@ export class BaselineEditComponent implements OnInit {
   familyStatus: any;
   tFamily: any;
   branch: any;
+  branchId: any;
   village: any;
   branchVillageMapId: any;
   swasthyaSahayikaId: any;
+  swasthyaSahayika: any;
   ss: any;
+  villagesOfBranch: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
     public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService
@@ -36,6 +39,7 @@ export class BaselineEditComponent implements OnInit {
     this.routes.queryParams.subscribe(params => {
       this.houseHoldId = params['id'];
       this.branch = params['bName'];
+      this.branchId = params['bId'];
       this.village = params['vName'];
       this.branchVillageMapId = params['vId'];
       this.ss = params['ssName'];
@@ -48,10 +52,26 @@ export class BaselineEditComponent implements OnInit {
       this.familyType(this.famType);
     });
     this.createForm();
+    this.baselineSurvey.get('branch').disable();
+    this.getVillageSS();
 
-    this.baselineSurvey.get('branchName').disable();
-    this.baselineSurvey.get('villageName').disable();
-    this.baselineSurvey.get('ssName').disable();
+    setTimeout(() => {
+      let villId = this.villagesOfBranch.find(i => i.villageName == this.village)?.villageMasterId;
+      let req = {
+        dataAccessDTO: {
+          userId: this.sidebarService.userId,
+          userName: this.sidebarService.loginId,
+        },
+        villageId: villId,
+        userId: this.sidebarService.userId
+      }
+      this.baselineService.ssVillageWiseList(req).subscribe((res) => {
+        console.log(res);
+        this.swasthyaSahayika = res.responseObject;
+      }, (error) => {
+        this.swasthyaSahayika = null;
+      })
+    }, 500);
 
     let postBody = {
       activeStatus: "A",
@@ -67,11 +87,46 @@ export class BaselineEditComponent implements OnInit {
 
   }
 
+  getVillageSS() {
+    let dto = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.branchId
+    }
+    this.baselineService.villagesOfBranch(dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject[0].gpDtoList[0].villageDtoList;
+    })
+  }
+  changeVillage(villageMasterId) {
+    this.branchVillageMapId = this.villagesOfBranch.find(vill => vill.villageMasterId == villageMasterId)?.branchVillageMapId;
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      villageId: villageMasterId,
+      userId: this.sidebarService.userId
+    }
+    setTimeout(() => {
+      this.baselineService.ssVillageWiseList(req).subscribe((res) => {
+        console.log(res);
+        this.swasthyaSahayika = res.responseObject;
+      }, (error) => {
+        this.swasthyaSahayika = null;
+      })
+    }, 500);
+  }
+  changeSS(ss) {
+    this.ss = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName;
+    this.swasthyaSahayikaId = ss;
+  }
   createForm() {
     this.baselineSurvey = this.fb.group({
-      branchName: ['', Validators.required],
-      villageName: ['', Validators.required],
-      ssName: ['', Validators.required],
+      branch: ['', Validators.required],
+      gram: ['', Validators.required],
+      swasthyaSahayika: ['', Validators.required],
       family: ['', Validators.required],
       totalFamily: ['', Validators.required],
       households: ['', Validators.required]

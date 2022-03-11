@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   templateUrl: './baseline-view.component.html',
   styleUrls: ['./baseline-view.component.css']
 })
-export class BaselineViewComponent implements OnInit, DoCheck {
+export class BaselineViewComponent implements OnInit, AfterViewInit {
   locationForm: FormGroup;
   baselineDetails: any;
   modalContent: any;
@@ -75,7 +75,7 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     setTimeout(() => {
       this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
         if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res?.responseObject[0]?.gpDtoList[0]?.villageDtoList;
+          this.villagesOfBranch = res.responseObject;
           console.log(this.villagesOfBranch, 'villagesOfBranch1');
         }
       })
@@ -84,6 +84,10 @@ export class BaselineViewComponent implements OnInit, DoCheck {
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   changeRegion(region) {
@@ -111,6 +115,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
       );
     }, 500);
     this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
 
     if (this.locationForm.value.region == '') {
@@ -133,10 +139,12 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     setTimeout(() => {
       this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
         this.loader = true;
-        this.villagesOfBranch = res.responseObject[0]?.gpDtoList[0]?.villageDtoList;
+        this.villagesOfBranch = res.responseObject;
         console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
 
     if (this.locationForm.value.branch == '') {
@@ -145,8 +153,28 @@ export class BaselineViewComponent implements OnInit, DoCheck {
     }
   }
 
+  changeBlock(blockname) {
+    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
+    this.selectedBlock = this.locationForm.get('block').value;
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.block == '') {
+      this.showError('No Data Found');
+      this.baselineDetails = [];
+    }
+  }
+  changeGp(gpName) {
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.selectedGp = this.locationForm.get('gp').value;
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.gp == '') {
+      this.showError('No Data Found');
+      this.baselineDetails = [];
+    }
+  }
+
   changeVillage(villagename) {
-    this.branchVillageMapId = this.villagesOfBranch.find(i => i.villageName == villagename)?.branchVillageMapId;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId;
     this.householdFamDetails(this.branchVillageMapId);
     if (this.locationForm.value.gram == '') {
       this.showError('No Data Found');
@@ -258,7 +286,8 @@ export class BaselineViewComponent implements OnInit, DoCheck {
         tFam: item.numberOfFamily,
         hhNo: item.houseHoldNumber,
         bName: item.branchDTO.branchName,
-        vName: this.villagesOfBranch.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
+        bId: item.branchDTO.branchId,
+        vName: this.villageDtoList.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
         vId: item.branchVillageMapId,
         ssName: item.swasthyaSahayikaDTO.name,
         ssId: item.swasthyaSahayikaDTO.swasthyaSahayikaId
