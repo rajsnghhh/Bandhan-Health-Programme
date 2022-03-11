@@ -437,7 +437,7 @@
 
                         <button class="btn btn-primary m-1" (click)="saveFamilyCreate()"><i
                                 class="fas fa-check-circle m-1"></i>Save</button>
-                        <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()"><i
+                        <button class="btn btn-secondary m-1" (click)="resetBaselineCreate()" *ngIf="!famData.famid"><i
                                 class="fa fa-refresh m-1"></i>Reset</button>
                         <button class="btn btn-danger m-1" (click)="saveBaselineCreateBack()"><i
                                 class="fa fa-arrow-left m-1"></i>Back</button>

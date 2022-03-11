@@ -120,6 +120,9 @@ export class BaselineViewComponent implements OnInit {
     if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.baselineDetails = [];
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList=[];
     }
   }
 
@@ -148,6 +151,9 @@ export class BaselineViewComponent implements OnInit {
     if (this.locationForm.value.branch == '') {
       this.showError('No Data Found');
       this.baselineDetails = [];
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList=[];
     }
   }
 
@@ -159,6 +165,8 @@ export class BaselineViewComponent implements OnInit {
     if (this.locationForm.value.block == '') {
       this.showError('No Data Found');
       this.baselineDetails = [];
+      this.villageDtoList = [];
+      this.gpDtoList=[];
     }
   }
   changeGp(gpName) {
@@ -168,6 +176,7 @@ export class BaselineViewComponent implements OnInit {
     if (this.locationForm.value.gp == '') {
       this.showError('No Data Found');
       this.baselineDetails = [];
+      this.villageDtoList = [];
     }
   }
 

@@ -84,6 +84,11 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
+    if (!this.locationForm.value.region) {
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList=[];
+    }
   }
 
   changeBranch(branch) {
@@ -108,6 +113,11 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
+    if (!this.locationForm.value.branch) {
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList=[];
+    }
   }
 
   changeBlock(blockname) {
@@ -116,14 +126,20 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
+    if (!this.locationForm.value.block) {
+      this.villageDtoList = [];
+    }
   }
+
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.swasthyaSahayika.setValue('');
+    if (!this.locationForm.value.gp) {
+      this.villageDtoList = [];
+    }
   }
-
 
   changeVillage(villagename) {
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
@@ -150,7 +166,6 @@ export class LocationComponent implements OnInit {
 
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }
-
 
   changeSS(ss) {
     this.sidebarService.swasthyaSahayikaId = ss;

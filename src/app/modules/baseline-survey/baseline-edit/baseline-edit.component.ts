@@ -36,6 +36,8 @@ export class BaselineEditComponent implements OnInit {
     , private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
+
+
     this.routes.queryParams.subscribe(params => {
       this.houseHoldId = params['id'];
       this.branch = params['bName'];
@@ -48,7 +50,7 @@ export class BaselineEditComponent implements OnInit {
       this.totalMembers = params['tMem'];
       this.totalFamili = params['tFam'];
       this.householdNumber = params['hhNo'];
-      console.log(params, 'abccccccccc');
+
       this.familyType(this.famType);
     });
     this.createForm();
@@ -85,6 +87,10 @@ export class BaselineEditComponent implements OnInit {
       console.log(this.familyStatus);
     })
 
+    if (this.baselineSurvey.value.swasthyaSahayika == '') {
+      this.swasthyaSahayikaId = '';
+    }
+
   }
 
   getVillageSS() {
@@ -99,6 +105,7 @@ export class BaselineEditComponent implements OnInit {
       this.villagesOfBranch = res.responseObject[0].gpDtoList[0].villageDtoList;
     })
   }
+
   changeVillage(villageMasterId) {
     this.branchVillageMapId = this.villagesOfBranch.find(vill => vill.villageMasterId == villageMasterId)?.branchVillageMapId;
     let req = {
@@ -117,7 +124,10 @@ export class BaselineEditComponent implements OnInit {
         this.swasthyaSahayika = null;
       })
     }, 500);
+
+    this.baselineSurvey.controls.swasthyaSahayika.setValue('');
   }
+
   changeSS(ss) {
     this.ss = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName;
     this.swasthyaSahayikaId = ss;

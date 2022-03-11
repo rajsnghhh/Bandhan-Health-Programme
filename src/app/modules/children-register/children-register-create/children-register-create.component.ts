@@ -128,6 +128,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList = [];
     }
   }
 
@@ -154,6 +157,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     if (this.locationForm.value.branch == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
+      this.villageDtoList = [];
+      this.villagesOfBranch = [];
+      this.gpDtoList = [];
     }
   }
 
@@ -165,6 +171,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     if (this.locationForm.value.block == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
+      this.villageDtoList = [];
+      this.gpDtoList = [];
     }
   }
 
@@ -175,6 +183,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     if (this.locationForm.value.gp == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
+      this.villageDtoList = [];
     }
   }
 

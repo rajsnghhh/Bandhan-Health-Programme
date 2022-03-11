@@ -267,8 +267,8 @@ export class BaselineCreateComponent implements OnInit {
     let item = this.baselineSurvey.value;
     let idValue = '';
     let tfamily;
-    this.locationComponent.locationForm.markAllAsTouched();
-    this.baselineSurvey.markAllAsTouched();
+    // this.locationComponent.locationForm.markAllAsTouched();
+    // this.baselineSurvey.markAllAsTouched();
     // console.log(thiitem.branch == this.baselineSurvey.get('branch').value)
     item.firstName = this.validationService.firstCaps(
       item.firstName.trim()
@@ -400,13 +400,28 @@ export class BaselineCreateComponent implements OnInit {
         numberOfFamily: tfamily,
         status: "A",
         swasthyaSahayikaDTO: {
-          name: this.sidebarService.swasthyaSahayikaName ?  this.sidebarService.swasthyaSahayikaName : '',
+          name: this.sidebarService.swasthyaSahayikaName ? this.sidebarService.swasthyaSahayikaName : '',
           swasthyaSahayikaId: parseInt(this.sidebarService.swasthyaSahayikaId) ? parseInt(this.sidebarService.swasthyaSahayikaId) : 0
         },
         totalMembers: item.households
       }
     }
     console.log(postBody);
+
+    if (!this.locationComponent.locationForm.value.block) {
+      this.showError('Please Select Block');
+      return;
+    }
+
+    if (!this.locationComponent.locationForm.value.gp) {
+      this.showError('Please Select GP');
+      return;
+    }
+
+    if (!this.locationComponent.locationForm.value.gram) {
+      this.showError('Please Select Village');
+      return;
+    }
 
     if (!this.baselineSurvey.value.family) {
       this.showError('Please Select Family Type');
