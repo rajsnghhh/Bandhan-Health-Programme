@@ -10,20 +10,41 @@
                         <legend class="scheduler-border">HH Info</legend>
                         <div class="row">
                             <div class="form-group col-md">
-                                <label for="branchName">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <input type="text" class="form-control" formControlName="branchName"
+                                <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <input type="text" class="form-control" formControlName="branch"
                                     [(ngModel)]="branch">
                             </div>
                             <div class="form-group col-md">
-                                <label for="villageName">GS/ Ward/ Village :&nbsp;<span
-                                        class="text-danger">*&nbsp;</span></label>
-                                <input type="text" class="form-control" formControlName="villageName"
-                                    [(ngModel)]="village">
-                            </div>
-                            <div class="form-group col-md">
-                                <label for="ssName">Name of SS :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <input type="text" class="form-control" formControlName="ssName" [(ngModel)]="ss">
-                            </div>
+                                <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" [(ngModel)]="branchVillageMapId" (change)="changeVillage($event.target.value)" formControlName="gram" id="gram"
+                                  [ngClass]="{
+                                    'is-invalid': f.gram.invalid && f.gram.touched,
+                                    'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
+                                  }">
+                                  <option value="">-- Select Village --</option>
+                                  <option *ngFor="let vill of villagesOfBranch" [value]="vill.branchVillageMapId">
+                                    {{ vill.villageName }}
+                                  </option>
+                                </select>
+                                <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                  <div *ngIf="f.gram.errors.required">
+                                    Village selection is required
+                                  </div>
+                                </div>
+                              </div>
+                          
+                              <div class="form-group col-md">
+                                <label for="swasthyaSahayika">
+                                  Name of SS :</label>
+                                <select class="form-select" [(ngModel)]="swasthyaSahayikaId" (change)="changeSS($event.target.value)" formControlName="swasthyaSahayika"
+                                  id="swasthyaSahayika">
+                                  <option value="">-- Select SS --</option>
+                                  <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
+                                    {{ ss.swasthyaSahayikaName }}
+                                  </option>
+                                </select>
+                          
+                              </div>
                         </div>
 
                         <div class="row">
