@@ -59,7 +59,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   finalDelChild: any;
   showChildDetails = false;
   childSetData: any;
-  activeChild: any;
+  activeChild: any = [];
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
@@ -639,7 +639,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     })
 
     this.activeChild = this.childDetails.childInfo.filter((x) => x.status == 'A')
-    console.log(this.activeChild.length);
+    // console.log(this.activeChild.length);
 
 
     if (this.baselineSurvey.value.childbelow18 == 'Y' || this.baselineSurvey.value.breastFeeding == 'Y' || this.baselineSurvey.value.breastFeeding == 'N' || this.baselineSurvey.value.childbelow5 == 'Y') {
@@ -658,8 +658,8 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     if (this.baselineSurvey.value.childbelow5 == 'Y') {
       let isvalid = 0;
-      this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge <= 5) {
+      this.activeChild.forEach((item, index) => {
+        if (this.activeChild[index].showAge <= 5) {
           isvalid += 1;
         }
       })
@@ -673,8 +673,8 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     if (this.baselineSurvey.value.childbelow18 == 'Y' && this.baselineSurvey.value.childbelow5 == 'N') {
       let isvalid = 0;
-      this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 5) {
+      this.activeChild.forEach((item, index) => {
+        if (this.activeChild[index].showAge < 5) {
           isvalid += 1;
         }
       })
@@ -689,8 +689,8 @@ export class FamilyInfoCreateComponent implements OnInit {
     if (this.baselineSurvey.value.breastFeeding == 'Y' || this.baselineSurvey.value.breastFeeding == 'N') {
 
       let isvalid = 0;
-      this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 2) {
+      this.activeChild.forEach((item, index) => {
+        if (this.activeChild[index].showAge < 2) {
           isvalid += 1;
         }
       })
@@ -703,8 +703,8 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     if (this.baselineSurvey.value.childbelow5 == 'Y' && this.baselineSurvey.value.breastFeeding == 'NA') {
       let isvalid = 0;
-      this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 2) {
+      this.activeChild.forEach((item, index) => {
+        if (this.activeChild[index].showAge < 2) {
           isvalid += 1;
         }
       })
@@ -713,12 +713,6 @@ export class FamilyInfoCreateComponent implements OnInit {
         this.showError('You can not add child below 2 years');
         return;
       }
-
-    }
-
-    if (this.baselineSurvey.value.child < this.childDetails.childInfo.length) {
-      this.showError(' Entered child data should not be more than children count');
-      return;
 
     }
 
@@ -807,13 +801,16 @@ export class FamilyInfoCreateComponent implements OnInit {
 
       this.finalDelChild = this.childDetails.childInfo;
 
-      console.log(this.finalDelChild, 'arrayList')
-
-      // this.childDetails.childInfo.splice(i, 1);
+      console.log(this.finalDelChild, 'arrayList');
 
     }
 
     else {
+      this.childDetails.childInfo.splice(i, 1);
+    }
+
+    if (this.childDetails.childInfo[i]?.childName == '' || this.childDetails.childInfo[i]?.dob == '' ||
+      this.childDetails.childInfo[i]?.sex == '' || this.childDetails.childInfo[i]?.childDetailId == 0) {
       this.childDetails.childInfo.splice(i, 1);
     }
 
@@ -1021,7 +1018,11 @@ export class FamilyInfoCreateComponent implements OnInit {
       totalChildren = parseInt(item.child);
     }
 
-    if (totalChildren < this.childDetails.childInfo.length) {
+    var actLen = [];
+    actLen = this.childDetails.childInfo.filter((x) => x.status == 'A');
+
+
+    if (totalChildren < actLen.length) {
       this.showError(' Entered child data should not be more than children count');
       // return;
     } else {

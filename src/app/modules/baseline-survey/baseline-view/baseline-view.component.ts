@@ -81,7 +81,7 @@ export class BaselineViewComponent implements OnInit {
           }
         })
       }
-    }, 500);
+    }, 1000);
 
 
     this.regionList = this.sidebarService.listOfRegion;
