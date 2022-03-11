@@ -392,10 +392,7 @@ export class FamilyInfoCreateComponent implements OnInit {
 
     let postBody = {
 
-      dataAccessDTO: {
-        userId: "100",
-        userName: "BK000001"
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       familyDetailDTO: {
         age: item.age,
         bbMicroGroupMembership: item.bbMicro,

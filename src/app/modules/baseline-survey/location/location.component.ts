@@ -46,13 +46,13 @@ export class LocationComponent implements OnInit {
       },
       branchId: this.sidebarService.branchId
     }
-
-    this.baselineService.villagesOfBranch(dto).subscribe((res) => {
-      console.log(res, 'res list');
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.baselineService.villagesOfBranch(dto).subscribe((res) => {
+        console.log(res, 'res list');
+        this.villagesOfBranch = res.responseObject;
+        console.log(this.villagesOfBranch, 'villagesOfBranch1');
+      })
     }
-    )
   }
 
   changeRegion(region) {
@@ -156,7 +156,7 @@ export class LocationComponent implements OnInit {
     this.sidebarService.swasthyaSahayikaId = ss;
     this.sidebarService.swasthyaSahayikaName = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName
   }
-  
+
   createForm() {
     this.locationForm = this.fb.group({
       region: ['', Validators.required],
