@@ -267,9 +267,7 @@ export class BaselineCreateComponent implements OnInit {
     let item = this.baselineSurvey.value;
     let idValue = '';
     let tfamily;
-    // this.locationComponent.locationForm.markAllAsTouched();
-    // this.baselineSurvey.markAllAsTouched();
-    // console.log(thiitem.branch == this.baselineSurvey.get('branch').value)
+
     item.firstName = this.validationService.firstCaps(
       item.firstName.trim()
     );
@@ -307,7 +305,6 @@ export class BaselineCreateComponent implements OnInit {
     } else {
       tfamily = '';
     }
-
 
     if (item.idtype != 1 || item.idtype != 2 || item.idtype != 3) {
       this.idCard = []
@@ -647,7 +644,9 @@ export class BaselineCreateComponent implements OnInit {
       if (this.ageCheck) {
         const convertAge = new Date(this.ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.childDetails.childInfo[index].showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.childDetails.childInfo[index].showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
+        console.log(this.childDetails.childInfo[index].showAge);
+
       }
     })
 
@@ -658,12 +657,12 @@ export class BaselineCreateComponent implements OnInit {
       }
     }
 
-    if (this.baselineSurvey.value.childbelow18 == 'Y') {
-      if (this.showAge > 18) {
-        this.showError('Please add a child below 18 years');
-        return;
-      }
-    }
+    // if (this.baselineSurvey.value.childbelow18 == 'Y') {
+    //   if (this.showAge > 18) {
+    //     this.showError('Please add a child below 18 years');
+    //     return;
+    //   }
+    // }
 
     if (this.baselineSurvey.value.childbelow5 == 'Y') {
       let isvalid = 0;
@@ -682,7 +681,7 @@ export class BaselineCreateComponent implements OnInit {
     if (this.baselineSurvey.value.childbelow18 == 'Y' && this.baselineSurvey.value.childbelow5 == 'N') {
       let isvalid = 0;
       this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 5) {
+        if (this.childDetails.childInfo[index].showAge <= 5) {
           isvalid += 1;
         }
       })
@@ -697,7 +696,7 @@ export class BaselineCreateComponent implements OnInit {
 
       let isvalid = 0;
       this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 2) {
+        if (this.childDetails.childInfo[index].showAge <= 2) {
           isvalid += 1;
         }
       })
@@ -711,7 +710,7 @@ export class BaselineCreateComponent implements OnInit {
     if (this.baselineSurvey.value.childbelow5 == 'Y' && this.baselineSurvey.value.breastFeeding == 'NA') {
       let isvalid = 0;
       this.childDetails.childInfo.forEach((item, index) => {
-        if (this.childDetails.childInfo[index].showAge < 2) {
+        if (this.childDetails.childInfo[index].showAge <= 2) {
           isvalid += 1;
         }
       })
