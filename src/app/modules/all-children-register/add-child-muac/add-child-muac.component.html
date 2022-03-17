@@ -57,7 +57,7 @@
     <div class="form-group col-md">
       <label for="muac">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
       <input type="text" class="form-control" placeholder="MUAC" formControlName="muac"
-      (keypress)="validationService.onlyIntegerAndDot($event)"
+      (keypress)="validationService.onlyIntegerAndDot($event)" pattern="\d+\.?\d?(?!\d)"
       [ngClass]="{
         'is-invalid': f.muac.invalid && f.muac.touched,
         'is-valid':

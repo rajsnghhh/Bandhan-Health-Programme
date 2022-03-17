@@ -74,7 +74,7 @@ export class ViewMuaclistComponent implements OnInit {
 
     this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
       this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
-        this.dialogRef.close();
+        this.viewMuacChildList();
         this.showSuccess('Delete');
       })
     }).catch(() => '');
