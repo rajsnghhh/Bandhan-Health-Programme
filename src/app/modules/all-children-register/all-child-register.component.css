@@ -1,0 +1,29 @@
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: #499 !important;
+}
+::ng-deep .mat-tab-label .mat-tab-label-content {
+  font-size: medium;
+}
+
+::ng-deep .mat-tab-header .mat-tab-labels {
+  justify-content: space-between;
+}
+
+.QA_table td {
+  padding: 0px;
+}
+.QA_table .table thead th {
+  padding: 17px 10px;
+}
+
+.fa-eye:hover,
+.fa-plus-circle:hover {
+  color: lightgreen !important;
+  cursor: pointer;
+  font-size: 2.1em;
+}
+.fa-eye:hover {
+  color: #70caf7 !important;
+  cursor: pointer;
+  font-size: 2.1em;
+}
