@@ -634,7 +634,7 @@ export class FamilyInfoCreateComponent implements OnInit {
       if (this.ageCheck) {
         const convertAge = new Date(this.ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.childDetails.childInfo[index].showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.childDetails.childInfo[index].showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
       }
     })
 
@@ -674,7 +674,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     if (this.baselineSurvey.value.childbelow18 == 'Y' && this.baselineSurvey.value.childbelow5 == 'N') {
       let isvalid = 0;
       this.activeChild.forEach((item, index) => {
-        if (this.activeChild[index].showAge < 5) {
+        if (this.activeChild[index].showAge <= 5) {
           isvalid += 1;
         }
       })
@@ -690,7 +690,7 @@ export class FamilyInfoCreateComponent implements OnInit {
 
       let isvalid = 0;
       this.activeChild.forEach((item, index) => {
-        if (this.activeChild[index].showAge < 2) {
+        if (this.activeChild[index].showAge <= 2) {
           isvalid += 1;
         }
       })
@@ -704,7 +704,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     if (this.baselineSurvey.value.childbelow5 == 'Y' && this.baselineSurvey.value.breastFeeding == 'NA') {
       let isvalid = 0;
       this.activeChild.forEach((item, index) => {
-        if (this.activeChild[index].showAge < 2) {
+        if (this.activeChild[index].showAge <= 2) {
           isvalid += 1;
         }
       })

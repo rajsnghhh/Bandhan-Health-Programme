@@ -220,6 +220,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   get f() {
     return this.locationForm.controls;
   }
+
   getMinDate() {
     let date = new Date();
     let toDate: any = date.getDate();
@@ -310,7 +311,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (ageCheck) {
         const convertAge = new Date(ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
       }
       console.log(this.showAge);
     })
@@ -355,16 +356,15 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       return;
     }
 
-    if (this.existingFamilyDetails.haveChild == 'Y' && this.existingFamilyDetails.childrenBelow18 == 'Y'
-      && this.existingFamilyDetails.childrenBelow5 == 'N') {
-      if (this.showAge < 5) {
+    if (this.existingFamilyDetails.childrenBelow18 == 'Y' && this.existingFamilyDetails.childrenBelow5 == 'N') {
+      if (this.showAge <= 5) {
         this.showError('This family does have any child below 5 years')
         return;
       }
     }
 
     if (this.existingFamilyDetails.childrenBelow5 == 'Y' && this.existingFamilyDetails.lactetingMother == 'NA') {
-      if (this.showAge < 2) {
+      if (this.showAge <= 2) {
         this.showError('This family does have any child below 2 years')
         return;
       }
@@ -386,23 +386,26 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   saveEditChild() {
-    console.log(this.childDetails);
-    console.log(this.existingFamilyDetails);
-    console.log(this.setChild);
+    // console.log(this.childDetails);
+    // console.log(this.existingFamilyDetails);
+    // console.log(this.setChild);
     this.childDetails.childInfo[0].familyDetailId = this.setChild.familyDetailId;
     this.childDetails.childInfo[0].childDetailId = this.setChild.childDetailId;
-    console.log(this.childDetails);
+    // console.log(this.childDetails);
     let firstCopyOFEFD = JSON.stringify(this.existingFamilyDetails);
-    this.childDetails.childInfo.forEach((item) => {
+    this.childDetails.childInfo.forEach((item, index) => {
       let ageCheck = item.dob
       if (ageCheck) {
+        // today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10);
         const convertAge = new Date(ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
       }
+      console.log(this.showAge);
+
       item.age = this.showAge;
       this.existingChildList[this.childIndexId] = item
-      console.log(this.existingChildList, 'newChild');
+      // console.log(this.existingChildList, 'newChild');
 
     })
 
@@ -412,9 +415,11 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (ageCheck) {
         const convertAge = new Date(ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
       }
       i.age = this.showAge
+      // console.log(this.showAge, 'agemaster');
+
     })
 
     if ((this.existingFamilyDetails.lactetingMother == 'Y' || this.existingFamilyDetails.lactetingMother == 'N')) {
@@ -430,14 +435,14 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         return;
       }
 
-      if (this.existingChildList.filter((v) => v.age < 2).length > 0) {
+      if (this.existingChildList.filter((v) => v.age <= 2).length > 0) {
         this.showError('Child list should not contain any child below 2 years');
         return;
       }
     }
 
     if ((this.existingFamilyDetails.childrenBelow18 == 'Y' && this.existingFamilyDetails.childrenBelow5 == 'N')) {
-      if (this.existingChildList.filter((v) => v.age > 5 && v.age <= 18).length < 1) {
+      if (this.existingChildList.filter((v) => v.age <= 18 && v.age > 5).length < 1) {
         this.showError('Child list must contain atleast one child below 18 years & more than 5 years');
         return;
       }
@@ -465,7 +470,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
 
     if (this.existingFamilyDetails.childrenBelow5 == 'N') {
-      if (this.showAge < 5) {
+      if (this.showAge <= 5) {
         this.showError('This family does have any child below 5 years')
         return;
       }
@@ -473,7 +478,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
 
     if (this.existingFamilyDetails.lactetingMother == 'NA') {
-      if (this.showAge < 2) {
+      if (this.showAge <= 2) {
         this.showError('This family does have any child below 2 years')
         return;
       }
@@ -487,20 +492,20 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       }
     }
 
-    console.log(copyOfexistingFamilyDetails);
-    console.log(this.existingFamilyDetails); console.log("**********", firstCopyOFEFD);
+    // console.log(copyOfexistingFamilyDetails);
+    // console.log(this.existingFamilyDetails); console.log("**********", firstCopyOFEFD);
 
     let femaleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "F");
     let maleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "M");
     let femaleLength = femaleList.length;
     let maleLength = maleList.length;
-    console.log(femaleLength, maleLength);
+    // console.log(femaleLength, maleLength);
 
     if (this.existingFamilyDetails.totaFamilyMemberFemales == femaleLength || this.existingFamilyDetails.totaFamilyMemberFemales < femaleLength) {
       this.showError('Total Female child should not be more than or equal to Total Family Member Female')
       this.existingFamilyDetails = JSON.parse(firstCopyOFEFD);
       this.existingChildList = this.existingFamilyDetails.childDetailDTOList;
-      console.log(this.existingFamilyDetails);
+      // console.log(this.existingFamilyDetails);
       return;
     }
 
@@ -516,9 +521,11 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
+
         this.getMoreDetails(this.existingFamilyDetails.familyDetailId);
       } else {
         this.showError(response.message);
+
       }
 
     })
@@ -568,6 +575,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   childModalDismiss() {
+    console.log('childModalDismiss');
     this.modalReference.close();
     this.childDetails.childInfo = [{
       age: 'string',
@@ -578,7 +586,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       sex: '',
       status: 'A'
     }];
+
   }
+
 
   checkChildDisabled() {
     let flag = true;
@@ -609,28 +619,30 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (ageCheck) {
         const convertAge = new Date(ageCheck);
         const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-        this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+        this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
       }
 
-      if (this.showAge >= 0 && this.showAge < 2) {
+      if (this.showAge > 0 && this.showAge <= 2) {
         below2 += 1;
       }  // checking for 0-2 years
 
-      if (this.showAge >= 2 && this.showAge < 5) {
+      if (this.showAge > 2 && this.showAge <= 5) {
         below5 += 1;
       } // checking for 2-5 years
 
-      if (this.showAge >= 5 && this.showAge < 18) {
+      if (this.showAge > 5 && this.showAge <= 18) {
         below18 += 1;
-      }  // checking for 6-18 years
+      }  // checking for 5-18 years
 
 
       if (x == i) {
-        if (this.showAge >= 2 && this.showAge < 5) {
-          forDelete = 5;
-        } else if (this.showAge >= 0 && this.showAge < 2) {
+        if (this.showAge > 0 && this.showAge <= 2) {
           forDelete = 2;
-        } else if (this.showAge >= 5 && this.showAge < 18) {
+        }
+        else if (this.showAge > 2 && this.showAge <= 5) {
+          forDelete = 5;
+        }
+        else if (this.showAge > 5 && this.showAge <= 18) {
           forDelete = 18;
         }
         else {
@@ -702,6 +714,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   editChild(items, i, EditChild) {
+    this.childModalDismiss();
     this.openModall(EditChild);
     this.setData(items);
     this.childIndexId = i;
@@ -728,3 +741,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
 }
+
+
+
+
