@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'muac-register', loadChildren: () => import('./modules/muac-register/muac-register.module').then(m => m.MuacRegisterModule), canActivate: [AuthGuard] },
   { path: 'core', loadChildren: () => import('./modules/core/core.module').then(m => m.CoreModule), canActivate: [AuthGuard] },
   { path: 'acr', loadChildren: () => import('./modules/all-children-register/all-child-register.module').then(m => m.AllChildRegisterModule), canActivate: [AuthGuard] },
+  { path: 'lmr', loadChildren: () => import('./modules/lactating-mother-register/lm-register.module').then(m => m.LmRegisterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

@@ -34,4 +34,8 @@ export class HttpService {
   getChildrenRegister(obj): any {
     return this.http.post(`${this.baseURL}acr/view`, obj)
   }
+
+  getLactatingMotherRegister(obj): any {
+    return this.http.post(`${this.baseURL}lactatingmotherregister/getVillageWiseChildDetails`, obj)
+  }
 }

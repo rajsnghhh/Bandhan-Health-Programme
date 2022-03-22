@@ -157,7 +157,7 @@
                                             : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
                                             : '-'}}</td>
                                             <td style="padding: 0px 0px 0px 32px;">
-                                                <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="!regionBranchHide"></i>
+                                                <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
                                                 <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
                                             </td>
                                         </tr>
@@ -208,7 +208,7 @@
                                             : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
                                             : '-'}}</td>
                                             <td style="padding: 0px 0px 0px 32px;">
-                                              <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="!regionBranchHide"></i>
+                                              <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
                                               <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
                                           </td>
                                         </tr>
@@ -253,7 +253,10 @@
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>
                                             <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
-                                            <td>{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName : '-'}}</td>
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
+                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
+                                            : '-'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
