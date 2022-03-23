@@ -122,5 +122,14 @@ export class ValidationService {
       return false;
     }
   }
+  onlyIntegerAndDot(event) {
+    const charCode = event.keyCode;
+    if ((charCode >= 48 && charCode <= 57) || charCode == 46) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
 
 }

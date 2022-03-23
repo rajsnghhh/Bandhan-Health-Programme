@@ -1,0 +1,432 @@
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h2 class="dialog-title">Lactating Mother Child</h2>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
+    </div>
+</h1>
+<div mat-dialog-content>
+    <form class="form-signin" [formGroup]="childBirthForm">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>Place of Delivery :</label> <br>
+                <label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="Home" formControlName="place"> &nbsp;
+                      <span>Home</span>
+                  </label> &nbsp;&nbsp;&nbsp;
+                  <label>
+                    <input type="radio" value="Institution" formControlName="place"> &nbsp;
+                      <span>Institution</span>
+                  </label>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-group col-md">
+                    <label for="birthWeight">Birth Weight (kg):</label>
+                    <input type="text" class="form-control" placeholder="Enter weight" formControlName="birthWeight" 
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.birthWeight.invalid && f.birthWeight.touched,
+                      'is-valid':
+                        f.birthWeight.valid &&
+                        (f.birthWeight.dirty || f.birthWeight.touched)
+                    }"/>
+                    <div *ngIf="f.birthWeight.errors" class="invalid-feedback">
+                      <div *ngIf="f.birthWeight.errors.notInBirthWeightRange">
+                        Birth Weight should be 0 to 9 kg
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    
+    <br>
+    <mat-accordion>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                Within 6 month
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+        <div class="form-group col-md-4">
+            <div class="form-group col-md">
+                <label for="firstVisitDate">First Visit Date:</label>
+                <input type="date" class="form-control" formControlName="firstVisitDate" />
+              </div>
+         </div>
+         <div class="form-group col-md-4">
+            <div class="form-group col-md">
+                <label for="secondVisitDate">Second visit Date:</label>
+                <input type="date" class="form-control" formControlName="secondVisitDate" />
+              </div>
+         </div>
+        </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after6m'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                After 6 months
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="form-group col-md">
+                <label>Exclusive Breast Feeding Complete :</label> <br>
+                <label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="Y" formControlName="ebfUpto6Complete"> &nbsp;
+                      <span>Yes</span>
+                  </label> &nbsp;&nbsp;&nbsp;
+                  <label>
+                    <input type="radio" value="N" formControlName="ebfUpto6Complete"> &nbsp;
+                      <span>No</span>
+                  </label>
+            </div>
+            <div class="form-group col-md">
+                <div class="form-group col-md">
+                    <label for="height">Height (cm):</label>
+                    <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.height.invalid && f.height.touched,
+                      'is-valid':
+                        f.height.valid &&
+                        (f.height.dirty || f.height.touched)
+                    }"/>
+                    <div *ngIf="f.height.errors" class="invalid-feedback">
+                      <div *ngIf="f.height.errors.notInHeightRange">
+                        Height should be 10 to 180 cm
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="form-group col-md">
+                <div class="form-group col-md">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.weight.invalid && f.weight.touched,
+                      'is-valid':
+                        f.weight.valid &&
+                        (f.weight.dirty || f.weight.touched)
+                    }"/>
+                    <div *ngIf="f.weight.errors" class="invalid-feedback">
+                      <div *ngIf="f.weight.errors.notInWeightRange">
+                        Weight should be 0 to 25 kg
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="form-group col-md">
+                <div class="form-group col-md">
+                    <label for="muac">MUAC (cm):</label>
+                    <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.muac.invalid && f.muac.touched,
+                      'is-valid':
+                        f.muac.valid &&
+                        (f.muac.dirty || f.muac.touched)
+                    }"/>
+                    <div *ngIf="f.muac.errors" class="invalid-feedback">
+                      <div *ngIf="f.muac.errors.notInMuacRange">
+                        MUAC should be 1 to 30 cm
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after12m'>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                After 12 months
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <div class="form-group col-md">
+                    <label>Primary Immunization completed :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="Y" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
+                          <span>Yes</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="N" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
+                          <span>No</span>
+                      </label>
+                </div>
+                <div class="form-group col-md">
+                    <label>Exclusive Breast Feeding Complete :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="Y" formControlName="ebfUpto12Complete"> &nbsp;
+                          <span>Yes</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="N" formControlName="ebfUpto12Complete"> &nbsp;
+                          <span>No</span>
+                      </label>
+                </div>
+                <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after18m'>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                After 18 months
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <div class="form-group col-md">
+                    <label>Exclusive Breast Feeding Complete :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="Y" formControlName="ebfUpto18Complete"> &nbsp;
+                          <span>Yes</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="N" formControlName="ebfUpto18Complete"> &nbsp;
+                          <span>No</span>
+                      </label>
+                </div>
+                <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after24m'> 
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                After 24 months
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <div class="form-group col-md">
+                    <label>Primary Immunization completed :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="Y" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
+                          <span>Yes</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="N" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
+                          <span>No</span>
+                      </label>
+                </div>
+                <div class="form-group col-md">
+                    <label>Exclusive Breast Feeding Complete :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="Y" formControlName="ebfUpto24Complete"> &nbsp;
+                          <span>Yes</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="N" formControlName="ebfUpto24Complete"> &nbsp;
+                          <span>No</span>
+                      </label>
+                </div>
+                <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Child Death 
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label for="checkChildDeath">Is child death ?</label>
+                    <select class="form-select" formControlName="checkChildDeath" id="checkChildDeath" (change)="checkChildDeath($event.target.value)">
+                      <option value="">-- Select --</option>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md" *ngIf="childDeath == 'Y'">
+                    <div class="form-group col-md-4">
+                        <label for="deathOfChildDate">First Visit Date:</label>
+                        <input type="date" class="form-control" formControlName="deathOfChildDate" />
+                      </div>
+                 </div>
+            </div>
+            <div class="form-group col-md" *ngIf="childDeath == 'Y'">
+                <div class="form-group col-md">
+                    <label for="comment">Comment:</label>
+                    <input type="text" class="form-control" formControlName="comment" />
+                  </div>
+             </div> 
+          </mat-expansion-panel>
+
+      </mat-accordion>
+      
+      <br> <br>
+      <div class="addEditBtn">
+        <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
+      </div>
+    </form>
+</div>

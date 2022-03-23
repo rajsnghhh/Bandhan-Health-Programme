@@ -1,0 +1,287 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+          <h2 class="page-title">All Children Register</h2>
+
+        <form class="form-signin" [formGroup]="locationForm">
+
+          <div  class="row" *ngIf="regionBranchHide">
+            <div class="form-group col-md">
+              <label for="region"
+                >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >
+              <select
+                class="form-select"
+                (change)="changeRegion($event.target.value)"
+                formControlName="region"
+                id="region"
+                [ngClass]="{
+                  'is-invalid': f.region.invalid && f.region.touched,
+                  'is-valid':
+                    f.region.valid && (f.region.dirty || f.region.touched)
+                }"
+              >
+                <option value="">-- Select Region --</option>
+                <option *ngFor="let region of regionList">
+                  {{region.regionName}}
+                </option>
+              </select>
+              <div *ngIf="f.region.errors" class="invalid-feedback">
+                <div *ngIf="f.region.errors.required">Region selection is required</div>
+              </div>
+            </div>
+        
+            <div class="form-group col-md">
+              <label for="branch"
+                >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >
+              <select
+                class="form-select"
+                (change)="changeBranch($event.target.value)"
+                formControlName="branch"
+                id="branch"
+                [ngClass]="{
+                  'is-invalid': f.branch.invalid && f.branch.touched,
+                  'is-valid':
+                    f.branch.valid && (f.branch.dirty || f.branch.touched)
+                }"
+              >
+                <option value="">-- Select Branch --</option>
+                <option *ngFor="let branch of branchList" >
+                  {{ branch.branchName }}
+                </option>
+              </select>
+              <div *ngIf="f.branch.errors" class="invalid-feedback">
+                <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md">
+              <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (change)="changeBlock($event.target.value)" formControlName="block" id="block"
+                [ngClass]="{
+                  'is-invalid': f.block.invalid && f.block.touched,
+                  'is-valid':
+                    f.block.valid && (f.block.dirty || f.block.touched)
+                }">
+                <option value="">-- Select Block --</option>
+                <option *ngFor="let block of villagesOfBranch">
+                  {{ block.blockName }}
+                </option>
+              </select>
+              <div *ngIf="f.block.errors" class="invalid-feedback">
+                <div *ngIf="f.block.errors.required">Block selection is required</div>
+              </div>
+            </div>
+        
+            <div class="form-group col-md">
+              <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp" id="gp" [ngClass]="{
+                  'is-invalid': f.gp.invalid && f.gp.touched,
+                  'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
+                }">
+                <option value="">-- Select GP/ Municipality --</option>
+                <option *ngFor="let gp of gpDtoList">
+                  {{ gp.name }}
+                </option>
+              </select>
+              <div *ngIf="f.gp.errors" class="invalid-feedback">
+                <div *ngIf="f.gp.errors.required">
+                  GP selection is required
+                </div>
+              </div>
+            </div>
+        
+            <div class="form-group col-md">
+              <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram" id="gram"
+                [ngClass]="{
+                  'is-invalid': f.gram.invalid && f.gram.touched,
+                  'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
+                }">
+                <option value="">-- Select Village --</option>
+                <option *ngFor="let vill of villageDtoList">
+                  {{ vill.villageName }}
+                </option>
+              </select>
+              <div *ngIf="f.gram.errors" class="invalid-feedback">
+                <div *ngIf="f.gram.errors.required">
+                  Village selection is required
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        
+        <br>
+        <div class="box_right d-flex lms_block col-md-6">
+          <div class="serach_field_2">
+              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                  <form active="#">
+                      <div class="search_field">
+                          <input type="text" name="search" placeholder="Search household info here..."
+                              [(ngModel)]="acrSearch">
+                      </div>
+                      <button type="submit"> <i class="fa fa-search"></i> </button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </form>
+          <br>
+          <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    All Children in ACR
+                </ng-template>
+                <ng-template matTabContent>
+                    <div class="white_box_tittle list_header">
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Family No.</th>
+                                            <th>Mother Name</th>
+                                            <th>Child Name</th>
+                                            <th>Child Age</th>
+                                            <th>Last MUAC <br> collected</th>
+                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let item of childrenWRTPsdOrBoD | filter: acrSearch;index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.familyNumber}}</td>
+                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
+                                            <td>{{item.childName}}</td>
+                                            <td>{{item.childAge}}</td>
+                                            <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
+                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
+                                            : '-'}}</td>
+                                            <td style="padding: 0px 0px 0px 32px;">
+                                                <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
+                                                <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab >
+                <ng-template mat-tab-label>
+                    Children between 6m to 5yr
+                </ng-template>
+                <ng-template matTabContent>
+                    <div class="white_box_tittle list_header">
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SL No</th>
+                                            <th>Family ID</th>
+                                            <th>Mother Name</th>
+                                            <th>Child Name</th>
+                                            <th>Age</th>
+                                            <th>Last MUAC <br> collected</th>
+                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.familyDetailId}}</td>
+                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
+                                            <td>{{item.childName}}</td>
+                                            <td>{{item.childAge}}</td>
+                                            <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
+                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
+                                            : '-'}}</td>
+                                            <td style="padding: 0px 0px 0px 32px;">
+                                              <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
+                                              <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab >
+                <ng-template mat-tab-label>
+                    Other Children
+                </ng-template>
+                <ng-template matTabContent>
+                    <div class="white_box_tittle list_header">
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Family ID</th>
+                                            <th>Mother Name</th>
+                                            <th>Child Name</th>
+                                            <th>Age</th>
+                                            <th>Last MUAC <br> collected</th>
+                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let item of ineligibleChildren | filter: acrSearch;index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.familyDetailId}}</td>
+                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
+                                            <td>{{item.childName}}</td>
+                                            <td>{{item.childAge}}</td>
+                                            <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
+                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
+                                            : '-'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+
+          </mat-tab-group>
+        </div>
+    </div>
+</div>
