@@ -235,7 +235,7 @@
                             <div *ngIf="f.ffemale.errors" class="invalid-feedback">
                                 <div *ngIf="f.ffemale.errors.required">Female is required</div>
                             </div>
-                            <span>Total Male + Female : {{addSum}}</span>
+                            <span>Total Male + Female : {{addSum ? addSum : 0}}</span>
                         </div>
 
                         <div class="form-group col-md">

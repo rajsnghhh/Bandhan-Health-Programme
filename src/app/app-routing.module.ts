@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'family-info', loadChildren: () => import('./modules/family-info/family-info.module').then(m => m.FamilyInfoModule), canActivate: [AuthGuard] },
   { path: 'muac-register', loadChildren: () => import('./modules/muac-register/muac-register.module').then(m => m.MuacRegisterModule), canActivate: [AuthGuard] },
   { path: 'core', loadChildren: () => import('./modules/core/core.module').then(m => m.CoreModule), canActivate: [AuthGuard] },
+  { path: 'pem-register', loadChildren: () => import('./modules/pem-register/pem-register.module').then(m => m.PemRegisterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

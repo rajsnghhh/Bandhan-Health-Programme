@@ -130,8 +130,6 @@
                                         <tr>
                                             <th>SL<br>No</th>
                                             <th>Household<br> No.</th>
-                                            <!-- <th>Village/ Ward/<br> Gram Sansad</th>
-                                            <th>GP/<br> Municipality</th> -->
                                             <th>Family<br> Type</th>
                                             <th>Family<br> Count</th>
                                             <th>Total Member<br> of Household</th>
@@ -146,10 +144,7 @@
                                         <tr
                                             *ngFor="let item of baselineDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td>{{item.houseHoldNumber}}
-                                            </td>
-                                            <!-- <td>-</td>
-                                            <td>-</td> -->
+                                            <td>{{item.houseHoldNumber}} </td>
                                             <td>{{item.familyType}}</td>
                                             <td>{{item.numberOfFamily}}</td>
                                             <td>{{item.totalMembers}}</td>

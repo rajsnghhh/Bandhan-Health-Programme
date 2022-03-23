@@ -513,7 +513,7 @@ class LoginComponent {
         }
         this.loading = false;
         setTimeout(() => {
-            this.accountService.login(("BK" + this.f.username.value), this.f.password.value)
+            this.accountService.login(("BK" + this.f.username.value).trim(), this.f.password.value)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["first"])())
                 .subscribe((data) => {
                 console.log("menudata", data);
@@ -546,7 +546,7 @@ class LoginComponent {
     }
     showSuccess(message) {
         this.toaster.success(message, 'Welcome', {
-            timeOut: 3000,
+            timeOut: 1000,
         });
     }
 }
