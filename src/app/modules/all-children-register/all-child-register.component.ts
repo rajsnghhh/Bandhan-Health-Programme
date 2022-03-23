@@ -8,6 +8,7 @@ import { ViewMuaclistComponent } from './view-muaclist/view-muaclist.component';
 import { AddChildMuacComponent } from './add-child-muac/add-child-muac.component';
 import { AcrService } from './acr.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ValidationService } from '../shared/services/validation.service';
 
 @Component({
   selector: 'app-all-child-register',
@@ -37,10 +38,16 @@ export class AllChildRegisterComponent implements OnInit {
   editMode: boolean;
   branchVillageMapId: any;
   index: number = 0;
+  acrSearch: string;
+  searchFullscreen: boolean;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService
-    , private baselineService: BaselineSurveyService, public dialog: MatDialog, public acrService: AcrService,) { }
+  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, public acrService: AcrService,
+    public validationService: ValidationService,) { }
 
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
   ngOnInit(): void {
     this.createForm();
     this.getChildrenList();

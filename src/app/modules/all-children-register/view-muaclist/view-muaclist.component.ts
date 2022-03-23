@@ -16,7 +16,8 @@ import { AddChildMuacComponent } from '../add-child-muac/add-child-muac.componen
 export class ViewMuaclistComponent implements OnInit {
   childMuac: Array<any> = [];
   childId: any;
-  regionBranchHide: boolean;
+  // regionBranchHide: boolean;
+  editMode: boolean;
 
   constructor(@Optional() public dialogRef: MatDialogRef<ViewMuaclistComponent>, public dialog: MatDialog,
     public acrService: AcrService, @Inject(MAT_DIALOG_DATA) public data: any, private httpService: HttpService,
@@ -26,7 +27,14 @@ export class ViewMuaclistComponent implements OnInit {
   ngOnInit(): void {
     this.childId = this.data.childId;
     this.viewMuacChildList();
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    // this.regionBranchHide = this.sidebarService.regionBranchHide;
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
+      this.sidebarService.RoleDTOName == 'AC') {
+      this.editMode = true;
+    } else {
+      this.editMode = false;
+    }
   }
 
   viewMuacChildList() {

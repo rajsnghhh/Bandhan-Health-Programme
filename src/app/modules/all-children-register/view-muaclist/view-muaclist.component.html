@@ -20,7 +20,7 @@
                         <th>Hight</th>
                         <th>Weight</th>
                         <th>MUAC</th>
-                        <th *ngIf="!regionBranchHide">Action</th>
+                        <th *ngIf="editMode">Action</th>
                     </tr>
                 </thead>
 
@@ -32,7 +32,7 @@
                         <td>{{item.height}}</td>
                         <td>{{item.weight}}</td>
                         <td>{{item.muac}}</td>
-                        <td style="padding: 0px 0px 0px 32px;" *ngIf="!regionBranchHide">
+                        <td style="padding: 0px 0px 0px 32px;" *ngIf="editMode">
                             <i class="fas fa-edit" title="Edit MUAC" (click)="onEdit(i)"></i> 
                             <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(i)"></i>
                         </td>

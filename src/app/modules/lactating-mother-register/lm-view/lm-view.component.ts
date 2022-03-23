@@ -29,8 +29,11 @@ export class LmViewComponent implements OnInit {
   regionBranchHide: boolean;
   branchVillageMapId: any;
   villageMasterId: any;
-
   lactatingmotherregister: Array<any> = [];
+  searchFullscreen: boolean;
+  lmrSearch: string | number;
+  loader: boolean = false;
+
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService
     , private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe) { }
@@ -172,9 +175,10 @@ export class LmViewComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    this.loader = false;
     this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
       this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
-      console.log(this.lactatingmotherregister);
+      this.loader = true;
     })
   }
 

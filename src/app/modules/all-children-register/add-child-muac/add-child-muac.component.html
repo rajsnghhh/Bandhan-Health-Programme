@@ -27,7 +27,7 @@
             (f.height.dirty || f.height.touched)
         }"/>
         <div *ngIf="f.height.errors" class="invalid-feedback">
-          <div *ngIf="f.height.errors.notInRange">
+          <div *ngIf="f.height.errors.notInHeightRange">
             Height should be 10 to 180 cm
           </div>
         </div>
@@ -46,8 +46,8 @@
             (f.weight.dirty || f.weight.touched)
         }"/>
         <div *ngIf="f.weight.errors" class="invalid-feedback">
-          <div *ngIf="f.weight.errors.notInRange">
-            Weight should be 1 to 25 kg
+          <div *ngIf="f.weight.errors.notInWeightRange">
+            Weight should be 0 to 25 kg
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
         <div *ngIf="f.muac.errors.required">
           MUAC is required
         </div>
-        <div *ngIf="f.muac.errors.notInRange">
+        <div *ngIf="f.muac.errors.notInMuacRange">
           MUAC should be 1 to 30 cm
         </div>
       </div>

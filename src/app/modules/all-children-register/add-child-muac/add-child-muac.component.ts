@@ -53,25 +53,26 @@ export class AddChildMuacComponent implements OnInit {
     if (controls.value >= 1 && controls.value <= 30) {
       return null;
     }
-    return { 'notInRange': true };
+    return { 'notInMuacRange': true };
   }
 
   weightRange(controls: AbstractControl): { [key: string]: any } | null {
-    if (controls.value >= 1 && controls.value <= 25 || controls.value == null) {
+    if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
       return null;
     }
-    return { 'notInRange': true };
+    return { 'notInWeightRange': true };
   }
 
   heightRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
       return null;
     }
-    return { 'notInRange': true };
+    return { 'notInHeightRange': true };
   }
 
   onAddEdit() {
     this.muacForm.markAllAsTouched();
+    debugger;
     if (this.editMode === true && this.muacForm.valid) {
       let addDto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
@@ -88,6 +89,9 @@ export class AddChildMuacComponent implements OnInit {
       this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
         this.dialogRef.close();
         this.showSuccess('Success');
+      }, error => {
+        this.dialogRef.close();
+        this.showError('Error')
       })
     } else {
       let editDto = {
@@ -106,6 +110,9 @@ export class AddChildMuacComponent implements OnInit {
         this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res) => {
           this.dialogRef.close();
           this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
         })
       }
     }
@@ -117,6 +124,11 @@ export class AddChildMuacComponent implements OnInit {
 
   showSuccess(message) {
     this.toaster.success(message, 'Child MUAC Save', {
+      timeOut: 3000,
+    });
+  }
+  showError(message) {
+    this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
   }

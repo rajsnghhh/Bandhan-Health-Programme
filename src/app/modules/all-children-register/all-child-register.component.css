@@ -27,3 +27,47 @@
   cursor: pointer;
   font-size: 2.1em;
 }
+
+.search_inner button {
+  padding-right: 1px;
+  margin-left: 540px;
+}
+
+.search_inner_fullscreen button {
+  padding-right: 1px;
+  margin-left: 840px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 90%;
+  background: transparent;
+  font-size: 12px;
+  padding-left: 19px;
+  font-size: 18px;
+  color: #2daab8;
+  border: 0;
+}
+
+.search_inner input {
+  width: 70%;
+  margin-left: 690px;
+  margin-bottom: 5px;
+}
+
+.search_inner_fullscreen input {
+  width: 74%;
+  margin-left: 850px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 55px;
+  border: 1px solid #2daab8;
+  padding-right: 15px;
+}
+
+.serach_field_2 .search_inner button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: 140px;
+}

@@ -113,8 +113,23 @@
               </div>
             </div>
         </div>
-        </form>
-
+        
+        
+        <br>
+        <div class="box_right d-flex lms_block col-md-6">
+          <div class="serach_field_2">
+              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                  <form active="#">
+                      <div class="search_field">
+                          <input type="text" name="search" placeholder="Search household info here..."
+                              [(ngModel)]="acrSearch">
+                      </div>
+                      <button type="submit"> <i class="fa fa-search"></i> </button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </form>
           <br>
           <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
 
@@ -145,7 +160,7 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of childrenWRTPsdOrBoD;index as i">
+                                        <tr *ngFor="let item of childrenWRTPsdOrBoD | filter: acrSearch;index as i">
                                             <td>{{i+1}}</td>
                                             <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
@@ -196,7 +211,7 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of childrenBetween6And59Months;index as i">
+                                        <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
                                             <td>{{i+1}}</td>
                                             <td>{{item.familyDetailId}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
@@ -246,7 +261,7 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of ineligibleChildren;index as i">
+                                        <tr *ngFor="let item of ineligibleChildren | filter: acrSearch;index as i">
                                             <td>{{i+1}}</td>
                                             <td>{{item.familyDetailId}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>

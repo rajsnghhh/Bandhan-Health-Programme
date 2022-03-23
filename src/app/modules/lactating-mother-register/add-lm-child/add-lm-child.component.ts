@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -99,16 +100,16 @@ export class AddLmChildComponent implements OnInit {
   createForm() {
     this.childBirthForm = this.fb.group({
       place: [null],
-      birthWeight: [''],
+      birthWeight: ['', this.birthWeightRange],
       primaryImmunizationUpto12Completed: [null],
       primaryImmunizationUpto24Completed: [null],
       ebfUpto6Complete: [null],
       ebfUpto12Complete: [null],
       ebfUpto18Complete: [null],
       ebfUpto24Complete: [null],
-      height: [''],
-      weight: [''],
-      muac: [''],
+      height: ['', this.heightRange],
+      weight: ['', this.weightRange],
+      muac: ['', this.muacRange],
       firstVisitDate: [null],
       secondVisitDate: [null],
       checkChildDeath: [null],
@@ -123,82 +124,120 @@ export class AddLmChildComponent implements OnInit {
   checkChildDeath(value) {
     this.childDeath = value;
   }
+
+  muacRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 1 && controls.value <= 30 || controls.value == null) {
+      return null;
+    }
+    return { 'notInMuacRange': true };
+  }
+
+  weightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
+      return null;
+    }
+    return { 'notInWeightRange': true };
+  }
+
+  birthWeightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 0 && controls.value <= 9 || controls.value == null) {
+      return null;
+    }
+    return { 'notInBirthWeightRange': true };
+  }
+
+  heightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
+      return null;
+    }
+    return { 'notInHeightRange': true };
+  }
+
   onSave() {
-    console.log(this.childBirthForm.value);
-    if (this.data.muacRegisterId == null) {
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        childBasicStatusDto: {
-          childId: this.data.childId.toString(),
-          placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
-          firstVisitDate: this.childBirthForm.value.firstVisitDate,
-          secondVisitDate: this.childBirthForm.value.secondVisitDate,
-          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
-        },
+    if (this.childBirthForm.valid) {
+      if (this.data.editMode == false) {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          childBasicStatusDto: {
+            childId: this.data.childId.toString(),
+            placeOfDelivery: this.childBirthForm.value.place,
+            birthWeight: this.childBirthForm.value.birthWeight,
+            firstVisitDate: this.childBirthForm.value.firstVisitDate,
+            secondVisitDate: this.childBirthForm.value.secondVisitDate,
+            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+          },
 
-        muacDataDto: {
-          muacRegisterId: 0,
-          muacCampId: null,
-          childId: this.data.childId.toString(),
-          height: this.childBirthForm.value.height,
-          weight: this.childBirthForm.value.weight,
-          muac: this.childBirthForm.value.muac,
-          active_flag: "A"
-        },
-        deadChildRegisterDto: {
-          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-          comment: this.childBirthForm.value.comment
+          muacDataDto: {
+            muacRegisterId: 0,
+            muacCampId: null,
+            childId: this.data.childId.toString(),
+            height: this.childBirthForm.value.height,
+            weight: this.childBirthForm.value.weight,
+            muac: this.childBirthForm.value.muac,
+            active_flag: "A"
+          },
+          deadChildRegisterDto: {
+            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+            comment: this.childBirthForm.value.comment
+          }
         }
-      }
-      console.log(Dto, 'reqAdd')
-      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
-        console.log(res, 'responseAdd')
-        this.dialogRef.close();
-        this.showSuccess('Success');
-      });
-    } else {
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        childBasicStatusDto: {
-          childId: this.data.childId,
-          placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
-          firstVisitDate: this.childBirthForm.value.firstVisitDate,
-          secondVisitDate: this.childBirthForm.value.secondVisitDate,
-          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
-        },
+        console.log(Dto, 'reqAdd')
+        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
+          console.log(res, 'responseAdd')
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        });
+      } else {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          childBasicStatusDto: {
+            childId: this.data.childId,
+            placeOfDelivery: this.childBirthForm.value.place,
+            birthWeight: this.childBirthForm.value.birthWeight,
+            firstVisitDate: this.childBirthForm.value.firstVisitDate,
+            secondVisitDate: this.childBirthForm.value.secondVisitDate,
+            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+          },
 
-        muacDataDto: {
-          muacRegisterId: this.data.muacRegisterId,
-          muacCampId: null,
-          childId: this.data.childId,
-          height: this.childBirthForm.value.height,
-          weight: this.childBirthForm.value.weight,
-          muac: this.childBirthForm.value.muac,
-          active_flag: "A"
-        },
-        deadChildRegisterDto: {
-          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-          comment: this.childBirthForm.value.comment
+          muacDataDto: {
+            muacRegisterId: this.data.muacRegisterId,
+            muacCampId: null,
+            childId: this.data.childId,
+            height: this.childBirthForm.value.height,
+            weight: this.childBirthForm.value.weight,
+            muac: this.childBirthForm.value.muac,
+            active_flag: "A"
+          },
+          deadChildRegisterDto: {
+            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+            comment: this.childBirthForm.value.comment
+          }
         }
+        console.log(Dto, 'reqEdit')
+        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
+          console.log(res, 'responseedit')
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        }
+        );
+
       }
-      console.log(Dto, 'reqEdit')
-      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
-        console.log(res, 'responseedit')
-        this.dialogRef.close();
-        this.showSuccess('Success');
-      });
     }
   }
 
@@ -208,6 +247,12 @@ export class AddLmChildComponent implements OnInit {
 
   showSuccess(message) {
     this.toaster.success(message, 'Child MUAC Save', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
   }

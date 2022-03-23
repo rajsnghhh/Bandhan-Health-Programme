@@ -21,9 +21,20 @@
             </div>
             <div class="form-group col-md-4">
                 <div class="form-group col-md">
-                    <label for="birthWeight">Weight (kg):</label>
+                    <label for="birthWeight">Birth Weight (kg):</label>
                     <input type="text" class="form-control" placeholder="Enter weight" formControlName="birthWeight" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.birthWeight.invalid && f.birthWeight.touched,
+                      'is-valid':
+                        f.birthWeight.valid &&
+                        (f.birthWeight.dirty || f.birthWeight.touched)
+                    }"/>
+                    <div *ngIf="f.birthWeight.errors" class="invalid-feedback">
+                      <div *ngIf="f.birthWeight.errors.notInBirthWeightRange">
+                        Birth Weight should be 0 to 9 kg
+                      </div>
+                    </div>
                   </div>
             </div>
         </div>
@@ -76,21 +87,54 @@
                 <div class="form-group col-md">
                     <label for="height">Height (cm):</label>
                     <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.height.invalid && f.height.touched,
+                      'is-valid':
+                        f.height.valid &&
+                        (f.height.dirty || f.height.touched)
+                    }"/>
+                    <div *ngIf="f.height.errors" class="invalid-feedback">
+                      <div *ngIf="f.height.errors.notInHeightRange">
+                        Height should be 10 to 180 cm
+                      </div>
+                    </div>
                   </div>
             </div>
             <div class="form-group col-md">
                 <div class="form-group col-md">
                     <label for="weight">Weight (kg):</label>
                     <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.weight.invalid && f.weight.touched,
+                      'is-valid':
+                        f.weight.valid &&
+                        (f.weight.dirty || f.weight.touched)
+                    }"/>
+                    <div *ngIf="f.weight.errors" class="invalid-feedback">
+                      <div *ngIf="f.weight.errors.notInWeightRange">
+                        Weight should be 0 to 25 kg
+                      </div>
+                    </div>
                   </div>
             </div>
             <div class="form-group col-md">
                 <div class="form-group col-md">
                     <label for="muac">MUAC (cm):</label>
                     <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    (keypress)="validationService.onlyIntegerAndDot($event)"
+                    [ngClass]="{
+                      'is-invalid': f.muac.invalid && f.muac.touched,
+                      'is-valid':
+                        f.muac.valid &&
+                        (f.muac.dirty || f.muac.touched)
+                    }"/>
+                    <div *ngIf="f.muac.errors" class="invalid-feedback">
+                      <div *ngIf="f.muac.errors.notInMuacRange">
+                        MUAC should be 1 to 30 cm
+                      </div>
+                    </div>
                   </div>
             </div>
           </div>
@@ -128,26 +172,59 @@
                       </label>
                 </div>
                 <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="height">Height (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="weight">Weight (kg):</label>
-                        <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="muac">MUAC (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
                       </div>
-                </div>
+                    </div>
+              </div>
               </div>
           </mat-expansion-panel>
 
@@ -171,26 +248,59 @@
                       </label>
                 </div>
                 <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="height">Height (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="weight">Weight (kg):</label>
-                        <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="muac">MUAC (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
                       </div>
-                </div>
+                    </div>
+              </div>
               </div>
           </mat-expansion-panel>
 
@@ -226,26 +336,59 @@
                       </label>
                 </div>
                 <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="height">Height (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                  <div class="form-group col-md">
+                      <label for="height">Height (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.height.invalid && f.height.touched,
+                        'is-valid':
+                          f.height.valid &&
+                          (f.height.dirty || f.height.touched)
+                      }"/>
+                      <div *ngIf="f.height.errors" class="invalid-feedback">
+                        <div *ngIf="f.height.errors.notInHeightRange">
+                          Height should be 10 to 180 cm
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="weight">Weight (kg):</label>
-                        <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="weight">Weight (kg):</label>
+                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.weight.invalid && f.weight.touched,
+                        'is-valid':
+                          f.weight.valid &&
+                          (f.weight.dirty || f.weight.touched)
+                      }"/>
+                      <div *ngIf="f.weight.errors" class="invalid-feedback">
+                        <div *ngIf="f.weight.errors.notInWeightRange">
+                          Weight should be 0 to 25 kg
+                        </div>
                       </div>
-                </div>
-                <div class="form-group col-md">
-                    <div class="form-group col-md">
-                        <label for="muac">MUAC (cm):</label>
-                        <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
-                        (keypress)="validationService.onlyIntegerAndDot($event)"/>
+                    </div>
+              </div>
+              <div class="form-group col-md">
+                  <div class="form-group col-md">
+                      <label for="muac">MUAC (cm):</label>
+                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac" 
+                      (keypress)="validationService.onlyIntegerAndDot($event)"
+                      [ngClass]="{
+                        'is-invalid': f.muac.invalid && f.muac.touched,
+                        'is-valid':
+                          f.muac.valid &&
+                          (f.muac.dirty || f.muac.touched)
+                      }"/>
+                      <div *ngIf="f.muac.errors" class="invalid-feedback">
+                        <div *ngIf="f.muac.errors.notInMuacRange">
+                          MUAC should be 1 to 30 cm
+                        </div>
                       </div>
-                </div>
+                    </div>
+              </div>
               </div>
           </mat-expansion-panel>
 
