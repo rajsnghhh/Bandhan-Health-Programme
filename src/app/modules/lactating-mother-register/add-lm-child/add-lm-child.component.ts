@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -26,6 +26,8 @@ export class AddLmChildComponent implements OnInit {
   muacRegisterId18month: any;
   muacRegisterId24month: any;
   editMode: boolean;
+  viewMode: boolean;
+  today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -40,6 +42,11 @@ export class AddLmChildComponent implements OnInit {
     this.lmMuacList();
     this.createForm();
     this.disableForm();
+    if (this.data.viewMode == true) {
+      this.viewMode = this.data.viewMode;
+      this.lmMuacList();
+      this.childBirthForm.disable();
+    }
   }
 
   lmMuacList() {
@@ -161,6 +168,11 @@ export class AddLmChildComponent implements OnInit {
 
   checkChildDeath(value) {
     this.childDeath = value;
+    if (this.childBirthForm.get('checkChildDeath').value == 'Y') {
+      this.childBirthForm.get('comment').setValidators(Validators.required);
+    } else {
+      this.childBirthForm.get('comment').clearAsyncValidators();
+    }
   }
 
   muacRange(controls: AbstractControl): { [key: string]: any } | null {

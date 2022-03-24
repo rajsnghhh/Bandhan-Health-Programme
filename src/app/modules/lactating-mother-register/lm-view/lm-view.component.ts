@@ -186,6 +186,34 @@ export class LmViewComponent implements OnInit {
     )
   }
 
+  ViewLmChild(index) {
+    const dialogRef = this.dialog.open(AddLmChildComponent, {
+      width: '1000px',
+      height: '550px',
+      data: {
+        viewMode: true,
+        muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
+        childId: this.lactatingmotherregister[index].childDetailId,
+        placeOfDelivery: this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery,
+        birthWeight: this.lactatingmotherregister[index].childBasicStatusDto.birthWeight,
+        firstVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate,
+        secondVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate,
+        ebfUpto6Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto6Complete,
+        primaryImmunizationUpto12Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto12Completed,
+        ebfUpto12Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto12Complete,
+        ebfUpto18Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto18Complete,
+        primaryImmunizationUpto24Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto24Completed,
+        ebfUpto24Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto24Complete,
+        childAge: this.lactatingmotherregister[index].childAge,
+        muac: this.lactatingmotherregister[index].muac,
+        height: this.lactatingmotherregister[index].height,
+        weight: this.lactatingmotherregister[index].weight,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
   openAddEditLmChild(index) {
     console.log(this.lactatingmotherregister[index]);
     let Dto = {
@@ -197,7 +225,7 @@ export class LmViewComponent implements OnInit {
         this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
           width: '1000px',
-          height: '450px',
+          height: '550px',
           data: {
             editMode: false,
             muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
@@ -212,7 +240,7 @@ export class LmViewComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
           width: '1000px',
-          height: '450px',
+          height: '550px',
           data: {
             editMode: true,
             muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
