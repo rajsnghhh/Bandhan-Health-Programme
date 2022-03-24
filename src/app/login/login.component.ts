@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
 
   showSuccess(message) {
     this.toaster.success(message, 'Welcome', {
-      timeOut: 3000,
+      timeOut: 1000,
     });
   }
 }

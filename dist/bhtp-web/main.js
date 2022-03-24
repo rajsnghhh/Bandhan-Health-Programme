@@ -535,7 +535,7 @@ function AppComponent_mat_toolbar_2_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"]("Welcome ", ctx_r1.user.responseObject.userdetailDTO.userFirstName, " ", ctx_r1.user.responseObject.userdetailDTO.userLastName, " (", ctx_r1.user.responseObject.RoledetailDTO.roleShortName, ")");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"](" Welcome ", ctx_r1.user.responseObject.userdetailDTO.userFirstName, " ", ctx_r1.user.responseObject.userdetailDTO.userLastName, " (", ctx_r1.user.responseObject.RoledetailDTO.roleShortName, ")");
 } }
 class AppComponent {
     constructor(validationService, accountService, confirmationDialogService) {
@@ -557,7 +557,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_1__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_login_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_modules_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_3__["ConfirmationDialogService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 3, consts: [[4, "ngIf"], [1, "dashboard_part", 3, "ngClass"], ["style", "background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;", 4, "ngIf"], [1, "main_content_inner"], [3, "valueChange"], [2, "background-color", "#ffff", "margin-left", "-300px", "margin-bottom", "40px", "width", "130%", "padding-left", "28%"], [2, "color", "#499", "font-size", "30px", "margin-left", "16px", "padding-right", "34%"], [2, "font-size", "75%"], [1, "btn", "btn-danger", 2, "margin-left", "1%", 3, "click"], [1, "fa", "fa-power-off"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 3, consts: [[4, "ngIf"], [1, "dashboard_part", 3, "ngClass"], ["style", "background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;", 4, "ngIf"], [1, "main_content_inner"], [3, "valueChange"], [2, "background-color", "#ffff", "margin-left", "-300px", "margin-bottom", "40px", "width", "130%", "padding-left", "28%"], [2, "color", "#499", "font-size", "30px", "margin-left", "16px", "padding-right", "34%"], [2, "font-size", "75%", "margin-left", "5%"], [1, "btn", "btn-danger", 2, "margin-left", "3%", 3, "click"], [1, "fa", "fa-power-off"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, AppComponent_nav_0_Template, 2, 0, "nav", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "section", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent_mat_toolbar_2_Template, 9, 3, "mat-toolbar", 2);

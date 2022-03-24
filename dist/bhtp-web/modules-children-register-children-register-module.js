@@ -606,9 +606,11 @@ class ChildrenRegisterCreateComponent {
             dataAccessDTO: dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-            this.villagesOfBranch = res.responseObject;
-        });
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+                this.villagesOfBranch = res.responseObject;
+            });
+        }
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
     }
@@ -632,10 +634,17 @@ class ChildrenRegisterCreateComponent {
                 this.branchList = null;
             });
         }, 500);
-        this.locationForm.get('branch').reset();
-        this.locationForm.get('block').reset();
-        this.locationForm.get('gp').reset();
-        this.locationForm.get('gram').reset();
+        this.locationForm.controls.branch.setValue('');
+        this.locationForm.controls.block.setValue('');
+        this.locationForm.controls.gp.setValue('');
+        this.locationForm.controls.gram.setValue('');
+        if (this.locationForm.value.region == '') {
+            this.showError('No Data Found');
+            this.existingFamilyList = [];
+            this.villageDtoList = [];
+            this.villagesOfBranch = [];
+            this.gpDtoList = [];
+        }
     }
     changeBranch(branch) {
         var _a, _b;
@@ -655,9 +664,16 @@ class ChildrenRegisterCreateComponent {
                 this.villagesOfBranch = res.responseObject;
             });
         }, 500);
-        this.locationForm.get('block').reset();
-        this.locationForm.get('gp').reset();
-        this.locationForm.get('gram').reset();
+        this.locationForm.controls.block.setValue('');
+        this.locationForm.controls.gp.setValue('');
+        this.locationForm.controls.gram.setValue('');
+        if (this.locationForm.value.branch == '') {
+            this.showError('No Data Found');
+            this.existingFamilyList = [];
+            this.villageDtoList = [];
+            this.villagesOfBranch = [];
+            this.gpDtoList = [];
+        }
     }
     changeBlock(blockname) {
         var _a;
@@ -668,6 +684,8 @@ class ChildrenRegisterCreateComponent {
         if (this.locationForm.value.block == '') {
             this.showError('No Data Found');
             this.existingFamilyList = [];
+            this.villageDtoList = [];
+            this.gpDtoList = [];
         }
     }
     changeGp(gpName) {
@@ -678,6 +696,7 @@ class ChildrenRegisterCreateComponent {
         if (this.locationForm.value.gp == '') {
             this.showError('No Data Found');
             this.existingFamilyList = [];
+            this.villageDtoList = [];
         }
     }
     changeVillage(villagename) {
@@ -789,7 +808,7 @@ class ChildrenRegisterCreateComponent {
             if (ageCheck) {
                 const convertAge = new Date(ageCheck);
                 const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-                this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+                this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
             }
             console.log(this.showAge);
         });
@@ -824,15 +843,14 @@ class ChildrenRegisterCreateComponent {
             this.showError('This family does not have any child below 18 years');
             return;
         }
-        if (this.existingFamilyDetails.haveChild == 'Y' && this.existingFamilyDetails.childrenBelow18 == 'Y'
-            && this.existingFamilyDetails.childrenBelow5 == 'N') {
-            if (this.showAge < 5) {
+        if (this.existingFamilyDetails.childrenBelow18 == 'Y' && this.existingFamilyDetails.childrenBelow5 == 'N') {
+            if (this.showAge <= 5) {
                 this.showError('This family does have any child below 5 years');
                 return;
             }
         }
         if (this.existingFamilyDetails.childrenBelow5 == 'Y' && this.existingFamilyDetails.lactetingMother == 'NA') {
-            if (this.showAge < 2) {
+            if (this.showAge <= 2) {
                 this.showError('This family does have any child below 2 years');
                 return;
             }
@@ -850,32 +868,35 @@ class ChildrenRegisterCreateComponent {
         });
     }
     saveEditChild() {
-        console.log(this.childDetails);
-        console.log(this.existingFamilyDetails);
-        console.log(this.setChild);
+        // console.log(this.childDetails);
+        // console.log(this.existingFamilyDetails);
+        // console.log(this.setChild);
         this.childDetails.childInfo[0].familyDetailId = this.setChild.familyDetailId;
         this.childDetails.childInfo[0].childDetailId = this.setChild.childDetailId;
-        console.log(this.childDetails);
+        // console.log(this.childDetails);
         let firstCopyOFEFD = JSON.stringify(this.existingFamilyDetails);
-        this.childDetails.childInfo.forEach((item) => {
+        this.childDetails.childInfo.forEach((item, index) => {
             let ageCheck = item.dob;
             if (ageCheck) {
+                // today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10);
                 const convertAge = new Date(ageCheck);
                 const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-                this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+                this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
             }
+            console.log(this.showAge);
             item.age = this.showAge;
             this.existingChildList[this.childIndexId] = item;
-            console.log(this.existingChildList, 'newChild');
+            // console.log(this.existingChildList, 'newChild');
         });
         this.existingChildList.filter((i) => {
             let ageCheck = i.dob;
             if (ageCheck) {
                 const convertAge = new Date(ageCheck);
                 const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-                this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+                this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
             }
             i.age = this.showAge;
+            // console.log(this.showAge, 'agemaster');
         });
         if ((this.existingFamilyDetails.lactetingMother == 'Y' || this.existingFamilyDetails.lactetingMother == 'N')) {
             if (this.existingChildList.filter((v) => v.age <= 2).length < 1) {
@@ -888,13 +909,13 @@ class ChildrenRegisterCreateComponent {
                 this.showError('Child list must contain atleast one child below 5 years & more than 2 years');
                 return;
             }
-            if (this.existingChildList.filter((v) => v.age < 2).length > 0) {
+            if (this.existingChildList.filter((v) => v.age <= 2).length > 0) {
                 this.showError('Child list should not contain any child below 2 years');
                 return;
             }
         }
         if ((this.existingFamilyDetails.childrenBelow18 == 'Y' && this.existingFamilyDetails.childrenBelow5 == 'N')) {
-            if (this.existingChildList.filter((v) => v.age > 5 && v.age <= 18).length < 1) {
+            if (this.existingChildList.filter((v) => v.age <= 18 && v.age > 5).length < 1) {
                 this.showError('Child list must contain atleast one child below 18 years & more than 5 years');
                 return;
             }
@@ -919,13 +940,13 @@ class ChildrenRegisterCreateComponent {
             dataAccessDTO: this.httpService.dataAccessDTO,
         };
         if (this.existingFamilyDetails.childrenBelow5 == 'N') {
-            if (this.showAge < 5) {
+            if (this.showAge <= 5) {
                 this.showError('This family does have any child below 5 years');
                 return;
             }
         }
         if (this.existingFamilyDetails.lactetingMother == 'NA') {
-            if (this.showAge < 2) {
+            if (this.showAge <= 2) {
                 this.showError('This family does have any child below 2 years');
                 return;
             }
@@ -936,19 +957,18 @@ class ChildrenRegisterCreateComponent {
                 copyOfexistingFamilyDetails.childDetailDTOList[i] = this.childDetails.childInfo[0];
             }
         }
-        console.log(copyOfexistingFamilyDetails);
-        console.log(this.existingFamilyDetails);
-        console.log("**********", firstCopyOFEFD);
+        // console.log(copyOfexistingFamilyDetails);
+        // console.log(this.existingFamilyDetails); console.log("**********", firstCopyOFEFD);
         let femaleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "F");
         let maleList = copyOfexistingFamilyDetails.childDetailDTOList.filter(x => x.sex == "M");
         let femaleLength = femaleList.length;
         let maleLength = maleList.length;
-        console.log(femaleLength, maleLength);
+        // console.log(femaleLength, maleLength);
         if (this.existingFamilyDetails.totaFamilyMemberFemales == femaleLength || this.existingFamilyDetails.totaFamilyMemberFemales < femaleLength) {
             this.showError('Total Female child should not be more than or equal to Total Family Member Female');
             this.existingFamilyDetails = JSON.parse(firstCopyOFEFD);
             this.existingChildList = this.existingFamilyDetails.childDetailDTOList;
-            console.log(this.existingFamilyDetails);
+            // console.log(this.existingFamilyDetails);
             return;
         }
         if (this.existingFamilyDetails.totaFamilyMemberMales < maleLength) {
@@ -1005,6 +1025,7 @@ class ChildrenRegisterCreateComponent {
         this.childDetails.childInfo.splice(i, 1);
     }
     childModalDismiss() {
+        console.log('childModalDismiss');
         this.modalReference.close();
         this.childDetails.childInfo = [{
                 age: 'string',
@@ -1040,25 +1061,25 @@ class ChildrenRegisterCreateComponent {
             if (ageCheck) {
                 const convertAge = new Date(ageCheck);
                 const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-                this.showAge = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+                this.showAge = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365.25);
             }
-            if (this.showAge >= 0 && this.showAge < 2) {
+            if (this.showAge > 0 && this.showAge <= 2) {
                 below2 += 1;
             } // checking for 0-2 years
-            if (this.showAge >= 2 && this.showAge < 5) {
+            if (this.showAge > 2 && this.showAge <= 5) {
                 below5 += 1;
             } // checking for 2-5 years
-            if (this.showAge >= 5 && this.showAge < 18) {
+            if (this.showAge > 5 && this.showAge <= 18) {
                 below18 += 1;
-            } // checking for 6-18 years
+            } // checking for 5-18 years
             if (x == i) {
-                if (this.showAge >= 2 && this.showAge < 5) {
-                    forDelete = 5;
-                }
-                else if (this.showAge >= 0 && this.showAge < 2) {
+                if (this.showAge > 0 && this.showAge <= 2) {
                     forDelete = 2;
                 }
-                else if (this.showAge >= 5 && this.showAge < 18) {
+                else if (this.showAge > 2 && this.showAge <= 5) {
+                    forDelete = 5;
+                }
+                else if (this.showAge > 5 && this.showAge <= 18) {
                     forDelete = 18;
                 }
                 else {
@@ -1118,6 +1139,7 @@ class ChildrenRegisterCreateComponent {
         }
     }
     editChild(items, i, EditChild) {
+        this.childModalDismiss();
         this.openModall(EditChild);
         this.setData(items);
         this.childIndexId = i;

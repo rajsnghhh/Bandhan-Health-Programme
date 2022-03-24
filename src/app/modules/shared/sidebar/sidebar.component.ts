@@ -117,6 +117,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if (routeId == 97) {
       this.router.navigate(['/muac-register/create']);
     }
+
+    if (routeId == 113) {
+      this.router.navigate(['/pem-register/create']);
+    }
   }
 
 
