@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,8 +36,8 @@ export class LmViewComponent implements OnInit {
   loader: boolean = false;
 
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService
-    , private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe) { }
+  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -179,84 +180,64 @@ export class LmViewComponent implements OnInit {
     this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
       this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
       this.loader = true;
+    }, error => {
+      this.loader = true;
+    }
+    )
+  }
+
+  openAddEditLmChild(index) {
+    console.log(this.lactatingmotherregister[index]);
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      childId: this.lactatingmotherregister[index].childDetailId,
+    }
+    this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
+      if (res.responseObject.length == 0 && (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery ==
+        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
+        const dialogRef = this.dialog.open(AddLmChildComponent, {
+          width: '1000px',
+          height: '450px',
+          data: {
+            editMode: false,
+            muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
+            childId: this.lactatingmotherregister[index].childDetailId,
+            childAge: this.lactatingmotherregister[index].childAge
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.getLactatingMotherList(this.villageMasterId);
+        });
+      } else {
+        const dialogRef = this.dialog.open(AddLmChildComponent, {
+          width: '1000px',
+          height: '450px',
+          data: {
+            editMode: true,
+            muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
+            childId: this.lactatingmotherregister[index].childDetailId,
+            placeOfDelivery: this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery,
+            birthWeight: this.lactatingmotherregister[index].childBasicStatusDto.birthWeight,
+            firstVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate,
+            secondVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate,
+            ebfUpto6Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto6Complete,
+            primaryImmunizationUpto12Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto12Completed,
+            ebfUpto12Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto12Complete,
+            ebfUpto18Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto18Complete,
+            primaryImmunizationUpto24Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto24Completed,
+            ebfUpto24Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto24Complete,
+            childAge: this.lactatingmotherregister[index].childAge,
+            muac: this.lactatingmotherregister[index].muac,
+            height: this.lactatingmotherregister[index].height,
+            weight: this.lactatingmotherregister[index].weight,
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.getLactatingMotherList(this.villageMasterId);
+        });
+      }
     })
   }
 
-  openAddLmChild(index): void {
-    //console.log(this.getAge(this.lactatingmotherregister[index].dob.replace(/-/g, "/")));
-    // console.log(this.getAge(this.lactatingmotherregister[index].childAge));
-
-    const dialogRef = this.dialog.open(AddLmChildComponent, {
-      width: '1000px',
-      height: '450px',
-      data: {
-        editMode: false,
-        muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
-        childId: this.lactatingmotherregister[index].childDetailId,
-        childAge: this.lactatingmotherregister[index].childAge
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getLactatingMotherList(this.villageMasterId);
-    });
-  }
-
-  openEditLmChild(index) {
-    console.log(this.lactatingmotherregister[index]);
-
-    const dialogRef = this.dialog.open(AddLmChildComponent, {
-      width: '1000px',
-      height: '450px',
-      data: {
-        editMode: true,
-        muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
-        childId: this.lactatingmotherregister[index].childDetailId,
-        placeOfDelivery: this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery,
-        birthWeight: this.lactatingmotherregister[index].childBasicStatusDto.birthWeight,
-        firstVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate,
-        secondVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate,
-        ebfUpto6Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto6Complete,
-        primaryImmunizationUpto12Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto12Completed,
-        ebfUpto12Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto12Complete,
-        ebfUpto18Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto18Complete,
-        primaryImmunizationUpto24Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto24Completed,
-        ebfUpto24Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto24Complete,
-        childAge: this.lactatingmotherregister[index].childAge,
-        muac: this.lactatingmotherregister[index].muac,
-        height: this.lactatingmotherregister[index].height,
-        weight: this.lactatingmotherregister[index].weight,
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.getLactatingMotherList(this.villageMasterId);
-    });
-  }
-
-  getAge(dateString) {
-    // const oneDay = 24 * 60 * 60 * 1000;
-    // let daysInMonth = 30.436875;
-    // let today = new Date();
-    // let birthDate = new Date(dateString);
-    // let year = today.getFullYear() - birthDate.getFullYear();
-    // let month = today.getMonth() - birthDate.getMonth();
-    // const start = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-    // const end = Date.UTC(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-    // let a = start - end;
-    // let days = a / oneDay
-    // return days;
-
-    // let y = dateString.indexOf("year");
-    // let year = parseInt(dateString.slice(0, y - 1));
-
-    // let m = dateString.indexOf("r");
-    // let m1 = dateString.indexOf("month");
-    // let month = parseInt(dateString.slice(m + 2, m1 - 1));
-
-    // let d = dateString.indexOf("h");
-    // let d1 = dateString.indexOf("day");
-    // let days = parseInt(dateString.slice(d + 2, d1 - 1));
-
-    // console.log(year, month, days)
-  }
 }
