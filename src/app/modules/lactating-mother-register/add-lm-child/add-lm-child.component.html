@@ -52,13 +52,15 @@
         <div class="form-group col-md-4">
             <div class="form-group col-md">
                 <label for="firstVisitDate">First Visit Date:</label>
-                <input type="date" class="form-control" formControlName="firstVisitDate" [max]="today" />
+                <input type="date" class="form-control" formControlName="firstVisitDate" [max]="today" [min]="childDob" 
+                (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy"/>
               </div>
          </div>
          <div class="form-group col-md-4">
             <div class="form-group col-md">
                 <label for="secondVisitDate">Second visit Date:</label>
-                <input type="date" class="form-control" formControlName="secondVisitDate" [max]="today"/>
+                <input type="date" class="form-control" formControlName="secondVisitDate" [max]="today" [min]="firstVisit"
+                placeholder="dd-mm-yyyy"/>
               </div>
          </div>
         </div>

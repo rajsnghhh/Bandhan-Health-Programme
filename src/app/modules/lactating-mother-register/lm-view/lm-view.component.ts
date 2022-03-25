@@ -192,22 +192,7 @@ export class LmViewComponent implements OnInit {
       height: '550px',
       data: {
         viewMode: true,
-        muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
-        childId: this.lactatingmotherregister[index].childDetailId,
-        placeOfDelivery: this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery,
-        birthWeight: this.lactatingmotherregister[index].childBasicStatusDto.birthWeight,
-        firstVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate,
-        secondVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate,
-        ebfUpto6Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto6Complete,
-        primaryImmunizationUpto12Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto12Completed,
-        ebfUpto12Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto12Complete,
-        ebfUpto18Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto18Complete,
-        primaryImmunizationUpto24Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto24Completed,
-        ebfUpto24Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto24Complete,
-        childAge: this.lactatingmotherregister[index].childAge,
-        muac: this.lactatingmotherregister[index].muac,
-        height: this.lactatingmotherregister[index].height,
-        weight: this.lactatingmotherregister[index].weight,
+        childWiselactatingmotherList: this.lactatingmotherregister[index]
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -228,9 +213,7 @@ export class LmViewComponent implements OnInit {
           height: '550px',
           data: {
             editMode: false,
-            muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
-            childId: this.lactatingmotherregister[index].childDetailId,
-            childAge: this.lactatingmotherregister[index].childAge
+            childWiselactatingmotherList: this.lactatingmotherregister[index]
           }
         });
 
@@ -243,22 +226,7 @@ export class LmViewComponent implements OnInit {
           height: '550px',
           data: {
             editMode: true,
-            muacRegisterId: this.lactatingmotherregister[index].muacRegisterId,
-            childId: this.lactatingmotherregister[index].childDetailId,
-            placeOfDelivery: this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery,
-            birthWeight: this.lactatingmotherregister[index].childBasicStatusDto.birthWeight,
-            firstVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate,
-            secondVisitDate: this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate,
-            ebfUpto6Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto6Complete,
-            primaryImmunizationUpto12Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto12Completed,
-            ebfUpto12Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto12Complete,
-            ebfUpto18Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto18Complete,
-            primaryImmunizationUpto24Completed: this.lactatingmotherregister[index].childBasicStatusDto.primaryImmunizationUpto24Completed,
-            ebfUpto24Complete: this.lactatingmotherregister[index].childBasicStatusDto.ebfUpto24Complete,
-            childAge: this.lactatingmotherregister[index].childAge,
-            muac: this.lactatingmotherregister[index].muac,
-            height: this.lactatingmotherregister[index].height,
-            weight: this.lactatingmotherregister[index].weight,
+            childWiselactatingmotherList: this.lactatingmotherregister[index]
           }
         });
         dialogRef.afterClosed().subscribe(result => {

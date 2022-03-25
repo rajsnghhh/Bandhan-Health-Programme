@@ -28,6 +28,8 @@ export class AddLmChildComponent implements OnInit {
   editMode: boolean;
   viewMode: boolean;
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+  childDob: string;
+  firstVisit: string;
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -36,7 +38,8 @@ export class AddLmChildComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data?.childWiselactatingmotherList)
+    this.childDob = this.data?.childWiselactatingmotherList?.dob;
     this.editMode = this.data.editMode;
     this.panelOpenState = false;
     this.lmMuacList();
@@ -52,7 +55,7 @@ export class AddLmChildComponent implements OnInit {
   lmMuacList() {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      childId: this.data.childId.toString()
+      childId: this.data?.childWiselactatingmotherList?.childDetailId
     }
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
       this.childMuaaList = res?.responseObject;
@@ -64,14 +67,14 @@ export class AddLmChildComponent implements OnInit {
         this.childBirthForm.reset();
       } else {
         this.childBirthForm.patchValue({
-          place: this.data.placeOfDelivery,
-          birthWeight: this.data.birthWeight,
-          primaryImmunizationUpto12Completed: this.data.primaryImmunizationUpto12Completed,
-          primaryImmunizationUpto24Completed: this.data.primaryImmunizationUpto24Completed,
-          ebfUpto6Complete: this.data.ebfUpto6Complete,
-          ebfUpto12Complete: this.data.ebfUpto12Complete,
-          ebfUpto18Complete: this.data.ebfUpto18Complete,
-          ebfUpto24Complete: this.data.ebfUpto24Complete,
+          place: this.data?.childWiselactatingmotherList?.childBasicStatusDto.placeOfDelivery,
+          birthWeight: this.data?.childWiselactatingmotherList?.childBasicStatusDto.birthWeight,
+          primaryImmunizationUpto12Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto12Completed,
+          primaryImmunizationUpto24Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto24Completed,
+          ebfUpto6Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto6Complete,
+          ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
+          ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
+          ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
           height6month: this.childMuaaList.find(month => month.muacForMonth == "6")?.height,
           height12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.height,
           height18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.height,
@@ -84,22 +87,25 @@ export class AddLmChildComponent implements OnInit {
           muac12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.muac,
           muac18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.muac,
           muac24month: this.childMuaaList.find(month => month.muacForMonth == "24")?.muac,
-          firstVisitDate: this.data.firstVisitDate,
-          secondVisitDate: this.data.secondVisitDate,
+          firstVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate,
+          secondVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate,
         })
       }
     })
   }
+  restrictSecondDate(date) {
+    this.firstVisit = date;
+  }
 
   disableForm() {
-    let dateString = this.data.childAge;
+    let dateString = this.data?.childWiselactatingmotherList?.childAge;
 
-    let y = dateString.indexOf("year");
-    let year = parseInt(dateString.slice(0, y - 1));
+    let y = dateString?.indexOf("year");
+    let year = parseInt(dateString?.slice(0, y - 1));
 
-    let m = dateString.indexOf("r");
-    let m1 = dateString.indexOf("month");
-    let month = parseInt(dateString.slice(m + 2, m1 - 1));
+    let m = dateString?.indexOf("r");
+    let m1 = dateString?.indexOf("month");
+    let month = parseInt(dateString?.slice(m + 2, m1 - 1));
 
     if (year <= 0 && month <= 6) {
       this.after6m = true;
@@ -209,7 +215,7 @@ export class AddLmChildComponent implements OnInit {
         let Dto = {
           dataAccessDTO: this.httpService.dataAccessDTO,
           childBasicStatusDto: {
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             placeOfDelivery: this.childBirthForm.value.place,
             birthWeight: this.childBirthForm.value.birthWeight,
             firstVisitDate: this.childBirthForm.value.firstVisitDate,
@@ -224,7 +230,7 @@ export class AddLmChildComponent implements OnInit {
 
           muacDataList: [{
             muacRegisterId: 0,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
             weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
             muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
@@ -233,7 +239,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: 0,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
             weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
             muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
@@ -242,7 +248,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: 0,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
             weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
             muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
@@ -251,7 +257,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: 0,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
             weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
             muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
@@ -261,7 +267,7 @@ export class AddLmChildComponent implements OnInit {
           ],
           deadChildRegisterDto: {
             deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment
+            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
           }
         }
         console.log(Dto, 'reqAdd')
@@ -277,7 +283,7 @@ export class AddLmChildComponent implements OnInit {
         let Dto = {
           dataAccessDTO: this.httpService.dataAccessDTO,
           childBasicStatusDto: {
-            childId: this.data.childId,
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             placeOfDelivery: this.childBirthForm.value.place,
             birthWeight: this.childBirthForm.value.birthWeight,
             firstVisitDate: this.childBirthForm.value.firstVisitDate,
@@ -292,7 +298,7 @@ export class AddLmChildComponent implements OnInit {
 
           muacDataList: [{
             muacRegisterId: this.muacRegisterId6month,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
             weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
             muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
@@ -301,7 +307,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: this.muacRegisterId12month,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
             weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
             muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
@@ -310,7 +316,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: this.muacRegisterId18month,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
             weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
             muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
@@ -319,7 +325,7 @@ export class AddLmChildComponent implements OnInit {
           },
           {
             muacRegisterId: this.muacRegisterId24month,
-            childId: this.data.childId.toString(),
+            childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
             weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
             muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
@@ -329,7 +335,7 @@ export class AddLmChildComponent implements OnInit {
           ],
           deadChildRegisterDto: {
             deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment
+            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
           }
         }
         console.log(Dto, 'reqEdit')
