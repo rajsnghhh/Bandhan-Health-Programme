@@ -52,6 +52,8 @@ export class AddLmChildComponent implements OnInit {
     }
   }
 
+  /* get the childWiselactatingmotherMUACList & 
+    set the value in form */
   lmMuacList() {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -93,10 +95,9 @@ export class AddLmChildComponent implements OnInit {
       }
     })
   }
-  restrictSecondDate(date) {
-    this.firstVisit = date;
-  }
 
+  /* Disable the form field 
+  depending on child age */
   disableForm() {
     let dateString = this.data?.childWiselactatingmotherList?.childAge;
 
@@ -172,6 +173,13 @@ export class AddLmChildComponent implements OnInit {
     return this.childBirthForm.controls;
   }
 
+  /* Restrict the second date depending on First visit date */
+  restrictSecondDate(date) {
+    this.firstVisit = date;
+  }
+
+  /* make child death comment required 
+  depending on checkChildDeath field value */
   checkChildDeath(value) {
     this.childDeath = value;
     if (this.childBirthForm.get('checkChildDeath').value == 'Y') {
@@ -180,28 +188,28 @@ export class AddLmChildComponent implements OnInit {
       this.childBirthForm.get('comment').clearAsyncValidators();
     }
   }
-
+  /* MUAC range between 1 to 30, validation */
   muacRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 1 && controls.value <= 30 || controls.value == null) {
       return null;
     }
     return { 'notInMuacRange': true };
   }
-
+  /* weigh range between 0 to 25, validation */
   weightRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
       return null;
     }
     return { 'notInWeightRange': true };
   }
-
+  /* Birth Weight range between 0 to 9, validation */
   birthWeightRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 0 && controls.value <= 9 || controls.value == null) {
       return null;
     }
     return { 'notInBirthWeightRange': true };
   }
-
+  /* Height range between 10 to 180, validation */
   heightRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
       return null;
@@ -209,6 +217,7 @@ export class AddLmChildComponent implements OnInit {
     return { 'notInHeightRange': true };
   }
 
+  /* Depending on condition form is Save or Edit */
   onSave() {
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
@@ -353,16 +362,19 @@ export class AddLmChildComponent implements OnInit {
     }
   }
 
+  /* Close the dialog pop-up */
   closeDialog() {
     this.dialogRef.close();
   }
 
+  /* Show success massage toaster */
   showSuccess(message) {
     this.toaster.success(message, 'Child MUAC Save', {
       timeOut: 3000,
     });
   }
 
+  /* Show Error massage toaster */
   showError(message) {
     this.toaster.error(message, 'Error', {
       timeOut: 3000,

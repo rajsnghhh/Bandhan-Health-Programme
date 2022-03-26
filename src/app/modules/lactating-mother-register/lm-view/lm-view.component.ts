@@ -34,6 +34,7 @@ export class LmViewComponent implements OnInit {
   searchFullscreen: boolean;
   lmrSearch: string | number;
   loader: boolean = false;
+  roleAccess: boolean;
 
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
@@ -66,8 +67,16 @@ export class LmViewComponent implements OnInit {
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
+      this.sidebarService.RoleDTOName == 'AC') {
+      this.roleAccess = true;
+    } else {
+      this.roleAccess = false;
+    }
   }
 
+  /* on change Region dropdown getting Branch list */
   changeRegion(region) {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
@@ -100,7 +109,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-
+  /* on change Branch dropdown getting villagesOfBranch list */
   changeBranch(branch) {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
@@ -127,7 +136,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-
+  /* on change Block dropdown getting GP list */
   changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
     this.selectedBlock = this.locationForm.get('block').value;
@@ -139,6 +148,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
+  /* on change GP dropdown getting Village list */
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
@@ -148,7 +158,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-
+  /* on change Village dropdown getting LactatingMother List */
   changeVillage(villagename) {
     this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.getLactatingMotherList(this.villageMasterId);
@@ -171,6 +181,7 @@ export class LmViewComponent implements OnInit {
     return this.locationForm.controls;
   }
 
+  /* get the all Lactating Mother List */
   getLactatingMotherList(villageMasterId = null) {
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -186,6 +197,7 @@ export class LmViewComponent implements OnInit {
     )
   }
 
+  /* only view the particular Lactating Mother info */
   ViewLmChild(index) {
     const dialogRef = this.dialog.open(AddLmChildComponent, {
       width: '1000px',
@@ -199,6 +211,8 @@ export class LmViewComponent implements OnInit {
     });
   }
 
+  /* First time it save the data,
+    After that it is editable */
   openAddEditLmChild(index) {
     console.log(this.lactatingmotherregister[index]);
     let Dto = {
