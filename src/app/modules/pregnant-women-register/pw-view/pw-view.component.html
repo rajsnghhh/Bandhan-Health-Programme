@@ -1,0 +1,124 @@
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h2 class="dialog-title">Pregnant Woman Register </h2>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
+    </div>
+</h1>
+<div mat-dialog-content>
+    <form class="form-signin" [formGroup]="pwRegisterForm">
+        <div class="row">
+            <div class="form-group col-md">
+                <label for="initialWeight">Initial Weight (kg):</label>
+                <input type="text" class="form-control" placeholder="Enter weight" formControlName="initialWeight" 
+                (keypress)="validationService.onlyIntegerAndDot($event)"/>
+            </div>
+            <div class="form-group col-md">
+                <label for="lastMenstrualDate">Last Menstrual Period (LMP):</label>
+                <input type="date" class="form-control" formControlName="lastMenstrualDate" placeholder="dd-mm-yyyy"/>
+            </div>
+            <div class="form-group col-md">
+                <label for="expectedDeliveryDate">Expected Date of Delivery (EDD):</label>
+                <input type="date" class="form-control" formControlName="expectedDeliveryDate" placeholder="dd-mm-yyyy"/>
+            </div>
+            <div class="form-group col-md">
+            <label>Antenatal Checkup Registration done (ANC):</label> <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" value="Y" formControlName="ancComplete"> &nbsp;
+                  <span>Yes</span>
+              </label> &nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="radio" value="N" formControlName="ancComplete"> &nbsp;
+                  <span>No</span>
+              </label>
+            </div>
+    </div>
+<br>
+    <div class="row">
+        <div class="form-group col-md">
+                <label for="anc1st">1st ANC Checkup:</label>
+                <input type="date" class="form-control" formControlName="anc1st" placeholder="dd-mm-yyyy"/>
+        </div>
+        <div class="form-group col-md">
+            <label for="anc2nd">2nd ANC checkup:</label>
+            <input type="date" class="form-control" formControlName="anc2nd" placeholder="dd-mm-yyyy"/>
+        </div>
+        <div class="form-group col-md">
+            <label for="anc3rd">3rd ANC checkup:</label>
+            <input type="date" class="form-control" formControlName="anc3rd" placeholder="dd-mm-yyyy"/>
+        </div>
+        <div class="form-group col-md">
+            <label for="anc4th">4th ANC checkup:</label>
+            <input type="date" class="form-control" formControlName="anc4th" placeholder="dd-mm-yyyy"/>
+        </div>
+    </div>
+<br>
+    <div class="row">
+        <label for="pregnancyComplication">Any pregnancy-related complication:</label>
+        <textarea class="form-control" rows="1" id="pregnancyComplication"></textarea>
+    </div>
+<br>
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="beforeDeliveryWeight">Weight Before Delivery (kg):</label>
+            <input type="text" class="form-control" placeholder="Enter weight" formControlName="beforeDeliveryWeight" 
+            (keypress)="validationService.onlyIntegerAndDot($event)"/>
+        </div>
+        <div class="form-group col-md">
+            <label>Delivery:</label> <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" value="Y" formControlName="delivery"> &nbsp;
+                  <span>Yes</span>
+              </label> &nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="radio" value="N" formControlName="delivery"> &nbsp;
+                  <span>No</span>
+              </label>
+        </div>
+    </div>
+<br>
+<div class="row">
+    <div class="form-group col-md">
+            <label for="miscarriage">Miscarriage:</label>
+            <input type="date" class="form-control" formControlName="miscarriage" placeholder="dd-mm-yyyy"/>
+    </div>
+    <div class="form-group col-md">
+        <label for="abortion">Abortion:</label>
+        <input type="date" class="form-control" formControlName="abortion" placeholder="dd-mm-yyyy"/>
+    </div>
+</div>
+  <br>  
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="actualDeliveryDate">Actual Date of Delivery:</label>
+            <input type="date" class="form-control" formControlName="actualDeliveryDate" placeholder="dd-mm-yyyy"/>
+        </div>
+        <div class="form-group col-md">
+            <label>Livebirth or Stillbirth:</label> <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" value="L" formControlName="liveStill"> &nbsp;
+                  <span>Live</span>
+              </label> &nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="radio" value="S" formControlName="liveStill"> &nbsp;
+                  <span>Still</span>
+              </label>
+        </div>
+        <div class="form-group col-md">
+            <label>Place of Delivery :</label> <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" value="Home" formControlName="place"> &nbsp;
+                  <span>Home</span>
+              </label> &nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="radio" value="Institution" formControlName="place"> &nbsp;
+                  <span>Institution</span>
+              </label>
+        </div>
+    </div>
+
+    </form>
+</div>
