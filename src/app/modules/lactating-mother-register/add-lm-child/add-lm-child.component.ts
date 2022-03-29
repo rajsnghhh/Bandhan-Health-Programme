@@ -367,14 +367,14 @@ export class AddLmChildComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  /* Show success massage toaster */
+  /* Show success message toaster */
   showSuccess(message) {
     this.toaster.success(message, 'Child MUAC Save', {
       timeOut: 3000,
     });
   }
 
-  /* Show Error massage toaster */
+  /* Show Error message toaster */
   showError(message) {
     this.toaster.error(message, 'Error', {
       timeOut: 3000,

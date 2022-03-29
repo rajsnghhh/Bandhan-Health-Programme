@@ -214,32 +214,8 @@ export class PemRegisterCreateComponent implements OnInit {
   createForm(pemDataSave: any) {
     var item = pemDataSave;
     this.latestMuac = this.pemDataSave?.latestMuacValue;
-    // this.placeOfDelivery = item?.childBasicStatusDto?.placeOfDelivery;
     this.firstVisitDate = item?.childBasicStatusDto?.firstVisitDate;
     this.secondVisitDate = item?.childBasicStatusDto?.secondVisitDate;
-
-
-    // const date = new Date(milliTime);
-    // var dateFormat = date.toLocaleDateString('en-US');
-    // let currentDate = new Date(dateFormat);
-
-    // function convertDate(date) {
-    //   var yyyy = date.getFullYear().toString();
-    //   var mm = (date.getMonth() + 1).toString();
-    //   var dd = date.getDate().toString();
-
-    //   var mmChars = mm.split('');
-    //   var ddChars = dd.split('');
-
-    //   return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
-    // }
-
-    // console.log(convertDate(currentDate));
-    // var firstDateFormat = convertDate(currentDate);
-
-    // console.log(firstDateFormat);
-
-
 
     this.pemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
@@ -280,7 +256,6 @@ export class PemRegisterCreateComponent implements OnInit {
     });
   }
 
-
   p(event) { }
 
   openModal(pemData, childId) {
@@ -309,7 +284,6 @@ export class PemRegisterCreateComponent implements OnInit {
   delivery(e) {
     this.institutionalDelivery = e.target.value;
     console.log(this.institutionalDelivery);
-
   }
 
   immunization12(e) {
@@ -403,7 +377,6 @@ export class PemRegisterCreateComponent implements OnInit {
       return;
     }
 
-
     let pemBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       muacDataDto: {
@@ -454,6 +427,7 @@ export class PemRegisterCreateComponent implements OnInit {
   }
 
   editPEMData(item, i, editPem, pemCounsellingDataMasterId) {
+    this.modalDismiss();
     this.modalContent = '';
     this.modalReference = this.modalService.open(editPem, {
       windowClass: 'pemData',
@@ -582,7 +556,6 @@ export class PemRegisterCreateComponent implements OnInit {
         }
       }
 
-
       console.log(pemBody);
 
       this.pemService.savePemRegister(pemBody).subscribe((res: any) => {
@@ -599,8 +572,6 @@ export class PemRegisterCreateComponent implements OnInit {
       })
     }
   }
-
-
 
   restrictZero(event: any) {
     if (event.target.value.length === 0 && event.key === '0') {

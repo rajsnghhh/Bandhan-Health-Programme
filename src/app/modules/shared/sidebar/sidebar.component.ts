@@ -130,6 +130,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/acr']);
     }
 
+    if (routeId == 129) {
+      this.router.navigate(['/pw-register']);
+    }
 
   }
 
