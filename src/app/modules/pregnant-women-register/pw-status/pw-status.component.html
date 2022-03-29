@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h2 class="dialog-title">Pregnant Woman Status</h2>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
+    </div>
+</h1>
+<div mat-dialog-content>
+    <h3>Pregnant Woman Name : chdhgas</h3>
+
+    <form class="form-signin" [formGroup]="pwStatusForm">
+
+        <div class="row">
+            <div class="form-group col-md">
+                <label>Change pregnant status :</label> <br>
+                <label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="Y" formControlName="pregnantStatus"> &nbsp;
+                    <span>Yes</span>
+                </label> &nbsp;&nbsp;&nbsp;
+                <label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="N" formControlName="pregnantStatus"> &nbsp;
+                    <span>No</span>
+                </label> &nbsp;&nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="NA" formControlName="pregnantStatus"> &nbsp;
+                    <span>NA</span>
+                </label>
+            </div>
+        </div>
+        <br>
+
+        <div class="addEditBtn">
+        <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
+        </div>
+    </form>
+</div>

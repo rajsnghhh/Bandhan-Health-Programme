@@ -1,8 +1,21 @@
-.QA_table td {
-  padding: 0px;
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: #499 !important;
 }
-.QA_table .table thead th {
-  padding: 17px 10px;
+::ng-deep .mat-tab-label .mat-tab-label-content {
+  font-size: medium;
+}
+
+::ng-deep .mat-tab-header .mat-tab-labels {
+  justify-content: center;
+}
+
+.QA_section .QA_table .table thead th {
+  padding: 17px 11px;
+}
+
+.QA_section .QA_table th,
+.QA_section .QA_table td {
+  padding: 16px 19px;
 }
 
 .search_inner button {
@@ -49,14 +62,8 @@
   margin-left: 140px;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-
-}
-
-
-.fa-eye:hover {
+.fa-list:hover {
   color: #70caf7 !important;
   cursor: pointer;
-  font-size: 1.8em;
+  font-size: 1.5em;
 }

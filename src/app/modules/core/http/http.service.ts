@@ -38,4 +38,7 @@ export class HttpService {
   getLactatingMotherRegister(obj): any {
     return this.http.post(`${this.baseURL}lactatingmotherregister/getVillageWiseChildDetails`, obj)
   }
+  getPregnantWomenList(obj): any {
+    return this.http.post(`${this.baseURL}pwr/getVillageWisePregnantWomanDetails`, obj)
+  }
 }

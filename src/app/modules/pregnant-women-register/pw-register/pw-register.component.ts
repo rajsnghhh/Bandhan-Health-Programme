@@ -1,20 +1,23 @@
-import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
-import { AddLmChildComponent } from '../add-lm-child/add-lm-child.component';
+import { PwStatusComponent } from '../pw-status/pw-status.component';
+import { PwViewComponent } from '../pw-view/pw-view.component';
+import { SinglePwListComponent } from '../single-pw-list/single-pw-list.component';
 
 @Component({
-  selector: 'app-lm-view',
-  templateUrl: './lm-view.component.html',
-  styleUrls: ['./lm-view.component.css'],
-  providers: [DatePipe]
+  selector: 'app-pw-register',
+  templateUrl: './pw-register.component.html',
+  styleUrls: ['./pw-register.component.css']
 })
-export class LmViewComponent implements OnInit {
+export class PwRegisterComponent implements OnInit {
+
+  allPregnantWomenList: Array<any> = [];
+  nonPregnantWomenList: Array<any> = [];
 
   locationForm: FormGroup;
   regionList: Array<any> = [];
@@ -28,21 +31,19 @@ export class LmViewComponent implements OnInit {
   selectedGp: String;
   branchId: any;
   regionBranchHide: boolean;
+  editMode: boolean;
   branchVillageMapId: any;
   villageMasterId: any;
-  lactatingmotherregister: Array<any> = [];
+  index: number = 0;
+  acrSearch: string;
   searchFullscreen: boolean;
-  lmrSearch: string | number;
-  loader: boolean = false;
-  roleAccess: boolean;
+  pwSearch: string | number;
 
-
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe) { }
+  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
+    private baselineService: BaselineSurveyService, public dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.createForm();
-    this.getLactatingMotherList();
 
     let dataAccessDTO = {
       userId: this.sidebarService.userId,
@@ -53,6 +54,7 @@ export class LmViewComponent implements OnInit {
       dataAccessDTO: dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
+
 
     setTimeout(() => {
       if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
@@ -67,16 +69,12 @@ export class LmViewComponent implements OnInit {
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
-      this.sidebarService.RoleDTOName == 'AC') {
-      this.roleAccess = true;
-    } else {
-      this.roleAccess = false;
-    }
   }
 
-  /* on change Region dropdown getting Branch list */
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    this.index = tabChangeEvent.index;
+  }
+
   changeRegion(region) {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
@@ -109,7 +107,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-  /* on change Branch dropdown getting villagesOfBranch list */
+
   changeBranch(branch) {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
@@ -136,7 +134,7 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-  /* on change Block dropdown getting GP list */
+
   changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
     this.selectedBlock = this.locationForm.get('block').value;
@@ -148,7 +146,6 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-  /* on change GP dropdown getting Village list */
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
@@ -158,10 +155,10 @@ export class LmViewComponent implements OnInit {
       this.villageDtoList = [];
     }
   }
-  /* on change Village dropdown getting LactatingMother List */
+
   changeVillage(villagename) {
     this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
-    this.getLactatingMotherList(this.villageMasterId);
+    this.getPregnantWomenList(this.villageMasterId);
     if (this.locationForm.value.gram == '') {
 
     }
@@ -181,73 +178,35 @@ export class LmViewComponent implements OnInit {
     return this.locationForm.controls;
   }
 
-  /* get the all Lactating Mother List */
-  getLactatingMotherList(villageMasterId = null) {
+  /* get the all Pregnant Women List */
+  getPregnantWomenList(villageMasterId = null) {
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
-    this.loader = false;
-    this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
-      this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
-      this.loader = true;
-    }, error => {
-      this.loader = true;
-    }
-    )
+    this.httpService.getPregnantWomenList(req).subscribe((res) => {
+      this.allPregnantWomenList = res.responseObject.pregnantWomanList;
+      this.nonPregnantWomenList = res.responseObject.nonPregnantWomanList;
+    })
   }
 
-  /* only view the particular Lactating Mother info */
-  ViewLmChild(index) {
-    const dialogRef = this.dialog.open(AddLmChildComponent, {
+  openPwList(i) {
+    const dialogRef = this.dialog.open(SinglePwListComponent, {
       width: '1000px',
       height: '550px',
-      data: {
-        viewMode: true,
-        childWiselactatingmotherList: this.lactatingmotherregister[index]
-      }
     });
+
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
-  /* First time it save the data,
-    After that it is editable */
-  openAddEditLmChild(index) {
-    console.log(this.lactatingmotherregister[index]);
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      childId: this.lactatingmotherregister[index].childDetailId,
-    }
-    this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
-      if (res.responseObject.length == 0 && (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery ==
-        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
-        const dialogRef = this.dialog.open(AddLmChildComponent, {
-          width: '1000px',
-          height: '550px',
-          data: {
-            editMode: false,
-            childWiselactatingmotherList: this.lactatingmotherregister[index]
-          }
-        });
+  openPwStatus(i) {
+    const dialogRef = this.dialog.open(PwStatusComponent, {
+      width: '500px',
+      height: '270px',
+    });
 
-        dialogRef.afterClosed().subscribe(result => {
-          this.getLactatingMotherList(this.villageMasterId);
-        });
-      } else {
-        const dialogRef = this.dialog.open(AddLmChildComponent, {
-          width: '1000px',
-          height: '550px',
-          data: {
-            editMode: true,
-            childWiselactatingmotherList: this.lactatingmotherregister[index]
-          }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          this.getLactatingMotherList(this.villageMasterId);
-        });
-      }
-    })
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
-
 }
