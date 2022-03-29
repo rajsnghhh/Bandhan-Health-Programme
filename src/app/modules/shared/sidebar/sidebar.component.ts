@@ -102,11 +102,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/Baseline-Survey/create']);
     }
 
-    if (routeId == 73) {
+    if (routeId == 73 || routeId == 75) {
       this.router.navigate(['/Baseline-Survey/view']);
     }
 
-    if (routeId == 81) {
+    if (routeId == 81 || routeId == 83) {
       this.router.navigate(['/children-register/create']);
     }
 
@@ -121,6 +121,16 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if (routeId == 113) {
       this.router.navigate(['/pem-register/create']);
     }
+
+    if (routeId == 121) {
+      this.router.navigate(['/lmr']);
+    }
+
+    if (routeId == 105) {
+      this.router.navigate(['/acr']);
+    }
+
+
   }
 
 

@@ -14,8 +14,12 @@ import { PemRegisterService } from '../pem-register.service';
   templateUrl: './pem-register-create.component.html',
   styleUrls: ['./pem-register-create.component.css']
 })
+
+
 export class PemRegisterCreateComponent implements OnInit {
   pemForm: FormGroup;
+  editPemForm: FormGroup;
+  locationForm: FormGroup;
   pemDetails: any;
   pemDataSave: any;
   childId: any;
@@ -32,6 +36,7 @@ export class PemRegisterCreateComponent implements OnInit {
   regionBranchHide: boolean;
   branchVillageMapId: any;
   villageMasterId: any;
+  placeOfDelivery: any;
   institutionalDelivery: string;
   immunizationDelivery12: string;
   immunizationDelivery24: string;
@@ -45,6 +50,11 @@ export class PemRegisterCreateComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   modalIndex: any;
+  latestMuac: number;
+  firstVisitDate: any;
+  secondVisitDate: any;
+  childDTO: any;
+  saveEditFormData: any;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -52,8 +62,9 @@ export class PemRegisterCreateComponent implements OnInit {
     public validationService: ValidationService, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
-
+    this.locForm();
     this.createForm(this.pemDataSave);
+
 
     let dataAccessDTO = {
       userId: this.sidebarService.userId,
@@ -106,12 +117,12 @@ export class PemRegisterCreateComponent implements OnInit {
         }
       );
     }, 500);
-    this.pemForm.controls.branch.setValue('');
-    this.pemForm.controls.block.setValue('');
-    this.pemForm.controls.gp.setValue('');
-    this.pemForm.controls.gram.setValue('');
+    this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
 
-    if (this.pemForm.value.region == '') {
+    if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.pemDetails = [];
       this.villageDtoList = [];
@@ -122,7 +133,7 @@ export class PemRegisterCreateComponent implements OnInit {
 
   changeBranch(branch) {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.pemForm.get('branch').value
+    this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
@@ -138,11 +149,11 @@ export class PemRegisterCreateComponent implements OnInit {
         console.log(this.villagesOfBranch, 'villagesOfBranch2');
       })
     }, 500);
-    this.pemForm.controls.block.setValue('');
-    this.pemForm.controls.gp.setValue('');
-    this.pemForm.controls.gram.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
 
-    if (this.pemForm.value.branch == '') {
+    if (this.locationForm.value.branch == '') {
       this.showError('No Data Found');
       this.pemDetails = [];
       this.villageDtoList = [];
@@ -152,10 +163,10 @@ export class PemRegisterCreateComponent implements OnInit {
   }
   changeBlock(blockname) {
     this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
-    this.selectedBlock = this.pemForm.get('block').value;
-    this.pemForm.controls.gp.setValue('');
-    this.pemForm.controls.gram.setValue('');
-    if (this.pemForm.value.block == '') {
+    this.selectedBlock = this.locationForm.get('block').value;
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.gram.setValue('');
+    if (this.locationForm.value.block == '') {
       this.showError('No Data Found');
       this.pemDetails = [];
       this.villageDtoList = [];
@@ -164,11 +175,11 @@ export class PemRegisterCreateComponent implements OnInit {
   }
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
-    this.selectedGp = this.pemForm.get('gp').value;
-    this.pemForm.controls.gram.setValue('');
+    this.selectedGp = this.locationForm.get('gp').value;
+    this.locationForm.controls.gram.setValue('');
     console.log(this.villageDtoList);
 
-    if (this.pemForm.value.gp == '') {
+    if (this.locationForm.value.gp == '') {
       this.showError('No Data Found');
       this.pemDetails = [];
       this.villageDtoList = [];
@@ -182,68 +193,79 @@ export class PemRegisterCreateComponent implements OnInit {
 
     this.viewPEMList();
 
-    if (this.pemForm.value.gram == '') {
+    if (this.locationForm.value.gram == '') {
       this.showError('No Data Found');
       this.pemDetails = [];
     }
 
   }
 
-  createForm(pemDataSave: any) {
-    var item = pemDataSave;
-    let milliTime = item?.childBasicStatusDto?.firstVisitDate
-
-    const date = new Date(milliTime);
-    var dateFormat = date.toLocaleDateString('en-US');
-    let currentDate = new Date(dateFormat);
-
-    function convertDate(date) {
-      var yyyy = date.getFullYear().toString();
-      var mm = (date.getMonth() + 1).toString();
-      var dd = date.getDate().toString();
-
-      var mmChars = mm.split('');
-      var ddChars = dd.split('');
-
-      return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
-    }
-
-    console.log(convertDate(currentDate));
-    var firstDateFormat = convertDate(currentDate);
-
-    if (item?.childBasicStatusDto?.firstVisitDate == null) {
-      var firstDateFormat = '';
-    }
-
-    this.pemForm = this.fb.group({
+  locForm() {
+    this.locationForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
+    });
+
+  }
+
+  createForm(pemDataSave: any) {
+    var item = pemDataSave;
+    this.latestMuac = this.pemDataSave?.latestMuacValue;
+    // this.placeOfDelivery = item?.childBasicStatusDto?.placeOfDelivery;
+    this.firstVisitDate = item?.childBasicStatusDto?.firstVisitDate;
+    this.secondVisitDate = item?.childBasicStatusDto?.secondVisitDate;
+
+
+    // const date = new Date(milliTime);
+    // var dateFormat = date.toLocaleDateString('en-US');
+    // let currentDate = new Date(dateFormat);
+
+    // function convertDate(date) {
+    //   var yyyy = date.getFullYear().toString();
+    //   var mm = (date.getMonth() + 1).toString();
+    //   var dd = date.getDate().toString();
+
+    //   var mmChars = mm.split('');
+    //   var ddChars = dd.split('');
+
+    //   return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+    // }
+
+    // console.log(convertDate(currentDate));
+    // var firstDateFormat = convertDate(currentDate);
+
+    // console.log(firstDateFormat);
+
+
+
+    this.pemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
-      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : '', Validators.required],
-      height: ['', Validators.required],
-      weight: ['', Validators.required],
-      breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : '', Validators.required],
-      breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : '', Validators.required],
-      breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : '', Validators.required],
-      breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : '', Validators.required],
+      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : ''],
+      height: [''],
+      weight: [''],
+      breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
+      breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
+      breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
+      breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
       pemDate: [''],
-      muac: [item?.latestMuacValue ? item?.latestMuacValue : '', Validators.required],
-      immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : '', Validators.required],
-      immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : '', Validators.required],
+      muac: [''],
+      immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
+      immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
       diarrhea: [item?.latestPemCounsellingExperiencedDiarrhea ? item?.latestPemCounsellingExperiencedDiarrhea : ''],
       supplementary: [item?.latestPemCounsellingSupplementaryFood ? item?.latestPemCounsellingSupplementaryFood : ''],
       healthcare: [item?.latestPemCounsellingVisitingHealthCenter ? item?.latestPemCounsellingVisitingHealthCenter : ''],
-      firstVisitDate: [firstDateFormat ? firstDateFormat : ''],
-      secondVisitDate: ['']
-
     });
   }
 
   get f() {
     return this.pemForm.controls;
+  }
+
+  get l() {
+    return this.locationForm.controls;
   }
 
   showSuccess(message) {
@@ -355,7 +377,11 @@ export class PemRegisterCreateComponent implements OnInit {
 
     this.pemService.viewPemRegisterEntry(obj).subscribe((res) => {
       this.pemRegisterEntry = res.responseObject;
+      this.childDTO = res.responseObject[0].childBasicStatusDto;
+
       console.log(this.pemRegisterEntry);
+      console.log(this.childDTO);
+
     })
 
   }
@@ -366,7 +392,17 @@ export class PemRegisterCreateComponent implements OnInit {
 
   savePEMRegisterEntry() {
     let item = this.pemForm.value;
-    console.log(this.childrenId);
+
+    if (item.pemDate == '') {
+      this.showError('Please select date of record keeping');
+      return;
+    }
+
+    if (item.muac == '') {
+      this.showError('Please enter muac value');
+      return;
+    }
+
 
     let pemBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -374,24 +410,24 @@ export class PemRegisterCreateComponent implements OnInit {
         muacRegisterId: 0,
         muacCampId: null,
         childId: this.childrenId,
-        height: item.height,
-        weight: item.weight,
+        height: item.height ? item.height : 0,
+        weight: item.weight ? item.weight : 0,
         muac: item.muac,
         active_flag: 'A'
       },
       pemCounsellingDataDto: {
         pemCounsellingDataMasterId: 0,
-        experiencedDiarrhea: this.diarrhea,
-        supplementaryFoodProvided: this.supplementary,
-        visitingHealthCareCenter: this.healthcare,
+        experiencedDiarrhea: item.diarrhea,
+        supplementaryFoodProvided: item.supplementary,
+        visitingHealthCareCenter: item.healthcare,
         active_flag: "A",
         pemDate: item.pemDate
       },
       childBasicStatusDto: {
-        placeOfDelivery: this.institutionalDelivery,
+        placeOfDelivery: item.delivery,
         birthWeight: item.birthweight,
-        firstVisitDate: item.firstVisitDate,
-        secondVisitDate: item.secondVisitDate,
+        firstVisitDate: this.firstVisitDate,
+        secondVisitDate: this.secondVisitDate,
         ebfUpto6Complete: item.breastfeeding6,
         primaryImmunizationUpto12Completed: item.immunization12,
         ebfUpto12Complete: item.breastfeeding12,
@@ -411,11 +447,166 @@ export class PemRegisterCreateComponent implements OnInit {
         this.createForm(this.pemDataSave);
       }
       else {
-        this.showError(res.responseObject);
+        this.showError(res.message);
       }
     })
 
   }
 
+  editPEMData(item, i, editPem, pemCounsellingDataMasterId) {
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(editPem, {
+      windowClass: 'pemData',
+    })
+    this.EditForm(item);
+
+  }
+
+  EditForm(item) {
+    this.saveEditFormData = item;
+
+    this.editPemForm = this.fb.group({
+      delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
+      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : ''],
+      height: [item?.muacData?.height ? item?.muacData?.height : ''],
+      weight: [item?.muacData?.weight ? item?.muacData?.weight : ''],
+      breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
+      breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
+      breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
+      breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
+      pemDate: [item?.pemDate],
+      muac: [item?.muacData?.muac ? item?.muacData?.muac : ''],
+      immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
+      immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
+      diarrhea: [item?.experiencedDiarrhea ? item?.experiencedDiarrhea : ''],
+      supplementary: [item?.supplementaryFood ? item?.supplementaryFood : ''],
+      healthcare: [item?.visitingHcareCenter ? item?.visitingHcareCenter : ''],
+    });
+
+  }
+
+  saveEditPEMRegisterEntry() {
+    var item = this.editPemForm.value;
+
+    console.log(this.saveEditFormData);
+    var set = this.saveEditFormData;
+
+    if (item.muac == '') {
+      this.showError('Please enter muac value');
+      return;
+    }
+
+    let pemBody = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      muacDataDto: {
+        muacRegisterId: set.muacData.muacRegisterId,
+        muacCampId: set.muacData.muacCampId,
+        childId: set.childId,
+        height: item.height ? item.height : 0,
+        weight: item.weight ? item.weight : 0,
+        muac: item.muac ? item.muac : 0,
+        active_flag: 'A'
+      },
+      pemCounsellingDataDto: {
+        pemCounsellingDataMasterId: set.pemCounsellingDataMasterId,
+        experiencedDiarrhea: item.diarrhea ? item.diarrhea : '',
+        supplementaryFoodProvided: item.supplementary ? item.supplementary : '',
+        visitingHealthCareCenter: item.healthcare ? item.healthcare : '',
+        active_flag: 'A',
+        pemDate: item.pemDate
+      },
+      childBasicStatusDto: {
+        placeOfDelivery: item.delivery ? item.delivery : '',
+        birthWeight: item.birthweight ? item.birthweight : '',
+        firstVisitDate: set.childBasicStatusDto.firstVisitDate,
+        secondVisitDate: set.childBasicStatusDto.secondVisitDate,
+        ebfUpto6Complete: item.breastfeeding6 ? item.breastfeeding6 : '',
+        primaryImmunizationUpto12Completed: item.immunization12 ? item.immunization12 : '',
+        ebfUpto12Complete: item.breastfeeding12 ? item.breastfeeding12 : '',
+        ebfUpto18Complete: item.breastfeeding18 ? item.breastfeeding18 : '',
+        primaryImmunizationUpto24Completed: item.immunization24 ? item.immunization24 : '',
+        ebfUpto24Complete: item.breastfeeding24 ? item.breastfeeding24 : ''
+      }
+    }
+
+    console.log(pemBody);
+
+    this.pemService.savePemRegister(pemBody).subscribe((res: any) => {
+      console.log(res);
+
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.modalDismiss();
+      }
+      else {
+        this.showError(res.message);
+      }
+    })
+
+  }
+
+  deletePEMData(item, i) {
+    console.log(item);
+
+    if (confirm('Do you want to delete PEMData: ')) {
+      let pemBody = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        muacDataDto: {
+          muacRegisterId: item.muacData.muacRegisterId,
+          muacCampId: item.muacData.muacCampId,
+          childId: item.childId,
+          height: item.muacData.height,
+          weight: item.muacData.weight,
+          muac: item.muacData.muac,
+          active_flag: 'D'
+        },
+        pemCounsellingDataDto: {
+          pemCounsellingDataMasterId: item.pemCounsellingDataMasterId,
+          experiencedDiarrhea: item.experiencedDiarrhea,
+          supplementaryFoodProvided: item.supplementaryFood,
+          visitingHealthCareCenter: item.visitingHcareCenter,
+          active_flag: 'D',
+          pemDate: item.pemDate
+        },
+        childBasicStatusDto: {
+          placeOfDelivery: item.childBasicStatusDto.placeOfDelivery,
+          birthWeight: item.childBasicStatusDto.birthWeight,
+          firstVisitDate: item.childBasicStatusDto.firstVisitDate,
+          secondVisitDate: item.childBasicStatusDto.secondVisitDate,
+          ebfUpto6Complete: item.childBasicStatusDto.ebfUpto6Complete,
+          primaryImmunizationUpto12Completed: item.childBasicStatusDto.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: item.childBasicStatusDto.ebfUpto12Complete,
+          ebfUpto18Complete: item.childBasicStatusDto.ebfUpto18Complete,
+          primaryImmunizationUpto24Completed: item.childBasicStatusDto.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: item.childBasicStatusDto.ebfUpto24Complete
+        }
+      }
+
+
+      console.log(pemBody);
+
+      this.pemService.savePemRegister(pemBody).subscribe((res: any) => {
+        console.log(res);
+
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.pemRegisterEntry.splice(i, 1);
+
+        }
+        else {
+          this.showError(res.message);
+        }
+      })
+    }
+  }
+
+
+
+  restrictZero(event: any) {
+    if (event.target.value.length === 0 && event.key === '0') {
+      event.preventDefault();
+    }
+
+  }
 
 }

@@ -4,24 +4,24 @@
             <div class="white_box QA_section mb_30">
                 <h2 class="page-title">View PEM Register</h2>
 
-                <form class="form-signin" [formGroup]="pemForm">
+                <form class="form-signin" [formGroup]="locationForm">
 
                     <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
                                 formControlName="region" id="region" [ngClass]="{
-                              'is-invalid': f.region.invalid && f.region.touched,
+                              'is-invalid': l.region.invalid && l.region.touched,
                               'is-valid':
-                                f.region.valid && (f.region.dirty || f.region.touched)
+                                l.region.valid && (l.region.dirty || l.region.touched)
                             }">
                                 <option value="">-- Select Region --</option>
                                 <option *ngFor="let region of regionList">
                                     {{region.regionName}}
                                 </option>
                             </select>
-                            <div *ngIf="f.region.errors" class="invalid-feedback">
-                                <div *ngIf="f.region.errors.required">Region selection is required</div>
+                            <div *ngIf="l.region.errors" class="invalid-feedback">
+                                <div *ngIf="l.region.errors.required">Region selection is required</div>
                             </div>
                         </div>
 
@@ -29,17 +29,17 @@
                             <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBranch($event.target.value)"
                                 formControlName="branch" id="branch" [ngClass]="{
-                              'is-invalid': f.branch.invalid && f.branch.touched,
+                              'is-invalid': l.branch.invalid && l.branch.touched,
                               'is-valid':
-                                f.branch.valid && (f.branch.dirty || f.branch.touched)
+                                l.branch.valid && (l.branch.dirty || l.branch.touched)
                             }">
                                 <option value="">-- Select Branch --</option>
                                 <option *ngFor="let branch of branchList">
                                     {{ branch.branchName }}
                                 </option>
                             </select>
-                            <div *ngIf="f.branch.errors" class="invalid-feedback">
-                                <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+                            <div *ngIf="l.branch.errors" class="invalid-feedback">
+                                <div *ngIf="l.branch.errors.required">Branch selection is required</div>
                             </div>
                         </div>
                     </div>
@@ -48,17 +48,17 @@
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBlock($event.target.value)"
                                 formControlName="block" id="block" [ngClass]="{
-                              'is-invalid': f.block.invalid && f.block.touched,
+                              'is-invalid': l.block.invalid && l.block.touched,
                               'is-valid':
-                                f.block.valid && (f.block.dirty || f.block.touched)
+                                l.block.valid && (l.block.dirty || l.block.touched)
                             }">
                                 <option value="">-- Select Block --</option>
                                 <option *ngFor="let block of villagesOfBranch">
                                     {{ block.blockName }}
                                 </option>
                             </select>
-                            <div *ngIf="f.block.errors" class="invalid-feedback">
-                                <div *ngIf="f.block.errors.required">Block selection is required</div>
+                            <div *ngIf="l.block.errors" class="invalid-feedback">
+                                <div *ngIf="l.block.errors.required">Block selection is required</div>
                             </div>
                         </div>
 
@@ -66,16 +66,16 @@
                             <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
                                 id="gp" [ngClass]="{
-                              'is-invalid': f.gp.invalid && f.gp.touched,
-                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
+                              'is-invalid': l.gp.invalid && l.gp.touched,
+                              'is-valid': l.gp.valid && (l.gp.dirty || l.gp.touched)
                             }">
                                 <option value="">-- Select GP/ Municipality --</option>
                                 <option *ngFor="let gp of gpDtoList">
                                     {{ gp.name }}
                                 </option>
                             </select>
-                            <div *ngIf="f.gp.errors" class="invalid-feedback">
-                                <div *ngIf="f.gp.errors.required">
+                            <div *ngIf="l.gp.errors" class="invalid-feedback">
+                                <div *ngIf="l.gp.errors.required">
                                     GP selection is required
                                 </div>
                             </div>
@@ -85,16 +85,16 @@
                             <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeVillage($event.target.value)"
                                 formControlName="gram" id="gram" [ngClass]="{
-                              'is-invalid': f.gram.invalid && f.gram.touched,
-                              'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
+                              'is-invalid': l.gram.invalid && l.gram.touched,
+                              'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched)
                             }">
                                 <option value="">-- Select Village --</option>
                                 <option *ngFor="let vill of villageDtoList">
                                     {{ vill.villageName }}
                                 </option>
                             </select>
-                            <div *ngIf="f.gram.errors" class="invalid-feedback">
-                                <div *ngIf="f.gram.errors.required">
+                            <div *ngIf="l.gram.errors" class="invalid-feedback">
+                                <div *ngIf="l.gram.errors.required">
                                     Village selection is required
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                             <th style="padding: 0px;">Age</th>
                                             <th>Current<br>Status</th>
                                             <th>PEM Register<br> Data Entry</th>
-                                            <th>Action</th>
+                                            <th>Add PEM</th>
                                         </tr>
                                     </thead>
 
@@ -186,21 +186,137 @@
 
         </div>
 
+
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border"></legend>
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Place of delivery:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.placeOfDelivery}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Birth weight of child: </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.birthWeight}}</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Primary immunization completed after 12 months: </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.primaryImmunizationUpto12Completed}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Primary immunization completed after 24 months:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.primaryImmunizationUpto24Completed}}</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Exclusive breastfeeding followed or not (at least for first 6 month): </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.ebfUpto6Complete}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Exclusive breastfeeding followed or not (upto first 12 month):</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.ebfUpto12Complete}}</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Exclusive breastfeeding followed or not (upto first 18 month):</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.ebfUpto18Complete}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                    font-size:1rem;">Exclusive breastfeeding followed or not (upto first 24 month): </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for=""> {{childDTO?.ebfUpto24Complete}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
         <div id="table_wrapper">
             <table class="table table-striped" id="table_wrapper" style="table-layout: fixed;">
 
                 <thead>
                     <tr>
                         <th>SL <br>No</th>
-                        <th>Muac Data<br>Created</th>
+                        <th>Data of<br>Record Keeping</th>
                         <th>Muac</th>
                         <th>Height</th>
                         <th>Weight</th>
-                        <th>Muac Register<br> Tag</th>
-                        <th>PEM Counselling <br>Data Created</th>
-                        <th>Diarrhea</th>
-                        <th>Supplementary <br> Food</th>
+                        <th>Experienced <br>Diarrhea</th>
+                        <th>Supplementary <br> Food Provided</th>
                         <th>Visiting Health <br>Care center</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
@@ -208,15 +324,16 @@
 
                     <tr *ngFor="let item of pemRegisterEntry ; index as i">
                         <td>{{i+1}}</td>
-                        <td>{{item.muacData.createdOn}}</td>
+                        <td>{{item.pemDate}}</td>
                         <td>{{item.muacData.muac}}</td>
                         <td>{{item.muacData.height}}</td>
                         <td>{{item.muacData.weight}}</td>
-                        <td>{{item.muacData.muacRegisterTag}}</td>
-                        <td>{{item.pemCounsellingDataCreatedOn}}</td>
                         <td>{{item.experiencedDiarrhea}}</td>
                         <td>{{item.supplementaryFood}}</td>
                         <td>{{item.visitingHcareCenter}}</td>
+                        <td><i class="fas fa-edit" title="Edit PEM"
+                                (click)="editPEMData(item,i,editPem,item.pemCounsellingDataMasterId)"> </i> <i
+                                class="fas fa-trash" title="Delete PEM" (click)="deletePEMData(item, i)"></i></td>
                     </tr>
 
                 </tbody>
@@ -239,318 +356,303 @@
 
         </div>
         <form class="form-signin" [formGroup]="pemForm" id="pem">
-            <div class="row">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                <div class="row">
 
-                <div class="form-group col-md-3">
-                    <label for="delivery">Place of delivery: &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="delivery" id="yes" value="Institution"
-                            formControlName="delivery" (change)="delivery($event)" />
-                        <label class="form-check-label" for="delivery">
-                            &nbsp;&nbsp;Institution</label>
+                    <div class="form-group col-md-3">
+                        <label for="delivery">Place of delivery:</label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="delivery" id="no"
-                                (change)="delivery($event)" value="Home" formControlName="delivery" />
+                            <input class="form-check-input" type="radio" name="delivery" id="yes" value="Institution"
+                                formControlName="delivery" (change)="delivery($event)" />
                             <label class="form-check-label" for="delivery">
-                                &nbsp;&nbsp;Home</label>
+                                &nbsp;&nbsp;Institution</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="delivery" id="no"
+                                    (change)="delivery($event)" value="Home" formControlName="delivery" />
+                                <label class="form-check-label" for="delivery">
+                                    &nbsp;&nbsp;Home</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="birthweight">Birth weight of child:&nbsp;<span
-                            class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" maxlength="5"
-                        (keypress)="validationService.onlyIntegerAndDecimal($event)" placeholder="Birthweight (in kg)"
-                        formControlName="birthweight" [ngClass]="{
+                    <div class="form-group col-md-3">
+                        <label for="birthweight">Birth weight of child:</label>
+                        <input type="text" class="form-control" maxlength="5"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                            placeholder="Birth Weight (In Kg)" formControlName="birthweight" [ngClass]="{
                     'is-invalid': f.birthweight.invalid && f.birthweight.touched,
                     'is-valid':
                       f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
                   }" />
-                    <div *ngIf="f.birthweight.errors" class="invalid-feedback">
-                        <div *ngIf="f.birthweight.errors.required">
-                            Birth weight is required
+                        <div *ngIf="f.birthweight.errors" class="invalid-feedback">
+                            <div *ngIf="f.birthweight.errors.required">
+                                Birth weight is required
+                            </div>
                         </div>
+
                     </div>
 
-
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="height">Height:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" (keypress)="validationService.onlyInteger($event)"
-                        maxlength="3" placeholder="Height (in cm)" formControlName="height" [ngClass]="{
-                    'is-invalid': f.height.invalid && f.height.touched,
-                    'is-valid':
-                      f.height.valid && (f.height.dirty || f.height.touched)
-                  }" />
-                    <div *ngIf="f.height.errors" class="invalid-feedback">
-                        <div *ngIf="f.height.errors.required">
-                            Height is required
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-                <div class="form-group col-md-3">
-                    <label for="weight">Weight:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" (keypress)="validationService.onlyInteger($event)"
-                        maxlength="3" placeholder="weight (in kg)" formControlName="weight" [ngClass]="{
-                    'is-invalid': f.weight.invalid && f.weight.touched,
-                    'is-valid':
-                      f.weight.valid && (f.weight.dirty || f.weight.touched)
-                  }" />
-                    <div *ngIf="f.weight.errors" class="invalid-feedback">
-                        <div *ngIf="f.weight.errors.required">
-                            weight is required
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-            </div>
-
-            <div class="row">
-
-                <div class="form-group col-md-3">
-                    <label for="breastfeeding6">Exclusive breastfeeding followed or not (at least for first 6 month):
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="breastfeeding6" id="yes" value="Y"
-                            formControlName="breastfeeding6" (change)="breastfeeding6($event)" />
-                        <label class="form-check-label" for="breastfeeding6">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="immunization12">Primary immunization completed after 12 months: </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="breastfeeding6" id="No"
-                                (change)="breastfeeding6($event)" value="N" formControlName="breastfeeding6" />
+                            <input class="form-check-input" type="radio" name="immunization12" id="yes" value="Y"
+                                formControlName="immunization12" (change)="immunization12($event)" />
+                            <label class="form-check-label" for="immunization12">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="immunization12" id="no"
+                                    (change)="immunization12($event)" value="N" formControlName="immunization12" />
+                                <label class="form-check-label" for="immunization12">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label for="immunization24">Primary immunization completed after 24 months: </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="immunization24" id="yes" value="Y"
+                                formControlName="immunization24" (change)="immunization24($event)" />
+                            <label class="form-check-label" for="immunization24">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="immunization24" id="no"
+                                    (change)="immunization24($event)" value="N" formControlName="immunization24" />
+                                <label class="form-check-label" for="immunization24">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding6">Exclusive breastfeeding followed or not (at least for first 6
+                            month):
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="breastfeeding6" id="yes" value="Y"
+                                formControlName="breastfeeding6" (change)="breastfeeding6($event)" />
                             <label class="form-check-label" for="breastfeeding6">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding6" id="No"
+                                    (change)="breastfeeding6($event)" value="N" formControlName="breastfeeding6" />
+                                <label class="form-check-label" for="breastfeeding6">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="breastfeeding12">Exclusive breastfeeding followed or not (at least for first 12 month):
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="breastfeeding12" id="yes" value="Y"
-                            formControlName="breastfeeding12" (change)="breastfeeding12($event)" />
-                        <label class="form-check-label" for="breastfeeding12">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding12">Exclusive breastfeeding followed or not (upto first 12
+                            month):
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="breastfeeding12" id="No"
-                                (change)="breastfeeding12($event)" value="N" formControlName="breastfeeding12" />
+                            <input class="form-check-input" type="radio" name="breastfeeding12" id="yes" value="Y"
+                                formControlName="breastfeeding12" (change)="breastfeeding12($event)" />
                             <label class="form-check-label" for="breastfeeding12">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding12" id="No"
+                                    (change)="breastfeeding12($event)" value="N" formControlName="breastfeeding12" />
+                                <label class="form-check-label" for="breastfeeding12">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="breastfeeding18">Exclusive breastfeeding followed or not (at least for first 18 month):
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="breastfeeding18" id="yes" value="Y"
-                            formControlName="breastfeeding18" (change)="breastfeeding18($event)" />
-                        <label class="form-check-label" for="breastfeeding18">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding18">Exclusive breastfeeding followed or not (upto first 18
+                            month):
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="breastfeeding18" id="No"
-                                (change)="breastfeeding18($event)" value="N" formControlName="breastfeeding18" />
+                            <input class="form-check-input" type="radio" name="breastfeeding18" id="yes" value="Y"
+                                formControlName="breastfeeding18" (change)="breastfeeding18($event)" />
                             <label class="form-check-label" for="breastfeeding18">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding18" id="No"
+                                    (change)="breastfeeding18($event)" value="N" formControlName="breastfeeding18" />
+                                <label class="form-check-label" for="breastfeeding18">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="breastfeeding24">Exclusive breastfeeding followed or not (at least for first 24 month):
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="breastfeeding24" id="yes" value="Y"
-                            formControlName="breastfeeding24" (change)="breastfeeding24($event)" />
-                        <label class="form-check-label" for="breastfeeding24">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding24">Exclusive breastfeeding followed or not (upto first 24
+                            month):
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="breastfeeding24" id="No"
-                                (change)="breastfeeding24($event)" value="N" formControlName="breastfeeding24" />
+                            <input class="form-check-input" type="radio" name="breastfeeding24" id="yes" value="Y"
+                                formControlName="breastfeeding24" (change)="breastfeeding24($event)" />
                             <label class="form-check-label" for="breastfeeding24">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding24" id="No"
+                                    (change)="breastfeeding24($event)" value="N" formControlName="breastfeeding24" />
+                                <label class="form-check-label" for="breastfeeding24">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+
+                <div class="row">
+
+                    <div class="form-group col-md-3">
+                        <label for="pemDate">Date of record keeping:
+                        </label>
+                        <input type="date" class="form-control" formControlName="pemDate"
+                            (keydown)="restrictTypeOfDate()" />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="height">Height:</label>
+                        <input type="text" class="form-control"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
+                            placeholder="Height (In Cm)" formControlName="height" [ngClass]="{
+                'is-invalid': f.height.invalid && f.height.touched,
+                'is-valid':
+                  f.height.valid && (f.height.dirty || f.height.touched)
+              }" />
+                        <div *ngIf="f.height.errors" class="invalid-feedback">
+                            <div *ngIf="f.height.errors.required">
+                                Height is required
+                            </div>
+                        </div>
 
 
-            </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="weight">Weight:</label>
+                        <input type="text" class="form-control"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
+                            placeholder="weight (In Kg)" formControlName="weight" [ngClass]="{
+                'is-invalid': f.weight.invalid && f.weight.touched,
+                'is-valid':
+                  f.weight.valid && (f.weight.dirty || f.weight.touched)
+              }" />
+                        <div *ngIf="f.weight.errors" class="invalid-feedback">
+                            <div *ngIf="f.weight.errors.required">
+                                weight is required
+                            </div>
+                        </div>
 
 
-            <div class="row">
+                    </div>
 
-                <div class="form-group col-md-3">
-                    <label for="pemDate">PEM Date:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="date" class="form-control" formControlName="pemDate"
-                        (keydown)="restrictTypeOfDate()" />
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="muac">MUAC (decimal):&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" maxlength="3" placeholder="weight (in kg)"
-                        formControlName="muac" [ngClass]="{
+                    <div class="form-group col-md-3">
+                        <label for="muac">MUAC (decimal):</label>
+                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In Decimal)"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                            (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
                     'is-invalid': f.muac.invalid && f.muac.touched,
                     'is-valid':
                       f.muac.valid && (f.muac.dirty || f.muac.touched)
                   }" />
-                    <div *ngIf="f.muac.errors" class="invalid-feedback">
-                        <div *ngIf="f.muac.errors.required">
-                            MUAC is required
+                        <div *ngIf="f.muac.errors" class="invalid-feedback">
+                            <div *ngIf="f.muac.errors.required">
+                                MUAC is required
+                            </div>
                         </div>
+
                     </div>
 
-
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="immunization12">Primary immunization completed after 12 months: &nbsp;<span
-                            class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="immunization12" id="yes" value="Y"
-                            formControlName="immunization12" (change)="immunization12($event)" />
-                        <label class="form-check-label" for="immunization12">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="diarrhea">Whether experienced Diarrhea:
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="immunization12" id="no"
-                                (change)="immunization12($event)" value="N" formControlName="immunization12" />
-                            <label class="form-check-label" for="immunization12">
-                                &nbsp;&nbsp;No</label>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="form-group col-md-3">
-                    <label for="immunization24">Primary immunization completed after 24 months: &nbsp;<span
-                            class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="immunization24" id="yes" value="Y"
-                            formControlName="immunization24" (change)="immunization24($event)" />
-                        <label class="form-check-label" for="immunization24">
-                            &nbsp;&nbsp;Yes</label>
-
-                        <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="immunization24" id="no"
-                                (change)="immunization24($event)" value="N" formControlName="immunization24" />
-                            <label class="form-check-label" for="immunization24">
-                                &nbsp;&nbsp;No</label>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="diarrhea">Whether experienced Diarrhea:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="diarrhea" id="yes" value="Y"
-                            formControlName="diarrhea" (change)="diarrhe($event)" />
-                        <label class="form-check-label" for="diarrhea">
-                            &nbsp;&nbsp;Yes</label>
-
-                        <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="diarrhea" id="No"
-                                (change)="diarrhe($event)" value="N" formControlName="diarrhea" />
+                            <input class="form-check-input" type="radio" name="diarrhea" id="yes" value="Y"
+                                formControlName="diarrhea" (change)="diarrhe($event)" />
                             <label class="form-check-label" for="diarrhea">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="diarrhea" id="No"
+                                    (change)="diarrhe($event)" value="N" formControlName="diarrhea" />
+                                <label class="form-check-label" for="diarrhea">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="supplementary">Supplementary food provided or not:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="supplementary" id="yes" value="Y"
-                            formControlName="supplementary" (change)="supplementar($event)" />
-                        <label class="form-check-label" for="supplementary">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="supplementary">Supplementary food provided or not:
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="supplementary" id="No"
-                                (change)="supplementar($event)" value="N" formControlName="supplementary" />
+                            <input class="form-check-input" type="radio" name="supplementary" id="yes" value="Y"
+                                formControlName="supplementary" (change)="supplementar($event)" />
                             <label class="form-check-label" for="supplementary">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="supplementary" id="No"
+                                    (change)="supplementar($event)" value="N" formControlName="supplementary" />
+                                <label class="form-check-label" for="supplementary">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md-3">
-                    <label for="healthcare">Whether visiting the health care centre:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="healthcare" id="yes" value="Y"
-                            formControlName="healthcare" (change)="healthCare($event)" />
-                        <label class="form-check-label" for="healthcare">
-                            &nbsp;&nbsp;Yes</label>
+                    <div class="form-group col-md-3">
+                        <label for="healthcare">Whether visiting the health care centre:
+                        </label>
 
                         <div class="form-check-inline">
-                            &nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="healthcare" id="No"
-                                (change)="healthCare($event)" value="N" formControlName="healthcare" />
+                            <input class="form-check-input" type="radio" name="healthcare" id="yes" value="Y"
+                                formControlName="healthcare" (change)="healthCare($event)" />
                             <label class="form-check-label" for="healthcare">
-                                &nbsp;&nbsp;No</label>
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="healthcare" id="No"
+                                    (change)="healthCare($event)" value="N" formControlName="healthcare" />
+                                <label class="form-check-label" for="healthcare">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label for="firstVisitDate">First Visit Date:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="date" class="form-control" formControlName="firstVisitDate"
-                        (keydown)="restrictTypeOfDate()" />
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="secondVisitDate">Second Visit Date:
-                        &nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="date" class="form-control" formControlName="secondVisitDate"
-                        (keydown)="restrictTypeOfDate()" />
-                </div>
-            </div>
+            </fieldset>
         </form>
 
         <div class="text-center">
@@ -558,6 +660,333 @@
                 <i class="fas fa-check-circle m-1"></i>Save
             </button>
             <button class="btn btn-secondary m-1" (click)="resetPEMRegisterEntry()">
+                <i class="fa fa-refresh m-1"></i>Reset
+            </button>
+        </div>
+
+
+    </div>
+</ng-template>
+
+
+<ng-template #editPem let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header" style="height: 80px;">
+
+            <div class="white_box QA_section mb_30" style="height: 100px;">
+                <h2 class="page-title">Edit PEM Counselling Data</h2>
+                <span class="closes" title="close" (click)="modalDismiss()"
+                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+            </div>
+
+        </div>
+        <form class="form-signin" [formGroup]="editPemForm" id="pem">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                <div class="row">
+
+                    <div class="form-group col-md-3">
+                        <label for="delivery">Place of delivery:</label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="delivery" id="yes" value="Institution"
+                                formControlName="delivery" (change)="delivery($event)" />
+                            <label class="form-check-label" for="delivery">
+                                &nbsp;&nbsp;Institution</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="delivery" id="no"
+                                    (change)="delivery($event)" value="Home" formControlName="delivery" />
+                                <label class="form-check-label" for="delivery">
+                                    &nbsp;&nbsp;Home</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="birthweight">Birth weight of child:</label>
+                        <input type="text" class="form-control" maxlength="5"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                            placeholder="Birth Weight (In Kg)" formControlName="birthweight" [ngClass]="{
+                    'is-invalid': f.birthweight.invalid && f.birthweight.touched,
+                    'is-valid':
+                      f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
+                  }" />
+                        <div *ngIf="f.birthweight.errors" class="invalid-feedback">
+                            <div *ngIf="f.birthweight.errors.required">
+                                Birth weight is required
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="immunization12">Primary immunization completed after 12 months: </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="immunization12" id="yes" value="Y"
+                                formControlName="immunization12" (change)="immunization12($event)" />
+                            <label class="form-check-label" for="immunization12">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="immunization12" id="no"
+                                    (change)="immunization12($event)" value="N" formControlName="immunization12" />
+                                <label class="form-check-label" for="immunization12">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label for="immunization24">Primary immunization completed after 24 months: </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="immunization24" id="yes" value="Y"
+                                formControlName="immunization24" (change)="immunization24($event)" />
+                            <label class="form-check-label" for="immunization24">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="immunization24" id="no"
+                                    (change)="immunization24($event)" value="N" formControlName="immunization24" />
+                                <label class="form-check-label" for="immunization24">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding6">Exclusive breastfeeding followed or not (at least for first 6
+                            month):
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="breastfeeding6" id="yes" value="Y"
+                                formControlName="breastfeeding6" (change)="breastfeeding6($event)" />
+                            <label class="form-check-label" for="breastfeeding6">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding6" id="No"
+                                    (change)="breastfeeding6($event)" value="N" formControlName="breastfeeding6" />
+                                <label class="form-check-label" for="breastfeeding6">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding12">Exclusive breastfeeding followed or not (upto first 12
+                            month):
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="breastfeeding12" id="yes" value="Y"
+                                formControlName="breastfeeding12" (change)="breastfeeding12($event)" />
+                            <label class="form-check-label" for="breastfeeding12">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding12" id="No"
+                                    (change)="breastfeeding12($event)" value="N" formControlName="breastfeeding12" />
+                                <label class="form-check-label" for="breastfeeding12">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding18">Exclusive breastfeeding followed or not (upto first 18
+                            month):
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="breastfeeding18" id="yes" value="Y"
+                                formControlName="breastfeeding18" (change)="breastfeeding18($event)" />
+                            <label class="form-check-label" for="breastfeeding18">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding18" id="No"
+                                    (change)="breastfeeding18($event)" value="N" formControlName="breastfeeding18" />
+                                <label class="form-check-label" for="breastfeeding18">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="breastfeeding24">Exclusive breastfeeding followed or not (upto first 24
+                            month):
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="breastfeeding24" id="yes" value="Y"
+                                formControlName="breastfeeding24" (change)="breastfeeding24($event)" />
+                            <label class="form-check-label" for="breastfeeding24">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="breastfeeding24" id="No"
+                                    (change)="breastfeeding24($event)" value="N" formControlName="breastfeeding24" />
+                                <label class="form-check-label" for="breastfeeding24">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+
+                <div class="row">
+
+                    <div class="form-group col-md-3">
+                        <label for="pemDate">Date of record keeping:
+                        </label>
+                        <input type="date" class="form-control" formControlName="pemDate"
+                            (keydown)="restrictTypeOfDate()" />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="height">Height:</label>
+                        <input type="text" class="form-control"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
+                            placeholder="Height (In Cm)" formControlName="height" [ngClass]="{
+                'is-invalid': f.height.invalid && f.height.touched,
+                'is-valid':
+                  f.height.valid && (f.height.dirty || f.height.touched)
+              }" />
+                        <div *ngIf="f.height.errors" class="invalid-feedback">
+                            <div *ngIf="f.height.errors.required">
+                                Height is required
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="weight">Weight:</label>
+                        <input type="text" class="form-control"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
+                            placeholder="weight (In Kg)" formControlName="weight" [ngClass]="{
+                'is-invalid': f.weight.invalid && f.weight.touched,
+                'is-valid':
+                  f.weight.valid && (f.weight.dirty || f.weight.touched)
+              }" />
+                        <div *ngIf="f.weight.errors" class="invalid-feedback">
+                            <div *ngIf="f.weight.errors.required">
+                                weight is required
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="muac">MUAC (decimal):</label>
+                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In Decimal)"
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                            (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
+                    'is-invalid': f.muac.invalid && f.muac.touched,
+                    'is-valid':
+                      f.muac.valid && (f.muac.dirty || f.muac.touched)
+                  }" />
+                        <div *ngIf="f.muac.errors" class="invalid-feedback">
+                            <div *ngIf="f.muac.errors.required">
+                                MUAC is required
+                            </div>
+                        </div>
+                        <span>Last Muac Recorded: {{latestMuac}}</span>
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="diarrhea">Whether experienced Diarrhea:
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="diarrhea" id="yes" value="Y"
+                                formControlName="diarrhea" (change)="diarrhe($event)" />
+                            <label class="form-check-label" for="diarrhea">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="diarrhea" id="No"
+                                    (change)="diarrhe($event)" value="N" formControlName="diarrhea" />
+                                <label class="form-check-label" for="diarrhea">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="supplementary">Supplementary food provided or not:
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="supplementary" id="yes" value="Y"
+                                formControlName="supplementary" (change)="supplementar($event)" />
+                            <label class="form-check-label" for="supplementary">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="supplementary" id="No"
+                                    (change)="supplementar($event)" value="N" formControlName="supplementary" />
+                                <label class="form-check-label" for="supplementary">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="healthcare">Whether visiting the health care centre:
+                        </label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="healthcare" id="yes" value="Y"
+                                formControlName="healthcare" (change)="healthCare($event)" />
+                            <label class="form-check-label" for="healthcare">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="healthcare" id="No"
+                                    (change)="healthCare($event)" value="N" formControlName="healthcare" />
+                                <label class="form-check-label" for="healthcare">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </fieldset>
+        </form>
+
+        <div class="text-center">
+            <button class="btn btn-primary m-1" (click)="saveEditPEMRegisterEntry()">
+                <i class="fas fa-check-circle m-1"></i>Save
+            </button>
+            <button class="btn btn-secondary m-1" (click)="resetEditPEMRegisterEntry()">
                 <i class="fa fa-refresh m-1"></i>Reset
             </button>
         </div>

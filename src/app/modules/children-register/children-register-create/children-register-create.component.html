@@ -135,7 +135,7 @@
                       <th>Husband</th>
                       <th>Total Child <br> Count</th>
                       <th>Existing <br>Child</th>
-                      <th>Add <br>Child</th>
+                      <th *ngIf="role !='PM' && role !='PO'">Add <br>Child</th>
                     </tr>
                   </thead>
 
@@ -154,7 +154,7 @@
                       <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                         (click)="openModal(viewExistingChild, item.familyDetailId)">View</td>
                       <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
-                        (click)="openModals(addNewChild, item.familyDetailId)">Add</td>
+                        (click)="openModals(addNewChild, item.familyDetailId)" *ngIf="role !='PM' && role !='PO'">Add</td>
                     </tr>
                   </tbody>
 
@@ -194,7 +194,7 @@
               <th>Date of Birth</th>
               <th>Age</th>
               <th>Sex</th>
-              <th>Action</th>
+              <th *ngIf="role !='PM' && role !='PO'">Action</th>
             </tr>
           </thead>
 
@@ -206,7 +206,7 @@
               <td>{{items.dob.substring(0,10).split('-').reverse().join('-')}}</td>
               <td>{{items.age}}</td>
               <td>{{items.sex}}</td>
-              <td><i class="fas fa-edit" title="Edit Child" (click)="editChild(items, i, EditChild)"></i>
+              <td *ngIf="role !='PM' && role !='PO'"><i class="fas fa-edit" title="Edit Child" (click)="editChild(items, i, EditChild)"></i>
                 <i class="fas fa-trash" title="Delete Child" (click)="deleteChild(items, i)"></i>
               </td>
             </tr>
