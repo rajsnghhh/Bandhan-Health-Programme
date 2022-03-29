@@ -11,14 +11,14 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PwViewComponent } from './pw-view/pw-view.component';
 import { PwStatusComponent } from './pw-status/pw-status.component';
 import { SinglePwListComponent } from './single-pw-list/single-pw-list.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [PwRegisterComponent, PwViewComponent, PwStatusComponent, SinglePwListComponent],
   imports: [
     CommonModule,
     PwRegisterRoutingModule, ReactiveFormsModule, FormsModule,
-    MatTabsModule, MatNativeDateModule, MatDialogModule, Ng2SearchPipeModule
+    MatTabsModule, MatNativeDateModule, MatDialogModule, Ng2SearchPipeModule, NgxPaginationModule
   ]
 })
 export class PwRegisterModule { }

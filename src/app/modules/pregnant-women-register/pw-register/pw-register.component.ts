@@ -38,6 +38,8 @@ export class PwRegisterComponent implements OnInit {
   acrSearch: string;
   searchFullscreen: boolean;
   pwSearch: string | number;
+  page = 1;
+  pageSize = 6;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog,) { }
@@ -74,7 +76,7 @@ export class PwRegisterComponent implements OnInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
     this.index = tabChangeEvent.index;
   }
-
+  p(event) { }
   changeRegion(region) {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
@@ -201,6 +203,7 @@ export class PwRegisterComponent implements OnInit {
   }
 
   openPwStatus(i) {
+    console.log(i);
     const dialogRef = this.dialog.open(PwStatusComponent, {
       width: '500px',
       height: '270px',
