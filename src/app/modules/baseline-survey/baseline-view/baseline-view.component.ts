@@ -46,6 +46,7 @@ export class BaselineViewComponent implements OnInit {
   toggleBool: boolean = true;
   finalDelHH: any;
   moreDetails: any;
+  role: any;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -57,6 +58,9 @@ export class BaselineViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
+    
 
     this.createForm();
     this.householdFamDetails();
@@ -122,7 +126,7 @@ export class BaselineViewComponent implements OnInit {
       this.baselineDetails = [];
       this.villageDtoList = [];
       this.villagesOfBranch = [];
-      this.gpDtoList=[];
+      this.gpDtoList = [];
     }
   }
 
@@ -153,7 +157,7 @@ export class BaselineViewComponent implements OnInit {
       this.baselineDetails = [];
       this.villageDtoList = [];
       this.villagesOfBranch = [];
-      this.gpDtoList=[];
+      this.gpDtoList = [];
     }
   }
 
@@ -166,7 +170,7 @@ export class BaselineViewComponent implements OnInit {
       this.showError('No Data Found');
       this.baselineDetails = [];
       this.villageDtoList = [];
-      this.gpDtoList=[];
+      this.gpDtoList = [];
     }
   }
   changeGp(gpName) {

@@ -81,3 +81,6 @@
 .QA_section .QA_table tbody .warning {
   color: #f7cd00;
 }
+.form-group {
+  margin-bottom: 1.5rem;
+}

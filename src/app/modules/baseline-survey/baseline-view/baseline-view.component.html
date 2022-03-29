@@ -134,8 +134,8 @@
                                             <th>Family<br> Count</th>
                                             <th>Total Member<br> of Household</th>
                                             <th>View<br>Family</th>
-                                            <th>Add<br>Family</th>
-                                            <th>Action</th>
+                                            <th *ngIf="role !='PM' && role !='PO'">Add<br>Family</th>
+                                            <th *ngIf="role !='PM' && role !='PO'">Action</th>
                                         </tr>
                                     </thead>
 
@@ -153,15 +153,16 @@
                                                 (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View
                                             </td>
 
-                                            <td class="btn-link" *ngIf="item.familyType == 'J'"
+                                            <td class="btn-link"
+                                                *ngIf="item.familyType == 'J' && role !='PM' && role !='PO'"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="gotoFamily(item)">Add</td>
-                                            <td *ngIf="item.familyType == 'S'">Add</td>
+                                            <td *ngIf="item.familyType == 'S' && role !='PM' && role !='PO'">Add</td>
 
 
-                                            <td> <i class="fas fa-edit" title="Edit Household"
-                                                    (click)="editHousehold(item,i)"> </i> <i class="fas fa-trash"
-                                                    title="Delete Household"
+                                            <td *ngIf="role !='PM' && role !='PO'"> <i class="fas fa-edit"
+                                                    title="Edit Household" (click)="editHousehold(item,i)"> </i> <i
+                                                    class="fas fa-trash" title="Delete Household"
                                                     (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>
@@ -208,7 +209,7 @@
                         <th>Total Child <br>Count</th>
                         <th>Child Below 18 <br>yr. entered</th>
                         <th>Family <br>Details</th>
-                        <th *ngIf="modalTitle == 'V' ">Action</th>
+                        <th *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'">Action</th>
                     </tr>
                 </thead>
 
@@ -224,7 +225,7 @@
                         <td>{{item.existingChildCount ? item.existingChildCount : 0 }}</td>
                         <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                             (click)="familyModal(viewDetails, item.familyDetailId)">View</td>
-                        <td *ngIf="modalTitle == 'V' ">
+                        <td *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'">
                             <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"> </i>
                             <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"></i>
                         </td>

@@ -5,9 +5,13 @@
 export const environment = {
   production: false,
   // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
-  // apiUrl: 'http://192.168.149.221:6181/bhp/api/v1/'
-  apiUrl: 'http://192.168.153.56:6181/bhp/api/v1/'
 
+  // apiUrl: 'http://192.168.153.56:6181/bhp/api/v1/'
+   apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+
+  // Production server
+  // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
+  // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 };
 
 /*

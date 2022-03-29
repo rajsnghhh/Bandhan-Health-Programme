@@ -54,6 +54,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   selectedGp: String;
   branchId: any;
   regionBranchHide: boolean;
+  role: any;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
@@ -65,6 +66,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
+    
     this.createForm();
     this.getMinDate();
 
