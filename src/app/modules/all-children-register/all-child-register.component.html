@@ -57,6 +57,7 @@
               </div>
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="form-group col-md">
               <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -153,7 +154,7 @@
                                             <th>Child Name</th>
                                             <th>Child Age</th>
                                             <th>Last MUAC <br> collected</th>
-                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                            <th>Current Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -167,10 +168,9 @@
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>
                                             <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
-                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
-                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
-                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
-                                            : '-'}}</td>
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                            : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa fa-circle"></i></td>
                                             <td style="padding: 0px 0px 0px 32px;">
                                                 <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
                                                 <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
@@ -204,7 +204,7 @@
                                             <th>Child Name</th>
                                             <th>Age</th>
                                             <th>Last MUAC <br> collected</th>
-                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                            <th>Current Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -218,10 +218,9 @@
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>
                                             <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
-                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
-                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
-                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
-                                            : '-'}}</td>
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                            : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
                                             <td style="padding: 0px 0px 0px 32px;">
                                               <i class="fa fa-plus-circle fa-2x" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
                                               <i class="fa fa-eye fa-2x" title="View Child" (click)="openViewChild(i)"> </i> 
@@ -255,7 +254,7 @@
                                             <th>Child Name</th>
                                             <th>Age</th>
                                             <th>Last MUAC <br> collected</th>
-                                            <th>Current Status <br> (Red, Yellow, Green)</th>
+                                            <th>Current Status</th>
                                         </tr>
                                     </thead>
 
@@ -268,10 +267,9 @@
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>
                                             <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
-                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'text-danger' 
-                                            : item.latestMuacIndicatorName == 'GREEN' ? 'text-success' 
-                                            : 'text-warning'}}">{{item.latestMuacIndicatorName ? item.latestMuacIndicatorName 
-                                            : '-'}}</td>
+                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                            : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                            : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa fa-circle"></i></td>
                                         </tr>
                                     </tbody>
                                 </table>
