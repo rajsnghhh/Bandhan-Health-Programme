@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
 }
-
 .dialog-title {
   background-color: #499;
   display: inline-block;
@@ -25,8 +24,4 @@
 }
 ::ng-deep .mat-dialog-container {
   padding: 12px 17px;
-}
-.addEditBtn {
-  display: flex;
-  justify-content: center;
 }

@@ -1,7 +1,14 @@
 <h1 mat-dialog-title>
     <div class="dialog-header">
         <h2 class="dialog-title">Pregnant Woman List </h2>
-        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
+        <div>
+            <button type="submit" class="btn btn-outline-warning" (click)="openHistory()">History</button> &nbsp;&nbsp;
+            <button type="submit" class="btn btn-outline-success" (click)="openCreatePage()">Create</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-times" (click)="closeDialog()"></i>
+        </div>
+        
+        
     </div>
 </h1>
 <div mat-dialog-content>
@@ -27,15 +34,15 @@
 
                     <tbody>
 
-                        <tr >
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td><i class="fas fa-edit" title="Edit" (click)="openPwView()"></i></td>
+                        <tr *ngFor="let item of pregnantWomanRegisterDetailList;index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{familyNumber}}</td>
+                            <td>{{pwName}}</td>
+                            <td>{{husbandOrGuardianName}}</td>
+                            <td>{{item.lastMenstrualPeriod == null ? '-' : item.lastMenstrualPeriod}}</td>
+                            <td>{{item.expectedDateOfDelivery == null ? '-' : item.expectedDateOfDelivery}}</td>
+                            <td>{{item.actualDateOfDelivery == null ? '-' : item.actualDateOfDelivery}}</td>
+                            <td><i class="fas fa-edit" title="Edit" (click)="openPwView(i)"></i></td>
                         </tr>
                     </tbody>
                 </table>
