@@ -163,11 +163,14 @@
                                 <td>{{item.childName}}</td>
                                 <td>{{item.sex}}</td>
                                 <td>{{item.childAge}}</td>
-                                <td>{{item.muac ? item.muac : '-'}}</td> 
-                                <td class="{{item.muacIndicatorName == 'RED' ? 'text-danger' 
+                                <td>{{item.muac ? item.muac : '-'}}</td>
+                                <td class="{{item.muacIndicatorName == 'RED' ? 'danger' 
+                                  : item.muacIndicatorName == 'GREEN' ? 'success' 
+                                  : item.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td> 
+                                <!-- <td class="{{item.muacIndicatorName == 'RED' ? 'text-danger' 
                                 : item.muacIndicatorName == 'GREEN' ? 'text-success' 
                                 : 'text-warning'}}">{{item.muacIndicatorName ? item.muacIndicatorName 
-                                : '-'}}</td>
+                                : '-'}}</td> -->
                                 <td style="padding: 0px 0px 0px 32px;">
                                     <i class="fas fa-edit" *ngIf="roleAccess" title="Save & Edit" (click)="openAddEditLmChild(i)"></i>
                                     <i class="fa fa-eye fa-lg" title="View Child" (click)="ViewLmChild(i)"></i>

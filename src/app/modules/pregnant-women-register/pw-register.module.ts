@@ -12,9 +12,10 @@ import { PwViewComponent } from './pw-view/pw-view.component';
 import { PwStatusComponent } from './pw-status/pw-status.component';
 import { SinglePwListComponent } from './single-pw-list/single-pw-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PwHistoryComponent } from './pw-history/pw-history.component';
 
 @NgModule({
-  declarations: [PwRegisterComponent, PwViewComponent, PwStatusComponent, SinglePwListComponent],
+  declarations: [PwRegisterComponent, PwViewComponent, PwStatusComponent, SinglePwListComponent, PwHistoryComponent],
   imports: [
     CommonModule,
     PwRegisterRoutingModule, ReactiveFormsModule, FormsModule,

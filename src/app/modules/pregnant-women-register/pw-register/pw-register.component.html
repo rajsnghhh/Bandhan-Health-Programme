@@ -196,9 +196,7 @@
                                             <th>Family No</th>
                                             <th>Name</th>
                                             <th>Husband <br>Name</th>
-                                            <th>Last Menstrual<br> Period</th>
-                                            <th>Expected Date<br>of Delivery</th>
-                                            <th>Month of pregnancy/<br>Actual Date of Delivery</th>
+                                            <th>Age</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -206,13 +204,11 @@
                                     <tbody>
 
                                         <tr *ngFor="let item of allPregnantWomenList | filter: pwSearch;index as i">
-                                            <td>{{i}}</td>
+                                            <td>{{i+1}}</td>
                                             <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.husbandOrGuardianName}}</td>
-                                            <td>{{item.lastMenstrualPeriod ? item.lastMenstrualPeriod : '-'}}</td>
-                                            <td>{{item.expectedDateOfDelivery? item.expectedDateOfDelivery : '-'}}</td>
-                                            <td>{{item.actualDateOfDelivery? item.actualDateOfDelivery : '-'}}</td>
+                                            <td>{{item.age}}</td>
                                             <td><i class="fas fa-list" title="View" (click)="openPwList(i)"></i></td>
                                         </tr>
                                     </tbody>

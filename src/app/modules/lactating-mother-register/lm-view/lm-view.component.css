@@ -51,12 +51,19 @@
 
 .form-group {
   margin-bottom: 1.5rem;
-
 }
-
 
 .fa-eye:hover {
   color: #70caf7 !important;
   cursor: pointer;
   font-size: 1.8em;
+}
+.QA_section .QA_table tbody .danger {
+  color: #cd0202;
+}
+.QA_section .QA_table tbody .success {
+  color: #24d524;
+}
+.QA_section .QA_table tbody .warning {
+  color: #f7cd00;
 }

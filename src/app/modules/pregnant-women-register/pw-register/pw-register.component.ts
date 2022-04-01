@@ -196,20 +196,27 @@ export class PwRegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(SinglePwListComponent, {
       width: '1000px',
       height: '550px',
+      data: {
+        index: i,
+        singlePregnantWomenList: this.allPregnantWomenList[i],
+        villageMasterId: this.villageMasterId
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getPregnantWomenList(this.villageMasterId)
     });
   }
 
   openPwStatus(i) {
-    console.log(i);
     const dialogRef = this.dialog.open(PwStatusComponent, {
       width: '500px',
       height: '270px',
+      data: { nonPregnantWomenList: this.nonPregnantWomenList[i] }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getPregnantWomenList(this.villageMasterId);
     });
   }
 }
