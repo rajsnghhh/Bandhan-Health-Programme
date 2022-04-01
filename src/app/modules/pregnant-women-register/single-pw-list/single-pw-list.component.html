@@ -42,7 +42,10 @@
                             <td>{{item.lastMenstrualPeriod == null ? '-' : item.lastMenstrualPeriod}}</td>
                             <td>{{item.expectedDateOfDelivery == null ? '-' : item.expectedDateOfDelivery}}</td>
                             <td>{{item.actualDateOfDelivery == null ? '-' : item.actualDateOfDelivery}}</td>
-                            <td><i class="fas fa-edit" title="Edit" (click)="openPwView(i)"></i></td>
+                            <td>
+                                <i class="fas fa-edit" title="Edit" (click)="openPwView(i)"></i>
+                                <i class="fas fa-trash" title="Wrong Entry" (click)="deletePregnency(item)"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

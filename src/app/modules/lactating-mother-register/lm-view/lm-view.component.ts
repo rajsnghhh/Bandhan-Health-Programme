@@ -222,13 +222,22 @@ export class LmViewComponent implements OnInit, DoCheck {
     After that it is editable */
   openAddEditLmChild(index) {
     console.log(this.lactatingmotherregister[index]);
+    let saveForm: boolean;
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       childId: this.lactatingmotherregister[index].childDetailId,
     }
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
-      if (res.responseObject.length == 0 && (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery ==
-        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
+      if (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate == null) {
+        saveForm = true;
+      } else {
+        saveForm = false
+      }
+
+      if (res.responseObject.length == 0 && saveForm) {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
           width: '1000px',
           height: '550px',
@@ -254,6 +263,7 @@ export class LmViewComponent implements OnInit, DoCheck {
           this.getLactatingMotherList(this.villageMasterId);
         });
       }
+
     })
   }
 
