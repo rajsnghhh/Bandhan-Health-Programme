@@ -1,10 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { MuacRegisterService } from '../muac-register.service';
 
 @Component({
@@ -13,6 +15,7 @@ import { MuacRegisterService } from '../muac-register.service';
   styleUrls: ['./muac-register-create.component.css']
 })
 export class MuacRegisterCreateComponent implements OnInit {
+  locationForm: FormGroup;
   muacList: any;
   muacCampList: any;
   modalContent: any;
@@ -37,12 +40,19 @@ export class MuacRegisterCreateComponent implements OnInit {
   ProjectEndDate: any;
   MuacList: any;
   loader: boolean = false;
+  villagesOfBranch: Array<any> = [];
+  regionList: Array<any> = [];
+  branchList: Array<any> = [];
+  muacAdd: boolean;
 
 
   constructor(private http: HttpService, private muacService: MuacRegisterService,
-    private modalService: NgbModal, private toaster: ToastrService, private router: Router) { }
+    private modalService: NgbModal, private toaster: ToastrService, private router: Router,
+    private fb: FormBuilder, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
+
+    this.locForm();
 
     this.muacDetails.muacInfo.push({
       muacCampId: 0,
@@ -52,10 +62,99 @@ export class MuacRegisterCreateComponent implements OnInit {
       createdDateTime: new Date().toISOString().slice(0, 10)
     });
 
+    let dataAccessDTO = {
+      userId: this.sidebarService.userId,
+      userName: this.sidebarService.loginId,
+    }
+
+    let Dto = {
+      dataAccessDTO: dataAccessDTO,
+      branchId: this.sidebarService.branchId
+    }
+
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.muacService.villagesOfBranch(Dto).subscribe((res) => {
+        if (res.sessionDTO.status == true) {
+          this.villagesOfBranch = res.responseObject;
+          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+        }
+      })
+    }
+
+    this.regionList = this.sidebarService.listOfRegion;
+
+  }
+
+  changeRegion(region) {
+    let regionId = this.regionList.find(
+      (reg) => reg.regionName == region
+    )?.regionMasterId;
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService?.userId,
+        userName: this.sidebarService?.loginId,
+      },
+      regionId: regionId,
+    };
+
+
+    this.muacService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.branchList = null;
+      }
+    );
+
+    this.locationForm.controls.branch.setValue('');
+    this.muacCampList = [];
+
+    if (this.locationForm.value.region == '') {
+      this.showError('No Data Found');
+      this.muacCampList = [];
+    }
+  }
+
+  changeBranch(branch) {
+    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    this.sidebarService.branchName = this.locationForm.get('branch').value
+    let Dto = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId
+    }
+
+    this.muacService.villagesOfBranch(Dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch, 'villagesOfBranch2');
+      this.muacListData(this.sidebarService.branchId);
+    });
+
+    if (this.locationForm.value.branch == '') {
+      this.showError('No Data Found');
+      this.muacCampList = [];
+      this.muacAdd = true;
+    }
+  }
+
+  createModal(createMuac) {
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(createMuac, {
+      windowClass: 'createMuac',
+    });
+  }
+
+  muacListData(branchId) {
     let obj = {
       activeStatus: 'A',
-      dataAccessDTO: this.http.dataAccessDTO,
-      id: 1
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      id: branchId
     }
 
     //API call for viewing muacList
@@ -64,7 +163,7 @@ export class MuacRegisterCreateComponent implements OnInit {
         this.loader = true;
         this.muacList = response.responseObject;
         this.muacCampList = response.responseObject.muaccampDetailList;
-        console.log(this.muacList);
+        console.log(this.muacCampList);
         this.getMinDate(this.muacList);
       },
         (err) => {
@@ -74,11 +173,15 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
-  createModal(createMuac) {
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(createMuac, {
-      windowClass: 'createMuac',
+  locForm() {
+    this.locationForm = this.fb.group({
+      region: ['', Validators.required],
+      branch: ['', Validators.required]
     });
+  }
+
+  get l() {
+    return this.locationForm.controls;
   }
 
   editModal(editMuac, item) {
@@ -143,12 +246,23 @@ export class MuacRegisterCreateComponent implements OnInit {
     return flag;
   }
 
+  addMuacDisabled() {
+    let flag = true;
+    if (this.locationForm.value.branch == '') {
+      flag = false;
+    }
+    return flag;
+  }
+
   saveMuac() {
 
     let postBody = {
       activeStatus: 'A',
-      dataAccessDTO: this.http.dataAccessDTO,
-      branchId: 1,
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
       projectStartDate: this.muacList.projectStartDate,
@@ -231,8 +345,11 @@ export class MuacRegisterCreateComponent implements OnInit {
   saveEditMuac() {
     let postBody = {
       activeStatus: 'A',
-      dataAccessDTO: this.http.dataAccessDTO,
-      branchId: 1,
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
       projectStartDate: this.muacList.projectStartDate,
@@ -282,16 +399,22 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
+
   deleteMuac(item, i) {
     const post = {
       activeStatus: "A",
-      dataAccessDTO: this.http.dataAccessDTO,
-      branchId: 1,
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      branchId: this.sidebarService.branchId,
       muacCampId: item.muacCampId,
       status: 'D',
       userId: 100,
       createdDateTime: item.startDate
     }
+
+    console.log(post);
 
     if (i === (this.muacList.muaccampDetailList.length - 1)) {
       if (confirm('Do you want to delete muac camp :' + item.campNumber)) {

@@ -133,9 +133,10 @@
                                             <th>Family<br> Type</th>
                                             <th>Family<br> Count</th>
                                             <th>Total Member<br> of Household</th>
+                                            <th>Swasthya <br>Sahayika</th>
                                             <th>View<br>Family</th>
-                                            <th *ngIf="role !='PM' && role !='PO'">Add<br>Family</th>
-                                            <th *ngIf="role !='PM' && role !='PO'">Action</th>
+                                            <th *ngIf="role !='PM' && role !='PO'  && role !='PD'">Add<br>Family</th>
+                                            <th *ngIf="role !='PM' && role !='PO'  && role !='PD'">Action</th>
                                         </tr>
                                     </thead>
 
@@ -148,21 +149,25 @@
                                             <td>{{item.familyType}}</td>
                                             <td>{{item.numberOfFamily}}</td>
                                             <td>{{item.totalMembers}}</td>
+                                            <td>{{item.swasthyaSahayikaDTO.name ? item.swasthyaSahayikaDTO.name :'-'}}</td>
                                             <td class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View
                                             </td>
 
                                             <td class="btn-link"
-                                                *ngIf="item.familyType == 'J' && role !='PM' && role !='PO'"
+                                                *ngIf="item.familyType == 'J' && role !='PM' && role !='PO' && role !='PD'"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="gotoFamily(item)">Add</td>
-                                            <td *ngIf="item.familyType == 'S' && role !='PM' && role !='PO'">Add</td>
+                                            <td
+                                                *ngIf="item.familyType == 'S' && role !='PM' && role !='PO'  && role !='PD'">
+                                                Add</td>
 
 
-                                            <td *ngIf="role !='PM' && role !='PO'"> <i class="fas fa-edit"
-                                                    title="Edit Household" (click)="editHousehold(item,i)"> </i> <i
-                                                    class="fas fa-trash" title="Delete Household"
+                                            <td *ngIf="role !='PM' && role !='PO' && role !='PD'"> <i
+                                                    class="fas fa-edit" title="Edit Household"
+                                                    (click)="editHousehold(item,i)"> </i> <i class="fas fa-trash"
+                                                    title="Delete Household"
                                                     (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>
@@ -209,7 +214,7 @@
                         <th>Total Child <br>Count</th>
                         <th>Child Below 18 <br>yr. entered</th>
                         <th>Family <br>Details</th>
-                        <th *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'">Action</th>
+                        <th *ngIf="modalTitle == 'V' && role !='PM' && role !='PO' && role !='PD'">Action</th>
                     </tr>
                 </thead>
 
@@ -225,7 +230,7 @@
                         <td>{{item.existingChildCount ? item.existingChildCount : 0 }}</td>
                         <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                             (click)="familyModal(viewDetails, item.familyDetailId)">View</td>
-                        <td *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'">
+                        <td *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'  && role !='PD'">
                             <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"> </i>
                             <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"></i>
                         </td>
@@ -576,19 +581,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="" style="font-weight: 500;
-                            font-size: 1.05rem;">Total No. of children:</label>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for=""> {{moreDetails?.totalNumberOfChildren}}</label>
-                            </div>
-                        </div>
 
-                    </div>
-
-                    <div class="col">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="" style="font-weight: 500;
@@ -598,13 +591,12 @@
                                 <label for=""> {{moreDetails?.totaFamilyMemberMales}}</label>
                             </div>
                         </div>
+
+
                     </div>
 
-                </div>
-
-
-                <div class="row">
                     <div class="col">
+
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="" style="font-weight: 500;
@@ -614,7 +606,15 @@
                                 <label for=""> {{moreDetails?.totaFamilyMemberFemales}}</label>
                             </div>
                         </div>
+
+
                     </div>
+
+                </div>
+
+
+                <div class="row">
+
 
                     <div class="col">
                         <div class="row">
@@ -626,6 +626,19 @@
                                 <label for=""> {{moreDetails?.totaFamilyMemberSrcitizen}}</label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Total No. of children:</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for=""> {{moreDetails?.totalNumberOfChildren}}</label>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>

@@ -206,7 +206,7 @@ export class BaselineViewComponent implements OnInit {
       this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
         this.loader = true;
         this.baselineDetails = response.responseObject;
-        // console.log(this.baselineDetails);
+        console.log(this.baselineDetails);
       },
         (err) => {
           this.loader = true;

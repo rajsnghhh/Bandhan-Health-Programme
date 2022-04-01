@@ -147,10 +147,13 @@
                                             <td style="padding: 0px;">{{pem.firstName}}</td>
                                             <td style="padding: 0px;">{{pem.childName}}</td>
                                             <td style="padding: 0px;">{{pem.childAge}}</td>
-                                            <td style="padding: 0px;">{{pem.latestMuacIndicatorName}}</td>
+                                            <td style="padding: 0px;" class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                            : pem.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                            : pem.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
+                                                    class="fa fa-circle fa-lg"></i></td>
                                             <td class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
-                                                (click)="openModal(pemData, pem.childId)">View
+                                                (click)="openModal(pemData, pem.childId, pem.childAge)">View
                                             </td>
                                             <td style="padding: 0px;"> <i class="fa fa-plus" title="Create PEM"
                                                     (click)="addPemModal(addPem, pem.childId, pem)"></i>
@@ -208,7 +211,7 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="" style="font-weight: 500;
-                    font-size:1rem;">Birth weight of child: </label>
+                    font-size:1rem;">Birth weight of child (In kg): </label>
                         </div>
                         <div class="form-group col-md-6">
                             <label for=""> {{childDTO?.birthWeight}}</label>
@@ -310,9 +313,9 @@
                     <tr>
                         <th>SL <br>No</th>
                         <th>Data of<br>Record Keeping</th>
-                        <th>Muac</th>
-                        <th>Height</th>
-                        <th>Weight</th>
+                        <th>Muac <br> (In cm)</th>
+                        <th>Height <br> (In cm)</th>
+                        <th>Weight <br> (In kg)</th>
                         <th>Experienced <br>Diarrhea</th>
                         <th>Supplementary <br> Food Provided</th>
                         <th>Visiting Health <br>Care center</th>
@@ -380,10 +383,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child:</label>
-                        <input type="text" class="form-control" maxlength="5"
+                        <label for="birthweight">Birth weight of child (In kg):</label>
+                        <input type="text" class="form-control" maxlength="5" (keyup)="birthWeightVal()"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)"
-                            placeholder="Birth Weight (In Kg)" formControlName="birthweight" [ngClass]="{
+                            placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
                     'is-invalid': f.birthweight.invalid && f.birthweight.touched,
                     'is-valid':
                       f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
@@ -401,14 +404,16 @@
 
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="immunization12" id="yes" value="Y"
-                                formControlName="immunization12" (change)="immunization12($event)" />
+                                formControlName="immunization12" (change)="immunization12($event)"
+                                [disabled]="!immunization12" />
                             <label class="form-check-label" for="immunization12">
                                 &nbsp;&nbsp;Yes</label>
 
                             <div class="form-check-inline">
                                 &nbsp;&nbsp;&nbsp;
                                 <input class="form-check-input" type="radio" name="immunization12" id="no"
-                                    (change)="immunization12($event)" value="N" formControlName="immunization12" />
+                                    (change)="immunization12($event)" value="N" formControlName="immunization12"
+                                    [disabled]="!immunization12" />
                                 <label class="form-check-label" for="immunization12">
                                     &nbsp;&nbsp;No</label>
                             </div>
@@ -537,10 +542,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="height">Height:</label>
+                        <label for="height">Height (In cm):</label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
-                            placeholder="Height (In Cm)" formControlName="height" [ngClass]="{
+                            (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
                 'is-invalid': f.height.invalid && f.height.touched,
                 'is-valid':
                   f.height.valid && (f.height.dirty || f.height.touched)
@@ -555,10 +560,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="weight">Weight:</label>
+                        <label for="weight">Weight (In kg):</label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
-                            placeholder="weight (In Kg)" formControlName="weight" [ngClass]="{
+                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
                 'is-invalid': f.weight.invalid && f.weight.touched,
                 'is-valid':
                   f.weight.valid && (f.weight.dirty || f.weight.touched)
@@ -573,9 +578,9 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="muac">MUAC (decimal):</label>
-                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In Decimal)"
-                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                        <label for="muac">MUAC (In cm):</label>
+                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In cm)"
+                            (keyup)="muacVal()" (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
                     'is-invalid': f.muac.invalid && f.muac.touched,
                     'is-valid':
@@ -708,10 +713,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child:</label>
+                        <label for="birthweight">Birth weight of child (In kg):</label>
                         <input type="text" class="form-control" maxlength="5"
-                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
-                            placeholder="Birth Weight (In Kg)" formControlName="birthweight" [ngClass]="{
+                            (keypress)="validationService.onlyIntegerAndDecimal($event)" (keyup)="birthWeightVal()"
+                            placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
                     'is-invalid': f.birthweight.invalid && f.birthweight.touched,
                     'is-valid':
                       f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
@@ -865,10 +870,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="height">Height:</label>
+                        <label for="height">Height (In cm):</label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
-                            placeholder="Height (In Cm)" formControlName="height" [ngClass]="{
+                            (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
                 'is-invalid': f.height.invalid && f.height.touched,
                 'is-valid':
                   f.height.valid && (f.height.dirty || f.height.touched)
@@ -883,10 +888,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="weight">Weight:</label>
+                        <label for="weight">Weight (In kg):</label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
-                            placeholder="weight (In Kg)" formControlName="weight" [ngClass]="{
+                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
                 'is-invalid': f.weight.invalid && f.weight.touched,
                 'is-valid':
                   f.weight.valid && (f.weight.dirty || f.weight.touched)
@@ -901,9 +906,9 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="muac">MUAC (decimal):</label>
-                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In Decimal)"
-                            (keypress)="validationService.onlyIntegerAndDecimal($event)"
+                        <label for="muac">MUAC (In cm):</label>
+                        <input type="text" class="form-control" maxlength="4" placeholder="Muac (In cm)"
+                            (keyup)="muacVal()" (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
                     'is-invalid': f.muac.invalid && f.muac.touched,
                     'is-valid':
