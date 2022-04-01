@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
+import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { AddLmChildComponent } from '../add-lm-child/add-lm-child.component';
 
@@ -14,7 +15,7 @@ import { AddLmChildComponent } from '../add-lm-child/add-lm-child.component';
   styleUrls: ['./lm-view.component.css'],
   providers: [DatePipe]
 })
-export class LmViewComponent implements OnInit {
+export class LmViewComponent implements OnInit, DoCheck {
 
   locationForm: FormGroup;
   regionList: Array<any> = [];
@@ -38,7 +39,13 @@ export class LmViewComponent implements OnInit {
 
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe) { }
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe,
+    public validationService: ValidationService,) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
+
 
   ngOnInit(): void {
     this.createForm();

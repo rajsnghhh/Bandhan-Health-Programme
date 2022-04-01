@@ -142,10 +142,10 @@ const environment = {
     production: false,
     // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
     // apiUrl: 'http://192.168.153.56:6181/bhp/api/v1/'
-    //  apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+    apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // Production server
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
-    apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
+    // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -400,48 +400,51 @@ class SidebarComponent {
         var routeId = submenu.subFunctionMasterId;
         console.log(routeId);
         console.log(submenu.subFunctionShortName);
-        // if (routeId == 5) {
-        //   this.router.navigate(['/role-access']);
-        // }
-        // if (routeId == 9) {
-        //   this.router.navigate(['/vertical']);
-        // }
-        // if (routeId == 13) {
-        //   this.router.navigate(['/sub-vertical']);
-        // }
-        // if (routeId == 17) {
-        //   this.router.navigate(['/donor']);
-        // }
-        // if (routeId == 21) {
-        //   this.router.navigate(['/project']);
-        // }
-        // if (routeId == 25) {
-        //   this.router.navigate(['/mou']);
-        // }
+        if (routeId == 5) {
+            this.router.navigate(['/role-access']);
+        }
+        if (routeId == 9) {
+            this.router.navigate(['/vertical']);
+        }
+        if (routeId == 13) {
+            this.router.navigate(['/sub-vertical']);
+        }
+        if (routeId == 17) {
+            this.router.navigate(['/donor']);
+        }
+        if (routeId == 21) {
+            this.router.navigate(['/project']);
+        }
+        if (routeId == 25) {
+            this.router.navigate(['/mou']);
+        }
         if (routeId == 65) {
             this.router.navigate(['/Baseline-Survey/create']);
         }
-        if (routeId == 73) {
+        if (routeId == 73 || routeId == 75) {
             this.router.navigate(['/Baseline-Survey/view']);
         }
-        if (routeId == 81) {
+        if (routeId == 81 || routeId == 83) {
             this.router.navigate(['/children-register/create']);
         }
         if (routeId == 89 || routeId == 91) {
             this.router.navigate(['/central-register/view']);
         }
-        // if (routeId == 97) {
-        //   this.router.navigate(['/muac-register/create']);
-        // }
-        // if (routeId == 113) {
-        //   this.router.navigate(['/pem-register/create']);
-        // }
-        // if (routeId == 121) {
-        //   this.router.navigate(['/lmr']);
-        // }
-        // if (routeId == 105) {
-        //   this.router.navigate(['/acr']);
-        // }
+        if (routeId == 97) {
+            this.router.navigate(['/muac-register/create']);
+        }
+        if (routeId == 113) {
+            this.router.navigate(['/pem-register/create']);
+        }
+        if (routeId == 121) {
+            this.router.navigate(['/lmr']);
+        }
+        if (routeId == 105) {
+            this.router.navigate(['/acr']);
+        }
+        if (routeId == 129) {
+            this.router.navigate(['/pw-register']);
+        }
     }
     ngAfterViewInit() {
         let a = document.querySelectorAll(".card-header");
@@ -842,6 +845,9 @@ class HttpService {
     }
     getLactatingMotherRegister(obj) {
         return this.http.post(`${this.baseURL}lactatingmotherregister/getVillageWiseChildDetails`, obj);
+    }
+    getPregnantWomenList(obj) {
+        return this.http.post(`${this.baseURL}pwr/getVillageWisePregnantWomanDetails`, obj);
     }
 }
 HttpService.ɵfac = function HttpService_Factory(t) { return new (t || HttpService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__["SidebarService"])); };
@@ -1360,8 +1366,9 @@ const routes = [
     { path: 'muac-register', loadChildren: () => Promise.all(/*! import() | modules-muac-register-muac-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("modules-muac-register-muac-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/muac-register/muac-register.module */ "3y2c")).then(m => m.MuacRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'core', loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./modules/core/core.module */ "6ZYd")).then(m => m.CoreModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'pem-register', loadChildren: () => Promise.all(/*! import() | modules-pem-register-pem-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~2fed4444"), __webpack_require__.e("common"), __webpack_require__.e("modules-pem-register-pem-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pem-register/pem-register.module */ "8xsE")).then(m => m.PemRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~0b89170d"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'lmr', loadChildren: () => Promise.all(/*! import() | modules-lactating-mother-register-lm-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~0b89170d"), __webpack_require__.e("modules-lactating-mother-register-lm-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/lactating-mother-register/lm-register.module */ "D/kB")).then(m => m.LmRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'lmr', loadChildren: () => Promise.all(/*! import() | modules-lactating-mother-register-lm-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("modules-lactating-mother-register-lm-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/lactating-mother-register/lm-register.module */ "D/kB")).then(m => m.LmRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'pw-register', loadChildren: () => Promise.all(/*! import() | modules-pregnant-women-register-pw-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-pregnant-women-register-pw-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pregnant-women-register/pw-register.module */ "TWdA")).then(m => m.PwRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {

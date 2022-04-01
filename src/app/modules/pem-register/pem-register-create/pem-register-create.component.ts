@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { PemRegisterService } from '../pem-register.service';
 })
 
 
-export class PemRegisterCreateComponent implements OnInit {
+export class PemRegisterCreateComponent implements OnInit, DoCheck {
   pemForm: FormGroup;
   editPemForm: FormGroup;
   locationForm: FormGroup;
@@ -55,11 +55,18 @@ export class PemRegisterCreateComponent implements OnInit {
   secondVisitDate: any;
   childDTO: any;
   saveEditFormData: any;
+  registerSearch: any;
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private route: Router, private httpBranch: BranchService,
     public validationService: ValidationService, private sidebarService: SidebarService) { }
+
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
     this.locForm();

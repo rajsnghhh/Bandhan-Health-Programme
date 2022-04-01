@@ -100,13 +100,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 
+
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
-                                        <input type="text" name="search" placeholder="Search household info here..."
+                                        <input type="text" name="search" placeholder="Search pem info here..."
                                             [(ngModel)]="registerSearch">
                                     </div>
                                     <button type="submit"> <i class="fa fa-search"></i> </button>
@@ -114,7 +114,7 @@
                             </div>
                         </div>
 
-                    </div> -->
+                    </div>
 
                     <div class="white_box_tittle list_header">
 
@@ -141,7 +141,7 @@
                                     <tbody>
 
                                         <tr
-                                            *ngFor="let pem of pemDetails  | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td style="padding: 0px;">{{pem.familyNumber}}</td>
                                             <td style="padding: 0px;">{{pem.firstName}}</td>
