@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { PwHistoryComponent } from '../pw-history/pw-history.component';
 import { PwViewComponent } from '../pw-view/pw-view.component';
 
@@ -17,16 +18,16 @@ export class SinglePwListComponent implements OnInit {
   pwName: string;
   familyNumber: any;
   husbandOrGuardianName: any;
+  createDisable: boolean;
   pregnantWomanRegisterDetailList: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SinglePwListComponent>,
     public dialog: MatDialog, private httpService: HttpService, private confirmationDialogService: ConfirmationDialogService,
-    private http: HttpClient, private toaster: ToastrService,) {
+    private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService,) {
     dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
-    debugger;
     console.log(this.data.singlePregnantWomenList);
     this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
     this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
@@ -40,11 +41,13 @@ export class SinglePwListComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    let previouslength = this.pregnantWomanRegisterDetailList.length;
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
       this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList[this.data.index].pregnantWomanRegisterDetailList;
+      this.createDisable = (this.pregnantWomanRegisterDetailList.length > previouslength) ? true : false;
     })
   }
 
@@ -90,19 +93,24 @@ export class SinglePwListComponent implements OnInit {
     });
   }
 
-  deletePregnency(value) {
+  deletePregnency(value, i) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       familyDetailId: this.data.singlePregnantWomenList.familyDetailId,
       pregnantWomanStatus: 'N',
       pregnantWomanRegisterId: value.pregnantWomanRegisterId
     }
-    this.confirmationDialogService.confirm('', 'Do you want to make as wrong entry ?').then(() => {
-      this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
-        this.dialogRef.close();
-        this.showSuccess('Delete');
-      })
-    }).catch(() => '');
+    if (i === (this.pregnantWomanRegisterDetailList.length - 1)) {
+      this.confirmationDialogService.confirm('', 'Do you want to make as wrong entry ?').then(() => {
+        this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
+          this.dialogRef.close();
+          this.showSuccess('Delete');
+        })
+      }).catch(() => '');
+    } else {
+      this.showError('Always delete last one');
+    }
+
   }
 
   closeDialog() {
@@ -111,6 +119,11 @@ export class SinglePwListComponent implements OnInit {
 
   showSuccess(message) {
     this.toaster.success(message, 'Pregnant Women Register Detete', {
+      timeOut: 3000,
+    });
+  }
+  showError(message) {
+    this.toaster.error(message, 'Pregnant Women', {
       timeOut: 3000,
     });
   }

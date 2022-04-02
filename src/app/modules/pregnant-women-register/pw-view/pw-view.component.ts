@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-pw-view',
@@ -22,9 +23,10 @@ export class PwViewComponent implements OnInit {
   showMessage: any;
   actualDeliveryDate: any;
   MotherDeath: any;
+  acMode: boolean;
 
   constructor(private http: HttpClient, private httpService: HttpService, private fb: FormBuilder,
-    public validationService: ValidationService, private toaster: ToastrService,
+    public validationService: ValidationService, private toaster: ToastrService, private sidebarService: SidebarService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PwViewComponent>) {
     dialogRef.disableClose = true;
   }
@@ -33,6 +35,12 @@ export class PwViewComponent implements OnInit {
     console.log(this.data)
     this.createForm();
     this.enableActualDelivery();
+
+    if (this.sidebarService.RoleDTOName == 'AC') {
+      this.acMode = true;
+    } else {
+      this.acMode = false;
+    }
 
     if (this.data.createMode == true) {
       this.create = 'Create';
