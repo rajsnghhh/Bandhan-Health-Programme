@@ -31,9 +31,7 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    setTimeout(() => {
-      this.getLocationHco();
-    }, 500);
+    this.getLocationHco();
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
@@ -67,18 +65,16 @@ export class LocationComponent implements OnInit {
       regionId: regionId,
     };
     this.loader = false;
-    setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe(
-        (res) => {
-          this.loader = true;
-          this.branchList = res?.responseObject;
-        },
-        (error) => {
-          this.loader = true;
-          this.branchList = null;
-        }
-      );
-    }, 500);
+    this.baselineService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.loader = true;
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.loader = true;
+        this.branchList = null;
+      }
+    );
     this.locationForm.controls.branch.setValue('');
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
@@ -87,7 +83,7 @@ export class LocationComponent implements OnInit {
     if (!this.locationForm.value.region) {
       this.villageDtoList = [];
       this.villagesOfBranch = [];
-      this.gpDtoList=[];
+      this.gpDtoList = [];
     }
   }
 
@@ -102,13 +98,11 @@ export class LocationComponent implements OnInit {
       branchId: this.sidebarService.branchId
     }
     this.loader = false;
-    setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.loader = true;
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch2');
-      })
-    }, 500);
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.loader = true;
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch, 'villagesOfBranch2');
+    })
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
@@ -116,7 +110,7 @@ export class LocationComponent implements OnInit {
     if (!this.locationForm.value.branch) {
       this.villageDtoList = [];
       this.villagesOfBranch = [];
-      this.gpDtoList=[];
+      this.gpDtoList = [];
     }
   }
 
@@ -153,16 +147,14 @@ export class LocationComponent implements OnInit {
       userId: this.sidebarService.userId
     }
     this.loader = false;
-    setTimeout(() => {
-      this.baselineService.ssVillageWiseList(req).subscribe((res) => {
-        console.log(res);
-        this.loader = true;
-        this.swasthyaSahayika = res.responseObject;
-      }, (error) => {
-        this.loader = true;
-        this.swasthyaSahayika = null;
-      })
-    }, 500);
+    this.baselineService.ssVillageWiseList(req).subscribe((res) => {
+      console.log(res);
+      this.loader = true;
+      this.swasthyaSahayika = res.responseObject;
+    }, (error) => {
+      this.loader = true;
+      this.swasthyaSahayika = null;
+    })
 
     this.locationForm.controls.swasthyaSahayika.setValue('');
   }

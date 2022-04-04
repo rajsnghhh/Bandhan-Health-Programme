@@ -63,16 +63,14 @@ export class AllChildRegisterComponent implements OnInit {
     }
 
 
-    setTimeout(() => {
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-          if (res.sessionDTO.status == true) {
-            this.villagesOfBranch = res.responseObject;
-            console.log(this.villagesOfBranch, 'villagesOfBranch1');
-          }
-        })
-      }
-    }, 500);
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        if (res.sessionDTO.status == true) {
+          this.villagesOfBranch = res.responseObject;
+          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+        }
+      })
+    }
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
@@ -94,16 +92,14 @@ export class AllChildRegisterComponent implements OnInit {
       },
       regionId: regionId,
     };
-    setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe(
-        (res) => {
-          this.branchList = res?.responseObject;
-        },
-        (error) => {
-          this.branchList = null;
-        }
-      );
-    }, 500);
+    this.baselineService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.branchList = null;
+      }
+    );
     this.locationForm.controls.branch.setValue('');
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
@@ -128,12 +124,10 @@ export class AllChildRegisterComponent implements OnInit {
       },
       branchId: this.sidebarService.branchId
     }
-    setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch2');
-      })
-    }, 500);
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch, 'villagesOfBranch2');
+    })
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
