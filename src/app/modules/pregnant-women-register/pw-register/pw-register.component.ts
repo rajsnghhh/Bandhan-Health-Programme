@@ -181,8 +181,8 @@ export class PwRegisterComponent implements OnInit {
       villageMasterId: villageMasterId
     }
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
-      this.allPregnantWomenList = res.responseObject.pregnantWomanList;
-      this.nonPregnantWomenList = res.responseObject.nonPregnantWomanList;
+      this.allPregnantWomenList = res.responseObject?.pregnantWomanList;
+      this.nonPregnantWomenList = res.responseObject?.nonPregnantWomanList;
     })
   }
 

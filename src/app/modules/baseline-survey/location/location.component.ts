@@ -64,14 +64,11 @@ export class LocationComponent implements OnInit {
       },
       regionId: regionId,
     };
-    this.loader = false;
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
       (res) => {
-        this.loader = true;
         this.branchList = res?.responseObject;
       },
       (error) => {
-        this.loader = true;
         this.branchList = null;
       }
     );
@@ -97,9 +94,7 @@ export class LocationComponent implements OnInit {
       },
       branchId: this.sidebarService.branchId
     }
-    this.loader = false;
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     })
@@ -146,13 +141,10 @@ export class LocationComponent implements OnInit {
       villageId: villId,
       userId: this.sidebarService.userId
     }
-    this.loader = false;
     this.baselineService.ssVillageWiseList(req).subscribe((res) => {
       console.log(res);
-      this.loader = true;
       this.swasthyaSahayika = res.responseObject;
     }, (error) => {
-      this.loader = true;
       this.swasthyaSahayika = null;
     })
 
