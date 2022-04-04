@@ -125,3 +125,15 @@ legend.scheduler-border {
   color: #2daab8;
   margin-left: 140px;
 }
+
+.QA_section .QA_table tbody .danger {
+  color: #cd0202;
+}
+
+.QA_section .QA_table tbody .success {
+  color: #24d524;
+}
+
+.QA_section .QA_table tbody .warning {
+  color: #f7cd00;
+}

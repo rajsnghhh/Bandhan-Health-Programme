@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MuacRegisterRoutingModule } from './muac-register-routing.module';
 import { MuacRegisterCreateComponent } from './muac-register-create/muac-register-create.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../shared/loader/loader.module';
 
 
@@ -12,7 +12,8 @@ import { LoaderModule } from '../shared/loader/loader.module';
   imports: [
     CommonModule,
     MuacRegisterRoutingModule,
-    FormsModule, LoaderModule
+    FormsModule, LoaderModule,
+    ReactiveFormsModule
   ]
 })
 export class MuacRegisterModule { }

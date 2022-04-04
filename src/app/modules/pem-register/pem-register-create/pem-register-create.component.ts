@@ -57,6 +57,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   saveEditFormData: any;
   registerSearch: any;
   searchFullscreen: boolean;
+  checkAge: any;
+  childAge: any;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -69,9 +71,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+
     this.locForm();
     this.createForm(this.pemDataSave);
-
 
     let dataAccessDTO = {
       userId: this.sidebarService.userId,
@@ -241,7 +243,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       supplementary: [item?.latestPemCounsellingSupplementaryFood ? item?.latestPemCounsellingSupplementaryFood : ''],
       healthcare: [item?.latestPemCounsellingVisitingHealthCenter ? item?.latestPemCounsellingVisitingHealthCenter : ''],
     });
+
   }
+
 
   get f() {
     return this.pemForm.controls;
@@ -265,7 +269,11 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   p(event) { }
 
-  openModal(pemData, childId) {
+  openModal(pemData, childId, childAge) {
+    console.log(childAge);
+    this.childAge = childAge;
+
+
     this.viewPEMRegisterEntry(childId);
     this.modalContent = '';
     this.modalReference = this.modalService.open(pemData, {
@@ -274,6 +282,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   }
 
   addPemModal(addPem, childId, pem) {
+    this.checkAge = pem.childAge;
+    console.log(this.checkAge);
     this.pemDataSave = pem;
     this.createForm(this.pemDataSave);
     console.log(this.pemDataSave);
@@ -282,6 +292,50 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.modalReference = this.modalService.open(addPem, {
       windowClass: 'pemData',
     });
+
+    let y = this.checkAge?.indexOf("year");
+    let year = parseInt(this.checkAge?.slice(0, y - 1));
+
+    let m = this.checkAge?.indexOf("r");
+    let m1 = this.checkAge?.indexOf("month");
+    let month = parseInt(this.checkAge?.slice(m + 2, m1 - 1));
+
+    if (year == 0 && month >= 6) {
+      this.pemForm.controls['immunization12'].disable();
+      this.pemForm.controls['immunization24'].disable();
+      this.pemForm.controls['breastfeeding6'].enable();
+      this.pemForm.controls['breastfeeding12'].disable();
+      this.pemForm.controls['breastfeeding18'].disable();
+      this.pemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year == 1 && month < 6) {
+      this.pemForm.controls['immunization12'].enable();
+      this.pemForm.controls['immunization24'].disable();
+      this.pemForm.controls['breastfeeding6'].enable();
+      this.pemForm.controls['breastfeeding12'].enable();
+      this.pemForm.controls['breastfeeding18'].disable();
+      this.pemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year >= 1 && month >= 6) {
+      this.pemForm.controls['immunization12'].enable();
+      this.pemForm.controls['immunization24'].disable();
+      this.pemForm.controls['breastfeeding6'].enable();
+      this.pemForm.controls['breastfeeding12'].enable();
+      this.pemForm.controls['breastfeeding18'].enable();
+      this.pemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year >= 2 && month >= 0) {
+      this.pemForm.controls['immunization12'].enable();
+      this.pemForm.controls['immunization24'].enable();
+      this.pemForm.controls['breastfeeding6'].enable();
+      this.pemForm.controls['breastfeeding12'].enable();
+      this.pemForm.controls['breastfeeding18'].enable();
+      this.pemForm.controls['breastfeeding24'].enable();
+    }
+
   }
 
   modalDismiss() {
@@ -358,7 +412,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
     this.pemService.viewPemRegisterEntry(obj).subscribe((res) => {
       this.pemRegisterEntry = res.responseObject;
-      this.childDTO = res.responseObject[0].childBasicStatusDto;
+      this.childDTO = res.responseObject[0]?.childBasicStatusDto;
 
       console.log(this.pemRegisterEntry);
       console.log(this.childDTO);
@@ -381,6 +435,26 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
     if (item.muac == '') {
       this.showError('Please enter muac value');
+      return;
+    }
+
+    if (this.pemForm.value.height < 10 || this.pemForm.value.height > 180) {
+      this.showError('Height should be between 10cm to 180cm');
+      return;
+    }
+
+    if (this.pemForm.value.weight > 25) {
+      this.showError('Weight should be under 25kg');
+      return;
+    }
+
+    if (this.pemForm.value.muac > 30) {
+      this.showError('Muac should be under 30cm');
+      return;
+    }
+
+    if (this.pemForm.value.birthweight > 9) {
+      this.showError('Birth weight should not be more than 9 years');
       return;
     }
 
@@ -434,12 +508,62 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   }
 
   editPEMData(item, i, editPem, pemCounsellingDataMasterId) {
+    var checkAge = this.childAge;
+
     this.modalDismiss();
     this.modalContent = '';
     this.modalReference = this.modalService.open(editPem, {
       windowClass: 'pemData',
     })
     this.EditForm(item);
+
+
+    checkAge = this.childAge;
+    console.log(checkAge);
+
+
+    let y = checkAge?.indexOf("year");
+    let year = parseInt(checkAge?.slice(0, y - 1));
+
+    let m = checkAge?.indexOf("r");
+    let m1 = checkAge?.indexOf("month");
+    let month = parseInt(checkAge?.slice(m + 2, m1 - 1));
+
+    if (year == 0 && month >= 6) {
+      this.editPemForm.controls['immunization12'].disable();
+      this.editPemForm.controls['immunization24'].disable();
+      this.editPemForm.controls['breastfeeding6'].enable();
+      this.editPemForm.controls['breastfeeding12'].disable();
+      this.editPemForm.controls['breastfeeding18'].disable();
+      this.editPemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year == 1 && month < 6) {
+      this.editPemForm.controls['immunization12'].enable();
+      this.editPemForm.controls['immunization24'].disable();
+      this.editPemForm.controls['breastfeeding6'].enable();
+      this.editPemForm.controls['breastfeeding12'].enable();
+      this.editPemForm.controls['breastfeeding18'].disable();
+      this.editPemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year >= 1 && month >= 6) {
+      this.editPemForm.controls['immunization12'].enable();
+      this.editPemForm.controls['immunization24'].disable();
+      this.editPemForm.controls['breastfeeding6'].enable();
+      this.editPemForm.controls['breastfeeding12'].enable();
+      this.editPemForm.controls['breastfeeding18'].enable();
+      this.editPemForm.controls['breastfeeding24'].disable();
+    }
+
+    if (year >= 2 && month >= 0) {
+      this.editPemForm.controls['immunization12'].enable();
+      this.editPemForm.controls['immunization24'].enable();
+      this.editPemForm.controls['breastfeeding6'].enable();
+      this.editPemForm.controls['breastfeeding12'].enable();
+      this.editPemForm.controls['breastfeeding18'].enable();
+      this.editPemForm.controls['breastfeeding24'].enable();
+    }
 
   }
 
@@ -474,6 +598,27 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
     if (item.muac == '') {
       this.showError('Please enter muac value');
+      return;
+    }
+
+
+    if (this.editPemForm.value.height < 10 || this.editPemForm.value.height > 180) {
+      this.showError('Height should be between 10cm to 180cm');
+      return;
+    }
+
+    if (this.editPemForm.value.weight > 25) {
+      this.showError('Weight should be under 25kg');
+      return;
+    }
+
+    if (this.editPemForm.value.muac > 30) {
+      this.showError('Muac should be under 30cm');
+      return;
+    }
+
+    if (this.editPemForm.value.birthweight > 9) {
+      this.showError('Birth weight should not be more than 9 years');
       return;
     }
 
@@ -583,6 +728,67 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   restrictZero(event: any) {
     if (event.target.value.length === 0 && event.key === '0') {
       event.preventDefault();
+    }
+
+  }
+
+  heightVal() {
+    console.log(this.pemForm.value.height);
+
+
+    if (this.pemForm.value.height < 10 || this.pemForm.value.height > 180) {
+      this.showError('Height should be between 10cm to 180cm');
+      return;
+    }
+
+    if (this.editPemForm?.value.height < 10 || this.editPemForm?.value.height > 180) {
+      this.showError('Height should be between 10cm to 180cm');
+      return;
+    }
+
+
+  }
+
+  weightVal() {
+
+    if (this.pemForm.value.weight > 25) {
+      this.showError('Weight should be under 25kg');
+      return;
+    }
+
+    if (this.editPemForm?.value.weight > 25) {
+      this.showError('Weight should be under 25kg');
+      return;
+    }
+
+
+  }
+
+  muacVal() {
+
+    if (this.pemForm.value.muac > 30) {
+      this.showError('Muac should be under 30cm');
+      return;
+    }
+
+    if (this.editPemForm?.value.muac > 30) {
+      this.showError('Muac should be under 30cm');
+      return;
+    }
+
+
+  }
+
+  birthWeightVal() {
+
+    if (this.pemForm.value.birthweight > 9) {
+      this.showError('Birth weight should not be more than 9 years');
+      return;
+    }
+
+    if (this.editPemForm?.value.birthweight > 9) {
+      this.showError('Birth weight should not be more than 9 years');
+      return;
     }
 
   }
