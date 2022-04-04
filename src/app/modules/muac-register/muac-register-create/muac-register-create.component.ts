@@ -332,14 +332,20 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   expectEndDate(e) {
-    var dtStartDate = new Date(e.target.value);
-    this.month = dtStartDate.getMonth() + 1;
-    this.day = dtStartDate.getDate() + 1;
-    this.year = dtStartDate.getFullYear();
+    // var dtStartDate = new Date(e.target.value);
+    // this.month = dtStartDate.getMonth() + 1;
+    // this.day = dtStartDate.getDate() + 1;
+    // this.year = dtStartDate.getFullYear();
     if (this.month < 10) this.month = '0' + this.month.toString();
     if (this.day < 10) this.day = '0' + this.day.toString();
-    var maxDate = this.year + '-' + this.month + '-' + this.day;
-    this.selStartDate = maxDate;
+    // var maxDate = this.year + '-' + this.month + '-' + this.day;
+    this.selStartDate = moment(this.addDays(1, new Date(e.target.value))).format('YYYY-MM-DD');
+    console.log(this.selStartDate);
+  }
+
+  addDays(numOfDays: number, date = new Date()) {
+    date.setDate(date.getDate() + numOfDays);
+    return date;
   }
 
   saveEditMuac() {
