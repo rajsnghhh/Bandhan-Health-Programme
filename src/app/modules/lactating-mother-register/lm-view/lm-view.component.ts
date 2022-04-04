@@ -61,16 +61,14 @@ export class LmViewComponent implements OnInit, DoCheck {
       branchId: this.sidebarService.branchId
     }
 
-    setTimeout(() => {
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-          if (res.sessionDTO.status == true) {
-            this.villagesOfBranch = res.responseObject;
-            console.log(this.villagesOfBranch, 'villagesOfBranch1');
-          }
-        })
-      }
-    }, 500);
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+        if (res.sessionDTO.status == true) {
+          this.villagesOfBranch = res.responseObject;
+          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+        }
+      })
+    }
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
@@ -95,16 +93,14 @@ export class LmViewComponent implements OnInit, DoCheck {
       },
       regionId: regionId,
     };
-    setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe(
-        (res) => {
-          this.branchList = res?.responseObject;
-        },
-        (error) => {
-          this.branchList = null;
-        }
-      );
-    }, 500);
+    this.baselineService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.branchList = null;
+      }
+    );
     this.locationForm.controls.branch.setValue('');
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
@@ -127,12 +123,10 @@ export class LmViewComponent implements OnInit, DoCheck {
       },
       branchId: this.sidebarService.branchId
     }
-    setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch2');
-      })
-    }, 500);
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.villagesOfBranch = res.responseObject;
+      console.log(this.villagesOfBranch, 'villagesOfBranch2');
+    })
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
@@ -222,13 +216,22 @@ export class LmViewComponent implements OnInit, DoCheck {
     After that it is editable */
   openAddEditLmChild(index) {
     console.log(this.lactatingmotherregister[index]);
+    let saveForm: boolean;
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       childId: this.lactatingmotherregister[index].childDetailId,
     }
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
-      if (res.responseObject.length == 0 && (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery ==
-        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
+      if (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate == null &&
+        this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate == null) {
+        saveForm = true;
+      } else {
+        saveForm = false
+      }
+
+      if (res.responseObject.length == 0 && saveForm) {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
           width: '1000px',
           height: '550px',
@@ -254,6 +257,7 @@ export class LmViewComponent implements OnInit, DoCheck {
           this.getLactatingMotherList(this.villageMasterId);
         });
       }
+
     })
   }
 

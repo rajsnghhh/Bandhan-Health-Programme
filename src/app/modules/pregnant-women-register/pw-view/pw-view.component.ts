@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-pw-view',
@@ -22,9 +23,10 @@ export class PwViewComponent implements OnInit {
   showMessage: any;
   actualDeliveryDate: any;
   MotherDeath: any;
+  acMode: boolean;
 
   constructor(private http: HttpClient, private httpService: HttpService, private fb: FormBuilder,
-    public validationService: ValidationService, private toaster: ToastrService,
+    public validationService: ValidationService, private toaster: ToastrService, private sidebarService: SidebarService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PwViewComponent>) {
     dialogRef.disableClose = true;
   }
@@ -33,6 +35,12 @@ export class PwViewComponent implements OnInit {
     console.log(this.data)
     this.createForm();
     this.enableActualDelivery();
+
+    if (this.sidebarService.RoleDTOName == 'AC') {
+      this.acMode = true;
+    } else {
+      this.acMode = false;
+    }
 
     if (this.data.createMode == true) {
       this.create = 'Create';
@@ -89,6 +97,7 @@ export class PwViewComponent implements OnInit {
 
   restrictAncDate(value) {
     this.actualDeliveryDate = value;
+    this.pwRegisterForm.get('actualDeliveryDate').reset();
     this.AncDate = new Date(new Date().setDate(new Date(value).getDate() + 1)).toISOString().substring(0, 10);
   }
 
@@ -115,6 +124,7 @@ export class PwViewComponent implements OnInit {
 
   anc1stDate(value) {
     this.actualDeliveryDate = value;
+    this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
       this.pwRegisterForm.controls['anc3rd'].value !== null) {
       this.showMessage = true;
@@ -124,6 +134,7 @@ export class PwViewComponent implements OnInit {
   }
   anc2ndDate(value) {
     this.actualDeliveryDate = value;
+    this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
       this.pwRegisterForm.controls['anc3rd'].value !== null) {
       this.showMessage = true;
@@ -133,6 +144,7 @@ export class PwViewComponent implements OnInit {
   }
   anc3rdDate(value) {
     this.actualDeliveryDate = value;
+    this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
       this.pwRegisterForm.controls['anc3rd'].value !== null) {
       this.showMessage = true;
@@ -142,6 +154,7 @@ export class PwViewComponent implements OnInit {
   }
   anc4thDate(value) {
     this.actualDeliveryDate = value;
+    this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
       this.pwRegisterForm.controls['anc3rd'].value !== null) {
       this.showMessage = true;
@@ -202,84 +215,87 @@ export class PwViewComponent implements OnInit {
 
   onSave() {
     console.log(this.pwRegisterForm.value)
-    if (this.data.createMode == true) {
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        pregnantWomanRegisterDto: {
-          pregnantWomanRegisterId: 0,
-          familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
-          initialWeight: this.pwRegisterForm.value.initialWeight,
-          lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-          expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-          antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-          firstAncCheckup: this.pwRegisterForm.value.anc1st,
-          secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-          thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-          fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-          pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-          weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-          delivery: this.pwRegisterForm.value.delivery,
-          miscarriage: this.pwRegisterForm.value.miscarriage,
-          abortion: this.pwRegisterForm.value.abortion,
-          actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-          livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-          placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-        },
-        familyDeathRegister: {
-          deathStatus: this.pwRegisterForm.value.womenDeath,
-          timeOfDeath: this.pwRegisterForm.value.deathTime,
-          familyDeathComment: this.pwRegisterForm.value.deathReason
+    if (this.pwRegisterForm.valid) {
+      if (this.data.createMode == true) {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          pregnantWomanRegisterDto: {
+            pregnantWomanRegisterId: 0,
+            familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
+            initialWeight: this.pwRegisterForm.value.initialWeight,
+            lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+            expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+            antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+            firstAncCheckup: this.pwRegisterForm.value.anc1st,
+            secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+            thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+            fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+            pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+            weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+            delivery: this.pwRegisterForm.value.delivery,
+            miscarriage: this.pwRegisterForm.value.miscarriage,
+            abortion: this.pwRegisterForm.value.abortion,
+            actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+            livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+            placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+          },
+          familyDeathRegister: {
+            deathStatus: this.pwRegisterForm.value.womenDeath,
+            timeOfDeath: this.pwRegisterForm.value.deathTime,
+            familyDeathComment: this.pwRegisterForm.value.deathReason
+          }
         }
-      }
-      console.log(Dto, 'reqAdd')
-      this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
-        console.log(res, 'responseAdd')
-        this.dialogRef.close();
-        this.showSuccess('Success');
-      }, error => {
-        this.dialogRef.close();
-        this.showError('Error')
-      });
-    } else {
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        pregnantWomanRegisterDto: {
-          pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
-          familyDetailId: this.data.familyDetailId,
-          initialWeight: this.pwRegisterForm.value.initialWeight,
-          lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-          expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-          antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-          firstAncCheckup: this.pwRegisterForm.value.anc1st,
-          secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-          thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-          fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-          pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-          weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-          delivery: this.pwRegisterForm.value.delivery,
-          miscarriage: this.pwRegisterForm.value.miscarriage,
-          abortion: this.pwRegisterForm.value.abortion,
-          actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-          livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-          placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-        },
-        familyDeathRegister: {
-          deathStatus: this.pwRegisterForm.value.womenDeath,
-          timeOfDeath: this.pwRegisterForm.value.deathTime,
-          familyDeathComment: this.pwRegisterForm.value.deathReason
+        console.log(Dto, 'reqAdd')
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+          console.log(res, 'responseAdd')
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        });
+      } else {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          pregnantWomanRegisterDto: {
+            pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
+            familyDetailId: this.data.familyDetailId,
+            initialWeight: this.pwRegisterForm.value.initialWeight,
+            lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+            expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+            antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+            firstAncCheckup: this.pwRegisterForm.value.anc1st,
+            secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+            thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+            fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+            pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+            weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+            delivery: this.pwRegisterForm.value.delivery,
+            miscarriage: this.pwRegisterForm.value.miscarriage,
+            abortion: this.pwRegisterForm.value.abortion,
+            actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+            livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+            placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+          },
+          familyDeathRegister: {
+            deathStatus: this.pwRegisterForm.value.womenDeath,
+            timeOfDeath: this.pwRegisterForm.value.deathTime,
+            familyDeathComment: this.pwRegisterForm.value.deathReason
+          }
         }
-      }
-      console.log(Dto, 'reqEdit')
-      this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
-        console.log(res, 'responseEdit')
-        this.dialogRef.close();
-        this.showSuccess('Success');
-      }, error => {
-        this.dialogRef.close();
-        this.showError('Error')
-      });
+        console.log(Dto, 'reqEdit')
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+          console.log(res, 'responseEdit')
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        });
 
+      }
     }
+
 
   }
 

@@ -29,8 +29,7 @@ export class ViewMuaclistComponent implements OnInit {
     this.viewMuacChildList();
 
     // this.regionBranchHide = this.sidebarService.regionBranchHide;
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
-      this.sidebarService.RoleDTOName == 'AC') {
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
       this.editMode = true;
     } else {
       this.editMode = false;

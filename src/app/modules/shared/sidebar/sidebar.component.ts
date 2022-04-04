@@ -34,10 +34,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.sidebarService.RoleDTOName = res?.responseObject?.RoledetailDTO?.roleShortName;
       this.menuList = res?.responseObject.menuDetailList;
       console.log(this.menuList, 'menuList');
+      this.checkRoledetailDTO();
     });
-
-
-    this.checkRoledetailDTO();
 
   }
 

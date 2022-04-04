@@ -47,16 +47,14 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     }
 
     //API call for viewing centralRegister
-    setTimeout(() => {
-      this.centralService.viewCentralRegister(obj).subscribe((response: any) => {
+    this.centralService.viewCentralRegister(obj).subscribe((response: any) => {
+      this.loader = true;
+      this.centralDetails = response.responseObject;
+      console.log(this.centralDetails);
+    },
+      (err) => {
         this.loader = true;
-        this.centralDetails = response.responseObject;
-        console.log(this.centralDetails);
-      },
-        (err) => {
-          this.loader = true;
-        })
-    }, 1000);
+      })
 
 
     this.httpBranch.listOfBranchUser().subscribe((res) => {

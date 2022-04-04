@@ -69,7 +69,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
     this.role = this.sidebarService.RoleDTOName;
     console.log(this.role);
-    
+
     this.createForm();
     this.getMinDate();
 
@@ -114,18 +114,16 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       regionId: regionId,
     };
     this.loader = false;
-    setTimeout(() => {
-      this.baselineService.listOfBranchesOfARegion(req).subscribe(
-        (res) => {
-          this.loader = true;
-          this.branchList = res?.responseObject;
-        },
-        (error) => {
-          this.loader = true;
-          this.branchList = null;
-        }
-      );
-    }, 500);
+    this.baselineService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.loader = true;
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.loader = true;
+        this.branchList = null;
+      }
+    );
     this.locationForm.controls.branch.setValue('');
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
@@ -150,12 +148,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       branchId: this.sidebarService.branchId
     }
     this.loader = false;
-    setTimeout(() => {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.loader = true;
-        this.villagesOfBranch = res.responseObject;
-      })
-    }, 500);
+    this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.loader = true;
+      this.villagesOfBranch = res.responseObject;
+    })
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
@@ -217,6 +213,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         },
           (err) => {
             this.loader = true;
+            this.showError('No Data Found');
           })
       }, 1000);
     }
