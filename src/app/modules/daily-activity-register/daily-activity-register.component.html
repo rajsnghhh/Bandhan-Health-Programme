@@ -1,0 +1,143 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Daily Activity Register</h2>
+
+                <form class="form-signin" [formGroup]="locationForm">
+
+                    <div class="row" >
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{
+                              'is-invalid': l.region.invalid && l.region.touched,
+                              'is-valid':
+                                l.region.valid && (l.region.dirty || l.region.touched)
+                            }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.region.errors" class="invalid-feedback">
+                                <div *ngIf="l.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{
+                              'is-invalid': l.branch.invalid && l.branch.touched,
+                              'is-valid':
+                                l.branch.valid && (l.branch.dirty || l.branch.touched)
+                            }">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.branch.errors" class="invalid-feedback">
+                                <div *ngIf="l.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" id="block" [ngClass]="{
+                              'is-invalid': l.block.invalid && l.block.touched,
+                              'is-valid':
+                                l.block.valid && (l.block.dirty || l.block.touched)
+                            }">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of villagesOfBranch">
+                                    {{ block.blockName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.block.errors" class="invalid-feedback">
+                                <div *ngIf="l.block.errors.required">Block selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{
+                              'is-invalid': l.gp.invalid && l.gp.touched,
+                              'is-valid': l.gp.valid && (l.gp.dirty || l.gp.touched)
+                            }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpDtoList">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.gp.errors" class="invalid-feedback">
+                                <div *ngIf="l.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeVillage($event.target.value)"
+                                formControlName="gram" id="gram" [ngClass]="{
+                              'is-invalid': l.gram.invalid && l.gram.touched,
+                              'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched)
+                            }">
+                                <option value="">-- Select Village --</option>
+                                <option *ngFor="let vill of villageDtoList">
+                                    {{ vill.villageName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.gram.errors" class="invalid-feedback">
+                                <div *ngIf="l.gram.errors.required">
+                                    Village selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search pem info here..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info"
+                                    style="table-layout: fixed; ">
+
+                                  
+
+                                </table>
+                                <!-- <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

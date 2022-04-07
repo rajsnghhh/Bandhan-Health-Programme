@@ -243,6 +243,7 @@ export class PwViewComponent implements OnInit {
   }
 
   onSave() {
+    
     console.log(this.pwRegisterForm.value)
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {

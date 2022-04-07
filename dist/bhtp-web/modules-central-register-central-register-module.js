@@ -683,15 +683,13 @@ class CentralRegisterViewComponent {
             id: 888
         };
         //API call for viewing centralRegister
-        setTimeout(() => {
-            this.centralService.viewCentralRegister(obj).subscribe((response) => {
-                this.loader = true;
-                this.centralDetails = response.responseObject;
-                console.log(this.centralDetails);
-            }, (err) => {
-                this.loader = true;
-            });
-        }, 1000);
+        this.centralService.viewCentralRegister(obj).subscribe((response) => {
+            this.loader = true;
+            this.centralDetails = response.responseObject;
+            console.log(this.centralDetails);
+        }, (err) => {
+            this.loader = true;
+        });
         this.httpBranch.listOfBranchUser().subscribe((res) => {
             res.responseObject.map((arr) => {
                 this.villageNames.push(arr.villageName);

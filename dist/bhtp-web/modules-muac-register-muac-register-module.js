@@ -8493,16 +8493,21 @@ class MuacRegisterCreateComponent {
         }
     }
     expectEndDate(e) {
-        var dtStartDate = new Date(e.target.value);
-        this.month = dtStartDate.getMonth() + 1;
-        this.day = dtStartDate.getDate() + 1;
-        this.year = dtStartDate.getFullYear();
+        // var dtStartDate = new Date(e.target.value);
+        // this.month = dtStartDate.getMonth() + 1;
+        // this.day = dtStartDate.getDate() + 1;
+        // this.year = dtStartDate.getFullYear();
         if (this.month < 10)
             this.month = '0' + this.month.toString();
         if (this.day < 10)
             this.day = '0' + this.day.toString();
-        var maxDate = this.year + '-' + this.month + '-' + this.day;
-        this.selStartDate = maxDate;
+        // var maxDate = this.year + '-' + this.month + '-' + this.day;
+        this.selStartDate = moment__WEBPACK_IMPORTED_MODULE_2__(this.addDays(1, new Date(e.target.value))).format('YYYY-MM-DD');
+        console.log(this.selStartDate);
+    }
+    addDays(numOfDays, date = new Date()) {
+        date.setDate(date.getDate() + numOfDays);
+        return date;
     }
     saveEditMuac() {
         let postBody = {
@@ -8612,7 +8617,7 @@ MuacRegisterCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MuacRegisterCreateComponent_Template_button_click_6_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r44); const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](49); return ctx.createModal(_r5); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Add Muac");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Add Muac Camp");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();

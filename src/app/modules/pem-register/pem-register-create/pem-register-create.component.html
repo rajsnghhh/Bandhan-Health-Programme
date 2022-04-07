@@ -364,7 +364,7 @@
                 <div class="row">
 
                     <div class="form-group col-md-3">
-                        <label for="delivery">Place of delivery:</label>
+                        <label for="delivery">Place of delivery: &nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="delivery" id="yes" value="Institution"
@@ -383,7 +383,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child (In kg):</label>
+                        <label for="birthweight">Birth weight of child (In kg): &nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" maxlength="5" (keyup)="birthWeightVal()"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
@@ -535,14 +536,23 @@
                 <div class="row">
 
                     <div class="form-group col-md-3">
-                        <label for="pemDate">Date of record keeping:
+                        <label for="pemDate">Date of record keeping: &nbsp;<span class="text-danger">*&nbsp;</span>
                         </label>
                         <input type="date" class="form-control" formControlName="pemDate"
-                            (keydown)="restrictTypeOfDate()" />
+                            (keydown)="restrictTypeOfDate()" [ngClass]="{
+                                'is-invalid': f.pemDate.invalid && f.pemDate.touched,
+                                'is-valid':
+                                  f.pemDate.valid && (f.pemDate.dirty || f.pemDate.touched)
+                              }" />
+                        <div *ngIf="f.pemDate.errors" class="invalid-feedback">
+                            <div *ngIf="f.pemDate.errors.required">
+                                Date of record keeping is required
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="height">Height (In cm):</label>
+                        <label for="height">Height (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
                             (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
@@ -560,7 +570,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="weight">Weight (In kg):</label>
+                        <label for="weight">Weight (In kg): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
                             (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
@@ -570,7 +580,7 @@
               }" />
                         <div *ngIf="f.weight.errors" class="invalid-feedback">
                             <div *ngIf="f.weight.errors.required">
-                                weight is required
+                                Weight is required
                             </div>
                         </div>
 
@@ -578,7 +588,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="muac">MUAC (In cm):</label>
+                        <label for="muac">MUAC (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" maxlength="4" placeholder="Muac (In cm)"
                             (keyup)="muacVal()" (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
@@ -713,16 +723,17 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child (In kg):</label>
+                        <label for="birthweight">Birth weight of child (In kg): &nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" maxlength="5"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" (keyup)="birthWeightVal()"
                             placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
-                    'is-invalid': f.birthweight.invalid && f.birthweight.touched,
+                    'is-invalid': e.birthweight.invalid && e.birthweight.touched,
                     'is-valid':
-                      f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
+                      e.birthweight.valid && (e.birthweight.dirty || e.birthweight.touched)
                   }" />
-                        <div *ngIf="f.birthweight.errors" class="invalid-feedback">
-                            <div *ngIf="f.birthweight.errors.required">
+                        <div *ngIf="e.birthweight.errors" class="invalid-feedback">
+                            <div *ngIf="e.birthweight.errors.required">
                                 Birth weight is required
                             </div>
                         </div>
@@ -863,23 +874,32 @@
                 <div class="row">
 
                     <div class="form-group col-md-3">
-                        <label for="pemDate">Date of record keeping:
+                        <label for="pemDate">Date of record keeping: &nbsp;<span class="text-danger">*&nbsp;</span>
                         </label>
                         <input type="date" class="form-control" formControlName="pemDate"
-                            (keydown)="restrictTypeOfDate()" />
+                            (keydown)="restrictTypeOfDate()" [ngClass]="{
+                                'is-invalid': e.pemDate.invalid && e.pemDate.touched,
+                                'is-valid':
+                                  e.pemDate.valid && (e.pemDate.dirty || e.pemDate.touched)
+                              }" />
+                        <div *ngIf="e.pemDate.errors" class="invalid-feedback">
+                            <div *ngIf="e.pemDate.errors.required">
+                                Date of record keeping is required
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="height">Height (In cm):</label>
+                        <label for="height">Height (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
                             (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
-                'is-invalid': f.height.invalid && f.height.touched,
+                'is-invalid': e.height.invalid && e.height.touched,
                 'is-valid':
-                  f.height.valid && (f.height.dirty || f.height.touched)
+                  e.height.valid && (e.height.dirty || e.height.touched)
               }" />
-                        <div *ngIf="f.height.errors" class="invalid-feedback">
-                            <div *ngIf="f.height.errors.required">
+                        <div *ngIf="e.height.errors" class="invalid-feedback">
+                            <div *ngIf="e.height.errors.required">
                                 Height is required
                             </div>
                         </div>
@@ -888,16 +908,16 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="weight">Weight (In kg):</label>
+                        <label for="weight">Weight (In kg): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
                             (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
-                'is-invalid': f.weight.invalid && f.weight.touched,
+                'is-invalid': e.weight.invalid && e.weight.touched,
                 'is-valid':
-                  f.weight.valid && (f.weight.dirty || f.weight.touched)
+                  e.weight.valid && (e.weight.dirty || e.weight.touched)
               }" />
-                        <div *ngIf="f.weight.errors" class="invalid-feedback">
-                            <div *ngIf="f.weight.errors.required">
+                        <div *ngIf="e.weight.errors" class="invalid-feedback">
+                            <div *ngIf="e.weight.errors.required">
                                 weight is required
                             </div>
                         </div>
@@ -906,16 +926,16 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="muac">MUAC (In cm):</label>
+                        <label for="muac">MUAC (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" maxlength="4" placeholder="Muac (In cm)"
                             (keyup)="muacVal()" (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
-                    'is-invalid': f.muac.invalid && f.muac.touched,
+                    'is-invalid': e.muac.invalid && e.muac.touched,
                     'is-valid':
-                      f.muac.valid && (f.muac.dirty || f.muac.touched)
+                      e.muac.valid && (e.muac.dirty || e.muac.touched)
                   }" />
-                        <div *ngIf="f.muac.errors" class="invalid-feedback">
-                            <div *ngIf="f.muac.errors.required">
+                        <div *ngIf="e.muac.errors" class="invalid-feedback">
+                            <div *ngIf="e.muac.errors.required">
                                 MUAC is required
                             </div>
                         </div>

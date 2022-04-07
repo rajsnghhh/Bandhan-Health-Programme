@@ -367,8 +367,8 @@ class SidebarComponent {
             this.sidebarService.RoleDTOName = (_f = (_e = res === null || res === void 0 ? void 0 : res.responseObject) === null || _e === void 0 ? void 0 : _e.RoledetailDTO) === null || _f === void 0 ? void 0 : _f.roleShortName;
             this.menuList = res === null || res === void 0 ? void 0 : res.responseObject.menuDetailList;
             console.log(this.menuList, 'menuList');
+            this.checkRoledetailDTO();
         });
-        this.checkRoledetailDTO();
     }
     checkRoledetailDTO() {
         let req = {
