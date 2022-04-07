@@ -132,6 +132,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/pw-register']);
     }
 
+    if (routeId == 137) {
+      this.router.navigate(['/daily-activity-register']);
+    }
+
   }
 
 

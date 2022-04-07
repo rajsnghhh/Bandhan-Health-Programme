@@ -3092,9 +3092,7 @@ class LocationComponent {
     }
     ngOnInit() {
         this.createForm();
-        setTimeout(() => {
-            this.getLocationHco();
-        }, 500);
+        this.getLocationHco();
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
     }
@@ -3124,16 +3122,11 @@ class LocationComponent {
             },
             regionId: regionId,
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-                this.loader = true;
-                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
-            }, (error) => {
-                this.loader = true;
-                this.branchList = null;
-            });
-        }, 500);
+        this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
+            this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+        }, (error) => {
+            this.branchList = null;
+        });
         this.locationForm.controls.branch.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -3156,14 +3149,10 @@ class LocationComponent {
             },
             branchId: this.sidebarService.branchId
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                this.loader = true;
-                this.villagesOfBranch = res.responseObject;
-                console.log(this.villagesOfBranch, 'villagesOfBranch2');
-            });
-        }, 500);
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch2');
+        });
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');
@@ -3207,17 +3196,12 @@ class LocationComponent {
             villageId: villId,
             userId: this.sidebarService.userId
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.ssVillageWiseList(req).subscribe((res) => {
-                console.log(res);
-                this.loader = true;
-                this.swasthyaSahayika = res.responseObject;
-            }, (error) => {
-                this.loader = true;
-                this.swasthyaSahayika = null;
-            });
-        }, 500);
+        this.baselineService.ssVillageWiseList(req).subscribe((res) => {
+            console.log(res);
+            this.swasthyaSahayika = res.responseObject;
+        }, (error) => {
+            this.swasthyaSahayika = null;
+        });
         this.locationForm.controls.swasthyaSahayika.setValue('');
     }
     changeSS(ss) {
@@ -4380,16 +4364,14 @@ class BaselineViewComponent {
             dataAccessDTO: dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
-        setTimeout(() => {
-            if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-                this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                    if (res.sessionDTO.status == true) {
-                        this.villagesOfBranch = res.responseObject;
-                        console.log(this.villagesOfBranch, 'villagesOfBranch1');
-                    }
-                });
-            }
-        }, 1000);
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+                if (res.sessionDTO.status == true) {
+                    this.villagesOfBranch = res.responseObject;
+                    console.log(this.villagesOfBranch, 'villagesOfBranch1');
+                }
+            });
+        }
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
     }
@@ -4403,16 +4385,11 @@ class BaselineViewComponent {
             },
             regionId: regionId,
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-                this.loader = true;
-                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
-            }, (error) => {
-                this.loader = true;
-                this.branchList = null;
-            });
-        }, 500);
+        this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
+            this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+        }, (error) => {
+            this.branchList = null;
+        });
         this.locationForm.controls.branch.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -4436,14 +4413,10 @@ class BaselineViewComponent {
             },
             branchId: this.sidebarService.branchId
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                this.loader = true;
-                this.villagesOfBranch = res.responseObject;
-                console.log(this.villagesOfBranch, 'villagesOfBranch2');
-            });
-        }, 500);
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch2');
+        });
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');

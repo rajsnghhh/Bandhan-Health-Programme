@@ -228,15 +228,15 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
     this.pemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
-      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : ''],
-      height: [''],
-      weight: [''],
+      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : '', Validators.required],
+      height: ['', Validators.required],
+      weight: ['', Validators.required],
       breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
       breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
       breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
       breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
-      pemDate: [''],
-      muac: [''],
+      pemDate: ['', Validators.required],
+      muac: ['', Validators.required],
       immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
       immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
       diarrhea: [item?.latestPemCounsellingExperiencedDiarrhea ? item?.latestPemCounsellingExperiencedDiarrhea : ''],
@@ -249,6 +249,10 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   get f() {
     return this.pemForm.controls;
+  }
+
+  get e() {
+    return this.editPemForm.controls;
   }
 
   get l() {
@@ -428,13 +432,23 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   savePEMRegisterEntry() {
     let item = this.pemForm.value;
 
+    if (item.delivery == '') {
+      this.showError('Please select delivery');
+      return;
+    }
+
+    if (item.birthweight == '') {
+      this.showError('Please select birth weight');
+      return;
+    }
+
     if (item.pemDate == '') {
       this.showError('Please select date of record keeping');
       return;
     }
 
-    if (item.muac == '') {
-      this.showError('Please enter muac value');
+    if (item.height == '') {
+      this.showError('Please enter height');
       return;
     }
 
@@ -443,8 +457,18 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       return;
     }
 
+    if (item.weight == '') {
+      this.showError('Please enter weight');
+      return;
+    }
+
     if (this.pemForm.value.weight > 25) {
       this.showError('Weight should be under 25kg');
+      return;
+    }
+
+    if (item.muac == '') {
+      this.showError('Please enter muac value');
       return;
     }
 
@@ -482,12 +506,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         birthWeight: item.birthweight,
         firstVisitDate: this.firstVisitDate,
         secondVisitDate: this.secondVisitDate,
-        ebfUpto6Complete: item.breastfeeding6,
-        primaryImmunizationUpto12Completed: item.immunization12,
-        ebfUpto12Complete: item.breastfeeding12,
-        ebfUpto18Complete: item.breastfeeding18,
-        primaryImmunizationUpto24Completed: item.immunization24,
-        ebfUpto24Complete: item.breastfeeding24
+        ebfUpto6Complete: item.breastfeeding6 ? item.breastfeeding6 : null,
+        primaryImmunizationUpto12Completed: item.immunization12 ? item.immunization12 : null,
+        ebfUpto12Complete: item.breastfeeding12 ? item.breastfeeding12 : null,
+        ebfUpto18Complete: item.breastfeeding18 ? item.breastfeeding18 : null,
+        primaryImmunizationUpto24Completed: item.immunization24 ? item.immunization24 : null,
+        ebfUpto24Complete: item.breastfeeding24 ? item.breastfeeding24 : null
       }
     }
 
@@ -572,15 +596,15 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
     this.editPemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
-      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : ''],
-      height: [item?.muacData?.height ? item?.muacData?.height : ''],
-      weight: [item?.muacData?.weight ? item?.muacData?.weight : ''],
+      birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : '', Validators.required],
+      height: [item?.muacData?.height ? item?.muacData?.height : '', Validators.required],
+      weight: [item?.muacData?.weight ? item?.muacData?.weight : '', Validators.required],
       breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
       breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
       breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
       breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
-      pemDate: [item?.pemDate],
-      muac: [item?.muacData?.muac ? item?.muacData?.muac : ''],
+      pemDate: [item?.pemDate, Validators.required],
+      muac: [item?.muacData?.muac ? item?.muacData?.muac : '', Validators.required],
       immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
       immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
       diarrhea: [item?.experiencedDiarrhea ? item?.experiencedDiarrhea : ''],
@@ -596,19 +620,43 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     console.log(this.saveEditFormData);
     var set = this.saveEditFormData;
 
-    if (item.muac == '') {
-      this.showError('Please enter muac value');
+    if (item.delivery == '') {
+      this.showError('Please select delivery');
       return;
     }
 
+    if (item.birthweight == '') {
+      this.showError('Please select birth weight');
+      return;
+    }
 
-    if (this.editPemForm.value.height < 10 || this.editPemForm.value.height > 180) {
+    if (item.pemDate == '') {
+      this.showError('Please select date of record keeping');
+      return;
+    }
+
+    if (item.height == '') {
+      this.showError('Please enter height');
+      return;
+    }
+
+    if (parseInt(this.editPemForm.value.height) < 10 || parseInt(this.editPemForm.value.height) > 180) {
       this.showError('Height should be between 10cm to 180cm');
+      return;
+    }
+
+    if (item.weight == '') {
+      this.showError('Please enter weight');
       return;
     }
 
     if (this.editPemForm.value.weight > 25) {
       this.showError('Weight should be under 25kg');
+      return;
+    }
+
+    if (item.muac == '') {
+      this.showError('Please enter muac value');
       return;
     }
 
@@ -621,6 +669,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       this.showError('Birth weight should not be more than 9 years');
       return;
     }
+
 
     let pemBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -646,12 +695,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         birthWeight: item.birthweight ? item.birthweight : '',
         firstVisitDate: set.childBasicStatusDto.firstVisitDate,
         secondVisitDate: set.childBasicStatusDto.secondVisitDate,
-        ebfUpto6Complete: item.breastfeeding6 ? item.breastfeeding6 : '',
-        primaryImmunizationUpto12Completed: item.immunization12 ? item.immunization12 : '',
-        ebfUpto12Complete: item.breastfeeding12 ? item.breastfeeding12 : '',
-        ebfUpto18Complete: item.breastfeeding18 ? item.breastfeeding18 : '',
-        primaryImmunizationUpto24Completed: item.immunization24 ? item.immunization24 : '',
-        ebfUpto24Complete: item.breastfeeding24 ? item.breastfeeding24 : ''
+        ebfUpto6Complete: item.breastfeeding6 ? item.breastfeeding6 : null,
+        primaryImmunizationUpto12Completed: item.immunization12 ? item.immunization12 : null,
+        ebfUpto12Complete: item.breastfeeding12 ? item.breastfeeding12 : null,
+        ebfUpto18Complete: item.breastfeeding18 ? item.breastfeeding18 : null,
+        primaryImmunizationUpto24Completed: item.immunization24 ? item.immunization24 : null,
+        ebfUpto24Complete: item.breastfeeding24 ? item.breastfeeding24 : null
       }
     }
 
@@ -736,12 +785,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     console.log(this.pemForm.value.height);
 
 
-    if (this.pemForm.value.height < 10 || this.pemForm.value.height > 180) {
+    if (parseInt(this.pemForm.value.height) < 10 || parseInt(this.pemForm.value.height) > 180) {
       this.showError('Height should be between 10cm to 180cm');
       return;
     }
 
-    if (this.editPemForm?.value.height < 10 || this.editPemForm?.value.height > 180) {
+    if (parseInt(this.editPemForm?.value.height) < 10 || parseInt(this.editPemForm?.value.height) > 180) {
       this.showError('Height should be between 10cm to 180cm');
       return;
     }
@@ -751,12 +800,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   weightVal() {
 
-    if (this.pemForm.value.weight > 25) {
+    if (parseInt(this.pemForm.value.weight) > 25) {
       this.showError('Weight should be under 25kg');
       return;
     }
 
-    if (this.editPemForm?.value.weight > 25) {
+    if (parseInt(this.editPemForm?.value.weight) > 25) {
       this.showError('Weight should be under 25kg');
       return;
     }
@@ -766,12 +815,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   muacVal() {
 
-    if (this.pemForm.value.muac > 30) {
+    if (parseInt(this.pemForm.value.muac) > 30) {
       this.showError('Muac should be under 30cm');
       return;
     }
 
-    if (this.editPemForm?.value.muac > 30) {
+    if (parseInt(this.editPemForm?.value.muac) > 30) {
       this.showError('Muac should be under 30cm');
       return;
     }
@@ -781,12 +830,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   birthWeightVal() {
 
-    if (this.pemForm.value.birthweight > 9) {
+    if (parseInt(this.pemForm.value.birthweight) > 9) {
       this.showError('Birth weight should not be more than 9 years');
       return;
     }
 
-    if (this.editPemForm?.value.birthweight > 9) {
+    if (parseInt(this.editPemForm?.value.birthweight) > 9) {
       this.showError('Birth weight should not be more than 9 years');
       return;
     }

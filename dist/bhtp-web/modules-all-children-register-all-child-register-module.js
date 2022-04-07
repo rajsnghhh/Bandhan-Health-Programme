@@ -552,20 +552,17 @@ class AllChildRegisterComponent {
             dataAccessDTO: dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
-        setTimeout(() => {
-            if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-                this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                    if (res.sessionDTO.status == true) {
-                        this.villagesOfBranch = res.responseObject;
-                        console.log(this.villagesOfBranch, 'villagesOfBranch1');
-                    }
-                });
-            }
-        }, 500);
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+                if (res.sessionDTO.status == true) {
+                    this.villagesOfBranch = res.responseObject;
+                    console.log(this.villagesOfBranch, 'villagesOfBranch1');
+                }
+            });
+        }
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
-        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
-            this.sidebarService.RoleDTOName == 'AC') {
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
             this.editMode = true;
         }
         else {
@@ -582,13 +579,11 @@ class AllChildRegisterComponent {
             },
             regionId: regionId,
         };
-        setTimeout(() => {
-            this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
-            }, (error) => {
-                this.branchList = null;
-            });
-        }, 500);
+        this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
+            this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+        }, (error) => {
+            this.branchList = null;
+        });
         this.locationForm.controls.branch.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -613,12 +608,10 @@ class AllChildRegisterComponent {
             },
             branchId: this.sidebarService.branchId
         };
-        setTimeout(() => {
-            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                this.villagesOfBranch = res.responseObject;
-                console.log(this.villagesOfBranch, 'villagesOfBranch2');
-            });
-        }, 500);
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch2');
+        });
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');
@@ -957,8 +950,7 @@ class ViewMuaclistComponent {
         this.childId = this.data.childId;
         this.viewMuacChildList();
         // this.regionBranchHide = this.sidebarService.regionBranchHide;
-        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
-            this.sidebarService.RoleDTOName == 'AC') {
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
             this.editMode = true;
         }
         else {

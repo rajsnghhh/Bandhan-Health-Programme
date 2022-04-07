@@ -1501,16 +1501,14 @@ class LmViewComponent {
             dataAccessDTO: dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
-        setTimeout(() => {
-            if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-                this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                    if (res.sessionDTO.status == true) {
-                        this.villagesOfBranch = res.responseObject;
-                        console.log(this.villagesOfBranch, 'villagesOfBranch1');
-                    }
-                });
-            }
-        }, 500);
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+                if (res.sessionDTO.status == true) {
+                    this.villagesOfBranch = res.responseObject;
+                    console.log(this.villagesOfBranch, 'villagesOfBranch1');
+                }
+            });
+        }
         this.regionList = this.sidebarService.listOfRegion;
         this.regionBranchHide = this.sidebarService.regionBranchHide;
         if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
@@ -1532,13 +1530,11 @@ class LmViewComponent {
             },
             regionId: regionId,
         };
-        setTimeout(() => {
-            this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
-            }, (error) => {
-                this.branchList = null;
-            });
-        }, 500);
+        this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
+            this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+        }, (error) => {
+            this.branchList = null;
+        });
         this.locationForm.controls.branch.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -1561,12 +1557,10 @@ class LmViewComponent {
             },
             branchId: this.sidebarService.branchId
         };
-        setTimeout(() => {
-            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                this.villagesOfBranch = res.responseObject;
-                console.log(this.villagesOfBranch, 'villagesOfBranch2');
-            });
-        }, 500);
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch2');
+        });
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');
@@ -1650,13 +1644,22 @@ class LmViewComponent {
       After that it is editable */
     openAddEditLmChild(index) {
         console.log(this.lactatingmotherregister[index]);
+        let saveForm;
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
             childId: this.lactatingmotherregister[index].childDetailId,
         };
         this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res) => {
-            if (res.responseObject.length == 0 && (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery ==
-                this.lactatingmotherregister[index].childBasicStatusDto.birthWeight)) {
+            if (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery == null &&
+                this.lactatingmotherregister[index].childBasicStatusDto.birthWeight == null &&
+                this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate == null &&
+                this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate == null) {
+                saveForm = true;
+            }
+            else {
+                saveForm = false;
+            }
+            if (res.responseObject.length == 0 && saveForm) {
                 const dialogRef = this.dialog.open(_add_lm_child_add_lm_child_component__WEBPACK_IMPORTED_MODULE_3__["AddLmChildComponent"], {
                     width: '1000px',
                     height: '550px',

@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'acr', loadChildren: () => import('./modules/all-children-register/all-child-register.module').then(m => m.AllChildRegisterModule), canActivate: [AuthGuard] },
   { path: 'lmr', loadChildren: () => import('./modules/lactating-mother-register/lm-register.module').then(m => m.LmRegisterModule), canActivate: [AuthGuard] },
   { path: 'pw-register', loadChildren: () => import('./modules/pregnant-women-register/pw-register.module').then(m => m.PwRegisterModule), canActivate: [AuthGuard] },
+  { path: 'daily-activity-register', loadChildren: () => import('./modules/daily-activity-register/daily-activity-register.module').then(m => m.DailyActivityRegisterModule) },
   { path: '**', redirectTo: '' },
 ];
 

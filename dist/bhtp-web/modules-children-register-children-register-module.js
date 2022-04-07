@@ -650,16 +650,11 @@ class ChildrenRegisterCreateComponent {
             },
             regionId: regionId,
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
-                this.loader = true;
-                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
-            }, (error) => {
-                this.loader = true;
-                this.branchList = null;
-            });
-        }, 500);
+        this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
+            this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+        }, (error) => {
+            this.branchList = null;
+        });
         this.locationForm.controls.branch.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -683,13 +678,9 @@ class ChildrenRegisterCreateComponent {
             },
             branchId: this.sidebarService.branchId
         };
-        this.loader = false;
-        setTimeout(() => {
-            this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-                this.loader = true;
-                this.villagesOfBranch = res.responseObject;
-            });
-        }, 500);
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+            this.villagesOfBranch = res.responseObject;
+        });
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');
@@ -750,6 +741,7 @@ class ChildrenRegisterCreateComponent {
                     });
                 }, (err) => {
                     this.loader = true;
+                    this.showError('No Data Found');
                 });
             }, 1000);
         }
