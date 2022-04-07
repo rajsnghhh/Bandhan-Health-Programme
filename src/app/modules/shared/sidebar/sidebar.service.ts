@@ -18,6 +18,7 @@ export class SidebarService {
   branchName: any;
   swasthyaSahayikaId: any
   swasthyaSahayikaName: any;
+  subMenuList: Array<any> = [];
 
   constructor(private http: HttpClient) { }
   //HCO ** TL

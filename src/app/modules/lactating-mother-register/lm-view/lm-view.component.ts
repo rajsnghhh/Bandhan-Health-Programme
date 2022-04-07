@@ -35,8 +35,7 @@ export class LmViewComponent implements OnInit, DoCheck {
   searchFullscreen: boolean;
   lmrSearch: string | number;
   loader: boolean = false;
-  roleAccess: boolean;
-
+  createUpdateMode: boolean;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe,
@@ -73,12 +72,16 @@ export class LmViewComponent implements OnInit, DoCheck {
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
 
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1 ||
-      this.sidebarService.RoleDTOName == 'AC') {
-      this.roleAccess = true;
+    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+      this.regionBranchHide = false;
     } else {
-      this.roleAccess = false;
+      this.regionBranchHide = true;
     }
+
+    this.createUpdateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 
   /* on change Region dropdown getting Branch list */

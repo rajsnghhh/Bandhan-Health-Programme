@@ -18,8 +18,11 @@ export class SinglePwListComponent implements OnInit {
   pwName: string;
   familyNumber: any;
   husbandOrGuardianName: any;
-  createDisable: boolean;
+  // createDisable: boolean;
   pregnantWomanRegisterDetailList: Array<any> = [];
+  updateMode: boolean;
+  deleteMode: boolean;
+  createMode: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SinglePwListComponent>,
     public dialog: MatDialog, private httpService: HttpService, private confirmationDialogService: ConfirmationDialogService,
@@ -33,6 +36,21 @@ export class SinglePwListComponent implements OnInit {
     this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
     this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
     this.pregnantWomanRegisterDetailList = this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 
   /* get the all Pregnant Women List */
@@ -41,13 +59,13 @@ export class SinglePwListComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
-    let previouslength = this.pregnantWomanRegisterDetailList.length;
+    // let previouslength = this.pregnantWomanRegisterDetailList.length;
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
       this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList[this.data.index].pregnantWomanRegisterDetailList;
-      this.createDisable = (this.pregnantWomanRegisterDetailList.length > previouslength) ? true : false;
+      // this.createDisable = (this.pregnantWomanRegisterDetailList.length > previouslength) ? true : false;
     })
   }
 
@@ -108,7 +126,7 @@ export class SinglePwListComponent implements OnInit {
         })
       }).catch(() => '');
     } else {
-      this.showError('Always delete last one');
+      this.showError('Error');
     }
 
   }
@@ -123,7 +141,7 @@ export class SinglePwListComponent implements OnInit {
     });
   }
   showError(message) {
-    this.toaster.error(message, 'Pregnant Women', {
+    this.toaster.error(message, 'Always delete last one', {
       timeOut: 3000,
     });
   }

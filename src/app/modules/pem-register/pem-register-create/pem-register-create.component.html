@@ -134,7 +134,7 @@
                                             <th style="padding: 0px;">Age</th>
                                             <th>Current<br>Status</th>
                                             <th>PEM Register<br> Data Entry</th>
-                                            <th>Add PEM</th>
+                                            <th *ngIf="createMode">Add PEM</th>
                                         </tr>
                                     </thead>
 
@@ -155,7 +155,7 @@
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
                                                 (click)="openModal(pemData, pem.childId, pem.childAge)">View
                                             </td>
-                                            <td style="padding: 0px;"> <i class="fa fa-plus" title="Create PEM"
+                                            <td style="padding: 0px;" *ngIf="createMode"> <i class="fa fa-plus" title="Create PEM"
                                                     (click)="addPemModal(addPem, pem.childId, pem)"></i>
                                             </td>
                                         </tr>
@@ -334,9 +334,9 @@
                         <td>{{item.experiencedDiarrhea}}</td>
                         <td>{{item.supplementaryFood}}</td>
                         <td>{{item.visitingHcareCenter}}</td>
-                        <td><i class="fas fa-edit" title="Edit PEM"
-                                (click)="editPEMData(item,i,editPem,item.pemCounsellingDataMasterId)"> </i> <i
-                                class="fas fa-trash" title="Delete PEM" (click)="deletePEMData(item, i)"></i></td>
+                        <td><i class="fas fa-edit" title="Edit PEM" *ngIf="updateMode"
+                                (click)="editPEMData(item,i,editPem,item.pemCounsellingDataMasterId)"> </i>
+                            <i class="fas fa-trash" title="Delete PEM" *ngIf="deleteMode" (click)="deletePEMData(item, i)"></i></td>
                     </tr>
 
                 </tbody>

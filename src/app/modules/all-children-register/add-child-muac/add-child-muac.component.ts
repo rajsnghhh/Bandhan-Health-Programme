@@ -3,9 +3,12 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { MuacRegisterService } from '../../muac-register/muac-register.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { AcrService } from '../acr.service';
 
 @Component({
@@ -16,10 +19,14 @@ import { AcrService } from '../acr.service';
 export class AddChildMuacComponent implements OnInit {
   muacForm: FormGroup;
   editMode: boolean;
+  muacCampList: Array<any> = [];
+  campDate: boolean;
+  childMuac: Array<any> = [];
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, public acrService: AcrService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddChildMuacComponent>) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddChildMuacComponent>,
+    private sidebarService: SidebarService, private muacService: MuacRegisterService,) {
     dialogRef.disableClose = true;
   }
 
@@ -30,16 +37,37 @@ export class AddChildMuacComponent implements OnInit {
       this.muacForm.reset();
     } else {
       this.muacForm.patchValue({
-        muacCampNo: (this.data?.muacCampDto?.muacCampNumber),
+        muacCampNo: (this.data?.muacCampNumber),
         height: (this.data.height),
         weight: (this.data.weight),
         muac: (this.data.muac)
       })
     }
+
+    let obj = {
+      activeStatus: 'A',
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      id: this.sidebarService.branchId
+    }
+    this.muacService.muacCampList(obj).subscribe((response: any) => {
+      this.muacCampList = response.responseObject.muaccampDetailList;
+    })
+
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      childId: this.data.childId
+    }
+    this.http.post(`${this.httpService.baseURL}muaccamp/viewMuacRegistersOfAChild`, Dto).subscribe((res: any) => {
+      this.childMuac = res.responseObject;
+    })
   }
+
   createForm() {
     this.muacForm = this.fb.group({
-      muacCampNo: [''],
+      muacCampNo: [null],
       height: ['', this.heightRange],
       weight: ['', this.weightRange],
       muac: ['', [Validators.required, this.muacRange]],
@@ -47,6 +75,11 @@ export class AddChildMuacComponent implements OnInit {
   }
   get f() {
     return this.muacForm.controls;
+  }
+
+  campNo(Id) {
+    this.campDate = (this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.startDate >
+      moment(new Date()).format('YYYY-MM-DD')) ? false : true;
   }
 
   muacRange(controls: AbstractControl): { [key: string]: any } | null {
@@ -72,13 +105,13 @@ export class AddChildMuacComponent implements OnInit {
 
   onAddEdit() {
     this.muacForm.markAllAsTouched();
-    debugger;
+    console.log(this.muacForm)
     if (this.editMode === true && this.muacForm.valid) {
       let addDto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         muacDataDto: {
           muacRegisterId: 0,
-          muacCampId: null,
+          muacCampId: this.muacForm.value.muacCampNo,
           childId: this.data.childId,
           height: this.muacForm.value.height,
           weight: this.muacForm.value.weight,
@@ -86,19 +119,21 @@ export class AddChildMuacComponent implements OnInit {
           active_flag: "A"
         }
       }
-      this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
-        this.dialogRef.close();
-        this.showSuccess('Success');
-      }, error => {
-        this.dialogRef.close();
-        this.showError('Error')
-      })
+      if (this.campDate) {
+        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        })
+      }
     } else {
       let editDto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         muacDataDto: {
           muacRegisterId: this.data.muacRegisterId,
-          muacCampId: this.data?.muacCampDto?.muacCampId,
+          muacCampId: this.muacForm.value.muacCampNo,
           childId: this.data.childId,
           height: this.muacForm.value.height,
           weight: this.muacForm.value.weight,

@@ -24,7 +24,6 @@ export class PwViewComponent implements OnInit {
   showMessage: any;
   actualDeliveryDate: any;
   MotherDeath: any;
-  acMode: boolean;
   miscarriage: boolean;
   abortion: boolean;
 
@@ -38,12 +37,6 @@ export class PwViewComponent implements OnInit {
     console.log(this.data)
     this.createForm();
     this.enableActualDelivery();
-
-    if (this.sidebarService.RoleDTOName == 'AC') {
-      this.acMode = true;
-    } else {
-      this.acMode = false;
-    }
 
     if (this.data.createMode == true) {
       this.create = 'Create';
@@ -68,6 +61,19 @@ export class PwViewComponent implements OnInit {
         liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
         deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
       })
+    }
+
+    if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
+      this.checkAncComplete = true;
+    } else {
+      this.checkAncComplete = false;
+    }
+
+    if (this.data.pregnantWomanRegisterData.actualDateOfDelivery !== null) {
+      this.deliveryStatusYes = true;
+      this.pwRegisterForm.controls['actualDeliveryDate'].enable();
+      this.pwRegisterForm.controls['liveStill'].enable();
+      this.pwRegisterForm.controls['deliveryPlace'].enable();
     }
   }
 
@@ -243,7 +249,6 @@ export class PwViewComponent implements OnInit {
   }
 
   onSave() {
-    
     console.log(this.pwRegisterForm.value)
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {
@@ -334,7 +339,7 @@ export class PwViewComponent implements OnInit {
   }
   /* Show success message toaster */
   showSuccess(message) {
-    this.toaster.success(message, 'Child MUAC Save', {
+    this.toaster.success(message, 'Pregnant Woman Details Save', {
       timeOut: 3000,
     });
   }
