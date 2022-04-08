@@ -117,23 +117,23 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/muac-register/create']);
     }
 
-    if (routeId == 113) {
+    if (routeId == 113 || routeId == 115) {
       this.router.navigate(['/pem-register/create']);
     }
 
-    if (routeId == 121) {
+    if (routeId == 121 || routeId == 123) {
       this.router.navigate(['/lmr']);
     }
 
-    if (routeId == 105) {
+    if (routeId == 105 || routeId == 107) {
       this.router.navigate(['/acr']);
     }
 
-    if (routeId == 129) {
+    if (routeId == 129 || routeId == 131) {
       this.router.navigate(['/pw-register']);
     }
 
-    if (routeId == 137) {
+    if (routeId == 137 || routeId == 147) {
       this.router.navigate(['/daily-activity-register']);
     }
 

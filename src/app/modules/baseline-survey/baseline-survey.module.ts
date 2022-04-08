@@ -21,7 +21,7 @@ import { LocationModule } from './location/location.module';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    LoaderModule, LocationModule
+    LoaderModule, LocationModule, 
   ]
 
 })

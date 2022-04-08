@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   templateUrl: './baseline-view.component.html',
   styleUrls: ['./baseline-view.component.css']
 })
+
 export class BaselineViewComponent implements OnInit {
   locationForm: FormGroup;
   baselineDetails: any;
@@ -25,7 +26,7 @@ export class BaselineViewComponent implements OnInit {
   page = 1;
   pageSize = 6;
   familyStatus: any;
-  registerSearch: String;
+  registerSearch: any;
   householdId: any;
   aaa: boolean;
   searchFullscreen: boolean;
@@ -47,6 +48,7 @@ export class BaselineViewComponent implements OnInit {
   finalDelHH: any;
   moreDetails: any;
   role: any;
+
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
