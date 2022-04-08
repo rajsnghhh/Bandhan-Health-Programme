@@ -3,7 +3,7 @@
         <h2 class="dialog-title">Pregnant Woman List </h2>
         <div>
             <button type="submit" class="btn btn-outline-warning" (click)="openHistory()">History</button> &nbsp;&nbsp;
-            <button type="submit" class="btn btn-success" (click)="openCreatePage()" [disabled]="createDisable">Create</button>
+            <button type="submit" class="btn btn-success" *ngIf="createMode" (click)="openCreatePage()" >Create</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-times" (click)="closeDialog()"></i>
         </div>
@@ -43,8 +43,8 @@
                             <td>{{item.expectedDateOfDelivery == null ? '-' : item.expectedDateOfDelivery}}</td>
                             <td>{{item.actualDateOfDelivery == null ? '-' : item.actualDateOfDelivery}}</td>
                             <td>
-                                <i class="fas fa-edit" title="Edit" (click)="openPwView(i)"></i>
-                                <i class="fas fa-trash" title="Wrong Entry" (click)="deletePregnency(item,i)"></i>
+                                <i class="fas fa-edit" title="Edit" *ngIf="updateMode" (click)="openPwView(i)"></i>
+                                <i class="fas fa-trash" title="Wrong Entry" *ngIf="deleteMode" (click)="deletePregnency(item,i)"></i>
                             </td>
                         </tr>
                     </tbody>

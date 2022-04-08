@@ -10,7 +10,18 @@
             <div class="form-group col-md">
                 <label for="initialWeight">Initial Weight (kg):</label>
                 <input type="text" class="form-control" placeholder="Enter weight" formControlName="initialWeight" 
-                (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"/>
+                (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"
+                [ngClass]="{
+                    'is-invalid': f.initialWeight.invalid && f.initialWeight.touched,
+                    'is-valid':
+                      f.initialWeight.valid &&
+                      (f.initialWeight.dirty || f.initialWeight.touched)
+                  }"/>
+                  <div *ngIf="f.initialWeight.errors" class="invalid-feedback">
+                    <div *ngIf="f.initialWeight.errors.notInWeightRange">
+                      Weight should be 20 to 200 kg
+                    </div>
+                  </div>
             </div>
             <div class="form-group col-md">
                 <label for="lastMenstrualDate">Last Menstrual Period (LMP):</label>
@@ -20,7 +31,7 @@
             <div class="form-group col-md">
                 <label for="expectedDeliveryDate">Expected Date of Delivery (EDD):</label>
                 <input type="date" class="form-control" formControlName="expectedDeliveryDate" placeholder="dd-mm-yyyy"
-                (change)="enableActualDelivery()"/>
+                (change)="enableActualDelivery()" [min]="actualDeliveryDate"/>
             </div>
             <div class="form-group col-md">
             <label>Antenatal Checkup Registration done (ANC):</label> <br>
@@ -72,7 +83,18 @@
         <div class="form-group col-md">
             <label for="beforeDeliveryWeight">Weight Before Delivery (kg):</label>
             <input type="text" class="form-control" placeholder="Enter weight" formControlName="beforeDeliveryWeight" 
-            (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"/>
+            (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"
+            [ngClass]="{
+                'is-invalid': f.beforeDeliveryWeight.invalid && f.beforeDeliveryWeight.touched,
+                'is-valid':
+                  f.beforeDeliveryWeight.valid &&
+                  (f.beforeDeliveryWeight.dirty || f.beforeDeliveryWeight.touched)
+              }"/>
+              <div *ngIf="f.beforeDeliveryWeight.errors" class="invalid-feedback">
+                <div *ngIf="f.beforeDeliveryWeight.errors.notInWeightRange">
+                  Weight should be 20 to 200 kg
+                </div>
+              </div>
         </div>
         <div class="form-group col-md">
             <label>Delivery:</label> <br>
@@ -90,10 +112,22 @@
 <br>
 <div class="row" *ngIf="deliveryStatusNo">
     <div class="form-group col-md">
+        <label>Delivery No:</label> <br>
+        <label>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="miscarriage" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
+              <span>Miscarriage</span>
+          </label> &nbsp;&nbsp;&nbsp;
+          <label>
+            <input type="radio" value="abortion" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
+              <span>Abortion</span>
+          </label>
+    </div>
+    <div class="form-group col-md" *ngIf="miscarriage">
             <label for="miscarriage">Miscarriage:</label>
             <input type="date" class="form-control" formControlName="miscarriage" placeholder="dd-mm-yyyy"/>
     </div>
-    <div class="form-group col-md">
+    <div class="form-group col-md" *ngIf="abortion">
         <label for="abortion">Abortion:</label>
         <input type="date" class="form-control" formControlName="abortion" placeholder="dd-mm-yyyy"/>
     </div>

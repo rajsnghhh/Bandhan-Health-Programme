@@ -4,7 +4,7 @@
 
         <div style="float: right;">
             <div class="add_button ">
-                <button class="btn btn-primary" (click)="createModal(createMuac)" [disabled]="!addMuacDisabled()">Add
+                <button class="btn btn-primary" *ngIf="createMode"  (click)="createModal(createMuac)" [disabled]="!addMuacDisabled()">Add
                     Muac Camp</button>
             </div>
         </div>
@@ -73,8 +73,8 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td><i class="fas fa-edit" title="Edit Muac" (click)="editModal(editMuac, item)"></i>
-                                    <i class="fas fa-trash" title="Delete Muac" (click)="deleteMuac(item, i)"></i>
+                                <td><i class="fas fa-edit" title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
+                                    <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode" (click)="deleteMuac(item, i)"></i>
                                 </td>
                             </tr>
                         </tbody>

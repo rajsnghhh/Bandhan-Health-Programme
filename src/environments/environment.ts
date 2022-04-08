@@ -6,8 +6,11 @@ export const environment = {
   production: false,
   // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
 
+  // Local
+  apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
+
   // Development 
-  apiUrl: 'http://192.168.149.221:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.149.221:6180/bhp/api/v1/'
 
   // Test
   // apiUrl: 'http://192.168.149.221:6181/bhp/api/v1/test/'

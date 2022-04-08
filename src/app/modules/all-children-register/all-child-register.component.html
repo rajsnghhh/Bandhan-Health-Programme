@@ -172,7 +172,7 @@
                                             : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
                                             <td style="padding: 0px 0px 0px 32px;">
-                                                <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
+                                                <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(i)" *ngIf="createMode"></i>
                                                 <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
                                             </td>
                                         </tr>
@@ -222,7 +222,7 @@
                                             : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
                                             <td style="padding: 0px 0px 0px 32px;">
-                                              <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(i)" *ngIf="editMode"></i>
+                                              <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(i)" *ngIf="createMode"></i>
                                               <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
                                           </td>
                                         </tr>

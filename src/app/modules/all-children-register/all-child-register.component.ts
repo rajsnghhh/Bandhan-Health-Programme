@@ -35,7 +35,7 @@ export class AllChildRegisterComponent implements OnInit {
   selectedGp: String;
   branchId: any;
   regionBranchHide: boolean;
-  editMode: boolean;
+  createMode: boolean;
   branchVillageMapId: any;
   index: number = 0;
   acrSearch: string;
@@ -75,10 +75,14 @@ export class AllChildRegisterComponent implements OnInit {
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
     if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.editMode = true;
+      this.regionBranchHide = false;
     } else {
-      this.editMode = false;
+      this.regionBranchHide = true;
     }
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 
   changeRegion(region) {

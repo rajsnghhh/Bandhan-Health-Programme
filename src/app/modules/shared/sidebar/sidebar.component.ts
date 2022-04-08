@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.sidebarService.userId = res?.responseObject?.userdetailDTO?.userId;
       this.sidebarService.RoleDTOName = res?.responseObject?.RoledetailDTO?.roleShortName;
       this.menuList = res?.responseObject.menuDetailList;
+      this.sidebarService.subMenuList = this.menuList;
       console.log(this.menuList, 'menuList');
       this.checkRoledetailDTO();
     });
@@ -46,10 +47,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         userName: this.sidebarService.loginId,
       }
     }
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+    if (this.sidebarService?.RoleDTOName?.indexOf('HCO') != -1 || this.sidebarService?.RoleDTOName?.indexOf('TL') != -1) {
       this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-        this.sidebarService.branchId = res.responseObject[0].branchId;
-        this.sidebarService.branchName = res.responseObject[0].branchName;
+        this.sidebarService.branchId = res.responseObject[0]?.branchId;
+        this.sidebarService.branchName = res.responseObject[0]?.branchName;
       });
       this.sidebarService.regionBranchHide = false;
     } else {
@@ -63,7 +64,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   menuClick(i) {
     // console.log(i);
     this.subMenuList = this.menuList[i].subMenuDetailList;
-    console.log(this.subMenuList);
+    console.log(this.sidebarService.subMenuList);
   }
 
   subMenuClick(submenu) {

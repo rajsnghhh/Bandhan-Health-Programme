@@ -369,7 +369,7 @@ export class AddLmChildComponent implements OnInit {
 
   /* Show success message toaster */
   showSuccess(message) {
-    this.toaster.success(message, 'Child MUAC Save', {
+    this.toaster.success(message, 'Child Information Save', {
       timeOut: 3000,
     });
   }

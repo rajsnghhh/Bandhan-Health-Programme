@@ -16,8 +16,9 @@ import { AddChildMuacComponent } from '../add-child-muac/add-child-muac.componen
 export class ViewMuaclistComponent implements OnInit {
   childMuac: Array<any> = [];
   childId: any;
-  // regionBranchHide: boolean;
-  editMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  disableAction: boolean;
 
   constructor(@Optional() public dialogRef: MatDialogRef<ViewMuaclistComponent>, public dialog: MatDialog,
     public acrService: AcrService, @Inject(MAT_DIALOG_DATA) public data: any, private httpService: HttpService,
@@ -28,12 +29,18 @@ export class ViewMuaclistComponent implements OnInit {
     this.childId = this.data.childId;
     this.viewMuacChildList();
 
-    // this.regionBranchHide = this.sidebarService.regionBranchHide;
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.editMode = true;
-    } else {
-      this.editMode = false;
-    }
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    this.disableAction = (this.updateMode == false && this.deleteMode == false) ? false : true;
+
   }
 
   viewMuacChildList() {
@@ -47,6 +54,7 @@ export class ViewMuaclistComponent implements OnInit {
   }
 
   onEdit(index) {
+    console.log(this.childMuac[index]);
     this.acrService.editMode = false;
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
@@ -54,7 +62,7 @@ export class ViewMuaclistComponent implements OnInit {
       data: {
         muacRegisterId: this.childMuac[index].muacRegisterId,
         childId: this.childId,
-        muacCampNumber: this.childMuac[index].muacCampDto.muacCampNumber,
+        muacCampNumber: this.childMuac[index].muacCampDto.muacCampId,
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,
         muac: this.childMuac[index].muac

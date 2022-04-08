@@ -59,6 +59,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   searchFullscreen: boolean;
   checkAge: any;
   childAge: any;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -68,6 +71,21 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 113)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 113)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 113)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   ngOnInit(): void {

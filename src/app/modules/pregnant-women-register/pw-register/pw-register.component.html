@@ -197,6 +197,7 @@
                                             <th>Name</th>
                                             <th>Husband <br>Name</th>
                                             <th>Age</th>
+                                            <th>Current Pregnancy Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -209,6 +210,7 @@
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.husbandOrGuardianName}}</td>
                                             <td>{{item.age}}</td>
+                                            <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
                                             <td><i class="fas fa-list" title="View" (click)="openPwList(i)"></i></td>
                                         </tr>
                                     </tbody>

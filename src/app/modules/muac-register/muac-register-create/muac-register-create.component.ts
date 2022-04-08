@@ -44,6 +44,9 @@ export class MuacRegisterCreateComponent implements OnInit {
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   muacAdd: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  createMode: boolean;
 
 
   constructor(private http: HttpService, private muacService: MuacRegisterService,
@@ -82,6 +85,21 @@ export class MuacRegisterCreateComponent implements OnInit {
     }
 
     this.regionList = this.sidebarService.listOfRegion;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
   }
 

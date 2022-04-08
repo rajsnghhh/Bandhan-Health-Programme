@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -23,7 +24,8 @@ export class PwViewComponent implements OnInit {
   showMessage: any;
   actualDeliveryDate: any;
   MotherDeath: any;
-  acMode: boolean;
+  miscarriage: boolean;
+  abortion: boolean;
 
   constructor(private http: HttpClient, private httpService: HttpService, private fb: FormBuilder,
     public validationService: ValidationService, private toaster: ToastrService, private sidebarService: SidebarService,
@@ -35,12 +37,6 @@ export class PwViewComponent implements OnInit {
     console.log(this.data)
     this.createForm();
     this.enableActualDelivery();
-
-    if (this.sidebarService.RoleDTOName == 'AC') {
-      this.acMode = true;
-    } else {
-      this.acMode = false;
-    }
 
     if (this.data.createMode == true) {
       this.create = 'Create';
@@ -66,11 +62,24 @@ export class PwViewComponent implements OnInit {
         deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
       })
     }
+
+    if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
+      this.checkAncComplete = true;
+    } else {
+      this.checkAncComplete = false;
+    }
+
+    if (this.data.pregnantWomanRegisterData.actualDateOfDelivery !== null) {
+      this.deliveryStatusYes = true;
+      this.pwRegisterForm.controls['actualDeliveryDate'].enable();
+      this.pwRegisterForm.controls['liveStill'].enable();
+      this.pwRegisterForm.controls['deliveryPlace'].enable();
+    }
   }
 
   createForm() {
     this.pwRegisterForm = this.fb.group({
-      initialWeight: [null],
+      initialWeight: [null, this.weightRange],
       lastMenstrualDate: [null],
       expectedDeliveryDate: [null],
       ancComplete: [null],
@@ -79,8 +88,9 @@ export class PwViewComponent implements OnInit {
       anc3rd: [null],
       anc4th: [null],
       pregnancyComplication: [''],
-      beforeDeliveryWeight: [null],
+      beforeDeliveryWeight: [null, this.weightRange],
       delivery: [''],
+      deliveryNo: [''],
       miscarriage: [null],
       abortion: [null],
       actualDeliveryDate: [''],
@@ -95,10 +105,22 @@ export class PwViewComponent implements OnInit {
     return this.pwRegisterForm.controls;
   }
 
+  weightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 20 && controls.value <= 200 || controls.value == null) {
+      return null;
+    }
+    return { 'notInWeightRange': true };
+  }
+
   restrictAncDate(value) {
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(new Date().setDate(new Date(value).getDate() + 1)).format('YYYY-MM-DD');
+    this.AncDate = moment(new Date().setDate(new Date(value).getDate() + 1)).format('YYYY-MM-DD');
+    this.pwRegisterForm.get('expectedDeliveryDate').reset();
+    this.pwRegisterForm.get('anc1st').reset();
+    this.pwRegisterForm.get('anc2nd').reset();
+    this.pwRegisterForm.get('anc3rd').reset();
+    this.pwRegisterForm.get('anc4th').reset();
     this.pwRegisterForm.get('actualDeliveryDate').reset();
-    this.AncDate = new Date(new Date().setDate(new Date(value).getDate() + 1)).toISOString().substring(0, 10);
   }
 
   checkAnc(value) {
@@ -119,6 +141,19 @@ export class PwViewComponent implements OnInit {
     } else {
       this.deliveryStatusNo = false;
       this.deliveryStatusYes = false;
+    }
+  }
+
+  checkDeliveryStatusNo(value) {
+    if (value == 'miscarriage') {
+      this.miscarriage = true;
+      this.abortion = false;
+    } else if (value == 'abortion') {
+      this.miscarriage = false;
+      this.abortion = true;
+    } else {
+      this.miscarriage = false;
+      this.abortion = false;
     }
   }
 
@@ -214,7 +249,6 @@ export class PwViewComponent implements OnInit {
   }
 
   onSave() {
-    
     console.log(this.pwRegisterForm.value)
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {
@@ -305,7 +339,7 @@ export class PwViewComponent implements OnInit {
   }
   /* Show success message toaster */
   showSuccess(message) {
-    this.toaster.success(message, 'Child MUAC Save', {
+    this.toaster.success(message, 'Pregnant Woman Details Save', {
       timeOut: 3000,
     });
   }
