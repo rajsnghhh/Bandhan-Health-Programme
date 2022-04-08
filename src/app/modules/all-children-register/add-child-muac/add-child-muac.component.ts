@@ -22,6 +22,7 @@ export class AddChildMuacComponent implements OnInit {
   muacCampList: Array<any> = [];
   campDate: boolean;
   childMuac: Array<any> = [];
+  campNotPresent: boolean;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, public acrService: AcrService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
@@ -78,6 +79,8 @@ export class AddChildMuacComponent implements OnInit {
   }
 
   campNo(Id) {
+    let campNo = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.campNumber.slice(-4);
+    this.campNotPresent = this.childMuac.find(campNumber => campNumber.muacCampDto.muacCampNumber == campNo)?.muacCampDto.muacCampNumber ? false : true;
     this.campDate = (this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.startDate >
       moment(new Date()).format('YYYY-MM-DD')) ? false : true;
   }
@@ -119,7 +122,7 @@ export class AddChildMuacComponent implements OnInit {
           active_flag: "A"
         }
       }
-      if (this.campDate) {
+      if (this.campDate && this.campNotPresent) {
         this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
           this.dialogRef.close();
           this.showSuccess('Success');
@@ -127,6 +130,8 @@ export class AddChildMuacComponent implements OnInit {
           this.dialogRef.close();
           this.showError('Error')
         })
+      } else {
+        this.showError('Enter Correct MUAC Camp No');
       }
     } else {
       let editDto = {
