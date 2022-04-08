@@ -134,9 +134,59 @@
           <br>
           <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
 
+            <mat-tab >
+              <ng-template mat-tab-label>
+                  Children Currently between 6m to 5yr
+              </ng-template>
+              <ng-template matTabContent>
+                  <div class="white_box_tittle list_header">
+                      <div class="QA_table ">
+                          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                              <table
+                                  class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                  role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                  <thead>
+                                      <tr>
+                                          <th>SL No</th>
+                                          <th>Family ID</th>
+                                          <th>Mother Name</th>
+                                          <th>Child Name</th>
+                                          <th>Age</th>
+                                          <th>Last MUAC <br> collected</th>
+                                          <th>Current Status</th>
+                                          <th>Action</th>
+                                      </tr>
+                                  </thead>
+
+                                  <tbody>
+
+                                      <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
+                                          <td>{{i+1}}</td>
+                                          <td>{{item.familyDetailId}}</td>
+                                          <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
+                                          <td>{{item.childName}}</td>
+                                          <td>{{item.childAge}}</td>
+                                          <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
+                                          <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                          : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                          : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
+                                          <td style="padding: 0px 0px 0px 32px;">
+                                            <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(i)" *ngIf="createMode"></i>
+                                            <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+          </mat-tab>
+
             <mat-tab>
                 <ng-template mat-tab-label>
-                    All Children in ACR
+                    All Other Children in ACR
                 </ng-template>
                 <ng-template matTabContent>
                     <div class="white_box_tittle list_header">
@@ -175,56 +225,6 @@
                                                 <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(i)" *ngIf="createMode"></i>
                                                 <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
                                             </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </mat-tab>
-
-            <mat-tab >
-                <ng-template mat-tab-label>
-                    Children between 6m to 5yr
-                </ng-template>
-                <ng-template matTabContent>
-                    <div class="white_box_tittle list_header">
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
-
-                                    <thead>
-                                        <tr>
-                                            <th>SL No</th>
-                                            <th>Family ID</th>
-                                            <th>Mother Name</th>
-                                            <th>Child Name</th>
-                                            <th>Age</th>
-                                            <th>Last MUAC <br> collected</th>
-                                            <th>Current Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                        <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
-                                            <td>{{i+1}}</td>
-                                            <td>{{item.familyDetailId}}</td>
-                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
-                                            <td>{{item.childName}}</td>
-                                            <td>{{item.childAge}}</td>
-                                            <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td> 
-                                            <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
-                                            : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
-                                            : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
-                                            <td style="padding: 0px 0px 0px 32px;">
-                                              <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(i)" *ngIf="createMode"></i>
-                                              <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
-                                          </td>
                                         </tr>
                                     </tbody>
                                 </table>
