@@ -126,7 +126,7 @@
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <thead>
+                                    <thead id="header-fixed">
                                         <tr>
                                             <th>SL<br>No</th>
                                             <th>Household<br> No.</th>
@@ -135,8 +135,8 @@
                                             <th>Total Member<br> of Household</th>
                                             <th>Swasthya <br>Sahayika</th>
                                             <th>View<br>Family</th>
-                                            <th *ngIf="role !='PM' && role !='PO'  && role !='PD'">Add<br>Family</th>
-                                            <th *ngIf="role !='PM' && role !='PO'  && role !='PD'">Action</th>
+                                            <th *ngIf="createMode">Add<br>Family</th>
+                                            <th >Action</th>
                                         </tr>
                                     </thead>
 
@@ -159,15 +159,12 @@
                                                 *ngIf="item.familyType == 'J' && role !='PM' && role !='PO' && role !='PD'"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="gotoFamily(item)">Add</td>
-                                            <td
-                                                *ngIf="item.familyType == 'S' && role !='PM' && role !='PO'  && role !='PD'">
-                                                Add</td>
+                                            <td *ngIf="createMode"> Add</td>
 
-
-                                            <td *ngIf="role !='PM' && role !='PO' && role !='PD'"> <i
+                                            <td > <i *ngIf="updateMode"
                                                     class="fas fa-edit" title="Edit Household"
-                                                    (click)="editHousehold(item,i)"> </i> <i class="fas fa-trash"
-                                                    title="Delete Household"
+                                                    (click)="editHousehold(item,i)"> </i> 
+                                                    <i class="fas fa-trash" title="Delete Household" *ngIf="deleteMode"
                                                     (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>

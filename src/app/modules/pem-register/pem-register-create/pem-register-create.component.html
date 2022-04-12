@@ -2,7 +2,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white_box QA_section mb_30">
-                <h2 class="page-title">View PEM Register</h2>
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">View PEM Register</h2>
+          
+                    <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search pem info here..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <form class="form-signin" [formGroup]="locationForm">
 
@@ -99,21 +116,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="box_right d-flex lms_block col-md-6">
-                        <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
-                                <form active="#">
-                                    <div class="search_field">
-                                        <input type="text" name="search" placeholder="Search pem info here..."
-                                            [(ngModel)]="registerSearch">
-                                    </div>
-                                    <button type="submit"> <i class="fa fa-search"></i> </button>
-                                </form>
-                            </div>
-                        </div>
-
                     </div>
 
                     <div class="white_box_tittle list_header">

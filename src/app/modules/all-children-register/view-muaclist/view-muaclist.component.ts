@@ -50,6 +50,7 @@ export class ViewMuaclistComponent implements OnInit {
     }
     this.http.post(`${this.httpService.baseURL}muaccamp/viewMuacRegistersOfAChild`, Dto).subscribe((res: any) => {
       this.childMuac = res.responseObject;
+      console.log(this.childMuac);
     })
   }
 

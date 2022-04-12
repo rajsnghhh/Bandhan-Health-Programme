@@ -2,7 +2,24 @@
     <div class="row">
       <div class="col-md-12">
         <div class="white_box QA_section mb_30">
-          <h2 class="page-title">Pregnant Woman Register</h2>
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">Pregnant Woman Register</h2>
+  
+            <div class="box_right d-flex lms_block col-md-6">
+              <div class="serach_field_2">
+                  <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                      <form active="#">
+                          <div class="search_field">
+                              <input type="text" name="search" placeholder="Search pregnant info here..."
+                                  [(ngModel)]="pwSearch">
+                          </div>
+                          <button type="submit"> <i class="fa fa-search"></i> </button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
 
         <form class="form-signin" [formGroup]="locationForm">
 
@@ -114,24 +131,9 @@
               </div>
             </div>
         </div>
-        
-        
-        <br>
-        <div class="box_right d-flex lms_block col-md-6">
-          <div class="serach_field_2">
-              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                  <form active="#">
-                      <div class="search_field">
-                          <input type="text" name="search" placeholder="Search pregnant info here..."
-                              [(ngModel)]="pwSearch">
-                      </div>
-                      <button type="submit"> <i class="fa fa-search"></i> </button>
-                  </form>
-              </div>
-          </div>
-      </div>
     </form>
-          <br>
+    
+    <br>
           <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
 
             <mat-tab>
@@ -146,7 +148,7 @@
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <thead>
+                                    <thead id="header-fixed">
                                         <tr>
                                             <th>SL<br>No</th>
                                             <th>Family No.</th>
@@ -190,7 +192,7 @@
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <thead>
+                                    <thead id="header-fixed">
                                         <tr>
                                             <th>SL No</th>
                                             <th>Family No</th>

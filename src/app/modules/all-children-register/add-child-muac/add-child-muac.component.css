@@ -24,7 +24,7 @@
 
 .addEditBtn {
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 label {
   margin-top: 5px;

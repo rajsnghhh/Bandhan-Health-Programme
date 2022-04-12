@@ -18,7 +18,6 @@ export class SinglePwListComponent implements OnInit {
   pwName: string;
   familyNumber: any;
   husbandOrGuardianName: any;
-  // createDisable: boolean;
   pregnantWomanRegisterDetailList: Array<any> = [];
   updateMode: boolean;
   deleteMode: boolean;
@@ -59,13 +58,12 @@ export class SinglePwListComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
-    // let previouslength = this.pregnantWomanRegisterDetailList.length;
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
       this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList[this.data.index].pregnantWomanRegisterDetailList;
-      // this.createDisable = (this.pregnantWomanRegisterDetailList.length > previouslength) ? true : false;
+      console.log(this.pregnantWomanRegisterDetailList, 'listpage');
     })
   }
 
@@ -74,8 +72,7 @@ export class SinglePwListComponent implements OnInit {
       width: '1000px',
       height: '550px',
       data: {
-        createMode: false,
-        pregnantWomanRegisterData: this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList[i],
+        pregnantWomanRegisterData: this.pregnantWomanRegisterDetailList[i],
         familyDetailId: this.data.singlePregnantWomenList.familyDetailId
       }
     });
@@ -96,20 +93,19 @@ export class SinglePwListComponent implements OnInit {
     });
   }
 
-  openCreatePage() {
-    const dialogRef = this.dialog.open(PwViewComponent, {
-      width: '1000px',
-      height: '550px',
-      data: {
-        createMode: true,
-        pregnantWomanRegisterData: this.data.singlePregnantWomenList
-      }
-    });
+  // openCreatePage() {
+  //   const dialogRef = this.dialog.open(PwViewComponent, {
+  //     width: '1000px',
+  //     height: '550px',
+  //     data: {
+  //       pregnantWomanRegisterData: this.data.singlePregnantWomenList
+  //     }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.data.villageMasterId)
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.getPregnantWomenList(this.data.villageMasterId)
+  //   });
+  // }
 
   deletePregnency(value, i) {
     let Dto = {
