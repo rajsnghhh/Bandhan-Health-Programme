@@ -7,20 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AppComponent } from './app.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { RoleAccessComponent } from './role-access/role-access.component'
 import { CoreModule } from './modules/core/core.module';
-import { RoleAcessResolver } from './role-access/role-access-resolver.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RoleAcessResolver } from './modules/role-access/role-access-resolver.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RoleAccessComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

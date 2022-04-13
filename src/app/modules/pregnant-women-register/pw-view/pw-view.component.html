@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h2 class="dialog-title">{{create}} Pregnant Woman Register </h2>
+        <h2 class="dialog-title">Pregnant Woman Register </h2>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
     </div>
 </h1>
@@ -10,7 +10,7 @@
             <div class="form-group col-md">
                 <label for="initialWeight">Initial Weight (kg):</label>
                 <input type="text" class="form-control" placeholder="Enter weight" formControlName="initialWeight" 
-                (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"
+                (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()" maxlength="7"
                 [ngClass]="{
                     'is-invalid': f.initialWeight.invalid && f.initialWeight.touched,
                     'is-valid':
@@ -83,7 +83,7 @@
         <div class="form-group col-md">
             <label for="beforeDeliveryWeight">Weight Before Delivery (kg):</label>
             <input type="text" class="form-control" placeholder="Enter weight" formControlName="beforeDeliveryWeight" 
-            (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()"
+            (keypress)="validationService.onlyIntegerAndDot($event)" (change)="enableActualDelivery()" maxlength="7"
             [ngClass]="{
                 'is-invalid': f.beforeDeliveryWeight.invalid && f.beforeDeliveryWeight.touched,
                 'is-valid':
@@ -112,7 +112,7 @@
 <br>
 <div class="row" *ngIf="deliveryStatusNo">
     <div class="form-group col-md">
-        <label>Delivery No:</label> <br>
+        <label>Reason :</label> <br>
         <label>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <input type="radio" value="miscarriage" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
@@ -200,7 +200,7 @@
             maxlength="300"></textarea>
         </div>
     </div>
-
+<br>
     <div class="addEditBtn">
         <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
     </div>

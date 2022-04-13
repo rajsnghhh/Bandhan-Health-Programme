@@ -28,7 +28,7 @@
       <div class="form-group col-md">
         <label for="height">Height (cm):</label>
         <input type="text" class="form-control" placeholder="Enter height" formControlName="height"
-         (keypress)="validationService.onlyIntegerAndDot($event)" 
+         (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7"
          [ngClass]="{
           'is-invalid': f.height.invalid && f.height.touched,
           'is-valid':
@@ -47,7 +47,7 @@
       <div class="form-group col-md">
         <label for="weight">Weight (kg):</label>
         <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight" 
-        (keypress)="validationService.onlyIntegerAndDot($event)"
+        (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
         [ngClass]="{
           'is-invalid': f.weight.invalid && f.weight.touched,
           'is-valid':
@@ -61,12 +61,12 @@
         </div>
       </div>
     </div>
-
+    <!-- pattern="\d+\.?\d{2}?(?!\d{2})" -->
   <div class="row">
     <div class="form-group col-md">
       <label for="muac">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
       <input type="text" class="form-control" placeholder="MUAC" formControlName="muac"
-      (keypress)="validationService.onlyIntegerAndDot($event)" pattern="\d+\.?\d?(?!\d)"
+      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
       [ngClass]="{
         'is-invalid': f.muac.invalid && f.muac.touched,
         'is-valid':

@@ -7,16 +7,17 @@
 
 .search_inner button {
   padding-right: 1px;
-  margin-left: 540px;
+  margin-left: 330px;
+  height: 63%;
 }
 
 .search_inner_fullscreen button {
   padding-right: 1px;
-  margin-left: 840px;
+  margin-left: 625px;
   position: absolute;
   left: 0;
   top: 0;
-  height: 90%;
+  height: 60%;
   background: transparent;
   font-size: 12px;
   padding-left: 19px;
@@ -27,14 +28,12 @@
 
 .search_inner input {
   width: 70%;
-  margin-left: 690px;
-  margin-bottom: 5px;
+  margin-left: 474px;
 }
 
 .search_inner_fullscreen input {
   width: 74%;
-  margin-left: 850px;
-  margin-bottom: 5px;
+  margin-left: 630px;
   font-size: 13px;
   height: 40px;
   border-radius: 5px;
@@ -66,4 +65,33 @@
 }
 .QA_section .QA_table tbody .warning {
   color: #f7cd00;
+}
+
+
+table.table thead tr:after {
+  content: '';
+  overflow-y: scroll;
+  visibility: hidden;
+}
+table.table thead th {
+  flex: 1 auto;
+  display: block;
+  color: #ffffff;
+}
+table.table tbody {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+  height: auto;
+  max-height: 500px;
+}
+table.table thead tr,
+table.table tbody tr {
+  display: flex;
+}
+table.table thead tr th,
+table.table tbody tr td {
+    width: 50%;
+    padding: 5px;
+    text-align:left;
 }

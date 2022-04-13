@@ -3,9 +3,25 @@
     <div class="row">
       <div class="col-md-12">
         <div class="white_box QA_section mb_30">
+          <div id="header-fixed" style="display: flex;">
           <h2 class="page-title">Lactating Mother Register</h2>
 
-        <form class="form-signin" [formGroup]="locationForm">
+          <div class="box_right d-flex lms_block col-md-6">
+            <div class="serach_field_2">
+                <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                    <form active="#">
+                        <div class="search_field">
+                            <input type="text" name="search" placeholder="Search lactating info here..."
+                                [(ngModel)]="lmrSearch">
+                        </div>
+                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <form class="form-signin" [formGroup]="locationForm">
 
           <div  class="row" *ngIf="regionBranchHide">
             <div class="form-group col-md">
@@ -115,24 +131,8 @@
               </div>
             </div>
         </div>
-
-        <br>
-        <div class="box_right d-flex lms_block col-md-6">
-          <div class="serach_field_2">
-              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                  <form active="#">
-                      <div class="search_field">
-                          <input type="text" name="search" placeholder="Search lactating info here..."
-                              [(ngModel)]="lmrSearch">
-                      </div>
-                      <button type="submit"> <i class="fa fa-search"></i> </button>
-                  </form>
-              </div>
-          </div>
-      </div>
         </form>
 
-          <br>
           <div class="white_box_tittle list_header">
             <div class="QA_table ">
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -140,7 +140,7 @@
                         class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                         role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                        <thead>
+                        <thead id="table-header-fixed">
                             <tr>
                                 <th>SL<br>No</th>
                                 <th>Family No.</th>

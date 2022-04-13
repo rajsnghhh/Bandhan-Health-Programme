@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { HttpService } from 'src/app/modules/core/http/http.service';
-import { DataAccessDTO } from '../modules/core/models/dataAccessDTO.model';
-import { MainFunctionDTO } from '../modules/core/models/mainFunctionDTO.model';
-import { RoleMasterDTO } from '../modules/core/models/roleMasterDTO.model';
-import { RoleFunctionMapDTO } from '../modules/core/models/roleSubFunctionMapDTO.model'
-import { SubFunctionMasterDTO } from '../modules/core/models/subFunctionDTO.model';
+import { DataAccessDTO } from '../core/models/dataAccessDTO.model';
+import { MainFunctionDTO } from '../core/models/mainFunctionDTO.model';
+import { RoleMasterDTO } from '../core/models/roleMasterDTO.model';
+import { RoleFunctionMapDTO } from '../core/models/roleSubFunctionMapDTO.model';
+import { SubFunctionMasterDTO } from '../core/models/subFunctionDTO.model';
 
 @Component({
   selector: 'app-role-access',

@@ -2,7 +2,24 @@
     <div class="row">
       <div class="col-md-12">
         <div class="white_box QA_section mb_30">
-          <h2 class="page-title">All Children Register</h2>
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">All Children Register</h2>
+  
+            <div class="box_right d-flex lms_block col-md-6">
+              <div class="serach_field_2">
+                  <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                      <form active="#">
+                          <div class="search_field">
+                              <input type="text" name="search" placeholder="Search acr info here..."
+                                  [(ngModel)]="acrSearch">
+                          </div>
+                          <button type="submit"> <i class="fa fa-search"></i> </button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
 
         <form class="form-signin" [formGroup]="locationForm">
 
@@ -115,26 +132,9 @@
             </div>
         </div>
         
-        
-        <br>
-        <div class="box_right d-flex lms_block col-md-6">
-          <div class="serach_field_2">
-              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                  <form active="#">
-                      <div class="search_field">
-                          <input type="text" name="search" placeholder="Search acr info here..."
-                              [(ngModel)]="acrSearch">
-                      </div>
-                      <button type="submit"> <i class="fa fa-search"></i> </button>
-                  </form>
-              </div>
-          </div>
-      </div>
     </form>
-          <br>
-          <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
-
-            <mat-tab >
+          <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)"> 
+            <mat-tab>
               <ng-template mat-tab-label>
                   Children Currently between 6m to 5yr
               </ng-template>
@@ -278,7 +278,6 @@
                     </div>
                 </ng-template>
             </mat-tab>
-
           </mat-tab-group>
         </div>
     </div>

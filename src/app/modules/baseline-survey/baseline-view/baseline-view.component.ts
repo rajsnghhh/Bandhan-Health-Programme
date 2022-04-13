@@ -49,6 +49,10 @@ export class BaselineViewComponent implements OnInit {
   finalDelHH: any;
   moreDetails: any;
   role: any;
+  updateMode: boolean;
+  deleteMode: boolean;
+  createMode: boolean;
+
 
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
@@ -88,9 +92,23 @@ export class BaselineViewComponent implements OnInit {
       })
     }
 
-
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 
   changeRegion(region) {
@@ -290,6 +308,8 @@ export class BaselineViewComponent implements OnInit {
         hhNo: item.houseHoldNumber,
         bName: item.branchDTO.branchName,
         bId: item.branchDTO.branchId,
+        blockName: this.selectedBlock,
+        gpName: this.selectedGp,
         vName: this.villageDtoList.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
         vId: item.branchVillageMapId,
         ssName: item.swasthyaSahayikaDTO.name,

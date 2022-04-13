@@ -30,6 +30,12 @@ export class BaselineEditComponent implements OnInit {
   swasthyaSahayika: any;
   ss: any;
   villagesOfBranch: any;
+  gpDtoList: Array<any> = [];
+  villageDtoList: Array<any> = [];
+  selectedBlock: String;
+  selectedGp: String;
+  blockName: any;
+  gpName: any;
 
   constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
     public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService
@@ -39,9 +45,12 @@ export class BaselineEditComponent implements OnInit {
 
 
     this.routes.queryParams.subscribe(params => {
+      console.log(params);
       this.houseHoldId = params['id'];
       this.branch = params['bName'];
       this.branchId = params['bId'];
+      this.blockName = params['blockName'];
+      this.gpName = params['gpName'];
       this.village = params['vName'];
       this.branchVillageMapId = params['vId'];
       this.ss = params['ssName'];
@@ -55,10 +64,10 @@ export class BaselineEditComponent implements OnInit {
     });
     this.createForm();
     this.baselineSurvey.get('branch').disable();
-    this.getVillageSS();
+    this.getBlockList();
 
     setTimeout(() => {
-      let villId = this.villagesOfBranch.find(i => i.villageName == this.village)?.villageMasterId;
+      let villId = this.villagesOfBranch?.find(i => i.villageName == this.village)?.villageMasterId;
       let req = {
         dataAccessDTO: {
           userId: this.sidebarService.userId,
@@ -87,13 +96,13 @@ export class BaselineEditComponent implements OnInit {
       console.log(this.familyStatus);
     })
 
-    if (this.baselineSurvey.value.swasthyaSahayika == '') {
-      this.swasthyaSahayikaId = '';
+    if (this.baselineSurvey.value.swasthyaSahayika == null) {
+      this.swasthyaSahayikaId = null;
     }
 
   }
 
-  getVillageSS() {
+  getBlockList() {
     let dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
@@ -101,13 +110,34 @@ export class BaselineEditComponent implements OnInit {
       },
       branchId: this.branchId
     }
+    console.log(dto);
     this.baselineService.villagesOfBranch(dto).subscribe((res) => {
-      this.villagesOfBranch = res.responseObject[0].gpDtoList[0].villageDtoList;
+      console.log(res);
+      this.villagesOfBranch = res?.responseObject;
+      this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == this.blockName)?.gpDtoList;
+      this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.blockName)?.gpDtoList.find(gp => gp.name == this.gpName)?.villageDtoList;
     })
   }
 
+  changeBlock(blockname) {
+    this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
+    this.selectedBlock = this.baselineSurvey.get('block').value;
+    this.baselineSurvey.controls.gp.setValue('');
+    this.baselineSurvey.controls.gram.setValue('');
+    this.baselineSurvey.controls.swasthyaSahayika.setValue('');
+
+  }
+
+  changeGp(gpName) {
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.selectedGp = this.baselineSurvey.get('gp').value;
+    this.baselineSurvey.controls.gram.setValue('');
+    this.baselineSurvey.controls.swasthyaSahayika.setValue('');
+
+  }
+
   changeVillage(villageMasterId) {
-    this.branchVillageMapId = this.villagesOfBranch.find(vill => vill.villageMasterId == villageMasterId)?.branchVillageMapId;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageMasterId)?.branchVillageMapId;
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
@@ -135,6 +165,8 @@ export class BaselineEditComponent implements OnInit {
   createForm() {
     this.baselineSurvey = this.fb.group({
       branch: ['', Validators.required],
+      block: ['', Validators.required],
+      gp: ['', Validators.required],
       gram: ['', Validators.required],
       swasthyaSahayika: ['', Validators.required],
       family: ['', Validators.required],

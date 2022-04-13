@@ -84,16 +84,17 @@ legend.scheduler-border {
 
 .search_inner button {
   padding-right: 1px;
-  margin-left: 540px;
+  margin-left: 374px;
+  height: 63%;
 }
 
 .search_inner_fullscreen button {
   padding-right: 1px;
-  margin-left: 840px;
+  margin-left: 678px;
   position: absolute;
   left: 0;
   top: 0;
-  height: 90%;
+  height: 60%;
   background: transparent;
   font-size: 12px;
   padding-left: 19px;
@@ -104,14 +105,12 @@ legend.scheduler-border {
 
 .search_inner input {
   width: 70%;
-  margin-left: 690px;
-  margin-bottom: 5px;
+  margin-left: 525px;
 }
 
 .search_inner_fullscreen input {
   width: 74%;
-  margin-left: 850px;
-  margin-bottom: 5px;
+  margin-left: 685px;
   font-size: 13px;
   height: 40px;
   border-radius: 5px;

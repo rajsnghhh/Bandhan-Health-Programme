@@ -20,7 +20,6 @@ export class PwViewComponent implements OnInit {
   AncDate: any;
   deliveryStatusNo: boolean;
   deliveryStatusYes: boolean;
-  create: any;
   showMessage: any;
   actualDeliveryDate: any;
   MotherDeath: any;
@@ -34,34 +33,27 @@ export class PwViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.createForm();
     this.enableActualDelivery();
-
-    if (this.data.createMode == true) {
-      this.create = 'Create';
-      this.pwRegisterForm.reset();
-    } else {
-      this.create = null;
-      this.pwRegisterForm.patchValue({
-        initialWeight: this.data.pregnantWomanRegisterData.initialWeight,
-        lastMenstrualDate: this.data.pregnantWomanRegisterData.lastMenstrualPeriod,
-        expectedDeliveryDate: this.data.pregnantWomanRegisterData.expectedDateOfDelivery,
-        ancComplete: this.data.pregnantWomanRegisterData.antenatalCheckup,
-        anc1st: this.data.pregnantWomanRegisterData.firstAncCheckup,
-        anc2nd: this.data.pregnantWomanRegisterData.secondAncCheckup,
-        anc3rd: this.data.pregnantWomanRegisterData.thirdAncCheckup,
-        anc4th: this.data.pregnantWomanRegisterData.fourthAncCheckup,
-        pregnancyComplication: this.data.pregnantWomanRegisterData.pregnancyComplication,
-        beforeDeliveryWeight: this.data.pregnantWomanRegisterData.weightBeforeDelivery,
-        delivery: this.data.pregnantWomanRegisterData.delivery,
-        miscarriage: this.data.pregnantWomanRegisterData.miscarriage,
-        abortion: this.data.pregnantWomanRegisterData.abortion,
-        actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
-        liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
-        deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
-      })
-    }
+    console.log(this.data.pregnantWomanRegisterData, 'editpage');
+    this.pwRegisterForm.patchValue({
+      initialWeight: this.data.pregnantWomanRegisterData.initialWeight,
+      lastMenstrualDate: this.data.pregnantWomanRegisterData.lastMenstrualPeriod,
+      expectedDeliveryDate: this.data.pregnantWomanRegisterData.expectedDateOfDelivery,
+      ancComplete: this.data.pregnantWomanRegisterData.antenatalCheckup,
+      anc1st: this.data.pregnantWomanRegisterData.firstAncCheckup,
+      anc2nd: this.data.pregnantWomanRegisterData.secondAncCheckup,
+      anc3rd: this.data.pregnantWomanRegisterData.thirdAncCheckup,
+      anc4th: this.data.pregnantWomanRegisterData.fourthAncCheckup,
+      pregnancyComplication: this.data.pregnantWomanRegisterData.pregnancyComplication,
+      beforeDeliveryWeight: this.data.pregnantWomanRegisterData.weightBeforeDelivery,
+      delivery: this.data.pregnantWomanRegisterData.delivery,
+      miscarriage: this.data.pregnantWomanRegisterData.miscarriage,
+      abortion: this.data.pregnantWomanRegisterData.abortion,
+      actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
+      liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
+      deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
+    })
 
     if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
       this.checkAncComplete = true;
