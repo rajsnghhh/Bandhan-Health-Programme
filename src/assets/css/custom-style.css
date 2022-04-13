@@ -8838,4 +8838,18 @@ i {
   z-index:2;
   background-color: #ffffff; 
 }
+
+.empty-state_message {
+  color: #38a169;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 0.85rem;
+}
+.empty-state_help {
+  color: #a2a5b9;
+  font-size: 0.875rem;
+}
+.empty_message_div{
+  margin-left: 35%;
+}
 /*# sourceMappingURL=style.css.map */

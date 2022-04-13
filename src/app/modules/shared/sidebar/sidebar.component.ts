@@ -73,6 +73,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     console.log(routeId);
     console.log(submenu.subFunctionShortName);
 
+    if (routeId == 1) {
+      this.router.navigate(['/user']);
+    }
+
     if (routeId == 5) {
       this.router.navigate(['/role-access']);
     }
