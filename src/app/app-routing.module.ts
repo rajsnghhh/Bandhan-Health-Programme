@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './login/auth.guard';
-import { RoleAcessResolver } from './role-access/role-access-resolver.service';
-import { RoleAccessComponent } from './role-access/role-access.component';
-
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./login/account.module').then(m => m.AccountModule) },
   { path: 'donor', loadChildren: () => import('./modules/donor/donor.module').then(m => m.DonorModule), canActivate: [AuthGuard] },
-  { path: 'role-access', component: RoleAccessComponent, resolve: { roleAcess: RoleAcessResolver }, canActivate: [AuthGuard] },
+  { path: 'role-access', loadChildren: () => import('./modules/role-access/role-access.module').then(m => m.RoleAccessModule), canActivate: [AuthGuard] },
   { path: 'vertical', loadChildren: () => import('./modules/vertical/vertical.module').then(m => m.VerticalModule), canActivate: [AuthGuard] },
   { path: 'sub-vertical', loadChildren: () => import('./modules/sub-vertical/sub-vertical.module').then(m => m.SubVerticalModule), canActivate: [AuthGuard] },
   { path: 'project', loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule), canActivate: [AuthGuard] },
