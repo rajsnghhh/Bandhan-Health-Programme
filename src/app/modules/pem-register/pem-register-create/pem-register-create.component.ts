@@ -496,7 +496,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     }
 
     if (this.pemForm.value.birthweight > 9) {
-      this.showError('Birth weight should not be more than 9 years');
+      this.showError('Birth weight should not be more than 9 kg');
       return;
     }
 
@@ -684,7 +684,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     }
 
     if (this.editPemForm.value.birthweight > 9) {
-      this.showError('Birth weight should not be more than 9 years');
+      this.showError('Birth weight should not be more than 9 kg');
       return;
     }
 
@@ -849,12 +849,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   birthWeightVal() {
 
     if (parseInt(this.pemForm.value.birthweight) > 9) {
-      this.showError('Birth weight should not be more than 9 years');
+      this.showError('Birth weight should not be more than 9 kg');
       return;
     }
 
     if (parseInt(this.editPemForm?.value.birthweight) > 9) {
-      this.showError('Birth weight should not be more than 9 years');
+      this.showError('Birth weight should not be more than 9 kg');
       return;
     }
 

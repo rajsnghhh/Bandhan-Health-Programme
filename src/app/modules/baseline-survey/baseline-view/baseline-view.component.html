@@ -149,7 +149,8 @@
                                             <td>{{item.familyType}}</td>
                                             <td>{{item.numberOfFamily}}</td>
                                             <td>{{item.totalMembers}}</td>
-                                            <td>{{item.swasthyaSahayikaDTO.name ? item.swasthyaSahayikaDTO.name :'-'}}</td>
+                                            <td>{{item.swasthyaSahayikaDTO.name ? item.swasthyaSahayikaDTO.name :'-'}}
+                                            </td>
                                             <td class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View
@@ -171,6 +172,11 @@
                                                     (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>
+
+                                        <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
+                                            <td colspan="7">No matching household info found</td>
+
+                                        </tr> -->
                                     </tbody>
 
                                 </table>

@@ -30,6 +30,56 @@ class VerticalMasterViewDTO {
 
 /***/ }),
 
+/***/ "SICW":
+/*!****************************************************************!*\
+  !*** ./src/app/modules/muac-register/muac-register.service.ts ***!
+  \****************************************************************/
+/*! exports provided: MuacRegisterService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MuacRegisterService", function() { return MuacRegisterService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
+
+
+
+class MuacRegisterService {
+    constructor(http) {
+        this.http = http;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
+    }
+    villagesOfBranch(obj) {
+        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
+    }
+    listOfBranchesOfARegion(obj) {
+        return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
+    }
+    muacCampList(obj) {
+        return this.http.post(`${this.baseURL}muaccamp/branchWiseList`, obj);
+    }
+    saveMuac(obj) {
+        return this.http.post(`${this.baseURL}muaccamp/saveOrUpdate`, obj);
+    }
+    deleteMuac(obj) {
+        return this.http.post(`${this.baseURL}muaccamp/delete`, obj);
+    }
+}
+MuacRegisterService.ɵfac = function MuacRegisterService_Factory(t) { return new (t || MuacRegisterService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
+MuacRegisterService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: MuacRegisterService, factory: MuacRegisterService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](MuacRegisterService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "dXFN":
 /*!*******************************************************************!*\
   !*** ./src/app/modules/core/models/subverticalMasterDTO.model.ts ***!

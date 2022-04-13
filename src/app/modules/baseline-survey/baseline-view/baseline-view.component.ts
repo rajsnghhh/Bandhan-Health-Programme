@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { GrdFilterPipe } from '../../shared/search.pipe';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
@@ -18,7 +19,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
 
 export class BaselineViewComponent implements OnInit {
   locationForm: FormGroup;
-  baselineDetails: any;
+  baselineDetails:  any;
   modalContent: any;
   modalReference: any;
   modalIndex: any;
