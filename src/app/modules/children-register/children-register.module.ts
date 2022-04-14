@@ -6,10 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { GrdFilterPipe } from '../shared/search.pipe';
 
 
 @NgModule({
-  declarations: [ChildrenRegisterCreateComponent],
+  declarations: [ChildrenRegisterCreateComponent,GrdFilterPipe],
   imports: [
     CommonModule,
     ChildrenRegisterRoutingModule,

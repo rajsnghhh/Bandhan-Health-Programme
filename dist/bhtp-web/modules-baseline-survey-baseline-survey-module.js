@@ -45,7 +45,7 @@ BaselineSurveyModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
             ngx_pagination__WEBPACK_IMPORTED_MODULE_6__["NgxPaginationModule"],
             ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__["Ng2SearchPipeModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"].withConfig({ warnOnNgModelWithFormControl: 'never' }),
-            _shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_9__["LoaderModule"], _location_location_module__WEBPACK_IMPORTED_MODULE_10__["LocationModule"]
+            _shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_9__["LoaderModule"], _location_location_module__WEBPACK_IMPORTED_MODULE_10__["LocationModule"],
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BaselineSurveyModule, { declarations: [_baseline_create_baseline_create_component__WEBPACK_IMPORTED_MODULE_3__["BaselineCreateComponent"], _baseline_view_baseline_view_component__WEBPACK_IMPORTED_MODULE_5__["BaselineViewComponent"], _baseline_edit_baseline_edit_component__WEBPACK_IMPORTED_MODULE_7__["BaselineEditComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
         _baseline_survey_routing_module__WEBPACK_IMPORTED_MODULE_2__["BaselineSurveyRoutingModule"],
@@ -65,7 +65,7 @@ BaselineSurveyModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
                     ngx_pagination__WEBPACK_IMPORTED_MODULE_6__["NgxPaginationModule"],
                     ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__["Ng2SearchPipeModule"],
                     _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"].withConfig({ warnOnNgModelWithFormControl: 'never' }),
-                    _shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_9__["LoaderModule"], _location_location_module__WEBPACK_IMPORTED_MODULE_10__["LocationModule"]
+                    _shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_9__["LoaderModule"], _location_location_module__WEBPACK_IMPORTED_MODULE_10__["LocationModule"],
                 ]
             }]
     }], null, null); })();

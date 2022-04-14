@@ -141,9 +141,15 @@ __webpack_require__.r(__webpack_exports__);
 const environment = {
     production: false,
     // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
-    // apiUrl: 'http://192.168.153.56:6181/bhp/api/v1/'
-    apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
-    // Production server
+    // Local
+    apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
+    // Development 
+    // apiUrl: 'http://192.168.149.221:6180/bhp/api/v1/'
+    // Test
+    // apiUrl: 'http://192.168.149.221:6181/bhp/api/v1/test/'
+    // Staging
+    // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+    // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
     // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 };
@@ -366,21 +372,24 @@ class SidebarComponent {
             this.sidebarService.userId = (_d = (_c = res === null || res === void 0 ? void 0 : res.responseObject) === null || _c === void 0 ? void 0 : _c.userdetailDTO) === null || _d === void 0 ? void 0 : _d.userId;
             this.sidebarService.RoleDTOName = (_f = (_e = res === null || res === void 0 ? void 0 : res.responseObject) === null || _e === void 0 ? void 0 : _e.RoledetailDTO) === null || _f === void 0 ? void 0 : _f.roleShortName;
             this.menuList = res === null || res === void 0 ? void 0 : res.responseObject.menuDetailList;
+            this.sidebarService.subMenuList = this.menuList;
             console.log(this.menuList, 'menuList');
             this.checkRoledetailDTO();
         });
     }
     checkRoledetailDTO() {
+        var _a, _b, _c, _d;
         let req = {
             dataAccessDTO: {
                 userId: this.sidebarService.userId,
                 userName: this.sidebarService.loginId,
             }
         };
-        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        if (((_b = (_a = this.sidebarService) === null || _a === void 0 ? void 0 : _a.RoleDTOName) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1 || ((_d = (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.RoleDTOName) === null || _d === void 0 ? void 0 : _d.indexOf('TL')) != -1) {
             this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-                this.sidebarService.branchId = res.responseObject[0].branchId;
-                this.sidebarService.branchName = res.responseObject[0].branchName;
+                var _a, _b;
+                this.sidebarService.branchId = (_a = res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.branchId;
+                this.sidebarService.branchName = (_b = res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
             });
             this.sidebarService.regionBranchHide = false;
         }
@@ -394,7 +403,7 @@ class SidebarComponent {
     menuClick(i) {
         // console.log(i);
         this.subMenuList = this.menuList[i].subMenuDetailList;
-        console.log(this.subMenuList);
+        console.log(this.sidebarService.subMenuList);
     }
     subMenuClick(submenu) {
         var routeId = submenu.subFunctionMasterId;
@@ -430,20 +439,23 @@ class SidebarComponent {
         if (routeId == 89 || routeId == 91) {
             this.router.navigate(['/central-register/view']);
         }
-        if (routeId == 97) {
+        if (routeId == 97 || routeId == 99) {
             this.router.navigate(['/muac-register/create']);
         }
-        if (routeId == 113) {
+        if (routeId == 113 || routeId == 115) {
             this.router.navigate(['/pem-register/create']);
         }
-        if (routeId == 121) {
+        if (routeId == 121 || routeId == 123) {
             this.router.navigate(['/lmr']);
         }
-        if (routeId == 105) {
+        if (routeId == 105 || routeId == 107) {
             this.router.navigate(['/acr']);
         }
-        if (routeId == 129) {
+        if (routeId == 129 || routeId == 131) {
             this.router.navigate(['/pw-register']);
+        }
+        if (routeId == 137 || routeId == 147) {
+            this.router.navigate(['/daily-activity-register']);
         }
     }
     ngAfterViewInit() {
@@ -1033,6 +1045,7 @@ class SidebarService {
         this.http = http;
         this.listOfRegion = [];
         this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
+        this.subMenuList = [];
     }
     //HCO ** TL
     listOfBranchesOfUser(obj) {
@@ -1363,12 +1376,13 @@ const routes = [
     { path: 'central-register', loadChildren: () => Promise.all(/*! import() | modules-central-register-central-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("common"), __webpack_require__.e("modules-central-register-central-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/central-register/central-register.module */ "qvT1")).then(m => m.CentralRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'children-register', loadChildren: () => Promise.all(/*! import() | modules-children-register-children-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("common"), __webpack_require__.e("modules-children-register-children-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/children-register/children-register.module */ "43Nq")).then(m => m.ChildrenRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'family-info', loadChildren: () => __webpack_require__.e(/*! import() | modules-family-info-family-info-module */ "modules-family-info-family-info-module").then(__webpack_require__.bind(null, /*! ./modules/family-info/family-info.module */ "lKH6")).then(m => m.FamilyInfoModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'muac-register', loadChildren: () => Promise.all(/*! import() | modules-muac-register-muac-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("modules-muac-register-muac-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/muac-register/muac-register.module */ "3y2c")).then(m => m.MuacRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'muac-register', loadChildren: () => Promise.all(/*! import() | modules-muac-register-muac-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("common"), __webpack_require__.e("modules-muac-register-muac-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/muac-register/muac-register.module */ "3y2c")).then(m => m.MuacRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'core', loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./modules/core/core.module */ "6ZYd")).then(m => m.CoreModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'pem-register', loadChildren: () => Promise.all(/*! import() | modules-pem-register-pem-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("common"), __webpack_require__.e("modules-pem-register-pem-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pem-register/pem-register.module */ "8xsE")).then(m => m.PemRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("common"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'lmr', loadChildren: () => Promise.all(/*! import() | modules-lactating-mother-register-lm-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("modules-lactating-mother-register-lm-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/lactating-mother-register/lm-register.module */ "D/kB")).then(m => m.LmRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'pw-register', loadChildren: () => Promise.all(/*! import() | modules-pregnant-women-register-pw-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-pregnant-women-register-pw-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pregnant-women-register/pw-register.module */ "TWdA")).then(m => m.PwRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'pw-register', loadChildren: () => Promise.all(/*! import() | modules-pregnant-women-register-pw-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-pregnant-women-register-pw-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pregnant-women-register/pw-register.module */ "TWdA")).then(m => m.PwRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'daily-activity-register', loadChildren: () => __webpack_require__.e(/*! import() | modules-daily-activity-register-daily-activity-register-module */ "modules-daily-activity-register-daily-activity-register-module").then(__webpack_require__.bind(null, /*! ./modules/daily-activity-register/daily-activity-register.module */ "v3t/")).then(m => m.DailyActivityRegisterModule) },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {

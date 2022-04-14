@@ -42,7 +42,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   loader: boolean = true;
   page = 1;
   pageSize = 6;
-  registerSearch: any;
+  searchText : any;
   searchFullscreen: boolean;
   childIndexId: any;
   regionList: Array<any> = [];

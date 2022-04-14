@@ -8,7 +8,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BaselineEditComponent } from './baseline-edit/baseline-edit.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoaderModule } from '../shared/loader/loader.module';
-import { LocationComponent } from './location/location.component';
 import { LocationModule } from './location/location.module';
 
 @NgModule({
