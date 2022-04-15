@@ -1,0 +1,300 @@
+<h1 mat-dialog-title>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Create User</h2>
+    <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+  </div>
+</h1>
+
+<div mat-dialog-content>
+  <form class="form-signin" [formGroup]="userForm">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="userRole"
+          >Role:&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <select
+          class="form-select"
+          formControlName="userRole"
+          (change)="changeRole($event.target.value)"
+          [ngClass]="{
+            'is-invalid': f.userRole.invalid && f.userRole.touched,
+            'is-valid': f.userRole.valid && (f.userRole.dirty || f.userRole.touched)
+          }"
+        >
+          <option value="">-- Select Role --</option>
+          <option value="HCO">HCO</option>
+          <option value="HCOI/TL">HCOI / TL</option>
+          <option value="AC">AC</option>
+          <option value="PO">PO</option>
+          <option value="PM">PM</option>
+          <option value="PD">PD</option>
+        </select>
+        <div *ngIf="f.userRole.errors" class="invalid-feedback">
+            <div *ngIf="f.userRole.errors.required">
+              Role is required
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="region"
+          >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <select
+          class="form-select"
+          formControlName="region"
+          id="region"
+          [ngClass]="{
+            'is-invalid': f.region.invalid && f.region.touched,
+            'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
+          }"
+        >
+          <option value="">-- Select Region --</option>
+          <option></option>
+        </select>
+        <div *ngIf="f.region.errors" class="invalid-feedback">
+          <div *ngIf="f.region.errors.required">
+            Region selection is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="branch"
+          >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <select
+          class="form-select"
+          formControlName="branch"
+          id="branch"
+          [ngClass]="{
+            'is-invalid': f.branch.invalid && f.branch.touched,
+            'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)
+          }"
+        >
+          <option value="">-- Select Branch --</option>
+          <option></option>
+        </select>
+        <div *ngIf="f.branch.errors" class="invalid-feedback">
+          <div *ngIf="f.branch.errors.required">
+            Branch selection is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="firstName"
+          >First Name:&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter First Name"
+          formControlName="firstName"
+          maxlength="20"
+          (keypress)="validationService.onlyAlphabets($event)"
+          style="text-transform: capitalize"
+          [ngClass]="{
+            'is-invalid': f.firstName.invalid && f.firstName.touched,
+            'is-valid':
+              f.firstName.valid && (f.firstName.dirty || f.firstName.touched)
+          }"
+        />
+        <div *ngIf="f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+          <div *ngIf="f.firstName.errors.minlength">
+            Minimum length should be 3
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="middleName">Middle Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="20"
+          (keypress)="validationService.onlyAlphabets($event)"
+          style="text-transform: capitalize"
+          placeholder="Enter Middle Name"
+          formControlName="middleName"
+          [ngClass]="{
+            'is-invalid': f.middleName.invalid && f.middleName.touched
+          }"
+        />
+        <div *ngIf="f.middleName.errors" class="invalid-feedback">
+          <div *ngIf="f.middleName.errors.minlength">
+            Minimum length should be 3
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="lastName">Last Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="20"
+          (keypress)="validationService.onlyAlphabets($event)"
+          style="text-transform: capitalize"
+          placeholder="Enter Last Name"
+          formControlName="lastName"
+          [ngClass]="{
+            'is-invalid': f.lastName.invalid && f.lastName.touched
+          }"
+        />
+        <div *ngIf="f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.minlength">
+            Minimum length should be 3
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="loginId"
+          >Login ID / Employee ID:&nbsp;<span class="text-danger"
+            >*&nbsp;</span
+          ></label
+        >
+        <div style="display: grid; grid-template-columns: 0.1fr 1fr">
+          <p
+            style="
+              margin: 1px 0px 4px 0px;
+              font-weight: bold;
+              border-bottom: 1px solid black;
+              border-top: 1px solid black;
+              border-left: 1px solid black;
+              padding: 6px 7px 0px 7px;
+              border-radius: 5px 0px 0px 5px;
+            "
+          >
+            BK
+          </p>
+          <input
+            style="display: block"
+            type="text"
+            style="
+              border-bottom: 1px solid black;
+              border-top: 1px solid black;
+              border-right: 1px solid black;
+              margin: 1px 7px 4px -1px;
+              border-radius: 0px 5px 5px 0px;
+            "
+            (keypress)="validationService.onlyInteger($event)"
+            formControlName="loginId"
+            placeholder="Enter Username"
+            class="form-control"
+            [maxlength]="20"
+            [ngClass]="{
+              'is-invalid': f.loginId.invalid && f.loginId.touched,
+              'is-valid':
+                f.loginId.valid && (f.loginId.dirty || f.loginId.touched)
+            }"
+          />
+          <div></div>
+          <div *ngIf="f.loginId.errors" class="invalid-feedback">
+            <div *ngIf="f.loginId.errors.required">
+              Login ID / Employee ID is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="primaryMobile"
+          >Primary Mobile No:&nbsp;<span class="text-danger"
+            >*&nbsp;</span
+          ></label
+        >
+        <input
+          type=""
+          class="form-control"
+          maxlength="10"
+          (keypress)="validationService.onlyInteger($event)"
+          placeholder="Enter Mobile No"
+          formControlName="primaryMobile"
+          [ngClass]="{
+            'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched
+          }"
+        />
+        <div *ngIf="f.primaryMobile.errors" class="invalid-feedback">
+            <div *ngIf="f.primaryMobile.errors.required">Primary Mobile No is required</div>
+          <div *ngIf="f.primaryMobile.errors.minlength">
+            Mobile No. should be of 10 digit
+          </div>
+          <div *ngIf="f.primaryMobile.errors.pattern">
+            Mobile No. should be starting with 6, 7, 8 or 9
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="secondaryMobile">Secondary Mobile No:</label>
+        <input
+          type=""
+          class="form-control"
+          maxlength="10"
+          (keypress)="validationService.onlyInteger($event)"
+          placeholder="Enter Mobile No"
+          formControlName="secondaryMobile"
+          [ngClass]="{
+            'is-invalid': f.secondaryMobile.invalid && f.secondaryMobile.touched
+          }"
+        />
+        <div *ngIf="f.secondaryMobile.errors" class="invalid-feedback">
+          <div *ngIf="f.secondaryMobile.errors.minlength">
+            Mobile No. should be of 10 digit
+          </div>
+          <div *ngIf="f.secondaryMobile.errors.pattern">
+            Mobile No. should be starting with 6, 7, 8 or 9
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="primaryEmail"
+          >Primary Email:&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter Email"
+          formControlName="primaryEmail"
+          style="text-transform: capitalize"
+          [ngClass]="{
+            'is-invalid': f.primaryEmail.invalid && f.primaryEmail.touched,
+            'is-valid':
+              f.primaryEmail.valid &&
+              (f.primaryEmail.dirty || f.primaryEmail.touched)
+          }"
+        />
+        <div *ngIf="f.primaryEmail.errors" class="invalid-feedback">
+          <div *ngIf="f.primaryEmail.errors.required">Email is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="secondaryEmail"
+          >Secondary Email:</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter Email"
+          formControlName="secondaryEmail"
+        />
+      </div>
+    </div>
+<br>
+    <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
+
+  </form>
+</div>
