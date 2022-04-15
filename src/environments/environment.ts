@@ -7,7 +7,7 @@ export const environment = {
   // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
 
   // Local
-  apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
 
   // Development 
   // apiUrl: 'http://192.168.149.221:6180/bhp/api/v1/'
@@ -16,7 +16,7 @@ export const environment = {
   // apiUrl: 'http://192.168.149.221:6181/bhp/api/v1/test/'
 
   // Staging
-  // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+  apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
 
   // Production
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
