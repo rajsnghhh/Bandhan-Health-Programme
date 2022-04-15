@@ -6,7 +6,8 @@
                 <label for="" class="col-form-label">Main Function: </label>
             </div>
             <div class="col-md-4">
-                <select name="" id="" class="form-select" [(ngModel)]="mainFunctionId" (change)="getSubFunctions()">
+                <!-- [(ngModel)]="mainFunctionId" -->
+                <select name="" id="" class="form-select"  (change)="getSubFunctions()">
                     <option value="">-- Main Function --</option>
                     <option [ngValue]="item.mainFunctionMasterId"
                         *ngFor="let item of roleAccessData[0].mainFunctionDTOList">
@@ -18,7 +19,8 @@
                 <label for="" class="col-form-label">Sub Function: </label>
             </div>
             <div class="col-md-4">
-                <select name="" id="" class="form-select" [(ngModel)]="selectedSubFunction"
+                <!-- [(ngModel)]="selectedSubFunction" -->
+                <select name="" id="" class="form-select" 
                     (change)="createTableRows()">
                     <option value="">-- Sub Function --</option>
                     <option [ngValue]="item" *ngFor="let item of subFunctionsDropDown">{{item}}</option>

@@ -27,4 +27,24 @@
     justify-content: space-between;
   }
   
-  
+  .modal-content {
+    height: 450px;
+    width: 700px;
+  }
+
+  .close {
+    margin-left: 345px;
+  }
+.btn-link{
+  text-decoration: inherit;
+  display: inline-block;
+  margin-left: 50%;
+  transform: translate(-50%,50%);
+}
+/* .form-check{
+  display: inline;
+} */
+
+/* ::ng-deep .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  background: #499;
+} */

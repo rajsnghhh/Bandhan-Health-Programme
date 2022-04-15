@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateFormComponent } from '../user-create/user-create-form.component';
 
@@ -8,10 +9,12 @@ import { UserCreateFormComponent } from '../user-create/user-create-form.compone
   styleUrls: ['./user-table.component.css']
 })
 export class UserTableComponent implements OnInit {
+  userForm: FormGroup;
 
-  constructor(public dialog: MatDialog,) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder,) { }
 
   ngOnInit(): void {
+    this.createForm();
   }
 
   openCreateUser() {
@@ -23,5 +26,15 @@ export class UserTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  createForm() {
+    this.userForm = this.fb.group({
+      region: ['', Validators.required],
+      branch: ['', Validators.required],
+    });
+  }
+  get f() {
+    return this.userForm.controls;
   }
 }

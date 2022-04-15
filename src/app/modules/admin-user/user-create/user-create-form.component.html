@@ -18,39 +18,82 @@
           (change)="changeRole($event.target.value)"
           [ngClass]="{
             'is-invalid': f.userRole.invalid && f.userRole.touched,
-            'is-valid': f.userRole.valid && (f.userRole.dirty || f.userRole.touched)
+            'is-valid':
+              f.userRole.valid && (f.userRole.dirty || f.userRole.touched)
           }"
         >
           <option value="">-- Select Role --</option>
-          <option value="HCO">HCO</option>
-          <option value="HCOI/TL">HCOI / TL</option>
-          <option value="AC">AC</option>
-          <option value="PO">PO</option>
-          <option value="PM">PM</option>
-          <option value="PD">PD</option>
+          <option *ngFor="let role of roleList">
+            {{role.roleShortName}}
+          </option>
         </select>
         <div *ngIf="f.userRole.errors" class="invalid-feedback">
-            <div *ngIf="f.userRole.errors.required">
-              Role is required
+          <div *ngIf="f.userRole.errors.required">Role is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md" *ngIf="selectMultiRegion">
+        <!-- <button class="btn btn-link" (click)="createModal(selectRegion)"> 
+       +&nbsp;Select&nbsp;Region&nbsp;<span class="text-danger">*&nbsp;</span>
+      </button> -->
+      <label for="multiRegion"
+          >Select Multiple Region&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <ng-multiselect-dropdown
+          [placeholder]="'custom placeholder'"
+          [settings]="dropdownSettings"
+          [data]="regionList"
+          formControlName="multiRegion"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+
+      <!-- <ng-template #selectRegion let-modal>
+
+      <div class="modal-content">
+          <div class="modal-header">
+  
+              <div class="row">
+                  <div class="col-md-7">
+                      <h3 class="modal-title" id="modal-basic-title">Select Region</h3>
+                  </div>
+  
+                  <div class="col-md-2">
+                      <span class="close" (click)="selectRegionModalDismiss()"
+                          style="cursor: pointer;font-size: 35px;">&times;</span>
+                  </div>
+              </div>
+  
+          </div>
+  
+          <div class="modal-body">
+            <div class="form-check" *ngFor="let item of items">
+              <label class="checkbox-inline">
+                <input type="checkbox" formControlName="selectRegion" class="form-check"
+                (change)="getSelectedValue(item.name)" > &nbsp;{{item.name}}
+              </label>
             </div>
           </div>
       </div>
+  </ng-template> -->
 
-      <div class="form-group col-md">
+      <div class="form-group col-md" *ngIf="selectSingleRegion">
         <label for="region"
           >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
         >
         <select
           class="form-select"
+          (change)="changeRegion($event.target.value)"
           formControlName="region"
-          id="region"
           [ngClass]="{
             'is-invalid': f.region.invalid && f.region.touched,
             'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
           }"
         >
           <option value="">-- Select Region --</option>
-          <option></option>
+          <option *ngFor="let region of regionList">
+            {{region.regionName}}
+          </option>
         </select>
         <div *ngIf="f.region.errors" class="invalid-feedback">
           <div *ngIf="f.region.errors.required">
@@ -59,12 +102,13 @@
         </div>
       </div>
 
-      <div class="form-group col-md">
+      <div class="form-group col-md" *ngIf="selectSingleBranch">
         <label for="branch"
           >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
         >
         <select
           class="form-select"
+          (change)="changeBranch($event.target.value)"
           formControlName="branch"
           id="branch"
           [ngClass]="{
@@ -73,7 +117,9 @@
           }"
         >
           <option value="">-- Select Branch --</option>
-          <option></option>
+          <option *ngFor="let branch of branchList" >
+            {{ branch.branchName }}
+          </option>
         </select>
         <div *ngIf="f.branch.errors" class="invalid-feedback">
           <div *ngIf="f.branch.errors.required">
@@ -223,7 +269,9 @@
           }"
         />
         <div *ngIf="f.primaryMobile.errors" class="invalid-feedback">
-            <div *ngIf="f.primaryMobile.errors.required">Primary Mobile No is required</div>
+          <div *ngIf="f.primaryMobile.errors.required">
+            Primary Mobile No is required
+          </div>
           <div *ngIf="f.primaryMobile.errors.minlength">
             Mobile No. should be of 10 digit
           </div>
@@ -282,9 +330,7 @@
       </div>
 
       <div class="form-group col-md">
-        <label for="secondaryEmail"
-          >Secondary Email:</label
-        >
+        <label for="secondaryEmail">Secondary Email:</label>
         <input
           type="email"
           class="form-control"
@@ -293,8 +339,9 @@
         />
       </div>
     </div>
-<br>
-    <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
-
+    <br />
+    <button type="submit" class="btn btn-success" (click)="onSave()">
+      Save
+    </button>
   </form>
 </div>
