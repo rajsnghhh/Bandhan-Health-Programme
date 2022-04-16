@@ -86,7 +86,7 @@
 
             <div class="form-group col-md">
               <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram" id="gram"
+              <select class="form-select" (change)="changeVillage($event.target.value,2)" formControlName="gram" id="gram"
                 [ngClass]="{
                               'is-invalid': f.gram.invalid && f.gram.touched,
                               'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
@@ -102,6 +102,27 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-group col-md" *ngIf="existingFamilyListAll">
+              <label>View Child List By:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (click)="childList($event)"  formControlName="viewChild" id="viewChild"
+              [ngClass]="{
+                'is-invalid': f.viewChild.invalid && f.viewChild.touched,
+                'is-valid': f.viewChild.valid && (f.viewChild.dirty || f.viewChild.touched)
+              }">
+                <option value="">-- View  Child --</option>
+                 <option value="2">With Child</option>
+                <option value="1">All Child</option>
+                <option value="3">No Child</option>
+              </select>
+
+              <div *ngIf="f.viewChild.errors" class="invalid-feedback">
+                <div *ngIf="f.viewChild.errors.required">
+                  View Child selection is required
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div class="box_right d-flex lms_block col-md-6">
@@ -154,7 +175,8 @@
                       <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                         (click)="openModal(viewExistingChild, item.familyDetailId)">View</td>
                       <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
-                        (click)="openModals(addNewChild, item.familyDetailId)" *ngIf="role !='PM' && role !='PO' && role !='PD'">Add</td>
+                        (click)="openModals(addNewChild, item.familyDetailId)"
+                        *ngIf="role !='PM' && role !='PO' && role !='PD'">Add</td>
                     </tr>
                   </tbody>
 
@@ -206,7 +228,8 @@
               <td>{{items.dob.substring(0,10).split('-').reverse().join('-')}}</td>
               <td>{{items.age}}</td>
               <td>{{items.sex}}</td>
-              <td *ngIf="role !='PM' && role !='PO' && role !='PD'"><i class="fas fa-edit" title="Edit Child" (click)="editChild(items, i, EditChild)"></i>
+              <td *ngIf="role !='PM' && role !='PO' && role !='PD'"><i class="fas fa-edit" title="Edit Child"
+                  (click)="editChild(items, i, EditChild)"></i>
                 <i class="fas fa-trash" title="Delete Child" (click)="deleteChild(items, i)"></i>
               </td>
             </tr>

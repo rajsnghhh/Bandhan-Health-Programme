@@ -22,6 +22,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   modalContent: any
   modalReference: any;
   existingFamilyList: any;
+  existingFamilyListZero: any;
+  existingFamilyListNonZero: any;
+  existingFamilyListAll: any;
   existingFamilyDetails: any;
   existingChildList: any;
   checkChildCount: number;
@@ -42,7 +45,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   loader: boolean = true;
   page = 1;
   pageSize = 6;
-  searchText : any;
+  searchText: any;
   searchFullscreen: boolean;
   childIndexId: any;
   regionList: Array<any> = [];
@@ -131,6 +134,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.villageDtoList = [];
       this.villagesOfBranch = [];
       this.gpDtoList = [];
+      this.locationForm.controls.viewChild.setValue('');
     }
   }
 
@@ -156,6 +160,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.villageDtoList = [];
       this.villagesOfBranch = [];
       this.gpDtoList = [];
+      this.locationForm.controls.viewChild.setValue('');
     }
   }
 
@@ -169,6 +174,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.existingFamilyList = [];
       this.villageDtoList = [];
       this.gpDtoList = [];
+      this.locationForm.controls.viewChild.setValue('');
     }
   }
 
@@ -180,16 +186,18 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.showError('No Data Found');
       this.existingFamilyList = [];
       this.villageDtoList = [];
+      this.locationForm.controls.viewChild.setValue('');
     }
   }
 
-  changeVillage(villagename) {
+  changeVillage(villagename, a) {
     if (this.locationForm.value.gram == '') {
       this.showError('No Data Found');
+      this.locationForm.controls.viewChild.setValue('');
       this.existingFamilyList = [];
     }
     else {
-
+      this.locationForm.controls.viewChild.setValue('2');
       let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
       let obj = {
         activeStatus: "A",
@@ -200,11 +208,22 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       setTimeout(() => {
         this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
           this.loader = true;
-          this.existingFamilyList = response.responseObject;
+          this.existingFamilyListAll = response.responseObject;
+          this.existingFamilyListZero = this.existingFamilyListAll.filter((x) => x.existingChildCount == 0);
+          this.existingFamilyListNonZero = this.existingFamilyListAll.filter((x) => x.existingChildCount != 0);
           console.log(this.existingFamilyList);
+          console.log(this.existingFamilyListNonZero);
+          console.log(this.existingFamilyListZero);
+
           this.existingFamilyList?.forEach(item => {
             this.ide = item.familyDetailId
           })
+
+          if (a == 2) {
+            this.existingFamilyList = this.existingFamilyListNonZero;
+            this.locationForm.markAllAsTouched();
+          }
+
         },
           (err) => {
             this.loader = true;
@@ -212,6 +231,30 @@ export class ChildrenRegisterCreateComponent implements OnInit {
           })
       }, 1000);
     }
+
+
+  }
+
+
+  childList(e) {
+    console.log(e.target.value);
+
+    if (e.target.value == '') {
+      this.existingFamilyList = [];
+    }
+
+    if (e.target.value == 1) {
+      this.existingFamilyList = this.existingFamilyListAll;
+    }
+
+    if (e.target.value == 2) {
+      this.existingFamilyList = this.existingFamilyListNonZero
+    }
+
+    if (e.target.value == 3) {
+      this.existingFamilyList = this.existingFamilyListZero
+    }
+
   }
 
   get f() {
@@ -240,7 +283,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       branch: ['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
-      gram: ['', Validators.required]
+      gram: ['', Validators.required],
+      viewChild: ['2', Validators.required]
     });
   }
 
