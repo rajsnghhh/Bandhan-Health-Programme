@@ -45,25 +45,18 @@ export class UserCreateFormComponent implements OnInit {
     private http: HttpClient, private baselineService: BaselineSurveyService,
   ) {
     dialogRef.disableClose = true;
-    // this.checkedList = []; 
   }
 
   ngOnInit(): void {
-    // debugger;
     this.createForm();
+    this.regionList = this.data.regionList;
 
-    // this.regionList = [
-    //   { item_id: 1, item_text: 'Mumbai' },
-    //   { item_id: 2, item_text: 'Bangaluru' },
-    //   { item_id: 3, item_text: 'Pune' },
-    //   { item_id: 4, item_text: 'Navsari' },
-    //   { item_id: 5, item_text: 'New Delhi' },
-    //   { item_id: 17, item_text: 'dgsdh' },
-    //   { item_id: 25, item_text: 'sagsgbz' },
-    //   { item_id: 36, item_text: 'sgbxzv' },
-    //   { item_id: 44, item_text: 'xzvsgse' },
-    //   { item_id: 52, item_text: 'New sgsd' }
-    // ];
+    if (this.data.createMode) {
+      this.userForm.reset();
+    } else {
+
+    }
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'regionMasterId',
@@ -80,10 +73,6 @@ export class UserCreateFormComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}user/getListOfAllRoles`, Dto).subscribe((res: any) => {
       this.roleList = res.responseObject;
     });
-    this.http.post(`${this.httpService.baseURL}user/getListOfAllRegions`, Dto).subscribe((res: any) => {
-      this.regionList = res.responseObject;
-    });
-
   }
 
 
@@ -99,18 +88,14 @@ export class UserCreateFormComponent implements OnInit {
       loginId: ['', Validators.required],
       primaryMobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       secondaryMobile: ['', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
-      primaryEmail: ['', Validators.required],
-      secondaryEmail: [''],
+      primaryEmail: ['', [Validators.required, Validators.email]],
+      secondaryEmail: ['', Validators.email],
     });
   }
   get f() {
     return this.userForm.controls;
   }
 
-  // getSelectedValue(value: String) {
-  //   this.checkedList.push(value);
-  //   console.log(this.checkedList)
-  // }
   changeRole(value) {
     this.roleMasterId = this.roleList.find(role => role.roleShortName == value)?.roleMasterId;
     if (value?.indexOf('HCO') != -1) {
@@ -159,16 +144,6 @@ export class UserCreateFormComponent implements OnInit {
     this.currentBranchId = this.branchList?.find(branch => branch.branchName == value)?.branchId;
     this.branch = [{ 'branchId': this.currentBranchId }]
   }
-  // createModal(selectRegion) {
-  //   this.modalContent = '';
-  //   this.modalReference = this.modalService.open(selectRegion, {
-  //     windowClass: 'selectRegion',
-  //   });
-  // }
-  // selectRegionModalDismiss() {
-  //   this.modalReference.close();
-  //   this.userForm.value.selectRegion = this.checkedList;
-  // }
 
   onSave() {
     console.log(this.userForm);

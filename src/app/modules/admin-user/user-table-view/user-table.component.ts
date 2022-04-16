@@ -1,6 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
+import { HttpService } from '../../core/http/http.service';
+import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { UserCreateFormComponent } from '../user-create/user-create-form.component';
 
 @Component({
@@ -10,18 +15,47 @@ import { UserCreateFormComponent } from '../user-create/user-create-form.compone
 })
 export class UserTableComponent implements OnInit {
   userForm: FormGroup;
+  regionList: Array<any> = [];
+  branchList: Array<any> = [];
+  regionId: any;
+  branchId: any;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder,) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
+    private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService,) { }
 
   ngOnInit(): void {
     this.createForm();
+
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}user/getListOfAllRegions`, Dto).subscribe((res: any) => {
+      this.regionList = res.responseObject;
+    });
   }
 
   openCreateUser() {
     const dialogRef = this.dialog.open(UserCreateFormComponent, {
       width: '1000px',
       height: '550px',
-      data: {}
+      data: {
+        createMode: true,
+        regionList: this.regionList
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openEditUser() {
+    const dialogRef = this.dialog.open(UserCreateFormComponent, {
+      width: '1000px',
+      height: '550px',
+      data: {
+        createMode: false,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -36,5 +70,55 @@ export class UserTableComponent implements OnInit {
   }
   get f() {
     return this.userForm.controls;
+  }
+
+  changeRegion(region) {
+    this.regionId = this.regionList.find((reg) => reg.regionName == region)?.regionMasterId;
+    let req = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      regionId: this.regionId,
+    };
+    this.baselineService.listOfBranchesOfARegion(req).subscribe(
+      (res) => {
+        this.branchList = res?.responseObject;
+      },
+      (error) => {
+        this.branchList = null;
+      }
+    );
+    if (this.userForm.value.region == '') {
+      this.branchList = [];
+    }
+  }
+  changeBranch(value) {
+    this.branchId = this.branchList?.find(branch => branch.branchName == value)?.branchId;
+  }
+
+  resetPasswords() {
+    this.confirmationDialogService.confirm('', 'Do you want to reset password ?').then(() => {
+      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+      //   this.resetPwSuccess('Success');
+      // })
+    }).catch(() => '');
+  }
+
+  deleteUser() {
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+      //   this.showSuccess('Delete');
+      // })
+    }).catch(() => '');
+  }
+
+  showSuccess(message) {
+    this.toaster.success(message, 'User Deleted', {
+      timeOut: 3000,
+    });
+  }
+
+  resetPwSuccess(message) {
+    this.toaster.success(message, 'Password Reset Successs', {
+      timeOut: 3000,
+    });
   }
 }
