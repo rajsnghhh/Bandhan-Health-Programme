@@ -376,8 +376,12 @@
 
             <div class="row">
               <div class="form-group col-md">
-                <label for="bbMicro">
+                <label for="bbMicro" *ngIf="sidebarService.donorName?.includes('Bandhan')">
+                  Bandhan Bank Micro Group :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                <label for="bbMicro" *ngIf="!sidebarService.donorName?.includes('Bandhan') ">
                   Micro Group :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
                 <select class="form-select" formControlName="bbMicro" id="bbMicro" [ngClass]="{
                     'is-invalid': f.bbMicro.invalid && f.bbMicro.touched,
                     'is-valid':

@@ -19,7 +19,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
 
 export class BaselineViewComponent implements OnInit {
   locationForm: FormGroup;
-  baselineDetails:  any;
+  baselineDetails: any;
   modalContent: any;
   modalReference: any;
   modalIndex: any;
@@ -58,7 +58,7 @@ export class BaselineViewComponent implements OnInit {
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private confirmationDialogService: ConfirmationDialogService, private route: Router, private httpBranch: BranchService,
-    public validationService: ValidationService, private sidebarService: SidebarService) { }
+    public validationService: ValidationService, public sidebarService: SidebarService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -145,6 +145,11 @@ export class BaselineViewComponent implements OnInit {
   }
 
   changeBranch(branch) {
+
+    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto?.donorName;
+    console.log(this.sidebarService.donorName);
+
+
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
@@ -440,7 +445,8 @@ export class BaselineViewComponent implements OnInit {
           cFamilyCount: this.familyStatus?.createdFamilyCount,
           cFamilyMembersCount: this.familyStatus?.createdFamilyMambersCount,
           tFamilyCount: this.familyStatus?.totalFamilyCount,
-          tFamilyMembersCount: this.familyStatus?.totalFamilyMambersCount
+          tFamilyMembersCount: this.familyStatus?.totalFamilyMambersCount,
+          donor: this.sidebarService.donorName
         }
       });
     });
@@ -592,7 +598,8 @@ export class BaselineViewComponent implements OnInit {
               cFamilyCount: this.familyStatus.createdFamilyCount,
               cFamilyMembersCount: this.familyStatus.createdFamilyMambersCount,
               tFamilyCount: this.familyStatus.totalFamilyCount,
-              tFamilyMembersCount: this.familyStatus.totalFamilyMambersCount
+              tFamilyMembersCount: this.familyStatus.totalFamilyMambersCount,
+              donor: this.sidebarService.donorName
             }
           }))
           .catch(() => '');

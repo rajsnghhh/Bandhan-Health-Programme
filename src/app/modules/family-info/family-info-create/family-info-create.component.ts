@@ -20,6 +20,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   createdFamilyMembersCount: any;
   totalFamilyCount: any;
   totalFamilyMembersCount: any;
+  donorName:any;
   baselineSurvey: FormGroup;
   haveChildren: string = 'N';
   childbelow18: string;
@@ -107,6 +108,8 @@ export class FamilyInfoCreateComponent implements OnInit {
       this.createdFamilyMembersCount = params['cFamilyMembersCount'];
       this.totalFamilyCount = params['tFamilyCount'];
       this.totalFamilyMembersCount = params['tFamilyMembersCount'];
+      this.donorName = params['donor'];
+
     });
 
     this.getMinDate();

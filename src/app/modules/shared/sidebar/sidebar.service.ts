@@ -19,6 +19,8 @@ export class SidebarService {
   swasthyaSahayikaId: any
   swasthyaSahayikaName: any;
   subMenuList: Array<any> = [];
+  donorName: any;
+  donorMasterDto: any;
 
 
   constructor(private http: HttpClient) { }

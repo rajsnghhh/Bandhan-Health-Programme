@@ -23,7 +23,8 @@ export class LocationComponent implements OnInit {
   branchId: any;
   regionBranchHide: boolean;
   loader: boolean = true;
-  donorName: any;
+
+
   constructor(
     private fb: FormBuilder,
     private sidebarService: SidebarService,
@@ -35,6 +36,8 @@ export class LocationComponent implements OnInit {
     this.getLocationHco();
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+    console.log(this.branchId);
+    
   }
 
   getLocationHco() {
@@ -45,6 +48,9 @@ export class LocationComponent implements OnInit {
       },
       branchId: this.sidebarService.branchId
     }
+
+    console.log(this.sidebarService);
+    
     if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
       this.baselineService.villagesOfBranch(dto).subscribe((res) => {
         console.log(res, 'res list');
@@ -58,6 +64,8 @@ export class LocationComponent implements OnInit {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
     )?.regionMasterId;
+
+
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService?.userId,
@@ -89,25 +97,16 @@ export class LocationComponent implements OnInit {
 
   changeBranch(branch) {
 
+    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto?.donorName
+    console.log(this.sidebarService.donorName);
+
+    this.sidebarService.donorMasterDto = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto
+    console.log(this.sidebarService.donorMasterDto);
+    
+
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value;
-
-
-    // this.sidebarService.donorMasterId = this.branchList?.find(bran => bran.donorMasterDto.donorName == branch);
-    // // this.sidebarService.donorName = this.locationForm.get('branch').value;
-
-    // // let donorN = this.branchList?.find(don => don.branchPincode == branchPincode)?.donorN
-    // console.log(    this.sidebarService.donorMasterId );
-
-    //     let donorList = this.branchList.find(block => block.donorMasterDto.donorName == this.selectedDonor)?.donorMasterDto;
-    // console.log(donorList);
-
-    this.branchList.forEach((item) => {
-      let yy = item.donorMasterDto.donorName;
-
-    })
-
-
+    
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,

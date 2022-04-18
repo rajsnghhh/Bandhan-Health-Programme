@@ -27,7 +27,7 @@
           'is-invalid': f.branch.invalid && f.branch.touched,
           'is-valid':
             f.branch.valid && (f.branch.dirty || f.branch.touched)
-        }">
+        }" >
         <option value="">-- Select Branch --</option>
         <option *ngFor="let branch of branchList">
           {{ branch.branchName }}
