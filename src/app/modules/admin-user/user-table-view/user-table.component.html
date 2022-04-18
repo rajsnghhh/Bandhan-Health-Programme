@@ -2,14 +2,113 @@
   <div class="row">
     <div class="col-md-12">
       <div class="white_box QA_section mb_30">
-
         <div id="header-fixed" style="display: flex">
           <h2 class="page-title">User</h2>
         </div>
 
-        <div class="add_button ">
-            <button class="btn btn-primary"  (click)="openCreateUser()" >Create User</button>
+        <div class="add_button">
+          <button class="btn btn-primary" (click)="openCreateUser()">
+            <i class="fa fa-address-card-o" ></i>Create User
+          </button>
         </div>
+
+        <br>
+
+        <form class="form-signin" [formGroup]="userForm">
+          <div class="row">
+            <div class="form-group col-md">
+              <label for="region"
+                >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >
+              <select
+                class="form-select"
+                (change)="changeRegion($event.target.value)"
+                formControlName="region"
+                [ngClass]="{
+                  'is-invalid': f.region.invalid && f.region.touched,
+                  'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
+                }"
+              >
+                <option value="">-- Select Region --</option>
+                <option *ngFor="let region of regionList">
+                  {{region.regionName}}
+                </option>
+              </select>
+              <div *ngIf="f.region.errors" class="invalid-feedback">
+                <div *ngIf="f.region.errors.required">
+                  Region selection is required
+                </div>
+              </div>
+            </div>
+      
+            <div class="form-group col-md">
+              <label for="branch"
+                >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >
+              <select
+                class="form-select"
+                (change)="changeBranch($event.target.value)"
+                formControlName="branch"
+                id="branch"
+                [ngClass]="{
+                  'is-invalid': f.branch.invalid && f.branch.touched,
+                  'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)
+                }"
+              >
+                <option value="">-- Select Branch --</option>
+                <option *ngFor="let branch of branchList" >
+                  {{ branch.branchName }}
+                </option>
+              </select>
+              <div *ngIf="f.branch.errors" class="invalid-feedback">
+                <div *ngIf="f.branch.errors.required">
+                  Branch selection is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="white_box_tittle list_header" >
+          <div class="QA_table ">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                  <table
+                      class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                      role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+      
+                      <thead>
+                          <tr>
+                              <th>SL<br>No</th>
+                              <th>Name</th>
+                              <th>Login Id</th>
+                              <th>Mobile No</th>
+                              <th>Role</th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+      
+                      <tbody>
+      
+                          <tr>
+                              <td>1</td>
+                              <td>sdgseg</td>
+                              <td>105153</td>
+                              <td>8768555290</td>
+                              <td>HCO</td>
+                              <td style="padding: 0px 0px 0px 32px;">
+                                  <i class="fas fa-edit" title="Edit User" (click)="openEditUser()"></i>
+                                  <span class="fa-passwd-reset fa-stack" title="Reset Password" (click)="resetPasswords()">
+                                    <i class="fa fa-undo fa-stack-2x"></i>
+                                    <i class="fa fa-lock fa-stack-1x"></i>
+                                  </span> &nbsp;
+                                  <i class="fas fa-trash" title="Delete User" (click)="deleteUser()"></i>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
 
       </div>
     </div>

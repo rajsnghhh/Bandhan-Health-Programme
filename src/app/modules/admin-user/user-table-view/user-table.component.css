@@ -1,0 +1,14 @@
+.fa-passwd-reset > .fa-lock  {
+    font-size: 0.85rem;
+  }
+
+.fa-passwd-reset:hover{
+    color: #70caf7 !important;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.add_button{
+  display: flex;
+  flex-direction: row-reverse;
+}

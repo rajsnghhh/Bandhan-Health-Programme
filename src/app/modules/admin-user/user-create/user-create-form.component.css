@@ -1,30 +1,61 @@
 .dialog-title {
-    background-color: #499;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    color: #ffffff;
-  }
-  .dialog-title::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -14px;
-    width: 0;
-    height: 0;
-    border-top: 7px solid #277;
-    border-right: 7px solid #277;
-    border-bottom: 7px solid #0000;
-    border-left: 7px solid #0000;
-  }
-  ::ng-deep .mat-dialog-container {
-    padding: 22px 17px;
-  }
-  
-  .dialog-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  
+  background-color: #499;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  color: #ffffff;
+}
+.dialog-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -14px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #277;
+  border-right: 7px solid #277;
+  border-bottom: 7px solid #0000;
+  border-left: 7px solid #0000;
+}
+::ng-deep .mat-dialog-container {
+  padding: 22px 17px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-content {
+  height: 450px;
+  width: 700px;
+}
+
+.close {
+  margin-left: 345px;
+}
+.btn-link {
+  text-decoration: inherit;
+  display: inline-block;
+  margin-left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.loginId > p {
+  margin: 1px 0px 4px 0px;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  padding: 6px 7px 0px 7px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.loginId input {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  margin: 1px 7px 4px -1px;
+  border-radius: 0px 5px 5px 0px;
+}
