@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Create New Region</h2>
+    <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+  </div>
+</h1>
+<div mat-dialog-content>
+  <form class="form-signin" [formGroup]="regionForm">
+    <div class="form-group col-md">
+      <label for="region"
+        >Region Name :&nbsp;<span class="text-danger">*&nbsp;</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Region Name"
+        formControlName="region"
+        [ngClass]="{
+          'is-invalid': f.region.invalid && f.region.touched,
+          'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
+        }"
+      />
+      <div *ngIf="f.region.errors" class="invalid-feedback">
+        <div *ngIf="f.region.errors.required">Region is required</div>
+      </div>
+    </div>
+    <br />
+
+    <div class="addEditBtn">
+      <button type="submit" class="btn btn-success" (click)="onSave()">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

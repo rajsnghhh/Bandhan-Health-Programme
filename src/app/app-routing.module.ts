@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'project', loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule), canActivate: [AuthGuard] },
   { path: 'mou', loadChildren: () => import('./modules/mou/mou.module').then(m => m.MouModule), canActivate: [AuthGuard] },
   { path: 'dynamic-form', loadChildren: () => import('./modules/dynamic-form/dynamic-form.module').then(m => m.DynamicFormModule), canActivate: [AuthGuard] },
+  { path: 'region-branch', loadChildren: () => import('./modules/region-branch-setup/region-branch-setup.module').then(m => m.RegionBranchSetupModule), canActivate: [AuthGuard] },
   { path: 'Baseline-Survey', loadChildren: () => import('./modules/baseline-survey/baseline-survey.module').then(m => m.BaselineSurveyModule), canActivate: [AuthGuard] },
   { path: 'central-register', loadChildren: () => import('./modules/central-register/central-register.module').then(m => m.CentralRegisterModule), canActivate: [AuthGuard] },
   { path: 'children-register', loadChildren: () => import('./modules/children-register/children-register.module').then(m => m.ChildrenRegisterModule), canActivate: [AuthGuard] },

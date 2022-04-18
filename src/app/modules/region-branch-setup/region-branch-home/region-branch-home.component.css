@@ -1,0 +1,8 @@
+.add_button{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.edit_button{
+    border: 1px;
+    background-color: #f2f2f2;
+}
