@@ -18,11 +18,12 @@ export class LocationComponent implements OnInit {
   ssList: Array<any> = [];
   swasthyaSahayika: Array<any> = [];
   selectedBlock: String;
+  selectedDonor: String;
   selectedGp: String;
   branchId: any;
   regionBranchHide: boolean;
   loader: boolean = true;
-
+  donorName: any;
   constructor(
     private fb: FormBuilder,
     private sidebarService: SidebarService,
@@ -67,6 +68,8 @@ export class LocationComponent implements OnInit {
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
       (res) => {
         this.branchList = res?.responseObject;
+        console.log(this.branchList);
+
       },
       (error) => {
         this.branchList = null;
@@ -85,8 +88,26 @@ export class LocationComponent implements OnInit {
   }
 
   changeBranch(branch) {
+
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value
+    this.sidebarService.branchName = this.locationForm.get('branch').value;
+
+
+    // this.sidebarService.donorMasterId = this.branchList?.find(bran => bran.donorMasterDto.donorName == branch);
+    // // this.sidebarService.donorName = this.locationForm.get('branch').value;
+
+    // // let donorN = this.branchList?.find(don => don.branchPincode == branchPincode)?.donorN
+    // console.log(    this.sidebarService.donorMasterId );
+
+    //     let donorList = this.branchList.find(block => block.donorMasterDto.donorName == this.selectedDonor)?.donorMasterDto;
+    // console.log(donorList);
+
+    this.branchList.forEach((item) => {
+      let yy = item.donorMasterDto.donorName;
+
+    })
+
+
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,

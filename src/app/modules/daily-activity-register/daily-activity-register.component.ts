@@ -193,4 +193,8 @@ export class DailyActivityRegisterComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
+  restrictTypeOfDate() {
+    return false;
+  }
 }

@@ -20,12 +20,13 @@ export class SidebarService {
   swasthyaSahayikaName: any;
   subMenuList: Array<any> = [];
 
+
   constructor(private http: HttpClient) { }
   //HCO ** TL
   listOfBranchesOfUser(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, obj)
   }
-  //Other Higher lavel
+  //Other Higher level
   listOfRegionsOfUser(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj)
   }

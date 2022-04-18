@@ -243,15 +243,15 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.existingFamilyList = [];
     }
 
-    if (e.target.value == 1) {
+    if (e.target.value == 1 && this.locationForm.value.gram != '') {
       this.existingFamilyList = this.existingFamilyListAll;
     }
 
-    if (e.target.value == 2) {
+    if (e.target.value == 2 && this.locationForm.value.gram != '') {
       this.existingFamilyList = this.existingFamilyListNonZero
     }
 
-    if (e.target.value == 3) {
+    if (e.target.value == 3 && this.locationForm.value.gram != '') {
       this.existingFamilyList = this.existingFamilyListZero
     }
 

@@ -6,7 +6,7 @@
 
                 <form class="form-signin" [formGroup]="locationForm">
 
-                    <div class="row" >
+                    <!-- <div class="row" >
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
@@ -42,8 +42,8 @@
                                 <div *ngIf="l.branch.errors.required">Branch selection is required</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                    </div>  -->
+                    <!-- <div class="row">
                         <div class="form-group col-md">
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBlock($event.target.value)"
@@ -99,24 +99,24 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- <div class="box_right d-flex lms_block col-md-6">
-                        <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
-                                <form active="#">
-                                    <div class="search_field">
-                                        <input type="text" name="search" placeholder="Search pem info here..."
-                                            [(ngModel)]="registerSearch">
-                                    </div>
-                                    <button type="submit"> <i class="fa fa-search"></i> </button>
-                                </form>
-                            </div>
-                        </div>
-
                     </div> -->
 
-                    <div class="white_box_tittle list_header">
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" (keydown)="restrictTypeOfDate()">
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">To Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" (keydown)="restrictTypeOfDate()">
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- <div class="white_box_tittle list_header">
 
                         <div class="QA_table ">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -128,15 +128,14 @@
                                   
 
                                 </table>
-                                <!-- <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls> -->
+                                
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </form>
+
             </div>
         </div>
     </div>

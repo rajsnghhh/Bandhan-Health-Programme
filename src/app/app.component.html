@@ -11,11 +11,11 @@
         </span>
 
         <div>
-            <span style="font-size: 75%; margin-left: 5%;"> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
+            <span style="font-size: 85%; margin-left: 10%;"> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
                 {{user.responseObject.userdetailDTO.userLastName}}
                 ({{user.responseObject.RoledetailDTO.roleShortName}})</span>
-            <button class="btn btn-danger" style="margin-left: 3%;" (click)="logout()"> <i
-                    class="fa fa-power-off"></i>Logout</button>
+            <a style="margin-left: 45px; color:#e60000;" title="Logout" (click)="logout()"> <i
+                    class="fa fa-power-off"></i></a>
 
         </div>
 
