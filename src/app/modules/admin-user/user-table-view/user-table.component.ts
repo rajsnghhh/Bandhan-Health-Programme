@@ -17,6 +17,7 @@ export class UserTableComponent implements OnInit {
   userForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
+  userList: Array<any> = [];
   regionId: any;
   branchId: any;
 
@@ -49,12 +50,13 @@ export class UserTableComponent implements OnInit {
     });
   }
 
-  openEditUser() {
+  openEditUser(i) {
     const dialogRef = this.dialog.open(UserCreateFormComponent, {
       width: '1000px',
       height: '550px',
       data: {
         createMode: false,
+        userData: this.userList[i]
       }
     });
 
@@ -92,6 +94,21 @@ export class UserTableComponent implements OnInit {
   }
   changeBranch(value) {
     this.branchId = this.branchList?.find(branch => branch.branchName == value)?.branchId;
+    this.getUserList(this.branchId, this.regionId);
+  }
+
+  getUserList(branchId: any, regionId: any) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: branchId,
+      regionMasterId: regionId
+    }
+    this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
+      this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
+    }, error => {
+      console.log('Error');
+    }
+    )
   }
 
   resetPasswords() {

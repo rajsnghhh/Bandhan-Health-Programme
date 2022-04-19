@@ -16,19 +16,12 @@ import { ValidationService } from '../../shared/services/validation.service';
 })
 export class UserCreateFormComponent implements OnInit {
   userForm: FormGroup;
-  // modalContent: any;
-  // modalReference: any;
-  // items: Array<any> = [
-  //   { name: 'India' },
-  //   { name: 'US' },
-  //   { name: 'China' },
-  //   { name: 'France' }
-  // ];
-  // checkedList: any[];
+
 
   selectMultiRegion: boolean;
   selectSingleRegion: boolean;
   selectSingleBranch: boolean;
+  selectBaseBranch: Boolean;
   regionId: any;
   roleMasterId: any;
   currentBranchId: any;
@@ -48,13 +41,28 @@ export class UserCreateFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data, 'Edit')
     this.createForm();
     this.regionList = this.data.regionList;
 
     if (this.data.createMode) {
       this.userForm.reset();
     } else {
-
+      // this.changeRole(this.data.userData.roleShortName);
+      // this.userForm.patchValue({
+      //   userRole: this.data.userData.roleShortName,
+      //   multiRegion: null,
+      //   region: null,
+      //   branch: this.data.userData.branchList.branchName,
+      //   firstName: this.data.userData.userFirstName,
+      //   middleName: this.data.userData.userMiddleName,
+      //   lastName: this.data.userData.userLastName,
+      //   loginId: this.data.userData.loginId,
+      //   primaryMobile: this.data.userData.mobileNumber,
+      //   secondaryMobile: this.data.userData.mobileNumberSecondary,
+      //   primaryEmail: this.data.userData.email,
+      //   secondaryEmail: this.data.userData.emailSecondary,
+      // })
     }
 
     this.dropdownSettings = {
@@ -64,7 +72,7 @@ export class UserCreateFormComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       allowSearchFilter: true,
-      itemsShowLimit: 6,
+      itemsShowLimit: 3,
     };
 
     let Dto = {
@@ -78,10 +86,11 @@ export class UserCreateFormComponent implements OnInit {
 
   createForm() {
     this.userForm = this.fb.group({
-      userRole: ['', Validators.required],
+      userRole: [null, Validators.required],
       multiRegion: [''],
       region: [''],
       branch: [''],
+      baseBranch: [''],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       middleName: ['', Validators.compose([Validators.minLength(3)])],
       lastName: ['', Validators.compose([Validators.minLength(3)])],
@@ -102,6 +111,7 @@ export class UserCreateFormComponent implements OnInit {
       this.selectMultiRegion = false;
       this.selectSingleRegion = true;
       this.selectSingleBranch = true;
+      this.selectBaseBranch = false;
       this.userForm.get('region').setValidators(Validators.required);
       this.userForm.get('branch').setValidators(Validators.required);
       this.userForm.get('multiRegion').clearAsyncValidators();
@@ -109,6 +119,7 @@ export class UserCreateFormComponent implements OnInit {
       this.selectMultiRegion = false;
       this.selectSingleRegion = true;
       this.selectSingleBranch = false;
+      this.selectBaseBranch = true;
       this.userForm.get('region').setValidators(Validators.required);
       this.userForm.get('branch').clearAsyncValidators();
       this.userForm.get('multiRegion').clearAsyncValidators();
@@ -116,6 +127,7 @@ export class UserCreateFormComponent implements OnInit {
       this.selectMultiRegion = true;
       this.selectSingleRegion = false;
       this.selectSingleBranch = false;
+      this.selectBaseBranch = true;
       this.userForm.get('multiRegion').setValidators(Validators.required);
       this.userForm.get('branch').clearAsyncValidators();
       this.userForm.get('region').clearAsyncValidators();

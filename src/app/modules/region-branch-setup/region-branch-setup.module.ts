@@ -9,10 +9,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RegionBranchHomeComponent } from './region-branch-home/region-branch-home.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { RegionSetupComponent } from './region-setup/region-setup.component'
+import { RegionSetupComponent } from './region-setup/region-setup.component';
+import { BranchSetupComponent } from './branch-setup/branch-setup.component'
 
 @NgModule({
-  declarations: [RegionBranchHomeComponent, RegionSetupComponent],
+  declarations: [RegionBranchHomeComponent, RegionSetupComponent, BranchSetupComponent],
   imports: [
     CommonModule,
     RegionBranchSetupRoutingModule, ReactiveFormsModule, FormsModule,

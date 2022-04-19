@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { BranchSetupComponent } from '../branch-setup/branch-setup.component';
 import { RegionSetupComponent } from '../region-setup/region-setup.component';
 
 @Component({
@@ -36,7 +37,14 @@ export class RegionBranchHomeComponent implements OnInit {
   }
 
   openCreateBranch() {
+    const dialogRef = this.dialog.open(BranchSetupComponent, {
+      width: '95vw',
+      maxWidth: '100vw',
+      data: {}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   openEditRegion() {
