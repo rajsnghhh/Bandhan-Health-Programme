@@ -47,21 +47,26 @@ export class UserTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getUserList(this.branchId, this.regionId);
     });
   }
 
   openEditUser(i) {
-    const dialogRef = this.dialog.open(UserCreateFormComponent, {
-      width: '1000px',
-      height: '550px',
-      data: {
-        createMode: false,
-        userData: this.userList[i]
-      }
-    });
+    this.showError('This feature is unavailable');
+    // const dialogRef = this.dialog.open(UserCreateFormComponent, {
+    //   width: '1000px',
+    //   height: '550px',
+    //   data: {
+    //     createMode: false,
+    //     regionList: this.regionList,
+    //     branchList: this.branchList,
+    //     userData: this.userList[i]
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.getUserList(this.branchId, this.regionId);
+    // });
   }
 
   createForm() {
@@ -120,11 +125,12 @@ export class UserTableComponent implements OnInit {
   }
 
   deleteUser() {
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
-      //   this.showSuccess('Delete');
-      // })
-    }).catch(() => '');
+    this.showError('This feature is unavailable');
+    // this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+    // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+    //   this.showSuccess('Delete');
+    // })
+    // }).catch(() => '');
   }
 
   showSuccess(message) {
@@ -135,6 +141,12 @@ export class UserTableComponent implements OnInit {
 
   resetPwSuccess(message) {
     this.toaster.success(message, 'Password Reset Successs', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
   }

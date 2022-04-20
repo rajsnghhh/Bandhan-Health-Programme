@@ -90,8 +90,8 @@
             'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
           }"
         >
-          <option value="">-- Select Region --</option>
-          <option *ngFor="let region of regionList" [value]="region.regionMasterId">
+          <option [value]="null">-- Select Region --</option>
+          <option *ngFor="let region of regionList" [value]="region.regionName">
             {{region.regionName}}
           </option>
         </select>
@@ -110,13 +110,12 @@
           class="form-select"
           (change)="changeBranch($event.target.value)"
           formControlName="branch"
-          id="branch"
           [ngClass]="{
             'is-invalid': f.branch.invalid && f.branch.touched,
             'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)
           }"
         >
-          <option value="">-- Select Branch --</option>
+          <option [value]="null">-- Select Branch --</option>
           <option *ngFor="let branch of branchList" [value]="branch.branchName">
             {{ branch.branchName }}
           </option>
@@ -134,17 +133,17 @@
         >
         <select
           class="form-select"
-          (change)="changeBranch($event.target.value)"
+          (change)="changeBaseBranch($event.target.value)"
           formControlName="baseBranch"
           [ngClass]="{
             'is-invalid': f.baseBranch.invalid && f.baseBranch.touched,
             'is-valid': f.baseBranch.valid && (f.baseBranch.dirty || f.baseBranch.touched)
           }"
         >
-          <option value="">-- Select Base Branch --</option>
-          <!-- <option *ngFor="let branch of branchList" [value]="branch.branchName">
-            {{ branch.branchName }}
-          </option> -->
+        <option [value]="null">-- Select Branch --</option>
+        <option *ngFor="let branch of branchList" [value]="branch.branchId">
+          {{ branch.branchName }}
+        </option>
         </select>
         <div *ngIf="f.branch.errors" class="invalid-feedback">
           <div *ngIf="f.branch.errors.required">

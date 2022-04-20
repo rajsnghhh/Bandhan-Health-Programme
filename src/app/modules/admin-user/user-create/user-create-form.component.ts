@@ -31,6 +31,7 @@ export class UserCreateFormComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   region: Array<any> = [];
   branch: Array<any> = [];
+  // branchVillageMapId: any;
 
   constructor(@Optional() public dialogRef: MatDialogRef<UserCreateFormComponent>, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService, private fb: FormBuilder,
@@ -45,24 +46,45 @@ export class UserCreateFormComponent implements OnInit {
     this.createForm();
     this.regionList = this.data.regionList;
 
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}user/getListOfAllRoles`, Dto).subscribe((res: any) => {
+      this.roleList = res.responseObject;
+    });
+
     if (this.data.createMode) {
       this.userForm.reset();
     } else {
-      // this.changeRole(this.data.userData.roleShortName);
-      // this.userForm.patchValue({
-      //   userRole: this.data.userData.roleShortName,
-      //   multiRegion: null,
-      //   region: null,
-      //   branch: this.data.userData.branchList.branchName,
-      //   firstName: this.data.userData.userFirstName,
-      //   middleName: this.data.userData.userMiddleName,
-      //   lastName: this.data.userData.userLastName,
-      //   loginId: this.data.userData.loginId,
-      //   primaryMobile: this.data.userData.mobileNumber,
-      //   secondaryMobile: this.data.userData.mobileNumberSecondary,
-      //   primaryEmail: this.data.userData.email,
-      //   secondaryEmail: this.data.userData.emailSecondary,
-      // })
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        userId: this.data.userData.userId
+      }
+      this.http.post(`${this.httpService.baseURL}user/getUserDetails`, Dto).subscribe((res: any) => {
+        // this.branchVillageMapId = res.responseObject.branchList[0].branchName;
+        // this.branchList = this.data.branchList;
+        this.changeRole(this.data.userData.roleShortName);
+        this.changeRegion(res.responseObject.regionList[0]?.regionName);
+        // this.changeBranch(res.responseObject.branchList[0]?.branchName);
+        this.userForm.patchValue({
+          userRole: res.responseObject.roleShortName,
+          multiRegion: res.responseObject?.regionList,
+          region: res.responseObject.regionList[0]?.regionName,
+          branch: res.responseObject.branchList[0]?.branchName,
+          baseBranch: res.responseObject?.currentBranchId,
+          firstName: res.responseObject.userFirstName,
+          middleName: res.responseObject.userMiddleName,
+          lastName: res.responseObject.userLastName,
+          loginId: res.responseObject.loginId,
+          primaryMobile: res.responseObject.mobileNumber,
+          secondaryMobile: res.responseObject.mobileNumberSecondary,
+          primaryEmail: res.responseObject.email,
+          secondaryEmail: res.responseObject.emailSecondary,
+        });
+        this.userForm.get('branch').patchValue(res.responseObject.branchList[0]?.branchName);
+        // console.log(res.responseObject.branchList[0]?.branchName)
+      });
+
     }
 
     this.dropdownSettings = {
@@ -74,13 +96,6 @@ export class UserCreateFormComponent implements OnInit {
       allowSearchFilter: true,
       itemsShowLimit: 3,
     };
-
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-    }
-    this.http.post(`${this.httpService.baseURL}user/getListOfAllRoles`, Dto).subscribe((res: any) => {
-      this.roleList = res.responseObject;
-    });
   }
 
 
@@ -88,8 +103,8 @@ export class UserCreateFormComponent implements OnInit {
     this.userForm = this.fb.group({
       userRole: [null, Validators.required],
       multiRegion: [''],
-      region: [''],
-      branch: [''],
+      region: [null, Validators.required],
+      branch: [null, Validators.required],
       baseBranch: [''],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       middleName: ['', Validators.compose([Validators.minLength(3)])],
@@ -157,12 +172,17 @@ export class UserCreateFormComponent implements OnInit {
     this.branch = [{ 'branchId': this.currentBranchId }]
   }
 
+  changeBaseBranch(value) {
+    this.currentBranchId = value;
+  }
+
   onSave() {
     console.log(this.userForm);
+    this.changeBranch(this.userForm.value.branch);
     this.userForm.markAllAsTouched();
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      userId: 0,
+      userId: this.data.createMode ? 0 : this.data.userData.userId,
       userFirstName: this.userForm.value.firstName,
       userMiddleName: this.userForm.value.middleName,
       userLastName: this.userForm.value.lastName,
