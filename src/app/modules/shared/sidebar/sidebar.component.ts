@@ -51,6 +51,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
         this.sidebarService.branchId = res.responseObject[0]?.branchId;
         this.sidebarService.branchName = res.responseObject[0]?.branchName;
+        this.sidebarService.donorName = res.responseObject[0]?.donorMasterDto?.donorName;
       });
       this.sidebarService.regionBranchHide = false;
     } else {

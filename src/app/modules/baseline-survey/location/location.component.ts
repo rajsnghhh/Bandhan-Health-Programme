@@ -18,10 +18,12 @@ export class LocationComponent implements OnInit {
   ssList: Array<any> = [];
   swasthyaSahayika: Array<any> = [];
   selectedBlock: String;
+  selectedDonor: String;
   selectedGp: String;
   branchId: any;
   regionBranchHide: boolean;
   loader: boolean = true;
+
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +36,8 @@ export class LocationComponent implements OnInit {
     this.getLocationHco();
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+    console.log(this.branchId);
+    
   }
 
   getLocationHco() {
@@ -44,6 +48,9 @@ export class LocationComponent implements OnInit {
       },
       branchId: this.sidebarService.branchId
     }
+
+    console.log(this.sidebarService);
+    
     if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
       this.baselineService.villagesOfBranch(dto).subscribe((res) => {
         console.log(res, 'res list');
@@ -57,6 +64,8 @@ export class LocationComponent implements OnInit {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
     )?.regionMasterId;
+
+
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService?.userId,
@@ -67,6 +76,8 @@ export class LocationComponent implements OnInit {
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
       (res) => {
         this.branchList = res?.responseObject;
+        console.log(this.branchList);
+
       },
       (error) => {
         this.branchList = null;
@@ -85,8 +96,17 @@ export class LocationComponent implements OnInit {
   }
 
   changeBranch(branch) {
+
+    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto?.donorName
+    console.log(this.sidebarService.donorName);
+
+    this.sidebarService.donorMasterDto = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto
+    console.log(this.sidebarService.donorMasterDto);
+    
+
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value
+    this.sidebarService.branchName = this.locationForm.get('branch').value;
+    
     let Dto = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,

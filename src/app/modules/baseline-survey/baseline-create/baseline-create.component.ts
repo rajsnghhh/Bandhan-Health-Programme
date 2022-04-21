@@ -50,7 +50,7 @@ export class BaselineCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
-    private httpBranch: BranchService, private sidebarService: SidebarService) { }
+    private httpBranch: BranchService, public sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.getMinDate();

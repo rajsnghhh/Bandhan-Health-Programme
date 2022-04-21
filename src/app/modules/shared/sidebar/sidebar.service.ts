@@ -19,13 +19,16 @@ export class SidebarService {
   swasthyaSahayikaId: any
   swasthyaSahayikaName: any;
   subMenuList: Array<any> = [];
+  donorName: any;
+  donorMasterDto: any;
+
 
   constructor(private http: HttpClient) { }
   //HCO ** TL
   listOfBranchesOfUser(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, obj)
   }
-  //Other Higher lavel
+  //Other Higher level
   listOfRegionsOfUser(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj)
   }

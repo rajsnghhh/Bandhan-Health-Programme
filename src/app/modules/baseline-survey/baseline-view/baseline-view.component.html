@@ -136,7 +136,7 @@
                                             <th>Swasthya <br>Sahayika</th>
                                             <th>View<br>Family</th>
                                             <th *ngIf="createMode">Add<br>Family</th>
-                                            <th >Action</th>
+                                            <th *ngIf="createMode">Action</th>
                                         </tr>
                                     </thead>
 
@@ -156,16 +156,15 @@
                                                 (click)="openModal(viewFamily, item.familyDetailDTOList,item, i)">View
                                             </td>
 
-                                            <td class="btn-link"
-                                                *ngIf="item.familyType == 'J' && role !='PM' && role !='PO' && role !='PD'"
+                                            <td class="btn-link" *ngIf="item.familyType == 'J' && createMode"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="gotoFamily(item)">Add</td>
-                                            <td *ngIf="createMode"> Add</td>
+                                            <td *ngIf="item.familyType == 'S' && createMode"> Add</td>
 
-                                            <td > <i *ngIf="updateMode"
+                                            <td *ngIf="modalTitle == 'V' && createMode"> <i *ngIf="updateMode"
                                                     class="fas fa-edit" title="Edit Household"
-                                                    (click)="editHousehold(item,i)"> </i> 
-                                                    <i class="fas fa-trash" title="Delete Household" *ngIf="deleteMode"
+                                                    (click)="editHousehold(item,i)"> </i>
+                                                <i class="fas fa-trash" title="Delete Household" *ngIf="deleteMode"
                                                     (click)="deleteHousehold(item, i, viewFamily, item.familyDetailDTOList)"></i>
                                             </td>
                                         </tr>
@@ -217,7 +216,7 @@
                         <th>Total Child <br>Count</th>
                         <th>Child Below 18 <br>yr. entered</th>
                         <th>Family <br>Details</th>
-                        <th *ngIf="modalTitle == 'V' && role !='PM' && role !='PO' && role !='PD'">Action</th>
+                        <th *ngIf="modalTitle == 'V' && createMode">Action</th>
                     </tr>
                 </thead>
 
@@ -233,9 +232,11 @@
                         <td>{{item.existingChildCount ? item.existingChildCount : 0 }}</td>
                         <td class="btn-link" style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                             (click)="familyModal(viewDetails, item.familyDetailId)">View</td>
-                        <td *ngIf="modalTitle == 'V' && role !='PM' && role !='PO'  && role !='PD'">
-                            <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"> </i>
-                            <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"></i>
+                        <td *ngIf="modalTitle == 'V' && createMode">
+                            <i class="fas fa-edit" title="Edit Family" (click)="editFamily(item,i,items)"
+                                *ngIf="updateMode"> </i>
+                            <i class="fas fa-trash" title="Delete Family" (click)="deleteFamily(item,i)"
+                                *ngIf="deleteMode"></i>
                         </td>
                     </tr>
 
@@ -471,10 +472,16 @@
 
                     <div class="col">
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" *ngIf="sidebarService.donorName?.includes('Bandhan')">
                                 <label for="" style="font-weight: 500;
                             font-size: 1.05rem;">BB Micro Group:</label>
                             </div>
+
+                            <div class="form-group col-md-6" *ngIf="!sidebarService.donorName?.includes('Bandhan')">
+                                <label for="" style="font-weight: 500;
+                            font-size: 1.05rem;">Micro Group:</label>
+                            </div>
+
                             <div class="form-group col-md-6">
                                 <label for=""> {{moreDetails?.bbMicroGroupMembership}}</label>
                             </div>
