@@ -13,13 +13,14 @@ import { PwStatusComponent } from './pw-status/pw-status.component';
 import { SinglePwListComponent } from './single-pw-list/single-pw-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PwHistoryComponent } from './pw-history/pw-history.component';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 @NgModule({
   declarations: [PwRegisterComponent, PwViewComponent, PwStatusComponent, SinglePwListComponent, PwHistoryComponent],
   imports: [
-    CommonModule,
-    PwRegisterRoutingModule, ReactiveFormsModule, FormsModule,
-    MatTabsModule, MatNativeDateModule, MatDialogModule, Ng2SearchPipeModule, NgxPaginationModule
+    CommonModule, PwRegisterRoutingModule, ReactiveFormsModule, FormsModule,
+    MatTabsModule, MatNativeDateModule, MatDialogModule, Ng2SearchPipeModule,
+    NgxPaginationModule, LoaderModule
   ]
 })
 export class PwRegisterModule { }

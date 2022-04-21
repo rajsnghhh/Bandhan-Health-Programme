@@ -20,6 +20,7 @@ export class UserTableComponent implements OnInit {
   userList: Array<any> = [];
   regionId: any;
   branchId: any;
+  loader: boolean = true;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -108,26 +109,37 @@ export class UserTableComponent implements OnInit {
       branchId: branchId,
       regionMasterId: regionId
     }
+    this.loader = false;
     this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
       this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
+      this.loader = true;
     }, error => {
-      console.log('Error');
+      this.showError('Error');
+      this.loader = true;
     }
     )
   }
 
-  resetPasswords() {
+  resetPasswords(i) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
     this.confirmationDialogService.confirm('', 'Do you want to reset password ?').then(() => {
-      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
-      //   this.resetPwSuccess('Success');
-      // })
+      this.http.post(`${this.httpService.baseURL}user/resteUserLoginPassword`, Dto).subscribe((res) => {
+        this.resetPwSuccess('Success');
+      })
     }).catch(() => '');
   }
 
-  deleteUser() {
+  deleteUser(i) {
     this.showError('This feature is unavailable');
+    // let Dto = {
+    //   dataAccessDTO: this.httpService.dataAccessDTO,
+    //   userId: this.userList[i],
+    // }
     // this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-    // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+    // this.http.post(`${this.httpService.baseURL}user/deleteUser`, Dto).subscribe((res) => {
     //   this.showSuccess('Delete');
     // })
     // }).catch(() => '');
