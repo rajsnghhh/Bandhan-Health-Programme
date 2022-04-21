@@ -18,7 +18,7 @@ import { RoleAcessResolver } from './modules/role-access/role-access-resolver.se
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

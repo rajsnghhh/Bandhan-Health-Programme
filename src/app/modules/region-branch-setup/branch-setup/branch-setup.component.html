@@ -1,0 +1,465 @@
+<h1 mat-dialog-title>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Create New Branch</h2>
+    <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+  </div>
+</h1>
+
+<div mat-dialog-content>
+  <form class="form-signin" [formGroup]="branchForm">
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="region"
+              >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="region"
+              id="region"
+              [ngClass]="{
+                'is-invalid': f.region.invalid && f.region.touched,
+                'is-valid':
+                  f.region.valid && (f.region.dirty || f.region.touched)
+              }"
+            >
+              <option value="">-- Select Region --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.region.errors" class="invalid-feedback">
+              <div *ngIf="f.region.errors.required">Region selection is required</div>
+            </div>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="subVertical"
+              >Sub-Vertical :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="subVertical"
+              id="subVertical"
+              [ngClass]="{
+                'is-invalid': f.subVertical.invalid && f.subVertical.touched,
+                'is-valid':
+                  f.subVertical.valid && (f.subVertical.dirty || f.subVertical.touched)
+              }"
+            >
+              <option value="">-- Select Sub-Vertical --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.subVertical.errors" class="invalid-feedback">
+              <div *ngIf="f.subVertical.errors.required">subVertical selection is required</div>
+            </div>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="selectedSubVerticle"
+              >Project of selected Sub-Verticle :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="selectedSubVerticle"
+              id="selectedSubVerticle"
+              [ngClass]="{
+                'is-invalid': f.selectedSubVerticle.invalid && f.selectedSubVerticle.touched,
+                'is-valid':
+                  f.selectedSubVerticle.valid && (f.selectedSubVerticle.dirty || f.selectedSubVerticle.touched)
+              }"
+            >
+              <option value="">-- Select Project of selected Sub-Verticle --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.selectedSubVerticle.errors" class="invalid-feedback">
+              <div *ngIf="f.selectedSubVerticle.errors.required">selectedSubVerticle selection is required</div>
+            </div>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="state"
+              >State :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="state"
+              id="state"
+              [ngClass]="{
+                'is-invalid': f.state.invalid && f.state.touched,
+                'is-valid':
+                  f.state.valid && (f.state.dirty || f.state.touched)
+              }"
+            >
+              <option value="">-- Select state --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.state.errors" class="invalid-feedback">
+              <div *ngIf="f.state.errors.required">state selection is required</div>
+            </div>
+          </div>
+    </div>
+ 
+    <br />
+
+    <div class="row">
+          <div class="form-group col-md">
+            <label for="district"
+              >District :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="district"
+              id="district"
+              [ngClass]="{
+                'is-invalid': f.district.invalid && f.district.touched,
+                'is-valid':
+                  f.district.valid && (f.district.dirty || f.district.touched)
+              }"
+            >
+              <option value="">-- Select district --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.district.errors" class="invalid-feedback">
+              <div *ngIf="f.district.errors.required">district selection is required</div>
+            </div>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="selectedDistrict"
+              >Block of the selected district :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="selectedDistrict"
+              id="selectedDistrict"
+              [ngClass]="{
+                'is-invalid': f.selectedDistrict.invalid && f.selectedDistrict.touched,
+                'is-valid':
+                  f.selectedDistrict.valid && (f.selectedDistrict.dirty || f.selectedDistrict.touched)
+              }"
+            >
+              <option value="">-- Select selectedDistrict --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.selectedDistrict.errors" class="invalid-feedback">
+              <div *ngIf="f.selectedDistrict.errors.required">selectedDistrict selection is required</div>
+            </div>
+          </div>
+   
+        <div class="form-group col-md">
+            <label for="branchName"
+              >Branch Name :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter branchName Name"
+              formControlName="branchName"
+              [ngClass]="{
+                'is-invalid': f.branchName.invalid && f.branchName.touched,
+                'is-valid': f.branchName.valid && (f.branchName.dirty || f.branchName.touched)
+              }"
+            />
+            <div *ngIf="f.branchName.errors" class="invalid-feedback">
+              <div *ngIf="f.branchName.errors.required">branchName is required</div>
+            </div>
+        </div>
+    
+        <div class="form-group col-md">
+            <label for="branchType"
+              >Branch Type :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="branchType"
+              id="branchType"
+              [ngClass]="{
+                'is-invalid': f.branchType.invalid && f.branchType.touched,
+                'is-valid':
+                  f.branchType.valid && (f.branchType.dirty || f.branchType.touched)
+              }"
+            >
+              <option value="">-- Select branchType --</option>
+              <!-- <option *ngFor="let region of regionList">
+                {{region.regionName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.branchType.errors" class="invalid-feedback">
+              <div *ngIf="f.branchType.errors.required">branchType selection is required</div>
+            </div>
+        </div>
+    </div>
+ 
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="startDate"
+              >Start Date :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="date"
+              class="form-control"
+              placeholder="Enter startDate Name"
+              formControlName="startDate"
+              [ngClass]="{
+                'is-invalid': f.startDate.invalid && f.startDate.touched,
+                'is-valid': f.startDate.valid && (f.startDate.dirty || f.startDate.touched)
+              }"
+            />
+            <div *ngIf="f.startDate.errors" class="invalid-feedback">
+              <div *ngIf="f.startDate.errors.required">startDate is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="address"
+              >Address :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter address Name"
+              formControlName="address"
+              [ngClass]="{
+                'is-invalid': f.address.invalid && f.address.touched,
+                'is-valid': f.address.valid && (f.address.dirty || f.address.touched)
+              }"
+            />
+            <div *ngIf="f.address.errors" class="invalid-feedback">
+              <div *ngIf="f.address.errors.required">address is required</div>
+            </div>
+        </div>
+    </div>
+ 
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="primaryContactName"
+              >Name of Primary Contact Person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter primaryContactName Name"
+              formControlName="primaryContactName"
+              [ngClass]="{
+                'is-invalid': f.primaryContactName.invalid && f.primaryContactName.touched,
+                'is-valid': f.primaryContactName.valid && (f.primaryContactName.dirty || f.primaryContactName.touched)
+              }"
+            />
+            <div *ngIf="f.primaryContactName.errors" class="invalid-feedback">
+              <div *ngIf="f.primaryContactName.errors.required">primaryContactName is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="primaryMobile"
+              >Primary Mobile No:&nbsp;<span class="text-danger"
+                >*&nbsp;</span
+              ></label
+            >
+            <input
+              type=""
+              class="form-control"
+              maxlength="10"
+              placeholder="Enter Mobile No"
+              formControlName="primaryMobile"
+              [ngClass]="{
+                'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched
+              }"
+            />
+            <div *ngIf="f.primaryMobile.errors" class="invalid-feedback">
+              <div *ngIf="f.primaryMobile.errors.required">
+                Primary Mobile No is required
+              </div>
+              <div *ngIf="f.primaryMobile.errors.minlength">
+                Mobile No. should be of 10 digit
+              </div>
+              <div *ngIf="f.primaryMobile.errors.pattern">
+                Mobile No. should be starting with 6, 7, 8 or 9
+              </div>
+            </div>
+        </div>
+
+          <div class="form-group col-md">
+            <label for="primaryEmail"
+              >Primary Email:&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter Email"
+              formControlName="primaryEmail"
+              [ngClass]="{
+                'is-invalid': f.primaryEmail.invalid && f.primaryEmail.touched,
+                'is-valid':
+                  f.primaryEmail.valid &&
+                  (f.primaryEmail.dirty || f.primaryEmail.touched)
+              }"
+            />
+            <div *ngIf="f.primaryEmail.errors" class="invalid-feedback">
+              <div *ngIf="f.primaryEmail.errors.required">Email is required</div>
+              <div *ngIf="f.primaryEmail.errors.email">Email is not valid</div>
+            </div>
+          </div>
+    </div>
+ 
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="postOffice"
+              >Post Office (P.O.) of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter postOffice Name"
+              formControlName="postOffice"
+              [ngClass]="{
+                'is-invalid': f.postOffice.invalid && f.postOffice.touched,
+                'is-valid': f.postOffice.valid && (f.postOffice.dirty || f.postOffice.touched)
+              }"
+            />
+            <div *ngIf="f.postOffice.errors" class="invalid-feedback">
+              <div *ngIf="f.postOffice.errors.required">postOffice is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="policeStation"
+              >Police Station (P.S.) of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter policeStation Name"
+              formControlName="policeStation"
+              [ngClass]="{
+                'is-invalid': f.policeStation.invalid && f.policeStation.touched,
+                'is-valid': f.policeStation.valid && (f.policeStation.dirty || f.policeStation.touched)
+              }"
+            />
+            <div *ngIf="f.policeStation.errors" class="invalid-feedback">
+              <div *ngIf="f.policeStation.errors.required">policeStation is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="branchLandmark"
+              >Landmark of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter branchLandmark Name"
+              formControlName="branchLandmark"
+              [ngClass]="{
+                'is-invalid': f.branchLandmark.invalid && f.branchLandmark.touched,
+                'is-valid': f.branchLandmark.valid && (f.branchLandmark.dirty || f.branchLandmark.touched)
+              }"
+            />
+            <div *ngIf="f.branchLandmark.errors" class="invalid-feedback">
+              <div *ngIf="f.branchLandmark.errors.required">branchLandmark is required</div>
+            </div>
+        </div>
+    </div>
+ 
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md">
+            <label for="secondaryContactName"
+              >Name of the secondary contact person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter secondaryContactName Name"
+              formControlName="secondaryContactName"
+              [ngClass]="{
+                'is-invalid': f.secondaryContactName.invalid && f.secondaryContactName.touched,
+                'is-valid': f.secondaryContactName.valid && (f.secondaryContactName.dirty || f.secondaryContactName.touched)
+              }"
+            />
+            <div *ngIf="f.secondaryContactName.errors" class="invalid-feedback">
+              <div *ngIf="f.secondaryContactName.errors.required">secondaryContactName is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="secondaryMobile"
+              >Phone number of contact person secondary:</label
+            >
+            <input
+              type=""
+              class="form-control"
+              maxlength="10"
+              placeholder="Enter secondary Mobile No"
+              formControlName="secondaryMobile"
+              [ngClass]="{
+                'is-invalid': f.secondaryMobile.invalid && f.secondaryMobile.touched
+              }"
+            />
+            <div *ngIf="f.secondaryMobile.errors" class="invalid-feedback">
+              <div *ngIf="f.secondaryMobile.errors.required">
+                Primary Mobile No is required
+              </div>
+              <div *ngIf="f.secondaryMobile.errors.minlength">
+                Mobile No. should be of 10 digit
+              </div>
+              <div *ngIf="f.secondaryMobile.errors.pattern">
+                Mobile No. should be starting with 6, 7, 8 or 9
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="secondaryEmail"
+              >Secondary Email:</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter secondary Email"
+              formControlName="secondaryEmail"
+              [ngClass]="{
+                'is-invalid': f.secondaryEmail.invalid && f.secondaryEmail.touched,
+                'is-valid':
+                  f.secondaryEmail.valid &&
+                  (f.secondaryEmail.dirty || f.secondaryEmail.touched)
+              }"
+            />
+            <div *ngIf="f.secondaryEmail.errors" class="invalid-feedback">
+              <div *ngIf="f.secondaryEmail.errors.required">Email is required</div>
+              <div *ngIf="f.secondaryEmail.errors.email">Email is not valid</div>
+            </div>
+          </div>
+    </div>
+
+    <br />
+
+    <!-- <div class="addEditBtn">
+      <button type="submit" class="btn btn-success" (click)="onSave()">
+        Save
+      </button>
+    </div> -->
+  </form>
+</div>
+<div mat-dialog-actions>
+    <button type="submit" class="btn btn-success" (click)="onSave()">
+        Save
+      </button>
+</div>

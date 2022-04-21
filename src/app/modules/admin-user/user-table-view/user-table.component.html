@@ -89,14 +89,14 @@
       
                       <tbody>
       
-                          <tr>
-                              <td>1</td>
-                              <td>sdgseg</td>
-                              <td>105153</td>
-                              <td>8768555290</td>
-                              <td>HCO</td>
+                          <tr *ngFor="let item of userList;index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{item.userFirstName}}  {{item.userMiddleName}}  {{item.userLastName}}</td>
+                              <td>{{item.loginId}}</td>
+                              <td>{{item.mobileNumber}}</td>
+                              <td>{{item.roleShortName}}</td>
                               <td style="padding: 0px 0px 0px 32px;">
-                                  <i class="fas fa-edit" title="Edit User" (click)="openEditUser()"></i>
+                                  <i class="fas fa-edit" title="Edit User" (click)="openEditUser(i)"></i>
                                   <span class="fa-passwd-reset fa-stack" title="Reset Password" (click)="resetPasswords()">
                                     <i class="fa fa-undo fa-stack-2x"></i>
                                     <i class="fa fa-lock fa-stack-1x"></i>

@@ -22,8 +22,8 @@
               f.userRole.valid && (f.userRole.dirty || f.userRole.touched)
           }"
         >
-          <option value="">-- Select Role --</option>
-          <option *ngFor="let role of roleList">
+          <option [value]="null">-- Select Role --</option>
+          <option *ngFor="let role of roleList" [value]="role.roleShortName">
             {{role.roleShortName}}
           </option>
         </select>
@@ -90,8 +90,8 @@
             'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
           }"
         >
-          <option value="">-- Select Region --</option>
-          <option *ngFor="let region of regionList">
+          <option [value]="null">-- Select Region --</option>
+          <option *ngFor="let region of regionList" [value]="region.regionName">
             {{region.regionName}}
           </option>
         </select>
@@ -110,16 +110,40 @@
           class="form-select"
           (change)="changeBranch($event.target.value)"
           formControlName="branch"
-          id="branch"
           [ngClass]="{
             'is-invalid': f.branch.invalid && f.branch.touched,
             'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)
           }"
         >
-          <option value="">-- Select Branch --</option>
-          <option *ngFor="let branch of branchList" >
+          <option [value]="null">-- Select Branch --</option>
+          <option *ngFor="let branch of branchList" [value]="branch.branchName">
             {{ branch.branchName }}
           </option>
+        </select>
+        <div *ngIf="f.branch.errors" class="invalid-feedback">
+          <div *ngIf="f.branch.errors.required">
+            Branch selection is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md" *ngIf="selectBaseBranch">
+        <label for="baseBranch"
+          >Base Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <select
+          class="form-select"
+          (change)="changeBaseBranch($event.target.value)"
+          formControlName="baseBranch"
+          [ngClass]="{
+            'is-invalid': f.baseBranch.invalid && f.baseBranch.touched,
+            'is-valid': f.baseBranch.valid && (f.baseBranch.dirty || f.baseBranch.touched)
+          }"
+        >
+        <option [value]="null">-- Select Branch --</option>
+        <option *ngFor="let branch of branchList" [value]="branch.branchId">
+          {{ branch.branchName }}
+        </option>
         </select>
         <div *ngIf="f.branch.errors" class="invalid-feedback">
           <div *ngIf="f.branch.errors.required">

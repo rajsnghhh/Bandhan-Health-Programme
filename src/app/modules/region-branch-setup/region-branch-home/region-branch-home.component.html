@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">Region Branch Setup</h2>
+        </div>
+        
+        <div class="add_button">
+            <button class="btn btn-primary" (click)="openCreateBranch()">
+                <i class="fas fa-code-branch" ></i>Create Branch
+            </button>    
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-primary" (click)="openCreateRegion()">
+                <i class="fa fa-map-marker" ></i>Create Region
+            </button>
+        </div>
+
+        <form class="form-signin" [formGroup]="stateSelectForm">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="state"
+                  >State :&nbsp;<span class="text-danger">*&nbsp;</span></label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeState($event.target.value)"
+                  formControlName="state"
+                  [ngClass]="{
+                    'is-invalid': f.state.invalid && f.state.touched,
+                    'is-valid': f.state.valid && (f.state.dirty || f.state.touched)
+                  }"
+                >
+                  <option value="">-- Select State --</option>
+                  <!-- <option *ngFor="let state of stateList">
+                    {{state.stateName}}
+                  </option> -->
+                </select>
+                <div *ngIf="f.state.errors" class="invalid-feedback">
+                  <div *ngIf="f.state.errors.required">
+                    State selection is required
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+
+        <div class="white_box_tittle list_header" >
+            <div class="QA_table ">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <table
+                        class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                        role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+        
+                        <thead>
+                            <tr>
+                                <th>SL<br>No</th>
+                                <th>Region Name</th>
+                                <th>Branch Name</th>
+                                <th>District</th>
+                                <th>Project</th> 
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+        
+                            <tr>
+                                <td>1</td>
+                                <td>Region 1</td>
+                                <td>
+                                    <ul>
+                                        <li>Branch 1</li>
+                                        <li>Branch 2</li>
+                                        <li>Branch 3</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                  <ul>
+                                    <li>Hooghly</li>
+                                    <li>Kolkata</li>
+                                    <li>Malda</li>
+                                </ul>
+                                </td>
+                                <td>
+                                  <ul>
+                                    <li>BHP</li>
+                                    <li>THP</li>
+                                    <li>BSDM</li>
+                                </ul>
+                                </td>
+                                <td>
+                                  <ul>
+                                    <li>Active</li>
+                                    <li>Phased out</li>
+                                    <li>Active</li>
+                                </ul>
+                                </td>
+                                <td>
+                                    <button class="edit_button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="openEditRegion()">Edit Region</button>
+                                        <button mat-menu-item [matMenuTriggerFor]="vertebrates">Edit Branch</button>
+                                    </mat-menu>
+                                    <mat-menu #vertebrates="matMenu">
+                                        <button mat-menu-item >Edit Branch 1</button>
+                                        <button mat-menu-item >Edit Branch 2</button>
+                                        <button mat-menu-item >Edit Branch 3</button>
+                                      </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
