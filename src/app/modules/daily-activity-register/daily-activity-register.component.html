@@ -6,7 +6,7 @@
 
                 <form class="form-signin" [formGroup]="locationForm">
 
-                    <!-- <div class="row" >
+                     <div class="row" >
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
@@ -42,7 +42,25 @@
                                 <div *ngIf="l.branch.errors.required">Branch selection is required</div>
                             </div>
                         </div>
-                    </div>  -->
+
+                        <div class="form-group col-md">
+                            <label for="hco">Hco :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="hco" id="hco" [ngClass]="{
+                              'is-invalid': l.hco.invalid && l.hco.touched,
+                              'is-valid':
+                                l.hco.valid && (l.hco.dirty || l.hco.touched)
+                            }">
+                                <option value="">-- Select Hco --</option>
+                                <option *ngFor="let hco of hcoList">
+                                    {{ hco.user_firstname}} {{hco.user_lastname}} - {{hco.role_shortname}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.hco.errors" class="invalid-feedback">
+                                <div *ngIf="l.hco.errors.required">Hco selection is required</div>
+                            </div>
+                        </div>
+                    </div> 
                     <!-- <div class="row">
                         <div class="form-group col-md">
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>

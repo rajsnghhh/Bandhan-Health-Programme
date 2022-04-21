@@ -17,4 +17,12 @@ export class DailyActivityRegisterService {
   listOfBranchesOfARegion(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }
+
+  hcoListOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj)
+  }
+
+  viewingDAREntryList(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivity/viewDailyActivityRegister`, obj)
+  }
 }

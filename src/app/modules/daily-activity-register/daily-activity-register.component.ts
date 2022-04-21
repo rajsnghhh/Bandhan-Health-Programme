@@ -11,25 +11,25 @@ import { DailyActivityRegisterService } from './daily-activity-register.service'
   styleUrls: ['./daily-activity-register.component.css']
 })
 export class DailyActivityRegisterComponent implements OnInit {
- locationForm: FormGroup;
- regionList: Array<any> = [];
- branchList: Array<any> = [];
- villagesOfBranch: Array<any> = [];
- gpDtoList: Array<any> = [];
- villageDtoList: Array<any> = [];
- selectedBlock: String;
- selectedGp: String;
- branchVillageMapId: any;
- villageMasterId: any;
-
+  locationForm: FormGroup;
+  regionList: Array<any> = [];
+  branchList: Array<any> = [];
+  villagesOfBranch: Array<any> = [];
+  gpDtoList: Array<any> = [];
+  villageDtoList: Array<any> = [];
+  selectedBlock: String;
+  selectedGp: String;
+  branchVillageMapId: any;
+  villageMasterId: any;
+  hcoList: any;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
-    private dailyActivityService : DailyActivityRegisterService,  private toaster: ToastrService) { }
+    private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService) { }
 
   ngOnInit(): void {
 
     this.locForm();
-    
+
     let dataAccessDTO = {
       userId: this.sidebarService.userId,
       userName: this.sidebarService.loginId,
@@ -57,7 +57,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     // this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
-  
+
   changeRegion(region) {
     let regionId = this.regionList.find(
       (reg) => reg.regionName == region
@@ -108,10 +108,10 @@ export class DailyActivityRegisterComponent implements OnInit {
     }
     // this.loader = false;
     setTimeout(() => {
-      this.dailyActivityService.villagesOfBranch(Dto).subscribe((res) => {
+      this.dailyActivityService.hcoListOfBranch(Dto).subscribe((res) => {
         // this.loader = true;
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch2');
+        this.hcoList = res.responseObject;
+        console.log(this.hcoList, 'hcoList');
       })
     }, 500);
     this.locationForm.controls.block.setValue('');
@@ -170,6 +170,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.locationForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
+      hco:['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
