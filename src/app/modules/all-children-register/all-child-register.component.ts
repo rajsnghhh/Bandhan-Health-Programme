@@ -9,6 +9,7 @@ import { AddChildMuacComponent } from './add-child-muac/add-child-muac.component
 import { AcrService } from './acr.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ValidationService } from '../shared/services/validation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-child-register',
@@ -40,10 +41,11 @@ export class AllChildRegisterComponent implements OnInit {
   index: number = 0;
   acrSearch: string;
   searchFullscreen: boolean;
+  loader: boolean = true;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public acrService: AcrService,
-    public validationService: ValidationService,) { }
+    public validationService: ValidationService, private toaster: ToastrService,) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -199,10 +201,15 @@ export class AllChildRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    this.loader = false;
     this.httpService.getChildrenRegister(req).subscribe((res) => {
       this.childrenBetween6And59Months = res.responseObject?.eligibleChildren?.childrenBetween6And59Months;
       this.childrenWRTPsdOrBoD = res.responseObject?.eligibleChildren?.childrenWRTPsdOrBoD;
       this.ineligibleChildren = res.responseObject?.ineligibleChildren;
+      this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     })
   }
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
@@ -232,6 +239,12 @@ export class AllChildRegisterComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getChildrenList(this.villageMasterId);
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
     });
   }
 }

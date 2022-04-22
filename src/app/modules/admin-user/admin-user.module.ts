@@ -9,6 +9,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   imports: [
     CommonModule,
     AdminUserRoutingModule, ReactiveFormsModule, FormsModule,
-    MatTabsModule, MatNativeDateModule, MatDialogModule,
+    MatTabsModule, MatNativeDateModule, MatDialogModule, LoaderModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   schemas: [NO_ERRORS_SCHEMA],

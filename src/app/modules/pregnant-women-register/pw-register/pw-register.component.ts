@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
@@ -40,9 +41,10 @@ export class PwRegisterComponent implements OnInit {
   pwSearch: string | number;
   page = 1;
   pageSize = 6;
+  loader: boolean = true;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog,) { }
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -180,9 +182,14 @@ export class PwRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    this.loader = false;
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.allPregnantWomenList = res.responseObject?.pregnantWomanList;
       this.nonPregnantWomenList = res.responseObject?.nonPregnantWomanList;
+      this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     })
   }
 
@@ -211,6 +218,12 @@ export class PwRegisterComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getPregnantWomenList(this.villageMasterId);
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
     });
   }
 }
