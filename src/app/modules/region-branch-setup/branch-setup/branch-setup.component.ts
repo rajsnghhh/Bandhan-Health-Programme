@@ -12,6 +12,9 @@ import { HttpService } from '../../core/http/http.service';
 })
 export class BranchSetupComponent implements OnInit {
   branchForm: FormGroup;
+  regionList: Array<any> = [];
+  subVerticalsList: Array<any> = [];
+  subVerticleProjectList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BranchSetupComponent>) {
@@ -20,14 +23,37 @@ export class BranchSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.allDropdownValue();
+
   }
 
+  allDropdownValue() {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}user/getListOfAllRegions`, Dto).subscribe((res: any) => {
+      this.regionList = res.responseObject;
+    });
+    this.http.post(`${this.httpService.baseURL}subvertical/getListOfAllSubVerticals`, Dto).subscribe((res: any) => {
+      this.subVerticalsList = res.responseObject.subVerticalList;
+    });
+  }
+
+  changeSubVertical(value) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      subVerticalMasterId: value
+    }
+    this.http.post(`${this.httpService.baseURL}subvertical/getSubVerticalWiseListOfAllProjects`, Dto).subscribe((res: any) => {
+      this.subVerticleProjectList = res.responseObject.projectList;
+    });
+  }
 
   createForm() {
     this.branchForm = this.fb.group({
       region: ['', Validators.required],
       subVertical: ['', Validators.required],
-      selectedSubVerticle: ['', Validators.required],
+      subVerticleProject: ['', Validators.required],
       state: ['', Validators.required],
       district: ['', Validators.required],
       selectedDistrict: ['', Validators.required],
@@ -38,10 +64,10 @@ export class BranchSetupComponent implements OnInit {
       primaryContactName: ['', Validators.required],
       primaryMobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       primaryEmail: ['', [Validators.required, Validators.email]],
-      postOffice: ['', Validators.required],
-      policeStation: ['', Validators.required],
-      branchLandmark: ['', Validators.required],
-      secondaryContactName: ['', Validators.required],
+      postOffice: [''],
+      policeStation: [''],
+      branchLandmark: [''],
+      secondaryContactName: [''],
       secondaryMobile: ['', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       secondaryEmail: ['', Validators.email],
     });

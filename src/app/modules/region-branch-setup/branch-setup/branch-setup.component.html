@@ -23,9 +23,9 @@
               }"
             >
               <option value="">-- Select Region --</option>
-              <!-- <option *ngFor="let region of regionList">
+              <option *ngFor="let region of regionList" [value]="region.regionMasterId">
                 {{region.regionName}}
-              </option> -->
+              </option>
             </select>
             <div *ngIf="f.region.errors" class="invalid-feedback">
               <div *ngIf="f.region.errors.required">Region selection is required</div>
@@ -40,6 +40,7 @@
               class="form-select"
               formControlName="subVertical"
               id="subVertical"
+              (change)="changeSubVertical($event.target.value)"
               [ngClass]="{
                 'is-invalid': f.subVertical.invalid && f.subVertical.touched,
                 'is-valid':
@@ -47,9 +48,9 @@
               }"
             >
               <option value="">-- Select Sub-Vertical --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let subVerticals of subVerticalsList" [value]="subVerticals.subVerticalMasterId">
+                {{subVerticals.subVerticalName}}
+              </option>
             </select>
             <div *ngIf="f.subVertical.errors" class="invalid-feedback">
               <div *ngIf="f.subVertical.errors.required">subVertical selection is required</div>
@@ -57,50 +58,25 @@
           </div>
 
           <div class="form-group col-md">
-            <label for="selectedSubVerticle"
+            <label for="subVerticleProject"
               >Project of selected Sub-Verticle :&nbsp;<span class="text-danger">*&nbsp;</span></label
             >
             <select
               class="form-select"
-              formControlName="selectedSubVerticle"
-              id="selectedSubVerticle"
+              formControlName="subVerticleProject"
               [ngClass]="{
-                'is-invalid': f.selectedSubVerticle.invalid && f.selectedSubVerticle.touched,
+                'is-invalid': f.subVerticleProject .invalid && f.subVerticleProject .touched,
                 'is-valid':
-                  f.selectedSubVerticle.valid && (f.selectedSubVerticle.dirty || f.selectedSubVerticle.touched)
+                  f.subVerticleProject .valid && (f.subVerticleProject .dirty || f.subVerticleProject .touched)
               }"
             >
               <option value="">-- Select Project of selected Sub-Verticle --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let subVerticleProject of subVerticleProjectList">
+                {{subVerticleProject.projectName}}
+              </option>
             </select>
-            <div *ngIf="f.selectedSubVerticle.errors" class="invalid-feedback">
-              <div *ngIf="f.selectedSubVerticle.errors.required">selectedSubVerticle selection is required</div>
-            </div>
-          </div>
-
-          <div class="form-group col-md">
-            <label for="state"
-              >State :&nbsp;<span class="text-danger">*&nbsp;</span></label
-            >
-            <select
-              class="form-select"
-              formControlName="state"
-              id="state"
-              [ngClass]="{
-                'is-invalid': f.state.invalid && f.state.touched,
-                'is-valid':
-                  f.state.valid && (f.state.dirty || f.state.touched)
-              }"
-            >
-              <option value="">-- Select state --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
-            </select>
-            <div *ngIf="f.state.errors" class="invalid-feedback">
-              <div *ngIf="f.state.errors.required">state selection is required</div>
+            <div *ngIf="f.subVerticleProject .errors" class="invalid-feedback">
+              <div *ngIf="f.subVerticleProject .errors.required">subVerticleProject  selection is required</div>
             </div>
           </div>
     </div>
@@ -108,6 +84,31 @@
     <br />
 
     <div class="row">
+
+          <div class="form-group col-md">
+        <label for="state"
+          >State :&nbsp;<span class="text-danger">*&nbsp;</span></label
+        >
+        <select
+          class="form-select"
+          formControlName="state"
+          id="state"
+          [ngClass]="{
+            'is-invalid': f.state.invalid && f.state.touched,
+            'is-valid':
+              f.state.valid && (f.state.dirty || f.state.touched)
+          }"
+        >
+          <option value="">-- Select state --</option>
+          <!-- <option *ngFor="let region of regionList">
+            {{region.regionName}}
+          </option> -->
+        </select>
+        <div *ngIf="f.state.errors" class="invalid-feedback">
+          <div *ngIf="f.state.errors.required">state selection is required</div>
+        </div>
+          </div>
+
           <div class="form-group col-md">
             <label for="district"
               >District :&nbsp;<span class="text-danger">*&nbsp;</span></label
@@ -246,6 +247,67 @@
 
     <div class="row">
         <div class="form-group col-md">
+            <label for="postOffice"
+              >Post Office (P.O.) of branch locality :</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter postOffice Name"
+              formControlName="postOffice"
+              [ngClass]="{
+                'is-invalid': f.postOffice.invalid && f.postOffice.touched,
+                'is-valid': f.postOffice.valid && (f.postOffice.dirty || f.postOffice.touched)
+              }"
+            />
+            <div *ngIf="f.postOffice.errors" class="invalid-feedback">
+              <div *ngIf="f.postOffice.errors.required">postOffice is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="policeStation"
+              >Police Station (P.S.) of branch locality :</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter policeStation Name"
+              formControlName="policeStation"
+              [ngClass]="{
+                'is-invalid': f.policeStation.invalid && f.policeStation.touched,
+                'is-valid': f.policeStation.valid && (f.policeStation.dirty || f.policeStation.touched)
+              }"
+            />
+            <div *ngIf="f.policeStation.errors" class="invalid-feedback">
+              <div *ngIf="f.policeStation.errors.required">policeStation is required</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="branchLandmark"
+              >Landmark of branch locality :</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter branchLandmark Name"
+              formControlName="branchLandmark"
+              [ngClass]="{
+                'is-invalid': f.branchLandmark.invalid && f.branchLandmark.touched,
+                'is-valid': f.branchLandmark.valid && (f.branchLandmark.dirty || f.branchLandmark.touched)
+              }"
+            />
+            <div *ngIf="f.branchLandmark.errors" class="invalid-feedback">
+              <div *ngIf="f.branchLandmark.errors.required">branchLandmark is required</div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="form-group col-md">
             <label for="primaryContactName"
               >Name of Primary Contact Person :&nbsp;<span class="text-danger">*&nbsp;</span></label
             >
@@ -316,66 +378,6 @@
           </div>
     </div>
  
-    <br />
-
-    <div class="row">
-        <div class="form-group col-md">
-            <label for="postOffice"
-              >Post Office (P.O.) of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter postOffice Name"
-              formControlName="postOffice"
-              [ngClass]="{
-                'is-invalid': f.postOffice.invalid && f.postOffice.touched,
-                'is-valid': f.postOffice.valid && (f.postOffice.dirty || f.postOffice.touched)
-              }"
-            />
-            <div *ngIf="f.postOffice.errors" class="invalid-feedback">
-              <div *ngIf="f.postOffice.errors.required">postOffice is required</div>
-            </div>
-        </div>
-
-        <div class="form-group col-md">
-            <label for="policeStation"
-              >Police Station (P.S.) of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter policeStation Name"
-              formControlName="policeStation"
-              [ngClass]="{
-                'is-invalid': f.policeStation.invalid && f.policeStation.touched,
-                'is-valid': f.policeStation.valid && (f.policeStation.dirty || f.policeStation.touched)
-              }"
-            />
-            <div *ngIf="f.policeStation.errors" class="invalid-feedback">
-              <div *ngIf="f.policeStation.errors.required">policeStation is required</div>
-            </div>
-        </div>
-
-        <div class="form-group col-md">
-            <label for="branchLandmark"
-              >Landmark of branch locality :&nbsp;<span class="text-danger">*&nbsp;</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter branchLandmark Name"
-              formControlName="branchLandmark"
-              [ngClass]="{
-                'is-invalid': f.branchLandmark.invalid && f.branchLandmark.touched,
-                'is-valid': f.branchLandmark.valid && (f.branchLandmark.dirty || f.branchLandmark.touched)
-              }"
-            />
-            <div *ngIf="f.branchLandmark.errors" class="invalid-feedback">
-              <div *ngIf="f.branchLandmark.errors.required">branchLandmark is required</div>
-            </div>
-        </div>
-    </div>
  
     <br />
 
