@@ -6,7 +6,7 @@
 
                 <form class="form-signin" [formGroup]="locationForm">
 
-                     <div class="row" >
+                    <div class="row" *ngIf="role != 'HCO' && role != 'HCOI' && role != 'TL' ">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
@@ -52,15 +52,16 @@
                                 l.hco.valid && (l.hco.dirty || l.hco.touched)
                             }">
                                 <option value="">-- Select Hco --</option>
-                                <option *ngFor="let hco of hcoList">
-                                    {{ hco.user_firstname}} {{hco.user_lastname}} - {{hco.role_shortname}}
+                                <option *ngFor="let hco of hcoList" value='{{hco.user_id}}'>
+                                    {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
+                                    {{hco.role_shortname}}
                                 </option>
                             </select>
                             <div *ngIf="l.hco.errors" class="invalid-feedback">
                                 <div *ngIf="l.hco.errors.required">Hco selection is required</div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <!-- <div class="row">
                         <div class="form-group col-md">
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -121,36 +122,118 @@
 
                     <div class="row">
                         <div class="form-group col-md">
-                            <label for="region">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <input type="date" class="form-control" (keydown)="restrictTypeOfDate()">
+                            <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" formControlName="fromDate"
+                                (keydown)="restrictTypeOfDate()" [ngClass]="{
+                                    'is-invalid': l.fromDate.invalid && l.fromDate.touched,
+                                    'is-valid':
+                                      l.fromDate.valid && (l.fromDate.dirty || l.fromDate.touched)
+                                  }">
+                            <div *ngIf="l.fromDate.errors" class="invalid-feedback">
+                                <div *ngIf="l.fromDate.errors.required">From Date selection is required</div>
+                            </div>
                         </div>
 
                         <div class="form-group col-md">
-                            <label for="branch">To Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <input type="date" class="form-control" (keydown)="restrictTypeOfDate()">
+                            <label for="toDate">To Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" formControlName="toDate"
+                                (keydown)="restrictTypeOfDate()" (change)="viewDAREntryList()" [ngClass]="{
+                                    'is-invalid': l.toDate.invalid && l.toDate.touched,
+                                    'is-valid':
+                                      l.toDate.valid && (l.toDate.dirty || l.toDate.touched)
+                                  }">
+                            <div *ngIf="l.toDate.errors" class="invalid-feedback">
+                                <div *ngIf="l.toDate.errors.required">To Date selection is required</div>
+                            </div>
 
                         </div>
                     </div>
-
-
-
-                    <!-- <div class="white_box_tittle list_header">
+                    <div class="white_box_tittle list_header">
 
                         <div class="QA_table ">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                 <table
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info"
-                                    style="table-layout: fixed; ">
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                  
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Date</th>
+                                            <th>View</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr
+                                            *ngFor="let item of darList | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{item.darDate}} </td>
+                                            <td (click)="darViewFamily(item.darViewFamilyDTOList)"><i
+                                                    class="fas fa-angle-right"></i></td>
+                                        </tr>
+
+                                        <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
+                                                    <td colspan="7">No matching household info found</td>
+        
+                                                </tr> -->
+                                    </tbody>
 
                                 </table>
-                                
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
 
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Village</th>
+                                            <th>Name of <br> Beneficiary Visited</th>
+                                            <th>Type of <br> beneficiary</th>
+                                            <th>Alone /<br> With SS</th>
+                                            <th>Name of SS </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr
+                                            *ngFor="let item of darViewFamilyList | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{item.villageName}} </td>
+                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                            <td> -</td>
+                                            <td>{{item.visitedWithSS}}</td>
+                                            <td>{{item.ssName}}</td>
+                                        </tr>
+
+                                        <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
+                                                    <td colspan="7">No matching household info found</td>
+        
+                                                </tr> -->
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
 
                 </form>
 
