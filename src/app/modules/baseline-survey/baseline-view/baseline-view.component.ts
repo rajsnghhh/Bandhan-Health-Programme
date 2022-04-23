@@ -81,7 +81,6 @@ export class BaselineViewComponent implements OnInit {
       branchId: this.sidebarService.branchId
     }
 
-
     if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
       this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
         if (res.sessionDTO.status == true) {

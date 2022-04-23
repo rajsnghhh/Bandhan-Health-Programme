@@ -49,38 +49,6 @@ module.exports = __webpack_require__(/*! D:\BHP_WEB\src\main.ts */"zUnb");
 
 /***/ }),
 
-/***/ "5yMF":
-/*!*************************************************************!*\
-  !*** ./src/app/role-access/role-access-resolver.service.ts ***!
-  \*************************************************************/
-/*! exports provided: RoleAcessResolver */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RoleAcessResolver", function() { return RoleAcessResolver; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modules/core/http/http.service */ "YwHQ");
-
-
-
-class RoleAcessResolver {
-    constructor(httpService) {
-        this.httpService = httpService;
-    }
-    resolve(route, state) {
-        return this.httpService.postRequest(`rolemaster/rolefunctionmap/view`, this.httpService.dataAccessDTO);
-    }
-}
-RoleAcessResolver.ɵfac = function RoleAcessResolver_Factory(t) { return new (t || RoleAcessResolver)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"])); };
-RoleAcessResolver.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: RoleAcessResolver, factory: RoleAcessResolver.ɵfac });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RoleAcessResolver, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
-    }], function () { return [{ type: _modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"] }]; }, null); })();
-
-
-/***/ }),
-
 /***/ "6ZYd":
 /*!*********************************************!*\
   !*** ./src/app/modules/core/core.module.ts ***!
@@ -142,7 +110,7 @@ const environment = {
     production: false,
     // apiUrl: window.location.protocol + '//' + window.location.hostname + ':6176/',
     // Local
-    apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
+    // apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
     // Development 
     // apiUrl: 'http://192.168.149.221:6180/bhp/api/v1/'
     // Test
@@ -151,7 +119,7 @@ const environment = {
     // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
-    // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
+    apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -387,9 +355,10 @@ class SidebarComponent {
         };
         if (((_b = (_a = this.sidebarService) === null || _a === void 0 ? void 0 : _a.RoleDTOName) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1 || ((_d = (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.RoleDTOName) === null || _d === void 0 ? void 0 : _d.indexOf('TL')) != -1) {
             this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-                var _a, _b;
-                this.sidebarService.branchId = (_a = res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.branchId;
-                this.sidebarService.branchName = (_b = res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
+                var _a, _b, _c, _d;
+                this.sidebarService.branchId = (_a = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.branchId;
+                this.sidebarService.branchName = (_b = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
+                this.sidebarService.donorName = (_d = (_c = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _c === void 0 ? void 0 : _c.donorMasterDto) === null || _d === void 0 ? void 0 : _d.donorName;
             });
             this.sidebarService.regionBranchHide = false;
         }
@@ -409,6 +378,9 @@ class SidebarComponent {
         var routeId = submenu.subFunctionMasterId;
         console.log(routeId);
         console.log(submenu.subFunctionShortName);
+        if (routeId == 1) {
+            this.router.navigate(['/user']);
+        }
         if (routeId == 5) {
             this.router.navigate(['/role-access']);
         }
@@ -426,6 +398,9 @@ class SidebarComponent {
         }
         if (routeId == 25) {
             this.router.navigate(['/mou']);
+        }
+        if (routeId == 29) {
+            this.router.navigate(['/region-branch']);
         }
         if (routeId == 65) {
             this.router.navigate(['/Baseline-Survey/create']);
@@ -552,10 +527,9 @@ function AppComponent_mat_toolbar_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "span", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function AppComponent_mat_toolbar_2_Template_button_click_6_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r4.logout(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "a", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function AppComponent_mat_toolbar_2_Template_a_click_6_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r4.logout(); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "i", 9);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, "Logout");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -584,10 +558,10 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_1__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_login_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_modules_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_3__["ConfirmationDialogService"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 3, consts: [[4, "ngIf"], [1, "dashboard_part", 3, "ngClass"], ["style", "background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;", 4, "ngIf"], [1, "main_content_inner"], [3, "valueChange"], [2, "background-color", "#ffff", "margin-left", "-300px", "margin-bottom", "40px", "width", "130%", "padding-left", "28%"], [2, "color", "#499", "font-size", "30px", "margin-left", "16px", "padding-right", "34%"], [2, "font-size", "75%", "margin-left", "5%"], [1, "btn", "btn-danger", 2, "margin-left", "3%", 3, "click"], [1, "fa", "fa-power-off"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 5, vars: 3, consts: [[4, "ngIf"], [1, "dashboard_part", 3, "ngClass"], ["style", "background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;", 4, "ngIf"], [1, "main_content_inner"], [3, "valueChange"], [2, "background-color", "#ffff", "margin-left", "-300px", "margin-bottom", "40px", "width", "130%", "padding-left", "28%"], [2, "color", "#499", "font-size", "30px", "margin-left", "16px", "padding-right", "34%"], [2, "font-size", "85%", "margin-left", "10%"], ["title", "Logout", 2, "margin-left", "28px", "color", "#e60000", 3, "click"], [1, "fa", "fa-power-off"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, AppComponent_nav_0_Template, 2, 0, "nav", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "section", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent_mat_toolbar_2_Template, 9, 3, "mat-toolbar", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent_mat_toolbar_2_Template, 8, 3, "mat-toolbar", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "router-outlet");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -769,14 +743,17 @@ class LoginService {
             loginId: username,
             password: password
         };
+        console.log("login req", requestBody);
         return this.http.post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].apiUrl}/user/login`, requestBody)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(user => {
+            var _a, _b, _c, _d;
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
             let dataDTO = {
-                userId: user === null || user === void 0 ? void 0 : user.responseObject.userdetailDTO.loginId,
-                userName: user === null || user === void 0 ? void 0 : user.responseObject.userdetailDTO.userId
+                userId: (_b = (_a = user === null || user === void 0 ? void 0 : user.responseObject) === null || _a === void 0 ? void 0 : _a.userdetailDTO) === null || _b === void 0 ? void 0 : _b.loginId,
+                userName: (_d = (_c = user === null || user === void 0 ? void 0 : user.responseObject) === null || _c === void 0 ? void 0 : _c.userdetailDTO) === null || _d === void 0 ? void 0 : _d.userId
             };
+            console.log("login req", dataDTO);
             localStorage.setItem('dataAccessDTO', JSON.stringify(dataDTO));
             this.userSubject.next(user);
             console.log("**********************", user);
@@ -893,15 +870,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_shared_shared_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/shared/shared.module */ "FpXt");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "Sy1n");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _role_access_role_access_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./role-access/role-access.component */ "g14e");
-/* harmony import */ var _modules_core_core_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/core/core.module */ "6ZYd");
-/* harmony import */ var _role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./role-access/role-access-resolver.service */ "5yMF");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "1kSV");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
-/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-multiselect-dropdown */ "Egam");
-/* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng2-search-filter */ "cZdB");
-/* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/toolbar */ "/t3+");
-
+/* harmony import */ var _modules_core_core_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/core/core.module */ "6ZYd");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "1kSV");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
+/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-multiselect-dropdown */ "Egam");
+/* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng2-search-filter */ "cZdB");
+/* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/toolbar */ "/t3+");
+/* harmony import */ var _modules_role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/role-access/role-access-resolver.service */ "orwW");
 
 
 
@@ -927,35 +902,33 @@ class AppModule {
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]] });
 AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({ factory: function AppModule_Factory(t) { return new (t || AppModule)(); }, providers: [
         { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] },
-        _role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_11__["RoleAcessResolver"]
+        _modules_role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_15__["RoleAcessResolver"]
     ], imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
             _modules_shared_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"],
-            _modules_core_core_module__WEBPACK_IMPORTED_MODULE_10__["CoreModule"],
-            _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModule"],
+            _modules_core_core_module__WEBPACK_IMPORTED_MODULE_9__["CoreModule"],
+            _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__["NgbModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_13__["ToastrModule"].forRoot(),
-            ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_14__["NgMultiSelectDropDownModule"].forRoot(),
-            ng2_search_filter__WEBPACK_IMPORTED_MODULE_15__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_16__["MatToolbarModule"]
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrModule"].forRoot(),
+            ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_12__["NgMultiSelectDropDownModule"].forRoot(),
+            ng2_search_filter__WEBPACK_IMPORTED_MODULE_13__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_14__["MatToolbarModule"]
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-        _role_access_role_access_component__WEBPACK_IMPORTED_MODULE_9__["RoleAccessComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
         _modules_shared_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"],
-        _modules_core_core_module__WEBPACK_IMPORTED_MODULE_10__["CoreModule"],
-        _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModule"],
-        _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_13__["ToastrModule"], ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_14__["NgMultiSelectDropDownModule"], ng2_search_filter__WEBPACK_IMPORTED_MODULE_15__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_16__["MatToolbarModule"]] }); })();
+        _modules_core_core_module__WEBPACK_IMPORTED_MODULE_9__["CoreModule"],
+        _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__["NgbModule"],
+        _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrModule"], ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_12__["NgMultiSelectDropDownModule"], ng2_search_filter__WEBPACK_IMPORTED_MODULE_13__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_14__["MatToolbarModule"]] }); })();
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
         args: [{
                 declarations: [
                     _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-                    _role_access_role_access_component__WEBPACK_IMPORTED_MODULE_9__["RoleAccessComponent"],
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -963,16 +936,16 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                     _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
                     _modules_shared_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"],
-                    _modules_core_core_module__WEBPACK_IMPORTED_MODULE_10__["CoreModule"],
-                    _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModule"],
+                    _modules_core_core_module__WEBPACK_IMPORTED_MODULE_9__["CoreModule"],
+                    _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__["NgbModule"],
                     _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
-                    ngx_toastr__WEBPACK_IMPORTED_MODULE_13__["ToastrModule"].forRoot(),
-                    ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_14__["NgMultiSelectDropDownModule"].forRoot(),
-                    ng2_search_filter__WEBPACK_IMPORTED_MODULE_15__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_16__["MatToolbarModule"]
+                    ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrModule"].forRoot(),
+                    ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_12__["NgMultiSelectDropDownModule"].forRoot(),
+                    ng2_search_filter__WEBPACK_IMPORTED_MODULE_13__["Ng2SearchPipeModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_14__["MatToolbarModule"]
                 ],
                 providers: [
                     { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] },
-                    _role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_11__["RoleAcessResolver"]
+                    _modules_role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_15__["RoleAcessResolver"]
                 ],
                 bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
             }]
@@ -1051,7 +1024,7 @@ class SidebarService {
     listOfBranchesOfUser(obj) {
         return this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, obj);
     }
-    //Other Higher lavel
+    //Other Higher level
     listOfRegionsOfUser(obj) {
         return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj);
     }
@@ -1068,238 +1041,34 @@ SidebarService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineIn
 
 /***/ }),
 
-/***/ "g14e":
-/*!******************************************************!*\
-  !*** ./src/app/role-access/role-access.component.ts ***!
-  \******************************************************/
-/*! exports provided: RoleAccessComponent */
+/***/ "orwW":
+/*!*********************************************************************!*\
+  !*** ./src/app/modules/role-access/role-access-resolver.service.ts ***!
+  \*********************************************************************/
+/*! exports provided: RoleAcessResolver */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RoleAccessComponent", function() { return RoleAccessComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RoleAcessResolver", function() { return RoleAcessResolver; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var src_app_modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/modules/core/http/http.service */ "YwHQ");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _core_http_http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/http/http.service */ "YwHQ");
 
 
 
-
-
-
-function RoleAccessComponent_option_12_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 16);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const item_r5 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngValue", item_r5.mainFunctionMasterId);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", item_r5.mainFunctionName, "");
-} }
-function RoleAccessComponent_option_20_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 16);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const item_r6 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngValue", item_r6);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r6);
-} }
-function RoleAccessComponent_th_28_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const item_r7 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r7.roleMasterDTO.roleDescription);
-} }
-function RoleAccessComponent_tr_30_td_3_Template(rf, ctx) { if (rf & 1) {
-    const _r15 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 17);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "input", 18);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function RoleAccessComponent_tr_30_td_3_Template_input_change_2_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15); const role_index_r12 = ctx.index; const action_item_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit; const ctx_r13 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r13.assignAccess(action_item_r8.subFunctionMasterId, role_index_r12, $event); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "span", 19);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const role_index_r12 = ctx.index;
-    const action_item_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
-    const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("checked", ctx_r10.checkStatus(action_item_r8.subFunctionMasterId, role_index_r12));
-} }
-function RoleAccessComponent_tr_30_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, RoleAccessComponent_tr_30_td_3_Template, 4, 1, "td", 14);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const action_item_r8 = ctx.$implicit;
-    const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", action_item_r8.accessType.charAt(0).toUpperCase() + action_item_r8.accessType.substring(1), " ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r3.roleAccessData);
-} }
-function RoleAccessComponent_div_31_Template(rf, ctx) { if (rf & 1) {
-    const _r18 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 20);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 6);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "button", 21);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function RoleAccessComponent_div_31_Template_button_click_2_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r18); const ctx_r17 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r17.save(); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "Save");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-} }
-class RoleAccessComponent {
-    constructor(httpService, route) {
+class RoleAcessResolver {
+    constructor(httpService) {
         this.httpService = httpService;
-        this.route = route;
-        this.mainFunctionId = '';
-        this.subFunctionsDropDown = [];
-        this.selectedSubFunction = '';
-        this.actionTypes = [];
     }
-    ngOnInit() {
-        this.route.data.subscribe(data => {
-            // this.menuData = data;
-            console.log(data);
-            this.roleAccessData = data.roleAcess.responseObject;
-            console.log(this.roleAccessData);
-            this.roleList = this.roleAccessData.map(item => item.roleMasterDTO);
-            this.main_functions = this.roleAccessData[0].mainFunctionDTOList;
-        });
-    }
-    getSubFunctions() {
-        this.subFunctions = this.roleAccessData[0].mainFunctionDTOList.find(item => item.mainFunctionMasterId === this.mainFunctionId).subFunctionMasterDTOList;
-        this.subFunctionsDropDown = new Set(this.subFunctions.map(item => item.subFunctionShortName));
-    }
-    createTableRows() {
-        this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction);
-        console.log(this.actionTypes);
-    }
-    assignAccess(subFunctionId, roleIndex, event) {
-        let checked = event.target.checked;
-        let item = this.roleAccessData[roleIndex].mainFunctionDTOList.find(item => item.mainFunctionMasterId === this.mainFunctionId).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId);
-        if (checked)
-            item.roleActiveFlag = 'Y';
-        else
-            item.roleActiveFlag = 'N';
-        // console.log(item);
-        console.log(this.roleAccessData);
-    }
-    checkStatus(subFunctionId, roleIndex) {
-        let flag = this.roleAccessData[roleIndex].mainFunctionDTOList.find(item => item.mainFunctionMasterId === this.mainFunctionId).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId).roleActiveFlag;
-        // console.log(flag);
-        if (flag === 'Y')
-            return true;
-        else
-            return false;
-    }
-    save() {
-        this.roleAccessSaveObj = {
-            dataAccessDTO: this.httpService.dataAccessDTO,
-            roleFunctionMapDTOList: this.roleAccessData
-        };
-        console.log(this.roleAccessSaveObj);
-        this.httpService.postRequest(`rolesubfunctionmap/save`, this.roleAccessSaveObj).subscribe((data) => {
-            console.log(data);
-        }, (error) => {
-            console.log(error);
-        });
+    resolve(route, state) {
+        return this.httpService.postRequest(`rolemaster/rolefunctionmap/view`, this.httpService.dataAccessDTO);
     }
 }
-RoleAccessComponent.ɵfac = function RoleAccessComponent_Factory(t) { return new (t || RoleAccessComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
-RoleAccessComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: RoleAccessComponent, selectors: [["app-role-access"]], decls: 32, vars: 7, consts: [[1, "container"], [1, "white_box", "QA_section", "mb_30"], [1, "page-title"], [1, "row", "my-3"], [1, "col"], ["for", "", 1, "col-form-label"], [1, "col-md-4"], ["name", "", "id", "", 1, "form-select", 3, "ngModel", "ngModelChange", "change"], ["value", ""], [3, "ngValue", 4, "ngFor", "ngForOf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], [1, "dataTables_wrapper"], ["role", "grid", 1, "table", "no-footer", "dtr-inline", "collapsed"], [4, "ngFor", "ngForOf"], ["class", "row", 4, "ngIf"], [3, "ngValue"], [1, "primary_checkbox", "d-flex", "mr-12"], ["type", "checkbox", 3, "checked", "change"], [1, "checkmark"], [1, "row"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]], template: function RoleAccessComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "Role Menu Map");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "label", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Main Function: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "select", 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function RoleAccessComponent_Template_select_ngModelChange_9_listener($event) { return ctx.mainFunctionId = $event; })("change", function RoleAccessComponent_Template_select_change_9_listener() { return ctx.getSubFunctions(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "option", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](11, "-- Main Function --");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, RoleAccessComponent_option_12_Template, 2, 2, "option", 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "div", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "label", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Sub Function: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "div", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "select", 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function RoleAccessComponent_Template_select_ngModelChange_17_listener($event) { return ctx.selectedSubFunction = $event; })("change", function RoleAccessComponent_Template_select_change_17_listener() { return ctx.createTableRows(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "option", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](19, "-- Sub Function --");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, RoleAccessComponent_option_20_Template, 2, 2, "option", 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 10);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "div", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "table", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "thead");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "tr");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](27, "th");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](28, RoleAccessComponent_th_28_Template, 2, 1, "th", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "tbody");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](30, RoleAccessComponent_tr_30_Template, 4, 2, "tr", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](31, RoleAccessComponent_div_31_Template, 4, 0, "div", 15);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.mainFunctionId);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.roleAccessData[0].mainFunctionDTOList);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.selectedSubFunction);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.subFunctionsDropDown);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.roleAccessData);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.actionTypes);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.selectedSubFunction);
-    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgModel"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ɵangular_packages_forms_forms_x"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]], styles: ["th[_ngcontent-%COMP%] {\r\n    white-space: break-spaces !important;\r\n    padding: 15px !important;\r\n    font-size: 16px !important;\r\n    text-align: center;\r\n}\r\n\r\ntd[_ngcontent-%COMP%] {\r\n    text-align: center;\r\n}\r\n\r\ntd[_ngcontent-%COMP%]:nth-child(1) {\r\n    font-size: 18px !important;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvbGUtYWNjZXNzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxvQ0FBb0M7SUFDcEMsd0JBQXdCO0lBQ3hCLDBCQUEwQjtJQUMxQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSwwQkFBMEI7QUFDOUIiLCJmaWxlIjoicm9sZS1hY2Nlc3MuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInRoIHtcclxuICAgIHdoaXRlLXNwYWNlOiBicmVhay1zcGFjZXMgIWltcG9ydGFudDtcclxuICAgIHBhZGRpbmc6IDE1cHggIWltcG9ydGFudDtcclxuICAgIGZvbnQtc2l6ZTogMTZweCAhaW1wb3J0YW50O1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcblxyXG50ZCB7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcblxyXG50ZDpudGgtY2hpbGQoMSkge1xyXG4gICAgZm9udC1zaXplOiAxOHB4ICFpbXBvcnRhbnQ7XHJcbn0iXX0= */"] });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RoleAccessComponent, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
-        args: [{
-                selector: 'app-role-access',
-                templateUrl: './role-access.component.html',
-                styleUrls: ['./role-access.component.css']
-            }]
-    }], function () { return [{ type: src_app_modules_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }]; }, null); })();
+RoleAcessResolver.ɵfac = function RoleAcessResolver_Factory(t) { return new (t || RoleAcessResolver)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"])); };
+RoleAcessResolver.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: RoleAcessResolver, factory: RoleAcessResolver.ɵfac });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RoleAcessResolver, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: _core_http_http_service__WEBPACK_IMPORTED_MODULE_1__["HttpService"] }]; }, null); })();
 
 
 /***/ }),
@@ -1354,35 +1123,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _login_auth_guard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login/auth.guard */ "VQQV");
-/* harmony import */ var _role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./role-access/role-access-resolver.service */ "5yMF");
-/* harmony import */ var _role_access_role_access_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./role-access/role-access.component */ "g14e");
-
-
 
 
 
 
 
 const routes = [
-    { path: '', loadChildren: () => Promise.all(/*! import() | login-account-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("login-account-module")]).then(__webpack_require__.bind(null, /*! ./login/account.module */ "Oqnm")).then(m => m.AccountModule) },
+    { path: '', loadChildren: () => Promise.all(/*! import() | login-account-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("login-account-module")]).then(__webpack_require__.bind(null, /*! ./login/account.module */ "Oqnm")).then(m => m.AccountModule) },
     { path: 'donor', loadChildren: () => Promise.all(/*! import() | modules-donor-donor-module */[__webpack_require__.e("common"), __webpack_require__.e("modules-donor-donor-module")]).then(__webpack_require__.bind(null, /*! ./modules/donor/donor.module */ "aevK")).then(m => m.DonorModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'role-access', component: _role_access_role_access_component__WEBPACK_IMPORTED_MODULE_4__["RoleAccessComponent"], resolve: { roleAcess: _role_access_role_access_resolver_service__WEBPACK_IMPORTED_MODULE_3__["RoleAcessResolver"] }, canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'user', loadChildren: () => Promise.all(/*! import() | modules-admin-user-admin-user-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~96d384e8"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~b669e605"), __webpack_require__.e("modules-admin-user-admin-user-module")]).then(__webpack_require__.bind(null, /*! ./modules/admin-user/admin-user.module */ "AZ41")).then(m => m.AdminUserModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'role-access', loadChildren: () => __webpack_require__.e(/*! import() | modules-role-access-role-access-module */ "modules-role-access-role-access-module").then(__webpack_require__.bind(null, /*! ./modules/role-access/role-access.module */ "dmim")).then(m => m.RoleAccessModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'vertical', loadChildren: () => Promise.all(/*! import() | modules-vertical-vertical-module */[__webpack_require__.e("common"), __webpack_require__.e("modules-vertical-vertical-module")]).then(__webpack_require__.bind(null, /*! ./modules/vertical/vertical.module */ "gCWA")).then(m => m.VerticalModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'sub-vertical', loadChildren: () => Promise.all(/*! import() | modules-sub-vertical-sub-vertical-module */[__webpack_require__.e("common"), __webpack_require__.e("modules-sub-vertical-sub-vertical-module")]).then(__webpack_require__.bind(null, /*! ./modules/sub-vertical/sub-vertical.module */ "3HSj")).then(m => m.SubVerticalModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'project', loadChildren: () => Promise.all(/*! import() | modules-project-project-module */[__webpack_require__.e("common"), __webpack_require__.e("modules-project-project-module")]).then(__webpack_require__.bind(null, /*! ./modules/project/project.module */ "y3uc")).then(m => m.ProjectModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'mou', loadChildren: () => Promise.all(/*! import() | modules-mou-mou-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("common"), __webpack_require__.e("modules-mou-mou-module")]).then(__webpack_require__.bind(null, /*! ./modules/mou/mou.module */ "d3vJ")).then(m => m.MouModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'mou', loadChildren: () => Promise.all(/*! import() | modules-mou-mou-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("common"), __webpack_require__.e("modules-mou-mou-module")]).then(__webpack_require__.bind(null, /*! ./modules/mou/mou.module */ "d3vJ")).then(m => m.MouModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'dynamic-form', loadChildren: () => __webpack_require__.e(/*! import() | modules-dynamic-form-dynamic-form-module */ "modules-dynamic-form-dynamic-form-module").then(__webpack_require__.bind(null, /*! ./modules/dynamic-form/dynamic-form.module */ "+pMV")).then(m => m.DynamicFormModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'Baseline-Survey', loadChildren: () => Promise.all(/*! import() | modules-baseline-survey-baseline-survey-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("common"), __webpack_require__.e("modules-baseline-survey-baseline-survey-module")]).then(__webpack_require__.bind(null, /*! ./modules/baseline-survey/baseline-survey.module */ "9Oov")).then(m => m.BaselineSurveyModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'central-register', loadChildren: () => Promise.all(/*! import() | modules-central-register-central-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("common"), __webpack_require__.e("modules-central-register-central-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/central-register/central-register.module */ "qvT1")).then(m => m.CentralRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'children-register', loadChildren: () => Promise.all(/*! import() | modules-children-register-children-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("common"), __webpack_require__.e("modules-children-register-children-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/children-register/children-register.module */ "43Nq")).then(m => m.ChildrenRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'region-branch', loadChildren: () => Promise.all(/*! import() | modules-region-branch-setup-region-branch-setup-module */[__webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~96d384e8"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~b669e605"), __webpack_require__.e("modules-region-branch-setup-region-branch-setup-module")]).then(__webpack_require__.bind(null, /*! ./modules/region-branch-setup/region-branch-setup.module */ "F9UH")).then(m => m.RegionBranchSetupModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'Baseline-Survey', loadChildren: () => Promise.all(/*! import() | modules-baseline-survey-baseline-survey-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("common"), __webpack_require__.e("modules-baseline-survey-baseline-survey-module")]).then(__webpack_require__.bind(null, /*! ./modules/baseline-survey/baseline-survey.module */ "9Oov")).then(m => m.BaselineSurveyModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'central-register', loadChildren: () => Promise.all(/*! import() | modules-central-register-central-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("common"), __webpack_require__.e("modules-central-register-central-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/central-register/central-register.module */ "qvT1")).then(m => m.CentralRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'children-register', loadChildren: () => Promise.all(/*! import() | modules-children-register-children-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("common"), __webpack_require__.e("modules-children-register-children-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/children-register/children-register.module */ "43Nq")).then(m => m.ChildrenRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'family-info', loadChildren: () => __webpack_require__.e(/*! import() | modules-family-info-family-info-module */ "modules-family-info-family-info-module").then(__webpack_require__.bind(null, /*! ./modules/family-info/family-info.module */ "lKH6")).then(m => m.FamilyInfoModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'muac-register', loadChildren: () => Promise.all(/*! import() | modules-muac-register-muac-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("common"), __webpack_require__.e("modules-muac-register-muac-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/muac-register/muac-register.module */ "3y2c")).then(m => m.MuacRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'muac-register', loadChildren: () => Promise.all(/*! import() | modules-muac-register-muac-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("common"), __webpack_require__.e("modules-muac-register-muac-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/muac-register/muac-register.module */ "3y2c")).then(m => m.MuacRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'core', loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./modules/core/core.module */ "6ZYd")).then(m => m.CoreModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'pem-register', loadChildren: () => Promise.all(/*! import() | modules-pem-register-pem-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("common"), __webpack_require__.e("modules-pem-register-pem-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pem-register/pem-register.module */ "8xsE")).then(m => m.PemRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("common"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'lmr', loadChildren: () => Promise.all(/*! import() | modules-lactating-mother-register-lm-register-module */[__webpack_require__.e("default~login-account-module~modules-baseline-survey-baseline-survey-module~modules-central-register~5c325052"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("modules-lactating-mother-register-lm-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/lactating-mother-register/lm-register.module */ "D/kB")).then(m => m.LmRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'pw-register', loadChildren: () => Promise.all(/*! import() | modules-pregnant-women-register-pw-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~26b5e5fc"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-lactating-mother-register-lm~cc0723f4"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-pregnant-women-register-pw-r~1ee185e3"), __webpack_require__.e("modules-pregnant-women-register-pw-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pregnant-women-register/pw-register.module */ "TWdA")).then(m => m.PwRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
-    { path: 'daily-activity-register', loadChildren: () => __webpack_require__.e(/*! import() | modules-daily-activity-register-daily-activity-register-module */ "modules-daily-activity-register-daily-activity-register-module").then(__webpack_require__.bind(null, /*! ./modules/daily-activity-register/daily-activity-register.module */ "v3t/")).then(m => m.DailyActivityRegisterModule) },
+    { path: 'pem-register', loadChildren: () => Promise.all(/*! import() | modules-pem-register-pem-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("common"), __webpack_require__.e("modules-pem-register-pem-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pem-register/pem-register.module */ "8xsE")).then(m => m.PemRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'acr', loadChildren: () => Promise.all(/*! import() | modules-all-children-register-all-child-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~96d384e8"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~b669e605"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("common"), __webpack_require__.e("modules-all-children-register-all-child-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/all-children-register/all-child-register.module */ "gFW8")).then(m => m.AllChildRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'lmr', loadChildren: () => Promise.all(/*! import() | modules-lactating-mother-register-lm-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~96d384e8"), __webpack_require__.e("modules-lactating-mother-register-lm-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/lactating-mother-register/lm-register.module */ "D/kB")).then(m => m.LmRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'pw-register', loadChildren: () => Promise.all(/*! import() | modules-pregnant-women-register-pw-register-module */[__webpack_require__.e("default~login-account-module~modules-admin-user-admin-user-module~modules-all-children-register-all-~6e850b40"), __webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~96d384e8"), __webpack_require__.e("default~modules-admin-user-admin-user-module~modules-all-children-register-all-child-register-module~b669e605"), __webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-muac-register-muac-register-~4fc7d896"), __webpack_require__.e("modules-pregnant-women-register-pw-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/pregnant-women-register/pw-register.module */ "TWdA")).then(m => m.PwRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'daily-activity-register', loadChildren: () => Promise.all(/*! import() | modules-daily-activity-register-daily-activity-register-module */[__webpack_require__.e("default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-mod~15780916"), __webpack_require__.e("modules-daily-activity-register-daily-activity-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/daily-activity-register/daily-activity-register.module */ "v3t/")).then(m => m.DailyActivityRegisterModule) },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {

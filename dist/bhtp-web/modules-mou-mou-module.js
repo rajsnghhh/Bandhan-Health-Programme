@@ -505,7 +505,8 @@ MouModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector
                     _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
                     ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_10__["NgMultiSelectDropDownModule"].forRoot(),
                     ngx_pagination__WEBPACK_IMPORTED_MODULE_11__["NgxPaginationModule"]
-                ]
+                ],
+                schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["NO_ERRORS_SCHEMA"]],
             }]
     }], null, null); })();
 

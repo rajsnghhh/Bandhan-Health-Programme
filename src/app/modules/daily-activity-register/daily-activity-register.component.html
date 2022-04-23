@@ -44,21 +44,21 @@
                         </div>
 
                         <div class="form-group col-md">
-                            <label for="hco">Hco :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <label for="hco">HCO/ HCOI /TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBranch($event.target.value)"
                                 formControlName="hco" id="hco" [ngClass]="{
                               'is-invalid': l.hco.invalid && l.hco.touched,
                               'is-valid':
                                 l.hco.valid && (l.hco.dirty || l.hco.touched)
                             }">
-                                <option value="">-- Select Hco --</option>
+                                <option value="">-- Select Role --</option>
                                 <option *ngFor="let hco of hcoList" value='{{hco.user_id}}'>
                                     {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
                                     {{hco.role_shortname}}
                                 </option>
                             </select>
                             <div *ngIf="l.hco.errors" class="invalid-feedback">
-                                <div *ngIf="l.hco.errors.required">Hco selection is required</div>
+                                <div *ngIf="l.hco.errors.required">Role selection is required</div>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                         <div class="form-group col-md">
                             <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="date" class="form-control" formControlName="fromDate"
-                                (keydown)="restrictTypeOfDate()" [ngClass]="{
+                                (keydown)="restrictTypeOfDate()" (change)="dateChange()" [ngClass]="{
                                     'is-invalid': l.fromDate.invalid && l.fromDate.touched,
                                     'is-valid':
                                       l.fromDate.valid && (l.fromDate.dirty || l.fromDate.touched)
@@ -147,6 +147,7 @@
                             </div>
 
                         </div>
+
                     </div>
                     <div class="white_box_tittle list_header">
 
@@ -158,7 +159,7 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th>SL<br>No</th>
+                                            <th>SL No</th>
                                             <th>Date</th>
                                             <th>View</th>
                                         </tr>
@@ -170,8 +171,11 @@
                                             *ngFor="let item of darList | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{item.darDate}} </td>
-                                            <td (click)="darViewFamily(item.darViewFamilyDTOList)"><i
-                                                    class="fas fa-angle-right"></i></td>
+                                            <td class="btn-link"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="darViewFamily(item.darViewFamilyDTOList)">More Info...</td>
+
+
                                         </tr>
 
                                         <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
@@ -187,9 +191,11 @@
 
                             </div>
                         </div>
+
+
                     </div>
 
-                    <div class="white_box_tittle list_header">
+                    <div class="white_box_tittle list_header" *ngIf="darViewFamilyList.length > 0">
 
                         <div class="QA_table ">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -199,12 +205,13 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th>SL<br>No</th>
-                                            <th>Village</th>
+                                            <th style="padding: 0px;">SL No</th>
+                                            <th style="padding: 0px;">Village</th>
                                             <th>Name of <br> Beneficiary Visited</th>
-                                            <th>Type of <br> beneficiary</th>
-                                            <th>Alone /<br> With SS</th>
-                                            <th>Name of SS </th>
+                                            <th style="padding: 0px;">Type of <br> beneficiary</th>
+                                            <th style="padding: 0px;">Alone /<br> With SS</th>
+                                            <th style="padding: 0px;">Name of SS </th>
+                                            <th style="padding: 0px;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -212,12 +219,17 @@
 
                                         <tr
                                             *ngFor="let item of darViewFamilyList | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
-                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td>{{item.villageName}} </td>
-                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                                            <td> -</td>
-                                            <td>{{item.visitedWithSS}}</td>
-                                            <td>{{item.ssName}}</td>
+                                            <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="padding: 0px;">{{item.villageName}} </td>
+                                            <td>{{item.firstName}} {{item.middleName}}
+                                                {{item.lastName}}</td>
+                                            <td style="padding: 0px;"> -</td>
+                                            <td style="padding: 0px;">{{item.visitedWithSS}}</td>
+                                            <td style="padding: 0px;">{{item.ssName}}</td>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
+                                                    (click)="editDARModal(editDAR, item.darChildList)"></i>
+                                                <i class="fas fa-trash" title="Delete DAR"></i>
+                                            </td>
                                         </tr>
 
                                         <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
@@ -241,3 +253,82 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #editDAR let-modal>
+    <div class="modal-content">
+        <div class="modal-header" style="height: 80px;">
+
+            <div class="white_box QA_section mb_30" style="height: 100px;">
+                <h2 class="page-title">Edit DAR</h2>
+                <span class="close" title="close" (click)="modalDismiss()"
+                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Child Info</legend>
+                <div id="table_wrapper">
+                    <table class="table table-striped" id="table_wrapper">
+
+                        <thead>
+                            <tr>
+                                <th>SL No</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>sex</th>
+                                <th>DOB</th>
+                                <th>Current Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody style="text-align: center;">
+
+                            <tr *ngFor="let item of darViewChildList; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.childName}}</td>
+                                <td>{{item.age}}</td>
+                                <td>{{item.sex}}</td>
+                                <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
+                                <td>-</td>
+                                <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                        (change)="changeCheckbox($event,item)"></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </fieldset>
+
+            <!-- <div class="row">
+                <div class="form-group col-md">
+                    <label for="ss">
+                        Visited With SS&nbsp;<span
+                            class="text-danger">*&nbsp;</span></label>
+
+                    <div class="form-check-inline">
+                        <input class="form-check-input" name="ss" type="radio" id="yes" value="Y"
+                            formControlName="ss" (change)="changess($event)" />
+                        <label class="form-check-label" for="">
+                            &nbsp;&nbsp;Yes</label>
+
+                        <div class="form-check-inline">
+                            &nbsp;&nbsp;&nbsp;
+                            <input class="form-check-input" type="radio" id="no" value="N" formControlName="ss"
+                                (change)="changess($event)" />
+                            <label class="form-check-label" for="">
+                                &nbsp;&nbsp;No</label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+
+</ng-template>

@@ -5,6 +5,7 @@ import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { DailyActivityRegisterService } from './daily-activity-register.service';
 import { HttpService } from '../core/http/http.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-daily-activity-register',
@@ -25,16 +26,22 @@ export class DailyActivityRegisterComponent implements OnInit {
   villageMasterId: any;
   hcoList: any;
   hcoId: any;
-  darList: any;
-  darViewFamilyList: any;
+  darList: Array<any> = [];
+  darViewFamilyList: Array<any> = [];
+  darViewChildList: Array<any> = [];
   page = 1;
   pageSize = 6;
   p: any;
   role: any;
-
+  modalContent: any;
+  modalReference: any;
+  modalIndex: any;
+  checkbox: any;
+  changeSS: any;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
-    private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService) { }
+    private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
@@ -57,7 +64,6 @@ export class DailyActivityRegisterComponent implements OnInit {
     }, 1000);
 
     this.regionList = this.sidebarService.listOfRegion;
-
   }
 
   changeRegion(region) {
@@ -83,7 +89,9 @@ export class DailyActivityRegisterComponent implements OnInit {
       this.locationForm.controls.toDate.setValue('');
       this.darList = [];
       this.darViewFamilyList = [];
-      // this.showError('No Data Found');
+      this.branchList = [];
+      this.hcoList = [];
+      this.showError('No Data Found');
     }
   }
 
@@ -102,13 +110,24 @@ export class DailyActivityRegisterComponent implements OnInit {
     });
 
 
+    if (branch) {
+      this.locationForm.controls.fromDate.setValue('');
+      this.locationForm.controls.toDate.setValue('');
+      this.darList = [];
+      this.darViewFamilyList = [];
+    }
+
+
     if (this.locationForm.value.branch == '') {
-      // this.showError('No Data Found');
       this.locationForm.controls.hco.setValue('');
       this.locationForm.controls.fromDate.setValue('');
       this.locationForm.controls.toDate.setValue('');
       this.darList = [];
       this.darViewFamilyList = [];
+      this.hcoList = [];
+      this.locationForm.controls.fromDate.setValue('');
+      this.locationForm.controls.toDate.setValue('');
+      this.showError('No Data Found');
     }
 
     if (this.locationForm.value.hco == '') {
@@ -168,14 +187,23 @@ export class DailyActivityRegisterComponent implements OnInit {
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required]
     });
+  }
 
+  dateChange() {
+    if (this.locationForm.value.fromDate && this.locationForm.value.toDate) {
+      this.locationForm.controls.toDate.setValue('');
+    }
   }
 
   viewDAREntryList() {
 
+    if (!this.locationForm.value.hco) {
+      this.showError('Please Select Role');
+      return;
+    }
+
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      // hcoId: this.hcoId,
       hcoId: this.hcoId ? this.hcoId : this.sidebarService.userId,
       startDate: this.locationForm.value.fromDate,
       endDate: this.locationForm.value.toDate,
@@ -188,14 +216,51 @@ export class DailyActivityRegisterComponent implements OnInit {
       this.darList = res.responseObject;
       console.log(this.darList);
 
-    })
+      if (res.status == false) {
+        this.showError(res.message);
+      }
+
+    });
 
   }
 
-
   darViewFamily(item) {
     this.darViewFamilyList = item;
+
+    console.log(this.darViewChildList, 'this.darViewChildList');
+
+
     console.log(this.darViewFamilyList, 'darViewFamily');
+  }
+
+  modalDismiss() {
+    this.modalReference.close();
+  }
+
+  changeCheckbox(e, item) {
+    var data = e.target.checked;
+    if (data) {
+      this.checkbox = item;
+    } else {
+      this.checkbox = '';
+    }
+
+    console.log(this.checkbox);
+  }
+
+  // changess(e) {
+  //   this.changeSS = e.target.value;
+  //   console.log(this.changeSS);
+    
+  // }
+
+  editDARModal(editDAR, item) {
+    this.darViewChildList = item;
+    console.log(this.darViewChildList, 'darChildList');
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(editDAR, {
+      windowClass: 'editDAR',
+    });
   }
 
   showSuccess(message) {
