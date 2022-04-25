@@ -30,12 +30,12 @@ export class LoginService {
 
 
     login(username, password) {
+        debugger;
         let requestBody = {
             deviceType: "W",
             loginId: username,
             password: password
         };
-        console.log("login req", requestBody);
         return this.http.post<User>(`${environment.apiUrl}/user/login`, requestBody)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -45,7 +45,6 @@ export class LoginService {
                     userId: user?.responseObject?.userdetailDTO?.loginId,
                     userName: user?.responseObject?.userdetailDTO?.userId
                 }
-                console.log("login req", dataDTO);
                 localStorage.setItem('dataAccessDTO', JSON.stringify(dataDTO));
                 this.userSubject.next(user);
                 console.log("**********************", user);
