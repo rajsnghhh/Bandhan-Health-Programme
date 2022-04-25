@@ -15,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class DailyActivityRegisterComponent implements OnInit {
   locationForm: FormGroup;
+  editForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -38,6 +39,7 @@ export class DailyActivityRegisterComponent implements OnInit {
   modalIndex: any;
   checkbox: any;
   changeSS: any;
+  swasthyaSahayika: Array<any> = [];
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
@@ -139,6 +141,11 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   }
 
+  changeSahika(ss) {
+    this.sidebarService.swasthyaSahayikaId = ss;
+    this.sidebarService.swasthyaSahayikaName = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName
+  }
+
   // changeBlock(blockname) {
   //   this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
   //   this.selectedBlock = this.locationForm.get('block').value;
@@ -189,10 +196,17 @@ export class DailyActivityRegisterComponent implements OnInit {
     });
   }
 
-  dateChange() {
+  fromDateChange() {
     if (this.locationForm.value.fromDate && this.locationForm.value.toDate) {
       this.locationForm.controls.toDate.setValue('');
     }
+    this.darList = [];
+    this.darViewFamilyList = [];
+  }
+
+  toDateChange() {
+    this.darList = [];
+    this.darViewFamilyList = [];
   }
 
   viewDAREntryList() {
@@ -248,18 +262,43 @@ export class DailyActivityRegisterComponent implements OnInit {
     console.log(this.checkbox);
   }
 
-  // changess(e) {
-  //   this.changeSS = e.target.value;
-  //   console.log(this.changeSS);
-    
-  // }
+  changess(e) {
+    this.changeSS = e.target.value;
+    console.log(this.changeSS);
+  }
 
-  editDARModal(editDAR, item) {
+  editDARModal(editDAR, item, id) {
     this.darViewChildList = item;
     console.log(this.darViewChildList, 'darChildList');
+    console.log(id);
+    this.editForms();
+
+
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      villageId: id,
+      userId: this.sidebarService.userId
+    }
+
+    console.log(req);
+
+    this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
+      console.log(res);
+      this.swasthyaSahayika = res.responseObject;
+    });
     this.modalContent = '';
     this.modalReference = this.modalService.open(editDAR, {
       windowClass: 'editDAR',
+    });
+  }
+
+  editForms() {
+    this.editForm = this.fb.group({
+      ss: this.changeSS,
+      sahayika: ['']
     });
   }
 

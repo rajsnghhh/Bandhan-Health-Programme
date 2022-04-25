@@ -25,4 +25,8 @@ export class DailyActivityRegisterService {
   viewingDAREntryList(obj): any {
     return this.http.post(`${this.baseURL}dailyActivity/viewDailyActivityRegister`, obj)
   }
+
+  ssVillageWiseList(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj)
+  }
 }
