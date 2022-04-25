@@ -30,7 +30,6 @@ export class LoginService {
 
 
     login(username, password) {
-        debugger;
         let requestBody = {
             deviceType: "W",
             loginId: username,

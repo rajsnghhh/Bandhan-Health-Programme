@@ -16,6 +16,7 @@ import { RegionSetupComponent } from '../region-setup/region-setup.component';
 })
 export class RegionBranchHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
+  stateList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -23,6 +24,13 @@ export class RegionBranchHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.stateList = res.responseObject.stateList;
+    });
   }
 
   openCreateRegion() {
