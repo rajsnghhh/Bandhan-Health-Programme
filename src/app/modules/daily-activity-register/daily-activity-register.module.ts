@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DailyActivityRegisterRoutingModule } from './daily-activity-register-routing.module';
 import { DailyActivityRegisterComponent } from './daily-activity-register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -15,7 +15,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DailyActivityRegisterRoutingModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule
   ]
 })
 export class DailyActivityRegisterModule { }
