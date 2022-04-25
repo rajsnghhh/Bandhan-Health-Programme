@@ -15,6 +15,8 @@ export class BranchSetupComponent implements OnInit {
   regionList: Array<any> = [];
   subVerticalsList: Array<any> = [];
   subVerticleProjectList: Array<any> = [];
+  branchTypeList: Array<any> = [];
+  stateList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BranchSetupComponent>) {
@@ -36,6 +38,14 @@ export class BranchSetupComponent implements OnInit {
     });
     this.http.post(`${this.httpService.baseURL}subvertical/getListOfAllSubVerticals`, Dto).subscribe((res: any) => {
       this.subVerticalsList = res.responseObject.subVerticalList;
+    });
+
+    this.http.post(`${this.httpService.baseURL}branch/getListOfALLBranchTypes`, Dto).subscribe((res: any) => {
+      this.branchTypeList = res.responseObject.branchTypeList;
+    });
+
+    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.stateList = res.responseObject.stateList;
     });
   }
 

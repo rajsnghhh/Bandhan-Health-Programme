@@ -92,7 +92,6 @@
         <select
           class="form-select"
           formControlName="state"
-          id="state"
           [ngClass]="{
             'is-invalid': f.state.invalid && f.state.touched,
             'is-valid':
@@ -100,9 +99,9 @@
           }"
         >
           <option value="">-- Select state --</option>
-          <!-- <option *ngFor="let region of regionList">
-            {{region.regionName}}
-          </option> -->
+          <option *ngFor="let state of stateList">
+            {{state.stateName}}
+          </option>
         </select>
         <div *ngIf="f.state.errors" class="invalid-feedback">
           <div *ngIf="f.state.errors.required">state selection is required</div>
@@ -183,7 +182,6 @@
             <select
               class="form-select"
               formControlName="branchType"
-              id="branchType"
               [ngClass]="{
                 'is-invalid': f.branchType.invalid && f.branchType.touched,
                 'is-valid':
@@ -191,9 +189,9 @@
               }"
             >
               <option value="">-- Select branchType --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let branchType of branchTypeList">
+                {{branchType.branchTypeDescription}}
+              </option>
             </select>
             <div *ngIf="f.branchType.errors" class="invalid-feedback">
               <div *ngIf="f.branchType.errors.required">branchType selection is required</div>
