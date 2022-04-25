@@ -5,7 +5,7 @@ import { DailyActivityRegisterRoutingModule } from './daily-activity-register-ro
 import { DailyActivityRegisterComponent } from './daily-activity-register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     DailyActivityRegisterRoutingModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    NgbPaginationModule
+    NgxPaginationModule
   ]
 })
 export class DailyActivityRegisterModule { }

@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
             this.loader = true;
           },
           error => {
+            console.log(error)
             this.loader = true;
             this.accountService.logout();
             this.loading = false;

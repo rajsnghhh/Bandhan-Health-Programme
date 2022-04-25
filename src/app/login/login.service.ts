@@ -35,15 +35,17 @@ export class LoginService {
             loginId: username,
             password: password
         };
+        console.log("login req", requestBody);
         return this.http.post<User>(`${environment.apiUrl}/user/login`, requestBody)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
 
                 let dataDTO = {
-                    userId: user?.responseObject.userdetailDTO.loginId,
-                    userName: user?.responseObject.userdetailDTO.userId
+                    userId: user?.responseObject?.userdetailDTO?.loginId,
+                    userName: user?.responseObject?.userdetailDTO?.userId
                 }
+                console.log("login req", dataDTO);
                 localStorage.setItem('dataAccessDTO', JSON.stringify(dataDTO));
                 this.userSubject.next(user);
                 console.log("**********************", user);

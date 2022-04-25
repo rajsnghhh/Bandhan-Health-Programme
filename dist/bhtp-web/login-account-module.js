@@ -529,6 +529,7 @@ class LoginComponent {
                 }
                 this.loader = true;
             }, error => {
+                console.log(error);
                 this.loader = true;
                 this.accountService.logout();
                 this.loading = false;
