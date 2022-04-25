@@ -196,10 +196,17 @@ export class DailyActivityRegisterComponent implements OnInit {
     });
   }
 
-  dateChange() {
+  fromDateChange() {
     if (this.locationForm.value.fromDate && this.locationForm.value.toDate) {
       this.locationForm.controls.toDate.setValue('');
     }
+    this.darList = [];
+    this.darViewFamilyList = [];
+  }
+
+  toDateChange() {
+    this.darList = [];
+    this.darViewFamilyList = [];
   }
 
   viewDAREntryList() {

@@ -124,7 +124,7 @@
                         <div class="form-group col-md">
                             <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="date" class="form-control" formControlName="fromDate"
-                                (keydown)="restrictTypeOfDate()" (change)="dateChange()" [ngClass]="{
+                                (keydown)="restrictTypeOfDate()" (change)="fromDateChange()" [ngClass]="{
                                     'is-invalid': l.fromDate.invalid && l.fromDate.touched,
                                     'is-valid':
                                       l.fromDate.valid && (l.fromDate.dirty || l.fromDate.touched)
@@ -137,7 +137,8 @@
                         <div class="form-group col-md">
                             <label for="toDate">To Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="date" class="form-control" formControlName="toDate"
-                                (keydown)="restrictTypeOfDate()" (change)="viewDAREntryList()" [ngClass]="{
+                                (keydown)="restrictTypeOfDate()" (change)="viewDAREntryList()" (change)="toDateChange()"
+                                [ngClass]="{
                                     'is-invalid': l.toDate.invalid && l.toDate.touched,
                                     'is-valid':
                                       l.toDate.valid && (l.toDate.dirty || l.toDate.touched)
@@ -306,13 +307,13 @@
 
             <form class="form-signin" [formGroup]="editForm">
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label for="ss">
                             Visited With SS&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                         <div class="form-check-inline">
                             <input class="form-check-input" name="ss" type="radio" id="yes" value="Y"
-                            formControlName="ss" (change)="changess($event)" />
+                                formControlName="ss" (change)="changess($event)" />
                             <label class="form-check-label" for="">
                                 &nbsp;&nbsp;Yes</label>
 
@@ -326,11 +327,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4" *ngIf="changeSS == 'Y'">
                         <label for="sahayika">
                             Name of SS :</label>
                         <select class="form-select" (change)="changeSahika($event.target.value)"
-                        formControlName="sahayika" id="swasthyaSahayika">
+                            formControlName="sahayika" id="swasthyaSahayika">
                             <option value="">-- Select SS --</option>
                             <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
                                 {{ ss.swasthyaSahayikaName }}
