@@ -106,6 +106,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/region-branch']);
     }
 
+    if (routeId == 37) {
+      this.router.navigate(['/block']);
+    }
+
     if (routeId == 65) {
       this.router.navigate(['/Baseline-Survey/create']);
     }

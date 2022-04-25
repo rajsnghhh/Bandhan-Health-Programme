@@ -24,19 +24,42 @@ export class RegionSetupComponent implements OnInit {
 
   createForm() {
     this.regionForm = this.fb.group({
-      region: ['', Validators.required],
+      regionName: ['', Validators.required],
     });
   }
   get f() {
     return this.regionForm.controls;
   }
 
-  onSave() {
+  camelize(str) {
+    let value = str.toLowerCase();
+    return value.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) return " ";
+      if (index === 0) return match.toUpperCase();
+      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
 
+  onSave() {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      regionMasterId: "0",
+      regionName: this.camelize(this.regionForm.value.regionName)
+    }
+    console.log(Dto);
+    this.http.post(`${this.httpService.baseURL}region/saveOrUpdate`, Dto).subscribe((res: any) => {
+      console.log(res);
+      if (res.status) {
+        this.dialogRef.close();
+        this.showSuccess('Region Created');
+      } else {
+        this.showError(res.message);
+      }
+    });
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Status Change', {
+    this.toaster.success(message, 'Success', {
       timeOut: 3000,
     });
   }

@@ -14,14 +14,14 @@
         type="text"
         class="form-control"
         placeholder="Enter Region Name"
-        formControlName="region"
+        formControlName="regionName"
         [ngClass]="{
-          'is-invalid': f.region.invalid && f.region.touched,
-          'is-valid': f.region.valid && (f.region.dirty || f.region.touched)
+          'is-invalid': f.regionName.invalid && f.regionName.touched,
+          'is-valid': f.regionName.valid && (f.regionName.dirty || f.regionName.touched)
         }"
       />
-      <div *ngIf="f.region.errors" class="invalid-feedback">
-        <div *ngIf="f.region.errors.required">Region is required</div>
+      <div *ngIf="f.regionName.errors" class="invalid-feedback">
+        <div *ngIf="f.regionName.errors.required">Region Name is required</div>
       </div>
     </div>
     <br />
