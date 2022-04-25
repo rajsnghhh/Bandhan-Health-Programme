@@ -4,12 +4,12 @@
         <div class="white_box QA_section mb_30">
 
           <div id="header-fixed" style="display: flex;">
-            <h2 class="page-title">Block Setup</h2>
+            <h2 class="page-title">GP/Municipality  Setup</h2>
         </div>
         
         <div class="add_button">
             <button class="btn btn-primary" (click)="openCreateBlock()">
-                <i class="fa fa-cubes"></i>Create Block
+                <i class="fa fa-building-o"></i>Create GP/Municipality
             </button>    
         </div>
 <br>
@@ -64,6 +64,31 @@
                   </div>
                 </div>
               </div>
+
+              <div class="form-group col-md-4">
+                <label for="block"
+                  >Block :&nbsp;<span class="text-danger">*&nbsp;</span></label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeBlock($event.target.value)"
+                  formControlName="block"
+                  [ngClass]="{
+                    'is-invalid': f.block.invalid && f.block.touched,
+                    'is-valid': f.block.valid && (f.block.dirty || f.block.touched)
+                  }"
+                >
+                  <option value="">-- Select Block --</option>
+                  <!-- <option *ngFor="let state of stateList">
+                    {{state.stateName}}
+                  </option> -->
+                </select>
+                <div *ngIf="f.block.errors" class="invalid-feedback">
+                  <div *ngIf="f.block.errors.required">
+                    Block selection is required
+                  </div>
+                </div>
+              </div>
             </div>
         </form>
 
@@ -80,7 +105,8 @@
                                 <th>State</th>
                                 <th>District</th>
                                 <th>Block Name</th>
-                                <th>Pin Code</th> 
+                                <th>GP/Municipality</th>
+                                <th>Type</th> 
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -97,7 +123,10 @@
                                     Onda
                                 </td>
                                 <td>
-                                    12365
+                                    GP 1
+                                </td>
+                                <td>
+                                    New
                                 </td>
                                 <td>
                                     <i class="fas fa-edit" title="Edit" (click)="openEditBlock()"></i>

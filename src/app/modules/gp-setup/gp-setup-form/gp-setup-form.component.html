@@ -1,0 +1,132 @@
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+      <h2 class="dialog-title">Create New Block</h2>
+      <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+    </div>
+  </h1>
+  
+  <div mat-dialog-content>
+    <form class="form-signin" [formGroup]="blockForm">
+      <div class="row">
+        <div class="form-group col-md">
+          <label for="state"
+            >State :&nbsp;<span class="text-danger">*&nbsp;</span></label
+          >
+          <select
+            class="form-select"
+            (change)="changeState($event.target.value)"
+            formControlName="state"
+            [ngClass]="{
+              'is-invalid': f.state.invalid && f.state.touched,
+              'is-valid': f.state.valid && (f.state.dirty || f.state.touched)
+            }"
+          >
+            <option value="">-- Select State --</option>
+            <!-- <option *ngFor="let state of stateList">
+                    {{state.stateName}}
+                  </option> -->
+          </select>
+          <div *ngIf="f.state.errors" class="invalid-feedback">
+            <div *ngIf="f.state.errors.required">State selection is required</div>
+          </div>
+        </div>
+  
+        <div class="form-group col-md">
+          <label for="district"
+            >District :&nbsp;<span class="text-danger">*&nbsp;</span></label
+          >
+          <select
+            class="form-select"
+            (change)="changeDistrict($event.target.value)"
+            formControlName="district"
+            [ngClass]="{
+              'is-invalid': f.district.invalid && f.district.touched,
+              'is-valid':
+                f.district.valid && (f.district.dirty || f.district.touched)
+            }"
+          >
+            <option value="">-- Select District --</option>
+            <!-- <option *ngFor="let state of stateList">
+                    {{state.stateName}}
+                  </option> -->
+          </select>
+          <div *ngIf="f.state.errors" class="invalid-feedback">
+            <div *ngIf="f.state.errors.required">
+              District selection is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="block"
+              >Block :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >
+            <select
+              class="form-select"
+              formControlName="block"
+              [ngClass]="{
+                'is-invalid': f.block.invalid && f.block.touched,
+                'is-valid': f.block.valid && (f.block.dirty || f.block.touched)
+              }"
+            >
+              <option value="">-- Select Block --</option>
+              <!-- <option *ngFor="let state of stateList">
+                {{state.stateName}}
+              </option> -->
+            </select>
+            <div *ngIf="f.block.errors" class="invalid-feedback">
+              <div *ngIf="f.block.errors.required">
+                Block selection is required
+              </div>
+            </div>
+          </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="form-group col-md">
+          <label for="gpName"
+            >gp Name :&nbsp;<span class="text-danger">*&nbsp;</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter gp Name"
+            formControlName="gpName"
+            [ngClass]="{
+              'is-invalid': f.gpName.invalid && f.gpName.touched,
+              'is-valid':
+                f.gpName.valid && (f.gpName.dirty || f.gpName.touched)
+            }"
+          />
+          <div *ngIf="f.gpName.errors" class="invalid-feedback">
+            <div *ngIf="f.gpName.errors.required">gp Name is required</div>
+          </div>
+        </div>
+  
+        <div class="form-group col-md">
+          <label for="type"
+            >Type :&nbsp;<span class="text-danger">*&nbsp;</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Type"
+            formControlName="type"
+            [ngClass]="{
+              'is-invalid': f.type.invalid && f.type.touched,
+              'is-valid':
+                f.type.valid && (f.type.dirty || f.type.touched)
+            }"
+          />
+          <div *ngIf="f.type.errors" class="invalid-feedback">
+            <div *ngIf="f.type.errors.required">Type is required</div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
+  </div>
+  
