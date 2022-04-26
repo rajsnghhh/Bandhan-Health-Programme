@@ -92,6 +92,7 @@
         <select
           class="form-select"
           formControlName="state"
+          (change)="changeState($event.target.value)"
           [ngClass]="{
             'is-invalid': f.state.invalid && f.state.touched,
             'is-valid':
@@ -115,6 +116,7 @@
             <select
               class="form-select"
               formControlName="district"
+              (change)="changeDistrict($event.target.value)"
               id="district"
               [ngClass]="{
                 'is-invalid': f.district.invalid && f.district.touched,
@@ -123,9 +125,9 @@
               }"
             >
               <option value="">-- Select district --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let district of stateWiseDistrictList">
+                {{district.districtName}}
+              </option>
             </select>
             <div *ngIf="f.district.errors" class="invalid-feedback">
               <div *ngIf="f.district.errors.required">district selection is required</div>
@@ -147,9 +149,9 @@
               }"
             >
               <option value="">-- Select selectedDistrict --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let block of blockList">
+                {{block.blockName}}
+              </option>
             </select>
             <div *ngIf="f.selectedDistrict.errors" class="invalid-feedback">
               <div *ngIf="f.selectedDistrict.errors.required">selectedDistrict selection is required</div>

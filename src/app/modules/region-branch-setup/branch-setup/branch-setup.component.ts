@@ -17,6 +17,8 @@ export class BranchSetupComponent implements OnInit {
   subVerticleProjectList: Array<any> = [];
   branchTypeList: Array<any> = [];
   stateList: Array<any> = [];
+  stateWiseDistrictList: Array<any> = [];
+  blockList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BranchSetupComponent>) {
@@ -57,6 +59,22 @@ export class BranchSetupComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}subvertical/getSubVerticalWiseListOfAllProjects`, Dto).subscribe((res: any) => {
       this.subVerticleProjectList = res.responseObject.projectList;
     });
+  }
+
+  changeState(value) {
+    let stateId = this.stateList.find(item => item.stateName == value)?.stateMasterId;
+
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateId: stateId
+    }
+    this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+      this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+    });
+  }
+
+  changeDistrict(value) {
+    this.blockList = this.stateWiseDistrictList.find(item => item.districtName == value)?.blockList;
   }
 
   createForm() {
