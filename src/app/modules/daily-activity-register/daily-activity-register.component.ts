@@ -37,9 +37,14 @@ export class DailyActivityRegisterComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   modalIndex: any;
-  checkbox: any;
+  childCheckbox: any;
+  visitCheckbox: any;
   changeSS: any;
   swasthyaSahayika: Array<any> = [];
+  visitData: any;
+  editListCheck: any;
+  childbox: Array<any> = [];
+
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
@@ -97,8 +102,14 @@ export class DailyActivityRegisterComponent implements OnInit {
     }
   }
 
+  changeHco(id) {
+    this.hcoId = id;
+  }
+
   changeBranch(branch) {
-    this.hcoId = branch;
+
+    console.log(branch);
+
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
@@ -251,48 +262,92 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.modalReference.close();
   }
 
-  changeCheckbox(e, item) {
+  changeChildbox(e, item) {
     var data = e.target.checked;
     if (data) {
-      this.checkbox = item;
+      this.childbox.push({
+        active_flag: "A",
+        childId: item.childId,
+        darChildMapId: item.darChildMapId,
+      });
+      console.log(this.childbox);
     } else {
-      this.checkbox = '';
+      this.childbox.pop();
     }
 
-    console.log(this.checkbox);
   }
+
+  changeVisitbox(e, ans) {
+    console.log(ans);
+
+    // if (ans == 'Y') {
+    //   e.target.checked
+    // }
+
+
+    // else {
+    //   e.target.unchecked
+    // }
+
+    // var data = e.target.checked;
+    // if (data) {
+    //   this.visitCheckbox = 'Y';
+    // } else {
+    //   this.visitCheckbox = 'N';
+    // }
+
+    // console.log(this.visitCheckbox);
+  }
+
 
   changess(e) {
     this.changeSS = e.target.value;
     console.log(this.changeSS);
   }
 
-  editDARModal(editDAR, item, id) {
+  editDARModal(editDAR, item, villId, darId, i, editList) {
     this.darViewChildList = item;
-    console.log(this.darViewChildList, 'darChildList');
-    console.log(id);
-    this.editForms();
+    // console.log(this.darViewChildList, 'darChildList');
+    // console.log(villId, darId);
+    this.editListCheck = editList;
+    console.log(this.editListCheck, 'Action');
 
+
+    this.editForms();
 
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      villageId: id,
+      villageId: villId,
       userId: this.sidebarService.userId
     }
 
-    console.log(req);
-
     this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
-      console.log(res);
       this.swasthyaSahayika = res.responseObject;
     });
     this.modalContent = '';
     this.modalReference = this.modalService.open(editDAR, {
       windowClass: 'editDAR',
     });
+
+    let post = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      dailyActivityRegisterMasterId: darId
+    }
+
+    this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
+      this.visitData = res.responseObject;
+      console.log(this.visitData, 'visitData');
+      // console.log(this.visitData[i].subPurposes);
+      // var tt = this.visitData[i].subPurposes.filter((x) => x.answer == 'Y');
+      // console.log(tt);
+    });
+
   }
 
   editForms() {
@@ -300,6 +355,40 @@ export class DailyActivityRegisterComponent implements OnInit {
       ss: this.changeSS,
       sahayika: ['']
     });
+  }
+
+  saveEditDAR() {
+    console.log(this.editListCheck);
+    var item = this.editListCheck;
+
+    let obj = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      darMasterId: item.dailyActivityRegisterMasterId,
+      familyId: item.familyId,
+      visitDate: item.darVisitDate,
+      visitedWithSS: item.visitedWithSS,
+      ssId: item.ssId,
+      childList: this.childbox,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      active_flag: "A",
+      visitPurposeData: this.visitData
+    }
+
+    console.log(obj);
+
+    this.dailyActivityService.saveEditDAR(obj).subscribe((res) => {
+      console.log(res);
+
+      if (res.status == true) {
+        this.showSuccess(res.message);
+      }
+
+    });
+
   }
 
   showSuccess(message) {

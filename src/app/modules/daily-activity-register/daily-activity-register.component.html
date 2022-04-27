@@ -45,8 +45,8 @@
 
                         <div class="form-group col-md">
                             <label for="hco">HCO/ HCOI /TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeBranch($event.target.value)"
-                                formControlName="hco" id="hco" [ngClass]="{
+                            <select class="form-select" (change)="changeHco($event.target.value)" formControlName="hco"
+                                id="hco" [ngClass]="{
                               'is-invalid': l.hco.invalid && l.hco.touched,
                               'is-valid':
                                 l.hco.valid && (l.hco.dirty || l.hco.touched)
@@ -228,7 +228,7 @@
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
                                             <td style="padding: 0px;">{{item.ssName}}</td>
                                             <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
-                                                    (click)="editDARModal(editDAR, item.darChildList, item.villageId)"></i>
+                                                    (click)="editDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)"></i>
                                                 <i class="fas fa-trash" title="Delete DAR"></i>
                                             </td>
                                         </tr>
@@ -295,7 +295,7 @@
                                 <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
                                 <td>-</td>
                                 <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                        (change)="changeCheckbox($event,item)"></td>
+                                        (change)="changeChildbox($event,item)"></td>
                             </tr>
 
                         </tbody>
@@ -340,10 +340,60 @@
 
                     </div>
                 </div>
+
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Specify Visit Purpose</legend>
+                    <div id="table_wrapper">
+                        <table class="table" id="table_wrapper">
+
+                            <tbody>
+                                <tr *ngFor="let item of visitData; index as i">
+                                    <th>
+                                        <h2>{{item.mainPurposeMasterName}}</h2>
+                                        <table class="table table-striped" id="table_wrapper">
+                                            <tbody style="text-align: start">
+
+                                                <tr *ngFor="let items of visitData[i].subPurposes; index as i">
+                                                    <td style="padding: 1px; margin-left: 60px;">
+                                                        <h4><i class="fas fa-caret-right"></i>
+                                                            {{items.subPurposeMasterName}}
+                                                        </h4>
+                                                    </td>
+                                                    <td *ngIf="items.answer == 'Y'"><input class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items.answer)" checked>
+                                                    </td>
+
+                                                    <td *ngIf="items.answer == 'N'"><input class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items.answer)"></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary bttn" (click)="saveEditDAR()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
             </form>
 
         </div>
     </div>
+
 
 
 </ng-template>
