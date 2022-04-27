@@ -6,17 +6,15 @@ import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
-import { BranchSetupComponent } from '../branch-setup/branch-setup.component';
-import { RegionSetupComponent } from '../region-setup/region-setup.component';
+import { GpSetupFormComponent } from '../gp-setup-form/gp-setup-form.component';
 
 @Component({
-  selector: 'app-region-branch-home',
-  templateUrl: './region-branch-home.component.html',
-  styleUrls: ['./region-branch-home.component.css']
+  selector: 'app-gp-home',
+  templateUrl: './gp-home.component.html',
+  styleUrls: ['./gp-home.component.css']
 })
-export class RegionBranchHomeComponent implements OnInit {
+export class GpHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
-  stateList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -24,19 +22,12 @@ export class RegionBranchHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-    }
-    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
-      this.stateList = res.responseObject.stateList;
-    });
   }
 
-  openCreateRegion() {
-    const dialogRef = this.dialog.open(RegionSetupComponent, {
+  openCreateBlock() {
+    const dialogRef = this.dialog.open(GpSetupFormComponent, {
       width: '500px',
-      height: '280px',
+      height: '350px',
       data: {}
     });
 
@@ -44,24 +35,22 @@ export class RegionBranchHomeComponent implements OnInit {
     });
   }
 
-  openCreateBranch() {
-    const dialogRef = this.dialog.open(BranchSetupComponent, {
-      width: '95vw',
-      maxWidth: '100vw',
+  openEditBlock() {
+    const dialogRef = this.dialog.open(GpSetupFormComponent, {
+      width: '530px',
+      height: '350px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
-  }
-
-  openEditRegion() {
-
   }
 
   createForm() {
     this.stateSelectForm = this.fb.group({
       state: ['', Validators.required],
+      district: ['', Validators.required],
+      block: ['', Validators.required],
     });
   }
   get f() {
@@ -71,4 +60,19 @@ export class RegionBranchHomeComponent implements OnInit {
   changeState(value) {
 
   }
+  changeDistrict(value) {
+
+  }
+  changeBlock(value) {
+
+  }
+
+  onDelete() {
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+
+      // })
+    }).catch(() => '');
+  }
+
 }
