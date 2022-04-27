@@ -6,6 +6,7 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { DailyActivityRegisterService } from './daily-activity-register.service';
 import { HttpService } from '../core/http/http.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-daily-activity-register',
@@ -48,7 +49,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
@@ -104,6 +105,13 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   changeHco(id) {
     this.hcoId = id;
+    if (this.locationForm.value.hco == '') {
+      this.locationForm.controls.fromDate.setValue('');
+      this.locationForm.controls.toDate.setValue('');
+      this.darList = [];
+      this.darViewFamilyList = [];
+      this.showError('No Data Found');
+    }
   }
 
   changeBranch(branch) {
@@ -222,9 +230,11 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   viewDAREntryList() {
 
-    if (!this.locationForm.value.hco) {
-      this.showError('Please Select Role');
-      return;
+    if (this.role != 'HCO' && this.role != 'HCOI' && this.role != 'TL') {
+      if (!this.locationForm.value.hco) {
+        this.showError('Please Select Role');
+        return;
+      }
     }
 
     let obj = {
@@ -259,7 +269,18 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
   modalDismiss() {
+
+    // return this.editForm.controls;
+    // this.darViewFamilyList = this.darViewFamilyList;
+    // this.editForms();
+
     this.modalReference.close();
+    // console.log('true');
+
+    // let currentUrl = this.router.url;
+    // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //   this.router.navigate([currentUrl]);
+    // });
   }
 
   changeChildbox(e, item) {
@@ -277,26 +298,16 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   }
 
-  changeVisitbox(e, ans) {
-    console.log(ans);
+  changeVisitbox(e, items) {
+    if (e.target.checked) {
+      items.answer = 'Y';
+    }
 
-    // if (ans == 'Y') {
-    //   e.target.checked
-    // }
+    else {
+      items.answer = 'N';
+    }
 
-
-    // else {
-    //   e.target.unchecked
-    // }
-
-    // var data = e.target.checked;
-    // if (data) {
-    //   this.visitCheckbox = 'Y';
-    // } else {
-    //   this.visitCheckbox = 'N';
-    // }
-
-    // console.log(this.visitCheckbox);
+    console.log(e.target.checked, items);
   }
 
 
@@ -323,6 +334,9 @@ export class DailyActivityRegisterComponent implements OnInit {
       villageId: villId,
       userId: this.sidebarService.userId
     }
+
+    console.log(req);
+
 
     this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
       this.swasthyaSahayika = res.responseObject;
@@ -352,14 +366,46 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   editForms() {
     this.editForm = this.fb.group({
-      ss: this.changeSS,
-      sahayika: ['']
+      ss: [this.editListCheck.visitedWithSS ? this.editListCheck.visitedWithSS : this.changeSS],
+      sahayika: [this.editListCheck.ssId ? this.editListCheck.ssId : '']
     });
+
+    // if(this.changeSS == "Y"){
+    //   this.editForm.controls.sahayika.setValue(this.editListCheck.ssId) ;
+    // }else{  
+    //   this.editForm.controls.sahayika.setValue('');
+    // }
+
+    if (this.editListCheck.visitedWithSS == 'Y') {
+      this.changeSS = 'Y';
+    }
+
+    if (this.editListCheck.visitedWithSS == 'N') {
+      this.changeSS = 'N';
+    }
+
   }
 
   saveEditDAR() {
     console.log(this.editListCheck);
     var item = this.editListCheck;
+
+    var chng;
+    if (this.changeSS) {
+      chng = this.changeSS
+    } else {
+      chng = item.visitedWithSS
+    }
+
+    var ssid;
+    if (this.changeSS == 'Y') {
+      ssid = this.sidebarService.swasthyaSahayikaId;
+    }
+
+    if (this.changeSS == 'N') {
+      ssid = null;
+    }
+
 
     let obj = {
       dataAccessDTO: {
@@ -369,8 +415,8 @@ export class DailyActivityRegisterComponent implements OnInit {
       darMasterId: item.dailyActivityRegisterMasterId,
       familyId: item.familyId,
       visitDate: item.darVisitDate,
-      visitedWithSS: item.visitedWithSS,
-      ssId: item.ssId,
+      visitedWithSS: chng,
+      ssId: ssid,
       childList: this.childbox,
       latitude: item.latitude,
       longitude: item.longitude,
@@ -385,6 +431,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
       if (res.status == true) {
         this.showSuccess(res.message);
+        this.modalDismiss();
       }
 
     });

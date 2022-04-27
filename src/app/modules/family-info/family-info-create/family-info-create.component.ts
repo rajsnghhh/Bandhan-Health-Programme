@@ -20,7 +20,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   createdFamilyMembersCount: any;
   totalFamilyCount: any;
   totalFamilyMembersCount: any;
-  donorName:any;
+  donorName: any;
   baselineSurvey: FormGroup;
   haveChildren: string = 'N';
   childbelow18: string;

@@ -226,7 +226,7 @@
                                                 {{item.lastName}}</td>
                                             <td style="padding: 0px;"> -</td>
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
-                                            <td style="padding: 0px;">{{item.ssName}}</td>
+                                            <td style="padding: 0px;">{{item.ssName ? item.ssName : '-'}}</td>
                                             <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
                                                     (click)="editDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)"></i>
                                                 <i class="fas fa-trash" title="Delete DAR"></i>
@@ -330,8 +330,9 @@
                     <div class="form-group col-md-4" *ngIf="changeSS == 'Y'">
                         <label for="sahayika">
                             Name of SS :</label>
-                        <select class="form-select" (change)="changeSahika($event.target.value)"
-                            formControlName="sahayika" id="swasthyaSahayika">
+
+                        <select class="form-select" formControlName="sahayika" id="swasthyaSahayika"
+                            (change)="changeSahika($event.target.value)">
                             <option value="">-- Select SS --</option>
                             <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
                                 {{ ss.swasthyaSahayikaName }}
@@ -362,12 +363,12 @@
                                                     </td>
                                                     <td *ngIf="items.answer == 'Y'"><input class="form-check-input"
                                                             type="checkbox" value="" id="flexCheckDefault"
-                                                            (change)="changeVisitbox($event, items.answer)" checked>
+                                                            (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td *ngIf="items.answer == 'N'"><input class="form-check-input"
                                                             type="checkbox" value="" id="flexCheckDefault"
-                                                            (change)="changeVisitbox($event, items.answer)"></td>
+                                                            (change)="changeVisitbox($event, items)"></td>
                                                 </tr>
 
                                             </tbody>
@@ -381,15 +382,16 @@
                     </div>
 
                 </fieldset>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary bttn" (click)="saveEditDAR()">
-                            Submit
-                        </button>
-                    </div>
-                </div>
             </form>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary bttn" (click)="saveEditDAR()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+
 
         </div>
     </div>
