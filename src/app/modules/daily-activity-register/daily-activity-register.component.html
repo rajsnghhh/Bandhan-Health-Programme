@@ -211,7 +211,8 @@
                                             <th>Name of <br> Beneficiary Visited</th>
                                             <th style="padding: 0px;">Type of <br> beneficiary</th>
                                             <th style="padding: 0px;">Alone /<br> With SS</th>
-                                            <th style="padding: 0px;">Name of SS </th>
+                                            <th style="padding: 0px;">Name of SS</th>
+                                            <th style="padding: 0px;">View</th>
                                             <th style="padding: 0px;">Action</th>
                                         </tr>
                                     </thead>
@@ -227,6 +228,11 @@
                                             <td style="padding: 0px;"> -</td>
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
                                             <td style="padding: 0px;">{{item.ssName ? item.ssName : '-'}}</td>
+                                            <td style="padding: 0px;" class="btn-link"
+                                                style="color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="viewDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)">
+                                                View
+                                            </td>
                                             <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
                                                     (click)="editDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)"></i>
                                                 <i class="fas fa-trash" title="Delete DAR"></i>
@@ -262,50 +268,52 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">Edit DAR</h2>
+                <!-- (click)="modal.dismiss('Cross click')" -->
                 <span class="close" title="close" (click)="modalDismiss()"
                     style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
             </div>
 
         </div>
         <div class="modal-body">
-            <fieldset class="scheduler-border">
-                <legend class="scheduler-border">Child Info</legend>
-                <div id="table_wrapper">
-                    <table class="table table-striped" id="table_wrapper">
-
-                        <thead>
-                            <tr>
-                                <th>SL No</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>sex</th>
-                                <th>DOB</th>
-                                <th>Current Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody style="text-align: center;">
-
-                            <tr *ngFor="let item of darViewChildList; index as i">
-                                <td>{{i+1}}</td>
-                                <td>{{item.childName}}</td>
-                                <td>{{item.age}}</td>
-                                <td>{{item.sex}}</td>
-                                <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
-                                <td>-</td>
-                                <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                        (change)="changeChildbox($event,item)"></td>
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-                </div>
-
-            </fieldset>
 
             <form class="form-signin" [formGroup]="editForm">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Child Info</legend>
+                    <div id="table_wrapper">
+                        <table class="table table-striped" id="table_wrapper">
+
+                            <thead>
+                                <tr>
+                                    <th>SL No</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>sex</th>
+                                    <th>DOB</th>
+                                    <th>Current Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align: center;">
+
+                                <tr *ngFor="let item of darViewChildList; index as i">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.childName}}</td>
+                                    <td>{{item.age}}</td>
+                                    <td>{{item.sex}}</td>
+                                    <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
+                                    <td>-</td>
+                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                            (change)="changeChildbox($event,item)" formControlName="child"></td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </fieldset>
+
                 <div class="row">
                     <div class="form-group col-md-2">
                         <label for="ss">
@@ -313,14 +321,14 @@
 
                         <div class="form-check-inline">
                             <input class="form-check-input" name="ss" type="radio" id="yes" value="Y"
-                                formControlName="ss" (change)="changess($event)" />
+                                formControlName="ss" (change)="changess($event.target.value)" />
                             <label class="form-check-label" for="">
                                 &nbsp;&nbsp;Yes</label>
 
                             <div class="form-check-inline">
                                 &nbsp;&nbsp;&nbsp;
                                 <input class="form-check-input" type="radio" id="no" value="N" formControlName="ss"
-                                    (change)="changess($event)" />
+                                    (change)="changess($event.target.value)" />
                                 <label class="form-check-label" for="">
                                     &nbsp;&nbsp;No</label>
                             </div>
@@ -362,12 +370,12 @@
                                                         </h4>
                                                     </td>
                                                     <td *ngIf="items.answer == 'Y'"><input class="form-check-input"
-                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            type="checkbox" value="" id="flexCheckDefault" 
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td *ngIf="items.answer == 'N'"><input class="form-check-input"
-                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            type="checkbox" value="" id="flexCheckDefault" 
                                                             (change)="changeVisitbox($event, items)"></td>
                                                 </tr>
 

@@ -269,14 +269,8 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
   modalDismiss() {
-
-    // return this.editForm.controls;
-    // this.darViewFamilyList = this.darViewFamilyList;
-    // this.editForms();
-
     this.modalReference.close();
-    // console.log('true');
-
+    this.editForm.reset();
     // let currentUrl = this.router.url;
     // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
     //   this.router.navigate([currentUrl]);
@@ -299,6 +293,8 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
   changeVisitbox(e, items) {
+    console.log(items);
+
     if (e.target.checked) {
       items.answer = 'Y';
     }
@@ -312,17 +308,63 @@ export class DailyActivityRegisterComponent implements OnInit {
 
 
   changess(e) {
-    this.changeSS = e.target.value;
+    this.changeSS = e;
     console.log(this.changeSS);
   }
 
   editDARModal(editDAR, item, villId, darId, i, editList) {
+    debugger;
     this.darViewChildList = item;
     // console.log(this.darViewChildList, 'darChildList');
     // console.log(villId, darId);
     this.editListCheck = editList;
     console.log(this.editListCheck, 'Action');
 
+
+    this.editForms();
+
+    
+
+    let req = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      villageId: villId,
+      userId: this.sidebarService.userId
+    }
+
+    console.log(req);
+
+
+    this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
+      this.swasthyaSahayika = res.responseObject;
+    });
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(editDAR, {
+      windowClass: 'editDAR',
+    });
+
+    let post = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      dailyActivityRegisterMasterId: darId
+    }
+
+    this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
+      this.visitData = res.responseObject;
+      console.log(this.visitData, 'visitData');
+    });
+
+  }
+
+
+  viewDARModal(editDAR, item, villId, darId, i, editList) {
+    this.darViewChildList = item;
+    this.editListCheck = editList;
+    console.log(this.editListCheck, 'Action');
 
     this.editForms();
 
@@ -357,31 +399,32 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
       this.visitData = res.responseObject;
       console.log(this.visitData, 'visitData');
-      // console.log(this.visitData[i].subPurposes);
-      // var tt = this.visitData[i].subPurposes.filter((x) => x.answer == 'Y');
-      // console.log(tt);
     });
+
+    this.editForm.disable();
+
 
   }
 
+
   editForms() {
+    console.log(this.editListCheck.ssId);
+
     this.editForm = this.fb.group({
+      child: [''],
       ss: [this.editListCheck.visitedWithSS ? this.editListCheck.visitedWithSS : this.changeSS],
       sahayika: [this.editListCheck.ssId ? this.editListCheck.ssId : '']
     });
 
-    // if(this.changeSS == "Y"){
-    //   this.editForm.controls.sahayika.setValue(this.editListCheck.ssId) ;
-    // }else{  
-    //   this.editForm.controls.sahayika.setValue('');
-    // }
 
     if (this.editListCheck.visitedWithSS == 'Y') {
       this.changeSS = 'Y';
+      // this.editForm.get('sahayika').patchValue(this.editListCheck.ssId);
     }
 
-    if (this.editListCheck.visitedWithSS == 'N') {
+    else if (this.editListCheck.visitedWithSS == 'N') {
       this.changeSS = 'N';
+      // this.editForm.get('sahayika').patchValue('');
     }
 
   }
@@ -416,7 +459,7 @@ export class DailyActivityRegisterComponent implements OnInit {
       familyId: item.familyId,
       visitDate: item.darVisitDate,
       visitedWithSS: chng,
-      ssId: ssid,
+      ssId: ssid ? ssid : ssid,
       childList: this.childbox,
       latitude: item.latitude,
       longitude: item.longitude,
