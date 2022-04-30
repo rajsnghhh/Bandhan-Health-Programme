@@ -7,6 +7,7 @@ import { DailyActivityRegisterService } from './daily-activity-register.service'
 import { HttpService } from '../core/http/http.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-daily-activity-register',
@@ -42,14 +43,17 @@ export class DailyActivityRegisterComponent implements OnInit {
   visitCheckbox: any;
   changeSS: any;
   swasthyaSahayika: Array<any> = [];
-  visitData: any;
+  visitData: Array<any> = [];
   editListCheck: any;
   childbox: Array<any> = [];
-
+  isDisabled: boolean = false;
+  mode: any;
+  updateMode: boolean;
+  deleteMode: boolean;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
-    private modalService: NgbModal, private router: Router) { }
+    private modalService: NgbModal, private router: Router, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
@@ -72,6 +76,17 @@ export class DailyActivityRegisterComponent implements OnInit {
     }, 1000);
 
     this.regionList = this.sidebarService.listOfRegion;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
   }
 
   changeRegion(region) {
@@ -89,7 +104,7 @@ export class DailyActivityRegisterComponent implements OnInit {
           this.branchList = null;
         }
       );
-    }, 500);
+    }, 1000);
     this.locationForm.controls.branch.setValue('');
     if (this.locationForm.value.region == '') {
       this.locationForm.controls.hco.setValue('');
@@ -105,6 +120,11 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   changeHco(id) {
     this.hcoId = id;
+
+    this.locationForm.controls.fromDate.setValue('');
+    this.locationForm.controls.toDate.setValue('');
+    this.darList = [];
+    this.darViewFamilyList = [];
     if (this.locationForm.value.hco == '') {
       this.locationForm.controls.fromDate.setValue('');
       this.locationForm.controls.toDate.setValue('');
@@ -164,46 +184,6 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.sidebarService.swasthyaSahayikaId = ss;
     this.sidebarService.swasthyaSahayikaName = this.swasthyaSahayika.find(i => i.swasthyaSahayikaId == ss)?.swasthyaSahayikaName
   }
-
-  // changeBlock(blockname) {
-  //   this.gpDtoList = this.villagesOfBranch.find(block => block.blockName == blockname)?.gpDtoList;
-  //   this.selectedBlock = this.locationForm.get('block').value;
-  //   this.locationForm.controls.gp.setValue('');
-  //   this.locationForm.controls.gram.setValue('');
-  //   if (this.locationForm.value.block == '') {
-  //     this.showError('No Data Found');
-  //     // this.pemDetails = [];
-  //     this.villageDtoList = [];
-  //     this.gpDtoList = [];
-  //   }
-  // }
-  // changeGp(gpName) {
-  //   this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
-  //   this.selectedGp = this.locationForm.get('gp').value;
-  //   this.locationForm.controls.gram.setValue('');
-  //   console.log(this.villageDtoList);
-
-  //   if (this.locationForm.value.gp == '') {
-  //     this.showError('No Data Found');
-  //     // this.pemDetails = [];
-  //     this.villageDtoList = [];
-  //   }
-  // }
-
-  // changeVillage(villagename) {
-  //   this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId;
-  //   this.villageMasterId = this.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId
-  //   console.log(this.villageMasterId);
-
-  //   // this.viewPEMList();
-
-  //   if (this.locationForm.value.gram == '') {
-  //     this.showError('No Data Found');
-  //     // this.pemDetails = [];
-  //   }
-
-  // }
-
 
   locForm() {
     this.locationForm = this.fb.group({
@@ -270,11 +250,10 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   modalDismiss() {
     this.modalReference.close();
-    this.editForm.reset();
-    // let currentUrl = this.router.url;
-    // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    //   this.router.navigate([currentUrl]);
-    // });
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
   changeChildbox(e, item) {
@@ -312,25 +291,20 @@ export class DailyActivityRegisterComponent implements OnInit {
     console.log(this.changeSS);
   }
 
-  editDARModal(editDAR, item, villId, darId, i, editList) {
-    debugger;
-    this.darViewChildList = item;
-    // console.log(this.darViewChildList, 'darChildList');
-    // console.log(villId, darId);
-    this.editListCheck = editList;
-    console.log(this.editListCheck, 'Action');
+  editDARModal(editDAR, item) {
+    console.log(item);
+    this.mode = 'E';
 
+    this.editListCheck = item;
+    this.darViewChildList = this.editListCheck.darChildList;
 
     this.editForms();
-
-    
-
     let req = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      villageId: villId,
+      villageId: this.editListCheck.villageId,
       userId: this.sidebarService.userId
     }
 
@@ -350,7 +324,7 @@ export class DailyActivityRegisterComponent implements OnInit {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      dailyActivityRegisterMasterId: darId
+      dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
     }
 
     this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
@@ -361,11 +335,11 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
 
-  viewDARModal(editDAR, item, villId, darId, i, editList) {
-    this.darViewChildList = item;
-    this.editListCheck = editList;
-    console.log(this.editListCheck, 'Action');
+  viewDARModal(editDAR, item) {
+    this.mode = 'V';
 
+    this.editListCheck = item;
+    this.darViewChildList = this.editListCheck.darChildList;
     this.editForms();
 
     let req = {
@@ -373,7 +347,7 @@ export class DailyActivityRegisterComponent implements OnInit {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      villageId: villId,
+      villageId: this.editListCheck.villageId,
       userId: this.sidebarService.userId
     }
 
@@ -393,7 +367,7 @@ export class DailyActivityRegisterComponent implements OnInit {
         userId: this.sidebarService.userId,
         userName: this.sidebarService.loginId,
       },
-      dailyActivityRegisterMasterId: darId
+      dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
     }
 
     this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
@@ -402,7 +376,6 @@ export class DailyActivityRegisterComponent implements OnInit {
     });
 
     this.editForm.disable();
-
 
   }
 
@@ -416,16 +389,58 @@ export class DailyActivityRegisterComponent implements OnInit {
       sahayika: [this.editListCheck.ssId ? this.editListCheck.ssId : '']
     });
 
-
     if (this.editListCheck.visitedWithSS == 'Y') {
       this.changeSS = 'Y';
-      // this.editForm.get('sahayika').patchValue(this.editListCheck.ssId);
     }
 
-    else if (this.editListCheck.visitedWithSS == 'N') {
+    if (this.editListCheck.visitedWithSS == 'N') {
       this.changeSS = 'N';
-      // this.editForm.get('sahayika').patchValue('');
     }
+
+  }
+
+  deleteDAR(item, i) {
+    console.log('deleteDAR');
+
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete ?')
+      .then(() => this.delete(item, i)
+      )
+
+      .catch(() => '');
+  }
+
+  delete(item, i) {
+    console.log(item);
+
+    let obj = {
+      dataAccessDTO: {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      },
+      darMasterId: item.dailyActivityRegisterMasterId,
+      familyId: item.familyId,
+      visitDate: item.darVisitDate,
+      visitedWithSS: item.visitedWithSS,
+      ssId: item.ssId,
+      childList: item.darChildList,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      active_flag: "D",
+      visitPurposeData: this.visitData
+    }
+
+    console.log(obj);
+
+    this.dailyActivityService.saveEditDAR(obj).subscribe((res) => {
+      console.log(res);
+
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.darViewFamilyList.splice(i, 1);
+      }
+
+    });
+
 
   }
 

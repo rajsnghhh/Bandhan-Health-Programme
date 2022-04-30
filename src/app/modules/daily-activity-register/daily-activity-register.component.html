@@ -62,63 +62,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="form-group col-md">
-                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeBlock($event.target.value)"
-                                formControlName="block" id="block" [ngClass]="{
-                              'is-invalid': l.block.invalid && l.block.touched,
-                              'is-valid':
-                                l.block.valid && (l.block.dirty || l.block.touched)
-                            }">
-                                <option value="">-- Select Block --</option>
-                                <option *ngFor="let block of villagesOfBranch">
-                                    {{ block.blockName }}
-                                </option>
-                            </select>
-                            <div *ngIf="l.block.errors" class="invalid-feedback">
-                                <div *ngIf="l.block.errors.required">Block selection is required</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md">
-                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
-                                id="gp" [ngClass]="{
-                              'is-invalid': l.gp.invalid && l.gp.touched,
-                              'is-valid': l.gp.valid && (l.gp.dirty || l.gp.touched)
-                            }">
-                                <option value="">-- Select GP/ Municipality --</option>
-                                <option *ngFor="let gp of gpDtoList">
-                                    {{ gp.name }}
-                                </option>
-                            </select>
-                            <div *ngIf="l.gp.errors" class="invalid-feedback">
-                                <div *ngIf="l.gp.errors.required">
-                                    GP selection is required
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md">
-                            <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeVillage($event.target.value)"
-                                formControlName="gram" id="gram" [ngClass]="{
-                              'is-invalid': l.gram.invalid && l.gram.touched,
-                              'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched)
-                            }">
-                                <option value="">-- Select Village --</option>
-                                <option *ngFor="let vill of villageDtoList">
-                                    {{ vill.villageName }}
-                                </option>
-                            </select>
-                            <div *ngIf="l.gram.errors" class="invalid-feedback">
-                                <div *ngIf="l.gram.errors.required">
-                                    Village selection is required
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
                     <div class="row">
                         <div class="form-group col-md">
@@ -176,13 +119,7 @@
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="darViewFamily(item.darViewFamilyDTOList)">More Info...</td>
 
-
                                         </tr>
-
-                                        <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
-                                                    <td colspan="7">No matching household info found</td>
-        
-                                                </tr> -->
                                     </tbody>
 
                                 </table>
@@ -192,7 +129,6 @@
 
                             </div>
                         </div>
-
 
                     </div>
 
@@ -228,21 +164,18 @@
                                             <td style="padding: 0px;"> -</td>
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
                                             <td style="padding: 0px;">{{item.ssName ? item.ssName : '-'}}</td>
-                                            <td style="padding: 0px;" class="btn-link"
+                                            <td style="padding: 0px;" class="btn-link" 
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                                (click)="viewDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)">
+                                                (click)="viewDARModal(editDAR, item)">
                                                 View
                                             </td>
-                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
-                                                    (click)="editDARModal(editDAR, item.darChildList, item.villageId, item.dailyActivityRegisterMasterId, i, item)"></i>
-                                                <i class="fas fa-trash" title="Delete DAR"></i>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR" *ngIf="updateMode"
+                                                    (click)="editDARModal(editDAR, item)"></i>
+                                                <i class="fas fa-trash" title="Delete DAR" *ngIf="deleteMode"
+                                                    (click)="deleteDAR(item,i)"></i>
                                             </td>
                                         </tr>
 
-                                        <!-- <tr  *ngIf="(baselineDetails | filter : registerSearch)?.length == 0">
-                                                    <td colspan="7">No matching household info found</td>
-        
-                                                </tr> -->
                                     </tbody>
 
                                 </table>
@@ -267,14 +200,55 @@
         <div class="modal-header" style="height: 80px;">
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
-                <h2 class="page-title">Edit DAR</h2>
-                <!-- (click)="modal.dismiss('Cross click')" -->
+                <h2 class="page-title" *ngIf="mode =='E'">Edit DAR</h2>
+                <h2 class="page-title" *ngIf="mode =='V'">View DAR</h2>
                 <span class="close" title="close" (click)="modalDismiss()"
                     style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
             </div>
 
         </div>
         <div class="modal-body">
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                        font-size: 1.05rem;">Family No:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">{{editListCheck.familyNumber}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                        font-size: 1.05rem;">Name:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">{{editListCheck.firstName}} {{editListCheck.middleName}}
+                                {{editListCheck.lastName}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="" style="font-weight: 500;
+                        font-size: 1.05rem;">Husband/ Guardian's Name:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">{{editListCheck.husbandOrGuardianName}}</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <form class="form-signin" [formGroup]="editForm">
                 <fieldset class="scheduler-border">
@@ -350,7 +324,6 @@
                     </div>
                 </div>
 
-
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Specify Visit Purpose</legend>
                     <div id="table_wrapper">
@@ -369,22 +342,147 @@
                                                             {{items.subPurposeMasterName}}
                                                         </h4>
                                                     </td>
-                                                    <td *ngIf="items.answer == 'Y'"><input class="form-check-input"
-                                                            type="checkbox" value="" id="flexCheckDefault" 
+
+                                                    <!-- Enable/Disable Using Lactating Mother and Main PurposeMasterName Status -->
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
-                                                    <td *ngIf="items.answer == 'N'"><input class="form-check-input"
-                                                            type="checkbox" value="" id="flexCheckDefault" 
-                                                            (change)="changeVisitbox($event, items)"></td>
-                                                </tr>
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
 
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+
+
+                                                    <!-- Enable/Disable Using PregnantWoman and Main PurposeMasterName Status -->
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+
+
+                                                    <!-- Enable/Disable Using PEM and Main PurposeMasterName Status -->
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+
+
+                                                    <!-- Enable/Disable Using For All and For General and Main PurposeMasterName Status -->
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For general')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For all')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)" checked>
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For general')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For all')">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td *ngIf="items.answer == 'Y' && mode == 'V'">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            [attr.disabled]="isDisabled" id="flexCheckDefault" checked
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                    <td *ngIf="items.answer == 'N' && mode == 'V'">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            [attr.disabled]="isDisabled" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
+                                                    </td>
+
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </th>
                                 </tr>
                             </tbody>
-
 
                         </table>
                     </div>
@@ -394,16 +492,13 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-primary bttn" (click)="saveEditDAR()">
+                    <button type="button" class="btn btn-primary bttn" (click)="saveEditDAR()" [disabled]="mode == 'V'">
                         Submit
                     </button>
                 </div>
             </div>
 
-
         </div>
     </div>
-
-
 
 </ng-template>
