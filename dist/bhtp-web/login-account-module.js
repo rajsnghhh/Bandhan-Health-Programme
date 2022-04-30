@@ -518,22 +518,24 @@ class LoginComponent {
                 .subscribe((data) => {
                 console.log("menudata", data);
                 console.log(data.message, 'loginData');
-                if (data.message.indexOf("first") !== -1) {
-                    this.accountService.logout();
-                    this.accountService.userFirstTime = data;
-                    this.router.navigate(['/reset']);
+                if (data.status) {
+                    if (data.message.indexOf("first") !== -1) {
+                        this.accountService.logout();
+                        this.accountService.userFirstTime = data;
+                        this.router.navigate(['/reset']);
+                    }
+                    else {
+                        this.router.navigate(['/core']);
+                        this.showSuccess('Login Successful');
+                    }
+                    this.loader = true;
                 }
                 else {
-                    this.router.navigate(['/core']);
-                    this.showSuccess('Login Successful');
+                    this.loader = true;
+                    this.accountService.logout();
+                    this.loading = false;
+                    this.showError('Please Enter Valid credentials');
                 }
-                this.loader = true;
-            }, error => {
-                console.log(error);
-                this.loader = true;
-                this.accountService.logout();
-                this.loading = false;
-                this.showError('Please Enter Valid credentials');
             });
         }, 2000);
     }
