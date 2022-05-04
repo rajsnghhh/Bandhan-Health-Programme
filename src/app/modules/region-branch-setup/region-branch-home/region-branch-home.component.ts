@@ -17,6 +17,7 @@ import { RegionSetupComponent } from '../region-setup/region-setup.component';
 export class RegionBranchHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
   stateList: Array<any> = [];
+  regionAndBranchList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -69,6 +70,17 @@ export class RegionBranchHomeComponent implements OnInit {
   }
 
   changeState(value) {
+    // this.stateMasterId = value;
+    this.getRegionAndBranchList(value)
+  }
 
+  getRegionAndBranchList(stateMasterId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateMasterId: stateMasterId
+    }
+    this.http.post(`${this.httpService.baseURL}region/getStateWiseRegionAndBranchList`, Dto).subscribe((res: any) => {
+      this.regionAndBranchList = res.responseObject.regionbranchlist;
+    });
   }
 }

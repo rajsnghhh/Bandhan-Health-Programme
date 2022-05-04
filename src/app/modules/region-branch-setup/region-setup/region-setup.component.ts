@@ -47,15 +47,17 @@ export class RegionSetupComponent implements OnInit {
       regionName: this.camelize(this.regionForm.value.regionName)
     }
     console.log(Dto);
-    this.http.post(`${this.httpService.baseURL}region/saveOrUpdate`, Dto).subscribe((res: any) => {
-      console.log(res);
-      if (res.status) {
-        this.dialogRef.close();
-        this.showSuccess('Region Created');
-      } else {
-        this.showError(res.message);
-      }
-    });
+    if (this.regionForm.valid) {
+      this.http.post(`${this.httpService.baseURL}region/saveOrUpdate`, Dto).subscribe((res: any) => {
+        console.log(res);
+        if (res.status) {
+          this.dialogRef.close();
+          this.showSuccess('Region Created');
+        } else {
+          this.showError(res.message);
+        }
+      });
+    }
   }
 
   showSuccess(message) {
