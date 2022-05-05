@@ -141,7 +141,6 @@
             <select
               class="form-select"
               formControlName="block"
-              id="block"
               [ngClass]="{
                 'is-invalid': f.block.invalid && f.block.touched,
                 'is-valid':
@@ -329,21 +328,18 @@
     <div class="row">
         <div class="form-group col-md">
             <label for="primaryContactName"
-              >Name of Primary Contact Person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >Name of Primary Contact Person :</label
             >
             <input
               type="text"
               class="form-control"
               placeholder="Enter primaryContactName Name"
               formControlName="primaryContactName"
-              [ngClass]="{
-                'is-invalid': f.primaryContactName.invalid && f.primaryContactName.touched,
-                'is-valid': f.primaryContactName.valid && (f.primaryContactName.dirty || f.primaryContactName.touched)
-              }"
+              
             />
-            <div *ngIf="f.primaryContactName.errors" class="invalid-feedback">
+            <!-- <div *ngIf="f.primaryContactName.errors" class="invalid-feedback">
               <div *ngIf="f.primaryContactName.errors.required">primaryContactName is required</div>
-            </div>
+            </div> -->
         </div>
 
         <div class="form-group col-md">
@@ -359,7 +355,10 @@
               placeholder="Enter Mobile No"
               formControlName="primaryMobile"
               [ngClass]="{
-                'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched
+                'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched,
+                'is-valid':
+                  f.primaryMobile.valid &&
+                  (f.primaryMobile.dirty || f.primaryMobile.touched)
               }"
               (keypress)="validationService.onlyInteger($event)"
             />
@@ -405,21 +404,16 @@
     <div class="row">
         <div class="form-group col-md">
             <label for="secondaryContactName"
-              >Name of the secondary contact person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >Name of the secondary contact person :</label
             >
             <input
               type="text"
               class="form-control"
               placeholder="Enter secondaryContactName Name"
               formControlName="secondaryContactName"
-              [ngClass]="{
-                'is-invalid': f.secondaryContactName.invalid && f.secondaryContactName.touched,
-                'is-valid': f.secondaryContactName.valid && (f.secondaryContactName.dirty || f.secondaryContactName.touched)
-              }"
+              
             />
-            <div *ngIf="f.secondaryContactName.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryContactName.errors.required">secondaryContactName is required</div>
-            </div>
+            
         </div>
 
         <div class="form-group col-md">
@@ -438,9 +432,6 @@
               (keypress)="validationService.onlyInteger($event)"
             />
             <div *ngIf="f.secondaryMobile.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryMobile.errors.required">
-                Primary Mobile No is required
-              </div>
               <div *ngIf="f.secondaryMobile.errors.minlength">
                 Mobile No. should be of 10 digit
               </div>
@@ -459,17 +450,7 @@
               class="form-control"
               placeholder="Enter secondary Email"
               formControlName="secondaryEmail"
-              [ngClass]="{
-                'is-invalid': f.secondaryEmail.invalid && f.secondaryEmail.touched,
-                'is-valid':
-                  f.secondaryEmail.valid &&
-                  (f.secondaryEmail.dirty || f.secondaryEmail.touched)
-              }"
             />
-            <div *ngIf="f.secondaryEmail.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryEmail.errors.required">Email is required</div>
-              <div *ngIf="f.secondaryEmail.errors.email">Email is not valid</div>
-            </div>
           </div>
     </div>
 

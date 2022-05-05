@@ -20,6 +20,13 @@ export class RegionSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    if (this.data.editMode == false) {
+      this.regionForm.reset();
+    } else {
+      this.regionForm.patchValue({
+        regionName: this.data.regionName,
+      })
+    }
   }
 
   createForm() {
@@ -43,7 +50,7 @@ export class RegionSetupComponent implements OnInit {
   onSave() {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      regionMasterId: "0",
+      regionMasterId: this.data.editMode == false ? "0" : this.data.regionId,
       regionName: this.camelize(this.regionForm.value.regionName)
     }
     console.log(Dto);

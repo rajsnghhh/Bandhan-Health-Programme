@@ -18,6 +18,7 @@ export class RegionBranchHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
   stateList: Array<any> = [];
   regionAndBranchList: Array<any> = [];
+  stateMasterId: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -38,7 +39,7 @@ export class RegionBranchHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(RegionSetupComponent, {
       width: '500px',
       height: '280px',
-      data: {}
+      data: { editMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -49,15 +50,36 @@ export class RegionBranchHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(BranchSetupComponent, {
       width: '95vw',
       maxWidth: '100vw',
-      data: {}
+      data: { editMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
-  openEditRegion() {
+  openEditRegion(regionMasterId, regionName) {
+    const dialogRef = this.dialog.open(RegionSetupComponent, {
+      width: '500px',
+      height: '280px',
+      data: { editMode: true, regionId: regionMasterId, regionName: regionName }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.getRegionAndBranchList(this.stateMasterId);
+    });
+  }
+
+  openEditBranch(regionMasterId, branch) {
+    const dialogRef = this.dialog.open(BranchSetupComponent, {
+      width: '95vw',
+      maxWidth: '100vw',
+      data: { editMode: true, regionMasterId: regionMasterId, branchDetails: branch }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getRegionAndBranchList(this.stateMasterId);
+    });
+    console.log(regionMasterId, branch)
   }
 
   createForm() {
@@ -70,8 +92,8 @@ export class RegionBranchHomeComponent implements OnInit {
   }
 
   changeState(value) {
-    // this.stateMasterId = value;
-    this.getRegionAndBranchList(value)
+    this.stateMasterId = value;
+    this.getRegionAndBranchList(this.stateMasterId)
   }
 
   getRegionAndBranchList(stateMasterId) {

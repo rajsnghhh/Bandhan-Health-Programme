@@ -77,12 +77,12 @@
                                 </td>
                                 <td>
                                   <ul *ngFor="let branch of item.branchList">
-                                    <li>{{branch.districtMasterId}}</li>
+                                    <li>{{branch.districtName}}</li>
                                   </ul>
                                 </td>
                                 <td>
                                   <ul *ngFor="let branch of item.branchList">
-                                    <li>{{branch.projectMasterId}}</li>
+                                    <li>{{branch.projectName}}</li>
                                   </ul>
                                 </td>
                                 <td>
@@ -95,11 +95,11 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openEditRegion()">Edit {{item.regionName}}</button>
+                                        <button mat-menu-item (click)="openEditRegion(item.regionMasterId,item.regionName)">Edit {{item.regionName}}</button>
                                         <button mat-menu-item [matMenuTriggerFor]="vertebrates">Edit Branch</button>
                                     </mat-menu>
                                     <mat-menu #vertebrates="matMenu">
-                                        <button mat-menu-item *ngFor="let branch of item.branchList">Edit {{branch.branchName}}</button>
+                                        <button mat-menu-item *ngFor="let branch of item.branchList" (click)="openEditBranch(item.regionMasterId,branch)">Edit {{branch.branchName}}</button>
                                       </mat-menu>
                                 </td>
                             </tr>

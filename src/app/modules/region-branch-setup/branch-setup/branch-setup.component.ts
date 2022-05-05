@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { rejects } from 'assert';
+import { resolve } from 'dns';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -20,6 +22,7 @@ export class BranchSetupComponent implements OnInit {
   stateList: Array<any> = [];
   stateWiseDistrictList: Array<any> = [];
   blockList: Array<any> = [];
+  blockMasterId: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BranchSetupComponent>, public validationService: ValidationService,) {
@@ -29,7 +32,47 @@ export class BranchSetupComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.allDropdownValue();
+    if (this.data.editMode == false) {
+      this.branchForm.reset();
+    } else {
+      this.changeSubVertical(this.data.branchDetails.subverticalMasterId);
 
+      // this.chnageANything(this.data.branchDetails.stateMasterId).then((res) => {
+      //   this.changeDistrict(this.data.branchDetails.districtMasterId);
+      // });
+
+
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        stateId: this.data.branchDetails.stateMasterId
+      }
+      this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+        this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+        this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == this.data.branchDetails.districtMasterId)?.blockList;
+      });
+
+      this.branchForm.patchValue({
+        region: this.data.regionMasterId,
+        subVertical: this.data.branchDetails.subverticalMasterId,
+        subVerticleProject: this.data.branchDetails.projectMasterId,
+        state: this.data.branchDetails.stateMasterId,
+        district: this.data.branchDetails.districtMasterId,
+        block: this.data.branchDetails.blockMasterId,
+        branchName: this.data.branchDetails.branchName,
+        branchType: this.data.branchDetails.branchTypeMasterId,
+        startDate: this.data.branchDetails.branchOpenDate,
+        address: this.data.branchDetails.branchAddressLine,
+        pincode: this.data.branchDetails.branchPincode,
+        primaryMobile: this.data.branchDetails.branchPhonePrimary,
+        primaryEmail: this.data.branchDetails.branchEmailPrimary,
+        postOffice: this.data.branchDetails.branchPostOffice,
+        policeStation: this.data.branchDetails.branchPoliceStation,
+        branchLandmark: this.data.branchDetails.branchlandMark,
+        secondaryMobile: this.data.branchDetails.branchPhoneSecondary,
+        secondaryEmail: this.data.branchDetails.branchEmailSecondary,
+      });
+      this.branchForm.markAllAsTouched();
+    }
   }
 
   allDropdownValue() {
@@ -62,6 +105,20 @@ export class BranchSetupComponent implements OnInit {
     });
   }
 
+  // chnageANything(value): Promise<any> {
+  //   let stateId = value;
+
+  //   let Dto = {
+  //     dataAccessDTO: this.httpService.dataAccessDTO,
+  //     stateId: stateId
+  //   }
+  //   return new Promise((resolve, reject) => {
+  //     this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+  //       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+  //       resolve(res.responseObject);
+  //     });
+  //   })
+  // }
   changeState(value) {
     let stateId = value;
 
@@ -91,7 +148,7 @@ export class BranchSetupComponent implements OnInit {
       startDate: ['', Validators.required],
       address: ['', Validators.required],
       pincode: ['', Validators.required],
-      primaryContactName: ['', Validators.required],
+      primaryContactName: [''],
       primaryMobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       primaryEmail: ['', [Validators.required, Validators.email]],
       postOffice: [''],
@@ -110,7 +167,7 @@ export class BranchSetupComponent implements OnInit {
     console.log(this.branchForm)
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: "0",
+      branchId: this.data.editMode == false ? "0" : this.data.branchDetails.branchId,
       regionMasterId: this.branchForm.value.region,
       projectMasterId: this.branchForm.value.subVerticleProject,
       blockMasterId: this.branchForm.value.block,
