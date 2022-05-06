@@ -105,4 +105,12 @@ export class RegionBranchHomeComponent implements OnInit {
       this.regionAndBranchList = res.responseObject.regionbranchlist;
     });
   }
+
+  deleteRegion(regionMasterId, regionName) {
+
+  }
+
+  deleteBranch(regionMasterId, branch) {
+
+  }
 }
