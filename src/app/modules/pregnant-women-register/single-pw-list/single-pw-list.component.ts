@@ -62,7 +62,7 @@ export class SinglePwListComponent implements OnInit {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-      this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList[this.data.index].pregnantWomanRegisterDetailList;
+      this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList.find(x => x.familyDetailId == this.data.id).pregnantWomanRegisterDetailList;
       console.log(this.pregnantWomanRegisterDetailList, 'listpage');
     })
   }
@@ -119,6 +119,7 @@ export class SinglePwListComponent implements OnInit {
         this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
           this.dialogRef.close();
           this.showSuccess('Delete');
+          this.getPregnantWomenList(this.data.villageMasterId);
         })
       }).catch(() => '');
     } else {

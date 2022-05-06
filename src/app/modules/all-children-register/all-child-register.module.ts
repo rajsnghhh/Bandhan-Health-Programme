@@ -11,13 +11,14 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AddChildMuacComponent } from './add-child-muac/add-child-muac.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoaderModule } from '../shared/loader/loader.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [AllChildRegisterComponent, ViewMuaclistComponent, AddChildMuacComponent],
   imports: [
     CommonModule, AllChildRegisterRoutingModule, ReactiveFormsModule, FormsModule,
     MatTabsModule, MatNativeDateModule, MatDialogModule, Ng2SearchPipeModule,
-    LoaderModule
+    LoaderModule, NgxPaginationModule
   ]
 })
 export class AllChildRegisterModule { }

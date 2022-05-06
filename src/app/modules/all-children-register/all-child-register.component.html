@@ -150,7 +150,7 @@
                                   <thead>
                                       <tr>
                                           <th>SL No</th>
-                                          <th>Family ID</th>
+                                          <th>Family No.</th>
                                           <th>Mother Name</th>
                                           <th>Child Name</th>
                                           <th>Age</th>
@@ -162,9 +162,9 @@
 
                                   <tbody>
 
-                                      <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
-                                          <td>{{i+1}}</td>
-                                          <td>{{item.familyDetailId}}</td>
+                                      <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                                          <td>{{item.familyNumber}}</td>
                                           <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                           <td>{{item.childName}}</td>
                                           <td>{{item.childAge}}</td>
@@ -173,12 +173,15 @@
                                           : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                           : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
                                           <td style="padding: 0px 0px 0px 32px;">
-                                            <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(i)" *ngIf="createMode"></i>
-                                            <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
+                                            <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(item)" *ngIf="createMode"></i>
+                                            <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(item)"> </i> 
                                         </td>
                                       </tr>
                                   </tbody>
                               </table>
+                              <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
                           </div>
                       </div>
                   </div>
@@ -212,8 +215,8 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of childrenWRTPsdOrBoD | filter: acrSearch;index as i">
-                                            <td>{{i+1}}</td>
+                                        <tr *ngFor="let item of childrenWRTPsdOrBoD | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
                                             <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.childName}}</td>
@@ -223,12 +226,15 @@
                                             : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i class="fa fa-circle fa-lg"></i></td>
                                             <td style="padding: 0px 0px 0px 32px;">
-                                                <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(i)" *ngIf="createMode"></i>
-                                                <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(i)"> </i> 
+                                                <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(item)" *ngIf="createMode"></i>
+                                                <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(item)"> </i> 
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
                             </div>
                         </div>
                     </div>
@@ -250,7 +256,7 @@
                                     <thead>
                                         <tr>
                                             <th>SL<br>No</th>
-                                            <th>Family ID</th>
+                                            <th>Family No.</th>
                                             <th>Mother Name</th>
                                             <th>Child Name</th>
                                             <th>Age</th>
@@ -261,9 +267,9 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of ineligibleChildren | filter: acrSearch;index as i">
-                                            <td>{{i+1}}</td>
-                                            <td>{{item.familyDetailId}}</td>
+                                        <tr *ngFor="let item of ineligibleChildren | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                                            <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>
@@ -274,6 +280,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
                             </div>
                         </div>
                     </div>

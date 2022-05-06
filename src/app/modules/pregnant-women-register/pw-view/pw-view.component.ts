@@ -241,7 +241,8 @@ export class PwViewComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.pwRegisterForm.value)
+    console.log(this.pwRegisterForm)
+    this.pwRegisterForm.markAllAsTouched();
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {
         let Dto = {
