@@ -106,11 +106,33 @@ export class RegionBranchHomeComponent implements OnInit {
     });
   }
 
-  deleteRegion(regionMasterId, regionName) {
-
+  deleteRegion(regionMasterId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      regionMasterId: regionMasterId,
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}region/deleteRegion`, Dto).subscribe((res) => {
+        this.showSuccess('Delete');
+      })
+    }).catch(() => '');
   }
 
-  deleteBranch(regionMasterId, branch) {
+  deleteBranch(branchId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: branchId,
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}branch/deleteBranch`, Dto).subscribe((res) => {
+        this.showSuccess('Delete');
+      })
+    }).catch(() => '');
+  }
 
+  showSuccess(message) {
+    this.toaster.success(message, 'Deleted', {
+      timeOut: 3000,
+    });
   }
 }
