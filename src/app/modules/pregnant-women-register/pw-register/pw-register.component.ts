@@ -193,13 +193,13 @@ export class PwRegisterComponent implements OnInit {
     })
   }
 
-  openPwList(i) {
+  openPwList(i, pregnantWomenList) {
     const dialogRef = this.dialog.open(SinglePwListComponent, {
       width: '1000px',
       height: '550px',
       data: {
-        index: i,
-        singlePregnantWomenList: this.allPregnantWomenList[i],
+        id: pregnantWomenList.familyDetailId,
+        singlePregnantWomenList: pregnantWomenList,
         villageMasterId: this.villageMasterId
       }
     });
@@ -209,11 +209,11 @@ export class PwRegisterComponent implements OnInit {
     });
   }
 
-  openPwStatus(i) {
+  openPwStatus(womenList) {
     const dialogRef = this.dialog.open(PwStatusComponent, {
       width: '500px',
       height: '270px',
-      data: { nonPregnantWomenList: this.nonPregnantWomenList[i] }
+      data: { nonPregnantWomenList: womenList }
     });
 
     dialogRef.afterClosed().subscribe(result => {

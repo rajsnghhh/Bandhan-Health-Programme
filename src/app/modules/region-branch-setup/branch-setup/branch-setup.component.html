@@ -71,7 +71,7 @@
               }"
             >
               <option value="">-- Select Project of selected Sub-Verticle --</option>
-              <option *ngFor="let subVerticleProject of subVerticleProjectList">
+              <option *ngFor="let subVerticleProject of subVerticleProjectList" [value]="subVerticleProject.projectMasterId">
                 {{subVerticleProject.projectName}}
               </option>
             </select>
@@ -92,6 +92,7 @@
         <select
           class="form-select"
           formControlName="state"
+          (change)="changeState($event.target.value)"
           [ngClass]="{
             'is-invalid': f.state.invalid && f.state.touched,
             'is-valid':
@@ -99,7 +100,7 @@
           }"
         >
           <option value="">-- Select state --</option>
-          <option *ngFor="let state of stateList">
+          <option *ngFor="let state of stateList" [value]="state.stateMasterId">
             {{state.stateName}}
           </option>
         </select>
@@ -115,6 +116,7 @@
             <select
               class="form-select"
               formControlName="district"
+              (change)="changeDistrict($event.target.value)"
               id="district"
               [ngClass]="{
                 'is-invalid': f.district.invalid && f.district.touched,
@@ -123,9 +125,9 @@
               }"
             >
               <option value="">-- Select district --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
+                {{district.districtName}}
+              </option>
             </select>
             <div *ngIf="f.district.errors" class="invalid-feedback">
               <div *ngIf="f.district.errors.required">district selection is required</div>
@@ -133,26 +135,25 @@
           </div>
 
           <div class="form-group col-md">
-            <label for="selectedDistrict"
+            <label for="block"
               >Block of the selected district :&nbsp;<span class="text-danger">*&nbsp;</span></label
             >
             <select
               class="form-select"
-              formControlName="selectedDistrict"
-              id="selectedDistrict"
+              formControlName="block"
               [ngClass]="{
-                'is-invalid': f.selectedDistrict.invalid && f.selectedDistrict.touched,
+                'is-invalid': f.block.invalid && f.block.touched,
                 'is-valid':
-                  f.selectedDistrict.valid && (f.selectedDistrict.dirty || f.selectedDistrict.touched)
+                  f.block.valid && (f.block.dirty || f.block.touched)
               }"
             >
-              <option value="">-- Select selectedDistrict --</option>
-              <!-- <option *ngFor="let region of regionList">
-                {{region.regionName}}
-              </option> -->
+              <option value="">-- Select block --</option>
+              <option *ngFor="let block of blockList" [value]="block.blockMasterId">
+                {{block.blockName}}
+              </option>
             </select>
-            <div *ngIf="f.selectedDistrict.errors" class="invalid-feedback">
-              <div *ngIf="f.selectedDistrict.errors.required">selectedDistrict selection is required</div>
+            <div *ngIf="f.block.errors" class="invalid-feedback">
+              <div *ngIf="f.block.errors.required">block selection is required</div>
             </div>
           </div>
    
@@ -189,7 +190,7 @@
               }"
             >
               <option value="">-- Select branchType --</option>
-              <option *ngFor="let branchType of branchTypeList">
+              <option *ngFor="let branchType of branchTypeList" [value]="branchType.branchTypeMasterId">
                 {{branchType.branchTypeDescription}}
               </option>
             </select>
@@ -239,6 +240,26 @@
               <div *ngIf="f.address.errors.required">address is required</div>
             </div>
         </div>
+
+        <div class="form-group col-md-3">
+          <label for="pincode">Pincode:&nbsp;<span class="text-danger">*&nbsp;</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            maxlength="10"
+            placeholder="Enter Pincode"
+            formControlName="pincode"
+            [ngClass]="{
+              'is-invalid': f.pincode.invalid && f.pincode.touched,
+              'is-valid': f.pincode.valid && (f.pincode.dirty || f.pincode.touched)
+            }"
+            (keypress)="validationService.onlyInteger($event)"
+          />
+          <div *ngIf="f.pincode.errors" class="invalid-feedback">
+            <div *ngIf="f.pincode.errors.required">Pincode is required</div>
+          </div>
+      </div>
     </div>
  
     <br />
@@ -307,21 +328,18 @@
     <div class="row">
         <div class="form-group col-md">
             <label for="primaryContactName"
-              >Name of Primary Contact Person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >Name of Primary Contact Person :</label
             >
             <input
               type="text"
               class="form-control"
               placeholder="Enter primaryContactName Name"
               formControlName="primaryContactName"
-              [ngClass]="{
-                'is-invalid': f.primaryContactName.invalid && f.primaryContactName.touched,
-                'is-valid': f.primaryContactName.valid && (f.primaryContactName.dirty || f.primaryContactName.touched)
-              }"
+              
             />
-            <div *ngIf="f.primaryContactName.errors" class="invalid-feedback">
+            <!-- <div *ngIf="f.primaryContactName.errors" class="invalid-feedback">
               <div *ngIf="f.primaryContactName.errors.required">primaryContactName is required</div>
-            </div>
+            </div> -->
         </div>
 
         <div class="form-group col-md">
@@ -337,8 +355,12 @@
               placeholder="Enter Mobile No"
               formControlName="primaryMobile"
               [ngClass]="{
-                'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched
+                'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched,
+                'is-valid':
+                  f.primaryMobile.valid &&
+                  (f.primaryMobile.dirty || f.primaryMobile.touched)
               }"
+              (keypress)="validationService.onlyInteger($event)"
             />
             <div *ngIf="f.primaryMobile.errors" class="invalid-feedback">
               <div *ngIf="f.primaryMobile.errors.required">
@@ -382,21 +404,16 @@
     <div class="row">
         <div class="form-group col-md">
             <label for="secondaryContactName"
-              >Name of the secondary contact person :&nbsp;<span class="text-danger">*&nbsp;</span></label
+              >Name of the secondary contact person :</label
             >
             <input
               type="text"
               class="form-control"
               placeholder="Enter secondaryContactName Name"
               formControlName="secondaryContactName"
-              [ngClass]="{
-                'is-invalid': f.secondaryContactName.invalid && f.secondaryContactName.touched,
-                'is-valid': f.secondaryContactName.valid && (f.secondaryContactName.dirty || f.secondaryContactName.touched)
-              }"
+              
             />
-            <div *ngIf="f.secondaryContactName.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryContactName.errors.required">secondaryContactName is required</div>
-            </div>
+            
         </div>
 
         <div class="form-group col-md">
@@ -412,11 +429,9 @@
               [ngClass]="{
                 'is-invalid': f.secondaryMobile.invalid && f.secondaryMobile.touched
               }"
+              (keypress)="validationService.onlyInteger($event)"
             />
             <div *ngIf="f.secondaryMobile.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryMobile.errors.required">
-                Primary Mobile No is required
-              </div>
               <div *ngIf="f.secondaryMobile.errors.minlength">
                 Mobile No. should be of 10 digit
               </div>
@@ -435,17 +450,7 @@
               class="form-control"
               placeholder="Enter secondary Email"
               formControlName="secondaryEmail"
-              [ngClass]="{
-                'is-invalid': f.secondaryEmail.invalid && f.secondaryEmail.touched,
-                'is-valid':
-                  f.secondaryEmail.valid &&
-                  (f.secondaryEmail.dirty || f.secondaryEmail.touched)
-              }"
             />
-            <div *ngIf="f.secondaryEmail.errors" class="invalid-feedback">
-              <div *ngIf="f.secondaryEmail.errors.required">Email is required</div>
-              <div *ngIf="f.secondaryEmail.errors.email">Email is not valid</div>
-            </div>
           </div>
     </div>
 

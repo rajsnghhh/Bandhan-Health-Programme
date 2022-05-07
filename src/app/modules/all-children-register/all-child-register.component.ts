@@ -42,6 +42,8 @@ export class AllChildRegisterComponent implements OnInit {
   acrSearch: string;
   searchFullscreen: boolean;
   loader: boolean = true;
+  page = 1;
+  pageSize = 6;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public acrService: AcrService,
@@ -216,12 +218,12 @@ export class AllChildRegisterComponent implements OnInit {
     this.index = tabChangeEvent.index;
   }
 
-  openCreateChild(index): void {
+  openCreateChild(childDetails): void {
     this.acrService.editMode = true;
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
       height: '450px',
-      data: { childId: (this.index == 0) ? this.childrenWRTPsdOrBoD[index].childDetailId : this.childrenBetween6And59Months[index].childDetailId }
+      data: { childId: childDetails.childDetailId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -230,11 +232,11 @@ export class AllChildRegisterComponent implements OnInit {
     });
   }
 
-  openViewChild(index) {
+  openViewChild(childDetails) {
     const dialogRef = this.dialog.open(ViewMuaclistComponent, {
       width: '700px',
       height: '400px',
-      data: { childId: (this.index == 0) ? this.childrenWRTPsdOrBoD[index].childDetailId : this.childrenBetween6And59Months[index].childDetailId }
+      data: { childId: childDetails.childDetailId }
     });
 
     dialogRef.afterClosed().subscribe(result => {

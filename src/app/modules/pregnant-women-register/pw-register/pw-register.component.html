@@ -162,13 +162,13 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of nonPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 25, currentPage: p };index as i">
-                                            <td>{{(p-1)*25+i+1 ? (p-1)*25+i+1 : i+1}}</td>
+                                        <tr *ngFor="let item of nonPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
                                             <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.age}}</td>
                                             <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                                            <td><i class="fas fa-edit" title="Edit" (click)="openPwStatus((p-1)*25+i ? (p-1)*25+i : i)"></i></td>
+                                            <td><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -207,17 +207,20 @@
 
                                     <tbody>
 
-                                        <tr *ngFor="let item of allPregnantWomenList | filter: pwSearch;index as i">
-                                            <td>{{i+1}}</td>
+                                        <tr *ngFor="let item of allPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
                                             <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.husbandOrGuardianName}}</td>
                                             <td>{{item.age}}</td>
                                             <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                                            <td><i class="fas fa-list" title="View" (click)="openPwList(i)"></i></td>
+                                            <td><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
                             </div>
                         </div>
                     </div>
