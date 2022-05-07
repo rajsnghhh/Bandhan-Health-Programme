@@ -441,7 +441,7 @@
 
               <div class="form-group col-md">
                 <label for="haveChildren">
-                  Do you have any child?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                  Do you have any child in your family?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
                 <div class="form-check-inline">
                   <input class="form-check-input" name="haveChildren" type="radio" id="yes" value="Y"
@@ -465,7 +465,7 @@
                 <label for="child">
                   How many children do you have?&nbsp;<span class="text-danger">*&nbsp;</span></label>
 
-                <input type="text" class="form-control" placeholder="Enter Children " formControlName="child"
+                <input type="text" class="form-control" placeholder="Children in your family " formControlName="child"
                   (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
                   (keyup)="checkChildren()" maxlength="2" [ngClass]="{
                     'is-invalid': f.child.invalid && f.child.touched,

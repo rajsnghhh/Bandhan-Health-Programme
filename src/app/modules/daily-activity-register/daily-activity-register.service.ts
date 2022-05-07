@@ -29,4 +29,14 @@ export class DailyActivityRegisterService {
   ssVillageWiseList(obj): any {
     return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj)
   }
+
+  visitPurposeData(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivity/viewDailyActivityRegisterVisitPurposeMap`, obj)
+  }
+
+  saveEditDAR(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivity/saveOrUpdate`, obj)
+  }
+
 }
+
