@@ -150,7 +150,7 @@
                                   <thead>
                                       <tr>
                                           <th>SL No</th>
-                                          <th>Family ID</th>
+                                          <th>Family No.</th>
                                           <th>Mother Name</th>
                                           <th>Child Name</th>
                                           <th>Age</th>
@@ -164,7 +164,7 @@
 
                                       <tr *ngFor="let item of childrenBetween6And59Months | filter: acrSearch;index as i">
                                           <td>{{i+1}}</td>
-                                          <td>{{item.familyDetailId}}</td>
+                                          <td>{{item.familyNumber}}</td>
                                           <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                           <td>{{item.childName}}</td>
                                           <td>{{item.childAge}}</td>
@@ -250,7 +250,7 @@
                                     <thead>
                                         <tr>
                                             <th>SL<br>No</th>
-                                            <th>Family ID</th>
+                                            <th>Family No.</th>
                                             <th>Mother Name</th>
                                             <th>Child Name</th>
                                             <th>Age</th>
@@ -263,7 +263,7 @@
 
                                         <tr *ngFor="let item of ineligibleChildren | filter: acrSearch;index as i">
                                             <td>{{i+1}}</td>
-                                            <td>{{item.familyDetailId}}</td>
+                                            <td>{{item.familyNumber}}</td>
                                             <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
                                             <td>{{item.childName}}</td>
                                             <td>{{item.childAge}}</td>

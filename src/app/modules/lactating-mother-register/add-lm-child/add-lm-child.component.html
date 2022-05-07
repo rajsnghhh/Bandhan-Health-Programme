@@ -1,434 +1,504 @@
 <h1 mat-dialog-title>
-    <div class="dialog-header">
-        <h2 class="dialog-title">Lactating Mother Child</h2>
-        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>  
-    </div>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Lactating Mother Child</h2>
+    <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+  </div>
 </h1>
 <div mat-dialog-content>
-    <form class="form-signin" [formGroup]="childBirthForm">
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label>Place of Delivery :</label> <br>
-                <label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" value="Home" formControlName="place"> &nbsp;
-                      <span>Home</span>
-                  </label> &nbsp;&nbsp;&nbsp;
-                  <label>
-                    <input type="radio" value="Institution" formControlName="place"> &nbsp;
-                      <span>Institution</span>
-                  </label>
-            </div>
-            <div class="form-group col-md-4">
-                <div class="form-group col-md">
-                    <label for="birthWeight">Birth Weight (kg):</label>
-                    <input type="text" class="form-control" placeholder="Enter weight" formControlName="birthWeight" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="5"
-                    [ngClass]="{
+  <form class="form-signin" [formGroup]="childBirthForm">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label>Place of Delivery :</label> <br>
+        <label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" value="Home" formControlName="place"> &nbsp;
+          <span>Home</span>
+        </label> &nbsp;&nbsp;&nbsp;
+        <label>
+          <input type="radio" value="Institution" formControlName="place"> &nbsp;
+          <span>Institution</span>
+        </label>
+      </div>
+      <div class="form-group col-md-4">
+        <div class="form-group col-md">
+          <label for="birthWeight">Birth Weight (kg):</label>
+          <input type="text" class="form-control" placeholder="Enter weight" formControlName="birthWeight"
+            (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="5" [ngClass]="{
                       'is-invalid': f.birthWeight.invalid && f.birthWeight.touched,
                       'is-valid':
                         f.birthWeight.valid &&
                         (f.birthWeight.dirty || f.birthWeight.touched)
-                    }"/>
-                    <div *ngIf="f.birthWeight.errors" class="invalid-feedback">
-                      <div *ngIf="f.birthWeight.errors.notInBirthWeightRange">
-                        Birth Weight should be 0 to 9 kg
-                      </div>
-                    </div>
-                  </div>
+                    }" />
+          <div *ngIf="f.birthWeight.errors" class="invalid-feedback">
+            <div *ngIf="f.birthWeight.errors.notInBirthWeightRange">
+              Birth Weight should be 0 to 9 kg
             </div>
+          </div>
         </div>
-    
+      </div>
+    </div>
+
     <br>
     <mat-accordion>
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-                Within 6 month
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-        <div class="form-group col-md-4">
-            <div class="form-group col-md">
-                <label for="firstVisitDate">First Visit Date:</label>
-                <input type="date" class="form-control" formControlName="firstVisitDate" [max]="today" [min]="childDob" 
-                (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy"/>
-              </div>
-         </div>
-         <div class="form-group col-md-4">
-            <div class="form-group col-md">
-                <label for="secondVisitDate">Second visit Date:</label>
-                <input type="date" class="form-control" formControlName="secondVisitDate" [max]="today" [min]="firstVisit"
-                placeholder="dd-mm-yyyy"/>
-              </div>
-         </div>
-        </div>
-        </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Within 6 month
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after6m'>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-                After 6 months
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
+        <div class="row">
+          <div class="form-group col-md-4">
             <div class="form-group col-md">
-                <label>Exclusive Breast Feeding Complete :</label> <br>
-                <label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" value="Y" formControlName="ebfUpto6Complete"> &nbsp;
-                      <span>Yes</span>
-                  </label> &nbsp;&nbsp;&nbsp;
-                  <label>
-                    <input type="radio" value="N" formControlName="ebfUpto6Complete"> &nbsp;
-                      <span>No</span>
-                  </label>
+              <label for="firstVisitDate">First Visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="date" class="form-control" formControlName="firstVisitDate" [max]="today" [min]="childDob"
+                (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy" [ngClass]="{
+                  'is-invalid': f.firstVisitDate.invalid && f.firstVisitDate.touched,
+                  'is-valid':
+                    f.firstVisitDate.valid && (f.firstVisitDate.dirty || f.firstVisitDate.touched)
+                }" />
+              <div *ngIf="f.firstVisitDate.errors" class="invalid-feedback">
+                <div *ngIf="f.firstVisitDate.errors.required">First Visit Date selection is required</div>
+              </div>
             </div>
+          </div>
+
+          <div class="form-group col-md-4">
             <div class="form-group col-md">
-                <div class="form-group col-md">
-                    <label for="height6month">Height (cm):</label>
-                    <input type="text" class="form-control" placeholder="Enter height" formControlName="height6month" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7"
-                    [ngClass]="{
+              <label for="secondVisitDate">Second visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="date" class="form-control" formControlName="secondVisitDate" [max]="today" [min]="firstVisit"
+                placeholder="dd-mm-yyyy" [ngClass]="{
+                  'is-invalid': f.secondVisitDate.invalid && f.secondVisitDate.touched,
+                  'is-valid':
+                    f.secondVisitDate.valid && (f.secondVisitDate.dirty || f.secondVisitDate.touched)
+                }" />
+              <div *ngIf="f.secondVisitDate.errors" class="invalid-feedback">
+                <div *ngIf="f.secondVisitDate.errors.required">Second Visit Date selection is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after6m'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            After 6 months
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="form-group col-md">
+            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="ebfUpto6Complete"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="ebfUpto6Complete"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="muacDate6">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <input type="date" class="form-control" formControlName="muacDate6" (keydown)="restrictTypeOfDate()"
+              [ngClass]="{
+                    'is-invalid': f.muacDate6.invalid && f.muacDate6.touched,
+                    'is-valid':
+                      f.muacDate6.valid && (f.muacDate6.dirty || f.muacDate6.touched)
+                  }">
+            <div *ngIf="f.muacDate6.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate6.errors.required">MUAC Date selection is required</div>
+            </div>
+
+          </div>
+
+          <div class="form-group col-md">
+            <div class="form-group col-md">
+              <label for="height6month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height" formControlName="height6month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
                       'is-invalid': f.height6month.invalid && f.height6month.touched,
                       'is-valid':
                         f.height6month.valid &&
                         (f.height6month.dirty || f.height6month.touched)
-                    }"/>
-                    <div *ngIf="f.height6month.errors" class="invalid-feedback">
-                      <div *ngIf="f.height6month.errors.notInHeightRange">
-                        Height should be 10 to 180 cm
-                      </div>
-                    </div>
-                  </div>
+                    }" />
+              <div *ngIf="f.height6month.errors" class="invalid-feedback">
+                <div *ngIf="f.height6month.errors.notInHeightRange">
+                  Height should be 10 to 180 cm
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="form-group col-md">
             <div class="form-group col-md">
-                <div class="form-group col-md">
-                    <label for="weight6month">Weight (kg):</label>
-                    <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight6month" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                    [ngClass]="{
+              <label for="weight6month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight6month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                       'is-invalid': f.weight6month.invalid && f.weight6month.touched,
                       'is-valid':
                         f.weight6month.valid &&
                         (f.weight6month.dirty || f.weight6month.touched)
-                    }"/>
-                    <div *ngIf="f.weight6month.errors" class="invalid-feedback">
-                      <div *ngIf="f.weight6month.errors.notInWeightRange">
-                        Weight should be 0 to 25 kg
-                      </div>
-                    </div>
-                  </div>
+                    }" />
+              <div *ngIf="f.weight6month.errors" class="invalid-feedback">
+                <div *ngIf="f.weight6month.errors.notInWeightRange">
+                  Weight should be 0 to 25 kg
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="form-group col-md">
             <div class="form-group col-md">
-                <div class="form-group col-md">
-                    <label for="muac6month">MUAC (cm):</label>
-                    <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac6month" 
-                    (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                    [ngClass]="{
+              <label for="muac6month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac6month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                       'is-invalid': f.muac6month.invalid && f.muac6month.touched,
                       'is-valid':
                         f.muac6month.valid &&
                         (f.muac6month.dirty || f.muac6month.touched)
-                    }"/>
-                    <div *ngIf="f.muac6month.errors" class="invalid-feedback">
-                      <div *ngIf="f.muac6month.errors.notInMuacRange">
-                        MUAC should be 1 to 30 cm
-                      </div>
-                    </div>
-                  </div>
+                    }" />
+              <div *ngIf="f.muac6month.errors" class="invalid-feedback">
+                <div *ngIf="f.muacDate6.errors?.required">MUAC is required</div>
+                <div *ngIf="f.muac6month.errors.notInMuacRange">
+                  MUAC should be 1 to 30 cm
+                </div>
+              </div>
             </div>
           </div>
-        </mat-expansion-panel>
 
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after12m'>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                After 12 months
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row">
-                <div class="form-group col-md">
-                    <label>Primary Immunization completed :</label> <br>
-                    <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="Y" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
-                          <span>Yes</span>
-                      </label> &nbsp;&nbsp;&nbsp;
-                      <label>
-                        <input type="radio" value="N" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
-                          <span>No</span>
-                      </label>
-                </div>
-                <div class="form-group col-md">
-                    <label>Exclusive Breast Feeding Complete :</label> <br>
-                    <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="Y" formControlName="ebfUpto12Complete"> &nbsp;
-                          <span>Yes</span>
-                      </label> &nbsp;&nbsp;&nbsp;
-                      <label>
-                        <input type="radio" value="N" formControlName="ebfUpto12Complete"> &nbsp;
-                          <span>No</span>
-                      </label>
-                </div>
-                <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="height12month">Height (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height12month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7"
-                      [ngClass]="{
-                        'is-invalid': f.height12month.invalid && f.height12month.touched,
-                        'is-valid':
-                          f.height12month.valid &&
-                          (f.height12month.dirty || f.height12month.touched)
-                      }"/>
-                      <div *ngIf="f.height12month.errors" class="invalid-feedback">
-                        <div *ngIf="f.height12month.errors.notInHeightRange">
-                          Height should be 10 to 180 cm
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="weight12month">Weight (kg):</label>
-                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight12month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
-                        'is-invalid': f.weight12month.invalid && f.weight12month.touched,
-                        'is-valid':
-                          f.weight12month.valid &&
-                          (f.weight12month.dirty || f.weight12month.touched)
-                      }"/>
-                      <div *ngIf="f.weight12month.errors" class="invalid-feedback">
-                        <div *ngIf="f.weight12month.errors.notInWeightRange">
-                          Weight should be 0 to 25 kg
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="muac12month">MUAC (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac12month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
-                        'is-invalid': f.muac12month.invalid && f.muac12month.touched,
-                        'is-valid':
-                          f.muac12month.valid &&
-                          (f.muac12month.dirty || f.muac12month.touched)
-                      }"/>
-                      <div *ngIf="f.muac12month.errors" class="invalid-feedback">
-                        <div *ngIf="f.muac12month.errors.notInMuacRange">
-                          MUAC should be 1 to 30 cm
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              </div>
-          </mat-expansion-panel>
+        </div>
+      </mat-expansion-panel>
 
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after18m'>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                After 18 months
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row">
-                <div class="form-group col-md">
-                    <label>Exclusive Breast Feeding Complete :</label> <br>
-                    <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="Y" formControlName="ebfUpto18Complete"> &nbsp;
-                          <span>Yes</span>
-                      </label> &nbsp;&nbsp;&nbsp;
-                      <label>
-                        <input type="radio" value="N" formControlName="ebfUpto18Complete"> &nbsp;
-                          <span>No</span>
-                      </label>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after12m'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            After 12 months
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Primary Immunization completed :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="ebfUpto12Complete"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="ebfUpto12Complete"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="muacDate12">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <input type="date" class="form-control" formControlName="muacDate12" (keydown)="restrictTypeOfDate()"
+              [ngClass]="{
+                    'is-invalid': f.muacDate12.invalid && f.muacDate12.touched,
+                    'is-valid':
+                      f.muacDate12.valid && (f.muacDate12.dirty || f.muacDate12.touched)
+                  }">
+            <div *ngIf="f.muacDate12.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate12.errors.required">MUAC Date selection is required</div>
+            </div>
+
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="height12month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height" formControlName="height12month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
+                          'is-invalid': f.height12month.invalid && f.height12month.touched,
+                          'is-valid':
+                            f.height12month.valid &&
+                            (f.height12month.dirty || f.height12month.touched)
+                        }" />
+              <div *ngIf="f.height12month.errors" class="invalid-feedback">
+                <div *ngIf="f.height12month.errors.notInHeightRange">
+                  Height should be 10 to 180 cm
                 </div>
-                <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="height18month">Height (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height18month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7"
-                      [ngClass]="{
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="weight12month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight12month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                          'is-invalid': f.weight12month.invalid && f.weight12month.touched,
+                          'is-valid':
+                            f.weight12month.valid &&
+                            (f.weight12month.dirty || f.weight12month.touched)
+                        }" />
+              <div *ngIf="f.weight12month.errors" class="invalid-feedback">
+                <div *ngIf="f.weight12month.errors.notInWeightRange">
+                  Weight should be 0 to 25 kg
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="muac12month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac12month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                          'is-invalid': f.muac12month.invalid && f.muac12month.touched,
+                          'is-valid':
+                            f.muac12month.valid &&
+                            (f.muac12month.dirty || f.muac12month.touched)
+                        }" />
+
+              <div *ngIf="f.muac12month.errors" class="invalid-feedback">
+                <div *ngIf="f.muac12month.errors.required">MUAC is required</div>
+                <div *ngIf="f.muac12month.errors.notInMuacRange">
+                  MUAC should be 1 to 30 cm
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after18m'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            After 18 months
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="form-group col-md">
+            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="ebfUpto18Complete"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="ebfUpto18Complete"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+
+          <div class="form-group col-md">
+            <label for="muacDate18">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <input type="date" class="form-control" formControlName="muacDate18" (keydown)="restrictTypeOfDate()"
+              [ngClass]="{
+                    'is-invalid': f.muacDate18.invalid && f.muacDate18.touched,
+                    'is-valid':
+                      f.muacDate18.valid && (f.muacDate18.dirty || f.muacDate18.touched)
+                  }">
+            <div *ngIf="f.muacDate18.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate18.errors.required">MUAC Date selection is required</div>
+            </div>
+
+          </div>
+          <div class="form-group col-md">
+            <div class="form-group col-md">
+              <label for="height18month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height" formControlName="height18month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
                         'is-invalid': f.height18month.invalid && f.height18month.touched,
                         'is-valid':
                           f.height18month.valid &&
                           (f.height18month.dirty || f.height18month.touched)
-                      }"/>
-                      <div *ngIf="f.height18month.errors" class="invalid-feedback">
-                        <div *ngIf="f.height18month.errors.notInHeightRange">
-                          Height should be 10 to 180 cm
-                        </div>
-                      </div>
-                    </div>
+                      }" />
+              <div *ngIf="f.height18month.errors" class="invalid-feedback">
+                <div *ngIf="f.height18month.errors.notInHeightRange">
+                  Height should be 10 to 180 cm
+                </div>
               </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="weight18month">Weight (kg):</label>
-                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight18month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
+            </div>
+          </div>
+          <div class="form-group col-md">
+            <div class="form-group col-md">
+              <label for="weight18month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight18month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                         'is-invalid': f.weight18month.invalid && f.weight18month.touched,
                         'is-valid':
                           f.weight18month.valid &&
                           (f.weight18month.dirty || f.weight18month.touched)
-                      }"/>
-                      <div *ngIf="f.weight18month.errors" class="invalid-feedback">
-                        <div *ngIf="f.weight18month.errors.notInWeightRange">
-                          Weight should be 0 to 25 kg
-                        </div>
-                      </div>
-                    </div>
+                      }" />
+              <div *ngIf="f.weight18month.errors" class="invalid-feedback">
+                <div *ngIf="f.weight18month.errors.notInWeightRange">
+                  Weight should be 0 to 25 kg
+                </div>
               </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="muac18month">MUAC (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac18month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
+            </div>
+          </div>
+          <div class="form-group col-md">
+            <div class="form-group col-md">
+              <label for="muac18month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac18month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                         'is-invalid': f.muac18month.invalid && f.muac18month.touched,
                         'is-valid':
                           f.muac18month.valid &&
                           (f.muac18month.dirty || f.muac18month.touched)
-                      }"/>
-                      <div *ngIf="f.muac18month.errors" class="invalid-feedback">
-                        <div *ngIf="f.muac18month.errors.notInMuacRange">
-                          MUAC should be 1 to 30 cm
-                        </div>
-                      </div>
-                    </div>
+                      }" />
+              <div *ngIf="f.muac18month.errors" class="invalid-feedback">
+                <div *ngIf="f.muac18month.errors.required">MUAC is required</div>
+                <div *ngIf="f.muac18month.errors.notInMuacRange">
+                  MUAC should be 1 to 30 cm
+                </div>
               </div>
-              </div>
-          </mat-expansion-panel>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
 
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled] = 'after24m'> 
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                After 24 months
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row">
-                <div class="form-group col-md">
-                    <label>Primary Immunization completed :</label> <br>
-                    <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="Y" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
-                          <span>Yes</span>
-                      </label> &nbsp;&nbsp;&nbsp;
-                      <label>
-                        <input type="radio" value="N" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
-                          <span>No</span>
-                      </label>
-                </div>
-                <div class="form-group col-md">
-                    <label>Exclusive Breast Feeding Complete :</label> <br>
-                    <label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="Y" formControlName="ebfUpto24Complete"> &nbsp;
-                          <span>Yes</span>
-                      </label> &nbsp;&nbsp;&nbsp;
-                      <label>
-                        <input type="radio" value="N" formControlName="ebfUpto24Complete"> &nbsp;
-                          <span>No</span>
-                      </label>
-                </div>
-                <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="height24month">Height (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter height" formControlName="height24month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7"
-                      [ngClass]="{
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after24m'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            After 24 months
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Primary Immunization completed :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="ebfUpto24Complete"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="ebfUpto24Complete"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="muacDate24">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <input type="date" class="form-control" formControlName="muacDate24" (keydown)="restrictTypeOfDate()"
+              [ngClass]="{
+                    'is-invalid': f.muacDate24.invalid && f.muacDate24.touched,
+                    'is-valid':
+                      f.muacDate24.valid && (f.muacDate24.dirty || f.muacDate24.touched)
+                  }">
+            <div *ngIf="f.muacDate24.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate24.errors.required">MUAC Date selection is required</div>
+            </div>
+
+          </div>
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="height24month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height" formControlName="height24month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
                         'is-invalid': f.height24month.invalid && f.height24month.touched,
                         'is-valid':
                           f.height24month.valid &&
                           (f.height24month.dirty || f.height24month.touched)
-                      }"/>
-                      <div *ngIf="f.height24month.errors" class="invalid-feedback">
-                        <div *ngIf="f.height24month.errors.notInHeightRange">
-                          Height should be 10 to 180 cm
-                        </div>
-                      </div>
-                    </div>
+                      }" />
+              <div *ngIf="f.height24month.errors" class="invalid-feedback">
+                <div *ngIf="f.height24month.errors.notInHeightRange">
+                  Height should be 10 to 180 cm
+                </div>
               </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="weight24month">Weight (kg):</label>
-                      <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight24month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="weight24month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight24month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                         'is-invalid': f.weight24month.invalid && f.weight24month.touched,
                         'is-valid':
                           f.weight24month.valid &&
                           (f.weight24month.dirty || f.weight24month.touched)
-                      }"/>
-                      <div *ngIf="f.weight24month.errors" class="invalid-feedback">
-                        <div *ngIf="f.weight24month.errors.notInWeightRange">
-                          Weight should be 0 to 25 kg
-                        </div>
-                      </div>
-                    </div>
+                      }" />
+              <div *ngIf="f.weight24month.errors" class="invalid-feedback">
+                <div *ngIf="f.weight24month.errors.notInWeightRange">
+                  Weight should be 0 to 25 kg
+                </div>
               </div>
-              <div class="form-group col-md">
-                  <div class="form-group col-md">
-                      <label for="muac24month">MUAC (cm):</label>
-                      <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac24month" 
-                      (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6"
-                      [ngClass]="{
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="form-group col-md">
+              <label for="muac24month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac24month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
                         'is-invalid': f.muac24month.invalid && f.muac24month.touched,
                         'is-valid':
                           f.muac24month.valid &&
                           (f.muac24month.dirty || f.muac24month.touched)
-                      }"/>
-                      <div *ngIf="f.muac24month.errors" class="invalid-feedback">
-                        <div *ngIf="f.muac24month.errors.notInMuacRange">
-                          MUAC should be 1 to 30 cm
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              </div>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Child Death 
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="checkChildDeath">Is child death ?</label>
-                    <select class="form-select" formControlName="checkChildDeath" id="checkChildDeath" (change)="checkChildDeath($event.target.value)">
-                      <option value="">-- Select --</option>
-                      <option value="Y">Yes</option>
-                      <option value="N">No</option>
-                    </select>
+                      }" />
+              <div *ngIf="f.muac24month.errors" class="invalid-feedback">
+                <div *ngIf="f.muac24month.errors.required">MUAC is required</div>
+                <div *ngIf="f.muac24month.errors.notInMuacRange">
+                  MUAC should be 1 to 30 cm
                 </div>
-                <div class="form-group col-md" *ngIf="childDeath == 'Y'">
-                    <div class="form-group col-md-4">
-                        <label for="deathOfChildDate">Date of Death:</label>
-                        <input type="date" class="form-control" formControlName="deathOfChildDate" />
-                      </div>
-                 </div>
+              </div>
             </div>
-            <div class="form-group col-md" *ngIf="childDeath == 'Y'">
-                <div class="form-group col-md">
-                    <label for="comment">Comment:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" formControlName="comment" />
-                  </div>
-             </div> 
-          </mat-expansion-panel>
+          </div>
+        </div>
+      </mat-expansion-panel>
 
-      </mat-accordion>
-      
-      <br> <br>
-      <div class="addEditBtn" *ngIf="!viewMode">
-        <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
-      </div>
-    </form>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Child Death
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="checkChildDeath">Is child death ?</label>
+            <select class="form-select" formControlName="checkChildDeath" id="checkChildDeath"
+              (change)="checkChildDeath($event.target.value)">
+              <option value="">-- Select --</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+          <div class="form-group col-md" *ngIf="childDeath == 'Y'">
+            <div class="form-group col-md-4">
+              <label for="deathOfChildDate">Date of Death:</label>
+              <input type="date" class="form-control" formControlName="deathOfChildDate" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md" *ngIf="childDeath == 'Y'">
+          <div class="form-group col-md">
+            <label for="comment">Comment:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <input type="text" class="form-control" formControlName="comment" />
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+    <br> <br>
+    <div class="addEditBtn" *ngIf="!viewMode">
+      <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
+    </div>
+  </form>
 </div>
