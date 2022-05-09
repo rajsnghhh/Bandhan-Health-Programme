@@ -204,14 +204,14 @@ export class LmViewComponent implements OnInit, DoCheck {
   }
 
   /* only view the particular Lactating Mother info */
-  ViewLmChild(index) {
-    console.log(index, this.lactatingmotherregister[index])
+  ViewLmChild(lmList) {
+    console.log(lmList)
     const dialogRef = this.dialog.open(AddLmChildComponent, {
       width: '1000px',
       height: '550px',
       data: {
         viewMode: true,
-        childWiselactatingmotherList: this.lactatingmotherregister[index]
+        childWiselactatingmotherList: lmList
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -220,18 +220,18 @@ export class LmViewComponent implements OnInit, DoCheck {
 
   /* First time it save the data,
     After that it is editable */
-  openAddEditLmChild(index) {
-    console.log(this.lactatingmotherregister[index]);
+  openAddEditLmChild(lmList) {
+    console.log(lmList);
     let saveForm: boolean;
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      childId: this.lactatingmotherregister[index].childDetailId,
+      childId: lmList.childDetailId,
     }
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
-      if (this.lactatingmotherregister[index].childBasicStatusDto.placeOfDelivery == null &&
-        this.lactatingmotherregister[index].childBasicStatusDto.birthWeight == null &&
-        this.lactatingmotherregister[index].childBasicStatusDto.firstVisitDate == null &&
-        this.lactatingmotherregister[index].childBasicStatusDto.secondVisitDate == null) {
+      if (lmList.childBasicStatusDto.placeOfDelivery == null &&
+        lmList.childBasicStatusDto.birthWeight == null &&
+        lmList.childBasicStatusDto.firstVisitDate == null &&
+        lmList.childBasicStatusDto.secondVisitDate == null) {
         saveForm = true;
       } else {
         saveForm = false
@@ -243,7 +243,7 @@ export class LmViewComponent implements OnInit, DoCheck {
           height: '550px',
           data: {
             editMode: false,
-            childWiselactatingmotherList: this.lactatingmotherregister[index]
+            childWiselactatingmotherList: lmList
           }
         });
 
@@ -256,7 +256,7 @@ export class LmViewComponent implements OnInit, DoCheck {
           height: '550px',
           data: {
             editMode: true,
-            childWiselactatingmotherList: this.lactatingmotherregister[index]
+            childWiselactatingmotherList: lmList
           }
         });
         dialogRef.afterClosed().subscribe(result => {
