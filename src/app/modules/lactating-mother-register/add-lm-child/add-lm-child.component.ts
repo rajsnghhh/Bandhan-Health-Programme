@@ -77,6 +77,10 @@ export class AddLmChildComponent implements OnInit {
           ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
           ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
           ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
+          muacDate6: this.childMuaaList.find(month => month.muacForMonth == "6")?.muacRecordDate,
+          muacDate12: this.childMuaaList.find(month => month.muacForMonth == "12")?.muacRecordDate,
+          muacDate18: this.childMuaaList.find(month => month.muacForMonth == "18")?.muacRecordDate,
+          muacDate24: this.childMuaaList.find(month => month.muacForMonth == "24")?.muacRecordDate,
           height6month: this.childMuaaList.find(month => month.muacForMonth == "6")?.height,
           height12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.height,
           height18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.height,
@@ -119,24 +123,44 @@ export class AddLmChildComponent implements OnInit {
       this.after12m = true;
       this.after18m = true;
       this.after24m = true;
+      this.childBirthForm.get('muac6month').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
     }
     else if (year >= 1 && year < 2 && month <= 6) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = true;
       this.after24m = true;
+      this.childBirthForm.get('muac6month').setValidators(Validators.required);
+      this.childBirthForm.get('muac12month').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
     }
     else if (year >= 1 && year <= 2 && month >= 6 && month <= 12) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = false;
       this.after24m = true;
+      this.childBirthForm.get('muac6month').setValidators(Validators.required);
+      this.childBirthForm.get('muac12month').setValidators(Validators.required);
+      this.childBirthForm.get('muac18month').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate18').setValidators(Validators.required);
     }
     else if (year >= 2) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = false;
       this.after24m = false;
+      this.childBirthForm.get('muac6month').setValidators(Validators.required);
+      this.childBirthForm.get('muac12month').setValidators(Validators.required);
+      this.childBirthForm.get('muac18month').setValidators(Validators.required);
+      this.childBirthForm.get('muac24month').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate18').setValidators(Validators.required);
+      this.childBirthForm.get('muacDate24').setValidators(Validators.required);
     }
   }
 
@@ -150,6 +174,10 @@ export class AddLmChildComponent implements OnInit {
       ebfUpto12Complete: [null],
       ebfUpto18Complete: [null],
       ebfUpto24Complete: [null],
+      muacDate6: [''],
+      muacDate12: [''],
+      muacDate18: [''],
+      muacDate24: [''],
       height6month: ['', this.heightRange],
       height12month: ['', this.heightRange],
       height18month: ['', this.heightRange],
@@ -158,12 +186,12 @@ export class AddLmChildComponent implements OnInit {
       weight12month: ['', this.weightRange],
       weight18month: ['', this.weightRange],
       weight24month: ['', this.weightRange],
-      muac6month: ['', this.muacRange],
-      muac12month: ['', this.muacRange],
-      muac18month: ['', this.muacRange],
-      muac24month: ['', this.muacRange],
-      firstVisitDate: [null],
-      secondVisitDate: [null],
+      muac6month: ['', Validators.compose([this.muacRange])],
+      muac12month: ['', Validators.compose([this.muacRange])],
+      muac18month: ['', Validators.compose([this.muacRange])],
+      muac24month: ['', Validators.compose([this.muacRange])],
+      firstVisitDate: ['', Validators.required],
+      secondVisitDate: ['', Validators.required],
       checkChildDeath: [null],
       deathOfChildDate: [null],
       comment: [''],
@@ -195,7 +223,7 @@ export class AddLmChildComponent implements OnInit {
     }
     return { 'notInMuacRange': true };
   }
-  /* weigh range between 0 to 25, validation */
+  /* weight range between 0 to 25, validation */
   weightRange(controls: AbstractControl): { [key: string]: any } | null {
     if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
       return null;
@@ -219,6 +247,111 @@ export class AddLmChildComponent implements OnInit {
 
   /* Depending on condition form is Save or Edit */
   onSave() {
+
+    if (!this.childBirthForm.value.firstVisitDate) {
+      this.showError('Please Enter First Visit Date');
+      return;
+    }
+
+    if (!this.childBirthForm.value.secondVisitDate) {
+      this.showError('Please Enter Second Visit Date');
+      return;
+    }
+
+    if (this.after6m == false) {
+      if (!this.childBirthForm.value.muacDate6) {
+        this.showError('Enter record date for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac6month) {
+        this.showError('Enter muac value for after 6 months');
+        return;
+      }
+    }
+
+    if (this.after12m == false) {
+      if (!this.childBirthForm.value.muacDate6) {
+        this.showError('Enter record date for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac6month) {
+        this.showError('Enter muac value for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muacDate12) {
+        this.showError('Enter record date for after 12 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac12month) {
+        this.showError('Enter muac value for after 12 months');
+        return;
+      }
+    }
+
+    if (this.after18m == false) {
+      if (!this.childBirthForm.value.muacDate6) {
+        this.showError('Enter record date for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac6month) {
+        this.showError('Enter muac value for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muacDate12) {
+        this.showError('Enter record date for after 12 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac12month) {
+        this.showError('Enter muac value for after 12 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muacDate18) {
+        this.showError('Enter record date for after 18 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac18month) {
+        this.showError('Enter muac value for after 18 months');
+        return;
+      }
+    }
+
+    if (this.after24m == false) {
+      if (!this.childBirthForm.value.muacDate6) {
+        this.showError('Enter record date for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac6month) {
+        this.showError('Enter muac value for after 6 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muacDate12) {
+        this.showError('Enter record date for after 12 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac12month) {
+        this.showError('Enter muac value for after 12 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muacDate18) {
+        this.showError('Enter record date for after 18 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac18month) {
+        this.showError('Enter muac value for after 18 months');
+        return;
+      }
+
+      if (!this.childBirthForm.value.muacDate24) {
+        this.showError('Enter record date for after 24 months');
+        return;
+      }
+      if (!this.childBirthForm.value.muac24month) {
+        this.showError('Enter muac value for after 24 months');
+        return;
+      }
+    }
+    console.log(this.childBirthForm)
+
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
         let Dto = {
@@ -244,7 +377,8 @@ export class AddLmChildComponent implements OnInit {
             weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
             muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
             active_flag: "A",
-            muacForMonth: "6"
+            muacForMonth: "6",
+            muacRecordDate: this.childBirthForm.value.muacDate6
           },
           {
             muacRegisterId: 0,
@@ -253,7 +387,8 @@ export class AddLmChildComponent implements OnInit {
             weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
             muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
             active_flag: "A",
-            muacForMonth: "12"
+            muacForMonth: "12",
+            muacRecordDate: this.childBirthForm.value.muacDate12
           },
           {
             muacRegisterId: 0,
@@ -262,7 +397,8 @@ export class AddLmChildComponent implements OnInit {
             weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
             muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
             active_flag: "A",
-            muacForMonth: "18"
+            muacForMonth: "18",
+            muacRecordDate: this.childBirthForm.value.muacDate18
           },
           {
             muacRegisterId: 0,
@@ -271,7 +407,8 @@ export class AddLmChildComponent implements OnInit {
             weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
             muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
             active_flag: "A",
-            muacForMonth: "24"
+            muacForMonth: "24",
+            muacRecordDate: this.childBirthForm.value.muacDate24
           }
           ],
           deadChildRegisterDto: {
@@ -280,13 +417,15 @@ export class AddLmChildComponent implements OnInit {
           }
         }
         console.log(Dto, 'reqAdd')
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
-          console.log(res, 'responseAdd')
-          this.dialogRef.close();
-          this.showSuccess('Success');
-        }, error => {
-          this.dialogRef.close();
-          this.showError('Error')
+        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+          console.log(res, 'responseAdd');
+          if (res.status == true) {
+            this.showSuccess(res.message);
+            this.dialogRef.close();
+          }
+          else {
+            this.showError(res.message);
+          }
         });
       } else {
         let Dto = {
@@ -306,40 +445,44 @@ export class AddLmChildComponent implements OnInit {
           },
 
           muacDataList: [{
-            muacRegisterId: this.muacRegisterId6month,
+            muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
             weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
             muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
             active_flag: "A",
-            muacForMonth: "6"
+            muacForMonth: "6",
+            muacRecordDate: this.childBirthForm.value.muacDate6
           },
           {
-            muacRegisterId: this.muacRegisterId12month,
+            muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
             weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
             muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
             active_flag: "A",
-            muacForMonth: "12"
+            muacForMonth: "12",
+            muacRecordDate: this.childBirthForm.value.muacDate12
           },
           {
-            muacRegisterId: this.muacRegisterId18month,
+            muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
             weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
             muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
             active_flag: "A",
-            muacForMonth: "18"
+            muacForMonth: "18",
+            muacRecordDate: this.childBirthForm.value.muacDate18
           },
           {
-            muacRegisterId: this.muacRegisterId24month,
+            muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
             height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
             weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
             muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
             active_flag: "A",
-            muacForMonth: "24"
+            muacForMonth: "24",
+            muacRecordDate: this.childBirthForm.value.muacDate24
           }
           ],
           deadChildRegisterDto: {
@@ -348,15 +491,17 @@ export class AddLmChildComponent implements OnInit {
           }
         }
         console.log(Dto, 'reqEdit')
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
-          console.log(res, 'responseedit')
-          this.dialogRef.close();
-          this.showSuccess('Success');
-        }, error => {
-          this.dialogRef.close();
-          this.showError('Error')
-        }
-        );
+        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+          console.log(res, 'responseedit');
+
+          if (res.status == true) {
+            this.showSuccess(res.message);
+            this.dialogRef.close();
+          }
+          else {
+            this.showError(res.message);
+          }
+        });
 
       }
     }
@@ -379,5 +524,9 @@ export class AddLmChildComponent implements OnInit {
     this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
+  }
+
+  restrictTypeOfDate() {
+    return false;
   }
 }

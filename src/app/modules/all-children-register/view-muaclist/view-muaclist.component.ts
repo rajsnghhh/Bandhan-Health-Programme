@@ -61,6 +61,7 @@ export class ViewMuaclistComponent implements OnInit {
       width: '500px',
       height: '450px',
       data: {
+        muacRecordDate: this.childMuac[index].muacRecordDate,
         muacRegisterId: this.childMuac[index].muacRegisterId,
         childId: this.childId,
         muacCampNumber: this.childMuac[index].muacCampDto.muacCampId,

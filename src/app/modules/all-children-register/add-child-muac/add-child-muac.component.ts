@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -23,6 +22,9 @@ export class AddChildMuacComponent implements OnInit {
   campDate: boolean;
   childMuac: Array<any> = [];
   campNotPresent: boolean;
+  minDate: any;
+  today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, public acrService: AcrService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
@@ -32,12 +34,14 @@ export class AddChildMuacComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getMinDate();
     this.editMode = this.acrService.editMode;
     this.createForm();
     if (this.editMode === true) {
       this.muacForm.reset();
     } else {
       this.muacForm.patchValue({
+        muacDate: (this.data?.muacRecordDate),
         muacCampNo: (this.data?.muacCampNumber),
         height: (this.data.height),
         weight: (this.data.weight),
@@ -66,8 +70,13 @@ export class AddChildMuacComponent implements OnInit {
     })
   }
 
+  editModes() {
+    if (this.muacForm.value.muacDate) { this.muacForm.controls['muacCampNo'].disable()}
+  }
+
   createForm() {
     this.muacForm = this.fb.group({
+      muacDate: ['', Validators.required],
       muacCampNo: [null],
       height: ['', this.heightRange],
       weight: ['', this.weightRange],
@@ -76,6 +85,22 @@ export class AddChildMuacComponent implements OnInit {
   }
   get f() {
     return this.muacForm.controls;
+  }
+
+  getMinDate() {
+    let date = new Date();
+    let toDate: any = date.getDate();
+    if (toDate < 10) {
+      toDate = '0' + toDate;
+    }
+
+    let month: any = date.getMonth() + 1;
+    if (month < 10) {
+      month = "0" + month;
+    }
+
+    let year = date.getUTCFullYear() - 3;
+    this.minDate = year + "-" + month + "-" + toDate;
   }
 
   campNo(Id) {
@@ -119,10 +144,13 @@ export class AddChildMuacComponent implements OnInit {
           height: this.muacForm.value.height,
           weight: this.muacForm.value.weight,
           muac: this.muacForm.value.muac,
+          muacRecordDate: this.muacForm.value.muacDate,
           active_flag: "A"
         }
       }
-      if (this.campDate && this.campNotPresent) {
+
+      console.log(addDto);
+      if (this.campDate && this.campNotPresent || this.muacForm.value.muacCampNo == null) {
         this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
           this.dialogRef.close();
           this.showSuccess('Success');
@@ -143,9 +171,13 @@ export class AddChildMuacComponent implements OnInit {
           height: this.muacForm.value.height,
           weight: this.muacForm.value.weight,
           muac: this.muacForm.value.muac,
+          muacRecordDate: this.muacForm.value.muacDate,
           active_flag: "A"
         }
       }
+
+      console.log(editDto);
+
       if (this.muacForm.valid) {
         this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res) => {
           this.dialogRef.close();
@@ -172,4 +204,9 @@ export class AddChildMuacComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
+  restrictTypeOfDate() {
+    return false;
+  }
+
 }
