@@ -79,7 +79,6 @@ export class RegionBranchHomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.getRegionAndBranchList(this.stateMasterId);
     });
-    console.log(regionMasterId, branch)
   }
 
   createForm() {
@@ -106,11 +105,50 @@ export class RegionBranchHomeComponent implements OnInit {
     });
   }
 
-  deleteRegion(regionMasterId, regionName) {
+  deleteRegion(regionMasterId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      regionMasterId: regionMasterId,
+    }
+    if (this.regionAndBranchList.find(x => x.regionMasterId == regionMasterId)?.branchList.length != 0) {
+      this.showError('Delete all branch');
+    } else {
+      this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+        this.http.post(`${this.httpService.baseURL}region/deleteRegion`, Dto).subscribe((res) => {
+          this.showSuccess('Success');
+          this.getRegionAndBranchList(this.stateMasterId);
+        })
+      }).catch(() => '');
+    }
 
   }
 
-  deleteBranch(regionMasterId, branch) {
+  deleteBranch(branchId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: branchId,
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}branch/deleteBranch`, Dto).subscribe((res: any) => {
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.getRegionAndBranchList(this.stateMasterId);
+        } else {
+          this.showError(res.message)
+        }
+      })
+    }).catch(() => '');
+  }
 
+  showSuccess(message) {
+    this.toaster.success(message, 'Deleted', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
   }
 }
