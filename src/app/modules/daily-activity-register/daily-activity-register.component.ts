@@ -59,6 +59,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.role = this.sidebarService.RoleDTOName;
 
     this.locForm();
+
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
@@ -381,8 +382,6 @@ export class DailyActivityRegisterComponent implements OnInit {
 
 
   editForms() {
-    console.log(this.editListCheck.ssId);
-
     this.editForm = this.fb.group({
       child: [''],
       ss: [this.editListCheck.visitedWithSS ? this.editListCheck.visitedWithSS : this.changeSS],
