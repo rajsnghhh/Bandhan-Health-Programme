@@ -12,6 +12,8 @@ import { HttpService } from '../../core/http/http.service';
 })
 export class BlockSetupFormComponent implements OnInit {
   blockForm: FormGroup;
+  stateList: Array<any> = [];
+  stateWiseDistrictList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BlockSetupFormComponent>) {
@@ -20,6 +22,12 @@ export class BlockSetupFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.stateList = res.responseObject.stateList;
+    });
   }
 
   createForm() {
@@ -35,7 +43,13 @@ export class BlockSetupFormComponent implements OnInit {
   }
 
   changeState(value) {
-
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateId: value
+    }
+    this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+      this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+    });
   }
   changeDistrict(value) {
 

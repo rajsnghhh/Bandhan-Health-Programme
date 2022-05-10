@@ -15,6 +15,10 @@ import { BlockSetupFormComponent } from '../block-setup-form/block-setup-form.co
 })
 export class BlockHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
+  stateList: Array<any> = [];
+  stateWiseDistrictList: Array<any> = [];
+  districtWiseBlockList: Array<any> = [];
+  stateId: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -22,6 +26,12 @@ export class BlockHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.stateList = res.responseObject.stateList;
+    });
   }
 
   openCreateBlock() {
@@ -57,10 +67,33 @@ export class BlockHomeComponent implements OnInit {
   }
 
   changeState(value) {
-
+    this.stateId = value;
+    console.log(this.stateId)
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateId: this.stateId
+    }
+    this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+      this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+    });
+    this.stateSelectForm.controls.district.setValue('');
+    if (!this.stateSelectForm.value.state) {
+      this.districtWiseBlockList = [];
+      this.stateWiseDistrictList = [];
+    }
   }
-  changeDistrict(value) {
 
+  changeDistrict(value) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      districtMasterId: value
+    }
+    this.http.post(`${this.httpService.baseURL}block/getListOfAllBlock`, Dto).subscribe((res: any) => {
+      this.districtWiseBlockList = res.responseObject?.blockList;
+    });
+    if (!this.stateSelectForm.value.district) {
+      this.districtWiseBlockList = [];
+    }
   }
 
   onDelete() {
