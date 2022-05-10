@@ -43,6 +43,7 @@ export class RegionBranchHomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getRegionAndBranchList(this.stateMasterId);
     });
   }
 
@@ -54,6 +55,7 @@ export class RegionBranchHomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getRegionAndBranchList(this.stateMasterId);
     });
   }
 

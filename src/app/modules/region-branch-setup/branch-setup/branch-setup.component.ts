@@ -21,6 +21,7 @@ export class BranchSetupComponent implements OnInit {
   stateWiseDistrictList: Array<any> = [];
   blockList: Array<any> = [];
   blockMasterId: any;
+  stateCode: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BranchSetupComponent>, public validationService: ValidationService,) {
@@ -119,7 +120,7 @@ export class BranchSetupComponent implements OnInit {
   // }
   changeState(value) {
     let stateId = value;
-
+    this.stateCode = this.stateList.find(x => x.stateMasterId == value)?.stateCode;
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       stateId: stateId
@@ -168,6 +169,7 @@ export class BranchSetupComponent implements OnInit {
       branchId: this.data.editMode == false ? "0" : this.data.branchDetails.branchId,
       regionMasterId: this.branchForm.value.region,
       projectMasterId: this.branchForm.value.subVerticleProject,
+      stateCode: this.stateCode,
       blockMasterId: this.branchForm.value.block,
       branchName: this.branchForm.value.branchName,
       branchTypeMasterId: this.branchForm.value.branchType,
