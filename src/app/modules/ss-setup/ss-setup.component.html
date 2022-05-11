@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">SS Setup</h2>
+                </div>
+                <form class="form-signin" [formGroup]="ssForm">
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" [ngClass]="{'is-invalid': f.region.invalid && f.region.touched, 'is-valid': 
+                                f.region.valid && (f.region.dirty || f.region.touched)}">
+                                <option value="">-- Select region --</option>
+                                <!-- <option *ngFor="let region of regionList; index as i" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}</option> -->
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">
+                                    Region selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
+                                'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
+                                <option value="">-- Select branch --</option>
+                                <!-- <option *ngFor="let branch of branchList; index as i" value="{{branch.branchMasterId}}">
+                                    {{branch.branchName}}</option> -->
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">
+                                    Branch selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
