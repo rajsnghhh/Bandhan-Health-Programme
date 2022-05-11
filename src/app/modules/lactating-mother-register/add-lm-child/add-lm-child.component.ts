@@ -20,7 +20,7 @@ export class AddLmChildComponent implements OnInit {
   after12m: boolean;
   after18m: boolean;
   after24m: boolean;
-  childMuaaList: Array<any> = [];
+  childMuacList: Array<any> = [];
   muacRegisterId6month: any;
   muacRegisterId12month: any;
   muacRegisterId18month: any;
@@ -38,7 +38,6 @@ export class AddLmChildComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data?.childWiselactatingmotherList)
     this.childDob = this.data?.childWiselactatingmotherList?.dob;
     this.editMode = this.data.editMode;
     this.panelOpenState = false;
@@ -60,11 +59,11 @@ export class AddLmChildComponent implements OnInit {
       childId: this.data?.childWiselactatingmotherList?.childDetailId
     }
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res: any) => {
-      this.childMuaaList = res?.responseObject;
-      this.muacRegisterId6month = this.childMuaaList.find(month => month.muacForMonth == "6")?.muacRegisterId;
-      this.muacRegisterId12month = this.childMuaaList.find(month => month.muacForMonth == "12")?.muacRegisterId;
-      this.muacRegisterId18month = this.childMuaaList.find(month => month.muacForMonth == "18")?.muacRegisterId;
-      this.muacRegisterId24month = this.childMuaaList.find(month => month.muacForMonth == "24")?.muacRegisterId;
+      this.childMuacList = res?.responseObject;
+      this.muacRegisterId6month = this.childMuacList.find(month => month.muacForMonth == "6")?.muacRegisterId;
+      this.muacRegisterId12month = this.childMuacList.find(month => month.muacForMonth == "12")?.muacRegisterId;
+      this.muacRegisterId18month = this.childMuacList.find(month => month.muacForMonth == "18")?.muacRegisterId;
+      this.muacRegisterId24month = this.childMuacList.find(month => month.muacForMonth == "24")?.muacRegisterId;
       if (this.data.editMode == false) {
         this.childBirthForm.reset();
       } else {
@@ -77,22 +76,22 @@ export class AddLmChildComponent implements OnInit {
           ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
           ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
           ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
-          muacDate6: this.childMuaaList.find(month => month.muacForMonth == "6")?.muacRecordDate,
-          muacDate12: this.childMuaaList.find(month => month.muacForMonth == "12")?.muacRecordDate,
-          muacDate18: this.childMuaaList.find(month => month.muacForMonth == "18")?.muacRecordDate,
-          muacDate24: this.childMuaaList.find(month => month.muacForMonth == "24")?.muacRecordDate,
-          height6month: this.childMuaaList.find(month => month.muacForMonth == "6")?.height,
-          height12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.height,
-          height18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.height,
-          height24month: this.childMuaaList.find(month => month.muacForMonth == "24")?.height,
-          weight6month: this.childMuaaList.find(month => month.muacForMonth == "6")?.weight,
-          weight12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.weight,
-          weight18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.weight,
-          weight24month: this.childMuaaList.find(month => month.muacForMonth == "24")?.weight,
-          muac6month: this.childMuaaList.find(month => month.muacForMonth == "6")?.muac,
-          muac12month: this.childMuaaList.find(month => month.muacForMonth == "12")?.muac,
-          muac18month: this.childMuaaList.find(month => month.muacForMonth == "18")?.muac,
-          muac24month: this.childMuaaList.find(month => month.muacForMonth == "24")?.muac,
+          muacDate6: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
+          muacDate12: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
+          muacDate18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
+          muacDate24: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
+          height6month: this.childMuacList.find(month => month.muacForMonth == "6")?.height,
+          height12month: this.childMuacList.find(month => month.muacForMonth == "12")?.height,
+          height18month: this.childMuacList.find(month => month.muacForMonth == "18")?.height,
+          height24month: this.childMuacList.find(month => month.muacForMonth == "24")?.height,
+          weight6month: this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
+          weight12month: this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
+          weight18month: this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
+          weight24month: this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
+          muac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
+          muac12month: this.childMuacList.find(month => month.muacForMonth == "12")?.muac,
+          muac18month: this.childMuacList.find(month => month.muacForMonth == "18")?.muac,
+          muac24month: this.childMuacList.find(month => month.muacForMonth == "24")?.muac,
           firstVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate,
           secondVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate,
         })
@@ -350,7 +349,6 @@ export class AddLmChildComponent implements OnInit {
         return;
       }
     }
-    console.log(this.childBirthForm)
 
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {

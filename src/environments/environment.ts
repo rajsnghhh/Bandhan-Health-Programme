@@ -24,6 +24,9 @@ export const environment = {
 
   //Soumen Machine
   // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
+
+  // Chayan Machine
+  // apiUrl: 'http://localhost:6180/bhp/api/v1/'
 };
 
 /*
