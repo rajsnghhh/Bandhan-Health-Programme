@@ -113,6 +113,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if (routeId == 41) {
       this.router.navigate(['/gp']);
     }
+    
+    if (routeId == 49) {
+      this.router.navigate(['/village-setup']);
+    }
 
     if (routeId == 65) {
       this.router.navigate(['/Baseline-Survey/create']);

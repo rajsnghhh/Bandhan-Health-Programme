@@ -25,7 +25,10 @@ const routes: Routes = [
   { path: 'acr', loadChildren: () => import('./modules/all-children-register/all-child-register.module').then(m => m.AllChildRegisterModule), canActivate: [AuthGuard] },
   { path: 'lmr', loadChildren: () => import('./modules/lactating-mother-register/lm-register.module').then(m => m.LmRegisterModule), canActivate: [AuthGuard] },
   { path: 'pw-register', loadChildren: () => import('./modules/pregnant-women-register/pw-register.module').then(m => m.PwRegisterModule), canActivate: [AuthGuard] },
-  { path: 'daily-activity-register', loadChildren: () => import('./modules/daily-activity-register/daily-activity-register.module').then(m => m.DailyActivityRegisterModule) },
+  { path: 'daily-activity-register', loadChildren: () => import('./modules/daily-activity-register/daily-activity-register.module').then(m => m.DailyActivityRegisterModule), canActivate: [AuthGuard] },
+  { path: 'village-setup', loadChildren: () => import('./modules/village-setup/village-setup.module').then(m => m.VillageSetupModule), canActivate: [AuthGuard] },
+  { path: 'ss-setup', loadChildren: () => import('./modules/ss-setup/ss-setup.module').then(m => m.SsSetupModule), canActivate: [AuthGuard] },
+  { path: 'privacy_policy', loadChildren: () => import('./modules/shared/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule) },
   { path: '**', redirectTo: '' },
 ];
 

@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Village Setup</h2>
+                </div>
+                <form class="form-signin" [formGroup]="villageForm">
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="state">State :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeState($event.target.value)"
+                                formControlName="state" [ngClass]="{'is-invalid': f.state.invalid && f.state.touched, 'is-valid': 
+                                f.state.valid && (f.state.dirty || f.state.touched)}">
+                                <option value="">-- Select State --</option>
+                                <option *ngFor="let state of stateList; index as i" value="{{state.stateMasterId}}">
+                                    {{state.stateName}}</option>
+                            </select>
+                            <div *ngIf="f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">
+                                    State selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="district">District :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeDistrict($event.target.value)"
+                                formControlName="district" [ngClass]="{'is-invalid': f.district.invalid && f.district.touched,
+                                'is-valid': f.district.valid && (f.district.dirty || f.district.touched)}">
+                                <option value="">-- Select District --</option>
+                                <option *ngFor="let district of districtList; index as i"
+                                    value="{{district.districtMasterId}}">
+                                    {{district.districtName}}</option>
+                            </select>
+                            <div *ngIf="f.district.errors" class="invalid-feedback">
+                                <div *ngIf="f.district.errors.required">
+                                    District selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" [ngClass]="{'is-invalid': f.block.invalid && f.block.touched,
+                                'is-valid': f.block.valid && (f.block.dirty || f.block.touched)}">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of blockList; index as i" value="{{block.blockMasterId}}">
+                                    {{block.blockName}} </option>
+                            </select>
+                            <div *ngIf="f.block.errors" class="invalid-feedback">
+                                <div *ngIf="f.block.errors.required">
+                                    Block selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{
+                              'is-invalid': f.gp.invalid && f.gp.touched,
+                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
+                            }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <!-- <option *ngFor="let gp of gpDtoList">
+                                    {{ gp.name }}
+                                </option> -->
+                            </select>
+                            <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                <div *ngIf="f.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
