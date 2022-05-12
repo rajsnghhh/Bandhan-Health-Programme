@@ -32,7 +32,7 @@ export class BranchSetupComponent implements OnInit {
     this.createForm();
     this.allDropdownValue();
     if (this.data.editMode == false) {
-      this.branchForm.reset();
+      // this.branchForm.reset();
     } else {
       this.changeSubVertical(this.data.branchDetails.subverticalMasterId);
 

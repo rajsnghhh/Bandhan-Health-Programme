@@ -88,6 +88,8 @@
           class="form-control"
           placeholder="Enter Pin Code"
           formControlName="pinCode"
+          (keypress)="validationService.onlyInteger($event)"
+          maxlength="10"
           [ngClass]="{
             'is-invalid': f.pinCode.invalid && f.pinCode.touched,
             'is-valid':
@@ -99,11 +101,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="addEditBtn">
-        <button type="submit" class="btn btn-success" (click)="onSave()">
-          Save
-        </button>
-      </div> -->
   </form>
 </div>
 

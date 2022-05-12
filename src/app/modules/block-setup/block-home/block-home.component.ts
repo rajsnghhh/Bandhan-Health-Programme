@@ -19,6 +19,7 @@ export class BlockHomeComponent implements OnInit {
   stateWiseDistrictList: Array<any> = [];
   districtWiseBlockList: Array<any> = [];
   stateId: any;
+  districtId: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -38,21 +39,24 @@ export class BlockHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(BlockSetupFormComponent, {
       width: '500px',
       height: '350px',
-      data: {}
+      data: { editMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getBlockList(this.districtId);
     });
   }
 
-  openEditBlock() {
+  openEditBlock(blockDetails) {
+    console.log(blockDetails)
     const dialogRef = this.dialog.open(BlockSetupFormComponent, {
       width: '530px',
       height: '350px',
-      data: {}
+      data: { editMode: true, blockInfo: blockDetails }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getBlockList(this.districtId);
     });
   }
 
@@ -84,23 +88,51 @@ export class BlockHomeComponent implements OnInit {
   }
 
   changeDistrict(value) {
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      districtMasterId: value
-    }
-    this.http.post(`${this.httpService.baseURL}block/getListOfAllBlock`, Dto).subscribe((res: any) => {
-      this.districtWiseBlockList = res.responseObject?.blockList;
-    });
+    this.districtId = value
+    this.getBlockList(this.districtId);
     if (!this.stateSelectForm.value.district) {
       this.districtWiseBlockList = [];
     }
   }
 
-  onDelete() {
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+  getBlockList(districtId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      districtMasterId: districtId
+    }
+    this.http.post(`${this.httpService.baseURL}block/getListOfAllBlock`, Dto).subscribe((res: any) => {
+      this.districtWiseBlockList = res.responseObject?.blockList;
+    });
+  }
 
-      // })
+  onDelete(blockDetails) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      blockMasterId: blockDetails.blockMasterId
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}block/deleteBlock`, Dto).subscribe((res: any) => {
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.getBlockList(this.districtId);
+        } else {
+          this.showError(res.message)
+        }
+      })
     }).catch(() => '');
+  }
+
+  /* Show success message toaster */
+  showSuccess(message) {
+    this.toaster.success(message, 'Success', {
+      timeOut: 3000,
+    });
+  }
+
+  /* Show Error message toaster */
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
   }
 }
