@@ -43,7 +43,6 @@
                     </div>
                 </div>
 
-
             </div>
 
             <div class="white_box_tittle list_header">
@@ -74,8 +73,9 @@
                                     <td>{{item.ssHusbandOrGuardianName}}</td>
                                     <td>{{item.ssAddress}}</td>
                                     <td>{{item.villageDto.villageName}}</td>
-                                    <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"></i>
-                                        <!--  *ngIf="updateMode" (click)="editDARModal(editDAR, item)" -->
+                                    <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
+                                            (click)="editSSForm(item, createSS)"></i>
+                                        <!--  *ngIf="updateMode" -->
                                         <i class="fas fa-trash" title="Delete SS"></i>
                                         <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
                                     </td>
@@ -96,7 +96,7 @@
     </div>
 </div>
 
-<ng-template #createSS let-modal>
+<ng-template #createSS>
 
     <div class="modal-content">
         <div class="modal-header">
@@ -118,9 +118,10 @@
             <form class="form-signin" [formGroup]="ssCreateForm">
                 <div class="row">
                     <div class="form-group col-md">
-                        <label for="ssName">First Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" placeholder="Enter SS Name" formControlName="ssName"
-                            maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                        <label for="ssName">Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Swasthya Sahayika Name"
+                            formControlName="ssName" maxlength="20"
+                            (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                             style="text-transform: capitalize" [ngClass]="{'is-invalid': c.ssName.invalid && c.ssName.touched,'is-valid': c.ssName.valid && 
                             (c.ssName.dirty || c.ssName.touched)}" />
                         <div *ngIf="c.ssName.errors" class="invalid-feedback">
@@ -136,7 +137,7 @@
                     <div class="form-group col-md">
                         <label for="husbandName">Husband/Guardian’s:&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" maxlength="20" placeholder="Enter Husband Name"
+                        <input type="text" class="form-control" maxlength="20" placeholder="Husband Name"
                             formControlName="husbandName" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                             style="text-transform: capitalize" [ngClass]="{'is-invalid': c.husbandName.invalid && c.husbandName.touched,
                             'is-valid': c.husbandName.valid && (c.husbandName.dirty || c.husbandName.touched)}" />
@@ -151,17 +152,17 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="mobile">Mobile No:</label>
+                        <label for="contact">Contact Number:</label>
                         <input type="" class="form-control" maxlength="10"
-                            (keypress)="validationService.onlyInteger($event)" placeholder="Enter Mobile No"
-                            formControlName="mobile" [ngClass]="{'is-invalid': c.mobile.invalid && 
-                          c.mobile.touched}" />
-                        <div *ngIf="c.mobile.errors" class="invalid-feedback">
-                            <div *ngIf="c.mobile.errors.minlength">
-                                Mobile No. should be of 10 digit
+                            (keypress)="validationService.onlyInteger($event)" placeholder="e.g. 9244646409"
+                            formControlName="contactNo" [ngClass]="{'is-invalid': c.contactNo.invalid && 
+                          c.contactNo.touched}" />
+                        <div *ngIf="c.contactNo.errors" class="invalid-feedback">
+                            <div *ngIf="c.contactNo.errors.minlength">
+                                Contact No. should be of 10 digit
                             </div>
-                            <div *ngIf="c.mobile.errors.pattern">
-                                Mobile No. should be starting with 6, 7, 8 or 9
+                            <div *ngIf="c.contactNo.errors.pattern">
+                                Contact No. should be starting with 6, 7, 8 or 9
                             </div>
                         </div>
                     </div>
@@ -170,15 +171,12 @@
                 <div class="row">
                     <div class="form-group col-md">
                         <label for="address">Address:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Address" formControlName="address"
-                            [ngClass]="{'is-invalid': c.address.invalid && c.address.touched,
+                        <input type="text" class="form-control" placeholder="e.g. Box 564, Disneyland"
+                            formControlName="address" [ngClass]="{'is-invalid': c.address.invalid && c.address.touched,
                             'is-valid': c.address.valid && (c.address.dirty || c.address.touched)}" />
                         <div *ngIf="c.address.errors" class="invalid-feedback">
                             <div *ngIf="c.address.errors.required">
                                 Address is required
-                            </div>
-                            <div *ngIf="c.address.errors.minlength">
-                                Minimum length should be 3
                             </div>
                         </div>
                     </div>
@@ -220,8 +218,7 @@
 
                     <div class="form-group col-md">
                         <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <select class="form-select" formControlName="gram"
-                            id="gram" [ngClass]="{'is-invalid': c.gram.invalid && c.gram.touched,
+                        <select class="form-select" formControlName="gram" id="gram" [ngClass]="{'is-invalid': c.gram.invalid && c.gram.touched,
                           'is-valid': c.gram.valid && (c.gram.dirty || c.gram.touched)}">
                             <option value="">-- Select Village --</option>
                             <option *ngFor="let vill of villList" value="{{vill.villageMasterId}}">
@@ -259,13 +256,10 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn" (click)="saveSSForm()">Submit</button>
+                <button type="button" class=" btn btn-primary bttn" (click)="saveSSForm()">Save</button>
             </div>
         </div>
 
-
-
     </div>
-
 
 </ng-template>
