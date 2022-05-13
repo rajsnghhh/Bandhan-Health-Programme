@@ -26,7 +26,7 @@ export class GpHomeComponent implements OnInit {
 
   openCreateBlock() {
     const dialogRef = this.dialog.open(GpSetupFormComponent, {
-      width: '500px',
+      width: '600px',
       height: '350px',
       data: {}
     });

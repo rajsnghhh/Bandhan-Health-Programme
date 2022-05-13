@@ -21,10 +21,10 @@
             'is-valid': f.state.valid && (f.state.dirty || f.state.touched)
           }"
         >
-          <option value="">-- Select State --</option>
-          <!-- <option *ngFor="let state of stateList">
-                  {{state.stateName}}
-                </option> -->
+        <option value="">-- Select state --</option>
+        <option *ngFor="let state of stateList" [value]="state.stateMasterId">
+          {{state.stateName}}
+        </option>
         </select>
         <div *ngIf="f.state.errors" class="invalid-feedback">
           <div *ngIf="f.state.errors.required">State selection is required</div>
@@ -45,10 +45,10 @@
               f.district.valid && (f.district.dirty || f.district.touched)
           }"
         >
-          <option value="">-- Select District --</option>
-          <!-- <option *ngFor="let state of stateList">
-                  {{state.stateName}}
-                </option> -->
+        <option value="">-- Select district --</option>
+        <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
+          {{district.districtName}}
+        </option>
         </select>
         <div *ngIf="f.state.errors" class="invalid-feedback">
           <div *ngIf="f.state.errors.required">
@@ -88,6 +88,8 @@
           class="form-control"
           placeholder="Enter Pin Code"
           formControlName="pinCode"
+          (keypress)="validationService.onlyInteger($event)"
+          maxlength="10"
           [ngClass]="{
             'is-invalid': f.pinCode.invalid && f.pinCode.touched,
             'is-valid':
@@ -99,11 +101,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="addEditBtn">
-        <button type="submit" class="btn btn-success" (click)="onSave()">
-          Save
-        </button>
-      </div> -->
   </form>
 </div>
 
