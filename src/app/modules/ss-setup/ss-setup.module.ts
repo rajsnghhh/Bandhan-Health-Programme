@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SsSetupRoutingModule } from './ss-setup-routing.module';
 import { SsSetupComponent } from './ss-setup.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     SsSetupRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule
   ]
 })
 export class SsSetupModule { }

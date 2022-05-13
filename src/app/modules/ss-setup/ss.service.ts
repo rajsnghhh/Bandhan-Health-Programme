@@ -10,7 +10,24 @@ export class SsService {
 
   constructor(private http: HttpClient) { }
 
-  // getStateList(obj): any {
-  //   return this.http.post(`${this.baseURL}state/getListOfAllStates`, obj)
-  // }
+  listOfBranchesOfARegion(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
+  }
+
+  listOfswasthyasahayika(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getSSOfABranchSimpler`, obj)
+  }
+
+  blockGPVillOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
+  }
+
+  staffListOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj)
+  }
+
+  ssSaveUpdate(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/saveOrUpdate`, obj)
+  }
+
 }

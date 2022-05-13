@@ -1,47 +1,271 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="white_box QA_section mb_30">
+    <div class="white_box QA_section mb_30">
+        <h2 class="page-title">Create Swasthya Sahayika </h2>
 
-                <div id="header-fixed" style="display: flex;">
-                    <h2 class="page-title">SS Setup</h2>
-                </div>
-                <form class="form-signin" [formGroup]="ssForm">
-                    <div class="row">
-                        <div class="form-group col-md">
-                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeRegion($event.target.value)"
-                                formControlName="region" [ngClass]="{'is-invalid': f.region.invalid && f.region.touched, 'is-valid': 
+        <form class="form-signin" [formGroup]="ssForm">
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region"
+                        [ngClass]="{'is-invalid': f.region.invalid && f.region.touched, 'is-valid': 
                                 f.region.valid && (f.region.dirty || f.region.touched)}">
-                                <option value="">-- Select region --</option>
-                                <!-- <option *ngFor="let region of regionList; index as i" value="{{region.regionMasterId}}">
-                                    {{region.regionName}}</option> -->
-                            </select>
-                            <div *ngIf="f.region.errors" class="invalid-feedback">
-                                <div *ngIf="f.region.errors.required">
-                                    Region selection is required
-                                </div>
-                            </div>
+                        <option value="">-- Select Region --</option>
+                        <option *ngFor="let region of regionList; index as i" value="{{region.regionMasterId}}">
+                            {{region.regionName}}</option>
+                    </select>
+                    <div *ngIf="f.region.errors" class="invalid-feedback">
+                        <div *ngIf="f.region.errors.required">
+                            Region selection is required
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group col-md">
-                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeBranch($event.target.value)"
-                                formControlName="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
+                <div class="form-group col-md">
+                    <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" (change)="changeBranch($event.target.value)" formControlName="branch"
+                        [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
-                                <option value="">-- Select branch --</option>
-                                <!-- <option *ngFor="let branch of branchList; index as i" value="{{branch.branchMasterId}}">
-                                    {{branch.branchName}}</option> -->
-                            </select>
-                            <div *ngIf="f.branch.errors" class="invalid-feedback">
-                                <div *ngIf="f.branch.errors.required">
-                                    Branch selection is required
-                                </div>
+                        <option value="">-- Select Branch --</option>
+                        <option *ngFor="let branch of branchList; index as i" value="{{branch.branchId}}">
+                            {{branch.branchName}}</option>
+                    </select>
+                    <div *ngIf="f.branch.errors" class="invalid-feedback">
+                        <div *ngIf="f.branch.errors.required">
+                            Branch selection is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md" *ngIf="ssForm.value.branch">
+                        <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
+                        <!-- <i class="fas fa-plus-circle" (click)="createSwasthyaSahayika(createSS)" style="cursor: pointer" title="Add Child"></i> -->
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="white_box_tittle list_header">
+
+                <div class="QA_table ">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                        <table
+                            class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                            role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                            <thead id="header-fixed">
+                                <tr>
+                                    <th>SL<br>No</th>
+                                    <th>Name</th>
+                                    <th>Guardian<br> Name</th>
+                                    <th>Address</th>
+                                    <th>Gram Sansad/ Village/<br> locality</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr
+                                    *ngFor="let item of ssList  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                    <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                    <td>{{item.ssName}} </td>
+                                    <td>{{item.ssHusbandOrGuardianName}}</td>
+                                    <td>{{item.ssAddress}}</td>
+                                    <td>{{item.villageDto.villageName}}</td>
+                                    <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"></i>
+                                        <!--  *ngIf="updateMode" (click)="editDARModal(editDAR, item)" -->
+                                        <i class="fas fa-trash" title="Delete SS"></i>
+                                        <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                            (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                        </pagination-controls>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<ng-template #createSS let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title">Create SS</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="ssModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <form class="form-signin" [formGroup]="ssCreateForm">
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="ssName">First Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Enter SS Name" formControlName="ssName"
+                            maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize" [ngClass]="{'is-invalid': c.ssName.invalid && c.ssName.touched,'is-valid': c.ssName.valid && 
+                            (c.ssName.dirty || c.ssName.touched)}" />
+                        <div *ngIf="c.ssName.errors" class="invalid-feedback">
+                            <div *ngIf="c.ssName.errors.required">
+                                SS Name is required
+                            </div>
+                            <div *ngIf="c.ssName.errors.minlength">
+                                Minimum length should be 3
                             </div>
                         </div>
                     </div>
-                </form>
+
+                    <div class="form-group col-md">
+                        <label for="husbandName">Husband/Guardian’s:&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" maxlength="20" placeholder="Enter Husband Name"
+                            formControlName="husbandName" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize" [ngClass]="{'is-invalid': c.husbandName.invalid && c.husbandName.touched,
+                            'is-valid': c.husbandName.valid && (c.husbandName.dirty || c.husbandName.touched)}" />
+                        <div *ngIf="c.husbandName.errors" class="invalid-feedback">
+                            <div *ngIf="c.husbandName.errors.required">
+                                Husband/ Guardian’s Name is required
+                            </div>
+                            <div *ngIf="c.husbandName.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="mobile">Mobile No:</label>
+                        <input type="" class="form-control" maxlength="10"
+                            (keypress)="validationService.onlyInteger($event)" placeholder="Enter Mobile No"
+                            formControlName="mobile" [ngClass]="{'is-invalid': c.mobile.invalid && 
+                          c.mobile.touched}" />
+                        <div *ngIf="c.mobile.errors" class="invalid-feedback">
+                            <div *ngIf="c.mobile.errors.minlength">
+                                Mobile No. should be of 10 digit
+                            </div>
+                            <div *ngIf="c.mobile.errors.pattern">
+                                Mobile No. should be starting with 6, 7, 8 or 9
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="address">Address:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Enter Address" formControlName="address"
+                            [ngClass]="{'is-invalid': c.address.invalid && c.address.touched,
+                            'is-valid': c.address.valid && (c.address.dirty || c.address.touched)}" />
+                        <div *ngIf="c.address.errors" class="invalid-feedback">
+                            <div *ngIf="c.address.errors.required">
+                                Address is required
+                            </div>
+                            <div *ngIf="c.address.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" (change)="changeBlock($event.target.value)" formControlName="block"
+                            id="block" [ngClass]="{'is-invalid': c.block.invalid && c.block.touched, 'is-valid':
+                            c.block.valid && (c.block.dirty || c.block.touched) }">
+                            <option value="">-- Select Block --</option>
+                            <option *ngFor="let block of blockList" value="{{block.blockMasterId}}">
+                                {{ block.blockName }}
+                            </option>
+                        </select>
+                        <div *ngIf="c.block.errors" class="invalid-feedback">
+                            <div *ngIf="c.block.errors.required">Block selection is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" (change)="changeGP($event.target.value)" formControlName="gp"
+                            id="gp" [ngClass]="{'is-invalid': c.gp.invalid && c.gp.touched,
+                            'is-valid': c.gp.valid && (c.gp.dirty || c.gp.touched)}">
+                            <option value="">-- Select Municipality --</option>
+                            <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                {{ gp.name }}
+                            </option>
+                        </select>
+                        <div *ngIf="c.gp.errors" class="invalid-feedback">
+                            <div *ngIf="c.gp.errors.required">
+                                GP selection is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="gram"
+                            id="gram" [ngClass]="{'is-invalid': c.gram.invalid && c.gram.touched,
+                          'is-valid': c.gram.valid && (c.gram.dirty || c.gram.touched)}">
+                            <option value="">-- Select Village --</option>
+                            <option *ngFor="let vill of villList" value="{{vill.villageMasterId}}">
+                                {{ vill.villageName }}
+                            </option>
+                        </select>
+                        <div *ngIf="c.gram.errors" class="invalid-feedback">
+                            <div *ngIf="c.gram.errors.required">
+                                Village selection is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="staff">Staff In Charge:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="staff" id="staff" [ngClass]="{
+                          'is-invalid': c.staff.invalid && c.staff.touched,
+                          'is-valid': c.staff.valid && (c.staff.dirty || c.staff.touched)
+                        }">
+                            <option value="">-- Select Staff --</option>
+                            <option *ngFor="let staff of staffList" value="{{staff.user_id}}">
+                                {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}}
+                            </option>
+                        </select>
+                        <div *ngIf="c.staff.errors" class="invalid-feedback">
+                            <div *ngIf="c.staff.errors.required">
+                                Staff Incharge selection is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary bttn" (click)="saveSSForm()">Submit</button>
             </div>
         </div>
+
+
+
     </div>
-</div>
+
+
+</ng-template>
