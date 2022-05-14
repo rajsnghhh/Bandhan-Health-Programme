@@ -89,7 +89,7 @@
           placeholder="Enter Pin Code"
           formControlName="pinCode"
           (keypress)="validationService.onlyInteger($event)"
-          maxlength="10"
+          maxlength="6"
           [ngClass]="{
             'is-invalid': f.pinCode.invalid && f.pinCode.touched,
             'is-valid':
