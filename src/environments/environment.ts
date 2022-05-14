@@ -22,7 +22,7 @@ export const environment = {
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 
-  //Soumen Machine
+  // Soumen Machine
   // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
 
   // Chayan Machine

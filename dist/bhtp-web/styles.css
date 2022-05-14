@@ -7405,6 +7405,10 @@ select:focus {
   color: red !important;
   cursor: pointer;
   font-size: 1.5em;
+}.fa-ellipsis-v:hover{
+  color: #14accf !important;
+  cursor: pointer;
+  font-size: 1.8em;
 }/******************************************************/html,
 body {
   height: 100%;

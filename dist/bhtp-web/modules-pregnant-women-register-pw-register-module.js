@@ -589,7 +589,7 @@ class SinglePwListComponent {
             this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
             this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
             this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-            this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList[this.data.index].pregnantWomanRegisterDetailList;
+            this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList.find(x => x.familyDetailId == this.data.id).pregnantWomanRegisterDetailList;
             console.log(this.pregnantWomanRegisterDetailList, 'listpage');
         });
     }
@@ -639,6 +639,7 @@ class SinglePwListComponent {
                 this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
                     this.dialogRef.close();
                     this.showSuccess('Delete');
+                    this.getPregnantWomenList(this.data.villageMasterId);
                 });
             }).catch(() => '');
         }
@@ -933,7 +934,7 @@ function PwRegisterComponent_ng_template_54_tr_21_Template(rf, ctx) { if (rf & 1
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "i", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PwRegisterComponent_ng_template_54_tr_21_Template_i_click_12_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r32); const i_r30 = ctx.index; const ctx_r31 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r31.openPwStatus((ctx_r31.p - 1) * 25 + i_r30 ? (ctx_r31.p - 1) * 25 + i_r30 : i_r30); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PwRegisterComponent_ng_template_54_tr_21_Template_i_click_12_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r32); const item_r29 = ctx.$implicit; const ctx_r31 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r31.openPwStatus(item_r29); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -942,7 +943,7 @@ function PwRegisterComponent_ng_template_54_tr_21_Template(rf, ctx) { if (rf & 1
     const i_r30 = ctx.index;
     const ctx_r28 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"]((ctx_r28.p - 1) * 25 + i_r30 + 1 ? (ctx_r28.p - 1) * 25 + i_r30 + 1 : i_r30 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"]((ctx_r28.p - 1) * 6 + i_r30 + 1 ? (ctx_r28.p - 1) * 6 + i_r30 + 1 : i_r30 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r29.familyNumber);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -952,7 +953,7 @@ function PwRegisterComponent_ng_template_54_tr_21_Template(rf, ctx) { if (rf & 1
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r29.pregnancyStatus == "N" ? "No" : "Yes");
 } }
-const _c1 = function (a1) { return { itemsPerPage: 25, currentPage: a1 }; };
+const _c1 = function (a1) { return { itemsPerPage: 6, currentPage: a1 }; };
 function PwRegisterComponent_ng_template_54_Template(rf, ctx) { if (rf & 1) {
     const _r34 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 37);
@@ -1026,15 +1027,16 @@ function PwRegisterComponent_ng_template_57_tr_23_Template(rf, ctx) { if (rf & 1
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "i", 44);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PwRegisterComponent_ng_template_57_tr_23_Template_i_click_14_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r40); const i_r38 = ctx.index; const ctx_r39 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r39.openPwList(i_r38); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PwRegisterComponent_ng_template_57_tr_23_Template_i_click_14_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r40); const i_r38 = ctx.index; const item_r37 = ctx.$implicit; const ctx_r39 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r39.openPwList(i_r38, item_r37); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const item_r37 = ctx.$implicit;
     const i_r38 = ctx.index;
+    const ctx_r36 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](i_r38 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"]((ctx_r36.p - 1) * 6 + i_r38 + 1 ? (ctx_r36.p - 1) * 6 + i_r38 + 1 : i_r38 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r37.familyNumber);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -1047,6 +1049,7 @@ function PwRegisterComponent_ng_template_57_tr_23_Template(rf, ctx) { if (rf & 1
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r37.pregnancyStatus == "N" ? "No" : "Yes");
 } }
 function PwRegisterComponent_ng_template_57_Template(rf, ctx) { if (rf & 1) {
+    const _r42 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 37);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 38);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 39);
@@ -1080,8 +1083,12 @@ function PwRegisterComponent_ng_template_57_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "tbody");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](23, PwRegisterComponent_ng_template_57_tr_23_Template, 15, 8, "tr", 22);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](24, "filter");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](24, "paginate");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](25, "filter");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "pagination-controls", 42);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("pageChange", function PwRegisterComponent_ng_template_57_Template_pagination_controls_pageChange_26_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r42); const ctx_r41 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r41.p = $event; })("pageBoundsCorrection", function PwRegisterComponent_ng_template_57_Template_pagination_controls_pageBoundsCorrection_26_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r42); const ctx_r43 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r43.p = $event; });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1089,7 +1096,7 @@ function PwRegisterComponent_ng_template_57_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](23);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](24, 1, ctx_r10.allPregnantWomenList, ctx_r10.pwSearch));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](24, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](25, 4, ctx_r10.allPregnantWomenList, ctx_r10.pwSearch), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](7, _c1, ctx_r10.p)));
 } }
 class PwRegisterComponent {
     constructor(httpService, fb, sidebarService, baselineService, dialog, toaster) {
@@ -1243,13 +1250,13 @@ class PwRegisterComponent {
             this.loader = true;
         });
     }
-    openPwList(i) {
+    openPwList(i, pregnantWomenList) {
         const dialogRef = this.dialog.open(_single_pw_list_single_pw_list_component__WEBPACK_IMPORTED_MODULE_3__["SinglePwListComponent"], {
             width: '1000px',
             height: '550px',
             data: {
-                index: i,
-                singlePregnantWomenList: this.allPregnantWomenList[i],
+                id: pregnantWomenList.familyDetailId,
+                singlePregnantWomenList: pregnantWomenList,
                 villageMasterId: this.villageMasterId
             }
         });
@@ -1257,11 +1264,11 @@ class PwRegisterComponent {
             this.getPregnantWomenList(this.villageMasterId);
         });
     }
-    openPwStatus(i) {
+    openPwStatus(womenList) {
         const dialogRef = this.dialog.open(_pw_status_pw_status_component__WEBPACK_IMPORTED_MODULE_2__["PwStatusComponent"], {
             width: '500px',
             height: '270px',
-            data: { nonPregnantWomenList: this.nonPregnantWomenList[i] }
+            data: { nonPregnantWomenList: womenList }
         });
         dialogRef.afterClosed().subscribe(result => {
             this.getPregnantWomenList(this.villageMasterId);
@@ -1364,7 +1371,7 @@ PwRegisterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "mat-tab");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](56, PwRegisterComponent_ng_template_56_Template, 1, 0, "ng-template", 29);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](57, PwRegisterComponent_ng_template_57_Template, 25, 4, "ng-template", 30);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](57, PwRegisterComponent_ng_template_57_Template, 27, 9, "ng-template", 30);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1912,7 +1919,8 @@ class PwViewComponent {
         }
     }
     onSave() {
-        console.log(this.pwRegisterForm.value);
+        console.log(this.pwRegisterForm);
+        this.pwRegisterForm.markAllAsTouched();
         if (this.pwRegisterForm.valid) {
             if (this.data.createMode == true) {
                 let Dto = {

@@ -1151,7 +1151,6 @@ class DailyActivityRegisterComponent {
         this.editForm.disable();
     }
     editForms() {
-        console.log(this.editListCheck.ssId);
         this.editForm = this.fb.group({
             child: [''],
             ss: [this.editListCheck.visitedWithSS ? this.editListCheck.visitedWithSS : this.changeSS],
