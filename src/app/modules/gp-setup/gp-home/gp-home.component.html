@@ -29,9 +29,9 @@
                   }"
                 >
                   <option value="">-- Select State --</option>
-                  <!-- <option *ngFor="let state of stateList">
+                  <option *ngFor="let state of stateList" [value]="state.stateMasterId">
                     {{state.stateName}}
-                  </option> -->
+                  </option>
                 </select>
                 <div *ngIf="f.state.errors" class="invalid-feedback">
                   <div *ngIf="f.state.errors.required">
@@ -54,9 +54,9 @@
                   }"
                 >
                   <option value="">-- Select District --</option>
-                  <!-- <option *ngFor="let state of stateList">
-                    {{state.stateName}}
-                  </option> -->
+                  <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
+                    {{district.districtName}}
+                  </option>
                 </select>
                 <div *ngIf="f.district.errors" class="invalid-feedback">
                   <div *ngIf="f.district.errors.required">
@@ -79,9 +79,9 @@
                   }"
                 >
                   <option value="">-- Select Block --</option>
-                  <!-- <option *ngFor="let state of stateList">
-                    {{state.stateName}}
-                  </option> -->
+                  <option *ngFor="let block of blockList" [value]="block.blockMasterId">
+                    {{block.blockName}}
+                  </option>
                 </select>
                 <div *ngIf="f.block.errors" class="invalid-feedback">
                   <div *ngIf="f.block.errors.required">
@@ -104,7 +104,7 @@
                                 <th>SL<br>No</th>
                                 <th>State</th>
                                 <th>District</th>
-                                <th>Block Name</th>
+                                <th>Block</th>
                                 <th>GP/Municipality</th>
                                 <th>Type</th> 
                                 <th>Action</th>
@@ -123,10 +123,10 @@
                                     Onda
                                 </td>
                                 <td>
-                                    GP 1
+                                    gvjl 1
                                 </td>
                                 <td>
-                                    New
+                                    GP
                                 </td>
                                 <td>
                                     <i class="fas fa-edit" title="Edit" (click)="openEditBlock()"></i>

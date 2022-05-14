@@ -6,7 +6,7 @@
   </h1>
   
   <div mat-dialog-content>
-    <form class="form-signin" [formGroup]="blockForm">
+    <form class="form-signin" [formGroup]="gpForm">
       <div class="row">
         <div class="form-group col-md">
           <label for="state"
@@ -22,9 +22,9 @@
             }"
           >
             <option value="">-- Select State --</option>
-            <!-- <option *ngFor="let state of stateList">
-                    {{state.stateName}}
-                  </option> -->
+            <option *ngFor="let state of stateList" [value]="state.stateMasterId">
+              {{state.stateName}}
+            </option>
           </select>
           <div *ngIf="f.state.errors" class="invalid-feedback">
             <div *ngIf="f.state.errors.required">State selection is required</div>
@@ -46,9 +46,9 @@
             }"
           >
             <option value="">-- Select District --</option>
-            <!-- <option *ngFor="let state of stateList">
-                    {{state.stateName}}
-                  </option> -->
+            <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
+              {{district.districtName}}
+            </option>
           </select>
           <div *ngIf="f.state.errors" class="invalid-feedback">
             <div *ngIf="f.state.errors.required">
@@ -70,9 +70,9 @@
               }"
             >
               <option value="">-- Select Block --</option>
-              <!-- <option *ngFor="let state of stateList">
-                {{state.stateName}}
-              </option> -->
+              <option *ngFor="let block of blockList" [value]="block.blockMasterId">
+                {{block.blockName}}
+              </option>
             </select>
             <div *ngIf="f.block.errors" class="invalid-feedback">
               <div *ngIf="f.block.errors.required">
@@ -81,11 +81,13 @@
             </div>
           </div>
       </div>
-      <br />
+
+      <br>
+
       <div class="row">
         <div class="form-group col-md">
           <label for="gpName"
-            >gp Name :&nbsp;<span class="text-danger">*&nbsp;</span></label
+            >GP / Municipality Name :&nbsp;<span class="text-danger">*&nbsp;</span></label
           >
           <input
             type="text"
@@ -99,7 +101,7 @@
             }"
           />
           <div *ngIf="f.gpName.errors" class="invalid-feedback">
-            <div *ngIf="f.gpName.errors.required">gp Name is required</div>
+            <div *ngIf="f.gpName.errors.required">GP / Municipality Name is required</div>
           </div>
         </div>
   
@@ -107,17 +109,18 @@
           <label for="type"
             >Type :&nbsp;<span class="text-danger">*&nbsp;</span></label
           >
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Enter Type"
-            formControlName="type"
-            [ngClass]="{
-              'is-invalid': f.type.invalid && f.type.touched,
-              'is-valid':
-                f.type.valid && (f.type.dirty || f.type.touched)
-            }"
-          />
+         <select
+              class="form-select"
+              formControlName="type"
+              [ngClass]="{
+                'is-invalid': f.type.invalid && f.type.touched,
+                'is-valid': f.type.valid && (f.type.dirty || f.type.touched)
+              }"
+            >
+              <option value="">-- Select Block --</option>
+              <option value="GP"> GP </option>
+              <option value="M">Municipality</option>
+            </select>
           <div *ngIf="f.type.errors" class="invalid-feedback">
             <div *ngIf="f.type.errors.required">Type is required</div>
           </div>

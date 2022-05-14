@@ -15,6 +15,10 @@ import { GpSetupFormComponent } from '../gp-setup-form/gp-setup-form.component';
 })
 export class GpHomeComponent implements OnInit {
   stateSelectForm: FormGroup;
+  stateList: Array<any> = [];
+  stateWiseDistrictList: Array<any> = [];
+  blockList: Array<any> = [];
+  blockId: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -22,12 +26,20 @@ export class GpHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.stateList = res.responseObject.stateList;
+    });
   }
 
   openCreateBlock() {
     const dialogRef = this.dialog.open(GpSetupFormComponent, {
-      width: '600px',
-      height: '350px',
+      width: '45vw',
+      maxWidth: '100vw',
+      height: '345px',
       data: {}
     });
 
@@ -37,8 +49,9 @@ export class GpHomeComponent implements OnInit {
 
   openEditBlock() {
     const dialogRef = this.dialog.open(GpSetupFormComponent, {
-      width: '530px',
-      height: '350px',
+      width: '45vw',
+      maxWidth: '100vw',
+      height: '345px',
       data: {}
     });
 
@@ -58,13 +71,21 @@ export class GpHomeComponent implements OnInit {
   }
 
   changeState(value) {
-
+    let stateId = value;
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateId: stateId
+    }
+    this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+      this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+    });
   }
-  changeDistrict(value) {
 
+  changeDistrict(value) {
+    this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
   }
   changeBlock(value) {
-
+    this.blockId = value;
   }
 
   onDelete() {
