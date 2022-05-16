@@ -39,55 +39,55 @@
                 <div class="row">
                     <div class="form-group col-md" *ngIf="ssForm.value.branch">
                         <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
-                        <!-- <i class="fas fa-plus-circle" (click)="createSwasthyaSahayika(createSS)" style="cursor: pointer" title="Add Child"></i> -->
                     </div>
+
                 </div>
 
-            </div>
+                <div class="white_box_tittle list_header">
 
-            <div class="white_box_tittle list_header">
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                <div class="QA_table ">
-                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                        <table
-                            class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                            role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+                                <thead id="header-fixed">
+                                    <tr>
+                                        <th>SL<br>No</th>
+                                        <th>Name</th>
+                                        <th>Guardian<br> Name</th>
+                                        <th>Address</th>
+                                        <th>Gram Sansad/ Village/<br> locality</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                            <thead id="header-fixed">
-                                <tr>
-                                    <th>SL<br>No</th>
-                                    <th>Name</th>
-                                    <th>Guardian<br> Name</th>
-                                    <th>Address</th>
-                                    <th>Gram Sansad/ Village/<br> locality</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                                <tbody>
 
-                            <tbody>
+                                    <tr
+                                        *ngFor="let item of ssList  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td>{{item.ssName}} </td>
+                                        <td>{{item.ssHusbandOrGuardianName}}</td>
+                                        <td>{{item.ssAddress}}</td>
+                                        <td>{{item.villageDto.villageName}}</td>
+                                        <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
+                                                (click)="editSSForm(item, createSS)"></i>
+                                            <!--  *ngIf="updateMode" -->
+                                            <i class="fas fa-trash" title="Delete SS"
+                                                (click)="deleteSSForm(item, i)"></i>
+                                            <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
+                                        </td>
 
-                                <tr
-                                    *ngFor="let item of ssList  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                    <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                    <td>{{item.ssName}} </td>
-                                    <td>{{item.ssHusbandOrGuardianName}}</td>
-                                    <td>{{item.ssAddress}}</td>
-                                    <td>{{item.villageDto.villageName}}</td>
-                                    <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
-                                            (click)="editSSForm(item, createSS)"></i>
-                                        <!--  *ngIf="updateMode" -->
-                                        <i class="fas fa-trash" title="Delete SS"></i>
-                                        <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
-                                    </td>
+                                    </tr>
+                                </tbody>
 
-                                </tr>
-                            </tbody>
+                            </table>
+                            <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                            </pagination-controls>
 
-                        </table>
-                        <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                            (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                        </pagination-controls>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,8 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Create SS</h3>
+                    <h3 class="modal-title" id="modal-basic-title" *ngIf="!editssData?.ssId">Create SS</h3>
+                    <h3 class="modal-title" id="modal-basic-title" *ngIf="editssData?.ssId">Edit SS</h3>
                 </div>
 
                 <div class="col-md-2">
@@ -232,9 +233,28 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md">
+                    <div class="form-group col-md" *ngIf="!editssData?.ssId">
                         <label for="staff">Staff In Charge:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <select class="form-select" formControlName="staff" id="staff" [ngClass]="{
+                          'is-invalid': c.staff.invalid && c.staff.touched,
+                          'is-valid': c.staff.valid && (c.staff.dirty || c.staff.touched)
+                        }">
+                            <option value="">-- Select Staff --</option>
+                            <option *ngFor="let staff of staffList" value="{{staff.user_id}}">
+                                {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}}
+                            </option>
+                        </select>
+                        <div *ngIf="c.staff.errors" class="invalid-feedback">
+                            <div *ngIf="c.staff.errors.required">
+                                Staff Incharge selection is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md" *ngIf="editssData?.ssId">
+                        <label for="staff">Staff In Charge:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="staff" id="staff" [attr.disabled]="isDisabled"
+                            [ngClass]="{
                           'is-invalid': c.staff.invalid && c.staff.touched,
                           'is-valid': c.staff.valid && (c.staff.dirty || c.staff.touched)
                         }">

@@ -251,10 +251,6 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   modalDismiss() {
     this.modalReference.close();
-    let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
   }
 
   changeChildbox(e, item) {
@@ -315,10 +311,12 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
       this.swasthyaSahayika = res.responseObject;
     });
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(editDAR, {
-      windowClass: 'editDAR',
-    });
+    setTimeout(() => {
+      this.modalContent = '';
+      this.modalReference = this.modalService.open(editDAR, {
+        windowClass: 'editDAR',
+      });
+    }, 500)
 
     let post = {
       dataAccessDTO: {
