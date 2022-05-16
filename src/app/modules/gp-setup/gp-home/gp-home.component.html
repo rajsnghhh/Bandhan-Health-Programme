@@ -113,24 +113,24 @@
         
                         <tbody>
         
-                            <tr>
-                                <td>1</td>
-                                <td>State 1</td>
+                            <tr *ngFor="let item of gpMunicipality;index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.stateName}}</td>
                                 <td>
-                                    District 1
+                                  {{item.districtName}}
                                 </td>
                                 <td>
-                                    Onda
+                                  {{item.blockName}}
                                 </td>
                                 <td>
-                                    gvjl 1
+                                  {{item.gpMunicipalityName}}
                                 </td>
                                 <td>
-                                    GP
+                                  {{item.gpMunicipalityType}}
                                 </td>
                                 <td>
-                                    <i class="fas fa-edit" title="Edit" (click)="openEditBlock()"></i>
-                                    <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete()"></i>
+                                    <i class="fas fa-edit" title="Edit" (click)="openEditBlock(item)"></i>
+                                    <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(item)"></i>
                                 </td>
                             </tr>
                         </tbody>

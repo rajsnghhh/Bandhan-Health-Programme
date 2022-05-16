@@ -31,6 +31,24 @@ export class GpSetupFormComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
       this.stateList = res.responseObject.stateList;
     });
+
+    if (this.data.editMode) {
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        stateId: this.data.gpMunicipalityDetails.stateMasterId
+      }
+      this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+        this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+        this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == this.data.gpMunicipalityDetails.districtMasterId)?.blockList;
+      });
+      this.gpForm.patchValue({
+        state: this.data.gpMunicipalityDetails.stateMasterId,
+        district: this.data.gpMunicipalityDetails.districtMasterId,
+        block: this.data.gpMunicipalityDetails.blockMasterId,
+        gpName: this.data.gpMunicipalityDetails.gpMunicipalityName,
+        type: this.data.gpMunicipalityDetails.gpMunicipalityType,
+      })
+    }
   }
 
   createForm() {
@@ -61,10 +79,45 @@ export class GpSetupFormComponent implements OnInit {
     this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
   }
 
-  onSave() { console.log(this.gpForm.value) }
+  onSave() {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      gpMunicipalityId: this.data.editMode ? this.data.gpMunicipalityDetails.gpMunicipalityId : "0",
+      gpMunicipalityType: this.gpForm.value.type,
+      blockMasterId: this.gpForm.value.block,
+      gpMunicipalityName: this.gpForm.value.gpName,
+    }
+    if (this.gpForm.valid) {
+      this.http.post(`${this.httpService.baseURL}gpmunicipality/saveOrUpdate`, Dto).subscribe((res: any) => {
+        if (res.status) {
+          this.dialogRef.close();
+          this.showSuccess('GP / Municipality Created');
+        } else {
+          this.showError(res.message);
+        }
+      }, error => {
+        this.dialogRef.close();
+        this.showError('Error')
+      });
+
+    }
+  }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
+  /* Show success message toaster */
+  showSuccess(message) {
+    this.toaster.success(message, 'Success', {
+      timeOut: 3000,
+    });
+  }
+
+  /* Show Error message toaster */
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
+  }
 }

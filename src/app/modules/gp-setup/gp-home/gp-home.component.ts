@@ -19,6 +19,7 @@ export class GpHomeComponent implements OnInit {
   stateWiseDistrictList: Array<any> = [];
   blockList: Array<any> = [];
   blockId: any;
+  gpMunicipality: Array<any> = [];
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -40,22 +41,24 @@ export class GpHomeComponent implements OnInit {
       width: '45vw',
       maxWidth: '100vw',
       height: '345px',
-      data: {}
+      data: { editMode: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getListOfAllGpMunicipality(this.blockId);
     });
   }
 
-  openEditBlock() {
+  openEditBlock(item) {
     const dialogRef = this.dialog.open(GpSetupFormComponent, {
       width: '45vw',
       maxWidth: '100vw',
       height: '345px',
-      data: {}
+      data: { editMode: true, gpMunicipalityDetails: item }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getListOfAllGpMunicipality(this.blockId);
     });
   }
 
@@ -86,14 +89,50 @@ export class GpHomeComponent implements OnInit {
   }
   changeBlock(value) {
     this.blockId = value;
+    this.getListOfAllGpMunicipality(this.blockId);
   }
 
-  onDelete() {
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-      // this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
+  getListOfAllGpMunicipality(blockMasterId) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      blockMasterId: blockMasterId
+    }
+    this.http.post(`${this.httpService.baseURL}gpmunicipality/getListOfAllGpMunicipality`, Dto).subscribe((res: any) => {
+      this.gpMunicipality = res.responseObject?.gpMunicipality;
+    }, error => {
+      console.log(error)
+    });
+  }
 
-      // })
+  onDelete(item) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      gpMunicipalityId: item.gpMunicipalityId
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}gpmunicipality/deleteGpMunicipality`, Dto).subscribe((res: any) => {
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.getListOfAllGpMunicipality(this.blockId);
+        } else {
+          this.showError(res.message)
+        }
+      })
     }).catch(() => '');
+  }
+
+  /* Show success message toaster */
+  showSuccess(message) {
+    this.toaster.success(message, 'Success', {
+      timeOut: 3000,
+    });
+  }
+
+  /* Show Error message toaster */
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
   }
 
 }
