@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SsSetupRoutingModule } from './ss-setup-routing.module';
 import { SsSetupComponent } from './ss-setup.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -15,7 +15,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     SsSetupRoutingModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    FormsModule
   ]
 })
 export class SsSetupModule { }

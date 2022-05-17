@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
+import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { SsService } from './ss.service';
@@ -21,7 +22,6 @@ export class SsSetupComponent implements OnInit {
   page = 1;
   pageSize = 6;
   p: any;
-  registerSearch: any;
   ssList: Array<any> = [];
   modalContent: any;
   modalReference: any;
@@ -32,16 +32,30 @@ export class SsSetupComponent implements OnInit {
   staffList: Array<any> = [];
   editssData: any;
   isDisabled: boolean = false;
+  searchText: any;
+  searchFullscreen: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal,
-    private validationService: ValidationService, private route: Router) { }
+    private validationService: ValidationService, private route: Router, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
     this.createForm();
 
     this.regionList = this.sidebarService.listOfRegion;
     console.log(this.regionList);
+
+    //   this.updateMode = this.sidebarService.subMenuList
+    //   .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+    //   .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+    //   .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    // this.deleteMode = this.sidebarService.subMenuList
+    //   .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+    //   .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+    //   .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   ssModalDismiss() {
@@ -67,37 +81,24 @@ export class SsSetupComponent implements OnInit {
   }
 
   createSSForm() {
+    this.ssCreateForm = this.fb.group({
+      ssName: [this.editssData?.ssName ? this.editssData?.ssName : '', Validators.compose([Validators.required, Validators.minLength(3)])],
+      husbandName: [this.editssData?.ssHusbandOrGuardianName ? this.editssData?.ssHusbandOrGuardianName : '', Validators.compose([Validators.required, Validators.minLength(3)])],
+      contactNo: [this.editssData?.ssContactNo ? this.editssData?.ssContactNo : '', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
+      address: [this.editssData?.ssAddress ? this.editssData?.ssAddress : '', Validators.required],
+      block: [this.editssData?.blockDto?.blockId ? this.editssData?.blockDto?.blockId : '', Validators.required],
+      gp: [this.editssData?.gpDto?.gpId ? this.editssData?.gpDto?.gpId : '', Validators.required],
+      gram: [this.editssData?.villageDto?.villageId ? this.editssData?.villageDto?.villageId : '', Validators.required],
+      staff: [this.editssData?.userDto?.userId ? this.editssData?.userDto?.userId : '', Validators.required]
+    });
+
     if (this.editssData?.ssId) {
-      this.ssCreateForm = this.fb.group({
-        ssName: [this.editssData.ssName, Validators.compose([Validators.required, Validators.minLength(3)])],
-        husbandName: [this.editssData.ssHusbandOrGuardianName, Validators.compose([Validators.required, Validators.minLength(3)])],
-        contactNo: [this.editssData.ssContactNo, Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
-        address: [this.editssData.ssAddress, Validators.required],
-        block: [this.editssData.blockDto.blockId, Validators.required],
-        gp: [this.editssData.gpDto.gpId, Validators.required],
-        gram: [this.editssData.villageDto.villageId, Validators.required],
-        staff: [this.editssData.userDto.userId, Validators.required]
-      });
-
       this.ssCreateForm.markAllAsTouched();
-
-    } else {
-      this.ssCreateForm = this.fb.group({
-        ssName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        husbandName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-        contactNo: ['', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
-        address: ['', Validators.required],
-        block: ['', Validators.required],
-        gp: ['', Validators.required],
-        gram: ['', Validators.required],
-        staff: ['', Validators.required]
-      });
-
     }
   }
 
   get c() {
-    return this.ssCreateForm.controls;
+    return this.ssCreateForm?.controls;
   }
 
   changeRegion(regionId) {
@@ -194,62 +195,62 @@ export class SsSetupComponent implements OnInit {
       this.ssCreateForm.value.husbandName.trim()
     );
 
-    // if (!this.ssCreateForm.value.ssName) {
-    //   this.showError('Please Enter Swasthya Sahayika Name');
-    //   return;
-    // } else if (this.ssCreateForm.value.ssName < 3) {
-    //   this.showError('Swasthya Sahayika Name should be at least 3 char long');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.ssName) {
+      this.showError('Please Enter Swasthya Sahayika Name');
+      return;
+    } else if (this.ssCreateForm.value.ssName < 3) {
+      this.showError('Swasthya Sahayika Name should be at least 3 char long');
+      return;
+    }
 
-    // if (!this.ssCreateForm.value.husbandName) {
-    //   this.showError('Please Enter Husband Name');
-    //   return;
-    // } else if (this.ssCreateForm.value.husbandName < 3) {
-    //   this.showError('Husband Name should be at least 3 char long');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.husbandName) {
+      this.showError('Please Enter Husband Name');
+      return;
+    } else if (this.ssCreateForm.value.husbandName < 3) {
+      this.showError('Husband Name should be at least 3 char long');
+      return;
+    }
 
-    // if (this.ssCreateForm.value.contactNo?.length) {
-    //   if (this.ssCreateForm.value.contactNo?.length != 10) {
-    //     this.showError('Contact Number should exactly contain 10 char');
-    //     return;
-    //   } else {
-    //     let startChar = parseInt(
-    //       this.ssCreateForm.value.contactNo.substr(0, 1)
-    //     );
-    //     if (startChar < 6) {
-    //       this.showError('Contact Number must start from 6-9');
-    //       return;
-    //     }
-    //   }
+    if (this.ssCreateForm.value.contactNo?.length) {
+      if (this.ssCreateForm.value.contactNo?.length != 10) {
+        this.showError('Contact Number should exactly contain 10 char');
+        return;
+      } else {
+        let startChar = parseInt(
+          this.ssCreateForm.value.contactNo.substr(0, 1)
+        );
+        if (startChar < 6) {
+          this.showError('Contact Number must start from 6-9');
+          return;
+        }
+      }
 
-    // }
+    }
 
-    // if (!this.ssCreateForm.value.address) {
-    //   this.showError('Please Enter Address');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.address) {
+      this.showError('Please Enter Address');
+      return;
+    }
 
-    // if (!this.ssCreateForm.value.block) {
-    //   this.showError('Please Select Block');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.block) {
+      this.showError('Please Select Block');
+      return;
+    }
 
-    // if (!this.ssCreateForm.value.gp) {
-    //   this.showError('Please Select GP');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.gp) {
+      this.showError('Please Select GP');
+      return;
+    }
 
-    // if (!this.ssCreateForm.value.gram) {
-    //   this.showError('Please Select Village');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.gram) {
+      this.showError('Please Select Village');
+      return;
+    }
 
-    // if (!this.ssCreateForm.value.staff) {
-    //   this.showError('Please Select Staff In Charge');
-    //   return;
-    // }
+    if (!this.ssCreateForm.value.staff) {
+      this.showError('Please Select Staff In Charge');
+      return;
+    }
     console.log(this.editssData);
 
     let postBody = {
@@ -295,11 +296,18 @@ export class SsSetupComponent implements OnInit {
     this.createSwasthyaSahayika(createSS);
 
   }
-
-  deleteSSForm(item,i) {
+  deleteSSForm(item, i) {
     console.log(item);
-    
 
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete ?')
+      .then(() => this.delete(item, i)
+      )
+
+      .catch(() => '');
+
+  }
+
+  delete(item, i) {
     let postBody = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
@@ -324,14 +332,15 @@ export class SsSetupComponent implements OnInit {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
-        this.ssList.splice(i,1);
+        this.ssList.splice(i, 1);
+        this.ssLists();
       }
       else {
         this.showError(res.message);
       }
     })
-
   }
+
 
   showSuccess(message) {
     this.toaster.success(message, 'Create Swasthya Sahayika', {

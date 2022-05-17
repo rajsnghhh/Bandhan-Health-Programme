@@ -1,100 +1,126 @@
 <div class="container">
-    <div class="white_box QA_section mb_30">
-        <h2 class="page-title">Create Swasthya Sahayika </h2>
 
-        <form class="form-signin" [formGroup]="ssForm">
-            <div class="row">
-                <div class="form-group col-md">
-                    <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region"
-                        [ngClass]="{'is-invalid': f.region.invalid && f.region.touched, 'is-valid': 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Create Swasthya Sahayika</h2>
+
+                    <div class="box_right d-flex lms_block col-md-6" *ngIf="ssForm.value.branch">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search SS Info here..."
+                                            [(ngModel)]="searchText">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="form-signin" [formGroup]="ssForm">
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" [ngClass]="{'is-invalid': f.region.invalid && f.region.touched, 'is-valid': 
                                 f.region.valid && (f.region.dirty || f.region.touched)}">
-                        <option value="">-- Select Region --</option>
-                        <option *ngFor="let region of regionList; index as i" value="{{region.regionMasterId}}">
-                            {{region.regionName}}</option>
-                    </select>
-                    <div *ngIf="f.region.errors" class="invalid-feedback">
-                        <div *ngIf="f.region.errors.required">
-                            Region selection is required
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList; index as i" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}</option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">
+                                    Region selection is required
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="form-group col-md">
-                    <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <select class="form-select" (change)="changeBranch($event.target.value)" formControlName="branch"
-                        [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
-                        <option value="">-- Select Branch --</option>
-                        <option *ngFor="let branch of branchList; index as i" value="{{branch.branchId}}">
-                            {{branch.branchName}}</option>
-                    </select>
-                    <div *ngIf="f.branch.errors" class="invalid-feedback">
-                        <div *ngIf="f.branch.errors.required">
-                            Branch selection is required
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList; index as i" value="{{branch.branchId}}">
+                                    {{branch.branchName}}</option>
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">
+                                    Branch selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md" *ngIf="ssForm.value.branch">
+                            <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="form-group col-md" *ngIf="ssForm.value.branch">
-                        <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
-                    </div>
+                    <div class="white_box_tittle list_header">
 
-                </div>
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                <div class="white_box_tittle list_header">
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>Name</th>
+                                            <th>Guardian<br> Name</th>
+                                            <th>Address</th>
+                                            <th>Gram Sansad/ Village/<br> locality</th>
+                                            <th>Staff In<br> Charge</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
 
-                    <div class="QA_table ">
-                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                            <table
-                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+                                    <tbody>
 
-                                <thead id="header-fixed">
-                                    <tr>
-                                        <th>SL<br>No</th>
-                                        <th>Name</th>
-                                        <th>Guardian<br> Name</th>
-                                        <th>Address</th>
-                                        <th>Gram Sansad/ Village/<br> locality</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
+                                        <tr
+                                            *ngFor="let item of ssList  | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{item.ssName}} </td>
+                                            <td>{{item.ssHusbandOrGuardianName}}</td>
+                                            <td>{{item.ssAddress}}</td>
+                                            <td>{{item.villageDto.villageName}}</td>
+                                            <td> {{ item.userDto.userFirstName}} {{item.userDto.userMiddleName}}
+                                                {{item.userDto.userLastName}}</td>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
+                                                    (click)="editSSForm(item, createSS)"></i>
+                                                <!--  *ngIf="updateMode" -->
+                                                <i class="fas fa-trash" title="Delete SS"
+                                                    (click)="deleteSSForm(item, i)"></i>
+                                                <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
+                                            </td>
 
-                                <tbody>
+                                        </tr>
+                                    </tbody>
 
-                                    <tr
-                                        *ngFor="let item of ssList  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                        <td>{{item.ssName}} </td>
-                                        <td>{{item.ssHusbandOrGuardianName}}</td>
-                                        <td>{{item.ssAddress}}</td>
-                                        <td>{{item.villageDto.villageName}}</td>
-                                        <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
-                                                (click)="editSSForm(item, createSS)"></i>
-                                            <!--  *ngIf="updateMode" -->
-                                            <i class="fas fa-trash" title="Delete SS"
-                                                (click)="deleteSSForm(item, i)"></i>
-                                            <!-- *ngIf="deleteMode" (click)="deleteDAR(item,i)" -->
-                                        </td>
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
 
-                                    </tr>
-                                </tbody>
-
-                            </table>
-                            <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                            </pagination-controls>
-
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                </form>
             </div>
-
-        </form>
+        </div>
     </div>
 </div>
+
 
 <ng-template #createSS>
 
