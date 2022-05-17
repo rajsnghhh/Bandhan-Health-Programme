@@ -4,7 +4,22 @@
             <div class="white_box QA_section mb_30">
 
                 <div id="header-fixed" style="display: flex;">
-                    <h2 class="page-title">Village Setup</h2>
+                    <h2 class="page-title">Create Gram Sansad/ Village/ Locality</h2>
+
+                    <div class="box_right d-flex lms_block col-md-6" *ngIf="villageForm.value.gp">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search Village Info here..."
+                                            [(ngModel)]="searchText">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <form class="form-signin" [formGroup]="villageForm">
                     <div class="row">
@@ -76,11 +91,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="villageForm.value.gp">
-                            <button class="btn btn-primary" (click)="createVillage( createVill)">Create</button>
+                        <div class="form-group col-md" *ngIf="villageForm.value.gp && createMode">
+                            <button class="btn btn-primary" (click)="createVillage(createVill)">Create</button>
                         </div>
                     </div>
-
 
                     <div class="white_box_tittle list_header">
 
@@ -104,7 +118,7 @@
                                     <tbody>
 
                                         <tr
-                                            *ngFor="let vill of villList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            *ngFor="let vill of villList |  filter:  searchText  |paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{GPType.name}}</td>
                                             <td>{{GPType.type}}</td>
@@ -112,8 +126,8 @@
                                             <td>{{vill.branchDetails?.branchName ? vill.branchDetails?.branchName :
                                                 '-'}}</td>
                                             <td style="padding: 0px;"><i class="fas fa-edit" title="Edit Village"
-                                                    (click)="editVillForm(vill, createVill)"></i>
-                                                <i class="fas fa-trash" title="Delete Village"
+                                                    *ngIf="updateMode" (click)="editVillForm(vill, createVill)"></i>
+                                                <i class="fas fa-trash" title="Delete Village" *ngIf="deleteMode"
                                                     (click)="deleteVillForm(vill, i)"></i>
                                             </td>
 
@@ -142,8 +156,8 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Create Vill</h3>
-                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="editssData?.ssId">Edit SS</h3> -->
+                    <h3 class="modal-title" id="modal-basic-title" *ngIf="!villageId">Create Village</h3>
+                    <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit Village</h3>
                 </div>
 
                 <div class="col-md-2">
@@ -159,7 +173,7 @@
 
                 <form class="form-signin" [formGroup]="villageForm">
                     <div class="row">
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="villageId">
                             <label for="state">State :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeState($event.target.value)"
                                 formControlName="state" [ngClass]="{'is-invalid': f.state.invalid && f.state.touched, 'is-valid': 
@@ -175,7 +189,23 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="!villageId">
+                            <label for="state">State :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeState($event.target.value)"
+                                formControlName="state" [ngClass]="{'is-invalid': f.state.invalid && f.state.touched, 'is-valid': 
+                                f.state.valid && (f.state.dirty || f.state.touched)}" [attr.disabled]="isDisabled">
+                                <option value="">-- Select State --</option>
+                                <option *ngFor="let state of stateList; index as i" value="{{state.stateMasterId}}">
+                                    {{state.stateName}}</option>
+                            </select>
+                            <div *ngIf="f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">
+                                    State selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="villageId">
                             <label for="district">District :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeDistrict($event.target.value)"
                                 formControlName="district" [ngClass]="{'is-invalid': f.district.invalid && f.district.touched,
@@ -192,7 +222,28 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="!villageId">
+                            <label for="district">District :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeDistrict($event.target.value)"
+                                formControlName="district" [ngClass]="{'is-invalid': f.district.invalid && f.district.touched,
+                                'is-valid': f.district.valid && (f.district.dirty || f.district.touched)}"
+                                [attr.disabled]="isDisabled">
+                                <option value="">-- Select District --</option>
+                                <option *ngFor="let district of districtList; index as i"
+                                    value="{{district.districtMasterId}}">
+                                    {{district.districtName}}</option>
+                            </select>
+                            <div *ngIf="f.district.errors" class="invalid-feedback">
+                                <div *ngIf="f.district.errors.required">
+                                    District selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md" *ngIf="villageId">
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBlock($event.target.value)"
                                 formControlName="block" [ngClass]="{'is-invalid': f.block.invalid && f.block.touched,
@@ -208,11 +259,45 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="!villageId">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" [ngClass]="{'is-invalid': f.block.invalid && f.block.touched,
+                                'is-valid': f.block.valid && (f.block.dirty || f.block.touched)}"
+                                [attr.disabled]="isDisabled">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of blockList; index as i" value="{{block.blockMasterId}}">
+                                    {{block.blockName}} </option>
+                            </select>
+                            <div *ngIf="f.block.errors" class="invalid-feedback">
+                                <div *ngIf="f.block.errors.required">
+                                    Block selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="villageId">
                             <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
                                 id="gp" [ngClass]="{'is-invalid': f.gp.invalid && f.gp.touched,
                               'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                <div *ngIf="f.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="!villageId">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{'is-invalid': f.gp.invalid && f.gp.touched,
+                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }" [attr.disabled]="isDisabled">
                                 <option value="">-- Select GP/ Municipality --</option>
                                 <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
                                     {{ gp.name }}
@@ -231,7 +316,7 @@
                     <div class="form-group col-md">
                         <label for="village">Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" placeholder="Village Name" formControlName="village"
-                            maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            maxlength="20" (keypress)="validationService.onlyIntegerAndAlphabet($event)"
                             style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
                             (c.village.dirty || c.village.touched)}" />
                         <div *ngIf="c.village.errors" class="invalid-feedback">
@@ -244,8 +329,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </form>
         </div>
 

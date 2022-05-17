@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -34,10 +33,17 @@ export class VillageSetupComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   gpId: any;
+  searchText: any;
+  searchFullscreen: boolean;
+  isDisabled: boolean = false;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private http: HttpClient,
-    private villageService: VillageSetupService, private sidebarService: SidebarService, private modalService: NgbModal,
-    private validationService: ValidationService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+
+  constructor(private fb: FormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
+    private sidebarService: SidebarService, private modalService: NgbModal, private validationService: ValidationService,
+    private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -50,7 +56,22 @@ export class VillageSetupComponent implements OnInit {
     this.villageService.getStateList(obj).subscribe((res) => {
       this.stateList = res.responseObject.stateList;
       console.log(this.stateList);
-    })
+    });
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 49)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 49)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 49)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
   }
 
@@ -82,6 +103,17 @@ export class VillageSetupComponent implements OnInit {
     this.stateType = this.stateList.find(state => state.stateMasterId == stateId);
     console.log(this.stateType, 'stateType');
 
+    this.villageForm.controls.district.setValue('');
+    this.villageForm.controls.block.setValue('');
+    this.villageForm.controls.gp.setValue('');
+    this.villList = [];
+    if (this.villageForm.value.state == '') {
+      this.villageForm.controls.district.setValue('');
+      this.villageForm.controls.block.setValue('');
+      this.villageForm.controls.gp.setValue('');
+      this.villList = [];
+    }
+
   }
 
   changeDistrict(districtId) {
@@ -91,6 +123,16 @@ export class VillageSetupComponent implements OnInit {
 
     this.blockList = this.districtList.find(block => block.districtMasterId == districtId)?.blockList;
     console.log(this.blockList);
+
+    this.villageForm.controls.block.setValue('');
+    this.villageForm.controls.gp.setValue('');
+    this.villList = [];
+
+    if (this.villageForm.value.district == '') {
+      this.villageForm.controls.block.setValue('');
+      this.villageForm.controls.gp.setValue('');
+      this.villList = [];
+    }
   }
 
   changeBlock(blockId) {
@@ -100,6 +142,12 @@ export class VillageSetupComponent implements OnInit {
 
     this.gpList = this.blockList.find(gp => gp.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
+    this.villageForm.controls.gp.setValue('');
+    this.villList = [];
+    if (this.villageForm.value.block == '') {
+      this.villageForm.controls.gp.setValue('');
+      this.villList = [];
+    }
   }
 
   changeGp(GPID) {
@@ -114,20 +162,24 @@ export class VillageSetupComponent implements OnInit {
       console.log(this.villList);
     });
 
+    this.villList = [];
+    if (this.villageForm.value.gp == '') {
+      this.villList = [];
+    }
+
   }
 
   createVillage(createVill) {
-    console.log(this.villageId, 'this.editVillData');
-
+    console.log(this.villageId, 'villge idcreate');
     this.modalContent = '';
     this.modalReference = this.modalService.open(createVill, {
       windowClass: 'createVill',
     });
     this.createVillForm();
-
   }
 
   editVillForm(vill, createVill) {
+    console.log(this.villageId, 'villge idedit');
     this.villageId = vill.villageMasterId;
     this.editVillData = vill;
     console.log(this.villageId, this.editVillData, 'villageId');
@@ -168,11 +220,11 @@ export class VillageSetupComponent implements OnInit {
       this.villCreateForm.value.village.trim()
     );
 
-
     if (!this.villCreateForm.value.village) {
       this.showError('Please Enter Village Name');
       return;
     }
+
 
     let obj = {
       dataAccessDTO: {
@@ -188,17 +240,39 @@ export class VillageSetupComponent implements OnInit {
     }
 
     console.log(obj);
-    this.villageService.saveVillage(obj).subscribe((res: any) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-        this.villModalDismiss();
-        this.changeGp(this.gpId);
-      }
-      else {
-        this.showError(res.message);
-      }
-    })
+
+    this.vill_check_duplicates();
+
+    // this.villageService.saveVillage(obj).subscribe((res: any) => {
+    //   console.log(res);
+    //   if (this.villageId == 0 || this.villageId == undefined) {
+    //     if (res.status == true) {
+    //       this.showSuccess(res.message);
+    //       this.villModalDismiss();
+    //       this.changeGp(this.gpId);
+    //     }
+    //     else {
+    //       this.showError(res.message);
+    //     }
+    //   } else {
+
+    //     if (res.status == true) {
+    //       this.showSuccess(res.message);
+    //       this.villModalDismiss();
+    //       this.villageForm.controls.state.setValue('');
+    //       this.villageForm.controls.district.setValue('');
+    //       this.villageForm.controls.block.setValue('');
+    //       this.villageForm.controls.gp.setValue('');
+    //       this.villList = [];
+
+    //     }
+    //     else {
+    //       this.showError(res.message);
+    //     }
+
+    //   }
+
+    // })
 
   }
 
@@ -208,15 +282,10 @@ export class VillageSetupComponent implements OnInit {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete ?')
       .then(() => this.delete(vill, i)
       )
-
       .catch(() => '');
-
   }
 
   delete(vill, i) {
-    console.log(i);
-
-
     let obj = {
       dataAccessDTO: {
         userId: this.sidebarService.userId,
@@ -231,17 +300,17 @@ export class VillageSetupComponent implements OnInit {
     }
 
     console.log(obj);
-    // this.villageService.saveVillage(obj).subscribe((res: any) => {
-    //   console.log(res);
-    //   if (res.status == true) {
-    //     this.showSuccess(res.message);
-    //     this.villList.splice(i, 1);
-    //     this.changeGp(this.gpId);
-    //   }
-    //   else {
-    //     this.showError(res.message);
-    //   }
-    // })
+    this.villageService.saveVillage(obj).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.villList.splice(i, 1);
+        this.changeGp(this.gpId);
+      }
+      else {
+        this.showError(res.message);
+      }
+    })
 
   }
 
@@ -256,4 +325,28 @@ export class VillageSetupComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
+  vill_check_duplicates() {
+
+    var gpVillList: Array<any> = [];
+    let obj = { dataAccessDTO: { userId: this.sidebarService?.userId, userName: this.sidebarService?.loginId }, gpId: this.gpId };
+    this.villageService.getVillageListByGpId(obj).subscribe((res) => {
+      gpVillList = res.responseObject;
+      console.log(gpVillList, 'gpVillList');
+
+      var userEnteredVill: string;
+      userEnteredVill = this.villCreateForm.value.village;
+
+      var checkDuplicateVillName: any;
+
+      checkDuplicateVillName = gpVillList.find((vill) => vill.villageName == userEnteredVill)?.villageName;
+      console.log(checkDuplicateVillName);
+
+      if (userEnteredVill == checkDuplicateVillName) {
+        this.showError(userEnteredVill + ' ' + 'is already existing');
+        return;
+      }
+    });
+  }
+
 }
