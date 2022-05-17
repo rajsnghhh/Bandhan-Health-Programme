@@ -53,21 +53,22 @@ export class UserTableComponent implements OnInit {
   }
 
   openEditUser(i) {
-    this.showError('This feature is unavailable');
-    // const dialogRef = this.dialog.open(UserCreateFormComponent, {
-    //   width: '1000px',
-    //   height: '550px',
-    //   data: {
-    //     createMode: false,
-    //     regionList: this.regionList,
-    //     branchList: this.branchList,
-    //     userData: this.userList[i]
-    //   }
-    // });
+    // this.showError('This feature is unavailable');
+    console.log(this.userList[i], '******')
+    const dialogRef = this.dialog.open(UserCreateFormComponent, {
+      width: '1000px',
+      height: '550px',
+      data: {
+        createMode: false,
+        regionList: this.regionList,
+        branchList: this.branchList,
+        userData: this.userList[i]
+      }
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.getUserList(this.branchId, this.regionId);
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getUserList(this.branchId, this.regionId);
+    });
   }
 
   createForm() {
@@ -133,16 +134,20 @@ export class UserTableComponent implements OnInit {
   }
 
   deleteUser(i) {
-    this.showError('This feature is unavailable');
-    // let Dto = {
-    //   dataAccessDTO: this.httpService.dataAccessDTO,
-    //   userId: this.userList[i],
-    // }
-    // this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-    // this.http.post(`${this.httpService.baseURL}user/deleteUser`, Dto).subscribe((res) => {
-    //   this.showSuccess('Delete');
-    // })
-    // }).catch(() => '');
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
+    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.http.post(`${this.httpService.baseURL}user/deleteUser`, Dto).subscribe((res: any) => {
+        if (this.userList[i].activeHouseholdCount == 0 && this.userList[i].activeSsCount == 0) {
+          this.showSuccess('Success');
+          this.getUserList(this.branchId, this.regionId);
+        } else {
+          this.showError('User mapped with Household / SS')
+        }
+      })
+    }).catch(() => '');
   }
 
   showSuccess(message) {

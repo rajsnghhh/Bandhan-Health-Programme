@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,6 +31,7 @@ export class UserCreateFormComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   region: Array<any> = [];
   branch: Array<any> = [];
+  disableMultiRegion: boolean;
   // branchVillageMapId: any;
 
   constructor(@Optional() public dialogRef: MatDialogRef<UserCreateFormComponent>, public dialog: MatDialog,
@@ -55,7 +56,26 @@ export class UserCreateFormComponent implements OnInit {
 
     if (this.data.createMode) {
       this.userForm.reset();
+      this.userForm.get('userRole').enable();
+      this.disableMultiRegion = false;
+      this.userForm.get('region').enable();
+      this.userForm.get('branch').enable();
+      this.userForm.get('baseBranch').enable();
     } else {
+      if (this.data.userData.activeHouseholdCount == 0 && this.data.userData.activeSsCount == 0) {
+        this.userForm.get('userRole').enable();
+        this.disableMultiRegion = false;
+        this.userForm.get('region').enable();
+        this.userForm.get('branch').enable();
+        this.userForm.get('baseBranch').enable();
+      } else {
+        this.userForm.get('userRole').disable();
+        this.disableMultiRegion = true;
+        this.userForm.get('region').disable();
+        this.userForm.get('branch').disable();
+        this.userForm.get('baseBranch').disable();
+      }
+
       let Dto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         userId: this.data.userData.userId
@@ -102,7 +122,7 @@ export class UserCreateFormComponent implements OnInit {
   createForm() {
     this.userForm = this.fb.group({
       userRole: [null, Validators.required],
-      multiRegion: [''],
+      multiRegion: [{ value: '', disabled: this.disableMultiRegion }],
       region: [null, Validators.required],
       branch: [null, Validators.required],
       baseBranch: [''],
