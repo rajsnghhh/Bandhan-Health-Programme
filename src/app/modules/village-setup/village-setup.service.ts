@@ -17,5 +17,14 @@ export class VillageSetupService {
   getDistrictAndBlockList(obj): any {
     return this.http.post(`${this.baseURL}district/getListOfDistrictAndBlock`, obj)
   }
+
+  getVillageListByGpId(obj): any {
+    return this.http.post(`${this.baseURL}village/getVillagesOfAGp`, obj)
+  }
+
+  saveVillage(obj): any {
+    return this.http.post(`${this.baseURL}village/saveOrUpdate`, obj)
+  }
+
 }
 

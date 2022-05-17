@@ -1,14 +1,56 @@
 .modal-content {
-    height: 440px;
-    overflow-x: hidden;
-    width: 900px;
-    margin-left: -170px
+  height: 440px;
+  overflow-x: hidden;
+  width: 900px;
+  margin-left: -170px
 }
 
 .close {
-    margin-left: 470px;
+  margin-left: 470px;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
-  }
+  margin-bottom: 1.5rem;
+}
+.search_inner button {
+  padding-right: 1px;
+  margin-left: 374px;
+  height: 63%;
+}
+
+.search_inner_fullscreen button {
+  padding-right: 1px;
+  margin-left: 678px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 60%;
+  background: transparent;
+  font-size: 12px;
+  padding-left: 19px;
+  font-size: 18px;
+  color: #2daab8;
+  border: 0;
+}
+
+.search_inner input {
+  width: 70%;
+  margin-left: 465px;
+}
+
+.search_inner_fullscreen input {
+  width: 74%;
+  margin-left: 685px;
+  font-size: 13px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 55px;
+  border: 1px solid #2daab8;
+  padding-right: 15px;
+}
+
+.serach_field_2 .search_inner button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: 80px;
+}

@@ -1,0 +1,14 @@
+.form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-content {
+    height: 440px;
+    overflow-x: hidden;
+    width: 900px;
+    margin-left: -170px
+  }
+  
+  .close {
+    margin-left: 470px;
+  }

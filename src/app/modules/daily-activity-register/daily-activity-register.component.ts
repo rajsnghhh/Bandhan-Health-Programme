@@ -159,7 +159,6 @@ export class DailyActivityRegisterComponent implements OnInit {
       this.darViewFamilyList = [];
     }
 
-
     if (this.locationForm.value.branch == '') {
       this.locationForm.controls.hco.setValue('');
       this.locationForm.controls.fromDate.setValue('');

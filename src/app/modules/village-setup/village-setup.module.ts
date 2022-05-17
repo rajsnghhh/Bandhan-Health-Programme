@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { VillageSetupRoutingModule } from './village-setup-routing.module';
 import { VillageSetupComponent } from './village-setup.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     VillageSetupRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    FormsModule,
   ]
 })
 export class VillageSetupModule { }

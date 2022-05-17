@@ -60,14 +60,163 @@
                         <div class="form-group col-md">
                             <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
-                                id="gp" [ngClass]="{
-                              'is-invalid': f.gp.invalid && f.gp.touched,
-                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
-                            }">
+                                id="gp" [ngClass]="{'is-invalid': f.gp.invalid && f.gp.touched,
+                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
                                 <option value="">-- Select GP/ Municipality --</option>
-                                <!-- <option *ngFor="let gp of gpDtoList">
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
                                     {{ gp.name }}
-                                </option> -->
+                                </option>
+                            </select>
+                            <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                <div *ngIf="f.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md" *ngIf="villageForm.value.gp">
+                            <button class="btn btn-primary" (click)="createVillage( createVill)">Create</button>
+                        </div>
+                    </div>
+
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th>SL<br>No</th>
+                                            <th>GP/ Municipality<br> Name</th>
+                                            <th>GP/ Municipality<br> Type</th>
+                                            <th>Gram Sansad/ Village/<br> locality</th>
+                                            <th>Branch Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr
+                                            *ngFor="let vill of villList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{GPType.name}}</td>
+                                            <td>{{GPType.type}}</td>
+                                            <td>{{vill.villageName}}</td>
+                                            <td>{{vill.branchDetails?.branchName ? vill.branchDetails?.branchName :
+                                                '-'}}</td>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit Village"
+                                                    (click)="editVillForm(vill, createVill)"></i>
+                                                <i class="fas fa-trash" title="Delete Village"
+                                                    (click)="deleteVillForm(vill, i)"></i>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #createVill>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h3 class="modal-title" id="modal-basic-title">Create Vill</h3>
+                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="editssData?.ssId">Edit SS</h3> -->
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="villModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <form class="form-signin" [formGroup]="villCreateForm">
+
+                <form class="form-signin" [formGroup]="villageForm">
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="state">State :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeState($event.target.value)"
+                                formControlName="state" [ngClass]="{'is-invalid': f.state.invalid && f.state.touched, 'is-valid': 
+                                f.state.valid && (f.state.dirty || f.state.touched)}">
+                                <option value="">-- Select State --</option>
+                                <option *ngFor="let state of stateList; index as i" value="{{state.stateMasterId}}">
+                                    {{state.stateName}}</option>
+                            </select>
+                            <div *ngIf="f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">
+                                    State selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="district">District :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeDistrict($event.target.value)"
+                                formControlName="district" [ngClass]="{'is-invalid': f.district.invalid && f.district.touched,
+                                'is-valid': f.district.valid && (f.district.dirty || f.district.touched)}">
+                                <option value="">-- Select District --</option>
+                                <option *ngFor="let district of districtList; index as i"
+                                    value="{{district.districtMasterId}}">
+                                    {{district.districtName}}</option>
+                            </select>
+                            <div *ngIf="f.district.errors" class="invalid-feedback">
+                                <div *ngIf="f.district.errors.required">
+                                    District selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" [ngClass]="{'is-invalid': f.block.invalid && f.block.touched,
+                                'is-valid': f.block.valid && (f.block.dirty || f.block.touched)}">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of blockList; index as i" value="{{block.blockMasterId}}">
+                                    {{block.blockName}} </option>
+                            </select>
+                            <div *ngIf="f.block.errors" class="invalid-feedback">
+                                <div *ngIf="f.block.errors.required">
+                                    Block selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{'is-invalid': f.gp.invalid && f.gp.touched,
+                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
                             </select>
                             <div *ngIf="f.gp.errors" class="invalid-feedback">
                                 <div *ngIf="f.gp.errors.required">
@@ -77,7 +226,35 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="village">Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Village Name" formControlName="village"
+                            maxlength="20" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
+                            (c.village.dirty || c.village.touched)}" />
+                        <div *ngIf="c.village.errors" class="invalid-feedback">
+                            <div *ngIf="c.village.errors.required">
+                                Village Name is required
+                            </div>
+                            <div *ngIf="c.village.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary bttn" (click)="saveVillForm()">Save</button>
             </div>
         </div>
+
     </div>
-</div>
+
+</ng-template>
