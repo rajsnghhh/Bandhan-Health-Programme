@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -30,6 +31,7 @@ export class AddLmChildComponent implements OnInit {
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
   childDob: string;
   firstVisit: string;
+  maxFirstVisit: string;
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -39,6 +41,14 @@ export class AddLmChildComponent implements OnInit {
 
   ngOnInit(): void {
     this.childDob = this.data?.childWiselactatingmotherList?.dob;
+
+    let after6date = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
+    if (after6date > this.today) {
+      this.maxFirstVisit = this.today;
+    } else {
+      this.maxFirstVisit = after6date;
+    }
+
     this.editMode = this.data.editMode;
     this.panelOpenState = false;
     this.lmMuacList();
@@ -202,7 +212,7 @@ export class AddLmChildComponent implements OnInit {
 
   /* Restrict the second date depending on First visit date */
   restrictSecondDate(date) {
-    this.firstVisit = date;
+    this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
   }
 
   /* make child death comment required 
