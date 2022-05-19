@@ -128,6 +128,10 @@ export class PwViewComponent implements OnInit {
     this.pwRegisterForm.get('actualDeliveryDate').reset();
   }
 
+  restrictTypeOfDate() {
+    return false;
+  }
+
   checkAnc(value) {
     if (value == 'Y') {
       this.checkAncComplete = true;
@@ -342,6 +346,8 @@ export class PwViewComponent implements OnInit {
 
 
   }
+
+
 
   closeDialog() {
     this.dialogRef.close();

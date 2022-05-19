@@ -62,6 +62,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
+  today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+  childDob: string;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -291,8 +293,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   p(event) { }
 
-  openModal(pemData, childId, childAge) {
-    console.log(childAge);
+  openModal(pemData, childId, childAge, pemDetails) {
+    console.log(pemDetails);
+    this.childDob = pemDetails.dob;
     this.childAge = childAge;
 
 
@@ -305,7 +308,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   addPemModal(addPem, childId, pem) {
     this.checkAge = pem.childAge;
-    console.log(this.checkAge);
+    console.log(pem);
+    this.childDob = pem.dob;
     this.pemDataSave = pem;
     this.createForm(this.pemDataSave);
     console.log(this.pemDataSave);
@@ -561,7 +565,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
 
     checkAge = this.childAge;
-    console.log(checkAge);
+    console.log(item, '***', editPem);
 
 
     let y = checkAge?.indexOf("year");

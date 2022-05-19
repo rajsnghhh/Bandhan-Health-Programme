@@ -32,6 +32,15 @@ export class AddLmChildComponent implements OnInit {
   childDob: string;
   firstVisit: string;
   maxFirstVisit: string;
+  muac6MinDate: string;
+  muac6MaxDate: string;
+  muac12MinDate: string;
+  muac12MaxDate: string;
+  muac18MinDate: string;
+  muac18MaxDate: string;
+  muac24MinDate: string;
+  muac24MaxDate: string;
+
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -48,6 +57,11 @@ export class AddLmChildComponent implements OnInit {
     } else {
       this.maxFirstVisit = after6date;
     }
+
+    this.muacRec6MinmaxDate();
+    this.muacRec12MinmaxDate();
+    this.muacRec18MinmaxDate();
+    this.muacRec24MinmaxDate();
 
     this.editMode = this.data.editMode;
     this.panelOpenState = false;
@@ -252,6 +266,45 @@ export class AddLmChildComponent implements OnInit {
       return null;
     }
     return { 'notInHeightRange': true };
+  }
+
+  /* Muac record for 6 month min max date set */
+  muacRec6MinmaxDate() {
+    this.muac6MinDate = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac6MaxDate = this.today;
+    } else {
+      this.muac6MaxDate = value;
+    }
+  }
+
+  /* Muac record for 12 month min max date set */
+  muacRec12MinmaxDate() {
+    this.muac12MinDate = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac12MaxDate = this.today;
+    } else {
+      this.muac12MaxDate = value;
+    }
+  }
+
+  /* Muac record for 18 month min max date set */
+  muacRec18MinmaxDate() {
+    this.muac18MinDate = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(24, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac18MaxDate = this.today;
+    } else {
+      this.muac18MaxDate = value;
+    }
+  }
+
+  /* Muac record for 24 month min max date set */
+  muacRec24MinmaxDate() {
+    this.muac24MinDate = moment(this.childDob).add(24, 'M').format('YYYY-MM-DD');
+    this.muac24MaxDate = this.today;
   }
 
   /* Depending on condition form is Save or Edit */

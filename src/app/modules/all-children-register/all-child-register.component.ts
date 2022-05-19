@@ -6,7 +6,6 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewMuaclistComponent } from './view-muaclist/view-muaclist.component';
 import { AddChildMuacComponent } from './add-child-muac/add-child-muac.component';
-import { AcrService } from './acr.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ValidationService } from '../shared/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
@@ -46,7 +45,7 @@ export class AllChildRegisterComponent implements OnInit {
   pageSize = 6;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog, public acrService: AcrService,
+    private baselineService: BaselineSurveyService, public dialog: MatDialog,
     public validationService: ValidationService, private toaster: ToastrService,) { }
 
   ngDoCheck(): void {
@@ -219,11 +218,10 @@ export class AllChildRegisterComponent implements OnInit {
   }
 
   openCreateChild(childDetails): void {
-    this.acrService.editMode = true;
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
       height: '450px',
-      data: { childId: childDetails.childDetailId }
+      data: { editMode: true, childId: childDetails.childDetailId, childDob: childDetails.dob }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -236,7 +234,7 @@ export class AllChildRegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewMuaclistComponent, {
       width: '700px',
       height: '400px',
-      data: { childId: childDetails.childDetailId }
+      data: { childId: childDetails.childDetailId, childDob: childDetails.dob }
     });
 
     dialogRef.afterClosed().subscribe(result => {
