@@ -52,7 +52,7 @@
           <div class="form-group col-md-4">
             <div class="form-group col-md">
               <label for="firstVisitDate">First Visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <input type="date" class="form-control" formControlName="firstVisitDate" [max]="today" [min]="childDob"
+              <input type="date" class="form-control" formControlName="firstVisitDate" [min]="childDob" [max]="maxFirstVisit"
                 (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.firstVisitDate.invalid && f.firstVisitDate.touched,
                   'is-valid':
@@ -67,7 +67,7 @@
           <div class="form-group col-md-4">
             <div class="form-group col-md">
               <label for="secondVisitDate">Second visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <input type="date" class="form-control" formControlName="secondVisitDate" [max]="today" [min]="firstVisit"
+              <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit" [max]="maxFirstVisit"
                 placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.secondVisitDate.invalid && f.secondVisitDate.touched,
                   'is-valid':
@@ -108,7 +108,7 @@
                     'is-invalid': f.muacDate6.invalid && f.muacDate6.touched,
                     'is-valid':
                       f.muacDate6.valid && (f.muacDate6.dirty || f.muacDate6.touched)
-                  }">
+                  }" [min]="muac6MinDate" [max]="muac6MaxDate">
             <div *ngIf="f.muacDate6.errors" class="invalid-feedback">
               <div *ngIf="f.muacDate6.errors.required">MUAC Date selection is required</div>
             </div>
@@ -211,7 +211,7 @@
                     'is-invalid': f.muacDate12.invalid && f.muacDate12.touched,
                     'is-valid':
                       f.muacDate12.valid && (f.muacDate12.dirty || f.muacDate12.touched)
-                  }">
+                  }" [min]="muac12MinDate" [max]="muac12MaxDate">
             <div *ngIf="f.muacDate12.errors" class="invalid-feedback">
               <div *ngIf="f.muacDate12.errors.required">MUAC Date selection is required</div>
             </div>
@@ -302,7 +302,7 @@
                     'is-invalid': f.muacDate18.invalid && f.muacDate18.touched,
                     'is-valid':
                       f.muacDate18.valid && (f.muacDate18.dirty || f.muacDate18.touched)
-                  }">
+                  }" [min]="muac18MinDate" [max]="muac18MaxDate">
             <div *ngIf="f.muacDate18.errors" class="invalid-feedback">
               <div *ngIf="f.muacDate18.errors.required">MUAC Date selection is required</div>
             </div>
@@ -402,7 +402,7 @@
                     'is-invalid': f.muacDate24.invalid && f.muacDate24.touched,
                     'is-valid':
                       f.muacDate24.valid && (f.muacDate24.dirty || f.muacDate24.touched)
-                  }">
+                  }" [min]="muac24MinDate" [max]="muac24MaxDate">
             <div *ngIf="f.muacDate24.errors" class="invalid-feedback">
               <div *ngIf="f.muacDate24.errors.required">MUAC Date selection is required</div>
             </div>

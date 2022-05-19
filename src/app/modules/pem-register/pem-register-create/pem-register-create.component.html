@@ -155,7 +155,7 @@
                                                     class="fa fa-circle fa-lg"></i></td>
                                             <td class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
-                                                (click)="openModal(pemData, pem.childId, pem.childAge)">View
+                                                (click)="openModal(pemData, pem.childId, pem.childAge,pem)">View
                                             </td>
                                             <td style="padding: 0px;" *ngIf="createMode"> <i class="fa fa-plus" title="Create PEM"
                                                     (click)="addPemModal(addPem, pem.childId, pem)"></i>
@@ -545,7 +545,7 @@
                                 'is-invalid': f.pemDate.invalid && f.pemDate.touched,
                                 'is-valid':
                                   f.pemDate.valid && (f.pemDate.dirty || f.pemDate.touched)
-                              }" />
+                              }" [min]="childDob" [max]="today" />
                         <div *ngIf="f.pemDate.errors" class="invalid-feedback">
                             <div *ngIf="f.pemDate.errors.required">
                                 Date of record keeping is required
@@ -883,7 +883,7 @@
                                 'is-invalid': e.pemDate.invalid && e.pemDate.touched,
                                 'is-valid':
                                   e.pemDate.valid && (e.pemDate.dirty || e.pemDate.touched)
-                              }" />
+                              }" [min]="childDob" [max]="today"/>
                         <div *ngIf="e.pemDate.errors" class="invalid-feedback">
                             <div *ngIf="e.pemDate.errors.required">
                                 Date of record keeping is required

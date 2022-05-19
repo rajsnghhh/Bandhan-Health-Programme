@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -30,6 +31,16 @@ export class AddLmChildComponent implements OnInit {
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
   childDob: string;
   firstVisit: string;
+  maxFirstVisit: string;
+  muac6MinDate: string;
+  muac6MaxDate: string;
+  muac12MinDate: string;
+  muac12MaxDate: string;
+  muac18MinDate: string;
+  muac18MaxDate: string;
+  muac24MinDate: string;
+  muac24MaxDate: string;
+
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -39,6 +50,19 @@ export class AddLmChildComponent implements OnInit {
 
   ngOnInit(): void {
     this.childDob = this.data?.childWiselactatingmotherList?.dob;
+
+    let after6date = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
+    if (after6date > this.today) {
+      this.maxFirstVisit = this.today;
+    } else {
+      this.maxFirstVisit = after6date;
+    }
+
+    this.muacRec6MinmaxDate();
+    this.muacRec12MinmaxDate();
+    this.muacRec18MinmaxDate();
+    this.muacRec24MinmaxDate();
+
     this.editMode = this.data.editMode;
     this.panelOpenState = false;
     this.lmMuacList();
@@ -202,7 +226,7 @@ export class AddLmChildComponent implements OnInit {
 
   /* Restrict the second date depending on First visit date */
   restrictSecondDate(date) {
-    this.firstVisit = date;
+    this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
   }
 
   /* make child death comment required 
@@ -242,6 +266,45 @@ export class AddLmChildComponent implements OnInit {
       return null;
     }
     return { 'notInHeightRange': true };
+  }
+
+  /* Muac record for 6 month min max date set */
+  muacRec6MinmaxDate() {
+    this.muac6MinDate = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac6MaxDate = this.today;
+    } else {
+      this.muac6MaxDate = value;
+    }
+  }
+
+  /* Muac record for 12 month min max date set */
+  muacRec12MinmaxDate() {
+    this.muac12MinDate = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac12MaxDate = this.today;
+    } else {
+      this.muac12MaxDate = value;
+    }
+  }
+
+  /* Muac record for 18 month min max date set */
+  muacRec18MinmaxDate() {
+    this.muac18MinDate = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
+    let value = moment(this.childDob).add(24, 'M').format('YYYY-MM-DD');
+    if (value > this.today) {
+      this.muac18MaxDate = this.today;
+    } else {
+      this.muac18MaxDate = value;
+    }
+  }
+
+  /* Muac record for 24 month min max date set */
+  muacRec24MinmaxDate() {
+    this.muac24MinDate = moment(this.childDob).add(24, 'M').format('YYYY-MM-DD');
+    this.muac24MaxDate = this.today;
   }
 
   /* Depending on condition form is Save or Edit */

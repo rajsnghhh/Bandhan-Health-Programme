@@ -194,8 +194,6 @@ export class LmViewComponent implements OnInit, DoCheck {
     this.loader = false;
     this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
       this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
-      console.log(this.lactatingmotherregister);
-
       this.loader = true;
     }, error => {
       this.loader = true;

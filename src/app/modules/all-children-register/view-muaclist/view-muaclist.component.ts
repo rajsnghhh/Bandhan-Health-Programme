@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
-import { AcrService } from '../acr.service';
 import { AddChildMuacComponent } from '../add-child-muac/add-child-muac.component';
 
 @Component({
@@ -21,7 +20,7 @@ export class ViewMuaclistComponent implements OnInit {
   disableAction: boolean;
 
   constructor(@Optional() public dialogRef: MatDialogRef<ViewMuaclistComponent>, public dialog: MatDialog,
-    public acrService: AcrService, @Inject(MAT_DIALOG_DATA) public data: any, private httpService: HttpService,
+    @Inject(MAT_DIALOG_DATA) public data: any, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService,
     private confirmationDialogService: ConfirmationDialogService,) { }
 
@@ -56,18 +55,19 @@ export class ViewMuaclistComponent implements OnInit {
 
   onEdit(index) {
     console.log(this.childMuac[index]);
-    this.acrService.editMode = false;
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
       height: '450px',
       data: {
+        editMode: false,
         muacRecordDate: this.childMuac[index].muacRecordDate,
         muacRegisterId: this.childMuac[index].muacRegisterId,
         childId: this.childId,
         muacCampNumber: this.childMuac[index].muacCampDto.muacCampId,
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,
-        muac: this.childMuac[index].muac
+        muac: this.childMuac[index].muac,
+        childDob: this.data.childDob
       }
     });
 

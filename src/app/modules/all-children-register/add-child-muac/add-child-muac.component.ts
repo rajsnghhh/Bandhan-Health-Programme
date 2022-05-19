@@ -8,7 +8,6 @@ import { HttpService } from '../../core/http/http.service';
 import { MuacRegisterService } from '../../muac-register/muac-register.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
-import { AcrService } from '../acr.service';
 
 @Component({
   selector: 'app-add-child-muac',
@@ -22,11 +21,15 @@ export class AddChildMuacComponent implements OnInit {
   campDate: boolean;
   childMuac: Array<any> = [];
   campNotPresent: boolean;
-  minDate: any;
+  minMuacRecordDate: string;
+  maxMuacRecordDate: string;
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+  muacCampStartDate: string;
+  muacCampEndDate: string;
+  childDob: string;
 
 
-  constructor(private fb: FormBuilder, public validationService: ValidationService, public acrService: AcrService,
+  constructor(private fb: FormBuilder, public validationService: ValidationService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddChildMuacComponent>,
     private sidebarService: SidebarService, private muacService: MuacRegisterService,) {
@@ -34,12 +37,15 @@ export class AddChildMuacComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMinDate();
-    this.editMode = this.acrService.editMode;
+    this.childDob = this.data.childDob;
+    this.minMuacRecordDate = this.childDob;
+    this.maxMuacRecordDate = this.today;
     this.createForm();
-    if (this.editMode === true) {
+    if (this.data.editMode === true) {
+      this.muacForm.get('muacCampNo').enable();
       this.muacForm.reset();
     } else {
+      this.muacForm.get('muacCampNo').disable();
       this.muacForm.patchValue({
         muacDate: (this.data?.muacRecordDate),
         muacCampNo: (this.data?.muacCampNumber),
@@ -59,6 +65,7 @@ export class AddChildMuacComponent implements OnInit {
     }
     this.muacService.muacCampList(obj).subscribe((response: any) => {
       this.muacCampList = response.responseObject.muaccampDetailList;
+      console.log(this.muacCampList);
     })
 
     let Dto = {
@@ -68,10 +75,6 @@ export class AddChildMuacComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}muaccamp/viewMuacRegistersOfAChild`, Dto).subscribe((res: any) => {
       this.childMuac = res.responseObject;
     })
-  }
-
-  editModes() {
-    if (this.muacForm.value.muacDate) { this.muacForm.controls['muacCampNo'].disable()}
   }
 
   createForm() {
@@ -87,23 +90,12 @@ export class AddChildMuacComponent implements OnInit {
     return this.muacForm.controls;
   }
 
-  getMinDate() {
-    let date = new Date();
-    let toDate: any = date.getDate();
-    if (toDate < 10) {
-      toDate = '0' + toDate;
-    }
-
-    let month: any = date.getMonth() + 1;
-    if (month < 10) {
-      month = "0" + month;
-    }
-
-    let year = date.getUTCFullYear() - 3;
-    this.minDate = year + "-" + month + "-" + toDate;
-  }
-
   campNo(Id) {
+    this.muacCampStartDate = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.startDate;
+    this.muacCampEndDate = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.endDate;
+    this.minMuacRecordDate = (this.muacCampStartDate > this.childDob) ? this.muacCampStartDate : this.childDob;
+    this.maxMuacRecordDate = (this.muacCampEndDate > this.today) ? this.today : this.muacCampEndDate;
+
     let campNo = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.campNumber.slice(-4);
     this.campNotPresent = this.childMuac.find(campNumber => campNumber.muacCampDto.muacCampNumber == campNo)?.muacCampDto.muacCampNumber ? false : true;
     this.campDate = (this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.startDate >
