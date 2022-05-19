@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'daily-activity-register', loadChildren: () => import('./modules/daily-activity-register/daily-activity-register.module').then(m => m.DailyActivityRegisterModule), canActivate: [AuthGuard] },
   { path: 'village-setup', loadChildren: () => import('./modules/village-setup/village-setup.module').then(m => m.VillageSetupModule), canActivate: [AuthGuard] },
   { path: 'ss-setup', loadChildren: () => import('./modules/ss-setup/ss-setup.module').then(m => m.SsSetupModule), canActivate: [AuthGuard] },
-  { path: 'privacy_policy', loadChildren: () => import('./modules/shared/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule) },
+  { path: 'privacy_policy', loadChildren: () => import('./modules/shared/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule), canActivate: [AuthGuard] },
+  { path: 'branch-villageMap', loadChildren: () => import('./modules/branch-village-map/branch-village-map.module').then(m => m.BranchVillageMapModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

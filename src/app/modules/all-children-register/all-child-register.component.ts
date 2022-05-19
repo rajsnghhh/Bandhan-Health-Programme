@@ -203,6 +203,7 @@ export class AllChildRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    
     this.loader = false;
     this.httpService.getChildrenRegister(req).subscribe((res) => {
       this.childrenBetween6And59Months = res.responseObject?.eligibleChildren?.childrenBetween6And59Months;
