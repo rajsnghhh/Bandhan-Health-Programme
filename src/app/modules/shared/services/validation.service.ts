@@ -145,4 +145,13 @@ export class ValidationService {
     }
   }
 
+  camelize(str) {
+    let value = str.toLowerCase();
+    return value.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) return " ";
+      if (index === 0) return match.toUpperCase();
+      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
+
 }

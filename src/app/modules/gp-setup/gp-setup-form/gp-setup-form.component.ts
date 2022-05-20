@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { ValidationService } from '../../shared/services/validation.service';
 
 @Component({
   selector: 'app-gp-setup-form',
@@ -16,7 +17,8 @@ export class GpSetupFormComponent implements OnInit {
   stateWiseDistrictList: Array<any> = [];
   blockList: Array<any> = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
+  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService,
+    private httpService: HttpService, public validationService: ValidationService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<GpSetupFormComponent>) {
     dialogRef.disableClose = true;
   }
@@ -73,19 +75,26 @@ export class GpSetupFormComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
     });
+    if (!this.gpForm.value.state) {
+      this.blockList = [];
+    }
   }
 
   changeDistrict(value) {
     this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
+    this.gpForm.controls.block.setValue('');
+    if (!this.gpForm.value.district) {
+    }
   }
 
   onSave() {
+    this.gpForm.markAllAsTouched();
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       gpMunicipalityId: this.data.editMode ? this.data.gpMunicipalityDetails.gpMunicipalityId : "0",
       gpMunicipalityType: this.gpForm.value.type,
       blockMasterId: this.gpForm.value.block,
-      gpMunicipalityName: this.gpForm.value.gpName,
+      gpMunicipalityName: this.validationService.camelize(this.gpForm.value.gpName.trim()),
     }
     if (this.gpForm.valid) {
       this.http.post(`${this.httpService.baseURL}gpmunicipality/saveOrUpdate`, Dto).subscribe((res: any) => {

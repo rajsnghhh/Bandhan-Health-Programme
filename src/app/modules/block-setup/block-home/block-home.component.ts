@@ -20,6 +20,7 @@ export class BlockHomeComponent implements OnInit {
   districtWiseBlockList: Array<any> = [];
   stateId: any;
   districtId: any;
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -100,8 +101,13 @@ export class BlockHomeComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       districtMasterId: districtId
     }
+    this.loader = false;
     this.http.post(`${this.httpService.baseURL}block/getListOfAllBlock`, Dto).subscribe((res: any) => {
       this.districtWiseBlockList = res.responseObject?.blockList;
+      this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     });
   }
 
@@ -110,7 +116,7 @@ export class BlockHomeComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       blockMasterId: blockDetails.blockMasterId
     }
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+    this.confirmationDialogService.confirm('', `Do you want to delete ${blockDetails.blockName} ?`).then(() => {
       this.http.post(`${this.httpService.baseURL}block/deleteBlock`, Dto).subscribe((res: any) => {
         if (res.status) {
           this.showSuccess(res.message);
