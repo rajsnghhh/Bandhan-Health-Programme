@@ -4,7 +4,7 @@
             <div class="white_box QA_section mb_30">
 
                 <div id="header-fixed" style="display: flex;">
-                    <h2 class="page-title">Create Gram Sansad/ Village/ Locality</h2>
+                    <h2 class="page-title">Create Village</h2>
 
                     <div class="box_right d-flex lms_block col-md-6" *ngIf="villageForm.value.gp">
                         <div class="serach_field_2">
@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="villageForm.value.gp && createMode">
+                        <div class="form-group col-md" *ngIf="villageForm.value.gp && createMode" id='buttonRight'>
                             <button class="btn btn-primary" (click)="createVillage(createVill)">Create</button>
                         </div>
                     </div>
@@ -316,8 +316,7 @@
                     <div class="form-group col-md">
                         <label for="village">Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" placeholder="Village Name" formControlName="village"
-                            maxlength="20" (keypress)="validationService.onlyIntegerAndAlphabet($event)"
-                            style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
+                            maxlength="20" style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
                             (c.village.dirty || c.village.touched)}" />
                         <div *ngIf="c.village.errors" class="invalid-feedback">
                             <div *ngIf="c.village.errors.required">

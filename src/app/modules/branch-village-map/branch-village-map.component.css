@@ -1,0 +1,29 @@
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-content {
+  height: 430px;
+  overflow-x: hidden;
+  width: 750px;
+  margin-left: -90px;
+}
+
+.close {
+  margin-left: 380px;
+}
+
+#header_fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #499;
+  color: #FFFFFF;
+  font-family: "Rajdhani", sans-serif;
+}
+
+#buttonRight {
+  margin-left: 880px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}

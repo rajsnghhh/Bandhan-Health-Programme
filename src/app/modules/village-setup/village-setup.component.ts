@@ -241,40 +241,56 @@ export class VillageSetupComponent implements OnInit {
 
     console.log(obj);
 
-    this.vill_check_duplicates();
-
-    // this.villageService.saveVillage(obj).subscribe((res: any) => {
-    //   console.log(res);
-    //   if (this.villageId == 0 || this.villageId == undefined) {
-    //     if (res.status == true) {
-    //       this.showSuccess(res.message);
-    //       this.villModalDismiss();
-    //       this.changeGp(this.gpId);
-    //     }
-    //     else {
-    //       this.showError(res.message);
-    //     }
-    //   } else {
-
-    //     if (res.status == true) {
-    //       this.showSuccess(res.message);
-    //       this.villModalDismiss();
-    //       this.villageForm.controls.state.setValue('');
-    //       this.villageForm.controls.district.setValue('');
-    //       this.villageForm.controls.block.setValue('');
-    //       this.villageForm.controls.gp.setValue('');
-    //       this.villList = [];
-
-    //     }
-    //     else {
-    //       this.showError(res.message);
-    //     }
-
-    //   }
-
-    // })
+    this.villCheckDuplicates(obj);
 
   }
+
+  villCheckDuplicates(obj) {
+
+    var userEnteredVill: string;
+    userEnteredVill = this.villCreateForm.value.village;
+
+    var checkDuplicateVillName: any;
+
+    checkDuplicateVillName = this.villList.find((vill) => vill.villageName == userEnteredVill)?.villageName;
+    console.log(checkDuplicateVillName);
+
+    if (userEnteredVill == checkDuplicateVillName) {
+      this.showError(userEnteredVill + ' ' + 'already exists in the GP. Please retry with a different name');
+      return;
+    }
+
+    this.villageService.saveVillage(obj).subscribe((res: any) => {
+      console.log(res);
+      if (this.villageId == 0 || this.villageId == undefined) {
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.villModalDismiss();
+          this.changeGp(this.gpId);
+        }
+        else {
+          this.showError(res.message);
+        }
+      } else {
+
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.villModalDismiss();
+          this.villageForm.controls.state.setValue('');
+          this.villageForm.controls.district.setValue('');
+          this.villageForm.controls.block.setValue('');
+          this.villageForm.controls.gp.setValue('');
+          this.villList = [];
+
+        }
+        else {
+          this.showError(res.message);
+        }
+
+      }
+
+    })
+  };
 
   deleteVillForm(vill, i) {
     console.log(vill);
@@ -323,29 +339,6 @@ export class VillageSetupComponent implements OnInit {
   showError(message) {
     this.toaster.error(message, 'Create Village', {
       timeOut: 3000,
-    });
-  }
-
-  vill_check_duplicates() {
-
-    var gpVillList: Array<any> = [];
-    let obj = { dataAccessDTO: { userId: this.sidebarService?.userId, userName: this.sidebarService?.loginId }, gpId: this.gpId };
-    this.villageService.getVillageListByGpId(obj).subscribe((res) => {
-      gpVillList = res.responseObject;
-      console.log(gpVillList, 'gpVillList');
-
-      var userEnteredVill: string;
-      userEnteredVill = this.villCreateForm.value.village;
-
-      var checkDuplicateVillName: any;
-
-      checkDuplicateVillName = gpVillList.find((vill) => vill.villageName == userEnteredVill)?.villageName;
-      console.log(checkDuplicateVillName);
-
-      if (userEnteredVill == checkDuplicateVillName) {
-        this.showError(userEnteredVill + ' ' + 'is already existing');
-        return;
-      }
     });
   }
 
