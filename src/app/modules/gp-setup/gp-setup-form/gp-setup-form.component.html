@@ -94,6 +94,8 @@
             class="form-control"
             placeholder="Enter gp Name"
             formControlName="gpName"
+            style="text-transform: capitalize"
+            spellcheck="false"
             [ngClass]="{
               'is-invalid': f.gpName.invalid && f.gpName.touched,
               'is-valid':

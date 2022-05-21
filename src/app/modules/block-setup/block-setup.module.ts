@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     CommonModule,
     BlockSetupRoutingModule, ReactiveFormsModule, FormsModule,
     MatTabsModule, MatNativeDateModule, MatDialogModule, MatMenuModule,
-    MatIconModule
+    MatIconModule, LoaderModule
   ]
 })
 export class BlockSetupModule { }

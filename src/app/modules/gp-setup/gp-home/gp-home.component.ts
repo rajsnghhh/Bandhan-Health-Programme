@@ -20,6 +20,7 @@ export class GpHomeComponent implements OnInit {
   blockList: Array<any> = [];
   blockId: any;
   gpMunicipality: Array<any> = [];
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -82,10 +83,18 @@ export class GpHomeComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
     });
+    if (!this.stateSelectForm.value.state) {
+      this.blockList = [];
+      this.gpMunicipality = [];
+    }
   }
 
   changeDistrict(value) {
     this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
+    this.stateSelectForm.controls.block.setValue('');
+    if (!this.stateSelectForm.value.district) {
+      this.gpMunicipality = [];
+    }
   }
   changeBlock(value) {
     this.blockId = value;
@@ -97,10 +106,13 @@ export class GpHomeComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       blockMasterId: blockMasterId
     }
+    this.loader = false;
     this.http.post(`${this.httpService.baseURL}gpmunicipality/getListOfAllGpMunicipality`, Dto).subscribe((res: any) => {
       this.gpMunicipality = res.responseObject?.gpMunicipality;
+      this.loader = true;
     }, error => {
-      console.log(error)
+      this.showError('Error');
+      this.loader = true;
     });
   }
 
@@ -109,7 +121,7 @@ export class GpHomeComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       gpMunicipalityId: item.gpMunicipalityId
     }
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+    this.confirmationDialogService.confirm('', `Do you want to delete ${item.gpMunicipalityName} ?`).then(() => {
       this.http.post(`${this.httpService.baseURL}gpmunicipality/deleteGpMunicipality`, Dto).subscribe((res: any) => {
         if (res.status) {
           this.showSuccess(res.message);

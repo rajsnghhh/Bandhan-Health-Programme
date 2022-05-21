@@ -19,6 +19,7 @@ export class RegionBranchHomeComponent implements OnInit {
   stateList: Array<any> = [];
   regionAndBranchList: Array<any> = [];
   stateMasterId: any;
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -26,6 +27,8 @@ export class RegionBranchHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+
+    this.getRegionAndBranchList(this.stateMasterId);
 
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -85,7 +88,7 @@ export class RegionBranchHomeComponent implements OnInit {
 
   createForm() {
     this.stateSelectForm = this.fb.group({
-      state: ['', Validators.required],
+      state: [''],
     });
   }
   get f() {
@@ -94,7 +97,7 @@ export class RegionBranchHomeComponent implements OnInit {
 
   changeState(value) {
     this.stateMasterId = value;
-    this.getRegionAndBranchList(this.stateMasterId)
+    this.getRegionAndBranchList(this.stateMasterId);
   }
 
   getRegionAndBranchList(stateMasterId) {
@@ -102,8 +105,13 @@ export class RegionBranchHomeComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       stateMasterId: stateMasterId
     }
+    this.loader = false;
     this.http.post(`${this.httpService.baseURL}region/getStateWiseRegionAndBranchList`, Dto).subscribe((res: any) => {
       this.regionAndBranchList = res.responseObject.regionbranchlist;
+      this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     });
   }
 

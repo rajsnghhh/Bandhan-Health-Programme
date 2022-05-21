@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { RegionSetupComponent } from './region-setup/region-setup.component';
 import { BranchSetupComponent } from './branch-setup/branch-setup.component'
+import { LoaderModule } from '../shared/loader/loader.module';
 
 @NgModule({
   declarations: [RegionBranchHomeComponent, RegionSetupComponent, BranchSetupComponent],
@@ -18,7 +19,7 @@ import { BranchSetupComponent } from './branch-setup/branch-setup.component'
     CommonModule,
     RegionBranchSetupRoutingModule, ReactiveFormsModule, FormsModule,
     MatTabsModule, MatNativeDateModule, MatDialogModule, MatMenuModule,
-    MatIconModule
+    MatIconModule, LoaderModule
   ]
 })
 export class RegionBranchSetupModule { }

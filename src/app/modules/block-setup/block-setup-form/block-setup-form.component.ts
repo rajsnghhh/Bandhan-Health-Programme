@@ -70,20 +70,16 @@ export class BlockSetupFormComponent implements OnInit {
       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
     });
   }
-  changeDistrict(value) {
-
-  }
 
   onSave() {
-    console.log(this.blockForm);
+    this.blockForm.markAllAsTouched();
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       blockMasterId: this.data.editMode ? this.data.blockInfo.blockMasterId : "0",
       districtMasterId: this.blockForm.controls.district.value,
-      blockName: this.blockForm.value.blockName,
+      blockName: this.validationService.camelize(this.blockForm.value.blockName.trim()),
       pinCode: this.blockForm.value.pinCode,
     }
-    console.log(Dto);
     if (this.blockForm.valid) {
       this.http.post(`${this.httpService.baseURL}block/saveOrUpdate`, Dto).subscribe((res: any) => {
         if (res.status) {
@@ -98,7 +94,6 @@ export class BlockSetupFormComponent implements OnInit {
       });
 
     }
-
   }
 
   closeDialog() {

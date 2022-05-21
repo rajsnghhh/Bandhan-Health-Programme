@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { ValidationService } from '../../shared/services/validation.service';
 
 @Component({
   selector: 'app-region-setup',
@@ -13,7 +14,8 @@ import { HttpService } from '../../core/http/http.service';
 export class RegionSetupComponent implements OnInit {
   regionForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
+  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService,
+    private httpService: HttpService, public validationService: ValidationService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<RegionSetupComponent>) {
     dialogRef.disableClose = true;
   }
@@ -38,20 +40,11 @@ export class RegionSetupComponent implements OnInit {
     return this.regionForm.controls;
   }
 
-  camelize(str) {
-    let value = str.toLowerCase();
-    return value.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-      if (+match === 0) return " ";
-      if (index === 0) return match.toUpperCase();
-      return index === 0 ? match.toLowerCase() : match.toUpperCase();
-    });
-  }
-
   onSave() {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       regionMasterId: this.data.editMode == false ? "0" : this.data.regionId,
-      regionName: this.camelize(this.regionForm.value.regionName)
+      regionName: this.validationService.camelize(this.regionForm.value.regionName.trim())
     }
     console.log(Dto);
     if (this.regionForm.valid) {
@@ -59,7 +52,7 @@ export class RegionSetupComponent implements OnInit {
         console.log(res);
         if (res.status) {
           this.dialogRef.close();
-          this.showSuccess('Region Created');
+          this.data.editMode == false ? this.showSuccess('Region Created') : this.showSuccess('Region Updated');
         } else {
           this.showError(res.message);
         }

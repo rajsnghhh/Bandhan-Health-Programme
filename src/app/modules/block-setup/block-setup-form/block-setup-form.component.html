@@ -37,7 +37,6 @@
         >
         <select
           class="form-select"
-          (change)="changeDistrict($event.target.value)"
           formControlName="district"
           [ngClass]="{
             'is-invalid': f.district.invalid && f.district.touched,
@@ -68,6 +67,8 @@
           class="form-control"
           placeholder="Enter Block Name"
           formControlName="blockName"
+          style="text-transform: capitalize"
+          spellcheck="false"
           [ngClass]="{
             'is-invalid': f.blockName.invalid && f.blockName.touched,
             'is-valid':
