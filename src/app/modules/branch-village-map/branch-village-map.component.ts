@@ -16,7 +16,7 @@ export class BranchVillageMapComponent implements OnInit {
   mapVillForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
-  flatVillageList: Array<any> = [];
+  mappedVillageList: Array<any> = [];
   stateList: Array<any> = [];
   districtList: Array<any> = [];
   blockList: Array<any> = [];
@@ -24,12 +24,19 @@ export class BranchVillageMapComponent implements OnInit {
   unmappedVillageList: Array<any> = [];
   branchId: any;
   branchName: any;
+  districtId: any;
+  districtName: any;
   page = 1;
   pageSize = 6;
   p: any;
   modalContent: any;
   modalReference: any;
   checkMapDataPushPop = {
+    dataAccessDTO: {},
+    branchId: '',
+    villageIdList: [],
+  };
+  checkUnmapDataPushPop = {
     dataAccessDTO: {},
     branchId: '',
     villageIdList: [],
@@ -67,10 +74,12 @@ export class BranchVillageMapComponent implements OnInit {
     }
     );
     this.branchVillageForm.controls.branch.setValue('');
-    this.flatVillageList = [];
+    this.mappedVillageList = [];
+    this.checkUnmapDataPushPop.villageIdList = [];
     if (this.branchVillageForm.value.region == '') {
       this.branchVillageForm.controls.branch.setValue('');
-      this.flatVillageList = [];
+      this.mappedVillageList = [];
+      this.checkUnmapDataPushPop.villageIdList = [];
     }
   }
 
@@ -79,19 +88,26 @@ export class BranchVillageMapComponent implements OnInit {
     this.branchName = this.branchList.find(item => item.branchId == this.branchId)?.branchName;
     console.log(this.branchName);
 
+    var district = this.branchList.find(dis => dis.districtMasterDto.districtMasterId == this.branchId)?.districtMasterDto;
+    this.districtName = district?.districtName;
+    this.districtId = district?.districtMasterId;
+    console.log(this.districtName, this.districtId);
+
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.branchId
     }
     this.branchVillMapService.flatListVillagesOfBranch(Dto).subscribe((res) => {
-      this.flatVillageList = res.responseObject;
-      console.log(this.flatVillageList, 'flatVillageList');
+      this.mappedVillageList = res.responseObject;
+      console.log(this.mappedVillageList, 'mappedVillageList');
     });
 
-    this.flatVillageList = [];
+    this.mappedVillageList = [];
+    this.checkUnmapDataPushPop.villageIdList = [];
 
     if (this.branchVillageForm.value.branch == '') {
-      this.flatVillageList = [];
+      this.mappedVillageList = [];
+      this.checkUnmapDataPushPop.villageIdList = [];
     }
   }
 
@@ -224,42 +240,93 @@ export class BranchVillageMapComponent implements OnInit {
     this.unmappedVillageList = [];
   }
 
-  mapVillCheck(e, item) {
-
-    var data = e.target.checked;
-    if (data) {
+  mapVillCheck(e, villId) {
+    var checkboxData = e.target.checked;
+    if (checkboxData) {
       this.checkMapDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
         this.checkMapDataPushPop.branchId = this.branchId,
-        this.checkMapDataPushPop.villageIdList.push({ villageId: item.villageMasterId });
-      console.log(this.checkMapDataPushPop);
+        this.checkMapDataPushPop.villageIdList.push({ villageId: villId });
+    } else {
+      var i = this.checkMapDataPushPop.villageIdList.findIndex(list => list.villageId == villId);
+      this.checkMapDataPushPop.villageIdList.splice(i, 1);
     }
-    else {
-      this.checkMapDataPushPop.villageIdList.pop();
-    }
+    console.log(this.checkMapDataPushPop, 'checkMapDataPushPop');
 
   }
 
   saveMapVill() {
-    let postBody = this.checkMapDataPushPop;
-    console.log(postBody);
+    if (this.mapVillForm.value.district != this.districtId) {
+      this.confirmationDialogService.confirm('', 'You are mapping villages of a different district with the' + ' ' + this.branchName + ' ' + '.')
+        .then(() => this.map()
+        )
+        .catch(() => '');
 
-    this.confirmationDialogService.confirm('', 'Are you sure you want to map selected villages to' + ' ' + this.branchName)
-      .then(() => this.checkMapDataPushPop
+    }
+    else {
+      this.confirmationDialogService.confirm('', 'Are you sure you want to map selected villages to the' + ' ' + this.branchName + ' ' + '?')
+        .then(() => this.map()
+        )
+        .catch(() => '');
+
+    }
+
+    console.log(this.mapVillForm.value.district, 'this.mapVillForm.value.district');
+    console.log(this.districtId, 'this.districtId');
+
+  }
+
+  map() {
+    this.branchVillMapService.mapVillagesToABranch(this.checkMapDataPushPop).subscribe((res) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.branchVillModalDismiss();
+        this.changeBranch(this.branchId);
+      }
+      else {
+        this.showError(res.message);
+      }
+
+    });
+
+  }
+
+  unMapVillCheck(e, villId) {
+    var checkboxData = e.target.checked;
+    if (checkboxData) {
+      this.checkUnmapDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
+        this.checkUnmapDataPushPop.villageIdList.push({ villageId: villId });
+    }
+    else {
+      var i = this.checkUnmapDataPushPop.villageIdList.findIndex(list => list.villageId == villId);
+      this.checkUnmapDataPushPop.villageIdList.splice(i, 1);
+    }
+
+    console.log(this.checkUnmapDataPushPop, 'checkUnmapDataPushPop');
+
+  }
+
+  saveunmapVill() {
+
+    this.confirmationDialogService.confirm('', 'Are you sure you want to unmap selected villages from the' + ' ' + this.branchName + ' ' + '?')
+      .then(() => this.unmap()
       )
       .catch(() => '');
 
-    // this.branchVillMapService.mapVillagesToABranch(postBody).subscribe((res) => {
-    //   console.log(res);
-    //   if (res.status == true) {
-    //     this.showSuccess(res.message);
-    //     this.branchVillModalDismiss();
-    //     this.changeBranch(this.branchId);
-    //   }
-    //   else {
-    //     this.showError(res.message);
-    //   }
+  }
 
-    // })
+  unmap() {
+    this.branchVillMapService.unmapVillagesFromABranch(this.checkUnmapDataPushPop).subscribe((res) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.changeBranch(this.branchId);
+      }
+      else {
+        this.showError(res.message);
+      }
+
+    })
 
   }
 
