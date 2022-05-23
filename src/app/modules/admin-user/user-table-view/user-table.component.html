@@ -103,6 +103,8 @@
                                     <i class="fa fa-lock fa-stack-1x"></i>
                                   </span> &nbsp;
                                   <i class="fas fa-trash" title="Delete User" (click)="deleteUser(i)"></i>
+                                  <i *ngIf="item.userActiveFlag == 'Y'" class="fa fa-unlock fa-lg" title="Want to deactivate ?" (click)="deactivateUser(i)"></i>
+                                  <i *ngIf="item.userActiveFlag == 'N'" class="fa fa-lock fa-lg activate" title="Want to activate ?" (click)="activateUser(i)"></i>
                               </td>
                           </tr>
                       </tbody>

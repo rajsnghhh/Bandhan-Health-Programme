@@ -117,7 +117,7 @@ export class RegionBranchHomeComponent implements OnInit {
     });
   }
 
-  deleteRegion(regionMasterId) {
+  deleteRegion(regionMasterId, regionName) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       regionMasterId: regionMasterId,
@@ -125,7 +125,7 @@ export class RegionBranchHomeComponent implements OnInit {
     if (this.regionAndBranchList.find(x => x.regionMasterId == regionMasterId)?.branchList.length != 0) {
       this.showError('Delete all branch');
     } else {
-      this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.confirmationDialogService.confirm('', `Do you want to delete ${regionName} ?`).then(() => {
         this.http.post(`${this.httpService.baseURL}region/deleteRegion`, Dto).subscribe((res) => {
           this.showSuccess('Success');
           this.getRegionAndBranchList(this.stateMasterId);
@@ -135,12 +135,12 @@ export class RegionBranchHomeComponent implements OnInit {
 
   }
 
-  deleteBranch(branchId) {
+  deleteBranch(branchId, branchName) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: branchId,
     }
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+    this.confirmationDialogService.confirm('', `Do you want to delete ${branchName} ?`).then(() => {
       this.http.post(`${this.httpService.baseURL}branch/deleteBranch`, Dto).subscribe((res: any) => {
         if (res.status == true) {
           this.showSuccess(res.message);

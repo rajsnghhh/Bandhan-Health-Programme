@@ -21,6 +21,7 @@ export class UserTableComponent implements OnInit {
   regionId: any;
   branchId: any;
   loader: boolean = true;
+  // hide: boolean = true;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
@@ -111,14 +112,19 @@ export class UserTableComponent implements OnInit {
       regionMasterId: regionId
     }
     this.loader = false;
-    this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
-      this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
-      this.loader = true;
-    }, error => {
-      this.showError('Error');
+    if (branchId != undefined || regionId != undefined) {
+      this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
+        this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
+        console.log(this.userList);
+        this.loader = true;
+      }, error => {
+        this.showError('Error');
+        this.loader = true;
+      })
+    } else {
       this.loader = true;
     }
-    )
+
   }
 
   resetPasswords(i) {
@@ -148,6 +154,26 @@ export class UserTableComponent implements OnInit {
         }
       })
     }).catch(() => '');
+  }
+
+  deactivateUser(i) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
+    this.http.post(`${this.httpService.baseURL}user/deactivateUser`, Dto).subscribe((res: any) => {
+      this.getUserList(this.branchId, this.regionId);
+    });
+  }
+
+  activateUser(i) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
+    this.http.post(`${this.httpService.baseURL}user/activateUser`, Dto).subscribe((res: any) => {
+      this.getUserList(this.branchId, this.regionId);
+    });
   }
 
   showSuccess(message) {

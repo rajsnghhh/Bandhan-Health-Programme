@@ -8,6 +8,18 @@
     font-size: 1.1em;
 }
 
+.fa-unlock:hover{
+  color: #337676 !important;
+  cursor: pointer;
+  font-size: 1.7em;
+}
+
+.activate:hover{
+  color: #337676 !important;
+  cursor: pointer;
+  font-size: 1.7em;
+}
+
 .add_button{
   display: flex;
   flex-direction: row-reverse;

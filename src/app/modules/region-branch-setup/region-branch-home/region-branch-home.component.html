@@ -96,11 +96,11 @@
                                      &nbsp;
                                     <i class="fas fa-trash" aria-hidden="true" mat-icon-button [matMenuTriggerFor]="menu1" title="Delete"></i>
                                     <mat-menu #menu1="matMenu">
-                                        <button mat-menu-item (click)="deleteRegion(item.regionMasterId)">Delete {{item.regionName}}</button>
+                                        <button mat-menu-item (click)="deleteRegion(item.regionMasterId,item.regionName)">Delete {{item.regionName}}</button>
                                         <button mat-menu-item [matMenuTriggerFor]="vertebrates1">Delete Branch</button>
                                     </mat-menu>
                                     <mat-menu #vertebrates1="matMenu">
-                                        <button mat-menu-item *ngFor="let branch of item.branchList" (click)="deleteBranch(branch.branchId)">Delete {{branch.branchName}}</button>
+                                        <button mat-menu-item *ngFor="let branch of item.branchList" (click)="deleteBranch(branch.branchId,branch.branchName)">Delete {{branch.branchName}}</button>
                                       </mat-menu>
                                 </td>
                             </tr>
