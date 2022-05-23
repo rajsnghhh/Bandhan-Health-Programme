@@ -34,28 +34,19 @@ export class SsSetupComponent implements OnInit {
   isDisabled: boolean = false;
   searchText: any;
   searchFullscreen: boolean;
-  updateMode: boolean;
-  deleteMode: boolean;
+  role: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal,
     private validationService: ValidationService, private route: Router, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
     this.createForm();
 
     this.regionList = this.sidebarService.listOfRegion;
     console.log(this.regionList);
-
-    //   this.updateMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-    //   .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
-
-    // this.deleteMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-    //   .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   ssModalDismiss() {
@@ -153,7 +144,7 @@ export class SsSetupComponent implements OnInit {
         windowClass: 'createMuac',
       });
       this.createSSForm();
-    }, 600);
+    }, 1000);
 
     let obj2 = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
 

@@ -10,12 +10,36 @@
         <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
         </span>
 
-        <div>
-            <span style="font-size: 85%; margin-left: 10%;"> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
-                {{user.responseObject.userdetailDTO.userLastName}}
-                ({{user.responseObject.RoledetailDTO.roleShortName}})</span>
-            <a style="margin-left: 11px; color:#e60000;" title="Logout" (click)="logout()"> <i
-                    class="fa fa-power-off"></i></a>
+        <!-- <div>
+            <span style="position: fixed;"> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
+                {{user.responseObject.userdetailDTO.userMiddleName}}
+                {{user.responseObject.userdetailDTO.userLastName}}&nbsp;&nbsp;
+            </span>   <a style=" color:#e60000; position: fixed;" title="Logout" (click)="logout()"> <i
+                class="fa fa-power-off"></i></a>
+
+          <br>
+
+            <span style="font-size: 85%; margin-left: 40%;">({{user.responseObject.RoledetailDTO.roleShortName}})</span>
+
+
+        </div> -->
+        <div class="row">
+            <div class="form-group col-md">
+                <span> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
+                    {{user.responseObject.userdetailDTO.userMiddleName}}
+                    {{user.responseObject.userdetailDTO.userLastName}}&nbsp;&nbsp;
+                </span>
+            </div>
+
+            <div class="form-group col-md">
+                <a style=" color:#e60000;" title="Logout" (click)="logout()"> <i class="fa fa-power-off"></i></a>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4" style="margin-left:50px;">
+                    <span>({{user.responseObject.RoledetailDTO.roleShortName}})</span>
+                </div>
+            </div>
 
         </div>
 

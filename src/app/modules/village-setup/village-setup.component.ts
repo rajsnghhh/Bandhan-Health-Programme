@@ -39,6 +39,7 @@ export class VillageSetupComponent implements OnInit {
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
+  role:any;
 
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
@@ -46,6 +47,8 @@ export class VillageSetupComponent implements OnInit {
     private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
     this.createForm();
 
     // Api call for viewing state list

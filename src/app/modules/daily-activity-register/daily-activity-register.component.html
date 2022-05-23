@@ -149,7 +149,8 @@
                                             <th style="padding: 0px;">Alone /<br> With SS</th>
                                             <th style="padding: 0px;">Name of SS</th>
                                             <th style="padding: 0px;">View</th>
-                                            <th style="padding: 0px;">Action</th>
+                                            <th style="padding: 0px;"
+                                                *ngIf="role == 'AC' || role == 'HCOI/ TL' || role == 'HCO' ">Action</th>
                                         </tr>
                                     </thead>
 
@@ -161,17 +162,43 @@
                                             <td style="padding: 0px;">{{item.villageName}} </td>
                                             <td>{{item.firstName}} {{item.middleName}}
                                                 {{item.lastName}}</td>
-                                            <td style="padding: 0px;"> -</td>
+                                            <td style="padding: 0px;">
+                                                {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
+                                                =='Y' && item.presentInPregnantWoman == 'Y' ? 'PEM, LM, PW' : '' }}
+
+                                                {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
+                                                =='Y' && item.presentInPregnantWoman == 'N' ? 'PEM, LM' : '' }}
+
+                                                {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
+                                                =='N' && item.presentInPregnantWoman == 'N' ? 'PEM' : '' }}
+
+                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
+                                                =='N' && item.presentInPregnantWoman == 'N' ? '' : '' }}
+
+                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
+                                                =='Y' && item.presentInPregnantWoman == 'Y' ? 'LM, PW' : '' }}
+
+                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
+                                                =='N' && item.presentInPregnantWoman == 'Y' ? 'PW' : '' }}
+
+                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
+                                                =='Y' && item.presentInPregnantWoman == 'N' ? 'LM' : '' }}
+
+                                                {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
+                                                =='N' && item.presentInPregnantWoman == 'Y' ? 'PEM, PW' : '' }}
+                                            </td>
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
                                             <td style="padding: 0px;">{{item.ssName ? item.ssName : '-'}}</td>
-                                            <td style="padding: 0px;" class="btn-link" 
+                                            <td style="padding: 0px;" class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="viewDARModal(editDAR, item)">
                                                 View
                                             </td>
-                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR" *ngIf="updateMode"
+                                            <td style="padding: 0px;"
+                                                *ngIf="role == 'AC' || role == 'HCOI/ TL' || role == 'HCO' "><i
+                                                    class="fas fa-edit" title="Edit DAR"
                                                     (click)="editDARModal(editDAR, item)"></i>
-                                                <i class="fas fa-trash" title="Delete DAR" *ngIf="deleteMode"
+                                                <i class="fas fa-trash" title="Delete DAR"
                                                     (click)="deleteDAR(item,i)"></i>
                                             </td>
                                         </tr>
