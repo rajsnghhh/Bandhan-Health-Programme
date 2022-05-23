@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
@@ -28,14 +28,16 @@ export class RegionBranchHomeComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
 
-    this.getRegionAndBranchList(this.stateMasterId);
-
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
     }
     this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
       this.stateList = res.responseObject.stateList;
+      this.stateMasterId = res.responseObject.stateList[0].stateMasterId;
+      this.stateSelectForm.get('state').patchValue(this.stateMasterId);
+      this.getRegionAndBranchList(this.stateMasterId);
     });
+
   }
 
   openCreateRegion() {
