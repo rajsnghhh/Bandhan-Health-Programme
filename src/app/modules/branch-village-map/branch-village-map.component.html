@@ -46,7 +46,8 @@
 
                         <div class="form-group col-md-12" id="buttonRight">
                             <button class="btn btn-primary" (click)="mapVillage(mapVill)"
-                                *ngIf="branchVillageForm.value.branch">Map Village</button>
+                                *ngIf="branchVillageForm.value.branch && role == 'PO' || role == 'PM'">Map
+                                Village</button>
                         </div>
                     </div>
 
@@ -65,7 +66,7 @@
                                             <th>Block</th>
                                             <th>GP</th>
                                             <th>Village</th>
-                                            <th>Un-Map Village</th>
+                                            <th *ngIf="role == 'PO' || role == 'PM'">Un-Map Village</th>
                                         </tr>
                                     </thead>
 
@@ -77,8 +78,8 @@
                                             <td>{{unmap.blockDto.blockName}}</td>
                                             <td>{{unmap.gpDto.gpName}}</td>
                                             <td>{{unmap.villageName}}</td>
-                                            <td><input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault"
+                                            <td *ngIf="role == 'PO' || role == 'PM'"><input class="form-check-input"
+                                                    type="checkbox" value="" id="flexCheckDefault"
                                                     (change)="unMapVillCheck($event, unmap.villageId)">
                                             </td>
                                         </tr>
@@ -89,7 +90,7 @@
                                     <div class="form-group col-md-6">
                                         <button type="button" class=" btn btn-primary bttn"
                                             [disabled]="checkUnmapDataPushPop.villageIdList.length == 0"
-                                            (click)="saveunmapVill()">Save</button>
+                                            (click)="saveunmapVill()" *ngIf="role == 'PO' || role == 'PM'">Save</button>
                                     </div>
 
                                     <div class="form-group col-md-6">

@@ -57,6 +57,8 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
+    
 
     this.locForm();
 
@@ -244,8 +246,8 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     console.log(this.darViewChildList, 'this.darViewChildList');
 
-
     console.log(this.darViewFamilyList, 'darViewFamily');
+    
   }
 
   modalDismiss() {
@@ -355,10 +357,12 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.dailyActivityService.ssVillageWiseList(req).subscribe((res) => {
       this.swasthyaSahayika = res.responseObject;
     });
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(editDAR, {
-      windowClass: 'editDAR',
-    });
+    setTimeout(() => {
+      this.modalContent = '';
+      this.modalReference = this.modalService.open(editDAR, {
+        windowClass: 'editDAR',
+      });
+    }, 500)
 
     let post = {
       dataAccessDTO: {

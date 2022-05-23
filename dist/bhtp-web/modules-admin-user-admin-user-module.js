@@ -165,20 +165,21 @@ class UserTableComponent {
         });
     }
     openEditUser(i) {
-        this.showError('This feature is unavailable');
-        // const dialogRef = this.dialog.open(UserCreateFormComponent, {
-        //   width: '1000px',
-        //   height: '550px',
-        //   data: {
-        //     createMode: false,
-        //     regionList: this.regionList,
-        //     branchList: this.branchList,
-        //     userData: this.userList[i]
-        //   }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //   this.getUserList(this.branchId, this.regionId);
-        // });
+        // this.showError('This feature is unavailable');
+        console.log(this.userList[i], '******');
+        const dialogRef = this.dialog.open(_user_create_user_create_form_component__WEBPACK_IMPORTED_MODULE_2__["UserCreateFormComponent"], {
+            width: '1000px',
+            height: '550px',
+            data: {
+                createMode: false,
+                regionList: this.regionList,
+                branchList: this.branchList,
+                userData: this.userList[i]
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            this.getUserList(this.branchId, this.regionId);
+        });
     }
     createForm() {
         this.userForm = this.fb.group({
@@ -238,16 +239,21 @@ class UserTableComponent {
         }).catch(() => '');
     }
     deleteUser(i) {
-        this.showError('This feature is unavailable');
-        // let Dto = {
-        //   dataAccessDTO: this.httpService.dataAccessDTO,
-        //   userId: this.userList[i],
-        // }
-        // this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-        // this.http.post(`${this.httpService.baseURL}user/deleteUser`, Dto).subscribe((res) => {
-        //   this.showSuccess('Delete');
-        // })
-        // }).catch(() => '');
+        let Dto = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            userId: this.userList[i].userId,
+        };
+        this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+            this.http.post(`${this.httpService.baseURL}user/deleteUser`, Dto).subscribe((res) => {
+                if (this.userList[i].activeHouseholdCount == 0 && this.userList[i].activeSsCount == 0) {
+                    this.showSuccess('Success');
+                    this.getUserList(this.branchId, this.regionId);
+                }
+                else {
+                    this.showError('User mapped with Household / SS');
+                }
+            });
+        }).catch(() => '');
     }
     showSuccess(message) {
         this.toaster.success(message, 'User Deleted', {
@@ -526,7 +532,7 @@ function UserCreateFormComponent_div_19_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("placeholder", "custom placeholder")("settings", ctx_r2.dropdownSettings)("data", ctx_r2.regionList);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("placeholder", "custom placeholder")("settings", ctx_r2.dropdownSettings)("data", ctx_r2.regionList)("disabled", ctx_r2.disableMultiRegion);
 } }
 function UserCreateFormComponent_div_20_option_8_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 11);
@@ -874,8 +880,27 @@ class UserCreateFormComponent {
         });
         if (this.data.createMode) {
             this.userForm.reset();
+            this.userForm.get('userRole').enable();
+            this.disableMultiRegion = false;
+            this.userForm.get('region').enable();
+            this.userForm.get('branch').enable();
+            this.userForm.get('baseBranch').enable();
         }
         else {
+            if (this.data.userData.activeHouseholdCount == 0 && this.data.userData.activeSsCount == 0) {
+                this.userForm.get('userRole').enable();
+                this.disableMultiRegion = false;
+                this.userForm.get('region').enable();
+                this.userForm.get('branch').enable();
+                this.userForm.get('baseBranch').enable();
+            }
+            else {
+                this.userForm.get('userRole').disable();
+                this.disableMultiRegion = true;
+                this.userForm.get('region').disable();
+                this.userForm.get('branch').disable();
+                this.userForm.get('baseBranch').disable();
+            }
             let Dto = {
                 dataAccessDTO: this.httpService.dataAccessDTO,
                 userId: this.data.userData.userId
@@ -919,7 +944,7 @@ class UserCreateFormComponent {
     createForm() {
         this.userForm = this.fb.group({
             userRole: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            multiRegion: [''],
+            multiRegion: [{ value: '', disabled: this.disableMultiRegion }],
             region: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
             branch: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
             baseBranch: [''],
@@ -1042,7 +1067,7 @@ class UserCreateFormComponent {
     }
 }
 UserCreateFormComponent.ɵfac = function UserCreateFormComponent_Factory(t) { return new (t || UserCreateFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"], 8), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_3__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_4__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_6__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_baseline_survey_baseline_survey_service__WEBPACK_IMPORTED_MODULE_8__["BaselineSurveyService"])); };
-UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: UserCreateFormComponent, selectors: [["app-user-create-form"]], decls: 84, vars: 49, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["for", "userRole"], [1, "text-danger"], ["formControlName", "userRole", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], [1, "form-group", "col-md"], ["for", "firstName"], ["type", "text", "placeholder", "Enter First Name", "formControlName", "firstName", "maxlength", "20", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "middleName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Middle Name", "formControlName", "middleName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "lastName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Last Name", "formControlName", "lastName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "loginId"], [1, "loginId", 2, "display", "grid", "grid-template-columns", "0.1fr 1fr"], ["type", "text", "formControlName", "loginId", "placeholder", "Enter Username", 1, "form-control", 2, "display", "block", 3, "maxlength", "ngClass", "keypress"], ["for", "primaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "primaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "secondaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "secondaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "primaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "primaryEmail", 1, "form-control", 3, "ngClass"], ["for", "secondaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "secondaryEmail", 1, "form-control", 3, "ngClass"], ["type", "submit", 1, "btn", "btn-success", 3, "click"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "multiRegion"], ["formControlName", "multiRegion", 3, "placeholder", "settings", "data"], ["for", "region"], ["formControlName", "region", 1, "form-select", 3, "ngClass", "change"], ["for", "branch"], ["formControlName", "branch", 1, "form-select", 3, "ngClass", "change"], ["for", "baseBranch"], ["formControlName", "baseBranch", 1, "form-select", 3, "ngClass", "change"]], template: function UserCreateFormComponent_Template(rf, ctx) { if (rf & 1) {
+UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: UserCreateFormComponent, selectors: [["app-user-create-form"]], decls: 84, vars: 49, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["for", "userRole"], [1, "text-danger"], ["formControlName", "userRole", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], [1, "form-group", "col-md"], ["for", "firstName"], ["type", "text", "placeholder", "Enter First Name", "formControlName", "firstName", "maxlength", "20", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "middleName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Middle Name", "formControlName", "middleName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "lastName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Last Name", "formControlName", "lastName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "loginId"], [1, "loginId", 2, "display", "grid", "grid-template-columns", "0.1fr 1fr"], ["type", "text", "formControlName", "loginId", "placeholder", "Enter Username", 1, "form-control", 2, "display", "block", 3, "maxlength", "ngClass", "keypress"], ["for", "primaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "primaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "secondaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "secondaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "primaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "primaryEmail", 1, "form-control", 3, "ngClass"], ["for", "secondaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "secondaryEmail", 1, "form-control", 3, "ngClass"], ["type", "submit", 1, "btn", "btn-success", 3, "click"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "multiRegion"], ["formControlName", "multiRegion", 3, "placeholder", "settings", "data", "disabled"], ["for", "region"], ["formControlName", "region", 1, "form-select", 3, "ngClass", "change"], ["for", "branch"], ["formControlName", "branch", 1, "form-select", 3, "ngClass", "change"], ["for", "baseBranch"], ["formControlName", "baseBranch", 1, "form-select", 3, "ngClass", "change"]], template: function UserCreateFormComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2", 2);
@@ -1074,7 +1099,7 @@ UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](18, UserCreateFormComponent_div_18_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, UserCreateFormComponent_div_19_Template, 6, 3, "div", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, UserCreateFormComponent_div_19_Template, 6, 4, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, UserCreateFormComponent_div_20_Template, 10, 7, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, UserCreateFormComponent_div_21_Template, 10, 7, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, UserCreateFormComponent_div_22_Template, 10, 7, "div", 14);

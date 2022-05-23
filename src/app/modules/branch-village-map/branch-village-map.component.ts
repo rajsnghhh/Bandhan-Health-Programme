@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { BranchVillageMapService } from './branch-village-map.service';
 
 @Component({
@@ -41,12 +42,15 @@ export class BranchVillageMapComponent implements OnInit {
     branchId: '',
     villageIdList: [],
   };
-
+  role:any;
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
-    private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+    private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
+    private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role);
 
     this.createForm();
 
