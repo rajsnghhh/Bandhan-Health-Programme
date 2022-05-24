@@ -15,6 +15,11 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RoleAcessResolver } from './modules/role-access/role-access-resolver.service';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -32,7 +37,10 @@ import { RoleAcessResolver } from './modules/role-access/role-access-resolver.se
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
-    Ng2SearchPipeModule, MatToolbarModule
+    Ng2SearchPipeModule, MatToolbarModule,
+    ReactiveFormsModule, FormsModule,
+    MatTabsModule, MatNativeDateModule, MatDialogModule, MatMenuModule,
+    MatIconModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
