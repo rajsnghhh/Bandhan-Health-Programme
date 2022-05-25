@@ -6,62 +6,32 @@
     [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'">
 
     <mat-toolbar *ngIf="user"
-        style="background-color: #ffff;margin-left: -300px; margin-bottom: 40px; width: 130%;padding-left: 28%;">
+        style="background-color: #ffff;margin-left: -330px; margin-bottom: 40px; width: 220%;padding-left: 28%;">
         <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
         </span>
 
-        <!-- <div>
-            <span style="position: fixed;"> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
-                {{user.responseObject.userdetailDTO.userMiddleName}}
-                {{user.responseObject.userdetailDTO.userLastName}}&nbsp;&nbsp;
-            </span>   <a style=" color:#e60000; position: fixed;" title="Logout" (click)="logout()"> <i
-                class="fa fa-power-off"></i></a>
+        <i class="fas fa-user-circle" style="font-size:40px;color: #8b4545;" mat-button [matMenuTriggerFor]="menu" 
+        title="My Profile"></i>
 
-          <br>
-
-            <span style="font-size: 85%; margin-left: 40%;">({{user.responseObject.RoledetailDTO.roleShortName}})</span>
-
-
-        </div> -->
-        <div class="row">
-            <div class="form-group col-md">
-                <span> Welcome {{user.responseObject.userdetailDTO.userFirstName}}
+        <mat-menu #menu="matMenu">
+            <div class="userMenu">
+                <div class="userMenu" style="background-color: #499;padding: 5px 25px;">
+                    <span style="color: #ffff;font-weight: 500;font-size: medium;"> Welcome </span>
+                    <span style="color: #ffff;font-weight: 500;font-size: medium;">
+                    {{user.responseObject.userdetailDTO.userFirstName}} 
                     {{user.responseObject.userdetailDTO.userMiddleName}}
-                    {{user.responseObject.userdetailDTO.userLastName}}&nbsp;&nbsp;
-                </span>
+                    {{user.responseObject.userdetailDTO.userLastName}}
+                    </span>
+                </div>                
+                <span>Role : {{user.responseObject.RoledetailDTO.roleShortName}}</span> 
+                <button class="btn btn-danger" style="padding: 3px;" (click)="logout()"> <i
+                    class="fa fa-power-off"></i>Logout</button>
             </div>
-
-            <div class="form-group col-md">
-                <a style=" color:#e60000;" title="Logout" (click)="logout()"> <i class="fa fa-power-off"></i></a>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4" style="margin-left:50px;">
-                    <span>({{user.responseObject.RoledetailDTO.roleShortName}})</span>
-                </div>
-            </div>
-
-        </div>
-
-
+        </mat-menu>
     </mat-toolbar>
 
     <div class="main_content_inner">
         <router-outlet></router-outlet>
     </div>
-
-    <!-- <div class="footer_part">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer_iner text-center">
-                        <p>2021 © Developed by
-                            <a href="#"> <i class="ti-heart"></i> </a><a href="#"> Bandhan Konnagar IT Division</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 </section>

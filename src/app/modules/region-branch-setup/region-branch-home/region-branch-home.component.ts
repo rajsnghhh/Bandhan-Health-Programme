@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BranchSetupComponent } from '../branch-setup/branch-setup.component';
 import { RegionSetupComponent } from '../region-setup/region-setup.component';
 
@@ -20,10 +21,14 @@ export class RegionBranchHomeComponent implements OnInit {
   regionAndBranchList: Array<any> = [];
   stateMasterId: any;
   loader: boolean = true;
+  createAccess: boolean;
+  updateAccess: boolean;
+  deleteAccess: boolean;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService,
-    private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,) { }
+  constructor(private fb: FormBuilder, private httpService: HttpService, private http: HttpClient,
+    private baselineService: BaselineSurveyService, private toaster: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
+    private sidebarService: SidebarService,) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -37,6 +42,21 @@ export class RegionBranchHomeComponent implements OnInit {
       this.stateSelectForm.get('state').patchValue(this.stateMasterId);
       this.getRegionAndBranchList(this.stateMasterId);
     });
+
+    this.createAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 29)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 29)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 29)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
   }
 
@@ -117,7 +137,7 @@ export class RegionBranchHomeComponent implements OnInit {
     });
   }
 
-  deleteRegion(regionMasterId) {
+  deleteRegion(regionMasterId, regionName) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       regionMasterId: regionMasterId,
@@ -125,7 +145,7 @@ export class RegionBranchHomeComponent implements OnInit {
     if (this.regionAndBranchList.find(x => x.regionMasterId == regionMasterId)?.branchList.length != 0) {
       this.showError('Delete all branch');
     } else {
-      this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+      this.confirmationDialogService.confirm('', `Do you want to delete ${regionName} ?`).then(() => {
         this.http.post(`${this.httpService.baseURL}region/deleteRegion`, Dto).subscribe((res) => {
           this.showSuccess('Success');
           this.getRegionAndBranchList(this.stateMasterId);
@@ -135,12 +155,12 @@ export class RegionBranchHomeComponent implements OnInit {
 
   }
 
-  deleteBranch(branchId) {
+  deleteBranch(branchId, branchName) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: branchId,
     }
-    this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
+    this.confirmationDialogService.confirm('', `Do you want to delete ${branchName} ?`).then(() => {
       this.http.post(`${this.httpService.baseURL}branch/deleteBranch`, Dto).subscribe((res: any) => {
         if (res.status == true) {
           this.showSuccess(res.message);

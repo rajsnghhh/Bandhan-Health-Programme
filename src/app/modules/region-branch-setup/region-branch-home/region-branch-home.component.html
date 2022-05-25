@@ -8,7 +8,7 @@
             <h2 class="page-title">Region Branch Setup</h2>
         </div>
         
-        <div class="add_button">
+        <div class="add_button" *ngIf="createAccess">
             <button class="btn btn-primary" (click)="openCreateBranch()">
                 <i class="fas fa-code-branch" ></i>Create Branch
             </button>    
@@ -84,7 +84,7 @@
                                 </td>
                                 <td>
                                     
-                                    <i class="fa fa-ellipsis-v fa-lg" aria-hidden="true" mat-icon-button [matMenuTriggerFor]="menu" title="Edit"></i>
+                                    <i class="fa fa-ellipsis-v fa-lg" *ngIf="updateAccess" aria-hidden="true" mat-icon-button [matMenuTriggerFor]="menu" title="Edit" ></i>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="openEditRegion(item.regionMasterId,item.regionName)">Edit {{item.regionName}}</button>
                                         <button mat-menu-item [matMenuTriggerFor]="vertebrates">Edit Branch</button>
@@ -94,13 +94,13 @@
                                       </mat-menu>
                                     
                                      &nbsp;
-                                    <i class="fas fa-trash" aria-hidden="true" mat-icon-button [matMenuTriggerFor]="menu1" title="Delete"></i>
+                                    <i class="fas fa-trash" *ngIf="deleteAccess" aria-hidden="true" mat-icon-button [matMenuTriggerFor]="menu1" title="Delete"></i>
                                     <mat-menu #menu1="matMenu">
-                                        <button mat-menu-item (click)="deleteRegion(item.regionMasterId)">Delete {{item.regionName}}</button>
+                                        <button mat-menu-item (click)="deleteRegion(item.regionMasterId,item.regionName)">Delete {{item.regionName}}</button>
                                         <button mat-menu-item [matMenuTriggerFor]="vertebrates1">Delete Branch</button>
                                     </mat-menu>
                                     <mat-menu #vertebrates1="matMenu">
-                                        <button mat-menu-item *ngFor="let branch of item.branchList" (click)="deleteBranch(branch.branchId)">Delete {{branch.branchName}}</button>
+                                        <button mat-menu-item *ngFor="let branch of item.branchList" (click)="deleteBranch(branch.branchId,branch.branchName)">Delete {{branch.branchName}}</button>
                                       </mat-menu>
                                 </td>
                             </tr>

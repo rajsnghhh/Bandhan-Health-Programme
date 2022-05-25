@@ -8,7 +8,7 @@
             <h2 class="page-title">Block Setup</h2>
         </div>
         
-        <div class="add_button">
+        <div class="add_button" *ngIf="createAccess">
             <button class="btn btn-primary" (click)="openCreateBlock()">
                 <i class="fa fa-cubes"></i>Create Block
             </button>    
@@ -101,8 +101,8 @@
                                   {{item.pinCode}}
                                 </td>
                                 <td>
-                                    <i class="fas fa-edit" title="Edit" (click)="openEditBlock(item)"></i>
-                                    <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(item)"></i>
+                                    <i class="fas fa-edit" title="Edit" *ngIf="updateAccess" (click)="openEditBlock(item)"></i>
+                                    <i class="fas fa-trash" title="Delete MUAC" *ngIf="deleteAccess" (click)="onDelete(item)"></i>
                                 </td>
                             </tr>
                         </tbody>

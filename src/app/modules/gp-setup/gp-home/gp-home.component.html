@@ -8,7 +8,7 @@
             <h2 class="page-title">GP/Municipality  Setup</h2>
         </div>
         
-        <div class="add_button">
+        <div class="add_button" *ngIf="createAccess">
             <button class="btn btn-primary" (click)="openCreateBlock()">
                 <i class="fa fa-building-o"></i>Create GP/Municipality
             </button>    
@@ -130,8 +130,8 @@
                                   {{item.gpMunicipalityType}}
                                 </td>
                                 <td>
-                                    <i class="fas fa-edit" title="Edit" (click)="openEditBlock(item)"></i>
-                                    <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(item)"></i>
+                                    <i class="fas fa-edit" title="Edit" *ngIf="updateAccess" (click)="openEditBlock(item)"></i>
+                                    <i class="fas fa-trash" title="Delete MUAC" *ngIf="deleteAccess" (click)="onDelete(item)"></i>
                                 </td>
                             </tr>
                         </tbody>

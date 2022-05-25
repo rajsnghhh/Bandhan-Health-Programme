@@ -40,13 +40,22 @@
           >Select Multiple Region&nbsp;<span class="text-danger">*&nbsp;</span></label
         >
         <ng-multiselect-dropdown
-          [placeholder]="'custom placeholder'"
+          [placeholder]="'Select Multiple Region'"
           [settings]="dropdownSettings"
           [data]="regionList"
           [disabled]="disableMultiRegion"
           formControlName="multiRegion"
+          [ngClass]="{
+            'is-invalid': f.multiRegion.invalid && f.multiRegion.touched,
+            'is-valid': f.multiRegion.valid && (f.multiRegion.dirty || f.multiRegion.touched)
+          }"
         >
         </ng-multiselect-dropdown>
+        <div *ngIf="f.multiRegion.errors" class="invalid-feedback">
+          <div *ngIf="f.multiRegion.errors.required">
+            Region selection is required
+          </div>
+        </div>
       </div>
 
       <!-- <ng-template #selectRegion let-modal>

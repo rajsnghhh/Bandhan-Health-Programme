@@ -122,7 +122,7 @@ export class UserCreateFormComponent implements OnInit {
   createForm() {
     this.userForm = this.fb.group({
       userRole: [null, Validators.required],
-      multiRegion: [{ value: '', disabled: this.disableMultiRegion }],
+      multiRegion: ['', Validators.required],
       region: [null, Validators.required],
       branch: [null, Validators.required],
       baseBranch: [''],

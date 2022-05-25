@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { UserCreateFormComponent } from '../user-create/user-create-form.component';
 
 @Component({
@@ -21,10 +22,13 @@ export class UserTableComponent implements OnInit {
   regionId: any;
   branchId: any;
   loader: boolean = true;
+  createAccess: boolean;
+  updateAccess: boolean;
+  deleteAccess: boolean;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService,) { }
+    private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService,) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -35,6 +39,21 @@ export class UserTableComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}user/getListOfAllRegions`, Dto).subscribe((res: any) => {
       this.regionList = res.responseObject;
     });
+
+    this.createAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 1)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 1)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 1)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   openCreateUser() {
@@ -53,8 +72,6 @@ export class UserTableComponent implements OnInit {
   }
 
   openEditUser(i) {
-    // this.showError('This feature is unavailable');
-    console.log(this.userList[i], '******')
     const dialogRef = this.dialog.open(UserCreateFormComponent, {
       width: '1000px',
       height: '550px',
@@ -111,14 +128,19 @@ export class UserTableComponent implements OnInit {
       regionMasterId: regionId
     }
     this.loader = false;
-    this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
-      this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
-      this.loader = true;
-    }, error => {
-      this.showError('Error');
+    if (branchId != undefined || regionId != undefined) {
+      this.http.post(`${this.httpService.baseURL}user/getListOfAllBranchAndRegionWiseUsers`, Dto).subscribe((res: any) => {
+        this.userList = res.responseObject?.branchWiseUserList.concat(res.responseObject?.regionWiseUserList);
+        console.log(this.userList);
+        this.loader = true;
+      }, error => {
+        this.showError('Error');
+        this.loader = true;
+      })
+    } else {
       this.loader = true;
     }
-    )
+
   }
 
   resetPasswords(i) {
@@ -148,6 +170,26 @@ export class UserTableComponent implements OnInit {
         }
       })
     }).catch(() => '');
+  }
+
+  deactivateUser(i) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
+    this.http.post(`${this.httpService.baseURL}user/deactivateUser`, Dto).subscribe((res: any) => {
+      this.getUserList(this.branchId, this.regionId);
+    });
+  }
+
+  activateUser(i) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.userList[i].userId,
+    }
+    this.http.post(`${this.httpService.baseURL}user/activateUser`, Dto).subscribe((res: any) => {
+      this.getUserList(this.branchId, this.regionId);
+    });
   }
 
   showSuccess(message) {
