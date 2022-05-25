@@ -166,6 +166,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/ss-setup']);
     }
 
+
+    if (routeId == 185 || routeId == 186) {
+      this.router.navigate(['/district-setup']);
+    }
+
   }
 
 

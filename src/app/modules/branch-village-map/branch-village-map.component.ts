@@ -43,6 +43,7 @@ export class BranchVillageMapComponent implements OnInit {
     villageIdList: [],
   };
   role:any;
+  createMode: boolean;
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
@@ -58,7 +59,12 @@ export class BranchVillageMapComponent implements OnInit {
     this.branchVillMapService.listOfRegionsOfUser(obj).subscribe((res) => {
       this.regionList = res.responseObject;
       console.log(this.regionList);
-    })
+    });
+
+    this.createMode = this.sidebarService.subMenuList
+    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+    .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 57)?.accessDetailList
+    .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
   }
 

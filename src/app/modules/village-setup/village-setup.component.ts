@@ -39,7 +39,7 @@ export class VillageSetupComponent implements OnInit {
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
-  role:any;
+  role: any;
 
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
@@ -223,28 +223,24 @@ export class VillageSetupComponent implements OnInit {
       this.villCreateForm.value.village.trim()
     );
 
-    if (!this.villCreateForm.value.village) {
-      this.showError('Please Enter Village Name');
-      return;
-    }
-
-
-    let obj = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId
-      },
-      villageCreationDto: {
-        villageMasterId: this.villageId ? this.villageId : 0,
-        villageName: this.villCreateForm.value.village,
-        gpMunicipalId: this.gpId,
-        active_flag: 'Y'
+    if (this.villCreateForm.valid) {
+      let obj = {
+        dataAccessDTO: {
+          userId: this.sidebarService.userId,
+          userName: this.sidebarService.loginId
+        },
+        villageCreationDto: {
+          villageMasterId: this.villageId ? this.villageId : 0,
+          villageName: this.villCreateForm.value.village,
+          gpMunicipalId: this.gpId,
+          active_flag: 'Y'
+        }
       }
+
+      console.log(obj);
+
+      this.villCheckDuplicates(obj);
     }
-
-    console.log(obj);
-
-    this.villCheckDuplicates(obj);
 
   }
 
@@ -255,7 +251,7 @@ export class VillageSetupComponent implements OnInit {
 
     var checkDuplicateVillName: any;
 
-    checkDuplicateVillName = this.villList.find((vill) => vill.villageName == userEnteredVill)?.villageName;
+    checkDuplicateVillName = this.villList?.find((vill) => vill.villageName == userEnteredVill)?.villageName;
     console.log(checkDuplicateVillName);
 
     if (userEnteredVill == checkDuplicateVillName) {

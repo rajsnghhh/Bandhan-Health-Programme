@@ -91,8 +91,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="villageForm.value.gp && role == 'PO' || role == 'PM'"
-                            id='buttonRight'>
+                        <div class="form-group col-md" *ngIf="villageForm.value.gp && createMode" id='buttonRight'>
                             <button class="btn btn-primary" (click)="createVillage(createVill)">Create</button>
                         </div>
                     </div>
@@ -112,7 +111,7 @@
                                             <th>GP/ Municipality<br> Type</th>
                                             <th>Gram Sansad/ Village/<br> locality</th>
                                             <th>Branch Name</th>
-                                            <th *ngIf="role == 'PO' || role == 'PM'">Action</th>
+                                            <th *ngIf="deleteMode || updateMode">Action</th>
                                         </tr>
                                     </thead>
 
@@ -126,9 +125,8 @@
                                             <td>{{vill.villageName}}</td>
                                             <td>{{vill.branchDetails?.branchName ? vill.branchDetails?.branchName :
                                                 '-'}}</td>
-                                            <td style="padding: 0px;" *ngIf="role == 'PO' || role == 'PM'"><i
-                                                    class="fas fa-edit" title="Edit Village" *ngIf="updateMode"
-                                                    (click)="editVillForm(vill, createVill)"></i>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit Village"
+                                                    *ngIf="updateMode" (click)="editVillForm(vill, createVill)"></i>
                                                 <i class="fas fa-trash" title="Delete Village" *ngIf="deleteMode"
                                                     (click)="deleteVillForm(vill, i)"></i>
                                             </td>

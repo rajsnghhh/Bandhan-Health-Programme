@@ -10,6 +10,10 @@ export class SsService {
 
   constructor(private http: HttpClient) { }
 
+  listOfRegionsOfUser(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj)
+  }
+
   listOfBranchesOfARegion(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }

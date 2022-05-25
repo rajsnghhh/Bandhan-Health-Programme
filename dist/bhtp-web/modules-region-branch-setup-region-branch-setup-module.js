@@ -333,7 +333,7 @@ function BranchSetupComponent_option_27_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_28_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "subVertical selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "SubVertical selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_28_Template(rf, ctx) { if (rf & 1) {
@@ -357,7 +357,7 @@ function BranchSetupComponent_option_37_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_38_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "subVerticleProject selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "SubVerticleProject selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_38_Template(rf, ctx) { if (rf & 1) {
@@ -381,7 +381,7 @@ function BranchSetupComponent_option_49_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_50_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "state selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "State selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_50_Template(rf, ctx) { if (rf & 1) {
@@ -405,7 +405,7 @@ function BranchSetupComponent_option_59_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_60_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "district selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "District selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_60_Template(rf, ctx) { if (rf & 1) {
@@ -429,7 +429,7 @@ function BranchSetupComponent_option_69_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_70_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "block selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Block selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_70_Template(rf, ctx) { if (rf & 1) {
@@ -443,7 +443,7 @@ function BranchSetupComponent_div_70_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_77_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "branchName is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "BranchName is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_77_Template(rf, ctx) { if (rf & 1) {
@@ -467,7 +467,7 @@ function BranchSetupComponent_option_86_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_87_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "branchType selection is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "BranchType selection is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_87_Template(rf, ctx) { if (rf & 1) {
@@ -481,7 +481,7 @@ function BranchSetupComponent_div_87_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_96_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "startDate is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "StartDate is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_96_Template(rf, ctx) { if (rf & 1) {
@@ -495,7 +495,7 @@ function BranchSetupComponent_div_96_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_103_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "address is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Address is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_103_Template(rf, ctx) { if (rf & 1) {
@@ -523,7 +523,7 @@ function BranchSetupComponent_div_110_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_117_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "postOffice is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "PostOffice is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_117_Template(rf, ctx) { if (rf & 1) {
@@ -537,7 +537,7 @@ function BranchSetupComponent_div_117_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_122_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "policeStation is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "PoliceStation is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_122_Template(rf, ctx) { if (rf & 1) {
@@ -551,7 +551,7 @@ function BranchSetupComponent_div_122_Template(rf, ctx) { if (rf & 1) {
 } }
 function BranchSetupComponent_div_127_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "branchLandmark is required");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "BranchLandmark is required");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function BranchSetupComponent_div_127_Template(rf, ctx) { if (rf & 1) {
@@ -1444,12 +1444,14 @@ class RegionBranchHomeComponent {
     }
     ngOnInit() {
         this.createForm();
-        this.getRegionAndBranchList(this.stateMasterId);
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
         };
         this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res) => {
             this.stateList = res.responseObject.stateList;
+            this.stateMasterId = res.responseObject.stateList[0].stateMasterId;
+            this.stateSelectForm.get('state').patchValue(this.stateMasterId);
+            this.getRegionAndBranchList(this.stateMasterId);
         });
     }
     openCreateRegion() {
@@ -1593,7 +1595,7 @@ RegionBranchHomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "div", 12);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "label", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "State :");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "Select State :");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "select", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function RegionBranchHomeComponent_Template_select_change_21_listener($event) { return ctx.changeState($event.target.value); });

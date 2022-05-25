@@ -46,7 +46,7 @@
 
                         <div class="form-group col-md-12" id="buttonRight">
                             <button class="btn btn-primary" (click)="mapVillage(mapVill)"
-                                *ngIf="branchVillageForm.value.branch && role == 'PO' || role == 'PM'">Map
+                                *ngIf="branchVillageForm.value.branch && createMode">Map
                                 Village</button>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                             <th>Block</th>
                                             <th>GP</th>
                                             <th>Village</th>
-                                            <th *ngIf="role == 'PO' || role == 'PM'">Un-Map Village</th>
+                                            <th *ngIf="createMode">Un-Map Village</th>
                                         </tr>
                                     </thead>
 
@@ -78,7 +78,7 @@
                                             <td>{{unmap.blockDto.blockName}}</td>
                                             <td>{{unmap.gpDto.gpName}}</td>
                                             <td>{{unmap.villageName}}</td>
-                                            <td *ngIf="role == 'PO' || role == 'PM'"><input class="form-check-input"
+                                            <td *ngIf="createMode"><input class="form-check-input"
                                                     type="checkbox" value="" id="flexCheckDefault"
                                                     (change)="unMapVillCheck($event, unmap.villageId)">
                                             </td>

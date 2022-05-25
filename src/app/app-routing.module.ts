@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'ss-setup', loadChildren: () => import('./modules/ss-setup/ss-setup.module').then(m => m.SsSetupModule), canActivate: [AuthGuard] },
   { path: 'privacy_policy', loadChildren: () => import('./modules/shared/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule), canActivate: [AuthGuard] },
   { path: 'branch-villageMap', loadChildren: () => import('./modules/branch-village-map/branch-village-map.module').then(m => m.BranchVillageMapModule), canActivate: [AuthGuard] },
+  { path: 'district-setup', loadChildren: () => import('./modules/district-setup/district-setup.module').then(m => m.DistrictSetupModule) },
   { path: '**', redirectTo: '' },
 ];
 

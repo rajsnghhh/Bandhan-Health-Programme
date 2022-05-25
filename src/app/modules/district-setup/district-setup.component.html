@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Create District</h2>
+                </div>
+                <form class="form-signin" [formGroup]="districtForm">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="state">State :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeState($event.target.value)"
+                                formControlName="state" [ngClass]="{'is-invalid': f.state.invalid && f.state.touched, 'is-valid': 
+                                f.state.valid && (f.state.dirty || f.state.touched)}">
+                                <option value="">-- Select State --</option>
+                                <option *ngFor="let state of stateList; index as i" value="{{state.stateMasterId}}">
+                                    {{state.stateName}}</option>
+                            </select>
+                            <div *ngIf="f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">
+                                    State selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" id='createButton' *ngIf="districtForm.value.state && createMode">
+                            <button class="btn btn-primary" title="Create District Here"
+                                (click)="districtModal(createDistrict)">Create</button>
+                        </div>
+
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th>SL No</th>
+                                            <th>District Name</th>
+                                            <th *ngIf="updateMode || deleteMode">Action</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let district of districtList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td>{{district.districtName}}</td>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit District"
+                                                    (click)="districtModal(createDistrict,district)"
+                                                    *ngIf="updateMode"></i>
+                                                <i class="fas fa-trash" title="Delete District"
+                                                    (click)="deleteDistrictForm(district, i)" *ngIf="deleteMode"></i>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #createDistrict>
+
+    <div class="modal-header">
+
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="branch" style="font-weight: 500;
+                font-size: 1.05rem;">State :</label>&nbsp;&nbsp;&nbsp;
+                {{stateName}}
+            </div>
+
+            <div class="col-md-2">
+                <span class="close" (click)="districtModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;">&times;</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-body">
+        <form class="form-signin" [formGroup]="districtCreateForm">
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="district">District:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="text" class="form-control" placeholder="district Name" formControlName="district"
+                        maxlength="20" style="text-transform: capitalize" [ngClass]="{'is-invalid': c.district.invalid && c.district.touched,'is-valid': c.district.valid && 
+                            (c.district.dirty || c.district.touched)}" />
+                    <div *ngIf="c.district.errors" class="invalid-feedback">
+                        <div *ngIf="c.district.errors.required">
+                            District Name is required
+                        </div>
+                        <div *ngIf="c.district.errors.minlength">
+                            Minimum length should be 3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <button type="button" class=" btn btn-primary bttn" (click)="saveDistrictForm()">Save</button>
+        </div>
+    </div>
+
+</ng-template>
