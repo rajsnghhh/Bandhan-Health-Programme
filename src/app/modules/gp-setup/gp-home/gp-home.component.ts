@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { GpSetupFormComponent } from '../gp-setup-form/gp-setup-form.component';
 
 @Component({
@@ -21,10 +22,14 @@ export class GpHomeComponent implements OnInit {
   blockId: any;
   gpMunicipality: Array<any> = [];
   loader: boolean = true;
+  createAccess: boolean;
+  updateAccess: boolean;
+  deleteAccess: boolean;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
-    private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,) { }
+    private http: HttpClient, private toaster: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
+    private sidebarService: SidebarService,) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -35,6 +40,21 @@ export class GpHomeComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
       this.stateList = res.responseObject.stateList;
     });
+
+    this.createAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 41)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 41)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteAccess = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 41)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   openCreateBlock() {
