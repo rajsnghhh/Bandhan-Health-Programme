@@ -49,19 +49,19 @@ export class DistrictSetupComponent implements OnInit {
     });
 
     this.createMode = this.sidebarService.subMenuList
-    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-    .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
-    .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
-  this.updateMode = this.sidebarService.subMenuList
-    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-    .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
-    .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
 
-  this.deleteMode = this.sidebarService.subMenuList
-    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-    .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
-    .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
   }
 

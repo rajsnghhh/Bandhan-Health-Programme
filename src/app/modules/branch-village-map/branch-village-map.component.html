@@ -90,7 +90,7 @@
                                     <div class="form-group col-md-6">
                                         <button type="button" class=" btn btn-primary bttn"
                                             [disabled]="checkUnmapDataPushPop.villageIdList.length == 0"
-                                            (click)="saveunmapVill()" *ngIf="role == 'PO' || role == 'PM'">Save</button>
+                                            (click)="saveunmapVill()" *ngIf="createMode">Unmap</button>
                                     </div>
 
                                     <div class="form-group col-md-6">
