@@ -19,7 +19,7 @@ export class DailyActivityRegisterService {
   }
 
   hcoListOfBranch(obj): any {
-    return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj)
+    return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj)
   }
 
   viewingDAREntryList(obj): any {
