@@ -651,7 +651,7 @@ class BranchVillageMapComponent {
         };
         this.branchVillMapService.listOfBranchesOfARegion(req).subscribe((res) => {
             this.branchList = res.responseObject;
-            console.log(res);
+            console.log(this.branchList, 'this.branchList');
         }, (error) => {
             this.branchList = null;
         });
@@ -665,11 +665,11 @@ class BranchVillageMapComponent {
         }
     }
     changeBranch(branchId) {
-        var _a, _b;
+        var _a, _b, _c;
         this.branchId = branchId;
         this.branchName = (_a = this.branchList.find(item => item.branchId == this.branchId)) === null || _a === void 0 ? void 0 : _a.branchName;
         console.log(this.branchName);
-        var district = (_b = this.branchList.find(dis => dis.districtMasterDto.districtMasterId == this.branchId)) === null || _b === void 0 ? void 0 : _b.districtMasterDto;
+        var district = (_c = (_b = this.branchList) === null || _b === void 0 ? void 0 : _b.find(item => item.branchId == this.branchId)) === null || _c === void 0 ? void 0 : _c.districtMasterDto;
         this.districtName = district === null || district === void 0 ? void 0 : district.districtName;
         this.districtId = district === null || district === void 0 ? void 0 : district.districtMasterId;
         console.log(this.districtName, this.districtId);
