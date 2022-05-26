@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./login/account.module').then(m => m.AccountModule) },
   { path: 'donor', loadChildren: () => import('./modules/donor/donor.module').then(m => m.DonorModule), canActivate: [AuthGuard] },
   { path: 'user', loadChildren: () => import('./modules/admin-user/admin-user.module').then(m => m.AdminUserModule), canActivate: [AuthGuard] },
+  { path: 'user-hh-ss-remap', loadChildren: () => import('./modules/user-hh-ss-remap/user-hh-ss-remap.module').then(m => m.UserHhSsRemapModule), canActivate: [AuthGuard] },
   { path: 'role-access', loadChildren: () => import('./modules/role-access/role-access.module').then(m => m.RoleAccessModule), canActivate: [AuthGuard] },
   { path: 'vertical', loadChildren: () => import('./modules/vertical/vertical.module').then(m => m.VerticalModule), canActivate: [AuthGuard] },
   { path: 'sub-vertical', loadChildren: () => import('./modules/sub-vertical/sub-vertical.module').then(m => m.SubVerticalModule), canActivate: [AuthGuard] },

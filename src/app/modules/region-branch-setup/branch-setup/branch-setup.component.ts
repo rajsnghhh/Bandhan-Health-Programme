@@ -147,13 +147,11 @@ export class BranchSetupComponent implements OnInit {
       startDate: ['', Validators.required],
       address: ['', Validators.required],
       pincode: ['', Validators.required],
-      primaryContactName: [''],
       primaryMobile: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       primaryEmail: ['', [Validators.required, Validators.email]],
       postOffice: [''],
       policeStation: [''],
       branchLandmark: [''],
-      secondaryContactName: [''],
       secondaryMobile: ['', Validators.compose([Validators.minLength(10), Validators.pattern("[6789][0-9]{9}")])],
       secondaryEmail: ['', Validators.email],
     });
