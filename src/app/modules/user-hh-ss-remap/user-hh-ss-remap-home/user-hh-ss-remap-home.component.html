@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">User Household SS Remap</h2>
+        </div>
+        
+        <form class="form-signin" [formGroup]="locationForm">
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="region"
+                      >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
+                    >
+                    <select
+                      class="form-select"
+                      (change)="changeRegion($event.target.value)"
+                      formControlName="region"
+                      id="region"
+                      [ngClass]="{
+                        'is-invalid': f.region.invalid && f.region.touched,
+                        'is-valid':
+                          f.region.valid && (f.region.dirty || f.region.touched)
+                      }"
+                    >
+                      <option value="">-- Select Region --</option>
+                      <option *ngFor="let region of regionList" [value]="region.regionMasterId">
+                        {{region.regionName}}
+                      </option>
+                    </select>
+                    <div *ngIf="f.region.errors" class="invalid-feedback">
+                      <div *ngIf="f.region.errors.required">Region selection is required</div>
+                    </div>
+                  </div>
+              
+                  <div class="form-group col-md">
+                    <label for="branch"
+                      >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
+                    >
+                    <select
+                      class="form-select"
+                      (change)="changeBranch($event.target.value)"
+                      formControlName="branch"
+                      id="branch"
+                      [ngClass]="{
+                        'is-invalid': f.branch.invalid && f.branch.touched,
+                        'is-valid':
+                          f.branch.valid && (f.branch.dirty || f.branch.touched)
+                      }"
+                    >
+                      <option value="">-- Select Branch --</option>
+                      <option *ngFor="let branch of branchList" [value]="branch.branchId">
+                        {{ branch.branchName }}
+                      </option>
+                    </select>
+                    <div *ngIf="f.branch.errors" class="invalid-feedback">
+                      <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+                    </div>
+                  </div>
+            </div>
+<br>
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="fromUser"
+                      >From User:&nbsp;<span class="text-danger">*&nbsp;</span></label
+                    >
+                    <select
+                      class="form-select"
+                      (change)="changeFromUser($event.target.value)"
+                      formControlName="fromUser"
+                      [ngClass]="{
+                        'is-invalid': f.fromUser.invalid && f.fromUser.touched,
+                        'is-valid':
+                          f.fromUser.valid && (f.fromUser.dirty || f.fromUser.touched)
+                      }"
+                    >
+                      <option value="">-- Select From User --</option>
+                      <option *ngFor="let fromUser of fromUserList" [value]="fromUser.user_id">
+                        {{fromUser.user_firstname}} {{fromUser.user_middlename}} {{fromUser.user_lastname}}
+                      </option>
+                    </select>
+                    <div *ngIf="f.fromUser.errors" class="invalid-feedback">
+                      <div *ngIf="f.fromUser.errors.required">From User selection is required</div>
+                    </div>
+                  </div>
+              
+                  <div class="form-group col-md">
+                    <label for="toUser"
+                      >To User :&nbsp;<span class="text-danger">*&nbsp;</span></label
+                    >
+                    <select
+                      class="form-select"
+                      (change)="changeToUser($event.target.value)"
+                      formControlName="toUser"
+                      id="toUser"
+                      [ngClass]="{
+                        'is-invalid': f.toUser.invalid && f.toUser.touched,
+                        'is-valid':
+                          f.toUser.valid && (f.toUser.dirty || f.toUser.touched)
+                      }"
+                    >
+                      <option value="">-- Select To User --</option>
+                      <option *ngFor="let toUser of toUserList" [value]="toUser.user_id">
+                        {{toUser.user_firstname}} {{toUser.user_middlename}} {{toUser.user_lastname}}
+                      </option>
+                    </select>
+                    <div *ngIf="f.toUser.errors" class="invalid-feedback">
+                      <div *ngIf="f.toUser.errors.required">To User selection is required</div>
+                    </div>
+                  </div>
+            </div>
+            <br>
+            <i class="fa fa-arrow-circle-right fa-4x" style="color: #499;" aria-hidden="true"
+            (click)="remapUser()"></i>
+        </form>
+
+    </div>
+</div>
+
+

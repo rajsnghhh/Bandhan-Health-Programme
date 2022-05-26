@@ -64,17 +64,20 @@
                                 <td>{{item.regionName}}</td>
                                 <td>
                                     <ul *ngFor="let branch of item.branchList">
-                                        <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined">{{branch.branchName}}</li>
+                                        <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined" [title]="branch.branchName">
+                                          {{branch.branchName.length > 15 ? (branch.branchName.slice(0,14) + '...') : branch.branchName}}</li>
                                     </ul>
                                 </td>
                                 <td>
                                   <ul *ngFor="let branch of item.branchList">
-                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined">{{branch.districtName}}</li>
+                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined" [title]="branch.districtName">
+                                      {{branch.districtName.length > 15 ? (branch.districtName.slice(0,14) + '...') : branch.districtName}}</li>
                                   </ul>
                                 </td>
                                 <td>
                                   <ul *ngFor="let branch of item.branchList">
-                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined">{{branch.projectName}}</li>
+                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined" [title]="branch.projectName">
+                                      {{branch.projectCode}}</li>
                                   </ul>
                                 </td>
                                 <td>
