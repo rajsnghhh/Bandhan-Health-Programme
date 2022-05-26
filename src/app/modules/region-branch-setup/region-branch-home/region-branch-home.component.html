@@ -76,7 +76,8 @@
                                 </td>
                                 <td>
                                   <ul *ngFor="let branch of item.branchList">
-                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined">{{branch.projectCode}}</li>
+                                    <li *ngIf="branch.stateMasterId == stateMasterId || stateMasterId == undefined" [title]="branch.projectName">
+                                      {{branch.projectCode}}</li>
                                   </ul>
                                 </td>
                                 <td>
