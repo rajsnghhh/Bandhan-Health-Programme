@@ -166,7 +166,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/ss-setup']);
     }
 
-    if (routeId == 185) {
+    if (routeId == 185 || routeId == 189) {
       this.router.navigate(['/user-hh-ss-remap']);
     }
 

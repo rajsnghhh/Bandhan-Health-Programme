@@ -316,7 +316,7 @@
                     <div class="form-group col-md">
                         <label for="village">Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" placeholder="Village Name" formControlName="village"
-                            maxlength="20" style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
+                            maxlength="50" style="text-transform: capitalize" [ngClass]="{'is-invalid': c.village.invalid && c.village.touched,'is-valid': c.village.valid && 
                             (c.village.dirty || c.village.touched)}" />
                         <div *ngIf="c.village.errors" class="invalid-feedback">
                             <div *ngIf="c.village.errors.required">

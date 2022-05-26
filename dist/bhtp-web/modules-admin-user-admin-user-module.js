@@ -1007,7 +1007,7 @@ class UserCreateFormComponent {
                     firstName: res.responseObject.userFirstName,
                     middleName: res.responseObject.userMiddleName,
                     lastName: res.responseObject.userLastName,
-                    loginId: res.responseObject.loginId,
+                    loginId: res.responseObject.loginId.slice(2),
                     primaryMobile: res.responseObject.mobileNumber,
                     secondaryMobile: res.responseObject.mobileNumberSecondary,
                     primaryEmail: res.responseObject.email,

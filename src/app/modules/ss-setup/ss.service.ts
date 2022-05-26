@@ -27,7 +27,7 @@ export class SsService {
   }
 
   staffListOfBranch(obj): any {
-    return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj)
+    return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj)
   }
 
   ssSaveUpdate(obj): any {
