@@ -42,7 +42,8 @@ export class BranchVillageMapComponent implements OnInit {
     branchId: '',
     villageIdList: [],
   };
-  role:any;
+  role: any;
+  createMode: boolean;
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
@@ -58,7 +59,12 @@ export class BranchVillageMapComponent implements OnInit {
     this.branchVillMapService.listOfRegionsOfUser(obj).subscribe((res) => {
       this.regionList = res.responseObject;
       console.log(this.regionList);
-    })
+    });
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 57)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
   }
 
@@ -71,7 +77,7 @@ export class BranchVillageMapComponent implements OnInit {
     };
     this.branchVillMapService.listOfBranchesOfARegion(req).subscribe((res) => {
       this.branchList = res.responseObject;
-      console.log(res);
+      console.log(this.branchList, 'this.branchList');
 
     }, (error) => {
       this.branchList = null;
@@ -92,7 +98,7 @@ export class BranchVillageMapComponent implements OnInit {
     this.branchName = this.branchList.find(item => item.branchId == this.branchId)?.branchName;
     console.log(this.branchName);
 
-    var district = this.branchList.find(dis => dis.districtMasterDto.districtMasterId == this.branchId)?.districtMasterDto;
+    var district = this.branchList?.find(item => item.branchId == this.branchId)?.districtMasterDto;
     this.districtName = district?.districtName;
     this.districtId = district?.districtMasterId;
     console.log(this.districtName, this.districtId);

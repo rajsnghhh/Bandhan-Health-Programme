@@ -70,7 +70,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   subMenuClick(submenu) {
 
-    var routeId = submenu.subFunctionMasterId
+    var routeId = submenu.subFunctionMasterId;
     console.log(routeId);
     console.log(submenu.subFunctionShortName);
 
@@ -168,6 +168,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
     if (routeId == 185) {
       this.router.navigate(['/user-hh-ss-remap']);
+    }
+
+    if (routeId == 185 || routeId == 186) {
+      this.router.navigate(['/district-setup']);
     }
 
   }

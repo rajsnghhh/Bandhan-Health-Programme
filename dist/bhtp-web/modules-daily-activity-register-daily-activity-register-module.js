@@ -1039,6 +1039,9 @@ class DailyActivityRegisterComponent {
         this.dailyActivityService.viewingDAREntryList(obj).subscribe((res) => {
             this.darList = res.responseObject;
             console.log(this.darList);
+            if (this.darList.length == 0) {
+                this.showError('No data found !');
+            }
             if (res.status == false) {
                 this.showError(res.message);
             }

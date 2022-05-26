@@ -34,6 +34,9 @@ export class SsSetupComponent implements OnInit {
   isDisabled: boolean = false;
   searchText: any;
   searchFullscreen: boolean;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
   role: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
@@ -45,8 +48,27 @@ export class SsSetupComponent implements OnInit {
     console.log(this.role);
     this.createForm();
 
-    this.regionList = this.sidebarService.listOfRegion;
-    console.log(this.regionList);
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
+    this.ssService.listOfRegionsOfUser(obj).subscribe((res) => {
+      this.regionList = res.responseObject;
+      console.log(this.regionList);
+    });
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 177)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 177)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 177)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
   }
 
   ssModalDismiss() {
