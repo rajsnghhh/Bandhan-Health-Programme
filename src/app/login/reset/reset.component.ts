@@ -60,14 +60,18 @@ export class ResetComponent implements OnInit {
           .subscribe(
             (data: Reset) => {
               console.log(data, 'resetData');
-              if ((data.status === true)) {
+              if (data.status) {
                 this.showSuccess('Success');
                 this.router.navigate(['/'], { relativeTo: this.route });
+              } else {
+                this.showError(data.message);
               }
               this.loader = true;
+              this.loading = false;
             },
             error => {
               this.loader = true;
+              console.log(error)
               this.showError('Error');
               this.loading = false;
             });
