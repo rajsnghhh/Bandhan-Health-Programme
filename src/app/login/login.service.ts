@@ -64,7 +64,6 @@ export class LoginService {
             userId: this.userFirstTime?.responseObject.userdetailDTO.userId,
             newPassword: password
         };
-        console.log(requestBody);
         return this.http.post(`${environment.apiUrl}user/resetPassword`, requestBody);
     }
 }
