@@ -1426,7 +1426,7 @@ class DailyActivityRegisterService {
         return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
     }
     hcoListOfBranch(obj) {
-        return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj);
+        return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj);
     }
     viewingDAREntryList(obj) {
         return this.http.post(`${this.baseURL}dailyActivity/viewDailyActivityRegister`, obj);

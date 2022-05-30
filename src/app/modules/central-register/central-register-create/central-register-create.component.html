@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="gram">GS/ Ward/ Village/ Locality
+                                <label for="gram">Village/ Gram Sansad/ Locality
                                     :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                                 <select class="form-select" formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': f.gram.invalid && f.gram.touched,
                             'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched) }">
@@ -98,8 +98,7 @@
                                 <label for="household">Household:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                                 <input type="text" class="form-control" maxlength="2"
                                     (keypress)="validationService.onlyInteger($event)" (keydown)="restrictZero($event)"
-                                    placeholder="Total Member of All Family" formControlName="household"
-                                    [ngClass]="{ 'is-invalid': f.household.invalid && f.household.touched,
+                                    placeholder="Total Member of All Family" formControlName="household" [ngClass]="{ 'is-invalid': f.household.invalid && f.household.touched,
                                 'is-valid': f.household.valid && (f.household.dirty || f.household.touched) }">
                                 <div *ngIf="f.household.errors" class="invalid-feedback">
                                     <div *ngIf="f.household.errors.required">Total Member of Household is required</div>
@@ -426,7 +425,8 @@
                 </div>
 
                 <div class="col-md-3">
-                    <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer;" title="Add Child"></i>
+                    <i class="fas fa-plus-circle" (click)="addNewChild()" style="cursor: pointer;"
+                        title="Add Child"></i>
                 </div>
 
                 <div class="col-md-2">

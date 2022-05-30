@@ -451,7 +451,7 @@ class SidebarComponent {
         if (routeId == 177 || routeId == 178 || routeId == 179 || routeId == 180) {
             this.router.navigate(['/ss-setup']);
         }
-        if (routeId == 185) {
+        if (routeId == 185 || routeId == 189) {
             this.router.navigate(['/user-hh-ss-remap']);
         }
         if (routeId == 185 || routeId == 186) {
