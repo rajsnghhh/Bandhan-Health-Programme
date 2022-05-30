@@ -170,7 +170,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/user-hh-ss-remap']);
     }
 
-    if (routeId == 185 || routeId == 186) {
+    if (routeId == 186) {
       this.router.navigate(['/district-setup']);
     }
 

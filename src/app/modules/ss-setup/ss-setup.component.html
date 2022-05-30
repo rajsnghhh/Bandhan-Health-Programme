@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode"  id='buttonRight'>
+                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode" id='buttonRight'>
                             <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                             <th>Name</th>
                                             <th>Guardian<br> Name</th>
                                             <th>Address</th>
-                                            <th>Gram Sansad/ Village/<br> locality</th>
+                                            <th>Village/ Gram <br>Sansad/ Locality</th>
                                             <th>Staff In<br> Charge</th>
                                             <th *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
@@ -244,7 +244,8 @@
                     </div>
 
                     <div class="form-group col-md">
-                        <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <label for="gram">Village/ Gram Sansad/ Locality
+                            :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <select class="form-select" formControlName="gram" id="gram" [ngClass]="{'is-invalid': c.gram.invalid && c.gram.touched,
                           'is-valid': c.gram.valid && (c.gram.dirty || c.gram.touched)}">
                             <option value="">-- Select Village --</option>

@@ -95,7 +95,7 @@ class SsService {
         return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
     }
     staffListOfBranch(obj) {
-        return this.http.post(`${this.baseURL}branch/getListOfHcoITL`, obj);
+        return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj);
     }
     ssSaveUpdate(obj) {
         return this.http.post(`${this.baseURL}swasthyasahayika/saveOrUpdate`, obj);

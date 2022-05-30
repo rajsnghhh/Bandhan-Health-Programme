@@ -84,7 +84,8 @@
                         </div>
 
                         <div class="form-group col-md">
-                            <label for="gram">GS/ Ward/ Village:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <label for="gram">Village/ Gram Sansad/ Locality
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeVillage($event.target.value)"
                                 formControlName="gram" id="gram" [ngClass]="{
                               'is-invalid': f.gram.invalid && f.gram.touched,
