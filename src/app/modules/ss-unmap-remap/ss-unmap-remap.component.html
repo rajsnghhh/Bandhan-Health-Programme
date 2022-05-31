@@ -1,0 +1,165 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Unmap/ Remap SS - Household</h2>
+                </div>
+
+                <form class="form-signin" [formGroup]="ssUnmapRemapForm">
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched, 
+                                'is-valid': f.region.valid && (f.region.dirty || f.region.touched)}">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
+                              'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md">
+                            <label for="hcouser">HCO/ HCOI /TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeHco($event.target.value)"
+                                formControlName="hcouser" id="hcouser" [ngClass]="{
+                              'is-invalid': f.hcouser.invalid && f.hcouser.touched,
+                              'is-valid':
+                                f.hcouser.valid && (f.hcouser.dirty || f.hcouser.touched)
+                            }">
+                                <option value="">-- Select Role --</option>
+                                <option *ngFor="let hcouser of userList" value='{{hcouser.user_id}}'>
+                                    {{ hcouser.user_firstname}} {{hcouser.user_middlename}} {{hcouser.user_lastname}} -
+                                    {{hcouser.role_shortname}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.hcouser.errors" class="invalid-feedback">
+                                <div *ngIf="f.hcouser.errors.required">Role selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="white_box_tittle list_header">
+
+                            <div class="QA_table ">
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                    <table
+                                        class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                        role="grid" aria-describedby="DataTables_Table_0_info"
+                                        style="table-layout: fixed">
+
+                                        <thead id="header-fixed">
+                                            <tr>
+                                                <th>SL No</th>
+                                                <th>Household No</th>
+                                                <th>Branch</th>
+                                                <th>Village of Household</th>
+                                                <th>SS Name</th>
+                                                <th>Unmap/ Remap</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of userMappedHHList; index as i">
+                                                <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                                <td>{{ item.houseHoldNumber}}</td>
+                                                <td>{{item.branchName}}</td>
+                                                <td>{{item.villageName}}</td>
+                                                <td>{{item.swasthyaSahayikaName ? item.swasthyaSahayikaName : '-'}}</td>
+                                                <td><input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault"
+                                                        (change)="unmapRemapSS($event, item.houseHoldDetailId)">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <button type="button" class=" btn btn-primary bttn"
+                                [disabled]="mapUnmapDto.ssHhMapRemapDtoList.length == 0"
+                                (click)="saveunmapSS()">Unmap</button>&nbsp;&nbsp;
+
+                            <button type="button" class=" btn btn-primary bttn"
+                                [disabled]="mapUnmapDto.ssHhMapRemapDtoList.length == 0"
+                                (click)="saveRemapSS(ssList)">Remap</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #ssList>
+    <div class="modal-header">
+
+        <div class="col-md-2">
+            <span class="close" (click)="modalDismiss()" style="cursor: pointer;font-size: 35px;">&times;</span>
+        </div>
+
+    </div>
+
+    <div class="modal-body">
+        <form class="form-signin" [formGroup]="modalForm">
+
+            <div class="form-group col-md">
+                <label for="ss">Swasthya Sahayika :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" (change)="changess($event.target.value)" formControlName="ss" id="ss"
+                    [ngClass]="{'is-invalid': s.ss.invalid && s.ss.touched,
+                              'is-valid': s.ss.valid && (s.ss.dirty || s.ss.touched) }">
+                    <option value="">-- Select SS--</option>
+                    <option *ngFor="let ss of ssLists; index as i " value="{{ss.swasthyaSahayikaId}}">
+                        {{ ss.swasthyaSahayikaName }}
+                    </option>
+                </select>
+                <div *ngIf="s.ss.errors" class="invalid-feedback">
+                    <div *ngIf="s.ss.errors.required">
+                        SS selection is required
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="button" class=" btn btn-primary bttn" [disabled]="!modalForm.value.ss"
+                    (click)="saveRemapSSFromModal()">Remap
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</ng-template>
