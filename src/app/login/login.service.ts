@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { User } from './user';
+import { ConfirmationDialogService } from '../modules/shared/confirmation-dialog/confirmation-dialog.service';
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class LoginService {
 
     constructor(
         private router: Router,
-        private http: HttpClient
+        private http: HttpClient, private confirmationDialogService: ConfirmationDialogService,
     ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
         this.user = this.userSubject.asObservable();

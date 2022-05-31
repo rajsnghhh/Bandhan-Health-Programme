@@ -18,6 +18,9 @@ export class UserHhSsRemapHomeComponent implements OnInit {
   branchList: Array<any> = [];
   fromUserList: Array<any> = [];
   toUserList: Array<any> = [];
+  noUserPresent: boolean = false;
+  branchId: any;
+  loader: boolean = true;
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder,
     private sidebarService: SidebarService, private confirmationDialogService: ConfirmationDialogService,
@@ -57,23 +60,36 @@ export class UserHhSsRemapHomeComponent implements OnInit {
   }
 
   changeBranch(value) {
+    this.branchId = value
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: value
+      branchId: this.branchId
     }
-    this.http.post(`${this.httpService.baseURL}branch/getListOfAllHcoITL`, Dto).subscribe((res: any) => {
-      this.fromUserList = res?.responseObject;
-    });
+    if (this.branchId != '') {
+      this.http.post(`${this.httpService.baseURL}branch/getListOfAllHcoITL`, Dto).subscribe((res: any) => {
+        this.fromUserList = res?.responseObject;
+        this.noUserPresent = (this.fromUserList.length == 0) ? true : false;
+      });
+    }
+    this.locationForm.controls.fromUser.patchValue('');
+    this.locationForm.controls.toUser.patchValue('');
+    if (!this.locationForm.value.branch) {
+      this.fromUserList = [];
+      this.toUserList = [];
+    }
   }
 
   changeFromUser(value) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: value
+      branchId: this.branchId
     }
-    this.http.post(`${this.httpService.baseURL}branch/getListOfActiveHcoITL`, Dto).subscribe((res: any) => {
-      this.toUserList = res?.responseObject;
-    });
+    if (this.branchId != '') {
+      this.http.post(`${this.httpService.baseURL}branch/getListOfActiveHcoITL`, Dto).subscribe((res: any) => {
+        this.toUserList = res?.responseObject.filter(item => item.user_id != value);
+      });
+    }
+    this.locationForm.controls.toUser.patchValue('');
   }
 
   changeToUser(value) {
@@ -81,21 +97,44 @@ export class UserHhSsRemapHomeComponent implements OnInit {
   }
 
   remapUser() {
+    console.log(this.locationForm.value.fromUser, this.locationForm.value.toUser)
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       fromUserId: this.locationForm.value.fromUser,
       toUserId: this.locationForm.value.toUser
     }
 
+
     this.confirmationDialogService.confirm('', `Do you want to remap?`).then(() => {
-      this.http.post(`${this.httpService.baseURL}remap/remapAllHhAndSsOfOneUserToAnother`, Dto).subscribe((res) => {
-        this.showSuccess('Success');
-      })
+      this.loader = false;
+      if (this.locationForm.value.fromUser != '' && this.locationForm.value.toUser != '') {
+        this.http.post(`${this.httpService.baseURL}remap/remapAllHhAndSsOfOneUserToAnother`, Dto).subscribe((res: any) => {
+          if (res.status) {
+            this.showSuccess(res.message);
+            this.loader = true;
+            this.locationForm.controls.region.patchValue('');
+            this.locationForm.controls.branch.patchValue('');
+            this.locationForm.controls.fromUser.patchValue('');
+            this.locationForm.controls.toUser.patchValue('');
+          } else {
+            this.showError('Error');
+            this.loader = true;
+          }
+        })
+      }
     }).catch(() => '');
+
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Deleted', {
+    this.toaster.success(message, 'Success', {
+      timeOut: 5000,
+    });
+  }
+
+  /* Show Error message toaster */
+  showError(message) {
+    this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
   }

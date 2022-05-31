@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
+import { ConfirmationDialogService } from 'src/app/modules/shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from 'src/app/modules/shared/services/validation.service';
 import { LoginService } from '../login.service';
 import { Reset } from '../user';
@@ -26,6 +27,7 @@ export class ResetComponent implements OnInit {
     private accountService: LoginService,
     private toaster: ToastrService,
     public validationService: ValidationService,
+    private confirmationDialogService: ConfirmationDialogService,
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
@@ -38,6 +40,11 @@ export class ResetComponent implements OnInit {
       newPassword: ['', Validators.required],
       confirmPassword: ['', [Validators.required]]
     });
+
+    if (this.accountService.userFirstTime == undefined) {
+      this.router.navigate(['/']);
+      this.showError('Please login again');
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -60,14 +67,18 @@ export class ResetComponent implements OnInit {
           .subscribe(
             (data: Reset) => {
               console.log(data, 'resetData');
-              if ((data.status === true)) {
+              if (data.status) {
                 this.showSuccess('Success');
                 this.router.navigate(['/'], { relativeTo: this.route });
+              } else {
+                this.showError(data.message);
               }
               this.loader = true;
+              this.loading = false;
             },
             error => {
               this.loader = true;
+              console.log(error)
               this.showError('Error');
               this.loading = false;
             });
@@ -85,7 +96,7 @@ export class ResetComponent implements OnInit {
 
   showError(message) {
     this.toaster.error(message, 'Error in password reset', {
-      timeOut: 3000,
+      timeOut: 4000,
     });
   }
 

@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -59,7 +60,8 @@
                     </div>
                   </div>
             </div>
-<br>
+            <div class="text-center text-danger" *ngIf="noUserPresent"><br>*No user present on this branch*</div>
+            <br>
             <div class="row">
                 <div class="form-group col-md">
                     <label for="fromUser"
@@ -111,8 +113,10 @@
                   </div>
             </div>
             <br>
-            <i class="fa fa-arrow-circle-right fa-4x" style="color: #499;" aria-hidden="true"
-            (click)="remapUser()"></i>
+              <div class="text-center">
+                <i class="fa fa-arrow-circle-right fa-4x" style="color: #499;" aria-hidden="true"
+                (click)="remapUser()"></i>
+              </div>
         </form>
 
     </div>

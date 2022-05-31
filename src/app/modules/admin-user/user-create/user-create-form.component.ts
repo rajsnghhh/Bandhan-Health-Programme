@@ -33,6 +33,8 @@ export class UserCreateFormComponent implements OnInit {
   branch: Array<any> = [];
   disableMultiRegion: boolean;
   // branchVillageMapId: any;
+  regionMultiId: Array<any> = [];
+  baseBranchList: Array<any> = [];
 
   constructor(@Optional() public dialogRef: MatDialogRef<UserCreateFormComponent>, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService, private fb: FormBuilder,
@@ -168,6 +170,25 @@ export class UserCreateFormComponent implements OnInit {
       this.userForm.get('region').clearAsyncValidators();
     }
   }
+
+  onItemSelect(value) {
+    let data = value.regionMasterId.toString();
+    this.regionMultiId.push(data);
+  }
+
+  getBaseBranch() {
+    console.log(this.regionMultiId);
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      regionId: this.regionMultiId
+    }
+    if (this.regionMultiId.length != 0) {
+      this.http.post(`${this.httpService.baseURL}branch/getListOfBranchesOfMultiRegion`, Dto).subscribe((res: any) => {
+        this.baseBranchList = res?.responseObject;
+      })
+    }
+  }
+
   changeRegion(region) {
     this.regionId = this.regionList.find((reg) => reg.regionName == region)?.regionMasterId;
     this.region = [{ 'regionMasterId': this.regionId }]
