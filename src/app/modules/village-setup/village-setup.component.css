@@ -35,7 +35,7 @@
 
 .search_inner input {
   width: 70%;
-  margin-left: 580px;
+  margin-left: 360px;
 }
 
 .search_inner_fullscreen input {
@@ -52,7 +52,7 @@
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: 195px;
+  margin-left: -25px;
 }
 
 #buttonRight {

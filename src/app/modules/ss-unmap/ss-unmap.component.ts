@@ -117,6 +117,7 @@ export class SsUnmapComponent implements OnInit {
     });
 
   }
+
   showSuccess(message) {
     this.toaster.success(message, 'Unmap SS', {
       timeOut: 10000,

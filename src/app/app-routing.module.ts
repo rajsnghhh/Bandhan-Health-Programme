@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: 'branch-villageMap', loadChildren: () => import('./modules/branch-village-map/branch-village-map.module').then(m => m.BranchVillageMapModule), canActivate: [AuthGuard] },
   { path: 'district-setup', loadChildren: () => import('./modules/district-setup/district-setup.module').then(m => m.DistrictSetupModule), canActivate: [AuthGuard] },
   { path: 'ss-unmap', loadChildren: () => import('./modules/ss-unmap/ss-unmap.module').then(m => m.SsUnmapModule), canActivate: [AuthGuard] },
+  { path: 'ss-unmap-remap', loadChildren: () => import('./modules/ss-unmap-remap/ss-unmap-remap.module').then(m => m.SsUnmapRemapModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 
