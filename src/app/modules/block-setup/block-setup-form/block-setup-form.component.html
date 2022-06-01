@@ -91,6 +91,7 @@
           formControlName="pinCode"
           (keypress)="validationService.onlyInteger($event)"
           maxlength="6"
+          minlength="6"
           [ngClass]="{
             'is-invalid': f.pinCode.invalid && f.pinCode.touched,
             'is-valid':
@@ -99,6 +100,7 @@
         />
         <div *ngIf="f.pinCode.errors" class="invalid-feedback">
           <div *ngIf="f.pinCode.errors.required">Pin Code is required</div>
+          <div *ngIf="f.pinCode.errors?.minlength">Minimum 6 digit required</div>
         </div>
       </div>
     </div>

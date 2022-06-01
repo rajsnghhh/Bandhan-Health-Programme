@@ -34,7 +34,7 @@ export class UserCreateFormComponent implements OnInit {
   disableMultiRegion: boolean;
   // branchVillageMapId: any;
   regionMultiId: Array<any> = [];
-  baseBranchList: Array<any> = [];
+  // baseBranchList: Array<any> = [];
 
   constructor(@Optional() public dialogRef: MatDialogRef<UserCreateFormComponent>, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService, private fb: FormBuilder,
@@ -86,13 +86,26 @@ export class UserCreateFormComponent implements OnInit {
         // this.branchVillageMapId = res.responseObject.branchList[0].branchName;
         // this.branchList = this.data.branchList;
         this.changeRole(this.data.userData.roleShortName);
-        this.changeRegion(res.responseObject.regionList[0]?.regionName);
+
+        let value = (res.responseObject.regionList.filter(item => item.regionMasterId))
+        value.forEach(e => {
+          let data = e.regionMasterId.toString()
+          this.regionMultiId.push(data);
+        });
+        if (res.responseObject.roleShortName.indexOf('HCO') == -1 && res.responseObject.roleShortName.indexOf('AC') == -1) {
+          this.getBaseBranch(this.regionMultiId);
+        }
+        else {
+          this.changeRegion(res.responseObject.regionList[0]?.regionName);
+        }
+
+
         // this.changeBranch(res.responseObject.branchList[0]?.branchName);
         this.userForm.patchValue({
           userRole: res.responseObject.roleShortName,
           multiRegion: res.responseObject?.regionList,
           region: res.responseObject.regionList[0]?.regionName,
-          branch: res.responseObject.branchList[0]?.branchName,
+          branch: res.responseObject.branchList[0]?.branchId,
           baseBranch: res.responseObject?.currentBranchId,
           firstName: res.responseObject.userFirstName,
           middleName: res.responseObject.userMiddleName,
@@ -103,7 +116,7 @@ export class UserCreateFormComponent implements OnInit {
           primaryEmail: res.responseObject.email,
           secondaryEmail: res.responseObject.emailSecondary,
         });
-        this.userForm.get('branch').patchValue(res.responseObject.branchList[0]?.branchName);
+        this.userForm.get('baseBranch').patchValue(res.responseObject?.currentBranchId);
         // console.log(res.responseObject.branchList[0]?.branchName)
       });
 
@@ -124,10 +137,10 @@ export class UserCreateFormComponent implements OnInit {
   createForm() {
     this.userForm = this.fb.group({
       userRole: [null, Validators.required],
-      multiRegion: ['', Validators.required],
-      region: [null, Validators.required],
-      branch: [null, Validators.required],
-      baseBranch: [''],
+      multiRegion: [''],
+      region: [null],
+      branch: [null],
+      baseBranch: [null],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       middleName: ['', Validators.compose([Validators.minLength(3)])],
       lastName: ['', Validators.compose([Validators.minLength(3)])],
@@ -169,22 +182,42 @@ export class UserCreateFormComponent implements OnInit {
       this.userForm.get('branch').clearAsyncValidators();
       this.userForm.get('region').clearAsyncValidators();
     }
+    this.userForm.controls.region.setValue(null);
+    this.userForm.controls.branch.setValue(null);
+    this.userForm.controls.baseBranch.setValue(null);
+    this.branchList = [];
   }
 
-  onItemSelect(value) {
-    let data = value.regionMasterId.toString();
-    this.regionMultiId.push(data);
+  onDeSelect(i) {
+    this.regionMultiId = [];
+    let value = (this.userForm.value.multiRegion.filter(item => item.regionMasterId))
+    value.forEach(e => {
+      let data = e.regionMasterId.toString()
+      this.regionMultiId.push(data);
+    });
+    this.getBaseBranch(this.regionMultiId);
   }
 
-  getBaseBranch() {
+  onItemSelect(i) {
+    this.regionMultiId = [];
+    let value = (this.userForm.value.multiRegion.filter(item => item.regionMasterId))
+    value.forEach(e => {
+      let data = e.regionMasterId.toString()
+      this.regionMultiId.push(data);
+    });
+
+    this.getBaseBranch(this.regionMultiId);
+  }
+
+  getBaseBranch(regionMultiId) {
     console.log(this.regionMultiId);
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      regionId: this.regionMultiId
+      regionId: regionMultiId
     }
     if (this.regionMultiId.length != 0) {
       this.http.post(`${this.httpService.baseURL}branch/getListOfBranchesOfMultiRegion`, Dto).subscribe((res: any) => {
-        this.baseBranchList = res?.responseObject;
+        this.branchList = res?.responseObject;
       })
     }
   }
@@ -209,7 +242,7 @@ export class UserCreateFormComponent implements OnInit {
     }
   }
   changeBranch(value) {
-    this.currentBranchId = this.branchList?.find(branch => branch.branchName == value)?.branchId;
+    this.currentBranchId = value;
     this.branch = [{ 'branchId': this.currentBranchId }]
   }
 
@@ -219,14 +252,15 @@ export class UserCreateFormComponent implements OnInit {
 
   onSave() {
     console.log(this.userForm);
-    this.changeBranch(this.userForm.value.branch);
+    this.userForm.value.multiRegion.forEach(x => delete x.regionName);
+    // this.changeBranch(this.userForm.value.branch);
     this.userForm.markAllAsTouched();
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       userId: this.data.createMode ? 0 : this.data.userData.userId,
-      userFirstName: this.userForm.value.firstName,
-      userMiddleName: this.userForm.value.middleName,
-      userLastName: this.userForm.value.lastName,
+      userFirstName: this.userForm.value.firstName ? this.validationService.camelize(this.userForm.value.firstName.trim()) : null,
+      userMiddleName: this.userForm.value.middleName ? this.validationService.camelize(this.userForm.value.middleName.trim()) : null,
+      userLastName: this.userForm.value.lastName ? this.validationService.camelize(this.userForm.value.lastName.trim()) : null,
       loginId: 'BK' + this.userForm.value.loginId,
       email: this.userForm.value.primaryEmail,
       emailSecondary: this.userForm.value.secondaryEmail,
@@ -234,7 +268,7 @@ export class UserCreateFormComponent implements OnInit {
       mobileNumberSecondary: this.userForm.value.secondaryMobile,
       currentBranchId: this.currentBranchId,
       roleShortName: this.userForm.value.userRole,
-      roleMasterId: this.roleMasterId,
+      roleMasterId: this.roleList.find(role => role.roleShortName == this.userForm.value.userRole)?.roleMasterId,
       branchList: (this.userForm.value.userRole?.indexOf('HCO') != -1) ?
         this.branch : null,
       regionList: (this.userForm.value.userRole?.indexOf('HCO') != -1 || this.userForm.value.userRole?.indexOf('AC') != -1) ?
@@ -243,11 +277,15 @@ export class UserCreateFormComponent implements OnInit {
     console.log(Dto);
     if (this.userForm.valid) {
       this.http.post(`${this.httpService.baseURL}user/saveOrUpdate`, Dto).subscribe((res: any) => {
-        this.dialogRef.close();
-        this.showSuccess('Success')
+        if (res.status) {
+          this.showSuccess('Success');
+          this.dialogRef.close();
+        } else {
+          this.showError('Error');
+        }
       });
     } else {
-      this.showError('Error')
+      this.showError('User Form is not valid ')
     }
   }
 
