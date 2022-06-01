@@ -252,7 +252,9 @@ export class UserCreateFormComponent implements OnInit {
 
   onSave() {
     console.log(this.userForm);
-    this.userForm.value.multiRegion.forEach(x => delete x.regionName);
+    if (this.userForm.value.multiRegion != null) {
+      this.userForm.value.multiRegion.forEach(x => delete x.regionName);
+    }
     // this.changeBranch(this.userForm.value.branch);
     this.userForm.markAllAsTouched();
     let Dto = {
