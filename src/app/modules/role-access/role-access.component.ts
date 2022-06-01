@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { HttpService } from 'src/app/modules/core/http/http.service';
@@ -7,6 +8,7 @@ import { MainFunctionDTO } from '../core/models/mainFunctionDTO.model';
 import { RoleMasterDTO } from '../core/models/roleMasterDTO.model';
 import { RoleFunctionMapDTO } from '../core/models/roleSubFunctionMapDTO.model';
 import { SubFunctionMasterDTO } from '../core/models/subFunctionDTO.model';
+import { RoleAccessService } from './role-access.service';
 
 @Component({
   selector: 'app-role-access',
@@ -14,95 +16,151 @@ import { SubFunctionMasterDTO } from '../core/models/subFunctionDTO.model';
   styleUrls: ['./role-access.component.css']
 })
 export class RoleAccessComponent implements OnInit {
-  // menuData: any = [];
-  main_functions: MainFunctionDTO[];
-  mainFunctionId: any = '';
-  subFunctions: SubFunctionMasterDTO[];
-  subFunctionsDropDown: any = [];
-  selectedSubFunction: string = ''
-  actionTypes: any = [];
-  roleList: RoleMasterDTO[];
+  roleAccessForm: FormGroup;
+  roleList: Array<any> = [];
+  mainFunctionList: Array<any> = [];
+  subFunctionList: any = [];
+  accessType: any;
+  // main_functions: MainFunctionDTO[];
+  // mainFunctionId: any = '';
+  // subFunctions: SubFunctionMasterDTO[];
+  subFunctions: any;
+  // subFunctionsDropDown: any = [];
+  // selectedSubFunction: string = ''
+  // actionTypes: any = [];
+  RoleList: RoleMasterDTO[];
   roleAccessData: RoleFunctionMapDTO[];
-  roleAccessSaveObj: {
-    dataAccessDTO: DataAccessDTO,
-    roleFunctionMapDTOList: RoleFunctionMapDTO[];
-  }
+  // roleAccessSaveObj: {
+  //   dataAccessDTO: DataAccessDTO,
+  //   roleFunctionMapDTOList: RoleFunctionMapDTO[];
+  // }
 
-  abcd: string;
-  constructor(private httpService: HttpService, private route: ActivatedRoute) { }
+  // abcd: string;
+  constructor(private httpService: HttpService, private route: ActivatedRoute, private roleService: RoleAccessService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.createForm();
 
-    this.route.data.subscribe(data => {
-      // this.menuData = data;
-      console.log(data);
-      this.roleAccessData = data.roleAcess.responseObject;
-      console.log(this.roleAccessData);
-      this.roleList = this.roleAccessData.map(item => item.roleMasterDTO);
-      this.main_functions = this.roleAccessData[0].mainFunctionDTOList
+    // Api call for viewing rolefunctionmapview list
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
+    this.roleService.rolefunctionmapview(obj).subscribe((res) => {
+      this.roleList = res.responseObject;
+      console.log(this.roleList, ' this.roleList');
     });
 
+    // this.route.data.subscribe(data => {
+    //   // this.menuData = data;
+    //   console.log(data);
+      this.roleAccessData =  this.roleList;
+    //   console.log(this.roleAccessData);
+      this.RoleList =  this.roleList.map(item => item.roleMasterDTO);
+      console.log(this.RoleList);
+      
+    //   this.main_functions = this.roleAccessData[0].mainFunctionDTOList
+    // });
+
+  }
+  createForm() {
+    this.roleAccessForm = this.fb.group({
+      role: ['', Validators.required],
+      mainfunction: ['', Validators.required],
+      subfunction: ['', Validators.required]
+    });
+  }
+
+  get f() {
+    return this.roleAccessForm.controls;
+  }
+
+  changeRole(roleId) {
+    console.log(roleId);
+    this.mainFunctionList = this.roleList.find(item => item.roleMasterDTO.roleMasterId == roleId)?.mainFunctionDTOList;
+    console.log(this.mainFunctionList, 'mainFunctionList');
+  }
+
+  changeMainFunction(mainFunctionId) {
+    console.log(mainFunctionId);
+    this.subFunctions = this.mainFunctionList.find(item => item.mainFunctionMasterId == mainFunctionId)?.subFunctionMasterDTOList;
+
+    this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+    console.log(this.subFunctionList, this.subFunctions, 'subFunctionList');
+  }
+
+  changeSubFunction(subFunctionName) {
+    console.log(subFunctionName);
+
+    this.accessType = this.subFunctions.filter(item => item.subFunctionShortName == subFunctionName);
+    console.log(this.accessType);
+
+
+    //   this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction)
+    //   console.log(this.actionTypes);
+
+
 
   }
 
-  getSubFunctions() {
 
-    this.subFunctions = this.roleAccessData[0].mainFunctionDTOList.find(item => item.mainFunctionMasterId === this.mainFunctionId).subFunctionMasterDTOList;
 
-    this.subFunctionsDropDown = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+  // getSubFunctions() {
 
-  }
+  //   this.subFunctions = this.roleAccessData[0].mainFunctionDTOList.find(item => item.mainFunctionMasterId === this.mainFunctionId).subFunctionMasterDTOList;
 
-  createTableRows() {
+  //   this.subFunctionsDropDown = new Set(this.subFunctions.map(item => item.subFunctionShortName));
 
-    this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction)
-    console.log(this.actionTypes);
-  }
+  // }
 
-  assignAccess(subFunctionId, roleIndex, event) {
-    let checked = event.target.checked;
-    let item = this.roleAccessData[roleIndex].mainFunctionDTOList.find(
-      item => item.mainFunctionMasterId === this.mainFunctionId
-    ).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId)
+  // createTableRows() {
 
-    if (checked)
-      item.roleActiveFlag = 'Y'
-    else
-      item.roleActiveFlag = 'N'
+  //   this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction)
+  //   console.log(this.actionTypes);
+  // }
 
-    // console.log(item);
-    console.log(this.roleAccessData);
+  // assignAccess(subFunctionId, roleIndex, event) {
+  //   let checked = event.target.checked;
+  //   let item = this.roleAccessData[roleIndex].mainFunctionDTOList.find(
+  //     item => item.mainFunctionMasterId === this.mainFunctionId
+  //   ).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId)
 
-  }
+  //   if (checked)
+  //     item.roleActiveFlag = 'Y'
+  //   else
+  //     item.roleActiveFlag = 'N'
 
-  checkStatus(subFunctionId, roleIndex): any {
-    let flag = this.roleAccessData[roleIndex].mainFunctionDTOList.find(
-      item => item.mainFunctionMasterId === this.mainFunctionId
-    ).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId).roleActiveFlag
+  //   // console.log(item);
+  //   console.log(this.roleAccessData);
 
-    // console.log(flag);
-    if (flag === 'Y')
-      return true
+  // }
 
-    else
-      return false
+  // checkStatus(subFunctionId, roleIndex): any {
+  //   let flag = this.roleAccessData[roleIndex].mainFunctionDTOList.find(
+  //     item => item.mainFunctionMasterId === this.mainFunctionId
+  //   ).subFunctionMasterDTOList.find(item => item.subFunctionMasterId === subFunctionId).roleActiveFlag
 
-  }
+  //   // console.log(flag);
+  //   if (flag === 'Y')
+  //     return true
 
-  save() {
-    this.roleAccessSaveObj = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      roleFunctionMapDTOList: this.roleAccessData
-    };
+  //   else
+  //     return false
 
-    console.log(this.roleAccessSaveObj);
-    this.httpService.postRequest(`rolesubfunctionmap/save`, this.roleAccessSaveObj).subscribe((data) => {
-      console.log(data)
-    },
+  // }
 
-      (error) => {
-        console.log(error);
-      })
-  }
+  // save() {
+  //   this.roleAccessSaveObj = {
+  //     dataAccessDTO: this.httpService.dataAccessDTO,
+  //     roleFunctionMapDTOList: this.roleAccessData
+  //   };
+
+  //   console.log(this.roleAccessSaveObj);
+  //   this.httpService.postRequest(`rolesubfunctionmap/save`, this.roleAccessSaveObj).subscribe((data) => {
+  //     console.log(data)
+  //   },
+
+  //     (error) => {
+  //       console.log(error);
+  //     })
+  // }
 
 }
