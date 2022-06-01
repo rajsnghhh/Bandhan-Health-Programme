@@ -46,6 +46,7 @@
           [disabled]="disableMultiRegion"
           formControlName="multiRegion"
           (onSelect)="onItemSelect($event)"
+          (onDeSelect)="onDeSelect($event)"
           [ngClass]="{
             'is-invalid': f.multiRegion.invalid && f.multiRegion.touched,
             'is-valid': f.multiRegion.valid && (f.multiRegion.dirty || f.multiRegion.touched)
@@ -127,7 +128,7 @@
           }"
         >
           <option [value]="null">-- Select Branch --</option>
-          <option *ngFor="let branch of branchList" [value]="branch.branchName">
+          <option *ngFor="let branch of branchList" [value]="branch.branchId">
             {{ branch.branchName }}
           </option>
         </select>
@@ -145,7 +146,6 @@
         <select
           class="form-select"
           (change)="changeBaseBranch($event.target.value)"
-          (click)="getBaseBranch()"
           formControlName="baseBranch"
           [ngClass]="{
             'is-invalid': f.baseBranch.invalid && f.baseBranch.touched,
@@ -153,7 +153,7 @@
           }"
         >
         <option [value]="null">-- Select Branch --</option>
-        <option *ngFor="let baseBranch of baseBranchList" [value]="baseBranch.branchId">
+        <option *ngFor="let baseBranch of branchList" [value]="baseBranch.branchId">
           {{ baseBranch.branchName }}
         </option>
         </select>

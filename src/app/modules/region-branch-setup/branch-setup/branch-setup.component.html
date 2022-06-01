@@ -247,9 +247,10 @@
           <input
             type="text"
             class="form-control"
-            maxlength="10"
             placeholder="Enter Pincode"
             formControlName="pincode"
+            maxlength="6"
+            minlength="6"
             [ngClass]="{
               'is-invalid': f.pincode.invalid && f.pincode.touched,
               'is-valid': f.pincode.valid && (f.pincode.dirty || f.pincode.touched)
@@ -258,6 +259,7 @@
           />
           <div *ngIf="f.pincode.errors" class="invalid-feedback">
             <div *ngIf="f.pincode.errors.required">Pincode is required</div>
+            <div *ngIf="f.pincode.errors?.minlength">Minimum 6 digit required</div>
           </div>
       </div>
     </div>
