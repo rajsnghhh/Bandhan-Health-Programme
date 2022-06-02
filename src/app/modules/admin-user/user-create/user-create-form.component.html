@@ -284,7 +284,9 @@
           placeholder="Enter Mobile No"
           formControlName="primaryMobile"
           [ngClass]="{
-            'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched
+            'is-invalid': f.primaryMobile.invalid && f.primaryMobile.touched,
+            'is-valid':
+              f.primaryMobile.valid && (f.primaryMobile.dirty || f.primaryMobile.touched)
           }"
         />
         <div *ngIf="f.primaryMobile.errors" class="invalid-feedback">
