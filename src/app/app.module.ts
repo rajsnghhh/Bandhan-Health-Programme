@@ -14,7 +14,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RoleAcessResolver } from './modules/role-access/role-access-resolver.service';
+// import { RoleAcessResolver } from './modules/role-access/role-access-resolver.service';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
@@ -44,7 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    RoleAcessResolver
+    // RoleAcessResolver
   ],
   bootstrap: [AppComponent]
 })
