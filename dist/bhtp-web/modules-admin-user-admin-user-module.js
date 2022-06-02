@@ -604,6 +604,7 @@ function UserCreateFormComponent_div_19_div_6_Template(rf, ctx) { if (rf & 1) {
 } }
 const _c0 = function (a0, a1) { return { "is-invalid": a0, "is-valid": a1 }; };
 function UserCreateFormComponent_div_19_Template(rf, ctx) { if (rf & 1) {
+    const _r19 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 36);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Select Multiple Region\u00A0");
@@ -611,7 +612,9 @@ function UserCreateFormComponent_div_19_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "ng-multiselect-dropdown", 37);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "ng-multiselect-dropdown", 37);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("onSelect", function UserCreateFormComponent_div_19_Template_ng_multiselect_dropdown_onSelect_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r19); const ctx_r18 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r18.onItemSelect($event); })("onDeSelect", function UserCreateFormComponent_div_19_Template_ng_multiselect_dropdown_onDeSelect_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r19); const ctx_r20 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r20.onDeSelect($event); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, UserCreateFormComponent_div_19_div_6_Template, 2, 1, "div", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
@@ -626,10 +629,10 @@ function UserCreateFormComponent_div_20_option_8_Template(rf, ctx) { if (rf & 1)
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const region_r20 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", region_r20.regionName);
+    const region_r23 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", region_r23.regionName);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", region_r20.regionName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", region_r23.regionName, " ");
 } }
 function UserCreateFormComponent_div_20_div_9_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
@@ -641,12 +644,12 @@ function UserCreateFormComponent_div_20_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, UserCreateFormComponent_div_20_div_9_div_1_Template, 2, 0, "div", 35);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r19 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+    const ctx_r22 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r19.f.region.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r22.f.region.errors.required);
 } }
 function UserCreateFormComponent_div_20_Template(rf, ctx) { if (rf & 1) {
-    const _r23 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+    const _r26 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 38);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Region :\u00A0");
@@ -655,7 +658,7 @@ function UserCreateFormComponent_div_20_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "select", 39);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_20_Template_select_change_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r23); const ctx_r22 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r22.changeRegion($event.target.value); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_20_Template_select_change_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r26); const ctx_r25 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r25.changeRegion($event.target.value); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "option", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "-- Select Region --");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -679,10 +682,10 @@ function UserCreateFormComponent_div_21_option_8_Template(rf, ctx) { if (rf & 1)
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const branch_r26 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", branch_r26.branchName);
+    const branch_r29 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", branch_r29.branchId);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", branch_r26.branchName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", branch_r29.branchName, " ");
 } }
 function UserCreateFormComponent_div_21_div_9_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
@@ -694,12 +697,12 @@ function UserCreateFormComponent_div_21_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, UserCreateFormComponent_div_21_div_9_div_1_Template, 2, 0, "div", 35);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r25 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+    const ctx_r28 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r25.f.branch.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r28.f.branch.errors.required);
 } }
 function UserCreateFormComponent_div_21_Template(rf, ctx) { if (rf & 1) {
-    const _r29 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+    const _r32 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 40);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Branch :\u00A0");
@@ -708,7 +711,7 @@ function UserCreateFormComponent_div_21_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "select", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_21_Template_select_change_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r29); const ctx_r28 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r28.changeBranch($event.target.value); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_21_Template_select_change_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r32); const ctx_r31 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r31.changeBranch($event.target.value); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "option", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "-- Select Branch --");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -727,51 +730,48 @@ function UserCreateFormComponent_div_21_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r4.f.branch.errors);
 } }
-function UserCreateFormComponent_div_22_option_8_Template(rf, ctx) { if (rf & 1) {
+function UserCreateFormComponent_div_22_option_6_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const branch_r32 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", branch_r32.branchId);
+    const baseBranch_r35 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", baseBranch_r35.branchId);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", branch_r32.branchName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", baseBranch_r35.branchName, " ");
 } }
-function UserCreateFormComponent_div_22_div_9_div_1_Template(rf, ctx) { if (rf & 1) {
+function UserCreateFormComponent_div_22_div_7_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Branch selection is required ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
-function UserCreateFormComponent_div_22_div_9_Template(rf, ctx) { if (rf & 1) {
+function UserCreateFormComponent_div_22_div_7_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 34);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, UserCreateFormComponent_div_22_div_9_div_1_Template, 2, 0, "div", 35);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, UserCreateFormComponent_div_22_div_7_div_1_Template, 2, 0, "div", 35);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r31 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+    const ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r31.f.branch.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r34.f.branch.errors.required);
 } }
 function UserCreateFormComponent_div_22_Template(rf, ctx) { if (rf & 1) {
-    const _r35 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+    const _r38 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 42);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Base Branch :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "span", 9);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Base Branch :");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "select", 43);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_22_Template_select_change_3_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r38); const ctx_r37 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r37.changeBaseBranch($event.target.value); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "option", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "-- Select Branch --");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "select", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function UserCreateFormComponent_div_22_Template_select_change_5_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r35); const ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r34.changeBaseBranch($event.target.value); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "option", 11);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "-- Select Branch --");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, UserCreateFormComponent_div_22_option_6_Template, 2, 2, "option", 12);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](8, UserCreateFormComponent_div_22_option_8_Template, 2, 2, "option", 12);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, UserCreateFormComponent_div_22_div_9_Template, 2, 1, "div", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, UserCreateFormComponent_div_22_div_7_Template, 2, 1, "div", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction2"](4, _c0, ctx_r5.f.baseBranch.invalid && ctx_r5.f.baseBranch.touched, ctx_r5.f.baseBranch.valid && (ctx_r5.f.baseBranch.dirty || ctx_r5.f.baseBranch.touched)));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", null);
@@ -934,7 +934,7 @@ function UserCreateFormComponent_div_80_Template(rf, ctx) { if (rf & 1) {
 } }
 const _c1 = function (a0) { return { "is-invalid": a0 }; };
 class UserCreateFormComponent {
-    // branchVillageMapId: any;
+    // baseBranchList: Array<any> = [];
     constructor(dialogRef, dialog, data, toaster, fb, validationService, modalService, httpService, http, baselineService) {
         this.dialogRef = dialogRef;
         this.dialog = dialog;
@@ -952,6 +952,8 @@ class UserCreateFormComponent {
         this.dropdownSettings = {};
         this.region = [];
         this.branch = [];
+        // branchVillageMapId: any;
+        this.regionMultiId = [];
         dialogRef.disableClose = true;
     }
     ngOnInit() {
@@ -996,13 +998,23 @@ class UserCreateFormComponent {
                 // this.branchVillageMapId = res.responseObject.branchList[0].branchName;
                 // this.branchList = this.data.branchList;
                 this.changeRole(this.data.userData.roleShortName);
-                this.changeRegion((_a = res.responseObject.regionList[0]) === null || _a === void 0 ? void 0 : _a.regionName);
+                let value = (res.responseObject.regionList.filter(item => item.regionMasterId));
+                value.forEach(e => {
+                    let data = e.regionMasterId.toString();
+                    this.regionMultiId.push(data);
+                });
+                if (res.responseObject.roleShortName.indexOf('HCO') == -1 && res.responseObject.roleShortName.indexOf('AC') == -1) {
+                    this.getBaseBranch(this.regionMultiId);
+                }
+                else {
+                    this.changeRegion((_a = res.responseObject.regionList[0]) === null || _a === void 0 ? void 0 : _a.regionName);
+                }
                 // this.changeBranch(res.responseObject.branchList[0]?.branchName);
                 this.userForm.patchValue({
                     userRole: res.responseObject.roleShortName,
                     multiRegion: (_b = res.responseObject) === null || _b === void 0 ? void 0 : _b.regionList,
                     region: (_c = res.responseObject.regionList[0]) === null || _c === void 0 ? void 0 : _c.regionName,
-                    branch: (_d = res.responseObject.branchList[0]) === null || _d === void 0 ? void 0 : _d.branchName,
+                    branch: (_d = res.responseObject.branchList[0]) === null || _d === void 0 ? void 0 : _d.branchId,
                     baseBranch: (_e = res.responseObject) === null || _e === void 0 ? void 0 : _e.currentBranchId,
                     firstName: res.responseObject.userFirstName,
                     middleName: res.responseObject.userMiddleName,
@@ -1013,7 +1025,7 @@ class UserCreateFormComponent {
                     primaryEmail: res.responseObject.email,
                     secondaryEmail: res.responseObject.emailSecondary,
                 });
-                this.userForm.get('branch').patchValue((_f = res.responseObject.branchList[0]) === null || _f === void 0 ? void 0 : _f.branchName);
+                this.userForm.get('baseBranch').patchValue((_f = res.responseObject) === null || _f === void 0 ? void 0 : _f.currentBranchId);
                 // console.log(res.responseObject.branchList[0]?.branchName)
             });
         }
@@ -1030,10 +1042,10 @@ class UserCreateFormComponent {
     createForm() {
         this.userForm = this.fb.group({
             userRole: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            multiRegion: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            region: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            branch: [null, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
-            baseBranch: [''],
+            multiRegion: [''],
+            region: [null],
+            branch: [null],
+            baseBranch: [null],
             firstName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)])],
             middleName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)])],
             lastName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(3)])],
@@ -1077,6 +1089,40 @@ class UserCreateFormComponent {
             this.userForm.get('branch').clearAsyncValidators();
             this.userForm.get('region').clearAsyncValidators();
         }
+        this.userForm.controls.region.setValue(null);
+        this.userForm.controls.branch.setValue(null);
+        this.userForm.controls.baseBranch.setValue(null);
+        this.branchList = [];
+    }
+    onDeSelect(i) {
+        this.regionMultiId = [];
+        let value = (this.userForm.value.multiRegion.filter(item => item.regionMasterId));
+        value.forEach(e => {
+            let data = e.regionMasterId.toString();
+            this.regionMultiId.push(data);
+        });
+        this.getBaseBranch(this.regionMultiId);
+    }
+    onItemSelect(i) {
+        this.regionMultiId = [];
+        let value = (this.userForm.value.multiRegion.filter(item => item.regionMasterId));
+        value.forEach(e => {
+            let data = e.regionMasterId.toString();
+            this.regionMultiId.push(data);
+        });
+        this.getBaseBranch(this.regionMultiId);
+    }
+    getBaseBranch(regionMultiId) {
+        console.log(this.regionMultiId);
+        let Dto = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            regionId: regionMultiId
+        };
+        if (this.regionMultiId.length != 0) {
+            this.http.post(`${this.httpService.baseURL}branch/getListOfBranchesOfMultiRegion`, Dto).subscribe((res) => {
+                this.branchList = res === null || res === void 0 ? void 0 : res.responseObject;
+            });
+        }
     }
     changeRegion(region) {
         var _a;
@@ -1096,24 +1142,26 @@ class UserCreateFormComponent {
         }
     }
     changeBranch(value) {
-        var _a, _b;
-        this.currentBranchId = (_b = (_a = this.branchList) === null || _a === void 0 ? void 0 : _a.find(branch => branch.branchName == value)) === null || _b === void 0 ? void 0 : _b.branchId;
+        this.currentBranchId = value;
         this.branch = [{ 'branchId': this.currentBranchId }];
     }
     changeBaseBranch(value) {
         this.currentBranchId = value;
     }
     onSave() {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         console.log(this.userForm);
-        this.changeBranch(this.userForm.value.branch);
+        if (this.userForm.value.multiRegion != null) {
+            this.userForm.value.multiRegion.forEach(x => delete x.regionName);
+        }
+        // this.changeBranch(this.userForm.value.branch);
         this.userForm.markAllAsTouched();
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
             userId: this.data.createMode ? 0 : this.data.userData.userId,
-            userFirstName: this.userForm.value.firstName,
-            userMiddleName: this.userForm.value.middleName,
-            userLastName: this.userForm.value.lastName,
+            userFirstName: this.userForm.value.firstName ? this.validationService.camelize(this.userForm.value.firstName.trim()) : null,
+            userMiddleName: this.userForm.value.middleName ? this.validationService.camelize(this.userForm.value.middleName.trim()) : null,
+            userLastName: this.userForm.value.lastName ? this.validationService.camelize(this.userForm.value.lastName.trim()) : null,
             loginId: 'BK' + this.userForm.value.loginId,
             email: this.userForm.value.primaryEmail,
             emailSecondary: this.userForm.value.secondaryEmail,
@@ -1121,21 +1169,26 @@ class UserCreateFormComponent {
             mobileNumberSecondary: this.userForm.value.secondaryMobile,
             currentBranchId: this.currentBranchId,
             roleShortName: this.userForm.value.userRole,
-            roleMasterId: this.roleMasterId,
-            branchList: (((_a = this.userForm.value.userRole) === null || _a === void 0 ? void 0 : _a.indexOf('HCO')) != -1) ?
+            roleMasterId: (_a = this.roleList.find(role => role.roleShortName == this.userForm.value.userRole)) === null || _a === void 0 ? void 0 : _a.roleMasterId,
+            branchList: (((_b = this.userForm.value.userRole) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1) ?
                 this.branch : null,
-            regionList: (((_b = this.userForm.value.userRole) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1 || ((_c = this.userForm.value.userRole) === null || _c === void 0 ? void 0 : _c.indexOf('AC')) != -1) ?
+            regionList: (((_c = this.userForm.value.userRole) === null || _c === void 0 ? void 0 : _c.indexOf('HCO')) != -1 || ((_d = this.userForm.value.userRole) === null || _d === void 0 ? void 0 : _d.indexOf('AC')) != -1) ?
                 this.region : this.userForm.value.multiRegion
         };
         console.log(Dto);
         if (this.userForm.valid) {
             this.http.post(`${this.httpService.baseURL}user/saveOrUpdate`, Dto).subscribe((res) => {
-                this.dialogRef.close();
-                this.showSuccess('Success');
+                if (res.status) {
+                    this.showSuccess('Success');
+                    this.dialogRef.close();
+                }
+                else {
+                    this.showError('Error');
+                }
             });
         }
         else {
-            this.showError('Error');
+            this.showError('User Form is not valid ');
         }
     }
     closeDialog() {
@@ -1153,7 +1206,7 @@ class UserCreateFormComponent {
     }
 }
 UserCreateFormComponent.ɵfac = function UserCreateFormComponent_Factory(t) { return new (t || UserCreateFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"], 8), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_3__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_4__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_6__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_baseline_survey_baseline_survey_service__WEBPACK_IMPORTED_MODULE_8__["BaselineSurveyService"])); };
-UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: UserCreateFormComponent, selectors: [["app-user-create-form"]], decls: 84, vars: 49, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["for", "userRole"], [1, "text-danger"], ["formControlName", "userRole", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], [1, "form-group", "col-md"], ["for", "firstName"], ["type", "text", "placeholder", "Enter First Name", "formControlName", "firstName", "maxlength", "20", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "middleName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Middle Name", "formControlName", "middleName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "lastName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Last Name", "formControlName", "lastName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "loginId"], [1, "loginId", 2, "display", "grid", "grid-template-columns", "0.1fr 1fr"], ["type", "text", "formControlName", "loginId", "placeholder", "Enter Username", 1, "form-control", 2, "display", "block", 3, "maxlength", "ngClass", "keypress"], ["for", "primaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "primaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "secondaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "secondaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "primaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "primaryEmail", 1, "form-control", 3, "ngClass"], ["for", "secondaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "secondaryEmail", 1, "form-control", 3, "ngClass"], ["type", "submit", 1, "btn", "btn-success", 3, "click"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "multiRegion"], ["formControlName", "multiRegion", 3, "placeholder", "settings", "data", "disabled", "ngClass"], ["for", "region"], ["formControlName", "region", 1, "form-select", 3, "ngClass", "change"], ["for", "branch"], ["formControlName", "branch", 1, "form-select", 3, "ngClass", "change"], ["for", "baseBranch"], ["formControlName", "baseBranch", 1, "form-select", 3, "ngClass", "change"]], template: function UserCreateFormComponent_Template(rf, ctx) { if (rf & 1) {
+UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: UserCreateFormComponent, selectors: [["app-user-create-form"]], decls: 84, vars: 49, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["for", "userRole"], [1, "text-danger"], ["formControlName", "userRole", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], [1, "form-group", "col-md"], ["for", "firstName"], ["type", "text", "placeholder", "Enter First Name", "formControlName", "firstName", "maxlength", "20", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "middleName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Middle Name", "formControlName", "middleName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "lastName"], ["type", "text", "maxlength", "20", "placeholder", "Enter Last Name", "formControlName", "lastName", 1, "form-control", 2, "text-transform", "capitalize", 3, "ngClass", "keypress"], ["for", "loginId"], [1, "loginId", 2, "display", "grid", "grid-template-columns", "0.1fr 1fr"], ["type", "text", "formControlName", "loginId", "placeholder", "Enter Username", 1, "form-control", 2, "display", "block", 3, "maxlength", "ngClass", "keypress"], ["for", "primaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "primaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "secondaryMobile"], ["type", "", "maxlength", "10", "placeholder", "Enter Mobile No", "formControlName", "secondaryMobile", 1, "form-control", 3, "ngClass", "keypress"], ["for", "primaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "primaryEmail", 1, "form-control", 3, "ngClass"], ["for", "secondaryEmail"], ["type", "email", "placeholder", "Enter Email", "formControlName", "secondaryEmail", 1, "form-control", 3, "ngClass"], ["type", "submit", 1, "btn", "btn-success", 3, "click"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "multiRegion"], ["formControlName", "multiRegion", 3, "placeholder", "settings", "data", "disabled", "ngClass", "onSelect", "onDeSelect"], ["for", "region"], ["formControlName", "region", 1, "form-select", 3, "ngClass", "change"], ["for", "branch"], ["formControlName", "branch", 1, "form-select", 3, "ngClass", "change"], ["for", "baseBranch"], ["formControlName", "baseBranch", 1, "form-select", 3, "ngClass", "change"]], template: function UserCreateFormComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2", 2);
@@ -1188,7 +1241,7 @@ UserCreateFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, UserCreateFormComponent_div_19_Template, 7, 9, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, UserCreateFormComponent_div_20_Template, 10, 7, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, UserCreateFormComponent_div_21_Template, 10, 7, "div", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, UserCreateFormComponent_div_22_Template, 10, 7, "div", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, UserCreateFormComponent_div_22_Template, 8, 7, "div", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](23, "br");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "div", 6);
@@ -1392,6 +1445,70 @@ AdminUserRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
                 exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]]
             }]
     }], null, null); })();
+
+
+/***/ }),
+
+/***/ "YwHQ":
+/*!***************************************************!*\
+  !*** ./src/app/modules/core/http/http.service.ts ***!
+  \***************************************************/
+/*! exports provided: HttpService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpService", function() { return HttpService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/sidebar/sidebar.service */ "dBge");
+
+
+
+
+
+
+class HttpService {
+    constructor(http, sidebarService) {
+        this.http = http;
+        this.sidebarService = sidebarService;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].apiUrl;
+        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic dXNlcjE6c2VjcmV0MQ=='
+        });
+        this.testUrl = `http://192.168.149.221:8085/`;
+        this.dataAccessDTO = {
+            userId: this.sidebarService.userId,
+            userName: this.sidebarService.loginId,
+        };
+        this.dataAccessDTOO = {
+            userId: 5,
+            userName: 'BK000005'
+        };
+    }
+    postRequest(url, body) {
+        return this.http.post(this.testUrl + url, body, { headers: this.headers });
+    }
+    getChildrenRegister(obj) {
+        return this.http.post(`${this.baseURL}acr/view`, obj);
+    }
+    getLactatingMotherRegister(obj) {
+        return this.http.post(`${this.baseURL}lactatingmotherregister/getVillageWiseChildDetails`, obj);
+    }
+    getPregnantWomenList(obj) {
+        return this.http.post(`${this.baseURL}pwr/getVillageWisePregnantWomanDetails`, obj);
+    }
+}
+HttpService.ɵfac = function HttpService_Factory(t) { return new (t || HttpService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__["SidebarService"])); };
+HttpService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: HttpService, factory: HttpService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HttpService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__["SidebarService"] }]; }, null); })();
 
 
 /***/ })

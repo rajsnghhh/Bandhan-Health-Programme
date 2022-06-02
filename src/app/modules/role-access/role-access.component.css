@@ -12,3 +12,39 @@ td {
 td:nth-child(1) {
     font-size: 18px !important;
 }
+
+/* 
+table tbody {
+    display: block;
+    height: 600px;
+    overflow: scroll;
+    overflow-x: hidden;
+} */
+
+table thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    /* Remove scrollbar space */
+    height: 8px;
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
+}
+
+::-webkit-scrollbar-thumb {
+    width: 30px;
+    /* Remove scrollbar space */
+    height: 30px;
+    border-radius: 10px;
+}
+
+/* Optional: show position indicator in colour */
+::-webkit-scrollbar-thumb {
+    background: rgb(158, 1, 1);
+}
+
+

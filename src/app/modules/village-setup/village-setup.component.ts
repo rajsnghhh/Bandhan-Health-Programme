@@ -231,7 +231,7 @@ export class VillageSetupComponent implements OnInit {
         },
         villageCreationDto: {
           villageMasterId: this.villageId ? this.villageId : 0,
-          villageName: this.villCreateForm.value.village,
+          villageName:this.validationService.camelize(this.villCreateForm.value.village.trim()),
           gpMunicipalId: this.gpId,
           active_flag: 'Y'
         }

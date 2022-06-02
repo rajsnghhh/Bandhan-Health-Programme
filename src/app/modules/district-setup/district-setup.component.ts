@@ -169,7 +169,7 @@ export class DistrictSetupComponent implements OnInit {
           districtMasterId: this.districtId ? this.districtId : 0,
           stateId: this.stateId,
           districtCode: this.editDistData?.districtCode ? this.editDistData?.districtCode : null,
-          districtName: this.districtCreateForm.value.district,
+          districtName: this.validationService.camelize(this.districtCreateForm.value.district.trim()),
           active_flag: "Y"
         }
       }

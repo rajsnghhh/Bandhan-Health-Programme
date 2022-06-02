@@ -18,6 +18,7 @@ import { RoleAccessService } from './role-access.service';
 export class RoleAccessComponent implements OnInit {
   roleAccessForm: FormGroup;
   roleList: Array<any> = [];
+  roleFunctionMapView: Array<any> = [];
   mainFunctionList: Array<any> = [];
   subFunctionList: any = [];
   accessType: any;
@@ -28,8 +29,8 @@ export class RoleAccessComponent implements OnInit {
   // subFunctionsDropDown: any = [];
   // selectedSubFunction: string = ''
   // actionTypes: any = [];
-  RoleList: RoleMasterDTO[];
-  roleAccessData: RoleFunctionMapDTO[];
+  // roleList: RoleMasterDTO[];
+  // roleAccessData: RoleFunctionMapDTO[];
   // roleAccessSaveObj: {
   //   dataAccessDTO: DataAccessDTO,
   //   roleFunctionMapDTOList: RoleFunctionMapDTO[];
@@ -42,25 +43,32 @@ export class RoleAccessComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
 
-    // Api call for viewing rolefunctionmapview list
+    // Api call for viewing role list
     let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    this.roleService.rolefunctionmapview(obj).subscribe((res) => {
+    this.roleService.roleList(obj).subscribe((res) => {
       this.roleList = res.responseObject;
-      console.log(this.roleList, ' this.roleList');
+      console.log(this.roleList, 'roleList');
     });
 
-    // this.route.data.subscribe(data => {
-    //   // this.menuData = data;
-    //   console.log(data);
-      this.roleAccessData =  this.roleList;
-    //   console.log(this.roleAccessData);
-      this.RoleList =  this.roleList.map(item => item.roleMasterDTO);
-      console.log(this.RoleList);
-      
-    //   this.main_functions = this.roleAccessData[0].mainFunctionDTOList
-    // });
+    // Api call for viewing rolefunctionmapview list
+    let objs = { dataAccessDTO: this.httpService.dataAccessDTO }
+    this.roleService.rolefunctionmapview(objs).subscribe((res) => {
+      this.roleFunctionMapView = res.responseObject;
+      console.log(this.roleFunctionMapView, 'roleFunctionMapView');
+    });
+
+
+    this.route.data.subscribe(data => {
+      // this.menuData = data;
+      console.log(data);
+      //   this.roleAccessData = data.roleAcess.responseObject;
+      //   console.log(this.roleAccessData);
+      //   this.roleList = this.roleAccessData.map(item => item.roleMasterDTO);
+      //   this.main_functions = this.roleAccessData[0].mainFunctionDTOList
+    });
 
   }
+
   createForm() {
     this.roleAccessForm = this.fb.group({
       role: ['', Validators.required],
@@ -75,16 +83,39 @@ export class RoleAccessComponent implements OnInit {
 
   changeRole(roleId) {
     console.log(roleId);
-    this.mainFunctionList = this.roleList.find(item => item.roleMasterDTO.roleMasterId == roleId)?.mainFunctionDTOList;
+
+    this.mainFunctionList = this.roleFunctionMapView.find(item => item.roleMasterDTO.roleMasterId == roleId)?.mainFunctionDTOList;
     console.log(this.mainFunctionList, 'mainFunctionList');
+    // this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+    // console.log(this.subFunctionList, 'subFunctionList');
+    // this.mainFunctionList.filter((item=> item.))
+
+    var submasterList = []
+
+    // this.mainFunctionList.filter(it=>{it.})
+
+    this.mainFunctionList?.forEach((item, i) => {
+      submasterList.push(item.subFunctionMasterDTOList)
+      // console.log(item.subFunctionMasterDTOList);
+      
+    });
+
+    // var tt = submasterList.filter(ite =>{ite.deviceType == "M"})
+    console.log(submasterList,"tty1");
+
   }
+
 
   changeMainFunction(mainFunctionId) {
     console.log(mainFunctionId);
     this.subFunctions = this.mainFunctionList.find(item => item.mainFunctionMasterId == mainFunctionId)?.subFunctionMasterDTOList;
 
-    this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
-    console.log(this.subFunctionList, this.subFunctions, 'subFunctionList');
+
+
+
+    // this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+    // console.log(this.subFunctionList, 'subFunctionList');
+
   }
 
   changeSubFunction(subFunctionName) {

@@ -1,4 +1,68 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~a043a27c"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~357b96df"],{
+
+/***/ "YwHQ":
+/*!***************************************************!*\
+  !*** ./src/app/modules/core/http/http.service.ts ***!
+  \***************************************************/
+/*! exports provided: HttpService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpService", function() { return HttpService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/sidebar/sidebar.service */ "dBge");
+
+
+
+
+
+
+class HttpService {
+    constructor(http, sidebarService) {
+        this.http = http;
+        this.sidebarService = sidebarService;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].apiUrl;
+        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic dXNlcjE6c2VjcmV0MQ=='
+        });
+        this.testUrl = `http://192.168.149.221:8085/`;
+        this.dataAccessDTO = {
+            userId: this.sidebarService.userId,
+            userName: this.sidebarService.loginId,
+        };
+        this.dataAccessDTOO = {
+            userId: 5,
+            userName: 'BK000005'
+        };
+    }
+    postRequest(url, body) {
+        return this.http.post(this.testUrl + url, body, { headers: this.headers });
+    }
+    getChildrenRegister(obj) {
+        return this.http.post(`${this.baseURL}acr/view`, obj);
+    }
+    getLactatingMotherRegister(obj) {
+        return this.http.post(`${this.baseURL}lactatingmotherregister/getVillageWiseChildDetails`, obj);
+    }
+    getPregnantWomenList(obj) {
+        return this.http.post(`${this.baseURL}pwr/getVillageWisePregnantWomanDetails`, obj);
+    }
+}
+HttpService.ɵfac = function HttpService_Factory(t) { return new (t || HttpService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__["SidebarService"])); };
+HttpService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: HttpService, factory: HttpService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HttpService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_3__["SidebarService"] }]; }, null); })();
+
+
+/***/ }),
 
 /***/ "oOf3":
 /*!*************************************************************************!*\
@@ -868,4 +932,4 @@ NgxPaginationModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
 /***/ })
 
 }]);
-//# sourceMappingURL=default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~a043a27c.js.map
+//# sourceMappingURL=default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~357b96df.js.map
