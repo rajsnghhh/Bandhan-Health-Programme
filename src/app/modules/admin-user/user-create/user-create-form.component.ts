@@ -165,6 +165,8 @@ export class UserCreateFormComponent implements OnInit {
       this.userForm.get('region').setValidators(Validators.required);
       this.userForm.get('branch').setValidators(Validators.required);
       this.userForm.get('multiRegion').clearAsyncValidators();
+      this.userForm.controls.region.setValue(null);
+      this.userForm.controls.branch.setValue(null);
     } else if (value == 'AC') {
       this.selectMultiRegion = false;
       this.selectSingleRegion = true;
@@ -173,6 +175,7 @@ export class UserCreateFormComponent implements OnInit {
       this.userForm.get('region').setValidators(Validators.required);
       this.userForm.get('branch').clearAsyncValidators();
       this.userForm.get('multiRegion').clearAsyncValidators();
+      this.userForm.controls.region.setValue(null);
     } else {
       this.selectMultiRegion = true;
       this.selectSingleRegion = false;
@@ -181,10 +184,11 @@ export class UserCreateFormComponent implements OnInit {
       this.userForm.get('multiRegion').setValidators(Validators.required);
       this.userForm.get('branch').clearAsyncValidators();
       this.userForm.get('region').clearAsyncValidators();
+      this.userForm.controls.baseBranch.setValue(null);
     }
-    this.userForm.controls.region.setValue(null);
-    this.userForm.controls.branch.setValue(null);
-    this.userForm.controls.baseBranch.setValue(null);
+    // this.userForm.controls.region.setValue(null);
+    // this.userForm.controls.branch.setValue(null);
+    // this.userForm.controls.baseBranch.setValue(null);
     this.branchList = [];
   }
 
