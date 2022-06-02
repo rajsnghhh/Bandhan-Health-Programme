@@ -17,8 +17,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../login.service */ "XNvx");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
 /* harmony import */ var src_app_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/modules/shared/services/validation.service */ "yjnX");
-/* harmony import */ var _modules_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../modules/shared/loader/loader.component */ "G/xV");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var src_app_modules_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/modules/shared/confirmation-dialog/confirmation-dialog.service */ "aQtA");
+/* harmony import */ var _modules_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../modules/shared/loader/loader.component */ "G/xV");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "ofXK");
+
 
 
 
@@ -84,13 +86,14 @@ function ResetComponent_span_30_Template(rf, ctx) { if (rf & 1) {
 } }
 const _c0 = function (a0) { return { "is-invalid": a0 }; };
 class ResetComponent {
-    constructor(formBuilder, route, router, accountService, toaster, validationService) {
+    constructor(formBuilder, route, router, accountService, toaster, validationService, confirmationDialogService) {
         this.formBuilder = formBuilder;
         this.route = route;
         this.router = router;
         this.accountService = accountService;
         this.toaster = toaster;
         this.validationService = validationService;
+        this.confirmationDialogService = confirmationDialogService;
         this.loading = false;
         this.submitted = false;
         this.show = false;
@@ -105,6 +108,10 @@ class ResetComponent {
             newPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
             confirmPassword: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]]
         });
+        if (this.accountService.userFirstTime == undefined) {
+            this.router.navigate(['/']);
+            this.showError('Please login again');
+        }
     }
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
@@ -122,13 +129,18 @@ class ResetComponent {
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["first"])())
                     .subscribe((data) => {
                     console.log(data, 'resetData');
-                    if ((data.status === true)) {
+                    if (data.status) {
                         this.showSuccess('Success');
                         this.router.navigate(['/'], { relativeTo: this.route });
                     }
+                    else {
+                        this.showError(data.message);
+                    }
                     this.loader = true;
+                    this.loading = false;
                 }, error => {
                     this.loader = true;
+                    console.log(error);
                     this.showError('Error');
                     this.loading = false;
                 });
@@ -144,7 +156,7 @@ class ResetComponent {
     }
     showError(message) {
         this.toaster.error(message, 'Error in password reset', {
-            timeOut: 3000,
+            timeOut: 4000,
         });
     }
     showSuccess(message) {
@@ -158,7 +170,7 @@ class ResetComponent {
         });
     }
 }
-ResetComponent.ɵfac = function ResetComponent_Factory(t) { return new (t || ResetComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_login_service__WEBPACK_IMPORTED_MODULE_4__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__["ValidationService"])); };
+ResetComponent.ɵfac = function ResetComponent_Factory(t) { return new (t || ResetComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_login_service__WEBPACK_IMPORTED_MODULE_4__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_modules_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_7__["ConfirmationDialogService"])); };
 ResetComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ResetComponent, selectors: [["app-reset"]], decls: 38, vars: 19, consts: [[3, "hidden"], ["src", "../../../assets/login_bg.jpg", "alt", "", 2, "width", "100vw", "height", "100vh", "margin-left", "-551px", "margin-top", "-54px"], [1, "card", 2, "position", "absolute", "top", "40%", "left", "50%", "transform", "translate(-50%, -50%)", "width", "40%"], [1, "card-header", 2, "background-color", "#499", "color", "#ffffff"], [1, "card-body", 2, "padding", "0rem 1rem"], [3, "formGroup", "ngSubmit"], [1, "form-group"], ["for", "newPassword"], [1, "text-danger"], [2, "display", "grid", "grid-template-columns", "5fr -0.1fr"], ["placeholder", "Enter new password", "formControlName", "newPassword", 1, "form-control", 2, "border", "1px solid black", 3, "type", "maxlength", "minlength", "ngClass"], [2, "margin", "-26px 0px 0px 450px", "z-index", "99999"], [4, "ngIf", "ngIfElse"], ["elseblock", ""], ["class", "invalid-feedback", 4, "ngIf"], ["for", "confirmPassword"], ["type", "password", "formControlName", "confirmPassword", "placeholder", "Enter again", 1, "form-control", 2, "border", "1px solid black", 3, "maxlength", "minlength", "ngClass"], [1, "btn", "btn-primary", 2, "margin-left", "35%", "margin-top", "34px", "transform", "translate(-50%, -50%)", "padding", "4px 14px 4px 14px", 3, "disabled"], ["class", "spinner-border spinner-border-sm mr-1", 4, "ngIf"], [1, "fa-passwd-reset", "fa-stack"], [1, "fa", "fa-undo", "fa-stack-2x"], [1, "fa", "fa-lock", 2, "margin-left", "12px"], ["type", "button", "routerLink", "../login", 1, "btn", "btn-danger", 2, "padding", "8px 14px 8px 14px", "margin", "0px 0px 8px -36px"], ["aria-hidden", "true", 1, "fa", "fa-times", "fa-lg"], ["class", "fa fa-eye", 3, "click", 4, "ngIf"], [1, "fa", "fa-eye", 3, "click"], [1, "fa", "fa-eye-slash", 3, "click"], [1, "invalid-feedback"], ["style", "margin-left: 41px;", 4, "ngIf"], [2, "margin-left", "41px"], [1, "spinner-border", "spinner-border-sm", "mr-1"]], template: function ResetComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-loader", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "img", 1);
@@ -233,7 +245,7 @@ ResetComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx.loading);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loading);
-    } }, directives: [_modules_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_7__["LoaderComponent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MinLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLink"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXNldC5jb21wb25lbnQuY3NzIn0= */"] });
+    } }, directives: [_modules_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_8__["LoaderComponent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MinLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLink"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXNldC5jb21wb25lbnQuY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ResetComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -241,7 +253,7 @@ ResetComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
                 templateUrl: './reset.component.html',
                 styleUrls: ['./reset.component.css']
             }]
-    }], function () { return [{ type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _login_service__WEBPACK_IMPORTED_MODULE_4__["LoginService"] }, { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"] }, { type: src_app_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__["ValidationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _login_service__WEBPACK_IMPORTED_MODULE_4__["LoginService"] }, { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"] }, { type: src_app_modules_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__["ValidationService"] }, { type: src_app_modules_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_7__["ConfirmationDialogService"] }]; }, null); })();
 
 
 /***/ }),

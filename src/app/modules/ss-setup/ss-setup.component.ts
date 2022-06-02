@@ -274,7 +274,7 @@ export class SsSetupComponent implements OnInit {
       hcoOrHcoIOrTLId: this.ssCreateForm.value.staff,
       swasthyaSahayikaDTO: {
         swasthyaSahayikaMasterId: this.editssData?.ssId ? this.editssData?.ssId : 0,
-        name: this.ssCreateForm.value.ssName,
+        name: this.validationService.camelize(this.ssCreateForm.value.ssName.trim()),
         husbandOrGuardianName: this.ssCreateForm.value.husbandName,
         contactNumber: this.ssCreateForm.value.contactNo ? this.ssCreateForm.value.contactNo : null,
         address: this.ssCreateForm.value.address,
