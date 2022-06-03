@@ -439,7 +439,7 @@ class SidebarComponent {
         if (routeId == 121 || routeId == 123) {
             this.router.navigate(['/lmr']);
         }
-        if (routeId == 105 || routeId == 107) {
+        if (routeId == 105 || routeId == 106 || routeId == 107 || routeId == 108) {
             this.router.navigate(['/acr']);
         }
         if (routeId == 129 || routeId == 131) {
