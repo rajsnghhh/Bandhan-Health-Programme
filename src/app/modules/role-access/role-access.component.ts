@@ -124,7 +124,7 @@ export class RoleAccessComponent implements OnInit {
   setSubFunctionMenu(item) {
     console.log(item);
     this.subFunctions = item;
-     this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName && item.deviceType));
+     this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName ));
     console.log(this.subFunctionList, 'subFunctionList');
 
 

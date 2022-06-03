@@ -150,7 +150,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/lmr']);
     }
 
-    if (routeId == 105 || routeId == 107) {
+    if (routeId == 105 || routeId == 106 || routeId == 107 || routeId == 108) {
       this.router.navigate(['/acr']);
     }
 
