@@ -169,7 +169,7 @@ export class BranchSetupComponent implements OnInit {
       projectMasterId: this.branchForm.value.subVerticleProject,
       stateCode: this.stateCode,
       blockMasterId: this.branchForm.value.block,
-      branchName: this.branchForm.value.branchName,
+      branchName: this.validationService.camelize(this.branchForm.value.branchName.trim()),
       branchTypeMasterId: this.branchForm.value.branchType,
       branchPincode: this.branchForm.value.pincode,
       branchActiveFlag: "Y",

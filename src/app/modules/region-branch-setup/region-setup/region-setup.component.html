@@ -15,6 +15,7 @@
         class="form-control"
         placeholder="Enter Region Name"
         formControlName="regionName"
+        style="text-transform: capitalize"
         [ngClass]="{
           'is-invalid': f.regionName.invalid && f.regionName.touched,
           'is-valid': f.regionName.valid && (f.regionName.dirty || f.regionName.touched)

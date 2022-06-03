@@ -166,6 +166,7 @@
               class="form-control"
               placeholder="Enter branchName Name"
               formControlName="branchName"
+              style="text-transform: capitalize"
               [ngClass]="{
                 'is-invalid': f.branchName.invalid && f.branchName.touched,
                 'is-valid': f.branchName.valid && (f.branchName.dirty || f.branchName.touched)
