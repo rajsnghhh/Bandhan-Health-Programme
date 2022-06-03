@@ -95,7 +95,7 @@
                                             <td>{{item.villageDto.villageName}}</td>
                                             <td> {{ item.userDto.userFirstName}} {{item.userDto.userMiddleName}}
                                                 {{item.userDto.userLastName}}</td>
-                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit SS"
+                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit SS"
                                                     *ngIf="updateMode" (click)="editSSForm(item, createSS)"></i>
 
                                                 <i class="fas fa-trash" title="Delete SS" *ngIf="deleteMode"

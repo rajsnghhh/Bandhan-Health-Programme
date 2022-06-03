@@ -125,7 +125,7 @@
                                             <td>{{vill.villageName}}</td>
                                             <td>{{vill.branchDetails?.branchName ? vill.branchDetails?.branchName :
                                                 '-'}}</td>
-                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit Village"
+                                            <td style="padding: 0px;"  *ngIf="deleteMode || updateMode"><i class="fas fa-edit" title="Edit Village"
                                                     *ngIf="updateMode" (click)="editVillForm(vill, createVill)"></i>
                                                 <i class="fas fa-trash" title="Delete Village" *ngIf="deleteMode"
                                                     (click)="deleteVillForm(vill, i)"></i>
