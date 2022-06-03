@@ -433,7 +433,7 @@ class DistrictSetupComponent {
                     districtMasterId: this.districtId ? this.districtId : 0,
                     stateId: this.stateId,
                     districtCode: ((_c = this.editDistData) === null || _c === void 0 ? void 0 : _c.districtCode) ? (_d = this.editDistData) === null || _d === void 0 ? void 0 : _d.districtCode : null,
-                    districtName: this.districtCreateForm.value.district,
+                    districtName: this.validationService.camelize(this.districtCreateForm.value.district.trim()),
                     active_flag: "Y"
                 }
             };

@@ -90,18 +90,43 @@ export class RoleAccessComponent implements OnInit {
     // console.log(this.subFunctionList, 'subFunctionList');
     // this.mainFunctionList.filter((item=> item.))
 
-    var submasterList = []
+    // var submasterList = []
 
     // this.mainFunctionList.filter(it=>{it.})
 
     this.mainFunctionList?.forEach((item, i) => {
-      submasterList.push(item.subFunctionMasterDTOList)
-      // console.log(item.subFunctionMasterDTOList);
-      
+      var ListM = item.subFunctionMasterDTOList.filter(item => item.deviceType === "M")
+      // console.log(ListM,'ListM');
+
+      var li = ListM.filter((v, i, a) => a.findIndex(v2 => (v2.subFunctionShortName === v.subFunctionShortName)) === i);
+
+
+      var ListW = item.subFunctionMasterDTOList.filter(item => item.deviceType === "W")
+      console.log(li, 'ListW');
+
+
+
     });
 
-    // var tt = submasterList.filter(ite =>{ite.deviceType == "M"})
-    console.log(submasterList,"tty1");
+
+
+    // submasterList[0].filter(ite =>{ite.deviceType == "M"})
+    // console.log(submasterList[0],"tty1");
+    // var tt = submasterList.forEach(ii => {
+
+
+
+    // })
+    // console.log(submasterList,"tty1");
+
+  }
+
+  setSubFunctionMenu(item) {
+    console.log(item);
+    this.subFunctions = item;
+     this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName && item.deviceType));
+    console.log(this.subFunctionList, 'subFunctionList');
+
 
   }
 

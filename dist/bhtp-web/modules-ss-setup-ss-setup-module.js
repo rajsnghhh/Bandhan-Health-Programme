@@ -660,7 +660,7 @@ function SsSetupComponent_ng_template_64_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "div", 8);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](61, "label", 64);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, "Village/ Gram Sansad/ Locality :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, "Village/ GS/ Locality :\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "span", 10);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -952,7 +952,7 @@ class SsSetupComponent {
             hcoOrHcoIOrTLId: this.ssCreateForm.value.staff,
             swasthyaSahayikaDTO: {
                 swasthyaSahayikaMasterId: ((_c = this.editssData) === null || _c === void 0 ? void 0 : _c.ssId) ? (_d = this.editssData) === null || _d === void 0 ? void 0 : _d.ssId : 0,
-                name: this.ssCreateForm.value.ssName,
+                name: this.validationService.camelize(this.ssCreateForm.value.ssName.trim()),
                 husbandOrGuardianName: this.ssCreateForm.value.husbandName,
                 contactNumber: this.ssCreateForm.value.contactNo ? this.ssCreateForm.value.contactNo : null,
                 address: this.ssCreateForm.value.address,
