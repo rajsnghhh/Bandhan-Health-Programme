@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'district-setup', loadChildren: () => import('./modules/district-setup/district-setup.module').then(m => m.DistrictSetupModule), canActivate: [AuthGuard] },
   { path: 'ss-unmap', loadChildren: () => import('./modules/ss-unmap/ss-unmap.module').then(m => m.SsUnmapModule), canActivate: [AuthGuard] },
   { path: 'ss-unmap-remap', loadChildren: () => import('./modules/ss-unmap-remap/ss-unmap-remap.module').then(m => m.SsUnmapRemapModule), canActivate: [AuthGuard] },
+  { path: 'report', loadChildren: () => import('./modules/reports/report.module').then(m => m.ReportModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

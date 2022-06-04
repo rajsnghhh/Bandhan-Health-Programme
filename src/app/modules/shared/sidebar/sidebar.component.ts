@@ -154,7 +154,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/acr']);
     }
 
-    if (routeId == 129 || routeId == 130 || routeId == 131 || routeId == 132 ) {
+    if (routeId == 129 || routeId == 130 || routeId == 131 || routeId == 132) {
       this.router.navigate(['/pw-register']);
     }
 
@@ -172,6 +172,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
     if (routeId == 186 || routeId == 187 || routeId == 188 || routeId == 189) {
       this.router.navigate(['/district-setup']);
+    }
+
+    if (routeId == 161 || routeId == 162 || routeId == 163 || routeId == 164) {
+      this.router.navigate(['/report']);
     }
 
   }
