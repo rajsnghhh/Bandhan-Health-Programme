@@ -62,16 +62,20 @@
 
                 </form><br>
 
-                <mat-accordion>
+                <!-- <mat-accordion>
 
                     <mat-expansion-panel>
-                        <mat-expansion-panel-header *ngFor="let item of mainFunctionList; index as i">
+                        <mat-expansion-panel-header *ngFor="let item of mainFunctionList; index as i" >
                             <mat-panel-title>
                                 {{item.mainFunctionName}}
                             </mat-panel-title>
+                            
                         </mat-expansion-panel-header>
+                        <mat-panel-description  *ngFor="let item of mainFunctionList; index as i">
+                           {{item.mainFunctionName}}
+                        </mat-panel-description> -->
 
-                        <table class="table table-striped" id="table_wrapper">
+                <!-- <table class="table table-striped" id="table_wrapper">
                             <tbody>
                                 <tr>
                                     <th>SubFunction</th>
@@ -88,32 +92,32 @@
                                 <tr *ngFor="let items of subFunctionList ; index as i">
                                     <td>{{items}}</td>
                                     <td>{{items}}</td>
-                                    <td><input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault"></td>
-                                    <td><input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault"></td>
-                                    <td><input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault"></td>
-                                    <td><input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault"></td>
+                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    </td>
+                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    </td>
+                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    </td>
+                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    </td>
 
-                                </tr>
+                                </tr> -->
 
-                                 <!-- <tr *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
+                <!-- <tr *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
                                         <td style="text-align:left;"> {{items.subFunctionShortName}}
                                         </td>
                                     </tr>  -->
-                            </tbody>
-                        </table>
-
-                     
-
-                    </mat-expansion-panel>
-
-                </mat-accordion>
+                <!-- </tbody>
+                        </table> -->
 
 
-                <!-- <div class="white_box_tittle list_header">
+
+                <!-- </mat-expansion-panel>
+
+                </mat-accordion> -->
+
+
+                <div class="white_box_tittle list_header">
 
                     <div class="QA_table ">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -153,10 +157,11 @@
 
                                                     </tr>
 
-                                                     <tr *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
-                                                            <td style="text-align:left;"> {{items.subFunctionShortName}}
-                                                            </td>
-                                                        </tr> 
+                                                    <tr
+                                                        *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
+                                                        <td style="text-align:left;"> {{items.subFunctionShortName}}
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
 
@@ -167,7 +172,7 @@
 
 
 
-                                <tbody>
+                                <!-- <tbody>
                                     <tr *ngFor="let item of accessType; index as i">
                                         <td>{{i+1}}</td>
                                         <td>{{item.accessType}} </td>
@@ -184,13 +189,13 @@
 
                                             </td>
                                     </tr>
-                                </tbody>
+                                </tbody> -->
 
                             </table>
 
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
 
         </div>
