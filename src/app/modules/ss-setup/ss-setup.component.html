@@ -42,7 +42,7 @@
 
                         <div class="form-group col-md">
                             <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                            <select class="form-select" (change)="changeBranch($event.target.value, 1)"
                                 formControlName="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
                                 'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
                                 <option value="">-- Select Branch --</option>
@@ -56,10 +56,27 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-md" *ngIf="ssForm.value.branch">
+                            <label for="staffWiseList">Staff Wise SS List:&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="staffWiseSSList($event)"
+                                formControlName="staffWiseList" id="staffWiseList" [ngClass]="{'is-invalid': f.staffWiseList.invalid && f.staffWiseList.touched, 'is-valid':
+                                f.staffWiseList.valid && (f.staffWiseList.dirty || f.staffWiseList.touched) }">
+                                <option value="">-- View SS List --</option>
+                                <option value="1">All SS List</option>
+                                <option *ngFor="let staff of staffList" value="{{staff.user_id}}">
+                                    {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.staffWiseList.errors" class="invalid-feedback">
+                                <div *ngIf="f.staffWiseList.errors.required">Staff wise list selection is required</div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="row">
-                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode" id='buttonRight'>
+                    <div class="row" >
+                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode" style ="display: flex; justify-content:flex-end">
                             <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
                         </div>
                     </div>
@@ -74,12 +91,12 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th>SL<br>No</th>
-                                            <th>Name</th>
-                                            <th>Guardian<br> Name</th>
-                                            <th>Address</th>
-                                            <th>Village/ Gram <br>Sansad/ Locality</th>
-                                            <th>Staff In<br> Charge</th>
+                                            <th style="padding: 0px;">SL<br>No</th>
+                                            <th style="padding: 0px;">Name</th>
+                                            <th style="padding: 0px;">Guardian<br> Name</th>
+                                            <th >Mobile</th>
+                                            <th style="padding: 0px;">Village/ Gram <br>Sansad/ Locality</th>
+                                            <th style="padding: 0px;">Staff In<br> Charge</th>
                                             <th *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
                                     </thead>
@@ -87,16 +104,17 @@
                                     <tbody>
 
                                         <tr
-                                            *ngFor="let item of ssList  | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td>{{item.ssName}} </td>
-                                            <td>{{item.ssHusbandOrGuardianName}}</td>
-                                            <td>{{item.ssAddress}}</td>
-                                            <td>{{item.villageDto.villageName}}</td>
-                                            <td> {{ item.userDto.userFirstName}} {{item.userDto.userMiddleName}}
+                                            *ngFor="let item of staffWiseSSLists | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="padding: 0px;">{{item.ssName}} </td>
+                                          <td style="padding: 0px;">{{item.ssHusbandOrGuardianName}}</td>
+                                          <td >{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
+                                          <td style="padding: 0px;">{{item.villageDto.villageName}}</td>
+                                          <td style="padding: 0px;"> {{ item.userDto.userFirstName}} {{item.userDto.userMiddleName}}
                                                 {{item.userDto.userLastName}}</td>
-                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit SS"
-                                                    *ngIf="updateMode" (click)="editSSForm(item, createSS)"></i>
+                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i
+                                                    class="fas fa-edit" title="Edit SS" *ngIf="updateMode"
+                                                    (click)="editSSForm(item, createSS)"></i>
 
                                                 <i class="fas fa-trash" title="Delete SS" *ngIf="deleteMode"
                                                     (click)="deleteSSForm(item, i)"></i>

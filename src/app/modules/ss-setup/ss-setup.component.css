@@ -40,7 +40,7 @@
 
 .search_inner_fullscreen input {
   width: 74%;
-  margin-left: 685px;
+  margin-left: 625px;
   font-size: 13px;
   height: 40px;
   border-radius: 5px;
@@ -49,14 +49,12 @@
   padding-right: 15px;
 }
 
+.fa {
+  margin-left: -75px;
+}
+
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
   margin-left: 80px;
-}
-
-#buttonRight {
-  margin-left: 910px;
-  margin-top: -10px;
-  margin-bottom: 5px;
 }

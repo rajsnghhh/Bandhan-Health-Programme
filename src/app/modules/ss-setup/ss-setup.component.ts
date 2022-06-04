@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -19,6 +18,8 @@ export class SsSetupComponent implements OnInit {
   ssCreateForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
+  staffWiseSSLists: Array<any> = [];
+  staffIdWiseList: Array<any> = [];
   page = 1;
   pageSize = 6;
   p: any;
@@ -41,7 +42,11 @@ export class SsSetupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal,
-    private validationService: ValidationService, private route: Router, private confirmationDialogService: ConfirmationDialogService) { }
+    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
@@ -85,7 +90,8 @@ export class SsSetupComponent implements OnInit {
   createForm() {
     this.ssForm = this.fb.group({
       region: ['', Validators.required],
-      branch: ['', Validators.required]
+      branch: ['', Validators.required],
+      staffWiseList: ['1', Validators.required]
     });
   }
 
@@ -121,9 +127,12 @@ export class SsSetupComponent implements OnInit {
       console.log(this.branchList);
     });
 
+    this.ssForm.controls.branch.setValue('');
+    this.staffWiseSSLists = [];
+
     if (this.ssForm.value.region == '') {
       this.branchList = [];
-      this.ssList = [];
+      this.staffWiseSSLists = [];
       this.ssForm.controls.branch.setValue('');
     }
   }
@@ -133,16 +142,33 @@ export class SsSetupComponent implements OnInit {
     this.ssService.listOfswasthyasahayika(obj).subscribe((res) => {
       this.ssList = res.responseObject?.ssDtoList;
       console.log(this.ssList);
+
+      if (this.ssForm.value.staffWiseList == 1) {
+        this.staffWiseSSLists = this.ssList;
+        this.ssForm.markAllAsTouched();
+      }
     });
 
   }
 
-  changeBranch(branchId) {
+  staffLists() {
+    let obj = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
+
+    this.ssService.staffListOfBranch(obj).subscribe((res) => {
+      this.staffList = res.responseObject;
+      console.log(this.staffList, 'staffList');
+    })
+  }
+
+  changeBranch(branchId, a) {
+
     this.branchId = branchId;
-    this.ssList = [];
+    this.staffLists();
     this.ssLists();
+    this.ssForm?.controls.staffWiseList.setValue('1');
+    this.staffWiseSSLists = [];
     if (this.ssForm.value.branch == '') {
-      this.ssList = [];
+      this.staffWiseSSLists = [];
     }
 
   }
@@ -170,10 +196,7 @@ export class SsSetupComponent implements OnInit {
 
     let obj2 = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
 
-    this.ssService.staffListOfBranch(obj2).subscribe((res) => {
-      this.staffList = res.responseObject;
-      console.log(this.staffList, 'staffList');
-    })
+    this.staffLists();
 
   }
 
@@ -291,7 +314,9 @@ export class SsSetupComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.ssModalDismiss();
+
         this.ssLists();
+        this.ssForm?.controls.staffWiseList.setValue('1');
       }
       else {
         this.showError(res.message);
@@ -365,6 +390,24 @@ export class SsSetupComponent implements OnInit {
     this.toaster.error(message, 'Create Swasthya Sahayika', {
       timeOut: 3000,
     });
+  }
+
+  staffWiseSSList(e) {
+    console.log(e.target.value);
+
+    if (e.target.value == '') {
+      this.staffWiseSSLists = [];
+    }
+
+    if (e.target.value == 1) {
+      this.staffWiseSSLists = this.ssList;
+    } else {
+      this.staffIdWiseList = this.ssList.filter(item => item.userDto.userId == e.target.value);
+      this.staffWiseSSLists = this.staffIdWiseList;
+      console.log(this.staffIdWiseList);
+
+    }
+
   }
 
 }
