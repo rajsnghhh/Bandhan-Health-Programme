@@ -46,6 +46,10 @@ export class VillageSetupComponent implements OnInit {
     private sidebarService: SidebarService, private modalService: NgbModal, private validationService: ValidationService,
     private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
 
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
+
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
     console.log(this.role);
@@ -231,7 +235,7 @@ export class VillageSetupComponent implements OnInit {
         },
         villageCreationDto: {
           villageMasterId: this.villageId ? this.villageId : 0,
-          villageName:this.validationService.camelize(this.villCreateForm.value.village.trim()),
+          villageName: this.validationService.camelize(this.villCreateForm.value.village.trim()),
           gpMunicipalId: this.gpId,
           active_flag: 'Y'
         }

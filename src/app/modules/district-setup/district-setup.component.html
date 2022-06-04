@@ -24,9 +24,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md" id='createButton' *ngIf="districtForm.value.state && createMode">
-                            <button class="btn btn-primary" title="Create District Here"
-                                (click)="districtModal(createDistrict)">Create</button>
+
+                        <div class="row">
+                            <div class="form-group col-md"  *ngIf="districtForm.value.state && createMode"
+                                style="display: flex; justify-content:flex-end">
+                                <button class="btn btn-primary" title="Create District Here"
+                                    (click)="districtModal(createDistrict)">Create</button>
+                            </div>
                         </div>
 
                     </div>
@@ -53,7 +57,8 @@
                                             *ngFor="let district of districtList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{district.districtName}}</td>
-                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit District"
+                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i
+                                                    class="fas fa-edit" title="Edit District"
                                                     (click)="districtModal(createDistrict,district)"
                                                     *ngIf="updateMode"></i>
                                                 <i class="fas fa-trash" title="Delete District"

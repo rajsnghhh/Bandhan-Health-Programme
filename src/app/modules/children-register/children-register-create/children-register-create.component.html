@@ -87,8 +87,8 @@
             <div class="form-group col-md">
               <label for="gram">Village/ Gram Sansad/ Locality
                 :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <select class="form-select" (change)="changeVillage($event.target.value,2)" formControlName="gram" id="gram"
-                [ngClass]="{
+              <select class="form-select" (change)="changeVillage($event.target.value,2)" formControlName="gram"
+                id="gram" [ngClass]="{
                               'is-invalid': f.gram.invalid && f.gram.touched,
                               'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
                             }">
@@ -106,13 +106,13 @@
 
             <div class="form-group col-md" *ngIf="existingFamilyListAll">
               <label>View Child List By:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <select class="form-select" (click)="childList($event)"  formControlName="viewChild" id="viewChild"
-              [ngClass]="{
+              <select class="form-select" (click)="childList($event)" formControlName="viewChild" id="viewChild"
+                [ngClass]="{
                 'is-invalid': f.viewChild.invalid && f.viewChild.touched,
                 'is-valid': f.viewChild.valid && (f.viewChild.dirty || f.viewChild.touched)
               }">
-                <option value="">-- View  Child --</option>
-                 <option value="2">With Child</option>
+                <option value="">-- View Child --</option>
+                <option value="2">With Child</option>
                 <option value="1">All Child</option>
                 <option value="3">No Child</option>
               </select>
