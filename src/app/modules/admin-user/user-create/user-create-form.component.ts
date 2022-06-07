@@ -272,7 +272,7 @@ export class UserCreateFormComponent implements OnInit {
       emailSecondary: this.userForm.value.secondaryEmail,
       mobileNumber: this.userForm.value.primaryMobile,
       mobileNumberSecondary: this.userForm.value.secondaryMobile,
-      currentBranchId: this.currentBranchId,
+      currentBranchId: this.userForm.value.branch || this.userForm.value.baseBranch,
       roleShortName: this.userForm.value.userRole,
       roleMasterId: this.roleList.find(role => role.roleShortName == this.userForm.value.userRole)?.roleMasterId,
       branchList: (this.userForm.value.userRole?.indexOf('HCO') != -1) ?
