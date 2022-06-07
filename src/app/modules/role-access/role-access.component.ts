@@ -41,6 +41,7 @@ export class RoleAccessComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
+
     this.createForm();
 
     // Api call for viewing role list
@@ -124,7 +125,7 @@ export class RoleAccessComponent implements OnInit {
   setSubFunctionMenu(item) {
     console.log(item);
     this.subFunctions = item;
-     this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName ));
+    this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
     console.log(this.subFunctionList, 'subFunctionList');
 
 
