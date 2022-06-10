@@ -112,11 +112,11 @@ const environment = {
     // Local
     // apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
     // Development 
-    // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
+    apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // Staging
-    apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+    // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
     // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
@@ -456,6 +456,9 @@ class SidebarComponent {
         }
         if (routeId == 186 || routeId == 187 || routeId == 188 || routeId == 189) {
             this.router.navigate(['/district-setup']);
+        }
+        if (routeId == 161 || routeId == 162 || routeId == 163 || routeId == 164) {
+            this.router.navigate(['/report']);
         }
     }
     ngAfterViewInit() {
@@ -1125,6 +1128,7 @@ const routes = [
     { path: 'district-setup', loadChildren: () => Promise.all(/*! import() | modules-district-setup-district-setup-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~357b96df"), __webpack_require__.e("modules-district-setup-district-setup-module")]).then(__webpack_require__.bind(null, /*! ./modules/district-setup/district-setup.module */ "UC6/")).then(m => m.DistrictSetupModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'ss-unmap', loadChildren: () => Promise.all(/*! import() | modules-ss-unmap-ss-unmap-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~357b96df"), __webpack_require__.e("modules-ss-unmap-ss-unmap-module")]).then(__webpack_require__.bind(null, /*! ./modules/ss-unmap/ss-unmap.module */ "BTnk")).then(m => m.SsUnmapModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'ss-unmap-remap', loadChildren: () => Promise.all(/*! import() | modules-ss-unmap-remap-ss-unmap-remap-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~357b96df"), __webpack_require__.e("modules-ss-unmap-remap-ss-unmap-remap-module")]).then(__webpack_require__.bind(null, /*! ./modules/ss-unmap-remap/ss-unmap-remap.module */ "OBPB")).then(m => m.SsUnmapRemapModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'report', loadChildren: () => __webpack_require__.e(/*! import() | modules-reports-report-module */ "modules-reports-report-module").then(__webpack_require__.bind(null, /*! ./modules/reports/report.module */ "P+a1")).then(m => m.ReportModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {

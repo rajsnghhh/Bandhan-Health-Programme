@@ -43,7 +43,7 @@ export class MouPendingComponent implements OnInit {
     item.status = 'APO';
 
     const postBody = {
-      dataAccessDTO: this.httpService.dataAccessDTOO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       moUMasterDTO: item,
     };
     console.log(postBody);

@@ -1171,7 +1171,7 @@ class UserCreateFormComponent {
             emailSecondary: this.userForm.value.secondaryEmail,
             mobileNumber: this.userForm.value.primaryMobile,
             mobileNumberSecondary: this.userForm.value.secondaryMobile,
-            currentBranchId: this.currentBranchId,
+            currentBranchId: this.userForm.value.branch || this.userForm.value.baseBranch,
             roleShortName: this.userForm.value.userRole,
             roleMasterId: (_a = this.roleList.find(role => role.roleShortName == this.userForm.value.userRole)) === null || _a === void 0 ? void 0 : _a.roleMasterId,
             branchList: (((_b = this.userForm.value.userRole) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1) ?
