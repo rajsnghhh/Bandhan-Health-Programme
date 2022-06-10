@@ -1,50 +1,80 @@
 th {
-    white-space: break-spaces !important;
-    padding: 15px !important;
-    font-size: 16px !important;
-    text-align: center;
+  white-space: break-spaces !important;
+  padding: 15px !important;
+  font-size: 16px !important;
+  text-align: center;
 }
 
 td {
-    text-align: center;
+  text-align: center;
 }
 
 td:nth-child(1) {
-    font-size: 18px !important;
+  font-size: 18px !important;
 }
 
-/* 
+/*  
 table tbody {
     display: block;
     height: 600px;
     overflow: scroll;
     overflow-x: hidden;
-} */
+}  */
 
-table thead, tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-    /* Remove scrollbar space */
-    height: 8px;
-    background: transparent;
-    /* Optional: just make scrollbar invisible */
+.collapsible {
+  background-color: #499;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-    width: 30px;
-    /* Remove scrollbar space */
-    height: 30px;
-    border-radius: 10px;
+.active, .collapsible:hover {
+  background-color: #499;
 }
 
-/* Optional: show position indicator in colour */
-::-webkit-scrollbar-thumb {
-    background: rgb(158, 1, 1);
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
 }
 
+.active:after {
+  content: "\2212";
+}
 
+.content {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+.QA_section .QA_table .table thead th {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  border: 0px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #71c1c1;
+}

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
 import { HttpService } from 'src/app/modules/core/http/http.service';
 import { DataAccessDTO } from '../core/models/dataAccessDTO.model';
 import { MainFunctionDTO } from '../core/models/mainFunctionDTO.model';
@@ -18,14 +17,19 @@ import { RoleAccessService } from './role-access.service';
 export class RoleAccessComponent implements OnInit {
   roleAccessForm: FormGroup;
   roleList: Array<any> = [];
-  roleFunctionMapView: Array<any> = [];
+  checkbox: any;
+  accessList: Array<any> = [];
+  roleFunctionMapView: any;
   mainFunctionList: Array<any> = [];
-  subFunctionList: any = [];
-  accessType: any;
+  webList: Array<any> = [];
+  mobileList: Array<any> = [];
+  // subFunctionFilterList: any = [];
+  // accessType: any;
+  // currentIndex: any = -1;
   // main_functions: MainFunctionDTO[];
   // mainFunctionId: any = '';
   // subFunctions: SubFunctionMasterDTO[];
-  subFunctions: any;
+  subFunctionList: Array<any> = [];
   // subFunctionsDropDown: any = [];
   // selectedSubFunction: string = ''
   // actionTypes: any = [];
@@ -44,13 +48,6 @@ export class RoleAccessComponent implements OnInit {
 
     this.createForm();
 
-    // Api call for viewing role list
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    this.roleService.roleList(obj).subscribe((res) => {
-      this.roleList = res.responseObject;
-      console.log(this.roleList, 'roleList');
-    });
-
     // Api call for viewing rolefunctionmapview list
     let objs = { dataAccessDTO: this.httpService.dataAccessDTO }
     this.roleService.rolefunctionmapview(objs).subscribe((res) => {
@@ -58,23 +55,22 @@ export class RoleAccessComponent implements OnInit {
       console.log(this.roleFunctionMapView, 'roleFunctionMapView');
     });
 
-
-    this.route.data.subscribe(data => {
-      // this.menuData = data;
-      console.log(data);
-      //   this.roleAccessData = data.roleAcess.responseObject;
-      //   console.log(this.roleAccessData);
-      //   this.roleList = this.roleAccessData.map(item => item.roleMasterDTO);
-      //   this.main_functions = this.roleAccessData[0].mainFunctionDTOList
-    });
+    // this.route.data.subscribe(data => {
+    // this.menuData = data;
+    // console.log(data);
+    // this.roleAccessData = data.roleAcess.responseObject;
+    // console.log(this.roleAccessData);
+    // this.roleList = this.roleAccessData.map(item => item.roleMasterDTO);
+    // this.main_functions = this.roleAccessData[0].mainFunctionDTOList
+    // });
 
   }
 
   createForm() {
     this.roleAccessForm = this.fb.group({
-      role: ['', Validators.required],
+      device: ['', Validators.required],
       mainfunction: ['', Validators.required],
-      subfunction: ['', Validators.required]
+      // subfunction: ['', Validators.required]
     });
   }
 
@@ -95,19 +91,19 @@ export class RoleAccessComponent implements OnInit {
 
     // this.mainFunctionList.filter(it=>{it.})
 
-    this.mainFunctionList?.forEach((item, i) => {
-      var ListM = item.subFunctionMasterDTOList.filter(item => item.deviceType === "M")
-      // console.log(ListM,'ListM');
+    // this.mainFunctionList?.forEach((item, i) => {
+    //   var ListM = item.subFunctionMasterDTOList.filter(item => item.deviceType === "M")
+    //   // console.log(ListM,'ListM');
 
-      var li = ListM.filter((v, i, a) => a.findIndex(v2 => (v2.subFunctionShortName === v.subFunctionShortName)) === i);
-
-
-      var ListW = item.subFunctionMasterDTOList.filter(item => item.deviceType === "W")
-      console.log(li, 'ListW');
+    //   var li = ListM.filter((v, i, a) => a.findIndex(v2 => (v2.subFunctionShortName === v.subFunctionShortName)) === i);
 
 
+    //   var ListW = item.subFunctionMasterDTOList.filter(item => item.deviceType === "W")
+    //   console.log(li, 'ListW');
 
-    });
+
+
+    // });
 
 
 
@@ -122,41 +118,14 @@ export class RoleAccessComponent implements OnInit {
 
   }
 
-  setSubFunctionMenu(item) {
-    console.log(item);
-    this.subFunctions = item;
-    this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
-    console.log(this.subFunctionList, 'subFunctionList');
+  // setSubFunctionMenu(item) {
+  //   console.log(item);
+  //   this.subFunctions = item;
+  //   this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+  //   console.log(this.subFunctionList, 'subFunctionList');
 
 
-  }
-
-
-  changeMainFunction(mainFunctionId) {
-    console.log(mainFunctionId);
-    this.subFunctions = this.mainFunctionList.find(item => item.mainFunctionMasterId == mainFunctionId)?.subFunctionMasterDTOList;
-
-
-
-
-    // this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
-    // console.log(this.subFunctionList, 'subFunctionList');
-
-  }
-
-  changeSubFunction(subFunctionName) {
-    console.log(subFunctionName);
-
-    this.accessType = this.subFunctions.filter(item => item.subFunctionShortName == subFunctionName);
-    console.log(this.accessType);
-
-
-    //   this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction)
-    //   console.log(this.actionTypes);
-
-
-
-  }
+  // }
 
 
 
@@ -219,5 +188,125 @@ export class RoleAccessComponent implements OnInit {
   //       console.log(error);
   //     })
   // }
+
+
+  changeDevice(deviceId) {
+    console.log(deviceId);
+    if (deviceId == 1) {
+      this.mainFunctionList = this.roleFunctionMapView?.webMenu;
+      console.log(this.mainFunctionList, ' this.mainFunctionList-web');
+    } else {
+      this.mainFunctionList = this.roleFunctionMapView?.mobMenus;
+      console.log(this.mainFunctionList, ' this.mainFunctionList-mobile');
+    }
+
+
+    // this.roleAccessForm.controls.deviceType.setValue('');
+
+    //   var WData = this.subFunctionList.filter((item) => item.deviceType == 'W');
+    //   // this.webList = new Set(WData.map(item => item.subFunctionShortName));
+    //   this.webList = WData.filter((v, i, a) => a.findIndex(v2 => (v2.subFunctionShortName === v.subFunctionShortName)) === i);
+    //   console.log(this.webList, 'weblist');
+
+    //   var Mdata = this.subFunctionList.filter((item) => item.deviceType == 'M');
+    //   this.mobileList = Mdata.filter((v, i, a) => a.findIndex(v2 => (v2.subFunctionShortName === v.subFunctionShortName)) === i);
+    //   console.log(this.mobileList, 'this.mobileList');
+
+    //   if (deviceId == 1) {
+    //     this.subFunctionFilterList = this.webList;
+    //   } else if (deviceId == 2) {
+    //     this.subFunctionFilterList = this.mobileList;
+    //   }
+
+
+  }
+
+
+  changeMainFunction(mainFunctionId) {
+
+
+    console.log(mainFunctionId, 'mainFunctionId');
+    this.subFunctionList = this.mainFunctionList.find(item => item.mainMenuId == mainFunctionId)?.subMenuDtoList;
+    // this.subFunctionFilterList = new Set(this.subFunctionList.map(item => item.subFunctionShortName))
+    console.log(this.subFunctionList, ' this.subFunctionList');
+    // console.log(this.subFunctionFilterList, 'this.subFunctionFilterList');
+
+
+
+    // this.subFunctionList = new Set(this.subFunctions.map(item => item.subFunctionShortName));
+    // console.log(this.subFunctionList, 'subFunctionList');
+
+  }
+
+  changeSubFunction(subFunctionName, indexs) {
+    console.log(subFunctionName, 'subFunctionName');
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        // before opening the accordion, you close everything
+        // for (var j = 0; j < coll.length; j++) {
+        //   coll[j].classList.remove("active");
+        //   coll[j].nextElementSibling.style.maxHeight = null;
+        // }
+
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+
+    this.roleList = this.subFunctionList.find((role) => role.subMenuName == subFunctionName)?.roleAccessDtoList;
+    console.log(this.roleList, 'roleList');
+
+    // this.accessList = this.roleList.filter((_, index) =>{this.roleList[index].accessDtoList})
+    // console.log(this.accessList);
+
+    // this.accessList = this.roleList.filter((item, index) =>{item})
+    // console.log(this.accessList, ' this.accessList ');
+
+    // this.roleList.forEach((item, i) => {
+    //   this.accessList = item.accessDtoList;
+    //   console.log(this.accessList, ' this.accessList ');
+
+    // })
+
+
+
+    // this.accessType = this.subFunctions.filter(item => item.subFunctionShortName == subFunctionName);
+    // console.log(this.accessType);
+
+
+
+    //   this.actionTypes = this.subFunctions.filter(item => item.subFunctionShortName === this.selectedSubFunction)
+    //   console.log(this.actionTypes);
+    // this.viewCheck(this.checkbox , this.accessList);
+
+
+  }
+
+  viewCheck(e, accessDtoList) {
+    this.checkbox = e;
+    this.accessList = accessDtoList;
+    console.log(this.accessList);
+
+  }
+
+  // changeRoleFunction(roleId) {
+
+  //   console.log(roleId);
+
+  //   this.accessList = this.roleList.find((role) => role.roleMasterId == roleId)?.accessDtoList;
+  //   console.log(this.accessList, 'accessDtoList');
+
+  // }
+
+
 
 }
