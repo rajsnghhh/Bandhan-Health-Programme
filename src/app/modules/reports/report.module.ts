@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReportRoutingModule } from './report-routing.module';
-import { ReportHomeComponent } from './report-home/report-home.component';
+import { LoaderModule } from '../shared/loader/loader.module';
+import { GeographicalReportHomeComponent } from './geographical-report-home/geographical-report-home.component';
 
 
 @NgModule({
-  declarations: [ReportHomeComponent],
+  declarations: [GeographicalReportHomeComponent],
   imports: [
     CommonModule,
-    ReportRoutingModule
+    ReportRoutingModule, LoaderModule
   ]
 })
 export class ReportModule { }
