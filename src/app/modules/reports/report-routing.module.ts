@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ReportHomeComponent } from './report-home/report-home.component';
+import { GeographicalReportHomeComponent } from './geographical-report-home/geographical-report-home.component';
 
-const routes: Routes = [{ path: '', component: ReportHomeComponent },];
+const routes: Routes = [{ path: '', component: GeographicalReportHomeComponent },];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

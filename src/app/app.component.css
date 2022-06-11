@@ -11,3 +11,19 @@
   flex-direction: column;
   align-items: center;
 }
+
+@media (max-width:1350px) {
+  .webaccess{
+    display: none;
+  }
+  .notSupport{
+    margin-top: 30px; 
+    color: red;
+  }
+}
+
+@media (min-width:1350px) {
+  .notSupport{
+    display: none;
+  }
+}

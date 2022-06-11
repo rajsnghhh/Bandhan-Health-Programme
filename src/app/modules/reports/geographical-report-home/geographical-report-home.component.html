@@ -1,0 +1,73 @@
+<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">Geographical Outreach Report</h2>
+        </div>
+        
+        <div class="white_box_tittle list_header" >
+          <div class="QA_table ">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                  <table
+                      class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                      role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+      
+                      <thead>
+                          <tr>
+                              <th>SL<br>No</th>
+                              <th>Donor Name</th>
+                              <th>project</th>
+                              <th>State Name</th>
+                              <th>District</th>
+                              <th>Block</th>
+                              <th>GP/<br>Municipality</th>
+                              <th>Village</th>
+                              <th>Region</th>
+                              <th>Branch</th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+      
+                      <tbody>
+      
+                          <tr *ngFor="let item of geographicalOutreachList;index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{item.donorName}}</td>
+                              <td>{{item.projectCode}}</td>
+                              <td>{{item.stateName}}</td>
+                              <td>{{item.district}}</td>
+                              <td>{{item.block}}</td>
+                              <td>{{item.gpMunicipality}}</td>
+                              <td>{{item.villageLocality}}</td>
+                              <td>{{item.region}}</td>
+                              <td>{{item.branch}}</td>
+                              <td>
+                                <i *ngIf="!showHideTable" class="fa fa-angle-double-down fa-2x" (click)="collaps(item.projectMasterId)"></i>
+                                <i *ngIf="showHideTable" class="fa fa-angle-double-up fa-2x" (click)="collaps(item.projectMasterId)"></i>
+                             </td>
+                          </tr>
+                          <tr  *ngFor="let item of stateWiseList" style="background-color: #b6f1f1;">
+                            <td *ngIf="showHideTable"></td>
+                            <td *ngIf="showHideTable"></td>
+                            <td *ngIf="showHideTable"></td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.stateName}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.district}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.block}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.gpMunicipality}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.villageLocality}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.region}}</td>
+                            <td *ngIf="showHideTable" class="text-dark">{{item.branch}}</td>
+                            <td *ngIf="showHideTable"></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+
