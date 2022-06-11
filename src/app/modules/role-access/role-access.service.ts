@@ -10,12 +10,12 @@ export class RoleAccessService {
 
   constructor(private http: HttpClient) { }
 
-  // roleList(obj): any {
-  //   return this.http.post(`${this.baseURL}rolemaster/list`, obj);
-  // }
-
   rolefunctionmapview(obj): any {
     return this.http.post(`${this.baseURL}rolemaster/rolefunctionmap/view`, obj);
+  }
+
+  rolesubfunctionmapsave(obj): any {
+    return this.http.post(`${this.baseURL}rolesubfunctionmap/save`, obj);
   }
 
 }
