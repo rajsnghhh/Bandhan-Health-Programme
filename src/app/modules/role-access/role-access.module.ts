@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RoleAccessRoutingModule } from './role-access-routing.module';
 import { RoleAccessComponent } from './role-access.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -10,7 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RoleAccessRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    
   ]
 })
 export class RoleAccessModule { }

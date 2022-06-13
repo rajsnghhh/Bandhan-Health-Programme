@@ -9,6 +9,7 @@ import { MainFunctionDTO } from '../core/models/mainFunctionDTO.model';
 import { RoleMasterDTO } from '../core/models/roleMasterDTO.model';
 import { RoleFunctionMapDTO } from '../core/models/roleSubFunctionMapDTO.model';
 import { SubFunctionMasterDTO } from '../core/models/subFunctionDTO.model';
+import { ValidationService } from '../shared/services/validation.service';
 
 @Component({
   selector: 'app-role-access',
@@ -21,6 +22,7 @@ export class RoleAccessComponent implements OnInit {
   roleFunctionMapView: any;
   mainFunctionList: Array<any> = [];
   subFunctionList: Array<any> = [];
+  searchFullscreen: boolean;
   // subFunctionFilterList: any = [];
   // accessType: any;
   // currentIndex: any = -1;
@@ -38,7 +40,11 @@ export class RoleAccessComponent implements OnInit {
   // }
   // abcd: string;
   constructor(private httpService: HttpService, private route: ActivatedRoute, private roleService: RoleAccessService,
-    private fb: FormBuilder, private toaster: ToastrService) { }
+    private fb: FormBuilder, private toaster: ToastrService, private validationService: ValidationService,) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
 
@@ -66,8 +72,9 @@ export class RoleAccessComponent implements OnInit {
     this.roleAccessForm = this.fb.group({
       device: ['', Validators.required],
       mainfunction: ['', Validators.required],
-      accessTypeChecked: [true],
-      accessTypeUnhecked: ['']
+      // subfunction: ['', Validators.required],
+      // accessTypeChecked: [true],
+      // accessTypeUnchecked: ['']
     });
   }
 
@@ -83,6 +90,15 @@ export class RoleAccessComponent implements OnInit {
     } else {
       this.mainFunctionList = this.roleFunctionMapView?.mobMenus;
       console.log(this.mainFunctionList, ' this.mainFunctionList-mobile');
+    }
+
+    this.roleAccessForm.controls.mainfunction.setValue('');
+    this.subFunctionList = [];
+
+    if (this.roleAccessForm.value.device == '') {
+      this.roleAccessForm.controls.mainfunction.setValue('');
+      this.mainFunctionList = [];
+      this.subFunctionList = [];
     }
 
 
@@ -124,20 +140,19 @@ export class RoleAccessComponent implements OnInit {
 
   changeSubFunction(subFunctionName) {
     console.log(subFunctionName, 'subFunctionName');
-    // this.roleAccessForm.patchValue({
-    //   subMenuAccessType: this.roleFunctionMapView.webMenu[1].subMenuDtoList[0].roleAccessDtoList[1].accessDtoList[0].roleActiveFlag == 'Y' ? true : false
-    // })
+
+
 
     var coll = document.getElementsByClassName("collapsible");
     var i;
 
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function () {
-        // before opening the accordion, you close everything
-        // for (var j = 0; j < coll.length; j++) {
-        //   coll[j].classList.remove("active");
-        //   coll[j].nextElementSibling.style.maxHeight = null;
-        // }
+
+        for (var j = 0; j < coll.length; j++) {
+          coll[j].classList.remove("active");
+          coll[j].nextElementSibling.style.maxHeight = null;
+        }
 
         this.classList.toggle("active");
         var content = this.nextElementSibling;
@@ -227,16 +242,16 @@ export class RoleAccessComponent implements OnInit {
 
     console.log(roleAccessSaveObj);
 
-    // this.roleService.rolesubfunctionmapsave(roleAccessSaveObj).subscribe((res) => {
-    //   console.log(res.responseObject, 'roleFunctionMapsave');
-    //   if (res.status == true) {
-    //     this.showSuccess(res.message);
-    //   }
-    //   else {
-    //     this.showError(res.message);
-    //   }
+    this.roleService.rolesubfunctionmapsave(roleAccessSaveObj).subscribe((res) => {
+      console.log(res.responseObject, 'roleFunctionMapsave');
+      if (res.status == true) {
+        this.showSuccess(res.message);
+      }
+      else {
+        this.showError(res.message);
+      }
 
-    // });
+    });
 
   }
 

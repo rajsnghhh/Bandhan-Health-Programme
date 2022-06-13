@@ -1482,18 +1482,13 @@ class HttpService {
             'Content-Type': 'application/json',
             'Authorization': 'Basic dXNlcjE6c2VjcmV0MQ=='
         });
-        this.testUrl = `http://192.168.149.221:8085/`;
         this.dataAccessDTO = {
             userId: this.sidebarService.userId,
             userName: this.sidebarService.loginId,
         };
-        this.dataAccessDTOO = {
-            userId: 5,
-            userName: 'BK000005'
-        };
     }
     postRequest(url, body) {
-        return this.http.post(this.testUrl + url, body, { headers: this.headers });
+        return this.http.post(this.baseURL + url, body, { headers: this.headers });
     }
     getChildrenRegister(obj) {
         return this.http.post(`${this.baseURL}acr/view`, obj);
