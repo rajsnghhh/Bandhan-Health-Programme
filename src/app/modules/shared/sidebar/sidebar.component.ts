@@ -175,7 +175,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
 
     if (routeId == 161 || routeId == 162 || routeId == 163 || routeId == 164) {
-      this.router.navigate(['/report']);
+      this.router.navigate(['/report/geographicalReport']);
+    }
+
+    if (routeId == 195 || routeId == 196 || routeId == 197 || routeId == 198) {
+      this.router.navigate(['/report/beneficiaryInfo']);
     }
 
   }

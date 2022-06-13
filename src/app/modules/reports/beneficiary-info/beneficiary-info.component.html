@@ -1,0 +1,236 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+
+          <div id="header-fixed" style="display: flex;">
+            <h2 class="page-title">Beneficiary Information Report</h2>
+        </div>
+
+        <form [formGroup]="locationForm">
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="project"
+                      >Project :</label
+                    >
+                    <select
+                      class="form-select"
+                      (change)="changeProject($event.target.value)"
+                      formControlName="project"
+                      [ngClass]="{
+                        'is-invalid': f.project.invalid && f.project.touched,
+                        'is-valid': f.project.valid && (f.project.dirty || f.project.touched)
+                      }"
+                    >
+                      <option value="">-- All --</option>
+                      <option *ngFor="let project of projectList" [value]="project.projectMasterId">
+                        {{project.projectName}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md">
+                    <label>Select :</label> <br>
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="stateWise" formControlName="stateOrRegion" (click)="checkStateOrRegion($event.target.value)"> &nbsp;
+                          <span>State Wise</span>
+                      </label> &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" value="regionWise" formControlName="stateOrRegion" (click)="checkStateOrRegion($event.target.value)"> &nbsp;
+                          <span>Region Wise</span>
+                      </label>
+                </div>
+            </div>
+<br>
+           <div class="row">
+              <div class="form-group col-md">
+                <label for="state"
+                  >State :</label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeState($event.target.value)"
+                  formControlName="state"
+                  [ngClass]="{
+                    'is-invalid': f.state.invalid && f.state.touched,
+                    'is-valid': f.state.valid && (f.state.dirty || f.state.touched)
+                  }"
+                >
+                  <option value="">-- All --</option>
+                  <option *ngFor="let state of stateList" [value]="state.stateMasterId">
+                    {{state.stateName}}
+                  </option>
+                </select>
+                <!-- <div *ngIf="f.state.errors" class="invalid-feedback">
+                  <div *ngIf="f.state.errors.required">
+                    State selection is required
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="form-group col-md">
+                <label for="district"
+                  >District :</label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeDistrict($event.target.value)"
+                  formControlName="district"
+                  [ngClass]="{
+                    'is-invalid': f.district.invalid && f.district.touched,
+                    'is-valid': f.district.valid && (f.district.dirty || f.district.touched)
+                  }"
+                >
+                  <option value="">-- All --</option>
+                  <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
+                    {{district.districtName}}
+                  </option>
+                </select>
+                <!-- <div *ngIf="f.district.errors" class="invalid-feedback">
+                  <div *ngIf="f.district.errors.required">
+                    District selection is required
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="form-group col-md">
+                <label for="block"
+                  >Block :</label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeBlock($event.target.value)"
+                  formControlName="block"
+                  [ngClass]="{
+                    'is-invalid': f.block.invalid && f.block.touched,
+                    'is-valid': f.block.valid && (f.block.dirty || f.block.touched)
+                  }"
+                >
+                  <option value="">-- All --</option>
+                  <option *ngFor="let block of blockList" [value]="block.blockMasterId">
+                    {{block.blockName}}
+                  </option>
+                </select>
+                <!-- <div *ngIf="f.block.errors" class="invalid-feedback">
+                  <div *ngIf="f.block.errors.required">
+                    Block selection is required
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="form-group col-md">
+                <label for="gp"
+                  >GP/ Municipality :</label
+                >
+                <select
+                  class="form-select"
+                  (change)="changeGp($event.target.value)"
+                  formControlName="gp"
+                  [ngClass]="{
+                    'is-invalid': f.gp.invalid && f.gp.touched,
+                    'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
+                  }"
+                >
+                  <option value="">-- All --</option>
+                  <option *ngFor="let gp of blockList" [value]="gp.gpMunicipalId">
+                    {{gp.name}}
+                  </option>
+                </select>
+                <!-- <div *ngIf="f.gp.errors" class="invalid-feedback">
+                  <div *ngIf="f.gp.errors.required">
+                    Block selection is required
+                  </div>
+                </div> -->
+              </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="region">Region :</label>
+                    <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region" id="region"
+                      [ngClass]="{
+                        'is-invalid': f.region.invalid && f.region.touched,
+                        'is-valid':
+                          f.region.valid && (f.region.dirty || f.region.touched)
+                      }">
+                      <option value="">-- All --</option>
+                      <option *ngFor="let region of regionList">
+                        {{region.regionName}}
+                      </option>
+                    </select>
+                    <!-- <div *ngIf="f.region.errors" class="invalid-feedback">
+                      <div *ngIf="f.region.errors.required">Region selection is required</div>
+                    </div> -->
+                  </div>
+            </div>
+        </form>
+        
+        
+        <div class="white_box_tittle list_header" >
+          <div class="QA_table ">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                  <table
+                      class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                      role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+      
+                      <thead>
+                          <tr>
+                            <th rowspan="3">SL<br>NO.</th>
+                            <th rowspan="3">Name</th>
+                            <th colspan="7">Family</th>
+                            <th colspan="8">Child</th>
+                          </tr>
+
+                          <tr>
+                            <th colspan="2">PEM </th>
+                            <th colspan="2">LM</th>
+                            <th colspan="2">PW</th>
+                            <th rowspan="2">Total<br>Family</th>
+                            <th colspan="2">Child<br>below 5 years</th>
+                            <th colspan="2">Child<br>below years</th>
+                            <th colspan="2">Child<br>PEM</th>
+                            <th colspan="2">Total<br> girl <br>(14 yr to 18yr)</th>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                            <th style="font-size: 13px;">Current</th>
+                            <th style="font-size: 13px;">Cum.</th>
+                        </tr>
+                      </thead>
+      
+                      <tbody>
+      
+                          <!-- <tr>
+                              <td>ghl</td>
+                              <td>542</td>
+                              <td>dbxc</td>
+                              <td>424</td>
+                              <td>xcb</td>
+                              <td>fbncf</td>
+                              <td>dfhtf</td>
+                              <td>uolg,</td>
+                              <td>sfafa</td>
+                          </tr> -->
+                          
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+
