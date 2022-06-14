@@ -151,7 +151,7 @@ export class RoleAccessComponent implements OnInit {
 
         for (var j = 0; j < coll.length; j++) {
           coll[j].classList.remove("active");
-          coll[j].nextElementSibling.style.maxHeight = null;
+          coll[j].nextElementSibling.innerHTML.Style.maxHeight = '';
         }
 
         this.classList.toggle("active");
