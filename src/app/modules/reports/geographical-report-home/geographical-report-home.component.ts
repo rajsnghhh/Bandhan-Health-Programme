@@ -25,6 +25,9 @@ export class GeographicalReportHomeComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}report/getGeographicalOutreach`, Dto).subscribe((res: any) => {
       this.geographicalOutreachList = res.responseObject?.geographicalOutreachList;
       this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     });
 
   }
@@ -38,8 +41,17 @@ export class GeographicalReportHomeComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}report/getStateWiseDetails`, Dto1).subscribe((res: any) => {
       this.stateWiseList = res.responseObject?.stateWiseList;
       this.loader = true;
+    }, error => {
+      this.showError('Error');
+      this.loader = true;
     });
 
     this.showHideTable = !this.showHideTable
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
   }
 }
