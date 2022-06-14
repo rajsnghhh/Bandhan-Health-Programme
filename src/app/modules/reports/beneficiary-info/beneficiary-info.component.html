@@ -9,7 +9,7 @@
 
         <form [formGroup]="locationForm">
             <div class="row">
-                <div class="form-group col-md">
+                <div class="form-group col-md-6">
                     <label for="project"
                       >Project :</label
                     >
@@ -29,7 +29,7 @@
                     </select>
                   </div>
 
-                  <div class="form-group col-md">
+                  <div class="form-group col-md" *ngIf="selectFilter">
                     <label>Select :</label> <br>
                     <label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -43,7 +43,7 @@
                 </div>
             </div>
 <br>
-           <div class="row">
+           <div class="row" *ngIf="stateWiseFilter">
               <div class="form-group col-md">
                 <label for="state"
                   >State :</label
@@ -62,11 +62,6 @@
                     {{state.stateName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.state.errors" class="invalid-feedback">
-                  <div *ngIf="f.state.errors.required">
-                    State selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -87,11 +82,6 @@
                     {{district.districtName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.district.errors" class="invalid-feedback">
-                  <div *ngIf="f.district.errors.required">
-                    District selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -112,11 +102,6 @@
                     {{block.blockName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.block.errors" class="invalid-feedback">
-                  <div *ngIf="f.block.errors.required">
-                    Block selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -133,20 +118,14 @@
                   }"
                 >
                   <option value="">-- All --</option>
-                  <option *ngFor="let gp of blockList" [value]="gp.gpMunicipalId">
+                  <option *ngFor="let gp of gpList" [value]="gp.gpMunicipalId">
                     {{gp.name}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.gp.errors" class="invalid-feedback">
-                  <div *ngIf="f.gp.errors.required">
-                    Block selection is required
-                  </div>
-                </div> -->
               </div>
-
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="regionWiseFilter">
                 <div class="form-group col-md-4">
                     <label for="region">Region :</label>
                     <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region" id="region"
@@ -213,17 +192,25 @@
       
                       <tbody>
       
-                          <!-- <tr>
-                              <td>ghl</td>
-                              <td>542</td>
-                              <td>dbxc</td>
-                              <td>424</td>
-                              <td>xcb</td>
-                              <td>fbncf</td>
-                              <td>dfhtf</td>
-                              <td>uolg,</td>
-                              <td>sfafa</td>
-                          </tr> -->
+                          <tr>
+                              <td>1</td>
+                              <td>proj<br>ect 1</td>
+                              <td>10</td>
+                              <td>12</td>
+                              <td>20</td>
+                              <td>22</td>
+                              <td>30</td>
+                              <td>32,</td>
+                              <td>60</td>
+                              <td>5</td>
+                              <td>6</td>
+                              <td>7</td>
+                              <td>8</td>
+                              <td>9</td>
+                              <td>10</td>
+                              <td>12</td>
+                              <td>20</td>
+                          </tr>
                           
                       </tbody>
                   </table>
