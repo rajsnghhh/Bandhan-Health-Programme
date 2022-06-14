@@ -41,283 +41,132 @@
                             </div>
                         </div>
 
+                        <!-- <div class="form-group col-md">
+                            <label for="subfunction">Sub Function :&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeSubFunction($event.target.value)"
+                                formControlName="subfunction" id="subfunction"
+                                [ngClass]="{ 'is-invalid': f.subfunction.invalid &&
+                                 f.subfunction.touched, 'is-valid': f.subfunction.valid && (f.subfunction.dirty || f.subfunction.touched)}">
+                                <option value="">-- Select Sub Function --</option>
+                                <option *ngFor="let subfunction of subFunctionList" value="{{subfunction.subMenuName}}">
+                                    {{subfunction.subMenuName}} </option>
+                            </select>
+                            <div *ngIf="f.subfunction.errors" class="invalid-feedback">
+                                <div *ngIf="f.subfunction.errors.required">Sub Function selection is required</div>
+                            </div>
+                        </div> -->
+
                     </div>
 
+
+                    <!-- <div class="" style="background: white">
+
+                        <div class="QA_table" style="width: 990px; margin-left: 10px;">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info"
+                                    style="table-layout: fixed; text-align:center; color: #a6d8d8; padding: 0px;">
+                                    <thead id="header_fixed">
+                                        <tr style="padding: 0px;">
+                                            <th style="padding: 0px;">Role Function</th>
+                                            <th style="padding: 0px;">Role Access</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let items of roleList ; index as i" style="padding: 0px;">
+                                            <td style="padding: 0px;">{{items.roleName}}</td>
+                                            <td>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td *ngFor="let itemss of items.accessDtoList ; index as i">
+                                                                {{itemss.subMenuAccessType}}
+                                                                <input class="form-check-input" type="checkbox" checked
+                                                                    value="" id="flexCheckDefault"
+                                                                    (change)="assignAccess(itemss, i, $event)"
+                                                                    *ngIf="itemss.roleActiveFlag == 'Y'">
+
+                                                                <input class="form-check-input" type="checkbox" value=""
+                                                                    id="flexCheckDefault"
+                                                                    (change)="assignAccess(itemss, i, $event)"
+                                                                    *ngIf="itemss.roleActiveFlag == 'N'">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
                     <div class="row" *ngFor="let item of subFunctionList; index as i">
-                        <button class="collapsible" (click)="changeSubFunction($event.target.value, i)"
-                            value="{{item.subMenuName}}" style="padding:10px;">{{item.subMenuName}}</button>
+                        <button class="collapsible" (click)="changeSubFunction($event.target.value)"
+                            value="{{item.subMenuName}}"
+                            style="padding:10px; width: -webkit-fill-available;">{{item.subMenuName}}</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <div class="content">
+                        <div class="content" style="background: white; margin-top: -14px;">
 
-                            <div class="QA_table ">
+                            <div class="QA_table" [ngClass]="searchFullscreen ? 'QA_tableFull' : 'QA_tableHalf'">
                                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                     <table
                                         class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                         role="grid" aria-describedby="DataTables_Table_0_info"
-                                        style="table-layout: fixed; text-align:center; color: #a6d8d8; ">
+                                        style="table-layout: fixed; text-align:center; padding: 0px;">
                                         <thead id="header_fixed">
-                                            <tr style="padding: 0px;">
-                                                <th style="padding: 0px;">Role Function</th>
-                                                <th style="padding: 0px;">View</th>
-                                                <th style="padding: 0px;">Create</th>
-                                                <th style="padding: 0px;">Update</th>
-                                                <th style="padding: 0px;">Delete</th>
+                                            <tr>
+                                                <th style="padding: 11px; width: 40%;">Role Function</th>
+                                                <th style="padding: 11px;"></th>
+                                                <th style="padding: 11px;">Role Access</th>
+                                                <th style="padding: 11px;"></th>
+                                                <th style="padding: 11px;"></th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
 
-                                            <tr *ngFor="let items of roleList ; index as i" style="padding: 0px;">
-                                                <td style="padding: 0px;">{{items.roleName}}</td>
-                                                <table>
-                                                    <tbody>
-                                                        <tr *ngFor="let item of accessList ; index as i">
-                                                            <td style="padding: 0px;">{{item.subMenuId}}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!-- <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault"
-                                                      >
-                                                         (change)="viewCheck($event, items.accessDtoList)" -->
-                                                <!-- </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
+                                            <tr *ngFor="let items of roleList ; index as i">
+                                                <td>{{items.roleName}}</td>
+
+                                                <td *ngFor="let itemss of items.accessDtoList ; index as i">
+                                                    {{itemss.subMenuAccessType}}&nbsp;
+                                                    <input class="form-check-input" type="checkbox" checked value=""
+                                                        id="flexCheckDefault" (change)="assignAccess(itemss, i, $event)"
+                                                        *ngIf="itemss.roleActiveFlag == 'Y'" style="margin-top: 7px">
+
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault" (change)="assignAccess(itemss, i, $event)"
+                                                        *ngIf="itemss.roleActiveFlag == 'N'" style="margin-top: 7px">
                                                 </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <!-- </div> -->
-
-                            <!-- <div class="row" *ngFor="let item of roleList; index as i">
-                                <button class="collapsibles" (click)="changeRoleFunction($event.target.value)"
-                                    value="{{item.roleMasterId}}">{{item.roleName}}</button>
-
-                                <div class="content">
-                                    <div class="row" *ngFor="let item of accessList; index as i">
-                                        <button class="collapsibles"
-                                            value="{{item.subMenuId}}">{{item.subMenuAccessType}}</button>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
-                    <!-- <button class="collapsible" (click)="changeSubFunction($event.target.value)"
-                            value="{{item.subMenuName}}" *ngFor="let item of subFunctionList; index as i">{{item.subMenuName}}</button>
-
-                        <div class="content">
-
-                            <p>yyyyyyyyyyyyyyyyyy
-                            </p> 
-                            </div> -->
-                    <!-- <div class="QA_table ">
-                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                    <table
-                                        class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                        role="grid" aria-describedby="DataTables_Table_0_info"
-                                        style="table-layout: fixed; text-align:center ">
-                                        <thead id="header_fixed">
-                                            <tr>
-                                                <th style="padding:0px;">SubFunction</th>
-                                                <th style="padding: 0px;">Device Type</th>
-                                                <th style="padding: 0px;">View</th>
-                                                <th style="padding: 0px;">Create</th>
-                                                <th style="padding: 0px;">Update</th>
-                                                <th style="padding: 0px;">Delete</th>
-
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-
-                                            <tr *ngFor="let items of subFunctionFilterList ; index as i">
-                                                <td style="padding: 0px;">{{items.subFunctionShortName}}</td>
-                                                <td style="padding: 0px;">{{items.deviceType}}</td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td>
-                                                <td style="padding: 0px;"><input class="form-check-input"
-                                                        type="checkbox" value="" id="flexCheckDefault">
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div> -->
-                    <!-- </div> -->
-
-                    <!-- </div> -->
 
                 </form><br>
-
-
-                <!-- <button type="button" class="collapsible" *ngFor="let item of mainFunctionList; index as i"
-                    value="{{item.mainFunctionMasterId}}" (click)="changeMainFunction($event.target.value)">
-                    {{item.mainFunctionName}}</button>
-                <div class="content" *ngFor="let items of subFunctionList ; index as i">
-                    <p>{{items}}</p>
-                </div> -->
-
-                <!-- <mat-accordion>
-
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header *ngFor="let item of mainFunctionList; index as i" >
-                            <mat-panel-title>
-                                {{item.mainFunctionName}}
-                            </mat-panel-title>
-                            
-                        </mat-expansion-panel-header>
-                        <mat-panel-description  *ngFor="let item of mainFunctionList; index as i">
-                           {{item.mainFunctionName}}
-                        </mat-panel-description> -->
-
-                <!-- <table class="table table-striped" id="table_wrapper">
-                            <tbody>
-                                <tr>
-                                   <th style="padding: 0px;">SubFunction</th>
-                                    <th>Device Type</th>
-                                    <th>View</th>
-                                    <th>Create</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-
-                                </tr>
-                            </tbody>
-                            <tbody>
-
-                                <tr *ngFor="let items of subFunctionList ; index as i">
-                                    <td>{{items}}</td>
-                                    <td>{{items}}</td>
-                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    </td>
-                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    </td>
-                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    </td>
-                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    </td>
-
-                                </tr> -->
-
-                <!-- <tr *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
-                                        <td style="text-align:left;"> {{items.subFunctionShortName}}
-                                        </td>
-                                    </tr>  -->
-                <!-- </tbody>
-                        </table> -->
-
-
-
-                <!-- </mat-expansion-panel>
-
-                </mat-accordion> -->
-
-
-                <!-- <div class="white_box_tittle list_header">
-
-                    <div class="QA_table ">
-                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                            <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table"
-                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
-                                <tbody>
-                                    <tr *ngFor="let item of mainFunctionList; index as i">
-                                        <th style="text-align:left; background-color: #499; color:#fff"
-                                            (click)="setSubFunctionMenu(item.subFunctionMasterDTOList)">
-                                            {{item.mainFunctionName}}
-
-                                            <table class="table table-striped" id="table_wrapper">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>SubFunction</th>
-                                                        <th>Device Type</th>
-                                                        <th>View</th>
-                                                        <th>Create</th>
-                                                        <th>Update</th>
-                                                        <th>Delete</th>
-
-                                                    </tr>
-                                                </tbody>
-                                                <tbody>
-
-                                                    <tr *ngFor="let items of subFunctionList ; index as i">
-                                                        <td>{{items}}</td>
-                                                        <td>{{items}}</td>
-                                                        <td><input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault"></td>
-                                                        <td><input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault"></td>
-                                                        <td><input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault"></td>
-                                                        <td><input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault"></td>
-
-                                                    </tr>
-
-                                                    <tr
-                                                        *ngFor="let items of mainFunctionList[i].subFunctionMasterDTOList; index as i">
-                                                        <td style="text-align:left;"> {{items.subFunctionShortName}}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                        </th>
-
-                                    </tr>
-                                </tbody> -->
-
-
-
-                <!-- <tbody>
-                                    <tr *ngFor="let item of accessType; index as i">
-                                        <td>{{i+1}}</td>
-                                        <td>{{item.accessType}} </td>
-                                        <td>{{item.deviceType}}</td>
-                                        <td>{{item.roleActiveFlag}}</td>
-                                        <td>--</td>
-                                        <td *ngFor="let role_item of roleAccessData; index as role_index">
-                                                <label class="primary_checkbox d-flex mr-12 ">
-                                                    <input type="checkbox" [checked]="checkStatus(
-                                                            action_item.subFunctionMasterId, role_index)" (change)="assignAccess(
-                                                            action_item.subFunctionMasterId, role_index, $event)">
-                                                    <span class="checkmark"></span>
-                                                </label>
-
-                                            </td>
-                                    </tr>
-                                </tbody> -->
-
-                <!-- </table>
-
-                        </div>
+                <div class="row">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-start">
+                        <button class="btn btn-primary btn-sm" (click)="saveRoleMap()"
+                            [disabled]="!roleAccessForm.value.mainfunction">Save
+                            Role Map</button>
                     </div>
-                </div> -->
-            </div>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 
 
-
-
-
-<!-- 
+    <!-- 
     
     <label for="" class="col-form-label">Main Function: </label>
 </div>
