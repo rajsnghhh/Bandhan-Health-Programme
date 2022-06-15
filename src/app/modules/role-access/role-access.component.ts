@@ -17,6 +17,8 @@ export class RoleAccessComponent implements OnInit {
   mainFunctionList: Array<any> = [];
   subFunctionList: Array<any> = [];
   searchFullscreen: boolean;
+  loader: boolean = true;
+
 
   constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: FormBuilder,
     private toaster: ToastrService, private validationService: ValidationService) { }
@@ -28,11 +30,11 @@ export class RoleAccessComponent implements OnInit {
   ngOnInit(): void {
 
     // Api call for viewing rolefunctionmapview list
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    this.roleService.rolefunctionmapview(obj).subscribe((res) => {
-      this.roleFunctionMapView = res.responseObject;
-      console.log(this.roleFunctionMapView, 'roleFunctionMapView');
-    });
+    // let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
+    // this.roleService.rolefunctionmapview(obj).subscribe((res) => {
+    //   this.roleFunctionMapView = res.responseObject;
+    //   console.log(this.roleFunctionMapView, 'roleFunctionMapView');
+    // });
 
     this.createForm();
 
@@ -51,13 +53,22 @@ export class RoleAccessComponent implements OnInit {
 
   changeDevice(deviceId) {
     console.log(deviceId);
-    if (deviceId == 1) {
-      this.mainFunctionList = this.roleFunctionMapView?.webMenu;
-      console.log(this.mainFunctionList, ' this.mainFunctionList-web');
-    } else {
-      this.mainFunctionList = this.roleFunctionMapView?.mobMenus;
-      console.log(this.mainFunctionList, ' this.mainFunctionList-mobile');
-    }
+
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
+    this.loader = false;
+    this.roleService.rolefunctionmapview(obj).subscribe((res) => {
+      this.roleFunctionMapView = res.responseObject;
+      console.log(this.roleFunctionMapView, 'roleFunctionMapView');
+
+      if (deviceId == 1) {
+        this.mainFunctionList = this.roleFunctionMapView?.webMenu;
+        console.log(this.mainFunctionList, ' this.mainFunctionList-web');
+      } else {
+        this.mainFunctionList = this.roleFunctionMapView?.mobMenus;
+        console.log(this.mainFunctionList, ' this.mainFunctionList-mobile');
+      }
+      this.loader = true;
+    });
 
     this.roleAccessForm.controls.mainfunction.setValue('');
     this.subFunctionList = [];
