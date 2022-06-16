@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -22,7 +23,8 @@
                         'is-valid': f.project.valid && (f.project.dirty || f.project.touched)
                       }"
                     >
-                      <option value="">-- All --</option>
+                      <option value="">-- Select Project --</option>
+                      <option value="all">-- All --</option>
                       <option *ngFor="let project of projectList" [value]="project.projectMasterId">
                         {{project.projectName}}
                       </option>
@@ -192,24 +194,24 @@
       
                       <tbody>
       
-                          <tr>
-                              <td>1</td>
-                              <td>proj<br>ect 1</td>
-                              <td>10</td>
-                              <td>12</td>
-                              <td>20</td>
-                              <td>22</td>
-                              <td>30</td>
-                              <td>32,</td>
-                              <td>60</td>
-                              <td>5</td>
-                              <td>6</td>
-                              <td>7</td>
-                              <td>8</td>
-                              <td>9</td>
-                              <td>10</td>
-                              <td>12</td>
-                              <td>20</td>
+                          <tr *ngFor="let item of projectWiseBeneficiaryList;index as i">
+                              <td style="font-size: 13px;">{{i+1}}</td>
+                              <td style="font-size: 13px;">{{item.projectCode ? item.projectCode : ''}}</td>
+                              <td style="font-size: 13px;">{{item.pemCurrent ? item.pemCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pemCumulative ? item.pemCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.lmCurrent ? item.lmCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.lmCumulative ? item.lmCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pwCurrent ? item.pwCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pwCumulative ? item.pwCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.totalFamilyCount ? item.totalFamilyCount : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below5Current ? item.below5Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below5Cumulative ? item.below5Cumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below2Current ? item.below2Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below2Cumulative ? item.below2Cumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.childPemCurrent ? item.childPemCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.childPemCumulative ? item.childPemCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.girl14To18Current ? item.girl14To18Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.girl14To18Cumulative ? item.girl14To18Cumulative : '0'}}</td>
                           </tr>
                           
                       </tbody>

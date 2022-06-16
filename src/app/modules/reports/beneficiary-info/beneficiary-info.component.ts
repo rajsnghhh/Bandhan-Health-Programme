@@ -20,6 +20,11 @@ export class BeneficiaryInfoComponent implements OnInit {
   selectFilter: boolean = false;
   stateWiseFilter: boolean = false;
   regionWiseFilter: boolean = false;
+  projectWiseBeneficiaryList: Array<any> = [];
+  Dto = {
+    dataAccessDTO: this.httpService.dataAccessDTO,
+  };
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService,) { }
@@ -28,10 +33,8 @@ export class BeneficiaryInfoComponent implements OnInit {
     this.createForm();
     console.log(this.locationForm.value.project == '')
 
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-    }
-    this.http.post(`${this.httpService.baseURL}report/getAllProject`, Dto).subscribe((res: any) => {
+
+    this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res: any) => {
       this.projectList = res.responseObject.projectList;
     });
   }
@@ -64,6 +67,16 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.locationForm.controls.gp.setValue('');
       this.locationForm.controls.region.setValue('');
       this.locationForm.controls.stateOrRegion.setValue('');
+    }
+
+    if (projectId = 'all') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
     }
 
   }
