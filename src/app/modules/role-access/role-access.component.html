@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -40,71 +41,8 @@
                                 <div *ngIf="f.mainfunction.errors.required">Main Function selection is required</div>
                             </div>
                         </div>
-
-                        <!-- <div class="form-group col-md">
-                            <label for="subfunction">Sub Function :&nbsp;<span
-                                    class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeSubFunction($event.target.value)"
-                                formControlName="subfunction" id="subfunction"
-                                [ngClass]="{ 'is-invalid': f.subfunction.invalid &&
-                                 f.subfunction.touched, 'is-valid': f.subfunction.valid && (f.subfunction.dirty || f.subfunction.touched)}">
-                                <option value="">-- Select Sub Function --</option>
-                                <option *ngFor="let subfunction of subFunctionList" value="{{subfunction.subMenuName}}">
-                                    {{subfunction.subMenuName}} </option>
-                            </select>
-                            <div *ngIf="f.subfunction.errors" class="invalid-feedback">
-                                <div *ngIf="f.subfunction.errors.required">Sub Function selection is required</div>
-                            </div>
-                        </div> -->
-
                     </div>
 
-
-                    <!-- <div class="" style="background: white">
-
-                        <div class="QA_table" style="width: 990px; margin-left: 10px;">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info"
-                                    style="table-layout: fixed; text-align:center; color: #a6d8d8; padding: 0px;">
-                                    <thead id="header_fixed">
-                                        <tr style="padding: 0px;">
-                                            <th style="padding: 0px;">Role Function</th>
-                                            <th style="padding: 0px;">Role Access</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                        <tr *ngFor="let items of roleList ; index as i" style="padding: 0px;">
-                                            <td style="padding: 0px;">{{items.roleName}}</td>
-                                            <td>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td *ngFor="let itemss of items.accessDtoList ; index as i">
-                                                                {{itemss.subMenuAccessType}}
-                                                                <input class="form-check-input" type="checkbox" checked
-                                                                    value="" id="flexCheckDefault"
-                                                                    (change)="assignAccess(itemss, i, $event)"
-                                                                    *ngIf="itemss.roleActiveFlag == 'Y'">
-
-                                                                <input class="form-check-input" type="checkbox" value=""
-                                                                    id="flexCheckDefault"
-                                                                    (change)="assignAccess(itemss, i, $event)"
-                                                                    *ngIf="itemss.roleActiveFlag == 'N'">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="row" *ngFor="let item of subFunctionList; index as i">
                         <button class="collapsible" (click)="changeSubFunction($event.target.value)"
                             value="{{item.subMenuName}}"
@@ -145,6 +83,7 @@
                                                         *ngIf="itemss.roleActiveFlag == 'N'" style="margin-top: 7px">
                                                 </td>
                                             </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -153,6 +92,7 @@
                     </div>
 
                 </form><br>
+
                 <div class="row">
                     <div class="form-group col-md" style="display: flex; justify-content:flex-start">
                         <button class="btn btn-primary btn-sm" (click)="saveRoleMap()"
@@ -164,65 +104,3 @@
             </div>
         </div>
     </div>
-
-
-    <!-- 
-    
-    <label for="" class="col-form-label">Main Function: </label>
-</div>
-<div class="col-md-4">
-    <select name="" id="" class="form-select" (change)="getSubFunctions()">
-        <option value="">-- Main Function --</option>
-        <option [ngValue]="item.mainFunctionMasterId" *ngFor="let item of roleAccessData[0].mainFunctionDTOList">
-            {{item.mainFunctionName}}</option>
-    </select>
-</div>
-
-<div class="col">
-    <label for="" class="col-form-label">Sub Function: </label>
-</div>
-<div class="col-md-4">
-    <select name="" id="" class="form-select" (change)="createTableRows()">
-        <option value="">-- Sub Function --</option>
-        <option [ngValue]="item" *ngFor="let item of subFunctionsDropDown">{{item}}</option>
-    </select>
-</div>
-</div>
-
-<div class="white_box_tittle list_header">
-<div class="QA_table ">
-    <div class="dataTables_wrapper">
-        <table class="table no-footer dtr-inline collapsed" role="grid">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th *ngFor="let item of roleAccessData">{{item.roleMasterDTO.roleDescription}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let action_item of actionTypes; index as i">
-                    <td>{{action_item.accessType.charAt(0).toUpperCase() +
-                        action_item.accessType.substring(1)}}
-                    </td>
-                    <td *ngFor="let role_item of roleAccessData; index as role_index">
-                        <label class="primary_checkbox d-flex mr-12 ">
-                            <input type="checkbox" [checked]="checkStatus(
-                                    action_item.subFunctionMasterId, role_index)" (change)="assignAccess(
-                                    action_item.subFunctionMasterId, role_index, $event)">
-                            <span class="checkmark"></span>
-                        </label>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
-
-<div class="row" *ngIf="selectedSubFunction">
-<div class="col-md-4">
-    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
-</div>
-</div> 
-</div>-->

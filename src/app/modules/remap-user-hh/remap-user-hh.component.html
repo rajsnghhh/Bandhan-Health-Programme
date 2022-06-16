@@ -1,0 +1,108 @@
+<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Remap-User-HH</h2>
+
+                </div>
+
+                <form class="form-signin" [formGroup]="remapUserHhForm">
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched, 
+                                'is-valid': f.region.valid && (f.region.dirty || f.region.touched)}">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{'is-invalid': f.branch.invalid && f.branch.touched,
+                              'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched)}">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="hco">HCO/ HCOI/ TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeHco($event.target.value)" formControlName="hco"
+                                id="hco" [ngClass]="{
+                              'is-invalid': f.hco.invalid && f.hco.touched,
+                              'is-valid':
+                                f.hco.valid && (f.hco.dirty || f.hco.touched)
+                            }">
+                                <option value="">-- Select Role --</option>
+                                <option *ngFor="let hco of hcoList" value='{{hco.user_id}}'>
+                                    {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
+                                    {{hco.role_shortname}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.hco.errors" class="invalid-feedback">
+                                <div *ngIf="f.hco.errors.required">Role selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                                <thead id="header-fixed">
+                                    <tr>
+                                        <th style="width: 10%;">SL No</th>
+                                        <th style="width: 10%;">Household No</th>
+                                        <th>Branch</th>
+                                        <th>Village of Household</th>
+                                        <th>SS Name</th>
+                                        <th>Remap</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of hcoHHList; index as i">
+                                        <td style="width: 9%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td style="width: 10%;">{{ item.houseHoldNumber}}</td>
+                                        <td style="width: 23%;">{{item.branchName}}</td>
+                                        <td style="width: 17%;">{{item.villageName}}</td>
+                                        <td style="width: 23%;">{{item.swasthyaSahayikaName ? item.swasthyaSahayikaName
+                                            : '-'}}</td>
+                                        <td><input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault">
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

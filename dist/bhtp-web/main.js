@@ -458,7 +458,10 @@ class SidebarComponent {
             this.router.navigate(['/district-setup']);
         }
         if (routeId == 161 || routeId == 162 || routeId == 163 || routeId == 164) {
-            this.router.navigate(['/report']);
+            this.router.navigate(['/report/geographicalReport']);
+        }
+        if (routeId == 195 || routeId == 196 || routeId == 197 || routeId == 198) {
+            this.router.navigate(['/report/beneficiaryInfo']);
         }
     }
     ngAfterViewInit() {
@@ -887,7 +890,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { RoleAcessResolver } from './modules/role-access/role-access-resolver.service';
 
 
 
@@ -900,7 +902,7 @@ class AppModule {
 }
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]] });
 AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({ factory: function AppModule_Factory(t) { return new (t || AppModule)(); }, providers: [
-        { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] },
+        { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] }
     ], imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
@@ -951,7 +953,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _angular_material_icon__WEBPACK_IMPORTED_MODULE_18__["MatIconModule"],
                 ],
                 providers: [
-                    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] },
+                    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_8__["LocationStrategy"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_8__["HashLocationStrategy"] }
                 ],
                 bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
             }]
