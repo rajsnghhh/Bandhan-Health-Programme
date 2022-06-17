@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -9,7 +10,7 @@
 
         <form [formGroup]="locationForm">
             <div class="row">
-                <div class="form-group col-md">
+                <div class="form-group col-md-6">
                     <label for="project"
                       >Project :</label
                     >
@@ -22,14 +23,15 @@
                         'is-valid': f.project.valid && (f.project.dirty || f.project.touched)
                       }"
                     >
-                      <option value="">-- All --</option>
+                      <option value="">-- Select Project --</option>
+                      <option value="all">-- All --</option>
                       <option *ngFor="let project of projectList" [value]="project.projectMasterId">
                         {{project.projectName}}
                       </option>
                     </select>
                   </div>
 
-                  <div class="form-group col-md">
+                  <div class="form-group col-md" *ngIf="selectFilter">
                     <label>Select :</label> <br>
                     <label>
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -43,7 +45,7 @@
                 </div>
             </div>
 <br>
-           <div class="row">
+           <div class="row" *ngIf="stateWiseFilter">
               <div class="form-group col-md">
                 <label for="state"
                   >State :</label
@@ -62,11 +64,6 @@
                     {{state.stateName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.state.errors" class="invalid-feedback">
-                  <div *ngIf="f.state.errors.required">
-                    State selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -87,11 +84,6 @@
                     {{district.districtName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.district.errors" class="invalid-feedback">
-                  <div *ngIf="f.district.errors.required">
-                    District selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -112,11 +104,6 @@
                     {{block.blockName}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.block.errors" class="invalid-feedback">
-                  <div *ngIf="f.block.errors.required">
-                    Block selection is required
-                  </div>
-                </div> -->
               </div>
 
               <div class="form-group col-md">
@@ -133,20 +120,14 @@
                   }"
                 >
                   <option value="">-- All --</option>
-                  <option *ngFor="let gp of blockList" [value]="gp.gpMunicipalId">
+                  <option *ngFor="let gp of gpList" [value]="gp.gpMunicipalId">
                     {{gp.name}}
                   </option>
                 </select>
-                <!-- <div *ngIf="f.gp.errors" class="invalid-feedback">
-                  <div *ngIf="f.gp.errors.required">
-                    Block selection is required
-                  </div>
-                </div> -->
               </div>
-
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="regionWiseFilter">
                 <div class="form-group col-md-4">
                     <label for="region">Region :</label>
                     <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region" id="region"
@@ -213,17 +194,25 @@
       
                       <tbody>
       
-                          <!-- <tr>
-                              <td>ghl</td>
-                              <td>542</td>
-                              <td>dbxc</td>
-                              <td>424</td>
-                              <td>xcb</td>
-                              <td>fbncf</td>
-                              <td>dfhtf</td>
-                              <td>uolg,</td>
-                              <td>sfafa</td>
-                          </tr> -->
+                          <tr *ngFor="let item of projectWiseBeneficiaryList;index as i">
+                              <td style="font-size: 13px;">{{i+1}}</td>
+                              <td style="font-size: 13px;">{{item.projectCode ? item.projectCode : ''}}</td>
+                              <td style="font-size: 13px;">{{item.pemCurrent ? item.pemCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pemCumulative ? item.pemCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.lmCurrent ? item.lmCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.lmCumulative ? item.lmCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pwCurrent ? item.pwCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.pwCumulative ? item.pwCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.totalFamilyCount ? item.totalFamilyCount : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below5Current ? item.below5Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below5Cumulative ? item.below5Cumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below2Current ? item.below2Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.below2Cumulative ? item.below2Cumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.childPemCurrent ? item.childPemCurrent : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.childPemCumulative ? item.childPemCumulative : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.girl14To18Current ? item.girl14To18Current : '0'}}</td>
+                              <td style="font-size: 13px;">{{item.girl14To18Cumulative ? item.girl14To18Cumulative : '0'}}</td>
+                          </tr>
                           
                       </tbody>
                   </table>

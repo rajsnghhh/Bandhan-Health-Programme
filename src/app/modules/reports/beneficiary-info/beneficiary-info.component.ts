@@ -17,17 +17,24 @@ export class BeneficiaryInfoComponent implements OnInit {
   blockList: Array<any> = [];
   gpList: Array<any> = [];
   regionList: Array<any> = [];
+  selectFilter: boolean = false;
+  stateWiseFilter: boolean = false;
+  regionWiseFilter: boolean = false;
+  projectWiseBeneficiaryList: Array<any> = [];
+  Dto = {
+    dataAccessDTO: this.httpService.dataAccessDTO,
+  };
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService,) { }
 
   ngOnInit(): void {
     this.createForm();
+    console.log(this.locationForm.value.project == '')
 
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-    }
-    this.http.post(`${this.httpService.baseURL}report/getAllProject`, Dto).subscribe((res: any) => {
+
+    this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res: any) => {
       this.projectList = res.responseObject.projectList;
     });
   }
@@ -48,22 +55,116 @@ export class BeneficiaryInfoComponent implements OnInit {
   }
 
   changeProject(projectId) {
+    if (projectId != '') {
+      this.selectFilter = true;
+    } else {
+      this.selectFilter = false;
+      this.stateWiseFilter = false;
+      this.regionWiseFilter = false;
+      this.locationForm.controls.state.setValue('');
+      this.locationForm.controls.district.setValue('');
+      this.locationForm.controls.block.setValue('');
+      this.locationForm.controls.gp.setValue('');
+      this.locationForm.controls.region.setValue('');
+      this.locationForm.controls.stateOrRegion.setValue('');
+    }
+
+    if (projectId = 'all') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
 
   }
 
   checkStateOrRegion(value) {
-
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+    }
+    if (value == 'stateWise') {
+      this.stateWiseFilter = true;
+      this.regionWiseFilter = false;
+      this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+        this.stateList = res.responseObject.stateList;
+      });
+      this.regionList = [];
+      this.locationForm.controls.region.setValue('');
+      this.locationForm.controls['district'].disable();
+      this.locationForm.controls['block'].disable();
+      this.locationForm.controls['gp'].disable();
+    } else {
+      this.stateWiseFilter = false;
+      this.regionWiseFilter = true;
+      this.http.post(`${this.httpService.baseURL}branch/getListOfRegionsOfUser`, Dto).subscribe((res: any) => {
+        this.regionList = res.responseObject;
+      });
+      this.stateList = [];
+      this.locationForm.controls.state.setValue('');
+      this.locationForm.controls.district.setValue('');
+      this.locationForm.controls.block.setValue('');
+      this.locationForm.controls.gp.setValue('');
+    }
   }
 
-  changeState(stateId) {
-
+  changeState(value) {
+    let Dto = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      stateId: value
+    }
+    this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
+      this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
+    });
+    this.locationForm.controls.district.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    if (!this.locationForm.value.state) {
+      this.locationForm.controls['district'].disable();
+      this.locationForm.controls['block'].disable();
+      this.locationForm.controls['gp'].disable();
+      this.stateWiseDistrictList = [];
+      this.blockList = [];
+      this.gpList = [];
+    } else {
+      this.locationForm.controls['district'].enable();
+      this.locationForm.controls['block'].disable();
+      this.locationForm.controls['gp'].disable();
+    }
   }
 
-  changeDistrict(districtId) {
-
+  changeDistrict(value) {
+    this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    if (!this.locationForm.value.district) {
+      this.locationForm.controls['district'].enable();
+      this.locationForm.controls['block'].disable();
+      this.locationForm.controls['gp'].disable();
+      this.blockList = [];
+      this.gpList = [];
+    } else {
+      this.locationForm.controls['district'].enable();
+      this.locationForm.controls['block'].enable();
+      this.locationForm.controls['gp'].disable();
+    }
   }
 
   changeBlock(blockId) {
+    this.gpList = this.blockList.find(gp => gp.blockMasterId == blockId)?.gpDtoList;
+    this.locationForm.controls.gp.setValue('');
+    if (!this.locationForm.value.block) {
+      this.locationForm.controls['district'].enable();
+      this.locationForm.controls['block'].enable();
+      this.locationForm.controls['gp'].disable();
+      this.gpList = [];
+    } else {
+      this.locationForm.controls['district'].enable();
+      this.locationForm.controls['block'].enable();
+      this.locationForm.controls['gp'].enable();
+    }
   }
 
   changeGp(gpId) {
