@@ -29,15 +29,7 @@ export class RoleAccessComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Api call for viewing rolefunctionmapview list
-    // let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    // this.roleService.rolefunctionmapview(obj).subscribe((res) => {
-    //   this.roleFunctionMapView = res.responseObject;
-    //   console.log(this.roleFunctionMapView, 'roleFunctionMapView');
-    // });
-
     this.createForm();
-
   }
 
   createForm() {

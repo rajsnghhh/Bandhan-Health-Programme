@@ -27,5 +27,13 @@ export class RemapUserHhService {
     return this.http.post(`${this.baseURL}remap/viewUsersMappedHhAndSsDetails`, obj)
   }
 
-  
+  getActiveSsListOfAnUser(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getActiveSsListOfAnUser`, obj)
+  }
+
+  remapUserHH(obj): any {
+    return this.http.post(`${this.baseURL}remap/unmapAndRemapUserFromOneOrMoreHouseholds`, obj)
+  }
+
+
 }

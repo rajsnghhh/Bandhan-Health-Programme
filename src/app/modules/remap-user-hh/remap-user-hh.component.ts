@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { RemapUserHhService } from './remap-user-hh.service';
@@ -11,15 +12,27 @@ import { RemapUserHhService } from './remap-user-hh.service';
 })
 export class RemapUserHhComponent implements OnInit {
   remapUserHhForm: FormGroup;
+  modalForm: FormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   hcoList: Array<any> = [];
+  hcoModalList: Array<any> = [];
   hcoHHList: Array<any> = [];
   loader: boolean = true;
-
+  modalContent: any;
+  modalReference: any;
+  branchId: any;
+  hcoUserId: any;
+  ssLists: Array<any> = [];
+  checkboxData: any;
+  remapDto = {
+    dataAccessDTO: {},
+    selectedUserId: '',
+    userHhUnmapRemapDtoList: [],
+  };
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserHHService: RemapUserHhService,
-    private toaster: ToastrService) { }
+    private toaster: ToastrService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -36,7 +49,6 @@ export class RemapUserHhComponent implements OnInit {
       region: ['', Validators.required],
       branch: ['', Validators.required],
       hco: ['', Validators.required]
-
     })
   }
 
@@ -59,60 +71,47 @@ export class RemapUserHhComponent implements OnInit {
       this.branchList = null;
     }
     );
-    // this.branchVillageForm.controls.branch.setValue('');
-    // this.mappedVillageList = [];
-    // this.checkUnmapDataPushPop.villageIdList = [];
-    // if (this.branchVillageForm.value.region == '') {
-    //   this.branchVillageForm.controls.branch.setValue('');
-    //   this.mappedVillageList = [];
-    //   this.checkUnmapDataPushPop.villageIdList = [];
-    // }
+    this.remapUserHhForm.controls.branch.setValue('');
+    this.remapUserHhForm.controls.hco.setValue('');
+    this.hcoHHList = [];
+    this.hcoList = [];
+    this.remapDto.userHhUnmapRemapDtoList = [];
+    if (this.remapUserHhForm.value.region == '') {
+      this.remapUserHhForm.controls.branch.setValue('');
+      this.remapUserHhForm.controls.hco.setValue('');
+      this.hcoHHList = [];
+      this.hcoList = [];
+      this.remapDto.userHhUnmapRemapDtoList = [];
+    }
   }
 
-
   changeBranch(branchId) {
+    this.branchId = branchId;
+    console.log(this.branchId, 'branchId');
 
-    console.log(branchId);
-
-    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId }
+    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
 
     this.remapUserHHService.hcoListOfBranch(Dto).subscribe((res: any) => {
       this.hcoList = res.responseObject;
       console.log(this.hcoList, 'hcoList');
     });
 
-
-    // if (branch) {
-    //   this.locationForm.controls.fromDate.setValue('');
-    //   this.locationForm.controls.toDate.setValue('');
-    //   this.darList = [];
-    //   this.darViewFamilyList = [];
-    // }
-
-    // if (this.locationForm.value.branch == '') {
-    //   this.locationForm.controls.hco.setValue('');
-    //   this.locationForm.controls.fromDate.setValue('');
-    //   this.locationForm.controls.toDate.setValue('');
-    //   this.darList = [];
-    //   this.darViewFamilyList = [];
-    //   this.hcoList = [];
-    //   this.locationForm.controls.fromDate.setValue('');
-    //   this.locationForm.controls.toDate.setValue('');
-    //   this.showError('No Data Found');
-    // }
-
-    // if (this.locationForm.value.hco == '') {
-    //   this.locationForm.controls.fromDate.setValue('');
-    //   this.locationForm.controls.toDate.setValue('');
-    //   this.darList = [];
-    //   this.darViewFamilyList = [];
-    // }
-
+    this.remapUserHhForm.controls.hco.setValue('');
+    this.hcoHHList = [];
+    this.hcoList = [];
+    this.remapDto.userHhUnmapRemapDtoList = [];
+    if (this.remapUserHhForm.value.branch == '') {
+      this.remapUserHhForm.controls.hco.setValue('');
+      this.hcoList = [];
+      this.hcoHHList = [];
+      this.remapDto.userHhUnmapRemapDtoList = [];
+    }
   }
 
   changeHco(hcoUserId) {
-    console.log(hcoUserId);
-    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: hcoUserId }
+    this.hcoUserId = hcoUserId;
+    console.log(this.hcoUserId);
+    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
     this.loader = false;
 
     this.remapUserHHService.viewUsersMappedHHDetails(Dto).subscribe((res: any) => {
@@ -125,18 +124,135 @@ export class RemapUserHhComponent implements OnInit {
     }, error => {
       this.showError('Error');
       this.loader = true;
+    });
+
+    this.hcoHHList = [];
+    this.remapDto.userHhUnmapRemapDtoList = [];
+    if (this.remapUserHhForm.value.hco == '') {
+      this.hcoHHList = [];
+      this.remapDto.userHhUnmapRemapDtoList = [];
+    }
+
+  }
+
+  clickCheckbox(e, hhId) {
+    this.checkboxData = e.target.checked;
+    console.log(this.checkboxData, 'this.checkboxData ', hhId);
+
+    if (this.checkboxData) {
+      this.remapDto.dataAccessDTO = this.httpService.dataAccessDTO,
+        this.remapDto.selectedUserId = this.hcoUserId,
+
+        this.remapDto.userHhUnmapRemapDtoList.push({ householdDetailId: hhId, remapUserId: null, remapSwasthyaSahayikaId: null });
+      console.log(this.checkboxData);
+
+    }
+    else {
+      var i = this.remapDto.userHhUnmapRemapDtoList.findIndex(list => list.householdDetailId == hhId);
+      this.remapDto.userHhUnmapRemapDtoList.splice(i, 1);
+    }
+
+    console.log(this.remapDto, 'remapDto.userHhUnmapRemapDtoList');
+
+  }
+
+  remapUserHHModal(remapuser) {
+    console.log(this.branchId, 'modalbranchId');
+
+    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+
+    this.remapUserHHService.hcoListOfBranch(Dto).subscribe((res: any) => {
+      this.hcoModalList = res.responseObject;
+      console.log(this.hcoModalList, 'hcoModalList');
+    });
+
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(remapuser, {
+      windowClass: 'remapuser',
+    });
+
+    this.remapModalForm();
+
+  }
+
+  changeHcouser(hcouserId) {
+
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, userId: hcouserId };
+
+    this.remapUserHHService.getActiveSsListOfAnUser(obj).subscribe((res) => {
+      this.ssLists = res.responseObject;
+      console.log(this.ssLists, 'ssLists');
+
     })
 
   }
 
+  saveRemapUserHHFromModal() {
+
+    var remapUser = this.remapDto.userHhUnmapRemapDtoList;
+
+    remapUser.filter(xyz => { xyz.remapUserId = this.modalForm.value.hcouser ? this.modalForm.value.hcouser : null })
+
+    console.log(remapUser);
+
+    this.remapDto.dataAccessDTO = this.httpService.dataAccessDTO,
+      this.remapDto.userHhUnmapRemapDtoList = remapUser;
+
+    console.log(this.remapDto);
+
+    var ssId = this.remapDto.userHhUnmapRemapDtoList;
+
+    ssId.filter(xyz => { xyz.remapSwasthyaSahayikaId = this.modalForm.value.ss ? this.modalForm.value.ss : null })
+
+    console.log(ssId);
+
+    this.remapDto.dataAccessDTO = this.httpService.dataAccessDTO,
+      this.remapDto.userHhUnmapRemapDtoList = ssId;
+
+    console.log(this.remapDto, 'finalremapdto');
+
+    if (this.remapUserHhForm.value.hco == this.modalForm.value.hcouser) {
+      this.showError('Selected User & remapping user should not be same');
+      return;
+    }
+
+    this.remapUserHHService.remapUserHH(this.remapDto).subscribe((res) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.modalDismiss();
+        this.changeHco(this.hcoUserId);
+      }
+      else {
+        this.showError(res.message);
+      }
+    })
+
+  }
+
+  remapModalForm() {
+    this.modalForm = this.fb.group({
+      hcouser: ['', Validators.required],
+      ss: ['']
+    })
+  }
+
+  get s() {
+    return this.modalForm.controls;
+  }
+
+  modalDismiss() {
+    this.modalReference.close();
+  }
+
   showSuccess(message) {
-    this.toaster.success(message, 'Success', {
+    this.toaster.success(message, 'Remap-User-HH', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Error', {
+    this.toaster.error(message, 'Remap-User-HH', {
       timeOut: 3000,
     });
   }
