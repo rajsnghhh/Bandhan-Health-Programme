@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { GeographicalStateWiseComponent } from '../geographical-state-wise/geographical-state-wise.component';
 
 @Component({
   selector: 'app-geographical-report-home',
@@ -11,10 +13,9 @@ import { HttpService } from '../../core/http/http.service';
 export class GeographicalReportHomeComponent implements OnInit {
   geographicalOutreachList: Array<any> = [];
   stateWiseList: Array<any> = [];
-  showHideTable: boolean = false;
   loader: boolean = true;
 
-  constructor(private httpService: HttpService,
+  constructor(private httpService: HttpService, public dialog: MatDialog,
     private http: HttpClient, private toaster: ToastrService,) { }
 
   ngOnInit(): void {
@@ -33,20 +34,15 @@ export class GeographicalReportHomeComponent implements OnInit {
   }
 
   collaps(value) {
-    let Dto1 = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      projectMasterId: value
-    }
-    this.loader = false;
-    this.http.post(`${this.httpService.baseURL}report/getStateWiseDetails`, Dto1).subscribe((res: any) => {
-      this.stateWiseList = res.responseObject?.stateWiseList;
-      this.loader = true;
-    }, error => {
-      this.showError('Error');
-      this.loader = true;
+    const dialogRef = this.dialog.open(GeographicalStateWiseComponent, {
+      width: '700px',
+      height: '400px',
+      data: { projectMasterId: value }
     });
 
-    this.showHideTable = !this.showHideTable
+    dialogRef.afterClosed().subscribe(result => {
+    });
+
   }
 
   showError(message) {

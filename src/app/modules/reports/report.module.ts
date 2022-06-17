@@ -6,14 +6,17 @@ import { LoaderModule } from '../shared/loader/loader.module';
 import { GeographicalReportHomeComponent } from './geographical-report-home/geographical-report-home.component';
 import { BeneficiaryInfoComponent } from './beneficiary-info/beneficiary-info.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { GeographicalStateWiseComponent } from './geographical-state-wise/geographical-state-wise.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
-  declarations: [GeographicalReportHomeComponent, BeneficiaryInfoComponent],
+  declarations: [GeographicalReportHomeComponent, BeneficiaryInfoComponent, GeographicalStateWiseComponent],
   imports: [
     CommonModule,
     ReportRoutingModule, LoaderModule, ReactiveFormsModule,
-    FormsModule,
+    FormsModule, MatNativeDateModule, MatDialogModule,
   ]
 })
 export class ReportModule { }
