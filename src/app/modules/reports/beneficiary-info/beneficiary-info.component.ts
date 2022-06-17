@@ -73,9 +73,9 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
-        // this.loader = true;
+        this.loader = true;
       }, error => {
-        // this.loader = true;
+        this.loader = true;
       });
     }
 
