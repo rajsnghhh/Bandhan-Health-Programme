@@ -56,3 +56,15 @@ table thead, tbody tr {
 ::-webkit-scrollbar-thumb {
     background: rgb(158, 1, 1);
 }
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+    height: 230px;
+}
+
+.close {
+    margin-left: 440px;
+}
+

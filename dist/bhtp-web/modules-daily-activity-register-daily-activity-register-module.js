@@ -144,7 +144,7 @@ function DailyActivityRegisterComponent_div_7_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "label", 28);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](23, "HCO/ HCOI /TL :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](23, "HCO/ HCOI/ TL :\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "span", 9);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();

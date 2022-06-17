@@ -5,7 +5,7 @@
             <div class="white_box QA_section mb_30">
 
                 <div id="header-fixed" style="display: flex;">
-                    <h2 class="page-title">Remap-User-HH</h2>
+                    <h2 class="page-title">Remap User HH</h2>
 
                 </div>
 
@@ -91,7 +91,8 @@
                                         <td style="width: 23%;">{{item.swasthyaSahayikaName ? item.swasthyaSahayikaName
                                             : '-'}}</td>
                                         <td><input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault">
+                                                id="flexCheckDefault"
+                                                (change)="clickCheckbox($event, item.houseHoldDetailId)">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -102,7 +103,70 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <button type="button" class=" btn btn-primary btn-sm"
+                            [disabled]="remapDto.userHhUnmapRemapDtoList.length == 0"
+                            (click)="remapUserHHModal(remapuser)">Remap</button>&nbsp;&nbsp;
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+
+
+<ng-template #remapuser>
+    <div class="modal-header">
+
+        <div class="col-md-2">
+            <span class="close" (click)="modalDismiss()" style="cursor: pointer;font-size: 35px;">&times;</span>
+        </div>
+
+    </div>
+
+    <div class="modal-body">
+        <form class="form-signin" [formGroup]="modalForm">
+
+            <div class="form-group col-md">
+                <label for="hcouser">HCO/ HCOI/ TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" (change)="changeHcouser($event.target.value)" formControlName="hcouser"
+                    id="hcouser" [ngClass]="{
+                  'is-invalid': s.hcouser.invalid && s.hcouser.touched, 'is-valid':
+                    s.hcouser.valid && (s.hcouser.dirty || s.hcouser.touched) }">
+                    <option value="">-- Select Role --</option>
+                    <option *ngFor="let hcouser of hcoModalList" value='{{hcouser.user_id}}'>
+                        {{ hcouser.user_firstname}} {{hcouser.user_middlename}} {{hcouser.user_lastname}} -
+                        {{hcouser.role_shortname}}
+                    </option>
+                </select>
+                <div *ngIf="s.hcouser.errors" class="invalid-feedback">
+                    <div *ngIf="s.hcouser.errors.required">User selection is required</div>
+                </div>
+            </div>
+
+            <div class="form-group col-md">
+                <label for="ss">Swasthya Sahayika :</label>
+                <select class="form-select" formControlName="ss" id="ss">
+                    <option value="">-- Select SS--</option>
+                    <option *ngFor="let ss of ssLists; index as i " value="{{ss.swasthyaSahayikaId}}">
+                        {{ ss.swasthyaSahayikaName }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="button" class=" btn btn-primary btn-sm" [disabled]="!modalForm.value.hcouser"
+                    (click)="saveRemapUserHHFromModal()">Remap
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</ng-template>
