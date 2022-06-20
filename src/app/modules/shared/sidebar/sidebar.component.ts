@@ -182,6 +182,28 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/report/beneficiaryInfo']);
     }
 
+    if (routeId == 194) {
+      this.router.navigate(['/ss-unmap']);
+    }
+
+    if (routeId == 203) {
+      this.router.navigate(['/ss-unmap-remap']);
+    }
+
+    if (routeId == 204) {
+      this.router.navigate(['/user-hh-ss-remap']);
+    }
+
+    if (routeId == 205) {
+      this.router.navigate(['/remap-user-hh']);
+    }
+
+    if (routeId == 206) {
+      this.router.navigate(['/remap-user-ss']);
+    }
+
+
+
   }
 
 
