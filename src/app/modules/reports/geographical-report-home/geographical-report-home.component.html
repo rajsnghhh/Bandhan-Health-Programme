@@ -45,8 +45,7 @@
                               <td>{{item.region}}</td>
                               <td>{{item.branch}}</td>
                               <td>
-                                <i *ngIf="!showHideTable" class="fa fa-angle-double-down fa-2x" (click)="collaps(item.projectMasterId)"></i>
-                                <i *ngIf="showHideTable" class="fa fa-angle-double-up fa-2x" (click)="collaps(item.projectMasterId)"></i>
+                                <i class="fa fa-file-text-o fa-lg" title="State Wise Report" (click)="collaps(item.projectMasterId)"> </i>
                              </td>
                           </tr>
                           <tr  *ngFor="let item of stateWiseList" style="background-color: #b6f1f1;">
