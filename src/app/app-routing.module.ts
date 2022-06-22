@@ -36,6 +36,7 @@ const routes: Routes = [
   { path: 'ss-unmap-remap', loadChildren: () => import('./modules/ss-unmap-remap/ss-unmap-remap.module').then(m => m.SsUnmapRemapModule), canActivate: [AuthGuard] },
   { path: 'report', loadChildren: () => import('./modules/reports/report.module').then(m => m.ReportModule), canActivate: [AuthGuard] },
   { path: 'remap-user-hh', loadChildren: () => import('./modules/remap-user-hh/remap-user-hh.module').then(m => m.RemapUserHhModule), canActivate: [AuthGuard] },
+  { path: 'remap-user-ss', loadChildren: () => import('./modules/remap-user-ss/remap-user-ss.module').then(m => m.RemapUserSsModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 
