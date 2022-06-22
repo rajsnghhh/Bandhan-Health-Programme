@@ -31,8 +31,6 @@ export class BeneficiaryInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    console.log(this.locationForm.value.project == '')
-
 
     this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res: any) => {
       this.projectList = res.responseObject.projectList;
@@ -59,17 +57,17 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.selectFilter = true;
     } else {
       this.selectFilter = false;
-      this.stateWiseFilter = false;
-      this.regionWiseFilter = false;
-      this.locationForm.controls.state.setValue('');
-      this.locationForm.controls.district.setValue('');
-      this.locationForm.controls.block.setValue('');
-      this.locationForm.controls.gp.setValue('');
-      this.locationForm.controls.region.setValue('');
-      this.locationForm.controls.stateOrRegion.setValue('');
     }
+    this.stateWiseFilter = false;
+    this.regionWiseFilter = false;
+    this.locationForm.controls.state.setValue('');
+    this.locationForm.controls.district.setValue('');
+    this.locationForm.controls.block.setValue('');
+    this.locationForm.controls.gp.setValue('');
+    this.locationForm.controls.region.setValue('');
+    this.locationForm.controls.stateOrRegion.setValue('');
 
-    if (projectId = 'all') {
+    if (projectId != '') {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
@@ -82,14 +80,23 @@ export class BeneficiaryInfoComponent implements OnInit {
   }
 
   checkStateOrRegion(value) {
-    let Dto = {
+    let Dto1 = {
       dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value
     }
+    console.log(Dto1)
     if (value == 'stateWise') {
       this.stateWiseFilter = true;
       this.regionWiseFilter = false;
-      this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
+      this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, this.Dto).subscribe((res: any) => {
         this.stateList = res.responseObject.stateList;
+      });
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoState`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
       });
       this.regionList = [];
       this.locationForm.controls.region.setValue('');
@@ -99,8 +106,15 @@ export class BeneficiaryInfoComponent implements OnInit {
     } else {
       this.stateWiseFilter = false;
       this.regionWiseFilter = true;
-      this.http.post(`${this.httpService.baseURL}branch/getListOfRegionsOfUser`, Dto).subscribe((res: any) => {
+      this.http.post(`${this.httpService.baseURL}branch/getListOfRegionsOfUser`, this.Dto).subscribe((res: any) => {
         this.regionList = res.responseObject;
+      });
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegion`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
       });
       this.stateList = [];
       this.locationForm.controls.state.setValue('');
@@ -110,14 +124,29 @@ export class BeneficiaryInfoComponent implements OnInit {
     }
   }
 
-  changeState(value) {
+  changeState(stateId) {
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      stateId: value
+      stateId: stateId
     }
     this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res: any) => {
       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
     });
+    let Dto1 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value,
+      stateMasterId: stateId
+    }
+    console.log(Dto1, 'state')
+    if (stateId != '') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoDistrict`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
     this.locationForm.controls.district.setValue('');
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
@@ -137,6 +166,22 @@ export class BeneficiaryInfoComponent implements OnInit {
 
   changeDistrict(value) {
     this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
+    let Dto1 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value,
+      stateMasterId: this.locationForm.get('state').value,
+      districtMasterId: value
+    }
+    console.log(Dto1, 'district')
+    if (value != '') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoBlock`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     if (!this.locationForm.value.district) {
@@ -154,6 +199,23 @@ export class BeneficiaryInfoComponent implements OnInit {
 
   changeBlock(blockId) {
     this.gpList = this.blockList.find(gp => gp.blockMasterId == blockId)?.gpDtoList;
+    let Dto1 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value,
+      stateMasterId: this.locationForm.get('state').value,
+      districtMasterId: this.locationForm.get('district').value,
+      blockMasterId: blockId
+    }
+    console.log(Dto1, 'block')
+    if (blockId != '') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoGp`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
     this.locationForm.controls.gp.setValue('');
     if (!this.locationForm.value.block) {
       this.locationForm.controls['district'].enable();
@@ -168,10 +230,41 @@ export class BeneficiaryInfoComponent implements OnInit {
   }
 
   changeGp(gpId) {
+    let Dto1 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value,
+      stateMasterId: this.locationForm.get('state').value,
+      districtMasterId: this.locationForm.get('district').value,
+      blockMasterId: this.locationForm.get('district').value,
+      gpMuncipalId: gpId
+    }
+    console.log(Dto1, 'gp')
+    if (gpId != '') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoVillage`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
   }
 
   changeRegion(regionId) {
-
+    let Dto1 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      projectMasterId: this.locationForm.get('project').value,
+      regionMasterId: regionId
+    }
+    if (regionId != '') {
+      this.loader = false;
+      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoBranch`, Dto1).subscribe((res: any) => {
+        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.loader = true;
+      }, error => {
+        this.loader = true;
+      });
+    }
   }
 
 }
