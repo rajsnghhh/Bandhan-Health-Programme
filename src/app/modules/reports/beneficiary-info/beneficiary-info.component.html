@@ -137,13 +137,10 @@
                           f.region.valid && (f.region.dirty || f.region.touched)
                       }">
                       <option value="">-- All --</option>
-                      <option *ngFor="let region of regionList">
+                      <option *ngFor="let region of regionList" [value]="region.regionMasterId">
                         {{region.regionName}}
                       </option>
                     </select>
-                    <!-- <div *ngIf="f.region.errors" class="invalid-feedback">
-                      <div *ngIf="f.region.errors.required">Region selection is required</div>
-                    </div> -->
                   </div>
             </div>
         </form>
@@ -170,7 +167,7 @@
                             <th colspan="2">PW</th>
                             <th rowspan="2">Total<br>Family</th>
                             <th colspan="2">Child<br>below 5 years</th>
-                            <th colspan="2">Child<br>below years</th>
+                            <th colspan="2">Child<br>below 2 years</th>
                             <th colspan="2">Child<br>PEM</th>
                             <th colspan="2">Total<br> girl <br>(14 yr to 18yr)</th>
                         </tr>
@@ -195,7 +192,7 @@
                       <tbody>
                           <tr *ngFor="let item of projectWiseBeneficiaryList;index as i">
                               <td style="font-size: 13px;">{{i+1}}</td>
-                              <td style="font-size: 13px;">{{item.projectCode ? item.projectCode : ''}}</td>
+                              <td style="font-size: 13px;">{{item.name ? item.name : ''}}</td>
                               <td style="font-size: 13px;">{{item.pemCurrent ? item.pemCurrent : '0'}}</td>
                               <td style="font-size: 13px;">{{item.pemCumulative ? item.pemCumulative : '0'}}</td>
                               <td style="font-size: 13px;">{{item.lmCurrent ? item.lmCurrent : '0'}}</td>
