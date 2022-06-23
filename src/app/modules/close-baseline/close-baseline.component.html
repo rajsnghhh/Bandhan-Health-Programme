@@ -1,0 +1,155 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Close Baseline</h2>
+                </div>
+
+                <form class="form-signin" [formGroup]="closeBaselineForm">
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched, 
+                                'is-valid': f.region.valid && (f.region.dirty || f.region.touched)}">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th style="width: 9%;">SL No</th>
+                                            <th style="width: 26%;">Branch Name</th>
+                                            <th style="width: 22%;">Tentative Survey End Date </th>
+                                            <th style="width: 26%;">Actual Baseline Survey End Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let item of branchList; index as i">
+                                            <td style="width: 9%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 26%;">{{item.branchName}}</td>
+                                            <td style="width: 22%;">{{item.branchBaseLineSurveyTentativeEndDate ?
+                                                item.branchBaseLineSurveyTentativeEndDate : '-'}}</td>
+                                            <td style="width: 28%;">{{item.branchBaseLineSurveyActualEndDate ?
+                                                item.branchBaseLineSurveyActualEndDate : 'Ongoing'}}</td>
+                                            <td>
+                                                <i class="fas fa-save" title="Save/ Update Tentative End Date"
+                                                    (click)="saveTentativeEndDate(item, tentativeEndDates)">
+                                                </i>
+
+                                                <i class="fa fa-circle fa-lg" title="End Survey" style="color: #24d524;"
+                                                    (click)="saveActualCloseDate(item, restartModalUI)"
+                                                    *ngIf="!item.branchBaseLineSurveyActualEndDate"></i>
+
+                                                <i class="fa fa-circle fa-lg" title="Restart Survey"
+                                                    style="color: #cd0202;"
+                                                    (click)="saveActualCloseDate(item, restartModalUI)"
+                                                    *ngIf="item.branchBaseLineSurveyActualEndDate"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #tentativeEndDates>
+    <div class="modal-header">
+
+        <div class="col-md-2">
+            <span class="close" (click)="modalDismiss()" style="cursor: pointer;font-size: 35px;">&times;</span>
+        </div>
+
+    </div>
+
+    <div class="modal-body">
+        <form class="form-signin" [formGroup]="modalForm">
+
+            <div class="form-group col-md">
+                <label for="tentativeEndDate">Tentative End Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="date" class="form-control" formControlName="tentativeEndDate"
+                    (keydown)="restrictTypeOfDate()"
+                    [ngClass]="{'is-invalid': l.tentativeEndDate.invalid && l.tentativeEndDate.touched,
+                        'is-valid': l.tentativeEndDate.valid && (l.tentativeEndDate.dirty || l.tentativeEndDate.touched)}">
+                <div *ngIf="l.tentativeEndDate.errors" class="invalid-feedback">
+                    <div *ngIf="l.tentativeEndDate.errors.required">Tentative End Date is required</div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" style="margin-left: 420px;">
+            <button type="button" class=" btn btn-primary btn-sm" [disabled]="!modalForm.value.tentativeEndDate"
+                (click)="saveButtonTentativeEndDate()">Save
+            </button>
+        </div>
+
+    </div>
+
+</ng-template>
+
+
+<ng-template #restartModalUI>
+    <div class="modal-header">
+
+        <div class="col-md-2">
+            <span class="close" (click)="modalDismiss()" style="cursor: pointer;font-size: 35px;">&times;</span>
+        </div>
+
+    </div>
+
+    <div class="modal-body">
+        <form class="form-signin" [formGroup]="restartModalForm">
+
+            <div class="form-group col-md">
+                <label for="tentativeDate">Tentative End Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="date" class="form-control" formControlName="tentativeDate" (keydown)="restrictTypeOfDate()"
+                    [ngClass]="{'is-invalid': m.tentativeDate.invalid && m.tentativeDate.touched,
+                        'is-valid': m.tentativeDate.valid && (m.tentativeDate.dirty || m.tentativeDate.touched)}">
+                <div *ngIf="m.tentativeDate.errors" class="invalid-feedback">
+                    <div *ngIf="m.tentativeDate.errors.required">Tentative End Date is required</div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" style="margin-left: 420px;">
+            <button type="button" class=" btn btn-primary btn-sm" [disabled]="!restartModalForm.value.tentativeDate"
+                (click)="restartSurvey()">Restart
+            </button>
+        </div>
+
+    </div>
+
+</ng-template>

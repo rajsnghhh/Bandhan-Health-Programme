@@ -1432,6 +1432,7 @@ class AddChildMuacComponent {
     }
     campNo(Id) {
         var _a, _b, _c, _d, _e;
+        this.muacForm.controls.muacDate.setValue('');
         this.muacCampStartDate = (_a = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)) === null || _a === void 0 ? void 0 : _a.startDate;
         this.muacCampEndDate = (_b = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)) === null || _b === void 0 ? void 0 : _b.endDate;
         this.minMuacRecordDate = (this.muacCampStartDate > this.childDob) ? this.muacCampStartDate : this.childDob;
@@ -1462,7 +1463,7 @@ class AddChildMuacComponent {
     onAddEdit() {
         this.muacForm.markAllAsTouched();
         console.log(this.muacForm);
-        if (this.editMode === true && this.muacForm.valid) {
+        if (this.data.editMode === true && this.muacForm.valid) {
             let addDto = {
                 dataAccessDTO: this.httpService.dataAccessDTO,
                 muacDataDto: {

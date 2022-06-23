@@ -1,0 +1,12 @@
+.close {
+    margin-left: 450px;
+  }
+
+  .modal-content {
+    height: 500px;
+    overflow-x: hidden;
+    width: 1000px;
+    margin-left: -190px;
+    margin-top: -4px;
+  }
+  
