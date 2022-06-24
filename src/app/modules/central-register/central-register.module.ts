@@ -9,6 +9,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LocationModule } from '../baseline-survey/location/location.module';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     FormsModule,
     Ng2SearchPipeModule, MatProgressSpinnerModule, LoaderModule,
-    NgxPaginationModule,
+    NgxPaginationModule, LocationModule
   ],
 })
 export class CentralRegisterModule { }

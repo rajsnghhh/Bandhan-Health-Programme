@@ -23,6 +23,10 @@ export class CloseBaselineComponent implements OnInit {
   modalTentiative: any;
   restartModalData: any;
   regionId: any;
+  loader: boolean = true;
+  page = 1;
+  pageSize = 6;
+  p: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private closeBaselineService: CloseBaselineService,
     private modalService: NgbModal, config: NgbModalConfig, private toaster: ToastrService,
@@ -114,10 +118,6 @@ export class CloseBaselineComponent implements OnInit {
       return;
     }
 
-
-    console.log(this.tentativeDetails, 'tentativeDetails');
-    console.log(this.modalTentiative, 'modalTentiative');
-
     let postObj = {
       dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.tentativeDetails.branchId,
       branchBaseLineSurveyEndDateMasterId: this.tentativeDetails.branchBaseLineSurveyEndDateMasterId ?
@@ -148,27 +148,31 @@ export class CloseBaselineComponent implements OnInit {
     console.log(this.restartModalData, 'restartModalData');
     var data = this.restartModalData;
 
+    console.log(data.branchOpenDate, 'branchOpenDate');
+    console.log(data.branchCloseDate, 'branchCloseDate');
+    console.log(data.projectMasterDto?.projectStartDate, 'projectStartDate');
+    console.log(data.projectMasterDto?.projectEndDate, 'projectEndDate');
+    console.log(this.restartModalForm.value.tentativeDate, 'tentativeDate');
 
-    // let postObj1 = {
-    //   dataAccessDTO: this.httpService.dataAccessDTO, branchId: data.branchId,
-    //   branchBaseLineSurveyEndDateMasterId: data.branchBaseLineSurveyEndDateMasterId,
-    //   endDate: this.restartModalForm.value.tentativeDate
-    // }
-    // console.log(postObj1, 'postobj1');
+    if ((data.branchOpenDate) > (this.restartModalForm.value.tentativeDate)) {
+      this.showError('Tentative end date can be after branch Open date');
+      return;
+    }
 
+    if ((data.branchCloseDate) < (this.restartModalForm.value.tentativeDate)) {
+      this.showError('Tentative end date can not be after branch close date');
+      return;
+    }
 
-    // this.closeBaselineService.saveBaseLineSurveyTentativeEndDate(postObj1).subscribe((res) => {
-    //   console.log(res);
-    //   if (res.status == true) {
-    //     this.showSuccess('Now Survey will reopen');
-    //     this.modalDismiss();
-    //     this.changeRegion(this.regionId)
-    //   } else {
-    //     this.showError(res.message);
-    //   }
+    if ((data.projectMasterDto?.projectStartDate) > (this.restartModalForm.value.tentativeDate)) {
+      this.showError('Tentative end date can be after project Open date');
+      return;
+    }
 
-    // })
-
+    if ((data.projectMasterDto?.projectEndDate) < (this.restartModalForm.value.tentativeDate)) {
+      this.showError('Tentative end date can not be after project end date');
+      return;
+    }
 
     let postObj2 = {
       dataAccessDTO: this.httpService.dataAccessDTO, branchId: data.branchId,
@@ -216,14 +220,17 @@ export class CloseBaselineComponent implements OnInit {
       branchBaseLineSurveyEndDateMasterId: item.branchBaseLineSurveyEndDateMasterId
     }
     console.log(postObj, 'end');
+    this.loader = false;
 
     this.closeBaselineService.saveActualBaseLineSurveyCloseDate(postObj).subscribe((res) => {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
+        this.loader = true;
         this.changeRegion(this.regionId)
       } else {
         this.showError(res.message);
+        this.loader = true;
       }
 
     })
