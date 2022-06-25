@@ -129,12 +129,13 @@ export class RoleAccessComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       roleFunctionMapDTOList: this.roleFunctionMapView
     }
-
+    this.loader = false;
     console.log(roleAccessSaveObj);
 
     this.roleService.rolesubfunctionmapsave(roleAccessSaveObj).subscribe((res) => {
       console.log(res.responseObject, 'roleFunctionMapsave');
       if (res.status == true) {
+        this.loader = true;
         this.showSuccess(res.message);
       }
       else {

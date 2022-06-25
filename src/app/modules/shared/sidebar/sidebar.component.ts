@@ -202,7 +202,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/remap-user-ss']);
     }
 
-    if (routeId == 208) {
+    if (routeId == 207) {
       this.router.navigate(['/close-baseline']);
     }
 

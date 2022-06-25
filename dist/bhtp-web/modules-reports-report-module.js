@@ -215,11 +215,12 @@ function BeneficiaryInfoComponent_div_21_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r2.gpList);
 } }
 function BeneficiaryInfoComponent_div_22_option_7_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 27);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const region_r23 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", region_r23.regionMasterId);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", region_r23.regionName, " ");
 } }
@@ -235,7 +236,7 @@ function BeneficiaryInfoComponent_div_22_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "option", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "-- All --");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, BeneficiaryInfoComponent_div_22_option_7_Template, 2, 1, "option", 26);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, BeneficiaryInfoComponent_div_22_option_7_Template, 2, 2, "option", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -306,7 +307,7 @@ function BeneficiaryInfoComponent_tr_98_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](i_r27 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r26.projectCode ? item_r26.projectCode : "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r26.name ? item_r26.name : "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r26.pemCurrent ? item_r26.pemCurrent : "0");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -361,7 +362,6 @@ class BeneficiaryInfoComponent {
     }
     ngOnInit() {
         this.createForm();
-        console.log(this.locationForm.value.project == '');
         this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res) => {
             this.projectList = res.responseObject.projectList;
         });
@@ -386,16 +386,16 @@ class BeneficiaryInfoComponent {
         }
         else {
             this.selectFilter = false;
-            this.stateWiseFilter = false;
-            this.regionWiseFilter = false;
-            this.locationForm.controls.state.setValue('');
-            this.locationForm.controls.district.setValue('');
-            this.locationForm.controls.block.setValue('');
-            this.locationForm.controls.gp.setValue('');
-            this.locationForm.controls.region.setValue('');
-            this.locationForm.controls.stateOrRegion.setValue('');
         }
-        if (projectId = 'all') {
+        this.stateWiseFilter = false;
+        this.regionWiseFilter = false;
+        this.locationForm.controls.state.setValue('');
+        this.locationForm.controls.district.setValue('');
+        this.locationForm.controls.block.setValue('');
+        this.locationForm.controls.gp.setValue('');
+        this.locationForm.controls.region.setValue('');
+        this.locationForm.controls.stateOrRegion.setValue('');
+        if (projectId != '') {
             this.loader = false;
             this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res) => {
                 this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
@@ -406,14 +406,23 @@ class BeneficiaryInfoComponent {
         }
     }
     checkStateOrRegion(value) {
-        let Dto = {
+        let Dto1 = {
             dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value
         };
+        console.log(Dto1);
         if (value == 'stateWise') {
             this.stateWiseFilter = true;
             this.regionWiseFilter = false;
-            this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res) => {
+            this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, this.Dto).subscribe((res) => {
                 this.stateList = res.responseObject.stateList;
+            });
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoState`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
             });
             this.regionList = [];
             this.locationForm.controls.region.setValue('');
@@ -424,8 +433,15 @@ class BeneficiaryInfoComponent {
         else {
             this.stateWiseFilter = false;
             this.regionWiseFilter = true;
-            this.http.post(`${this.httpService.baseURL}branch/getListOfRegionsOfUser`, Dto).subscribe((res) => {
+            this.http.post(`${this.httpService.baseURL}branch/getListOfRegionsOfUser`, this.Dto).subscribe((res) => {
                 this.regionList = res.responseObject;
+            });
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegion`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
             });
             this.stateList = [];
             this.locationForm.controls.state.setValue('');
@@ -434,15 +450,30 @@ class BeneficiaryInfoComponent {
             this.locationForm.controls.gp.setValue('');
         }
     }
-    changeState(value) {
+    changeState(stateId) {
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
-            stateId: value
+            stateId: stateId
         };
         this.http.post(`${this.httpService.baseURL}district/getListOfDistrictAndBlock`, Dto).subscribe((res) => {
             var _a;
             this.stateWiseDistrictList = (_a = res.responseObject) === null || _a === void 0 ? void 0 : _a.stateWiseDistrictList;
         });
+        let Dto1 = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value,
+            stateMasterId: stateId
+        };
+        console.log(Dto1, 'state');
+        if (stateId != '') {
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoDistrict`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
+            });
+        }
         this.locationForm.controls.district.setValue('');
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
@@ -463,6 +494,22 @@ class BeneficiaryInfoComponent {
     changeDistrict(value) {
         var _a;
         this.blockList = (_a = this.stateWiseDistrictList.find(item => item.districtMasterId == value)) === null || _a === void 0 ? void 0 : _a.blockList;
+        let Dto1 = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value,
+            stateMasterId: this.locationForm.get('state').value,
+            districtMasterId: value
+        };
+        console.log(Dto1, 'district');
+        if (value != '') {
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoBlock`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
+            });
+        }
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         if (!this.locationForm.value.district) {
@@ -481,6 +528,23 @@ class BeneficiaryInfoComponent {
     changeBlock(blockId) {
         var _a;
         this.gpList = (_a = this.blockList.find(gp => gp.blockMasterId == blockId)) === null || _a === void 0 ? void 0 : _a.gpDtoList;
+        let Dto1 = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value,
+            stateMasterId: this.locationForm.get('state').value,
+            districtMasterId: this.locationForm.get('district').value,
+            blockMasterId: blockId
+        };
+        console.log(Dto1, 'block');
+        if (blockId != '') {
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoGp`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
+            });
+        }
         this.locationForm.controls.gp.setValue('');
         if (!this.locationForm.value.block) {
             this.locationForm.controls['district'].enable();
@@ -495,8 +559,40 @@ class BeneficiaryInfoComponent {
         }
     }
     changeGp(gpId) {
+        let Dto1 = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value,
+            stateMasterId: this.locationForm.get('state').value,
+            districtMasterId: this.locationForm.get('district').value,
+            blockMasterId: this.locationForm.get('district').value,
+            gpMuncipalId: gpId
+        };
+        console.log(Dto1, 'gp');
+        if (gpId != '') {
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoVillage`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
+            });
+        }
     }
     changeRegion(regionId) {
+        let Dto1 = {
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            projectMasterId: this.locationForm.get('project').value,
+            regionMasterId: regionId
+        };
+        if (regionId != '') {
+            this.loader = false;
+            this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoBranch`, Dto1).subscribe((res) => {
+                this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+                this.loader = true;
+            }, error => {
+                this.loader = true;
+            });
+        }
     }
 }
 BeneficiaryInfoComponent.ɵfac = function BeneficiaryInfoComponent_Factory(t) { return new (t || BeneficiaryInfoComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"])); };
@@ -578,7 +674,7 @@ BeneficiaryInfoComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ�
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "th", 23);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](55, "Child");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](56, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "below years");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "below 2 years");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "th", 23);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, "Child");

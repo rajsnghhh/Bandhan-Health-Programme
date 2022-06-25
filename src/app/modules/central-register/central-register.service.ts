@@ -35,9 +35,9 @@ export class CentralRegisterService {
     return this.http.post(`${this.baseURL}baselinesurvey/saveOrUpdate`, obj)
   }
 
-  viewCentralRegister(obj): any {
-    return this.http.post(`${this.baseURL}baselinesurvey/view`, obj)
-  }
+  // viewCentralRegister(obj): any {
+  //   return this.http.post(`${this.baseURL}baselinesurvey/view`, obj)
+  // }
 
   viewDetailsCentralRegister(obj): any {
     return this.http.post(`${this.baseURL}familydetail/view`, obj)
@@ -47,5 +47,23 @@ export class CentralRegisterService {
     return this.http.post(`${this.baseURL}familydetail/saveOrUpdate`, obj)
 
   }
+
+  listOfRegionsOfUser(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj)
+  }
+
+  listOfBranchesOfARegion(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
+  }
+
+  villagesOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
+  }
+
+  viewCentralRegisterDetails(obj): any {
+    return this.http.post(`${this.baseURL}centralRegister/view`, obj)
+  }
+
+
 }
 

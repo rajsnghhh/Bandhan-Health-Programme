@@ -26,7 +26,6 @@ export class CloseBaselineComponent implements OnInit {
   loader: boolean = true;
   page = 1;
   pageSize = 6;
-  p: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private closeBaselineService: CloseBaselineService,
     private modalService: NgbModal, config: NgbModalConfig, private toaster: ToastrService,
@@ -138,9 +137,6 @@ export class CloseBaselineComponent implements OnInit {
       }
 
     })
-
-
-
 
   }
 
@@ -298,5 +294,7 @@ export class CloseBaselineComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
+  p(event) { }
 
 }

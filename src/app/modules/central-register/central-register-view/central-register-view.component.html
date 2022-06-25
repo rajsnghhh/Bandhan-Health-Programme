@@ -1,17 +1,217 @@
-<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">View Central Register</h2>
+
+                <form class="form-signin" [formGroup]="centralViewForm">
+
+                    <div class="row" *ngIf="regionBranchHide">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{ 'is-invalid': f.region.invalid && f.region.touched,
+                              'is-valid':  f.region.valid && (f.region.dirty || f.region.touched) }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="f.region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{  'is-invalid': f.branch.invalid && f.branch.touched,
+                              'is-valid': f.branch.valid && (f.branch.dirty || f.branch.touched) }">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.branch.errors" class="invalid-feedback">
+                                <div *ngIf="f.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" id="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                              'is-valid': f.block.valid && (f.block.dirty || f.block.touched)  }">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
+                                    {{ block.blockName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.block.errors" class="invalid-feedback">
+                                <div *ngIf="f.block.errors.required">Block selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                              'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched) }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.gp.errors" class="invalid-feedback">
+                                <div *ngIf="f.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">Village/ Gram Sansad/ Locality
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeVillage($event.target.value)"
+                                formControlName="gram" id="gram" [ngClass]="{'is-invalid': f.gram.invalid && f.gram.touched,
+                              'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)  }">
+                                <option value="">-- Select Village --</option>
+                                <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
+                                    {{ vill.villageName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f.gram.errors" class="invalid-feedback">
+                                <div *ngIf="f.gram.errors.required">
+                                    Village selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="Search household info here..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">SL<br>No</th>
+                                            <th style="width: 10%;">Family<br>No</th>
+                                            <th style="width: 22%;">Name</th>
+                                            <th style="width: 28%;">Husband</th>
+                                            <th>PW<br>Status</th>
+                                            <th>LM<br>Status</th>
+                                            <th>PEM<br>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of centralDetails | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td style="width: 10%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 10%;"> {{item.familyNumber}} </td>
+                                            <td style="width: 22%;">{{item.firstName}} {{item.middleName}}
+                                                {{item.lastName}}</td>
+                                            <td style="width: 28%;">{{item.husbandOrGuardianName}}</td>
+                                            <td (click)="routePWStatus(item)">{{item.pregnantStatus}}
+                                            </td>
+                                            <td>{{item.lactatingWomanStatus}}</td>
+                                            <td>{{item.pemStatus}}</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <!-- <app-loader [hidden]="loader"></app-loader>
 
 <div class="container">
     <div class="white_box QA_section mb_30">
         <h2 class="page-title">View Central Register</h2>
-<!-- 
+
         <div style="float: right;">
             <div class="add_button ">
                 <a class="btn btn-primary" [routerLink]="['/central-register/create']">Create Central Register</a>
             </div>
-        </div> -->
+        </div>
+
         <div class="row">
-            <app-location></app-location>
-          </div>
+            <div class="form-group col-md-3">
+                <label for="state" class="font-weight-bold">State:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select  form-select-md " id="state">
+                    <option value="">-- Select State --</option>
+                    <option *ngFor="let state of stateNames">{{state}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="region" class="font-weight-bold">Region:&nbsp;<span
+                        class="text-danger">*&nbsp;</span></label>
+                <select class="form-select form-select-md" id="region">
+                    <option value="">-- Select Region --</option>
+                    <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                            {{region.regionName}}
+                        </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="branch" class="font-weight-bold">Branch:&nbsp;<span
+                        class="text-danger">*&nbsp;</span></label>
+                <select class="form-select form-select-md" id="branch">
+                    <option value="">-- Select Branch --</option>
+                    <option *ngFor="let branchName of branchNames">{{branchName}}</option>
+                    <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                            {{region.regionName}}
+                        </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="village" class="font-weight-bold">Village/ Gram Sansad/ Locality
+                    :&nbsp;<span
+                        class="text-danger">*&nbsp;</span></label>
+                <select class="form-select form-select-md" id="village*">
+                    <option value="">-- Select Village--</option>
+                    <option *ngFor="let villageName of villageNames" value="{{villageMasterId}}">{{villageName}}
+                    </option>
+                </select>
+            </div>
+
+        </div>
 
         <div class="box_right d-flex lms_block col-md-6">
             <div class="serach_field_2">
@@ -491,4 +691,4 @@
             </fieldset>
         </div>
     </div>
-</ng-template>
+</ng-template> --> -->
