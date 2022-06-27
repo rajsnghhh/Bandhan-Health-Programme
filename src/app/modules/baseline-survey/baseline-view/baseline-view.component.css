@@ -1,6 +1,3 @@
-.form-group {
-  margin-bottom: 1.5rem;
-}
 
 .QA_table {
   overflow-x: hidden;
@@ -107,14 +104,6 @@
   margin-left: 8px;
 }
 
-
-
-
-
-
-.form-select {
-  margin-bottom: 1.5rem;
-}
 
 /* .modal-contents {
   height: 500px;

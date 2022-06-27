@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -36,7 +36,20 @@ export class LoginService {
             loginId: username,
             password: password
         };
-        return this.http.post<User>(`${environment.apiUrl}/user/login`, requestBody)
+
+        const headerDict = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Private-Network": "true",
+            "Access-Control-Allow-Origin": "true",
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(headerDict),
+        };
+
+        return this.http.post<User>(`${environment.apiUrl}/user/login`, requestBody, requestOptions)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));

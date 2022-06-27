@@ -169,12 +169,6 @@ class RoleAccessComponent {
         this.searchFullscreen = this.validationService.val;
     }
     ngOnInit() {
-        // Api call for viewing rolefunctionmapview list
-        // let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-        // this.roleService.rolefunctionmapview(obj).subscribe((res) => {
-        //   this.roleFunctionMapView = res.responseObject;
-        //   console.log(this.roleFunctionMapView, 'roleFunctionMapView');
-        // });
         this.createForm();
     }
     createForm() {
@@ -228,6 +222,7 @@ class RoleAccessComponent {
                 for (var j = 0; j < coll.length; j++) {
                     var con = coll[j].nextElementSibling;
                     coll[j].classList.remove("active");
+                    // coll[j].nextElementSibling.style.maxHeight = null;
                     con.style.maxHeight = null;
                 }
                 this.classList.toggle("active");

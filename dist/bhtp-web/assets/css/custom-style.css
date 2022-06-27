@@ -5108,6 +5108,7 @@ body::-webkit-scrollbar {
   color: #828bb2;
   font-weight: 400;
   border-bottom: 1px solid rgba(130, 139, 178, 0.1);
+  padding: 4px;
 }
 
 /* line 189, H:/admin_project/hospital/scss/_dashboard_part.scss */
@@ -5194,6 +5195,7 @@ body::-webkit-scrollbar {
   font-family: "Rajdhani", sans-serif;
   border: 0;
   background: #499;
+  padding: 12px;
 }
 
 /* line 248, H:/admin_project/hospital/scss/_dashboard_part.scss */

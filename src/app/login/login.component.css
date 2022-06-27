@@ -73,3 +73,7 @@ input {
   box-shadow: 0 0;
   color: rgba(87, 184, 70, 0.8);
 }
+
+.form-group {
+  margin-bottom: 0.5rem;
+}

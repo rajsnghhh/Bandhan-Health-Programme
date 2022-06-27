@@ -1153,6 +1153,86 @@ ViewMuaclistComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
 
 /***/ }),
 
+/***/ "SMi9":
+/*!********************************************************************!*\
+  !*** ./src/app/modules/baseline-survey/baseline-survey.service.ts ***!
+  \********************************************************************/
+/*! exports provided: BaselineSurveyService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaselineSurveyService", function() { return BaselineSurveyService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
+
+
+
+class BaselineSurveyService {
+    constructor(http) {
+        this.http = http;
+        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
+    }
+    getCasteView(obj) {
+        return this.http.post(`${this.baseURL}castemaster/view`, obj);
+    }
+    getEducationDetails(obj) {
+        return this.http.post(`${this.baseURL}educationalqualificationmaster/view`, obj);
+    }
+    monthlyIncomeDetails(obj) {
+        return this.http.post(`${this.baseURL}monthlyincomemaster/view`, obj);
+    }
+    religionDetails(obj) {
+        return this.http.post(`${this.baseURL}religionmaster/view`, obj);
+    }
+    occupationDetails(obj) {
+        return this.http.post(`${this.baseURL}occupationmaster/view`, obj);
+    }
+    getIdCardDetails(obj) {
+        return this.http.post(`${this.baseURL}identitycardtypes/view`, obj);
+    }
+    saveBaselineSurvey(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/saveOrUpdate`, obj);
+    }
+    baselineView(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/view`, obj);
+    }
+    baselineViewDetail(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/view/detail`, obj);
+    }
+    deleteFamily(obj) {
+        return this.http.post(`${this.baseURL}familydetail/saveOrUpdate`, obj);
+    }
+    viewMoreFamilyDetails(obj) {
+        return this.http.post(`${this.baseURL}familydetail/view`, obj);
+    }
+    baselineSurveyStatus(obj) {
+        return this.http.post(`${this.baseURL}baselinesurvey/status`, obj);
+    }
+    villagesOfBranch(obj) {
+        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
+    }
+    ssVillageWiseList(obj) {
+        return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj);
+    }
+    listOfBranchesOfARegion(obj) {
+        return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
+    }
+}
+BaselineSurveyService.ɵfac = function BaselineSurveyService_Factory(t) { return new (t || BaselineSurveyService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
+BaselineSurveyService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BaselineSurveyService, factory: BaselineSurveyService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BaselineSurveyService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "gFW8":
 /*!****************************************************************************!*\
   !*** ./src/app/modules/all-children-register/all-child-register.module.ts ***!
@@ -1432,6 +1512,7 @@ class AddChildMuacComponent {
     }
     campNo(Id) {
         var _a, _b, _c, _d, _e;
+        this.muacForm.controls.muacDate.setValue('');
         this.muacCampStartDate = (_a = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)) === null || _a === void 0 ? void 0 : _a.startDate;
         this.muacCampEndDate = (_b = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)) === null || _b === void 0 ? void 0 : _b.endDate;
         this.minMuacRecordDate = (this.muacCampStartDate > this.childDob) ? this.muacCampStartDate : this.childDob;
@@ -1462,7 +1543,7 @@ class AddChildMuacComponent {
     onAddEdit() {
         this.muacForm.markAllAsTouched();
         console.log(this.muacForm);
-        if (this.editMode === true && this.muacForm.valid) {
+        if (this.data.editMode === true && this.muacForm.valid) {
             let addDto = {
                 dataAccessDTO: this.httpService.dataAccessDTO,
                 muacDataDto: {

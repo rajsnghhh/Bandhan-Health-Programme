@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { RemapUserSsRoutingModule } from './remap-user-ss-routing.module';
 import { RemapUserSsComponent } from './remap-user-ss.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../shared/loader/loader.module';
 
 
@@ -12,7 +11,7 @@ import { LoaderModule } from '../shared/loader/loader.module';
   imports: [
     CommonModule,
     RemapUserSsRoutingModule,
-    ReactiveFormsModule, LoaderModule, FormsModule
+    ReactiveFormsModule, LoaderModule
   ]
 })
 export class RemapUserSsModule { }
