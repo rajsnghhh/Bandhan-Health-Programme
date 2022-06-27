@@ -143,6 +143,12 @@
                     </select>
                   </div>
             </div>
+
+            <div class="add_button" *ngIf="selectFilter">
+              <button class="btn btn-primary" (click)="generateReport()">
+                  <i class="fa fa-file-text-o"></i>Generate Report
+              </button>    
+          </div>
         </form>
         
         

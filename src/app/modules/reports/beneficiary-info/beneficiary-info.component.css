@@ -6,4 +6,7 @@ table tr th {
   , .QA_section .QA_table td {
     padding: 18px 0px;
   }
-
+  .add_button{
+    display: flex;
+    flex-direction: row-reverse;
+}
