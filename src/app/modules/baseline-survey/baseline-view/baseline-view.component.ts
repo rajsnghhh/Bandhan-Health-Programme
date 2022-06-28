@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -56,8 +55,7 @@ export class BaselineViewComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    private confirmationDialogService: ConfirmationDialogService, private route: Router, private httpBranch: BranchService,
-    public validationService: ValidationService, public sidebarService: SidebarService) { }
+    private confirmationDialogService: ConfirmationDialogService, private route: Router, public validationService: ValidationService, public sidebarService: SidebarService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -71,13 +69,13 @@ export class BaselineViewComponent implements OnInit {
     this.createForm();
     this.householdFamDetails();
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
+    // let dataAccessDTO = {
+    //   userId: this.sidebarService.userId,
+    //   userName: this.sidebarService.loginId,
+    // }
 
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -114,10 +112,7 @@ export class BaselineViewComponent implements OnInit {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
@@ -151,10 +146,7 @@ export class BaselineViewComponent implements OnInit {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {

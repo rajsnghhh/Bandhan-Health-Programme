@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
@@ -61,8 +60,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
-    private httpService: HttpService, private toaster: ToastrService, private httpBranch: BranchService,
-    private sidebarService: SidebarService, private baselineService: BaselineSurveyService) { }
+    private httpService: HttpService, private toaster: ToastrService, private sidebarService: SidebarService, private baselineService: BaselineSurveyService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -110,10 +108,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
@@ -142,10 +137,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {

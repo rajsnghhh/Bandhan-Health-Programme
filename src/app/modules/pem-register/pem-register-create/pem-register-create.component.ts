@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
@@ -67,8 +66,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    private route: Router, private httpBranch: BranchService,
-    public validationService: ValidationService, private sidebarService: SidebarService) { }
+    private route: Router, public validationService: ValidationService, private sidebarService: SidebarService) { }
 
 
   ngDoCheck(): void {
@@ -95,13 +93,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.locForm();
     this.createForm(this.pemDataSave);
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
-
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -127,10 +120,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.loader = false;
@@ -164,10 +154,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.loader = false;

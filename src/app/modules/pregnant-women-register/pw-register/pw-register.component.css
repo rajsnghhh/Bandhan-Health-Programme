@@ -9,15 +9,6 @@
   justify-content: start;
 }
 
-.QA_section .QA_table .table thead th {
-  padding: 17px 11px;
-}
-
-.QA_section .QA_table th,
-.QA_section .QA_table td {
-  padding: 16px 10px;
-}
-
 .search_inner button {
   padding-right: 1px;
   margin-left: 330px;

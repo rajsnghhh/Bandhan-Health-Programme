@@ -163,7 +163,7 @@ export class VillageSetupComponent implements OnInit {
     this.GPType = this.gpList.find(gp => gp.gpMunicipalId == this.gpId);
     console.log(this.GPType, 'GPType');
 
-    let obj = { dataAccessDTO: { userId: this.sidebarService?.userId, userName: this.sidebarService?.loginId }, gpId: this.gpId };
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, gpId: this.gpId };
     this.villageService.getVillageListByGpId(obj).subscribe((res) => {
       this.villList = res.responseObject;
       console.log(this.villList);
@@ -229,10 +229,7 @@ export class VillageSetupComponent implements OnInit {
 
     if (this.villCreateForm.valid) {
       let obj = {
-        dataAccessDTO: {
-          userId: this.sidebarService.userId,
-          userName: this.sidebarService.loginId
-        },
+        dataAccessDTO: this.httpService.dataAccessDTO,
         villageCreationDto: {
           villageMasterId: this.villageId ? this.villageId : 0,
           villageName: this.validationService.camelize(this.villCreateForm.value.village.trim()),
@@ -306,10 +303,7 @@ export class VillageSetupComponent implements OnInit {
 
   delete(vill, i) {
     let obj = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       villageCreationDto: {
         villageMasterId: vill.villageMasterId,
         villageName: vill.villageName,

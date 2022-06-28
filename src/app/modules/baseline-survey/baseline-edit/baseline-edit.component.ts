@@ -69,10 +69,7 @@ export class BaselineEditComponent implements OnInit {
     setTimeout(() => {
       let villId = this.villagesOfBranch?.find(i => i.villageName == this.village)?.villageMasterId;
       let req = {
-        dataAccessDTO: {
-          userId: this.sidebarService.userId,
-          userName: this.sidebarService.loginId,
-        },
+        dataAccessDTO: this.httpService.dataAccessDTO,
         villageId: villId,
         userId: this.sidebarService.userId
       }
@@ -104,10 +101,7 @@ export class BaselineEditComponent implements OnInit {
 
   getBlockList() {
     let dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.branchId
     }
     console.log(dto);
@@ -139,10 +133,7 @@ export class BaselineEditComponent implements OnInit {
   changeVillage(villageMasterId) {
     this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageMasterId)?.branchVillageMapId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       villageId: villageMasterId,
       userId: this.sidebarService.userId
     }

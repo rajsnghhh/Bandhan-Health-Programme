@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -133,10 +134,19 @@
                                             <td style="width: 22%;">{{item.firstName}} {{item.middleName}}
                                                 {{item.lastName}}</td>
                                             <td style="width: 28%;">{{item.husbandOrGuardianName}}</td>
-                                            <td (click)="routePWStatus(item)">{{item.pregnantStatus}}
-                                            </td>
-                                            <td>{{item.lactatingWomanStatus}}</td>
-                                            <td>{{item.pemStatus}}</td>
+                                            <td (click)="routePWStatus(item)"
+                                                [ngStyle]="{'color':item.pregnantStatus == 'Y' ? 'blue' : '',
+                                            'font-weight':item.pregnantStatus == 'Y' ? 'bold' : '', 'cursor': item.pregnantStatus == 'Y' ? 'pointer' : ''}">
+                                                {{item.pregnantStatus}}</td>
+                                            <td
+                                                [ngStyle]="{'color':item.lactatingWomanStatus == 'Y' ? 'blue' : '',
+                                                'font-weight':item.lactatingWomanStatus == 'Y' ? 'bold' : '', 'cursor': item.lactatingWomanStatus == 'Y' ? 'pointer' : ''}">
+                                                {{item.lactatingWomanStatus}}</td>
+                                            <td
+                                                [ngStyle]="{'color':item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'blue' : '',
+                                                'font-weight':item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'bold' : '', 
+                                                'cursor': item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'pointer' : ''}">
+                                                {{item.pemStatus}}</td>
                                         </tr>
                                     </tbody>
 
@@ -156,7 +166,7 @@
 
 
 
-<!-- <!-- <app-loader [hidden]="loader"></app-loader>
+<!--  <app-loader [hidden]="loader"></app-loader>
 
 <div class="container">
     <div class="white_box QA_section mb_30">

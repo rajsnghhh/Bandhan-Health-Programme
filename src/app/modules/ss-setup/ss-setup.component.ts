@@ -121,7 +121,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   changeRegion(regionId) {
-    let obj = { dataAccessDTO: { userId: this.sidebarService?.userId, userName: this.sidebarService?.loginId }, regionId: regionId };
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
     this.ssService.listOfBranchesOfARegion(obj).subscribe((res) => {
       this.branchList = res.responseObject;
       console.log(this.branchList);
@@ -138,7 +138,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   ssLists() {
-    let obj = { dataAccessDTO: { userId: this.sidebarService?.userId, userName: this.sidebarService?.loginId }, branchId: this.branchId };
+    let obj = {dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
     this.ssService.listOfswasthyasahayika(obj).subscribe((res) => {
       this.ssList = res.responseObject?.ssDtoList;
       console.log(this.ssList);
@@ -152,7 +152,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   staffLists() {
-    let obj = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
 
     this.ssService.staffListOfBranch(obj).subscribe((res) => {
       this.staffList = res.responseObject;
@@ -177,7 +177,7 @@ export class SsSetupComponent implements OnInit {
     console.log(this.editssData?.ssId, 'this.editssData?.ssIdcreate');
     console.log('branchId', this.branchId);
 
-    let obj = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
+    let obj = {dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
 
     this.ssService.blockGPVillOfBranch(obj).subscribe((res) => {
       this.blockList = res.responseObject;
@@ -194,7 +194,7 @@ export class SsSetupComponent implements OnInit {
       this.createSSForm();
     }, 1000);
 
-    let obj2 = { dataAccessDTO: { userId: this.sidebarService.userId, userName: this.sidebarService.loginId }, branchId: this.branchId }
+    let obj2 = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
 
     this.staffLists();
 
@@ -290,10 +290,7 @@ export class SsSetupComponent implements OnInit {
     console.log(this.editssData);
 
     let postBody = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       hcoOrHcoIOrTLId: this.ssCreateForm.value.staff,
       swasthyaSahayikaDTO: {
         swasthyaSahayikaMasterId: this.editssData?.ssId ? this.editssData?.ssId : 0,
@@ -347,10 +344,7 @@ export class SsSetupComponent implements OnInit {
 
   delete(item, i) {
     let postBody = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       hcoOrHcoIOrTLId: item.userDto.userId,
       swasthyaSahayikaDTO: {
         swasthyaSahayikaMasterId: item.ssId,

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -29,6 +28,13 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   p: any;
   page = 1;
   pageSize = 6;
+  villageId: any;
+  regionId: any;
+  branchId: any;
+  blockId: any;
+  gpId: any;
+  localStorageData: any;
+  loader: boolean = true;
   // centralDetails: any;
   // modalContent: any;
   // modalReference: any;
@@ -42,7 +48,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
 
   constructor(private centralService: CentralRegisterService, private http: HttpService,
     private modalService: NgbModal, private route: Router, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService, private httpBranch: BranchService,
+    private confirmationDialogService: ConfirmationDialogService,
     public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService
   ) { }
 
@@ -50,8 +56,29 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.searchFullscreen = this.validationService.val;
   }
 
+
   ngOnInit(): void {
+
+    this.localStorageData = JSON.parse(localStorage.getItem("datas"));
+
+    console.log(this.localStorageData, 'localstorage');
+
+    if (this.localStorageData) {
+      this.createForm();
+      this.changeRegion(this.localStorageData.regionID);
+      this.changeBranch(this.localStorageData.branchID);
+      setTimeout(() => {
+        this.changeBlock(this.localStorageData.blockID);
+        this.changeGp(this.localStorageData.gpID);
+        this.changeVillage(this.localStorageData.villageID);
+      }, 500);
+    }
+
+
+
+
     this.createForm();
+
     let obj = { dataAccessDTO: this.http.dataAccessDTO }
     this.centralService.listOfRegionsOfUser(obj).subscribe((res) => {
       this.regionList = res.responseObject;
@@ -109,12 +136,16 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
 
   createForm() {
     this.centralViewForm = this.fb.group({
-      region: ['', Validators.required],
-      branch: ['', Validators.required],
-      block: ['', Validators.required],
-      gp: ['', Validators.required],
-      gram: ['', Validators.required],
+      region: [this.localStorageData?.regionID ? this.localStorageData?.regionID : '', Validators.required],
+      branch: [this.localStorageData?.branchID ? this.localStorageData?.branchID : '', Validators.required],
+      block: [this.localStorageData?.blockID ? this.localStorageData?.blockID : '', Validators.required],
+      gp: [this.localStorageData?.gpID ? this.localStorageData?.gpID : '', Validators.required],
+      gram: [this.localStorageData?.villageID ? this.localStorageData?.villageID : '', Validators.required],
     });
+
+    // if (this.localStorageData){
+    //   return this.centralViewForm.controls;
+    // }
   }
 
   get f() {
@@ -122,7 +153,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   changeRegion(regionId) {
-    console.log(regionId);
+    this.regionId = regionId;
+    console.log(this.regionId);
 
     let req = {
       dataAccessDTO: this.http.dataAccessDTO,
@@ -137,6 +169,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     }
     );
 
+    // setTimeout(() => {
     this.centralViewForm.controls.branch.setValue('');
     this.centralViewForm.controls.block.setValue('');
     this.centralViewForm.controls.gp.setValue('');
@@ -146,11 +179,14 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       this.villagesOfBranch = [];
       this.gpList = [];
     }
+    // }, 1000);
+
+
   }
 
   changeBranch(branchId) {
-
-    console.log(branchId);
+    this.branchId = branchId;
+    console.log(this.branchId);
 
     let Dto = {
       dataAccessDTO: {
@@ -180,7 +216,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   changeBlock(blockId) {
-    console.log(blockId);
+    this.blockId = blockId;
+    console.log(this.blockId);
 
     this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
@@ -197,7 +234,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   changeGp(gpId) {
-    console.log(gpId);
+    this.gpId = gpId;
+    console.log(this.gpId);
 
     this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     console.log(this.villageList);
@@ -212,23 +250,69 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   changeVillage(villageId) {
-    console.log(villageId);
+    this.villageId = villageId;
+    console.log(this.villageId);
+    this.loader = false;
 
     let obj = { dataAccessDTO: this.http.dataAccessDTO, villageId: villageId }
     this.centralService.viewCentralRegisterDetails(obj).subscribe((res) => {
       this.centralDetails = res.responseObject;
       console.log(this.centralDetails);
+      this.loader = true;
     });
   }
 
 
   routePWStatus(item) {
-    console.log(item.pregnantStatus, item.familyDetailId);
-    
     if (item.pregnantStatus == 'Y') {
-      window.open('http://localhost:4200/#/pw-register', item.familyDetailId);
+      console.log(item);
+      //window.open('http://localhost:4200/#/pw-register');
+      this.route.navigate(['/pw-register'], {
+        queryParams: {
+          familyID: item.familyDetailId,
+          status: 'viewCentral',
+          regionID: this.regionId,
+          branchID: this.branchId,
+          blockID: this.blockId,
+          gpID: this.gpId,
+          villageID: this.villageId,
+
+        }
+
+
+      });
+
+
     }
   }
+
+  ngOnDestroy() {
+    localStorage.removeItem("datas");
+  }
+
+
+}
+
+  // editHousehold(item) {
+  //   console.log('edit', item);
+  //   this.route.navigate(['/Baseline-Survey/edit'], {
+  //     queryParams: {
+  //       id: item.householdDetailId,
+  //       type: item.familyType,
+  //       tMem: item.totalMembers,
+  //       tFam: item.numberOfFamily,
+  //       hhNo: item.houseHoldNumber,
+  //       bName: item.branchDTO.branchName,
+  //       bId: item.branchDTO.branchId,
+  //       blockName: this.selectedBlock,
+  //       gpName: this.selectedGp,
+  //       vName: this.villageDtoList.find(i => i.branchVillageMapId == item.branchVillageMapId).villageName,
+  //       vId: item.branchVillageMapId,
+  //       ssName: item.swasthyaSahayikaDTO.name,
+  //       ssId: item.swasthyaSahayikaDTO.swasthyaSahayikaId
+  //     }
+  //   });
+  // }
 
 
 
@@ -366,6 +450,3 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   // }
 
   // p(event) { }
-
-
-}
