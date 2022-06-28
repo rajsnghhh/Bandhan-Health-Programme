@@ -5,7 +5,7 @@
 
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">View PEM Register</h2>
-          
+
                     <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
                             <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <form class="form-signin" [formGroup]="locationForm">
+                <form class="form-signin" [formGroup]="locationForm" *ngIf="setStatus != 'viewCentralPEM'">
 
                     <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
@@ -119,61 +119,61 @@
                         </div>
                     </div>
 
-                    <div class="white_box_tittle list_header">
+                </form>
 
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info"
-                                    style="table-layout: fixed; ">
+                <div class="white_box_tittle list_header">
 
-                                    <thead>
-                                        <tr>
-                                            <th style="padding: 0px;">SL<br>No</th>
-                                            <th style="padding: 0px;">Family<br> No.</th>
-                                            <th>Mother <br> Name</th>
-                                            <th>Child <br> Name</th>
-                                            <th style="padding: 0px;">Age</th>
-                                            <th>Current<br>Status</th>
-                                            <th>PEM Register<br> Data Entry</th>
-                                            <th *ngIf="createMode">Add PEM</th>
-                                        </tr>
-                                    </thead>
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed; ">
 
-                                    <tbody>
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 0px;">SL<br>No</th>
+                                        <th style="padding: 0px;">Family<br> No.</th>
+                                        <th>Mother <br> Name</th>
+                                        <th>Child <br> Name</th>
+                                        <th style="padding: 0px;">Age</th>
+                                        <th>Current<br>Status</th>
+                                        <th>PEM Register<br> Data Entry</th>
+                                        <th *ngIf="createMode">Add PEM</th>
+                                    </tr>
+                                </thead>
 
-                                        <tr
-                                            *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="padding: 0px;">{{pem.familyNumber}}</td>
-                                            <td style="padding: 0px;">{{pem.firstName}}</td>
-                                            <td style="padding: 0px;">{{pem.childName}}</td>
-                                            <td style="padding: 0px;">{{pem.childAge}}</td>
-                                            <td style="padding: 0px;" class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                <tbody>
+
+                                    <tr
+                                        *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td style="padding: 0px;">{{pem.familyNumber}}</td>
+                                        <td style="padding: 0px;">{{pem.firstName}}</td>
+                                        <td style="padding: 0px;">{{pem.childName}}</td>
+                                        <td style="padding: 0px;">{{pem.childAge}}</td>
+                                        <td style="padding: 0px;" class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
                                             : pem.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : pem.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
-                                                    class="fa fa-circle fa-lg"></i></td>
-                                            <td class="btn-link"
-                                                style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
-                                                (click)="openModal(pemData, pem.childId, pem.childAge,pem)">View
-                                            </td>
-                                            <td style="padding: 0px;" *ngIf="createMode"> <i class="fa fa-plus" title="Create PEM"
-                                                    (click)="addPemModal(addPem, pem.childId, pem)"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                                class="fa fa-circle fa-lg"></i></td>
+                                        <td class="btn-link"
+                                            style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
+                                            (click)="openModal(pemData, pem.childId, pem.childAge,pem)">View
+                                        </td>
+                                        <td style="padding: 0px;" *ngIf="createMode"> <i class="fa fa-plus"
+                                                title="Create PEM" (click)="addPemModal(addPem, pem.childId, pem)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
 
-                                </table>
-                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls>
+                            </table>
+                            <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                            </pagination-controls>
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                </form>
             </div>
         </div>
     </div>
@@ -339,7 +339,9 @@
                         <td>{{item.visitingHcareCenter}}</td>
                         <td><i class="fas fa-edit" title="Edit PEM" *ngIf="updateMode"
                                 (click)="editPEMData(item,i,editPem,item.pemCounsellingDataMasterId)"> </i>
-                            <i class="fas fa-trash" title="Delete PEM" *ngIf="deleteMode" (click)="deletePEMData(item, i)"></i></td>
+                            <i class="fas fa-trash" title="Delete PEM" *ngIf="deleteMode"
+                                (click)="deletePEMData(item, i)"></i>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -884,7 +886,7 @@
                                 'is-invalid': e.pemDate.invalid && e.pemDate.touched,
                                 'is-valid':
                                   e.pemDate.valid && (e.pemDate.dirty || e.pemDate.touched)
-                              }" [min]="childDob" [max]="today"/>
+                              }" [min]="childDob" [max]="today" />
                         <div *ngIf="e.pemDate.errors" class="invalid-feedback">
                             <div *ngIf="e.pemDate.errors.required">
                                 Date of record keeping is required

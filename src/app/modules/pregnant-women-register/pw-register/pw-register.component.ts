@@ -70,8 +70,6 @@ export class PwRegisterComponent implements OnInit {
       console.log(this.blockID, ' this.blockID ');
       console.log(this.gpID, 'this.gpID');
       console.log(this.villageID, ' this.villageID ');
-
-
     });
 
     let JSONDatas = { regionID: this.regionID, branchID: this.branchID, blockID: this.blockID, gpID: this.gpID, villageID: this.villageID }

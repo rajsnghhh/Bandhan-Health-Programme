@@ -1090,10 +1090,7 @@ class DailyActivityRegisterComponent {
         this.darViewChildList = this.editListCheck.darChildList;
         this.editForms();
         let req = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             villageId: this.editListCheck.villageId,
             userId: this.sidebarService.userId
         };
@@ -1108,10 +1105,7 @@ class DailyActivityRegisterComponent {
             });
         }, 500);
         let post = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
         };
         this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
@@ -1125,10 +1119,7 @@ class DailyActivityRegisterComponent {
         this.darViewChildList = this.editListCheck.darChildList;
         this.editForms();
         let req = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             villageId: this.editListCheck.villageId,
             userId: this.sidebarService.userId
         };
@@ -1143,10 +1134,7 @@ class DailyActivityRegisterComponent {
             });
         }, 500);
         let post = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
         };
         this.dailyActivityService.visitPurposeData(post).subscribe((res) => {
@@ -1177,10 +1165,7 @@ class DailyActivityRegisterComponent {
     delete(item, i) {
         console.log(item);
         let obj = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             darMasterId: item.dailyActivityRegisterMasterId,
             familyId: item.familyId,
             visitDate: item.darVisitDate,
@@ -1219,10 +1204,7 @@ class DailyActivityRegisterComponent {
             ssid = null;
         }
         let obj = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             darMasterId: item.dailyActivityRegisterMasterId,
             familyId: item.familyId,
             visitDate: item.darVisitDate,

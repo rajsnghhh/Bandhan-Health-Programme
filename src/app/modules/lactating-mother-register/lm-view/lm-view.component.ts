@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -36,10 +37,17 @@ export class LmViewComponent implements OnInit, DoCheck {
   lmrSearch: string | number;
   loader: boolean = false;
   createUpdateMode: boolean;
+  setStatus: any;
+  familyID: any;
+  regionID: any;
+  branchID: any;
+  blockID: any;
+  gpID: any;
+  villageID: any;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe,
-    public validationService: ValidationService,) { }
+    public validationService: ValidationService, private activatedRoute: ActivatedRoute) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -47,41 +55,64 @@ export class LmViewComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
-    this.createForm();
-    this.getLactatingMotherList();
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.setStatus = params['status'];
+      this.familyID = params['familyID'];
+      this.regionID = params['regionID'];
+      this.branchID = params['branchID'];
+      this.blockID = params['blockID'];
+      this.gpID = params['gpID'];
+      this.villageID = params['villageID'];
+      console.log(params, 'params');
+      console.log(this.familyID, 'familyID');
+      console.log(this.regionID, ' this.regionID');
+      console.log(this.branchID, ' this.branchID');
+      console.log(this.blockID, ' this.blockID ');
+      console.log(this.gpID, 'this.gpID');
+      console.log(this.villageID, ' this.villageID ');
+    });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
-
-    let Dto = {
-      dataAccessDTO: dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
-        }
-      })
-    }
-
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.regionBranchHide = false;
+    if (this.setStatus == 'viewCentralLM') {
+      this.getLactatingMotherList(this.villageID)
     } else {
-      this.regionBranchHide = true;
-    }
 
-    this.createUpdateMode = this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
-      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+      this.createForm();
+      this.getLactatingMotherList();
+
+      let dataAccessDTO = {
+        userId: this.sidebarService.userId,
+        userName: this.sidebarService.loginId,
+      }
+
+      let Dto = {
+        dataAccessDTO: dataAccessDTO,
+        branchId: this.sidebarService.branchId
+      }
+
+      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch1');
+          }
+        })
+      }
+
+      this.regionList = this.sidebarService.listOfRegion;
+      this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        this.regionBranchHide = false;
+      } else {
+        this.regionBranchHide = true;
+      }
+
+      this.createUpdateMode = this.sidebarService.subMenuList
+        .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+        .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
+        .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    }
   }
 
   /* on change Region dropdown getting Branch list */
@@ -195,6 +226,11 @@ export class LmViewComponent implements OnInit, DoCheck {
     this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
       this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
       this.loader = true;
+      if (this.setStatus == 'viewCentralLM') {
+        var setData = this.lactatingmotherregister.filter(fam => fam.familyDetailId == this.familyID);
+        console.log(setData);
+        this.lactatingmotherregister = setData;
+      }
     }, error => {
       this.loader = true;
     }

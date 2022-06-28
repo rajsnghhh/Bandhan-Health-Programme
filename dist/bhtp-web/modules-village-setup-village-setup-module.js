@@ -977,12 +977,11 @@ class VillageSetupComponent {
         }
     }
     changeGp(GPID) {
-        var _a, _b;
         console.log(GPID);
         this.gpId = GPID;
         this.GPType = this.gpList.find(gp => gp.gpMunicipalId == this.gpId);
         console.log(this.GPType, 'GPType');
-        let obj = { dataAccessDTO: { userId: (_a = this.sidebarService) === null || _a === void 0 ? void 0 : _a.userId, userName: (_b = this.sidebarService) === null || _b === void 0 ? void 0 : _b.loginId }, gpId: this.gpId };
+        let obj = { dataAccessDTO: this.httpService.dataAccessDTO, gpId: this.gpId };
         this.villageService.getVillageListByGpId(obj).subscribe((res) => {
             this.villList = res.responseObject;
             console.log(this.villList);
@@ -1035,10 +1034,7 @@ class VillageSetupComponent {
         this.villCreateForm.value.village = this.validationService.firstCaps(this.villCreateForm.value.village.trim());
         if (this.villCreateForm.valid) {
             let obj = {
-                dataAccessDTO: {
-                    userId: this.sidebarService.userId,
-                    userName: this.sidebarService.loginId
-                },
+                dataAccessDTO: this.httpService.dataAccessDTO,
                 villageCreationDto: {
                     villageMasterId: this.villageId ? this.villageId : 0,
                     villageName: this.validationService.camelize(this.villCreateForm.value.village.trim()),
@@ -1098,10 +1094,7 @@ class VillageSetupComponent {
     }
     delete(vill, i) {
         let obj = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             villageCreationDto: {
                 villageMasterId: vill.villageMasterId,
                 villageName: vill.villageName,

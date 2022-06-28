@@ -1,66 +1,12 @@
-.QA_section .QA_table .table thead th {
-  padding: 12px 25px;
-}
-
-.modal-content {
-  height: 500px;
-  overflow-x: hidden;
-  width: 800px;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.close {
-  margin-left: 510px;
-}
-
-.white_box {
-  padding: 30px;
-}
-
-fieldset.scheduler-border {
-  border: 1px groove #ddd !important;
-  padding: 0 1.4em 1.4em 1.4em !important;
-  margin: 0 0 1.5em 0 !important;
-}
-
-legend.scheduler-border {
-  border: 1px groove #ddd !important;
-  background-color: gray;
-  width: 150px;
-  color: #ddd;
-  font-size: 1.2em !important;
-  font-weight: bold !important;
-  font-family: ui-sans-serif;
-}
-
-#table_wrapper .table thead {
-  border-bottom: 0 solid transparent;
-  background-color: #fff;
-  padding: 17px 30px;
-  line-height: 16px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #ffffff;
-  white-space: nowrap;
-  text-transform: capitalize;
-  font-family: "Rajdhani", sans-serif;
-  border: 0;
-  background: #499;
-  text-align: center;
-}
-
 .search_inner button {
   padding-right: 1px;
   margin-left: 330px;
-  height: 63%;
+  margin-top: 5;
 }
 
 .search_inner_fullscreen button {
   padding-right: 1px;
-  margin-left: 625px;
+  margin-left: 850px;
   position: absolute;
   left: 0;
   top: 0;
@@ -75,12 +21,12 @@ legend.scheduler-border {
 
 .search_inner input {
   width: 70%;
-  margin-left: 474px;
+  margin-left: 690px;
 }
 
 .search_inner_fullscreen input {
   width: 74%;
-  margin-left: 630px;
+  margin-left: 850px;
   font-size: 13px;
   height: 40px;
   border-radius: 5px;
@@ -92,5 +38,11 @@ legend.scheduler-border {
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: 140px;
+  margin-left: 350px;
+}
+
+.search_inner_fullscreen i {
+  margin-right: 10px;
+  font-size: large;
+  margin-top: 8px;
 }

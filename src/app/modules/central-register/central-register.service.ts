@@ -35,17 +35,12 @@ export class CentralRegisterService {
     return this.http.post(`${this.baseURL}baselinesurvey/saveOrUpdate`, obj)
   }
 
-  // viewCentralRegister(obj): any {
-  //   return this.http.post(`${this.baseURL}baselinesurvey/view`, obj)
-  // }
-
   viewDetailsCentralRegister(obj): any {
     return this.http.post(`${this.baseURL}familydetail/view`, obj)
   }
 
   deleteFamily(obj): any {
     return this.http.post(`${this.baseURL}familydetail/saveOrUpdate`, obj)
-
   }
 
   listOfRegionsOfUser(obj): any {
