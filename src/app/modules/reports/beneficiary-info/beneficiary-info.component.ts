@@ -25,6 +25,7 @@ export class BeneficiaryInfoComponent implements OnInit {
     dataAccessDTO: this.httpService.dataAccessDTO,
   };
   loader: boolean = true;
+  tableHeadName: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService,) { }
@@ -55,8 +56,10 @@ export class BeneficiaryInfoComponent implements OnInit {
   changeProject(projectId) {
     if (projectId != '' && projectId != 'all') {
       this.selectFilter = true;
+      this.tableHeadName = "Project";
     } else {
       this.selectFilter = false;
+      this.tableHeadName = "";
     }
     this.stateWiseFilter = false;
     this.regionWiseFilter = false;
@@ -170,6 +173,10 @@ export class BeneficiaryInfoComponent implements OnInit {
 
   generateReport() {
     if (this.stateWiseFilter == true) {
+      this.tableHeadName = this.locationForm.get('state').value ? this.locationForm.get('district').value
+        ? this.locationForm.get('block').value
+          ? this.locationForm.get('gp').value
+            ? "Village" : `GP/Muni` : "Block" : "District" : "State"
       let Dto1 = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         projectMasterId: this.locationForm.get('project').value,
@@ -188,6 +195,7 @@ export class BeneficiaryInfoComponent implements OnInit {
       });
     }
     else if (this.regionWiseFilter = true) {
+      this.tableHeadName = this.locationForm.get('region').value ? "Branch" : "Region"
       let Dto1 = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         projectMasterId: this.locationForm.get('project').value,

@@ -72,7 +72,7 @@
             >
               <option value="">-- Select Project of selected Sub-Verticle --</option>
               <option *ngFor="let subVerticleProject of subVerticleProjectList" [value]="subVerticleProject.projectMasterId">
-                {{subVerticleProject.projectName}}
+                {{subVerticleProject.projectCode}}
               </option>
             </select>
             <div *ngIf="f.subVerticleProject .errors" class="invalid-feedback">

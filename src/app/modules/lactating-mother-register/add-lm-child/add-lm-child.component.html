@@ -51,7 +51,7 @@
         <div class="row">
           <div class="form-group col-md-4">
             <div class="form-group col-md">
-              <label for="firstVisitDate">First Visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <label for="firstVisitDate">First Visit Date:</label>
               <input type="date" class="form-control" formControlName="firstVisitDate" [min]="childDob" [max]="maxFirstVisit"
                 (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.firstVisitDate.invalid && f.firstVisitDate.touched,
@@ -66,7 +66,7 @@
 
           <div class="form-group col-md-4">
             <div class="form-group col-md">
-              <label for="secondVisitDate">Second visit Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <label for="secondVisitDate">Second visit Date:</label>
               <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit" [max]="maxFirstVisit"
                 placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.secondVisitDate.invalid && f.secondVisitDate.touched,

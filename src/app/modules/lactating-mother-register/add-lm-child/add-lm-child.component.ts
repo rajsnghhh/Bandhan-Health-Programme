@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { ValidationService } from '../../shared/services/validation.service';
   templateUrl: './add-lm-child.component.html',
   styleUrls: ['./add-lm-child.component.css']
 })
-export class AddLmChildComponent implements OnInit {
+export class AddLmChildComponent implements OnInit, AfterContentInit {
 
   panelOpenState: boolean;
   childBirthForm: FormGroup;
@@ -57,7 +57,6 @@ export class AddLmChildComponent implements OnInit {
     } else {
       this.maxFirstVisit = after6date;
     }
-
     this.muacRec6MinmaxDate();
     this.muacRec12MinmaxDate();
     this.muacRec18MinmaxDate();
@@ -73,6 +72,11 @@ export class AddLmChildComponent implements OnInit {
       this.lmMuacList();
       this.childBirthForm.disable();
     }
+  }
+
+  ngAfterContentInit(): void {
+    this.childBirthForm.controls['secondVisitDate'].disable();
+
   }
 
   /* get the childWiselactatingmotherMUACList & 
@@ -135,7 +139,7 @@ export class AddLmChildComponent implements OnInit {
     let m1 = dateString?.indexOf("month");
     let month = parseInt(dateString?.slice(m + 2, m1 - 1));
 
-    if (year <= 0 && month <= 6) {
+    if (year <= 0 && month < 6) {
       this.after6m = true;
       this.after12m = true;
       this.after18m = true;
@@ -149,7 +153,7 @@ export class AddLmChildComponent implements OnInit {
       this.childBirthForm.get('muac6month').setValidators(Validators.required);
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
     }
-    else if (year >= 1 && year < 2 && month <= 6) {
+    else if (year >= 1 && year < 2 && month < 6) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = true;
@@ -213,8 +217,8 @@ export class AddLmChildComponent implements OnInit {
       muac12month: ['', Validators.compose([this.muacRange])],
       muac18month: ['', Validators.compose([this.muacRange])],
       muac24month: ['', Validators.compose([this.muacRange])],
-      firstVisitDate: ['', Validators.required],
-      secondVisitDate: ['', Validators.required],
+      firstVisitDate: [''],
+      secondVisitDate: [''],
       checkChildDeath: [null],
       deathOfChildDate: [null],
       comment: [''],
@@ -227,6 +231,8 @@ export class AddLmChildComponent implements OnInit {
   /* Restrict the second date depending on First visit date */
   restrictSecondDate(date) {
     this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
+    this.childBirthForm.controls.secondVisitDate.setValue(null);
+    this.childBirthForm.controls['secondVisitDate'].enable();
   }
 
   /* make child death comment required 
@@ -563,7 +569,6 @@ export class AddLmChildComponent implements OnInit {
             this.showError(res.message);
           }
         });
-
       }
     }
   }

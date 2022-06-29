@@ -109,7 +109,6 @@ export class LmViewComponent implements OnInit, DoCheck {
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.region == '') {
-
       this.villagesOfBranch = [];
       this.gpDtoList = [];
       this.villageDtoList = [];
@@ -128,13 +127,11 @@ export class LmViewComponent implements OnInit, DoCheck {
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch2');
     })
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.branch == '') {
-
       this.villagesOfBranch = [];
       this.gpDtoList = [];
       this.villageDtoList = [];
@@ -147,18 +144,18 @@ export class LmViewComponent implements OnInit, DoCheck {
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.block == '') {
-
       this.gpDtoList = [];
       this.villageDtoList = [];
     }
   }
   /* on change GP dropdown getting Village list */
   changeGp(gpName) {
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList.map((i) => {
+      return (i.villageName)
+    }).sort();
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.gp == '') {
-
       this.villageDtoList = [];
     }
   }

@@ -109,7 +109,7 @@
                 }">
                 <option value="">-- Select Village --</option>
                 <option *ngFor="let vill of villageDtoList">
-                  {{ vill.villageName }}
+                  {{ vill}}
                 </option>
               </select>
               <div *ngIf="f.gram.errors" class="invalid-feedback">
@@ -131,6 +131,7 @@
                     <th>SL No</th>
                     <th>Family No.</th>
                     <th>Mother Name</th>
+                    <th>Mother Age</th>
                     <th>Child Name</th>
                     <th>Child Sex</th>
                     <th>Child Age</th>
@@ -146,6 +147,7 @@
                     <td>{{i+1}}</td>
                     <td>{{item.familyNumber}}</td>
                     <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                    <td>{{item.age}}</td>
                     <td>{{item.childName}}</td>
                     <td>{{item.sex}}</td>
                     <td>{{item.childAge}}</td>
