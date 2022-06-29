@@ -165,7 +165,7 @@
                     <div class="form-group col-md">
                         <label for="ssName">Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" placeholder="Swasthya Sahayika Name"
-                            formControlName="ssName" maxlength="20"
+                            formControlName="ssName" maxlength="55"
                             (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                             style="text-transform: capitalize" [ngClass]="{'is-invalid': c.ssName.invalid && c.ssName.touched,'is-valid': c.ssName.valid && 
                             (c.ssName.dirty || c.ssName.touched)}" />
@@ -182,7 +182,7 @@
                     <div class="form-group col-md">
                         <label for="husbandName">Husband/Guardian’s:&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" maxlength="20" placeholder="Husband Name"
+                        <input type="text" class="form-control" maxlength="55" placeholder="Husband Name"
                             formControlName="husbandName" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                             style="text-transform: capitalize" [ngClass]="{'is-invalid': c.husbandName.invalid && c.husbandName.touched,
                             'is-valid': c.husbandName.valid && (c.husbandName.dirty || c.husbandName.touched)}" />

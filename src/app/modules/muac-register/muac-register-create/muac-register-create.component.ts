@@ -49,7 +49,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   createMode: boolean;
 
 
-  constructor(private http: HttpService, private muacService: MuacRegisterService,
+  constructor(private httpService: HttpService, private muacService: MuacRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private router: Router,
     private fb: FormBuilder, private sidebarService: SidebarService) { }
 
@@ -65,13 +65,9 @@ export class MuacRegisterCreateComponent implements OnInit {
       createdDateTime: new Date().toISOString().slice(0, 10)
     });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
 
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -108,10 +104,7 @@ export class MuacRegisterCreateComponent implements OnInit {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
 
@@ -138,10 +131,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -168,10 +158,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   muacListData(branchId) {
     let obj = {
       activeStatus: 'A',
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       id: branchId
     }
 
@@ -276,10 +263,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
     let postBody = {
       activeStatus: 'A',
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
@@ -369,10 +353,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   saveEditMuac() {
     let postBody = {
       activeStatus: 'A',
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
@@ -427,10 +408,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   deleteMuac(item, i) {
     const post = {
       activeStatus: "A",
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId,
       muacCampId: item.muacCampId,
       status: 'D',

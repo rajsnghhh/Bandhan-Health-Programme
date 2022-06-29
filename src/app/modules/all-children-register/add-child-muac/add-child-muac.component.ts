@@ -57,10 +57,7 @@ export class AddChildMuacComponent implements OnInit {
 
     let obj = {
       activeStatus: 'A',
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       id: this.sidebarService.branchId
     }
     this.muacService.muacCampList(obj).subscribe((response: any) => {

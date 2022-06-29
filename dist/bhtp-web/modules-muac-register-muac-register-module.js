@@ -378,8 +378,8 @@ function MuacRegisterCreateComponent_ng_template_49_Template(rf, ctx) { if (rf &
 } }
 const _c0 = function (a0, a1) { return { "is-invalid": a0, "is-valid": a1 }; };
 class MuacRegisterCreateComponent {
-    constructor(http, muacService, modalService, toaster, router, fb, sidebarService) {
-        this.http = http;
+    constructor(httpService, muacService, modalService, toaster, router, fb, sidebarService) {
+        this.httpService = httpService;
         this.muacService = muacService;
         this.modalService = modalService;
         this.toaster = toaster;
@@ -404,12 +404,8 @@ class MuacRegisterCreateComponent {
             userId: 100,
             createdDateTime: new Date().toISOString().slice(0, 10)
         });
-        let dataAccessDTO = {
-            userId: this.sidebarService.userId,
-            userName: this.sidebarService.loginId,
-        };
         let Dto = {
-            dataAccessDTO: dataAccessDTO,
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
         if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
@@ -429,13 +425,10 @@ class MuacRegisterCreateComponent {
             .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _g === void 0 ? void 0 : _g.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)) === null || _h === void 0 ? void 0 : _h.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _j === void 0 ? void 0 : _j.accessType) ? true : false;
     }
     changeRegion(region) {
-        var _a, _b, _c;
+        var _a;
         let regionId = (_a = this.regionList.find((reg) => reg.regionName == region)) === null || _a === void 0 ? void 0 : _a.regionMasterId;
         let req = {
-            dataAccessDTO: {
-                userId: (_b = this.sidebarService) === null || _b === void 0 ? void 0 : _b.userId,
-                userName: (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             regionId: regionId,
         };
         this.muacService.listOfBranchesOfARegion(req).subscribe((res) => {
@@ -455,10 +448,7 @@ class MuacRegisterCreateComponent {
         this.sidebarService.branchId = (_b = (_a = this.branchList) === null || _a === void 0 ? void 0 : _a.find(bran => bran.branchName == branch)) === null || _b === void 0 ? void 0 : _b.branchId;
         this.sidebarService.branchName = this.locationForm.get('branch').value;
         let Dto = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
         this.muacService.villagesOfBranch(Dto).subscribe((res) => {
@@ -481,10 +471,7 @@ class MuacRegisterCreateComponent {
     muacListData(branchId) {
         let obj = {
             activeStatus: 'A',
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             id: branchId
         };
         //API call for viewing muacList
@@ -571,10 +558,7 @@ class MuacRegisterCreateComponent {
     saveMuac() {
         let postBody = {
             activeStatus: 'A',
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId,
             projectMasterId: this.muacList.projectMasterId,
             projectName: this.muacList.projectName,
@@ -653,10 +637,7 @@ class MuacRegisterCreateComponent {
     saveEditMuac() {
         let postBody = {
             activeStatus: 'A',
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId,
             projectMasterId: this.muacList.projectMasterId,
             projectName: this.muacList.projectName,
@@ -704,10 +685,7 @@ class MuacRegisterCreateComponent {
     deleteMuac(item, i) {
         const post = {
             activeStatus: "A",
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId,
             muacCampId: item.muacCampId,
             status: 'D',

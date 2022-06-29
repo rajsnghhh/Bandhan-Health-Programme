@@ -301,10 +301,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     this.editForms();
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       villageId: this.editListCheck.villageId,
       userId: this.sidebarService.userId
     }
@@ -323,10 +320,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     }, 500)
 
     let post = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
     }
 
@@ -346,10 +340,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     this.editForms();
 
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       villageId: this.editListCheck.villageId,
       userId: this.sidebarService.userId
     }
@@ -368,10 +359,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     }, 500)
 
     let post = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       dailyActivityRegisterMasterId: this.editListCheck.dailyActivityRegisterMasterId
     }
 
@@ -416,10 +404,7 @@ export class DailyActivityRegisterComponent implements OnInit {
     console.log(item);
 
     let obj = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       darMasterId: item.dailyActivityRegisterMasterId,
       familyId: item.familyId,
       visitDate: item.darVisitDate,
@@ -469,10 +454,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
 
     let obj = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       darMasterId: item.dailyActivityRegisterMasterId,
       familyId: item.familyId,
       visitDate: item.darVisitDate,

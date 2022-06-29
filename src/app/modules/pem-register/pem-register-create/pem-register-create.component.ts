@@ -1,9 +1,8 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
@@ -64,11 +63,18 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   deleteMode: boolean;
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
   childDob: string;
+  setStatus: any;
+  familyID: any;
+  regionID: any;
+  branchID: any;
+  blockID: any;
+  gpID: any;
+  villageID: any;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    private route: Router, private httpBranch: BranchService,
-    public validationService: ValidationService, private sidebarService: SidebarService) { }
+    private route: Router, public validationService: ValidationService, private sidebarService: SidebarService,
+    private activatedRoute: ActivatedRoute) { }
 
 
   ngDoCheck(): void {
@@ -92,34 +98,50 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
 
-    this.locForm();
-    this.createForm(this.pemDataSave);
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.setStatus = params['status'];
+      this.familyID = params['familyID'];
+      this.regionID = params['regionID'];
+      this.branchID = params['branchID'];
+      this.blockID = params['blockID'];
+      this.gpID = params['gpID'];
+      this.villageID = params['villageID'];
+      console.log(params, 'params');
+      console.log(this.familyID, 'familyID');
+      console.log(this.regionID, ' this.regionID');
+      console.log(this.branchID, ' this.branchID');
+      console.log(this.blockID, ' this.blockID ');
+      console.log(this.gpID, 'this.gpID');
+      console.log(this.villageID, ' this.villageID ');
+    });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
+    if (this.setStatus == 'viewCentralPEM') {
+      this.viewPEMList();
+    } else {
+      this.locForm();
+      this.createForm(this.pemDataSave);
 
-    let Dto = {
-      dataAccessDTO: dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-
-    setTimeout(() => {
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.pemService.villagesOfBranch(Dto).subscribe((res) => {
-          if (res.sessionDTO.status == true) {
-            this.villagesOfBranch = res.responseObject;
-            console.log(this.villagesOfBranch, 'villagesOfBranch1');
-          }
-        })
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        branchId: this.sidebarService.branchId
       }
-    }, 1000);
 
 
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
+      setTimeout(() => {
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+          this.pemService.villagesOfBranch(Dto).subscribe((res) => {
+            if (res.sessionDTO.status == true) {
+              this.villagesOfBranch = res.responseObject;
+              console.log(this.villagesOfBranch, 'villagesOfBranch1');
+            }
+          })
+        }
+      }, 1000);
+
+
+      this.regionList = this.sidebarService.listOfRegion;
+      this.regionBranchHide = this.sidebarService.regionBranchHide;
+    }
   }
 
   changeRegion(region) {
@@ -127,10 +149,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.loader = false;
@@ -164,10 +183,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.loader = false;
@@ -418,12 +434,18 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   viewPEMList() {
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      villageMasterId: this.villageMasterId
+      villageMasterId: this.villageID ? this.villageID : this.villageMasterId
     }
 
     this.pemService.viewPemList(obj).subscribe((res) => {
       this.pemDetails = res.responseObject;
       console.log(this.pemDetails);
+
+      if (this.setStatus == 'viewCentralPEM') {
+        var setData = this.pemDetails.filter(fam => fam.familyDetailId == this.familyID);
+        console.log(setData);
+        this.pemDetails = setData;
+      }
     })
 
   }

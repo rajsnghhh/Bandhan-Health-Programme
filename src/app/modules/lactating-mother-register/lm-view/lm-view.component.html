@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <form class="form-signin" [formGroup]="locationForm">
+        <form class="form-signin" [formGroup]="locationForm" *ngIf="setStatus != 'viewCentralLM'">
 
           <div class="row" *ngIf="regionBranchHide">
             <div class="form-group col-md">
@@ -136,7 +136,7 @@
                     <th>Child Sex</th>
                     <th>Child Age</th>
                     <th>Last MUAC <br> collected</th>
-                    <th>Current Status</th>
+                    <th>Current<br>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>

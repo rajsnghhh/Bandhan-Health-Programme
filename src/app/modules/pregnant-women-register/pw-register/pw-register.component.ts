@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { PwStatusComponent } from '../pw-status/pw-status.component';
-import { PwViewComponent } from '../pw-view/pw-view.component';
 import { SinglePwListComponent } from '../single-pw-list/single-pw-list.component';
 
 @Component({
@@ -42,35 +42,62 @@ export class PwRegisterComponent implements OnInit {
   page = 1;
   pageSize = 6;
   loader: boolean = true;
+  setStatus: any;
+  familyID: any;
+  regionID: any;
+  branchID: any;
+  blockID: any;
+  gpID: any;
+  villageID: any;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,) { }
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.createForm();
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.setStatus = params['status'];
+      this.familyID = params['familyID'];
+      this.regionID = params['regionID'];
+      this.branchID = params['branchID'];
+      this.blockID = params['blockID'];
+      this.gpID = params['gpID'];
+      this.villageID = params['villageID'];
+      console.log(params, 'params');
+      console.log(this.familyID, 'familyID');
+      console.log(this.regionID, ' this.regionID');
+      console.log(this.branchID, ' this.branchID');
+      console.log(this.blockID, ' this.blockID ');
+      console.log(this.gpID, 'this.gpID');
+      console.log(this.villageID, ' this.villageID ');
+    });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
+    let JSONDatas = { regionID: this.regionID, branchID: this.branchID, blockID: this.blockID, gpID: this.gpID, villageID: this.villageID }
+    localStorage.setItem("datas", JSON.stringify(JSONDatas));
+
+    if (this.setStatus == 'viewCentral') {
+      this.getPregnantWomenList(this.villageID)
+    } else {
+      this.createForm();
+
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        branchId: this.sidebarService.branchId
+      }
+
+
+      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+            console.log(this.villagesOfBranch, 'villagesOfBranch1');
+          }
+        })
+      }
+
+      this.regionList = this.sidebarService.listOfRegion;
+      this.regionBranchHide = this.sidebarService.regionBranchHide; ``
     }
-
-    let Dto = {
-      dataAccessDTO: dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
-        }
-      })
-    }
-
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
@@ -82,10 +109,7 @@ export class PwRegisterComponent implements OnInit {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
@@ -112,10 +136,7 @@ export class PwRegisterComponent implements OnInit {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
@@ -186,7 +207,13 @@ export class PwRegisterComponent implements OnInit {
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.allPregnantWomenList = res.responseObject?.pregnantWomanList;
       this.nonPregnantWomenList = res.responseObject?.nonPregnantWomanList;
+      console.log(this.allPregnantWomenList);
       this.loader = true;
+      if (this.setStatus == 'viewCentral') {
+        var setData = this.allPregnantWomenList.filter(fam => fam.familyDetailId == this.familyID);
+        console.log(setData);
+        this.allPregnantWomenList = setData;
+      }
     }, error => {
       this.showError('Error');
       this.loader = true;
@@ -205,7 +232,11 @@ export class PwRegisterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.villageMasterId)
+      if (this.setStatus == 'viewCentral') {
+        this.getPregnantWomenList(this.villageID)
+      } else
+        this.getPregnantWomenList(this.villageMasterId);
+
     });
   }
 
@@ -217,7 +248,11 @@ export class PwRegisterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.villageMasterId);
+      if (this.setStatus == 'viewCentral') {
+        this.getPregnantWomenList(this.villageID)
+      } else
+        this.getPregnantWomenList(this.villageMasterId);
+
     });
   }
 

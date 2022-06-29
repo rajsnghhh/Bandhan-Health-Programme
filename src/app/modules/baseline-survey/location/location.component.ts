@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
 
@@ -26,6 +27,7 @@ export class LocationComponent implements OnInit {
 
 
   constructor(
+    private httpService: HttpService,
     private fb: FormBuilder,
     private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService
@@ -42,10 +44,7 @@ export class LocationComponent implements OnInit {
 
   getLocationHco() {
     let dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -67,10 +66,7 @@ export class LocationComponent implements OnInit {
 
 
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
@@ -108,10 +104,7 @@ export class LocationComponent implements OnInit {
     this.sidebarService.branchName = this.locationForm.get('branch').value;
     
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
@@ -154,10 +147,7 @@ export class LocationComponent implements OnInit {
     let villId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.sidebarService.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       villageId: villId,
       userId: this.sidebarService.userId
     }

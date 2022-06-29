@@ -116,10 +116,10 @@ const environment = {
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // Staging
-    apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+    // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
-    // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
+    apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
     // Soumen Machine
     // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
     // Chayan Machine
@@ -478,7 +478,7 @@ class SidebarComponent {
         if (routeId == 206) {
             this.router.navigate(['/remap-user-ss']);
         }
-        if (routeId == 208) {
+        if (routeId == 207) {
             this.router.navigate(['/close-baseline']);
         }
     }

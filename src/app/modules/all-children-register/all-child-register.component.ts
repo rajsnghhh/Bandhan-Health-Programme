@@ -55,13 +55,13 @@ export class AllChildRegisterComponent implements OnInit {
     this.createForm();
     this.getChildrenList();
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
+    // let dataAccessDTO = {
+    //   userId: this.sidebarService.userId,
+    //   userName: this.sidebarService.loginId,
+    // }
 
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -93,10 +93,7 @@ export class AllChildRegisterComponent implements OnInit {
       (reg) => reg.regionName == region
     )?.regionMasterId;
     let req = {
-      dataAccessDTO: {
-        userId: this.sidebarService?.userId,
-        userName: this.sidebarService?.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
@@ -125,10 +122,7 @@ export class AllChildRegisterComponent implements OnInit {
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {

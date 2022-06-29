@@ -569,12 +569,12 @@ class AllChildRegisterComponent {
         var _a, _b, _c;
         this.createForm();
         this.getChildrenList();
-        let dataAccessDTO = {
-            userId: this.sidebarService.userId,
-            userName: this.sidebarService.loginId,
-        };
+        // let dataAccessDTO = {
+        //   userId: this.sidebarService.userId,
+        //   userName: this.sidebarService.loginId,
+        // }
         let Dto = {
-            dataAccessDTO: dataAccessDTO,
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
         if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
@@ -597,13 +597,10 @@ class AllChildRegisterComponent {
             .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
     }
     changeRegion(region) {
-        var _a, _b, _c;
+        var _a;
         let regionId = (_a = this.regionList.find((reg) => reg.regionName == region)) === null || _a === void 0 ? void 0 : _a.regionMasterId;
         let req = {
-            dataAccessDTO: {
-                userId: (_b = this.sidebarService) === null || _b === void 0 ? void 0 : _b.userId,
-                userName: (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             regionId: regionId,
         };
         this.baselineService.listOfBranchesOfARegion(req).subscribe((res) => {
@@ -629,10 +626,7 @@ class AllChildRegisterComponent {
         this.sidebarService.branchId = (_b = (_a = this.branchList) === null || _a === void 0 ? void 0 : _a.find(bran => bran.branchName == branch)) === null || _b === void 0 ? void 0 : _b.branchId;
         this.sidebarService.branchName = this.locationForm.get('branch').value;
         let Dto = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.sidebarService.branchId
         };
         this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
@@ -1480,10 +1474,7 @@ class AddChildMuacComponent {
         }
         let obj = {
             activeStatus: 'A',
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            },
+            dataAccessDTO: this.httpService.dataAccessDTO,
             id: this.sidebarService.branchId
         };
         this.muacService.muacCampList(obj).subscribe((response) => {

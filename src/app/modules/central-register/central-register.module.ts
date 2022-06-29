@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CentralRegisterRoutingModule } from './central-register-routing.module';
 import { CentralRegisterViewComponent } from './central-register-view/central-register-view.component';
 import { CentralRegisterCreateComponent } from './central-register-create/central-register-create.component';

@@ -1,45 +1,37 @@
 <app-loader [hidden]="loader"></app-loader>
 <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="white_box QA_section mb_30">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="white_box QA_section mb_30">
 
-          <div id="header-fixed" style="display: flex;">
-            <h2 class="page-title">Pregnant Woman Register</h2>
-  
-            <div class="box_right d-flex lms_block col-md-6">
-              <div class="serach_field_2">
-                  <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                      <form active="#">
-                          <div class="search_field">
-                              <input type="text" name="search" placeholder="Search pregnant info here..."
-                                  [(ngModel)]="pwSearch">
-                          </div>
-                          <button type="submit"> <i class="fa fa-search"></i> </button>
-                      </form>
+        <div id="header-fixed" style="display: flex;">
+          <h2 class="page-title">Pregnant Woman Register</h2>
+
+          <div class="box_right d-flex lms_block col-md-6">
+            <div class="serach_field_2">
+              <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                <form active="#">
+                  <div class="search_field">
+                    <input type="text" name="search" placeholder="Search pregnant info here..." [(ngModel)]="pwSearch">
                   </div>
+                  <button type="submit"> <i class="fa fa-search"></i> </button>
+                </form>
               </div>
+            </div>
           </div>
         </div>
 
-        <form class="form-signin" [formGroup]="locationForm">
+        <form class="form-signin" [formGroup]="locationForm" *ngIf="setStatus != 'viewCentral'">
 
-          <div  class="row" *ngIf="regionBranchHide">
+          <div class="row" *ngIf="regionBranchHide">
             <div class="form-group col-md">
-              <label for="region"
-                >Region :&nbsp;<span class="text-danger">*&nbsp;</span></label
-              >
-              <select
-                class="form-select"
-                (change)="changeRegion($event.target.value)"
-                formControlName="region"
-                id="region"
-                [ngClass]="{
+              <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region"
+                id="region" [ngClass]="{
                   'is-invalid': f.region.invalid && f.region.touched,
                   'is-valid':
                     f.region.valid && (f.region.dirty || f.region.touched)
-                }"
-              >
+                }">
                 <option value="">-- Select Region --</option>
                 <option *ngFor="let region of regionList">
                   {{region.regionName}}
@@ -49,24 +41,17 @@
                 <div *ngIf="f.region.errors.required">Region selection is required</div>
               </div>
             </div>
-        
+
             <div class="form-group col-md">
-              <label for="branch"
-                >Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label
-              >
-              <select
-                class="form-select"
-                (change)="changeBranch($event.target.value)"
-                formControlName="branch"
-                id="branch"
-                [ngClass]="{
+              <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <select class="form-select" (change)="changeBranch($event.target.value)" formControlName="branch"
+                id="branch" [ngClass]="{
                   'is-invalid': f.branch.invalid && f.branch.touched,
                   'is-valid':
                     f.branch.valid && (f.branch.dirty || f.branch.touched)
-                }"
-              >
+                }">
                 <option value="">-- Select Branch --</option>
-                <option *ngFor="let branch of branchList" >
+                <option *ngFor="let branch of branchList">
                   {{ branch.branchName }}
                 </option>
               </select>
@@ -74,9 +59,9 @@
                 <div *ngIf="f.branch.errors.required">Branch selection is required</div>
               </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
+          </div>
+          <br>
+          <div class="row">
             <div class="form-group col-md">
               <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <select class="form-select" (change)="changeBlock($event.target.value)" formControlName="block" id="block"
@@ -94,10 +79,11 @@
                 <div *ngIf="f.block.errors.required">Block selection is required</div>
               </div>
             </div>
-        
+
             <div class="form-group col-md">
               <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp" id="gp" [ngClass]="{
+              <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp" id="gp"
+                [ngClass]="{
                   'is-invalid': f.gp.invalid && f.gp.touched,
                   'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)
                 }">
@@ -112,7 +98,7 @@
                 </div>
               </div>
             </div>
-        
+
             <div class="form-group col-md">
               <label for="gram">Village/ Gram Sansad/ Locality
                 :&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -132,104 +118,103 @@
                 </div>
               </div>
             </div>
-        </div>
-    </form>
-    
-    <br>
-          <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event)" > 
+          </div>
+        </form>
 
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    Set Pregnancy Status
-                </ng-template>
-                <ng-template matTabContent>
-                    <div class="white_box_tittle list_header">
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+        <br>
+        <mat-tab-group animationDuration="500ms" (selectedTabChange)="tabChanged($event)">
 
-                                    <thead id="header-fixed">
-                                        <tr>
-                                            <th>SL<br>No</th>
-                                            <th>Family No.</th>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Current Pregnancy Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
+          <mat-tab *ngIf="setStatus != 'viewCentral'">
+            <ng-template mat-tab-label>
+              Set Pregnancy Status
+            </ng-template>
+            <ng-template matTabContent>
+              <div class="white_box_tittle list_header">
+                <div class="QA_table ">
+                  <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                      role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <tbody>
+                      <thead id="header-fixed">
+                        <tr>
+                          <th>SL No</th>
+                          <th>Family No.</th>
+                          <th>Name</th>
+                          <th>Age</th>
+                          <th>Current Pregnancy Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
 
-                                        <tr *ngFor="let item of nonPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                                            <td>{{item.familyNumber}}</td>
-                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
-                                            <td>{{item.age}}</td>
-                                            <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                                            <td><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </mat-tab>
+                      <tbody>
 
-            <mat-tab >
-                <ng-template mat-tab-label>
-                    Pregnant Woman Register 
-                </ng-template>
-                <ng-template matTabContent>
-                    <div class="white_box_tittle list_header">
-                        <div class="QA_table ">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table
-                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+                        <tr
+                          *ngFor="let item of nonPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td>{{item.familyNumber}}</td>
+                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td>{{item.age}}</td>
+                          <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
+                          <td><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                      (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </mat-tab>
 
-                                    <thead id="header-fixed">
-                                        <tr>
-                                            <th>SL No</th>
-                                            <th>Family No</th>
-                                            <th>Name</th>
-                                            <th>Husband <br>Name</th>
-                                            <th>Age</th>
-                                            <th>Current Pregnancy Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Pregnant Woman Register
+            </ng-template>
+            <ng-template matTabContent>
+              <div class="white_box_tittle list_header">
+                <div class="QA_table ">
+                  <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                      role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <tbody>
+                      <thead id="header-fixed">
+                        <tr>
+                          <th>SL No</th>
+                          <th>Family No</th>
+                          <th>Name</th>
+                          <th>Husband Name</th>
+                          <th>Age</th>
+                          <th>Current Pregnancy Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
 
-                                        <tr *ngFor="let item of allPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                                            <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                                            <td>{{item.familyNumber}}</td>
-                                            <td>{{item.firstName}}  {{item.middleName}}  {{item.lastName}}</td>
-                                            <td>{{item.husbandOrGuardianName}}</td>
-                                            <td>{{item.age}}</td>
-                                            <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                                            <td><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </mat-tab>
+                      <tbody>
 
-          </mat-tab-group>
-        </div>
+                        <tr
+                          *ngFor="let item of allPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
+                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td>{{item.familyNumber}}</td>
+                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td>{{item.husbandOrGuardianName}}</td>
+                          <td>{{item.age}}</td>
+                          <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
+                          <td><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                      (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </mat-tab>
+
+        </mat-tab-group>
+      </div>
     </div>
-</div>
-
+  </div>

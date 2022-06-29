@@ -1,11 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { BranchService } from '../../core/http/branch.service';
 import { HttpService } from '../../core/http/http.service';
-import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { CentralRegisterService } from '../central-register.service';
@@ -29,20 +25,16 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   p: any;
   page = 1;
   pageSize = 6;
-  // centralDetails: any;
-  // modalContent: any;
-  // modalReference: any;
-  // modalIndex: any;
-  // moreDetails: any;
-  // registerSearch: String;
-  // branchNames: string[];
-  // loader: boolean = false;
-  // villageNames: any[] = [];
-  // stateNames: any[] = [];
+  villageId: any;
+  regionId: any;
+  branchId: any;
+  blockId: any;
+  gpId: any;
+  localStorageData: any;
+  loader: boolean = true;
+  registerSearch: any;
 
-  constructor(private centralService: CentralRegisterService, private http: HttpService,
-    private modalService: NgbModal, private route: Router, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService, private httpBranch: BranchService,
+  constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
     public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService
   ) { }
 
@@ -51,7 +43,22 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+    this.localStorageData = JSON.parse(localStorage.getItem("datas"));
+    console.log(this.localStorageData, 'localstorage');
+
+    if (this.localStorageData) {
+      this.createForm();
+      this.changeRegion(this.localStorageData.regionID);
+      this.changeBranch(this.localStorageData.branchID);
+      setTimeout(() => {
+        this.changeBlock(this.localStorageData.blockID);
+        this.changeGp(this.localStorageData.gpID);
+        this.changeVillage(this.localStorageData.villageID);
+      }, 1000);
+    }
+
     this.createForm();
+
     let obj = { dataAccessDTO: this.http.dataAccessDTO }
     this.centralService.listOfRegionsOfUser(obj).subscribe((res) => {
       this.regionList = res.responseObject;
@@ -79,42 +86,20 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
 
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
-
-
-    // let obj = {
-    //   activeStatus: "A",
-    //   dataAccessDTO: this.http.dataAccessDTO,
-    //   id: 888
-    // }
-
-    // //API call for viewing centralRegister
-    // this.centralService.viewCentralRegister(obj).subscribe((response: any) => {
-    //   this.loader = true;
-    //   this.centralDetails = response.responseObject;
-    //   console.log(this.centralDetails);
-    // },
-    //   (err) => {
-    //     this.loader = true;
-    //   })
-
-
-    // this.httpBranch.listOfBranchUser().subscribe((res) => {
-    //   res.responseObject.map((arr) => {
-    //     // this.stateNames.push(arr.stateDTO.stateName)
-    //   })
-    //   console.log(res.responseObject);
-
-    // });
   }
 
   createForm() {
     this.centralViewForm = this.fb.group({
-      region: ['', Validators.required],
-      branch: ['', Validators.required],
-      block: ['', Validators.required],
-      gp: ['', Validators.required],
-      gram: ['', Validators.required],
+      region: [this.localStorageData?.regionID ? this.localStorageData?.regionID : '', Validators.required],
+      branch: [this.localStorageData?.branchID ? this.localStorageData?.branchID : '', Validators.required],
+      block: [this.localStorageData?.blockID ? this.localStorageData?.blockID : '', Validators.required],
+      gp: [this.localStorageData?.gpID ? this.localStorageData?.gpID : '', Validators.required],
+      gram: [this.localStorageData?.villageID ? this.localStorageData?.villageID : '', Validators.required],
     });
+
+    if (this.localStorageData) {
+      this.centralViewForm.markAllAsTouched();
+    }
   }
 
   get f() {
@@ -122,7 +107,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   changeRegion(regionId) {
-    console.log(regionId);
+    this.regionId = regionId;
+    console.log(this.regionId);
 
     let req = {
       dataAccessDTO: this.http.dataAccessDTO,
@@ -141,16 +127,22 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.centralViewForm.controls.block.setValue('');
     this.centralViewForm.controls.gp.setValue('');
     this.centralViewForm.controls.gram.setValue('');
+    this.villageList = [];
+    this.villagesOfBranch = [];
+    this.gpList = [];
+    this.centralDetails = [];
     if (!this.centralViewForm.value.region) {
       this.villageList = [];
       this.villagesOfBranch = [];
       this.gpList = [];
+      this.centralDetails = [];
     }
+
   }
 
   changeBranch(branchId) {
-
-    console.log(branchId);
+    this.branchId = branchId;
+    console.log(this.branchId);
 
     let Dto = {
       dataAccessDTO: {
@@ -165,207 +157,134 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     });
 
-    // this.locationForm.controls.block.setValue('');
-    // this.locationForm.controls.gp.setValue('');
-    // this.locationForm.controls.gram.setValue('');
-
-    // if (this.locationForm.value.branch == '') {
-    //   this.showError('No Data Found');
-    //   this.baselineDetails = [];
-    //   this.villageDtoList = [];
-    //   this.villagesOfBranch = [];
-    //   this.gpDtoList = [];
-    // }
+    this.centralViewForm.controls.block.setValue('');
+    this.centralViewForm.controls.gp.setValue('');
+    this.centralViewForm.controls.gram.setValue('');
+    this.villageList = [];
+    this.gpList = [];
+    this.centralDetails = [];
+    if (!this.centralViewForm.value.branch) {
+      this.centralViewForm.controls.block.setValue('');
+      this.centralViewForm.controls.gp.setValue('');
+      this.centralViewForm.controls.gram.setValue('');
+      this.villageList = [];
+      this.villagesOfBranch = [];
+      this.gpList = [];
+      this.centralDetails = [];
+    }
 
   }
 
   changeBlock(blockId) {
-    console.log(blockId);
+    this.blockId = blockId;
+    console.log(this.blockId);
 
     this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
 
-    // this.selectedBlock = this.locationForm.get('block').value;
-    // this.locationForm.controls.gp.setValue('');
-    // this.locationForm.controls.gram.setValue('');
-    // if (this.locationForm.value.block == '') {
-    //   this.showError('No Data Found');
-    //   this.baselineDetails = [];
-    //   this.villageDtoList = [];
-    //   this.gpDtoList = [];
-    // }
+    this.centralViewForm.controls.gp.setValue('');
+    this.centralViewForm.controls.gram.setValue('');
+    this.centralDetails = [];
+    if (!this.centralViewForm.value.block) {
+      this.centralViewForm.controls.gp.setValue('');
+      this.centralViewForm.controls.gram.setValue('');
+      this.villageList = [];
+      this.centralDetails = [];
+
+    }
+
   }
 
   changeGp(gpId) {
-    console.log(gpId);
+    this.gpId = gpId;
+    console.log(this.gpId);
 
     this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     console.log(this.villageList);
 
-    // this.selectedGp = this.locationForm.get('gp').value;
-    // this.locationForm.controls.gram.setValue('');
-    // if (this.locationForm.value.gp == '') {
-    //   this.showError('No Data Found');
-    //   this.baselineDetails = [];
-    //   this.villageDtoList = [];
-    // }
+    this.centralViewForm.controls.gram.setValue('');
+    this.centralDetails = [];
+    if (!this.centralViewForm.value.gp) {
+      this.centralViewForm.controls.gram.setValue('');
+      this.centralDetails = [];
+    }
   }
 
   changeVillage(villageId) {
-    console.log(villageId);
+    this.villageId = villageId;
+    console.log(this.villageId);
+    this.loader = false;
+    if (!this.centralViewForm.value.gram) {
+      this.loader = true;
+    }
 
     let obj = { dataAccessDTO: this.http.dataAccessDTO, villageId: villageId }
     this.centralService.viewCentralRegisterDetails(obj).subscribe((res) => {
       this.centralDetails = res.responseObject;
       console.log(this.centralDetails);
+      this.loader = true;
     });
-  }
 
-
-  routePWStatus(item) {
-    console.log(item.pregnantStatus, item.familyDetailId);
-    
-    if (item.pregnantStatus == 'Y') {
-      window.open('http://localhost:4200/#/pw-register', item.familyDetailId);
+    this.centralDetails = [];
+    if (!this.centralViewForm.value.gram) {
+      this.centralDetails = [];
     }
   }
 
+  routePWStatus(PWitem) {
+    if (PWitem.pregnantStatus == 'Y') {
+      console.log(PWitem);
+      //window.open('http://localhost:4200/#/pw-register');
+      this.route.navigate(['/pw-register'], {
+        queryParams: {
+          familyID: PWitem.familyDetailId,
+          status: 'viewCentral',
+          regionID: this.regionId,
+          branchID: this.branchId,
+          blockID: this.blockId,
+          gpID: this.gpId,
+          villageID: this.villageId,
+        }
+      });
+    }
+  }
 
+  routeLMStatus(LMitem) {
+    if (LMitem.lactatingWomanStatus == 'Y') {
+      console.log(LMitem);
+      this.route.navigate(['/lmr'], {
+        queryParams: {
+          familyID: LMitem.familyDetailId,
+          status: 'viewCentralLM',
+          regionID: this.regionId,
+          branchID: this.branchId,
+          blockID: this.blockId,
+          gpID: this.gpId,
+          villageID: this.villageId,
+        }
+      });
+    }
+  }
 
+  routePEMStatus(PEMitem) {
+    if (PEMitem.pemStatus == 'RED' || PEMitem.pemStatus == 'GREEN' || PEMitem.pemStatus == 'YELLOW') {
+      console.log(PEMitem);
+      this.route.navigate(['/pem-register/create'], {
+        queryParams: {
+          familyID: PEMitem.familyDetailId,
+          status: 'viewCentralPEM',
+          regionID: this.regionId,
+          branchID: this.branchId,
+          blockID: this.blockId,
+          gpID: this.gpId,
+          villageID: this.villageId,
+        }
+      });
+    }
+  }
 
-
-  // getMoreDetails(id) {
-
-  //   let postBody = {
-  //     activeStatus: "A",
-  //     dataAccessDTO: this.http.dataAccessDTO,
-  //     id: id
-  //   }
-
-  //   //API call for viewing Details of centralRegister
-  //   this.centralService.viewDetailsCentralRegister(postBody).subscribe((response: any) => {
-  //     this.moreDetails = response.responseObject;
-  //     console.log(this.moreDetails)
-  //   })
-
-  // }
-
-  // openModal(viewDetails, id) {
-  //   this.getMoreDetails(id);
-  //   this.modalContent = '';
-  //   this.modalReference = this.modalService.open(viewDetails, {
-  //     windowClass: 'viewDetails',
-  //   });
-  // }
-
-  // deleteFamily(id, i) {
-  //   let postBody = {
-  //     activeStatus: "A",
-  //     dataAccessDTO: this.http.dataAccessDTO,
-  //     id: id
-  //   }
-
-  //   this.centralService.viewDetailsCentralRegister(postBody).subscribe((response: any) => {
-  //     let delDetails = response.responseObject;
-  //     console.log(delDetails);
-  //     this.delFam(delDetails, i);
-
-  //   })
-
-  // }
-
-  // delFam(delDetails, i) {
-
-  //   if (confirm('Do you want to delete family: ' + delDetails.firstName + ' ' + delDetails.lastName)) {
-
-  //     let post = {
-
-  //       dataAccessDTO: this.http.dataAccessDTO,
-  //       familyDetailDTO: {
-  //         age: delDetails.age,
-  //         bbMicroGroupMembership: delDetails.bbMicroGroupMembership,
-  //         casteTypeMasterDTO: {
-  //           casteTypeDescription: delDetails.casteTypeMasterDTO.casteTypeDescription,
-  //           casteTypeMasterId: delDetails.casteTypeMasterDTO.casteTypeMasterId
-  //         },
-  //         childDetailDTOList: delDetails.childDetailDTOList,
-  //         childrenBelow18: delDetails.childrenBelow18,
-  //         childrenBelow5: delDetails.childrenBelow5,
-  //         createdOn: delDetails.createdOn,
-  //         educationalQualificationMasterDTO: {
-  //           educationalQualificationMasterId: delDetails.educationalQualificationMasterDTO.educationalQualificationMasterId,
-  //           qualification: delDetails.educationalQualificationMasterDTO.qualification
-  //         },
-  //         familyDetailId: delDetails.familyDetailId,
-  //         familyDetailRemaingStatusDTO: {
-  //           createdFamilyCount: delDetails.familyDetailRemaingStatusDTO.createdFamilyCount,
-  //           createdFamilyMambersCount: delDetails.familyDetailRemaingStatusDTO.createdFamilyMambersCount,
-  //           totalFamilyCount: delDetails.familyDetailRemaingStatusDTO.totalFamilyCount,
-  //           totalFamilyMambersCount: delDetails.familyDetailRemaingStatusDTO.totalFamilyMambersCount
-  //         },
-  //         familyNumber: delDetails.familyNumber,
-  //         familyType: delDetails.familyType,
-  //         firstName: delDetails.firstName,
-  //         haveChild: delDetails.haveChild,
-  //         haveSanitaryLatrine: delDetails.haveSanitaryLatrine,
-  //         householdDetailsId: delDetails.householdDetailsId,
-  //         husbandOrGuardianName: delDetails.husbandOrGuardianName,
-  //         identityCardDTOList: delDetails.identityCardDTOList,
-  //         institutionalDelivery: delDetails.institutionalDelivery,
-  //         lactetingMother: delDetails.lactetingMother,
-  //         lastName: delDetails.lastName,
-  //         middleName: delDetails.middleName,
-  //         mobileNumber: delDetails.mobileNumber,
-  //         monthlyIncomeMasterDTO: {
-  //           incomeRange: delDetails.monthlyIncomeMasterDTO.incomeRange,
-  //           monthlyIncomeMasterId: delDetails.monthlyIncomeMasterDTO.monthlyIncomeMasterId
-  //         },
-  //         occupationMasterDTO: {
-  //           occupationDescription: delDetails.occupationMasterDTO.occupationDescription,
-  //           occupationMasterId: delDetails.occupationMasterDTO.occupationMasterId
-  //         },
-  //         pregnantWoman: delDetails.pregnantWoman,
-  //         religionMasterDTO: {
-  //           religionMasterDescription: delDetails.religionMasterDTO.religionMasterDescription,
-  //           religionMasterId: delDetails.religionMasterDTO.religionMasterId
-  //         },
-  //         status: "D",
-  //         totaFamilyMemberFemales: delDetails.totaFamilyMemberFemales,
-  //         totaFamilyMemberMales: delDetails.totaFamilyMemberMales,
-  //         totaFamilyMemberSrcitizen: delDetails.totaFamilyMemberSrcitizen,
-  //         totalNumberOfChildren: delDetails.totalNumberOfChildren
-  //       }
-
-  //     }
-
-  //     this.centralService.deleteFamily(post).subscribe((response: any) => {
-  //       console.log(response);
-  //       if (response.status == true) {
-  //         this.showSuccess(response.message);
-  //         this.centralDetails.splice(i, 1);
-  //       }
-  //       else {
-  //         this.showError(response.responseObject);
-  //       }
-
-  //     })
-  //   }
-
-  // }
-
-  // showSuccess(message) {
-  //   this.toaster.success(message, 'Family Delete', {
-  //     timeOut: 3000,
-  //   });
-  // }
-
-  // showError(message) {
-  //   this.toaster.error(message, 'Family Delete', {
-  //     timeOut: 3000,
-  //   });
-  // }
-
-  // p(event) { }
-
+  ngOnDestroy() {
+    localStorage.removeItem("datas");
+  }
 
 }
