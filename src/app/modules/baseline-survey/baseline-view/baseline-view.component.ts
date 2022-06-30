@@ -62,17 +62,9 @@ export class BaselineViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.role = this.sidebarService.RoleDTOName;
-    console.log(this.role);
-
 
     this.createForm();
     this.householdFamDetails();
-
-    // let dataAccessDTO = {
-    //   userId: this.sidebarService.userId,
-    //   userName: this.sidebarService.loginId,
-    // }
 
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -93,18 +85,22 @@ export class BaselineViewComponent implements OnInit {
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+    console.log(this.updateMode);
+
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+    console.log(this.deleteMode);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 73)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+    console.log(this.createMode);
   }
 
   changeRegion(region) {

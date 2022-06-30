@@ -57,6 +57,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   branchId: any;
   regionBranchHide: boolean;
   role: any;
+  updateMode: boolean;
+  deleteMode: boolean;
+  createMode: boolean;
+
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
@@ -96,6 +100,25 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
     this.regionList = this.sidebarService.listOfRegion;
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+      console.log(this.updateMode);
+      
+ 
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+      console.log(this.deleteMode);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+      console.log(this.createMode);
 
   }
 
