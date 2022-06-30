@@ -896,8 +896,6 @@ class DailyActivityRegisterComponent {
     }
     ngOnInit() {
         var _a, _b, _c, _d, _e, _f;
-        this.role = this.sidebarService.RoleDTOName;
-        console.log(this.role);
         this.locForm();
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
@@ -918,6 +916,7 @@ class DailyActivityRegisterComponent {
             .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
         this.deleteMode = ((_f = (_e = (_d = this.sidebarService.subMenuList
             .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _d === void 0 ? void 0 : _d.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)) === null || _e === void 0 ? void 0 : _e.accessDetailList.find(accessType => accessType.accessType == 'delete')) === null || _f === void 0 ? void 0 : _f.accessType) ? true : false;
+        this.regionBranchHide = this.sidebarService.regionBranchHide;
     }
     changeRegion(region) {
         var _a;
@@ -1022,7 +1021,7 @@ class DailyActivityRegisterComponent {
         this.darViewFamilyList = [];
     }
     viewDAREntryList() {
-        if (this.role != 'HCO' && this.role != 'HCOI' && this.role != 'TL') {
+        if (this.regionBranchHide) {
             if (!this.locationForm.value.hco) {
                 this.showError('Please Select Role');
                 return;
@@ -1318,7 +1317,7 @@ DailyActivityRegisterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0_
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroup", ctx.locationForm);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.role != "HCO" && ctx.role != "HCOI" && ctx.role != "TL");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.regionBranchHide);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction2"](11, _c0, ctx.l.fromDate.invalid && ctx.l.fromDate.touched, ctx.l.fromDate.valid && (ctx.l.fromDate.dirty || ctx.l.fromDate.touched)));
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);

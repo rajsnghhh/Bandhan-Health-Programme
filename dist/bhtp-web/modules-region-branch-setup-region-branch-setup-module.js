@@ -492,7 +492,7 @@ function BranchSetupComponent_option_37_Template(rf, ctx) { if (rf & 1) {
     const subVerticleProject_r28 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", subVerticleProject_r28.projectMasterId);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", subVerticleProject_r28.projectName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", subVerticleProject_r28.projectCode, " ");
 } }
 function BranchSetupComponent_div_38_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");

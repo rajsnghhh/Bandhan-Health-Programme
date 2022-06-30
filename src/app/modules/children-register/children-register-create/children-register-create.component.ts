@@ -67,10 +67,6 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.role = this.sidebarService.RoleDTOName;
-    console.log(this.role);
-
     this.createForm();
     this.getMinDate();
 
