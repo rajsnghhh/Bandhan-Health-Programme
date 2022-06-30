@@ -40,6 +40,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   muac18MaxDate: string;
   muac24MinDate: string;
   muac24MaxDate: string;
+  enableSecondVisitDate: boolean = false;
 
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
@@ -55,7 +56,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     if (after6date > this.today) {
       this.maxFirstVisit = this.today;
     } else {
-      this.maxFirstVisit = after6date;
+      this.maxFirstVisit = moment(after6date).add(-1, 'days').format('YYYY-MM-DD');
     }
     this.muacRec6MinmaxDate();
     this.muacRec12MinmaxDate();
@@ -75,7 +76,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.childBirthForm.controls['secondVisitDate'].disable();
+    // this.childBirthForm.controls['secondVisitDate'].disable();
 
   }
 
@@ -95,6 +96,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       if (this.data.editMode == false) {
         this.childBirthForm.reset();
       } else {
+        this.enableSecondVisitDate = this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate != null ? true : false;
         this.childBirthForm.patchValue({
           place: this.data?.childWiselactatingmotherList?.childBasicStatusDto.placeOfDelivery,
           birthWeight: this.data?.childWiselactatingmotherList?.childBasicStatusDto.birthWeight,
@@ -108,14 +110,14 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           muacDate12: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
           muacDate18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
           muacDate24: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
-          height6month: this.childMuacList.find(month => month.muacForMonth == "6")?.height,
-          height12month: this.childMuacList.find(month => month.muacForMonth == "12")?.height,
-          height18month: this.childMuacList.find(month => month.muacForMonth == "18")?.height,
-          height24month: this.childMuacList.find(month => month.muacForMonth == "24")?.height,
-          weight6month: this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
-          weight12month: this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
-          weight18month: this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
-          weight24month: this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
+          height6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.height,
+          height12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.height,
+          height18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.height,
+          height24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.height,
+          weight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
+          weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12"),
+          weight18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
+          weight24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
           muac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
           muac12month: this.childMuacList.find(month => month.muacForMonth == "12")?.muac,
           muac18month: this.childMuacList.find(month => month.muacForMonth == "18")?.muac,
@@ -163,7 +165,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
       this.childBirthForm.get('muacDate12').setValidators(Validators.required);
     }
-    else if (year >= 1 && year <= 2 && month >= 6 && month <= 12) {
+    else if (year >= 1 && year < 2 && month >= 6 && month <= 12) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = false;
@@ -232,7 +234,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   restrictSecondDate(date) {
     this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
     this.childBirthForm.controls.secondVisitDate.setValue(null);
-    this.childBirthForm.controls['secondVisitDate'].enable();
+    this.enableSecondVisitDate = true
   }
 
   /* make child death comment required 
@@ -268,7 +270,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   }
   /* Height range between 10 to 180, validation */
   heightRange(controls: AbstractControl): { [key: string]: any } | null {
-    if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
+    if (controls.value >= 10 && controls.value <= 180 || controls.value == null || controls.value == '') {
       return null;
     }
     return { 'notInHeightRange': true };

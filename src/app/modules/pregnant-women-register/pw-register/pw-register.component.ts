@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -50,7 +51,7 @@ export class PwRegisterComponent implements OnInit {
   gpID: any;
   villageID: any;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
+  constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
     private activatedRoute: ActivatedRoute) { }
 
@@ -63,13 +64,6 @@ export class PwRegisterComponent implements OnInit {
       this.blockID = params['blockID'];
       this.gpID = params['gpID'];
       this.villageID = params['villageID'];
-      console.log(params, 'params');
-      console.log(this.familyID, 'familyID');
-      console.log(this.regionID, ' this.regionID');
-      console.log(this.branchID, ' this.branchID');
-      console.log(this.blockID, ' this.blockID ');
-      console.log(this.gpID, 'this.gpID');
-      console.log(this.villageID, ' this.villageID ');
     });
 
     let JSONDatas = { regionID: this.regionID, branchID: this.branchID, blockID: this.blockID, gpID: this.gpID, villageID: this.villageID }
@@ -80,23 +74,27 @@ export class PwRegisterComponent implements OnInit {
     } else {
       this.createForm();
 
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        branchId: this.sidebarService.branchId
-      }
-
-
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-          if (res.sessionDTO.status == true) {
-            this.villagesOfBranch = res.responseObject;
-            console.log(this.villagesOfBranch, 'villagesOfBranch1');
+      this.sidebarService.checkRoledetailDTO().then((res: any) => {
+        if (res.regionBranchHide) {
+          this.regionList = res.region;
+          this.regionBranchHide = res.regionBranchHide;
+        } else {
+          let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+          let Dto = {
+            dataAccessDTO: {
+              userId: dataAccessDTO.userName,
+              userName: dataAccessDTO.userId,
+            },
+            branchId: res.branchId
           }
-        })
-      }
-
-      this.regionList = this.sidebarService.listOfRegion;
-      this.regionBranchHide = this.sidebarService.regionBranchHide; ``
+          this.regionBranchHide = res.regionBranchHide;
+          this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+            if (res.sessionDTO.status == true) {
+              this.villagesOfBranch = res.responseObject;
+            }
+          })
+        }
+      });
     }
   }
 

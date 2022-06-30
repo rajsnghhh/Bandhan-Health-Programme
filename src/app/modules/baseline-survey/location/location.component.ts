@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../core/http/http.service';
@@ -27,6 +28,7 @@ export class LocationComponent implements OnInit {
 
 
   constructor(
+    private http: HttpClient,
     private httpService: HttpService,
     private fb: FormBuilder,
     private sidebarService: SidebarService,
@@ -35,28 +37,29 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.getLocationHco();
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
-    console.log(this.branchId);
-    
-  }
 
-  getLocationHco() {
-    let dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let Dto = {
+          dataAccessDTO: {
+            userId: dataAccessDTO.userName,
+            userName: dataAccessDTO.userId,
+          },
+          branchId: res.branchId
+        }
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
-    console.log(this.sidebarService);
-    
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(dto).subscribe((res) => {
-        console.log(res, 'res list');
-        this.villagesOfBranch = res.responseObject;
-        console.log(this.villagesOfBranch, 'villagesOfBranch1');
-      })
-    }
   }
 
   changeRegion(region) {
@@ -98,11 +101,11 @@ export class LocationComponent implements OnInit {
 
     this.sidebarService.donorMasterDto = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto
     console.log(this.sidebarService.donorMasterDto);
-    
+
 
     this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
     this.sidebarService.branchName = this.locationForm.get('branch').value;
-    
+
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId

@@ -38,7 +38,8 @@ export class ViewMuaclistComponent implements OnInit {
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
-    this.disableAction = (this.updateMode == false && this.deleteMode == false) ? false : true;
+    this.disableAction = (this.updateMode == false && this.deleteMode == false) ? false
+      : (this.data.latestMuacTag == 'PEM') ? false : true;
 
   }
 

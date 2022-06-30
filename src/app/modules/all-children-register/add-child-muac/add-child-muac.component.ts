@@ -149,7 +149,7 @@ export class AddChildMuacComponent implements OnInit {
           this.showError('Error')
         })
       } else {
-        this.showError('Enter Correct MUAC Camp No');
+        this.showError('Data already exis for this MUAC Camp No');
       }
     } else {
       let editDto = {

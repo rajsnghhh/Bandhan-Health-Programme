@@ -63,13 +63,6 @@ export class LmViewComponent implements OnInit, DoCheck {
       this.blockID = params['blockID'];
       this.gpID = params['gpID'];
       this.villageID = params['villageID'];
-      console.log(params, 'params');
-      console.log(this.familyID, 'familyID');
-      console.log(this.regionID, ' this.regionID');
-      console.log(this.branchID, ' this.branchID');
-      console.log(this.blockID, ' this.blockID ');
-      console.log(this.gpID, 'this.gpID');
-      console.log(this.villageID, ' this.villageID ');
     });
 
     if (this.setStatus == 'viewCentralLM') {
@@ -79,33 +72,27 @@ export class LmViewComponent implements OnInit, DoCheck {
       this.createForm();
       this.getLactatingMotherList();
 
-      let dataAccessDTO = {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      }
-
-      let Dto = {
-        dataAccessDTO: dataAccessDTO,
-        branchId: this.sidebarService.branchId
-      }
-
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-          if (res.sessionDTO.status == true) {
-            this.villagesOfBranch = res.responseObject;
-            console.log(this.villagesOfBranch, 'villagesOfBranch1');
+      this.sidebarService.checkRoledetailDTO().then((res: any) => {
+        if (res.regionBranchHide) {
+          this.regionList = res.region;
+          this.regionBranchHide = res.regionBranchHide;
+        } else {
+          let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+          let Dto = {
+            dataAccessDTO: {
+              userId: dataAccessDTO.userName,
+              userName: dataAccessDTO.userId,
+            },
+            branchId: res.branchId
           }
-        })
-      }
-
-      this.regionList = this.sidebarService.listOfRegion;
-      this.regionBranchHide = this.sidebarService.regionBranchHide;
-
-      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-        this.regionBranchHide = false;
-      } else {
-        this.regionBranchHide = true;
-      }
+          this.regionBranchHide = res.regionBranchHide;
+          this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+            if (res.sessionDTO.status == true) {
+              this.villagesOfBranch = res.responseObject;
+            }
+          })
+        }
+      });
 
       this.createUpdateMode = this.sidebarService.subMenuList
         .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
@@ -221,7 +208,10 @@ export class LmViewComponent implements OnInit, DoCheck {
     }
     this.loader = false;
     this.httpService.getLactatingMotherRegister(req).subscribe((res) => {
-      this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months);
+      this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months
+        , res.responseObject?.childrenBetween12And18Months
+        , res.responseObject?.childrenBetween18And24Months
+        , res.responseObject?.childrenBeyond24Months);
       this.loader = true;
       if (this.setStatus == 'viewCentralLM') {
         var setData = this.lactatingmotherregister.filter(fam => fam.familyDetailId == this.familyID);

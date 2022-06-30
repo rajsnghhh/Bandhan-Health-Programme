@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -71,7 +72,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   gpID: any;
   villageID: any;
 
-  constructor(private fb: FormBuilder, private pemService: PemRegisterService,
+  constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private route: Router, public validationService: ValidationService, private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute) { }
@@ -121,26 +122,27 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       this.locForm();
       this.createForm(this.pemDataSave);
 
-      let Dto = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        branchId: this.sidebarService.branchId
-      }
-
-
-      setTimeout(() => {
-        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-          this.pemService.villagesOfBranch(Dto).subscribe((res) => {
+      this.sidebarService.checkRoledetailDTO().then((res: any) => {
+        if (res.regionBranchHide) {
+          this.regionList = res.region;
+          this.regionBranchHide = res.regionBranchHide;
+        } else {
+          let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+          let Dto = {
+            dataAccessDTO: {
+              userId: dataAccessDTO.userName,
+              userName: dataAccessDTO.userId,
+            },
+            branchId: res.branchId
+          }
+          this.regionBranchHide = res.regionBranchHide;
+          this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
             if (res.sessionDTO.status == true) {
               this.villagesOfBranch = res.responseObject;
-              console.log(this.villagesOfBranch, 'villagesOfBranch1');
             }
           })
         }
-      }, 1000);
-
-
-      this.regionList = this.sidebarService.listOfRegion;
-      this.regionBranchHide = this.sidebarService.regionBranchHide;
+      });
     }
   }
 
