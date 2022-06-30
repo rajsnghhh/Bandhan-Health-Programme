@@ -68,6 +68,7 @@ export class LoginService {
     logout() {
         // remove user from local storage and set current user to null
         localStorage.clear();
+        window.location.reload();
         this.userSubject.next(null);
         this.router.navigate(['/']);
     }

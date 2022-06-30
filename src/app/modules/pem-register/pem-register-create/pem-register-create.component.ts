@@ -115,6 +115,10 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       console.log(this.villageID, ' this.villageID ');
     });
 
+  
+    let JSONDatas = { regionID: this.regionID, branchID: this.branchID, blockID: this.blockID, gpID: this.gpID, villageID: this.villageID }
+    localStorage.setItem("datas", JSON.stringify(JSONDatas));
+
     if (this.setStatus == 'viewCentralPEM') {
       this.viewPEMList();
     } else {

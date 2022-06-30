@@ -35,8 +35,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   registerSearch: any;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
-    public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService
-  ) { }
+    public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -45,17 +44,43 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.localStorageData = JSON.parse(localStorage.getItem("datas"));
     console.log(this.localStorageData, 'localstorage');
+    this.createForm();
+
 
     if (this.localStorageData) {
-      this.createForm();
-      this.changeRegion(this.localStorageData.regionID);
-      this.changeBranch(this.localStorageData.branchID);
-      setTimeout(() => {
-        this.changeBlock(this.localStorageData.blockID);
-        this.changeGp(this.localStorageData.gpID);
-        this.changeVillage(this.localStorageData.villageID);
-      }, 1000);
+      if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+        let Dto = {
+          dataAccessDTO: this.http.dataAccessDTO,
+          branchId: this.localStorageData?.branchID ? this.localStorageData?.branchID : this.sidebarService?.branchId
+        }
+        if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
+          this.centralService.villagesOfBranch(Dto).subscribe((res) => {
+            if (res.sessionDTO.status == true) {
+              this.villagesOfBranch = res.responseObject;
+              console.log(this.villagesOfBranch, 'villagesOfBranch12');
+            }
+          })
+          setTimeout(() => {
+            this.changeBlock(this.localStorageData?.blockID);
+            this.changeGp(this.localStorageData?.gpID);
+            this.changeVillage(this.localStorageData?.villageID);
+          }, 1000);
+
+        }
+      } else {
+        this.changeRegion(this.localStorageData.regionID);
+        this.changeBranch(this.localStorageData.branchID);
+        setTimeout(() => {
+          this.changeBlock(this.localStorageData.blockID);
+          this.changeGp(this.localStorageData.gpID);
+          this.changeVillage(this.localStorageData.villageID);
+        }, 1000);
+      }
     }
+
+    // window.onbeforeunload = function () {
+    //   localStorage.removeItem("datas")
+    // }
 
     this.createForm();
 
@@ -65,13 +90,9 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       console.log(this.regionList);
     });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
 
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.http.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
 
@@ -84,7 +105,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       })
     }
 
-    this.regionList = this.sidebarService.listOfRegion;
+    // this.regionList = this.sidebarService.listOfRegion;
+
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
@@ -123,15 +145,26 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     }
     );
 
-    this.centralViewForm.controls.branch.setValue('');
-    this.centralViewForm.controls.block.setValue('');
-    this.centralViewForm.controls.gp.setValue('');
-    this.centralViewForm.controls.gram.setValue('');
-    this.villageList = [];
-    this.villagesOfBranch = [];
-    this.gpList = [];
-    this.centralDetails = [];
-    if (!this.centralViewForm.value.region) {
+    if (!this.localStorageData) {
+      this.centralViewForm.controls.branch.setValue('');
+      this.centralViewForm.controls.block.setValue('');
+      this.centralViewForm.controls.gp.setValue('');
+      this.centralViewForm.controls.gram.setValue('');
+      this.villageList = [];
+      this.villagesOfBranch = [];
+      this.gpList = [];
+      this.centralDetails = [];
+      if (!this.centralViewForm.value.region) {
+        this.villageList = [];
+        this.villagesOfBranch = [];
+        this.gpList = [];
+        this.centralDetails = [];
+      }
+    } else {
+      this.centralViewForm.controls.branch.setValue('');
+      this.centralViewForm.controls.block.setValue('');
+      this.centralViewForm.controls.gp.setValue('');
+      this.centralViewForm.controls.gram.setValue('');
       this.villageList = [];
       this.villagesOfBranch = [];
       this.gpList = [];
@@ -145,10 +178,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     console.log(this.branchId);
 
     let Dto = {
-      dataAccessDTO: {
-        userId: this.sidebarService.userId,
-        userName: this.sidebarService.loginId,
-      },
+      dataAccessDTO:this.http.dataAccessDTO,
       branchId: branchId
     }
 
@@ -157,20 +187,39 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     });
 
-    this.centralViewForm.controls.block.setValue('');
-    this.centralViewForm.controls.gp.setValue('');
-    this.centralViewForm.controls.gram.setValue('');
-    this.villageList = [];
-    this.gpList = [];
-    this.centralDetails = [];
-    if (!this.centralViewForm.value.branch) {
+    if (!this.localStorageData) {
       this.centralViewForm.controls.block.setValue('');
       this.centralViewForm.controls.gp.setValue('');
       this.centralViewForm.controls.gram.setValue('');
       this.villageList = [];
-      this.villagesOfBranch = [];
       this.gpList = [];
       this.centralDetails = [];
+      if (!this.centralViewForm.value.branch) {
+        this.centralViewForm.controls.block.setValue('');
+        this.centralViewForm.controls.gp.setValue('');
+        this.centralViewForm.controls.gram.setValue('');
+        this.villageList = [];
+        this.villagesOfBranch = [];
+        this.gpList = [];
+        this.centralDetails = [];
+      }
+    } else {
+      this.centralViewForm.controls.block.setValue('');
+      this.centralViewForm.controls.gp.setValue('');
+      this.centralViewForm.controls.gram.setValue('');
+      this.villageList = [];
+      this.gpList = [];
+      this.centralDetails = [];
+      if (!this.centralViewForm.value.branch) {
+        this.centralViewForm.controls.block.setValue('');
+        this.centralViewForm.controls.gp.setValue('');
+        this.centralViewForm.controls.gram.setValue('');
+        this.villageList = [];
+        this.villagesOfBranch = [];
+        this.gpList = [];
+        this.centralDetails = [];
+      }
+
     }
 
   }
@@ -182,15 +231,16 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
 
-    this.centralViewForm.controls.gp.setValue('');
-    this.centralViewForm.controls.gram.setValue('');
-    this.centralDetails = [];
-    if (!this.centralViewForm.value.block) {
+    if (!this.localStorageData) {
       this.centralViewForm.controls.gp.setValue('');
       this.centralViewForm.controls.gram.setValue('');
-      this.villageList = [];
       this.centralDetails = [];
-
+      if (!this.centralViewForm.value.block) {
+        this.centralViewForm.controls.gp.setValue('');
+        this.centralViewForm.controls.gram.setValue('');
+        this.villageList = [];
+        this.centralDetails = [];
+      }
     }
 
   }
@@ -199,14 +249,16 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.gpId = gpId;
     console.log(this.gpId);
 
-    this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
+    this.villageList = this.gpList?.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     console.log(this.villageList);
 
-    this.centralViewForm.controls.gram.setValue('');
-    this.centralDetails = [];
-    if (!this.centralViewForm.value.gp) {
+    if (!this.localStorageData) {
       this.centralViewForm.controls.gram.setValue('');
       this.centralDetails = [];
+      if (!this.centralViewForm.value.gp) {
+        this.centralViewForm.controls.gram.setValue('');
+        this.centralDetails = [];
+      }
     }
   }
 
@@ -225,22 +277,23 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       this.loader = true;
     });
 
-    this.centralDetails = [];
-    if (!this.centralViewForm.value.gram) {
+    if (!this.localStorageData) {
       this.centralDetails = [];
+      if (!this.centralViewForm.value.gram) {
+        this.centralDetails = [];
+      }
     }
   }
 
   routePWStatus(PWitem) {
     if (PWitem.pregnantStatus == 'Y') {
       console.log(PWitem);
-      //window.open('http://localhost:4200/#/pw-register');
       this.route.navigate(['/pw-register'], {
         queryParams: {
           familyID: PWitem.familyDetailId,
           status: 'viewCentral',
           regionID: this.regionId,
-          branchID: this.branchId,
+          branchID: this.branchId ? this.branchId : this.sidebarService.branchId,
           blockID: this.blockId,
           gpID: this.gpId,
           villageID: this.villageId,
@@ -257,7 +310,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
           familyID: LMitem.familyDetailId,
           status: 'viewCentralLM',
           regionID: this.regionId,
-          branchID: this.branchId,
+          branchID: this.branchId ? this.branchId : this.sidebarService.branchId,
           blockID: this.blockId,
           gpID: this.gpId,
           villageID: this.villageId,
@@ -274,7 +327,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
           familyID: PEMitem.familyDetailId,
           status: 'viewCentralPEM',
           regionID: this.regionId,
-          branchID: this.branchId,
+          branchID: this.branchId ? this.branchId : this.sidebarService.branchId,
           blockID: this.blockId,
           gpID: this.gpId,
           villageID: this.villageId,

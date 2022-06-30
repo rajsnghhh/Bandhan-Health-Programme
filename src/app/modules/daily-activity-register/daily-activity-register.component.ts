@@ -50,16 +50,13 @@ export class DailyActivityRegisterComponent implements OnInit {
   mode: any;
   updateMode: boolean;
   deleteMode: boolean;
+  regionBranchHide: boolean;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
     private modalService: NgbModal, private router: Router, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
-    this.role = this.sidebarService.RoleDTOName;
-    console.log(this.role);
-
-
     this.locForm();
 
     let Dto = {
@@ -90,6 +87,7 @@ export class DailyActivityRegisterComponent implements OnInit {
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
+      this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   changeRegion(region) {
@@ -212,7 +210,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   viewDAREntryList() {
 
-    if (this.role != 'HCO' && this.role != 'HCOI' && this.role != 'TL') {
+    if (this.regionBranchHide) {
       if (!this.locationForm.value.hco) {
         this.showError('Please Select Role');
         return;
