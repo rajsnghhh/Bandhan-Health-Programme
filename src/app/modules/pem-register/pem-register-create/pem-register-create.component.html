@@ -526,7 +526,7 @@
                         <label for="height">Height (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
-                            (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
+                            placeholder="Height (In cm)" formControlName="height" [ngClass]="{
                 'is-invalid': f.height.invalid && f.height.touched,  'is-valid':
                   f.height.valid && (f.height.dirty || f.height.touched)  }" />
                         <div *ngIf="f.height.errors" class="invalid-feedback">
@@ -541,7 +541,7 @@
                         <label for="weight">Weight (In kg): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
-                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{ 'is-invalid': f.weight.invalid && f.weight.touched, 
+                            placeholder="weight (In kg)" formControlName="weight" [ngClass]="{ 'is-invalid': f.weight.invalid && f.weight.touched, 
                               'is-valid':f.weight.valid && (f.weight.dirty || f.weight.touched)  }" />
                         <div *ngIf="f.weight.errors" class="invalid-feedback">
                             <div *ngIf="f.weight.errors.required">
@@ -846,7 +846,7 @@
                         <label for="height">Height (In cm): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
-                            (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
+                            placeholder="Height (In cm)" formControlName="height" [ngClass]="{
                 'is-invalid': e.height.invalid && e.height.touched,
                 'is-valid':
                   e.height.valid && (e.height.dirty || e.height.touched)
@@ -864,7 +864,7 @@
                         <label for="weight">Weight (In kg): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
-                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
+                            placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
                 'is-invalid': e.weight.invalid && e.weight.touched,
                 'is-valid':
                   e.weight.valid && (e.weight.dirty || e.weight.touched)

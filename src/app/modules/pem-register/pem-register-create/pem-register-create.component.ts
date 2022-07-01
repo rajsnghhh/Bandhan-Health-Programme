@@ -535,6 +535,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     }
 
 
+    this.heightVal();
+    this.weightVal();
+
     let pemBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       muacDataDto: {
@@ -666,6 +669,8 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       healthcare: [item?.visitingHcareCenter ? item?.visitingHcareCenter : '', Validators.required],
     });
 
+    this.editPemForm.markAllAsTouched();
+
   }
 
   saveEditPEMRegisterEntry() {
@@ -728,6 +733,10 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       this.showError('Please select visiting the health care centre or not');
       return;
     }
+
+    this.heightVal();
+    this.weightVal();
+
 
     let pemBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
