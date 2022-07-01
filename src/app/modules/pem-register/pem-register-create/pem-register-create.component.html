@@ -27,15 +27,10 @@
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
-                                formControlName="region" id="region" [ngClass]="{
-                              'is-invalid': l.region.invalid && l.region.touched,
-                              'is-valid':
-                                l.region.valid && (l.region.dirty || l.region.touched)
-                            }">
+                                formControlName="region" id="region" [ngClass]="{'is-invalid': l.region.invalid && l.region.touched,
+                              'is-valid':  l.region.valid && (l.region.dirty || l.region.touched)  }">
                                 <option value="">-- Select Region --</option>
-                                <option *ngFor="let region of regionList">
-                                    {{region.regionName}}
-                                </option>
+                                <option *ngFor="let region of regionList"> {{region.regionName}} </option>
                             </select>
                             <div *ngIf="l.region.errors" class="invalid-feedback">
                                 <div *ngIf="l.region.errors.required">Region selection is required</div>
@@ -45,11 +40,8 @@
                         <div class="form-group col-md">
                             <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBranch($event.target.value)"
-                                formControlName="branch" id="branch" [ngClass]="{
-                              'is-invalid': l.branch.invalid && l.branch.touched,
-                              'is-valid':
-                                l.branch.valid && (l.branch.dirty || l.branch.touched)
-                            }">
+                                formControlName="branch" id="branch" [ngClass]="{'is-invalid': l.branch.invalid && l.branch.touched,
+                              'is-valid': l.branch.valid && (l.branch.dirty || l.branch.touched) }">
                                 <option value="">-- Select Branch --</option>
                                 <option *ngFor="let branch of branchList">
                                     {{ branch.branchName }}
@@ -64,15 +56,10 @@
                         <div class="form-group col-md">
                             <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeBlock($event.target.value)"
-                                formControlName="block" id="block" [ngClass]="{
-                              'is-invalid': l.block.invalid && l.block.touched,
-                              'is-valid':
-                                l.block.valid && (l.block.dirty || l.block.touched)
-                            }">
+                                formControlName="block" id="block" [ngClass]="{'is-invalid': l.block.invalid && l.block.touched,
+                              'is-valid': l.block.valid && (l.block.dirty || l.block.touched)}">
                                 <option value="">-- Select Block --</option>
-                                <option *ngFor="let block of villagesOfBranch">
-                                    {{ block.blockName }}
-                                </option>
+                                <option *ngFor="let block of villagesOfBranch"> {{ block.blockName }} </option>
                             </select>
                             <div *ngIf="l.block.errors" class="invalid-feedback">
                                 <div *ngIf="l.block.errors.required">Block selection is required</div>
@@ -82,14 +69,10 @@
                         <div class="form-group col-md">
                             <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
-                                id="gp" [ngClass]="{
-                              'is-invalid': l.gp.invalid && l.gp.touched,
-                              'is-valid': l.gp.valid && (l.gp.dirty || l.gp.touched)
-                            }">
+                                id="gp" [ngClass]="{ 'is-invalid': l.gp.invalid && l.gp.touched,
+                              'is-valid': l.gp.valid && (l.gp.dirty || l.gp.touched) }">
                                 <option value="">-- Select GP/ Municipality --</option>
-                                <option *ngFor="let gp of gpDtoList">
-                                    {{ gp.name }}
-                                </option>
+                                <option *ngFor="let gp of gpDtoList">{{ gp.name }} </option>
                             </select>
                             <div *ngIf="l.gp.errors" class="invalid-feedback">
                                 <div *ngIf="l.gp.errors.required">
@@ -102,14 +85,10 @@
                             <label for="gram">Village/ Gram Sansad/ Locality
                                 :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeVillage($event.target.value)"
-                                formControlName="gram" id="gram" [ngClass]="{
-                              'is-invalid': l.gram.invalid && l.gram.touched,
-                              'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched)
-                            }">
+                                formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': l.gram.invalid && l.gram.touched,
+                              'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched) }">
                                 <option value="">-- Select Village --</option>
-                                <option *ngFor="let vill of villageDtoList">
-                                    {{ vill.villageName }}
-                                </option>
+                                <option *ngFor="let vill of villageDtoList"> {{ vill.villageName }} </option>
                             </select>
                             <div *ngIf="l.gram.errors" class="invalid-feedback">
                                 <div *ngIf="l.gram.errors.required">
@@ -131,12 +110,12 @@
 
                                 <thead>
                                     <tr>
-                                        <th style="padding: 0px;">SL<br>No</th>
-                                        <th style="padding: 0px;">Family<br> No.</th>
-                                        <th>Mother <br> Name</th>
-                                        <th>Child <br> Name</th>
-                                        <th style="padding: 0px;">Age</th>
-                                        <th>Current<br>Status</th>
+                                        <th style="width: 4%;">SL<br>No</th>
+                                        <th style="width: 10%;">Family No.</th>
+                                        <th style="width: 10%;">Mother Name</th>
+                                        <th style="width: 20%;">Child Name</th>
+                                        <th style="width: 25%;">Age</th>
+                                        <th style="width: 10%;">Current<br>Status</th>
                                         <th>PEM Register<br> Data Entry</th>
                                         <th *ngIf="createMode">Add PEM</th>
                                     </tr>
@@ -146,12 +125,12 @@
 
                                     <tr
                                         *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                        <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                        <td style="padding: 0px;">{{pem.familyNumber}}</td>
-                                        <td style="padding: 0px;">{{pem.firstName}}</td>
-                                        <td style="padding: 0px;">{{pem.childName}}</td>
-                                        <td style="padding: 0px;">{{pem.childAge}}</td>
-                                        <td style="padding: 0px;" class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td>{{pem.familyNumber}}</td>
+                                        <td>{{pem.firstName}}</td>
+                                        <td>{{pem.childName}}</td>
+                                        <td>{{pem.childAge}}</td>
+                                        <td class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
                                             : pem.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : pem.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                                                 class="fa fa-circle fa-lg"></i></td>
@@ -159,8 +138,8 @@
                                             style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
                                             (click)="openModal(pemData, pem.childId, pem.childAge,pem)">View
                                         </td>
-                                        <td style="padding: 0px;" *ngIf="createMode"> <i class="fa fa-plus"
-                                                title="Create PEM" (click)="addPemModal(addPem, pem.childId, pem)"></i>
+                                        <td *ngIf="createMode"> <i class="fa fa-plus" title="Create PEM"
+                                                (click)="addPemModal(addPem, pem.childId, pem)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -192,7 +171,6 @@
 
         </div>
 
-
         <fieldset class="scheduler-border">
             <legend class="scheduler-border"></legend>
 
@@ -205,7 +183,7 @@
                     font-size:1rem;">Place of delivery:</label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.placeOfDelivery}}</label>
+                            <label for=""> {{childDTO?.placeOfDelivery ? childDTO?.placeOfDelivery : '-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -217,13 +195,12 @@
                     font-size:1rem;">Birth weight of child (In kg): </label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.birthWeight}}</label>
+                            <label for=""> {{childDTO?.birthWeight ? childDTO?.birthWeight :'-'}}</label>
                         </div>
                     </div>
                 </div>
 
             </div>
-
 
             <div class="row">
 
@@ -234,7 +211,8 @@
                     font-size:1rem;">Primary immunization completed after 12 months: </label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.primaryImmunizationUpto12Completed}}</label>
+                            <label for=""> {{childDTO?.primaryImmunizationUpto12Completed ?
+                                childDTO?.primaryImmunizationUpto12Completed : '-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -246,7 +224,8 @@
                     font-size:1rem;">Primary immunization completed after 24 months:</label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.primaryImmunizationUpto24Completed}}</label>
+                            <label for=""> {{childDTO?.primaryImmunizationUpto24Completed ?
+                                childDTO?.primaryImmunizationUpto24Completed :'-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -262,7 +241,7 @@
                     font-size:1rem;">Exclusive breastfeeding followed or not (at least for first 6 month): </label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.ebfUpto6Complete}}</label>
+                            <label for=""> {{childDTO?.ebfUpto6Complete ? childDTO?.ebfUpto6Complete : '-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -274,7 +253,7 @@
                     font-size:1rem;">Exclusive breastfeeding followed or not (upto first 12 month):</label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.ebfUpto12Complete}}</label>
+                            <label for=""> {{childDTO?.ebfUpto12Complete ? childDTO?.ebfUpto12Complete : '-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -289,7 +268,7 @@
                     font-size:1rem;">Exclusive breastfeeding followed or not (upto first 18 month):</label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.ebfUpto18Complete}}</label>
+                            <label for=""> {{childDTO?.ebfUpto18Complete ? childDTO?.ebfUpto18Complete :'-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -301,7 +280,7 @@
                     font-size:1rem;">Exclusive breastfeeding followed or not (upto first 24 month): </label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for=""> {{childDTO?.ebfUpto24Complete}}</label>
+                            <label for=""> {{childDTO?.ebfUpto24Complete ? childDTO?.ebfUpto24Complete : '-'}}</label>
                         </div>
                     </div>
                 </div>
@@ -322,7 +301,7 @@
                         <th>Experienced <br>Diarrhea</th>
                         <th>Supplementary <br> Food Provided</th>
                         <th>Visiting Health <br>Care center</th>
-                        <th>Action</th>
+                        <th *ngIf="updateMode || deleteMode">Action</th>
                     </tr>
                 </thead>
 
@@ -369,7 +348,7 @@
                 <div class="row">
 
                     <div class="form-group col-md-3">
-                        <label for="delivery">Place of delivery: &nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <label for="delivery">Place of delivery:</label>
 
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="delivery" id="yes" value="Institution"
@@ -388,21 +367,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child (In kg): &nbsp;<span
-                                class="text-danger">*&nbsp;</span></label>
+                        <label for="birthweight">Birth weight of child (In kg):</label>
                         <input type="text" class="form-control" maxlength="5" (keyup)="birthWeightVal()"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)"
-                            placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
-                    'is-invalid': f.birthweight.invalid && f.birthweight.touched,
-                    'is-valid':
-                      f.birthweight.valid && (f.birthweight.dirty || f.birthweight.touched)
-                  }" />
-                        <div *ngIf="f.birthweight.errors" class="invalid-feedback">
-                            <div *ngIf="f.birthweight.errors.required">
-                                Birth weight is required
-                            </div>
-                        </div>
-
+                            placeholder="Birth Weight (In kg)" formControlName="birthweight">
                     </div>
 
                     <div class="form-group col-md-3">
@@ -445,7 +413,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="form-group col-md-3">
                         <label for="breastfeeding6">Exclusive breastfeeding followed or not (at least for first 6
@@ -545,10 +512,9 @@
                         </label>
                         <input type="date" class="form-control" formControlName="pemDate"
                             (keydown)="restrictTypeOfDate()" [ngClass]="{
-                                'is-invalid': f.pemDate.invalid && f.pemDate.touched,
-                                'is-valid':
-                                  f.pemDate.valid && (f.pemDate.dirty || f.pemDate.touched)
-                              }" [min]="childDob" [max]="today" />
+                                'is-invalid': f.pemDate.invalid && f.pemDate.touched, 'is-valid':
+                                  f.pemDate.valid && (f.pemDate.dirty || f.pemDate.touched) }" [min]="childDob"
+                            [max]="today" />
                         <div *ngIf="f.pemDate.errors" class="invalid-feedback">
                             <div *ngIf="f.pemDate.errors.required">
                                 Date of record keeping is required
@@ -561,16 +527,13 @@
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="5"
                             (keyup)="heightVal()" placeholder="Height (In cm)" formControlName="height" [ngClass]="{
-                'is-invalid': f.height.invalid && f.height.touched,
-                'is-valid':
-                  f.height.valid && (f.height.dirty || f.height.touched)
-              }" />
+                'is-invalid': f.height.invalid && f.height.touched,  'is-valid':
+                  f.height.valid && (f.height.dirty || f.height.touched)  }" />
                         <div *ngIf="f.height.errors" class="invalid-feedback">
                             <div *ngIf="f.height.errors.required">
                                 Height is required
                             </div>
                         </div>
-
 
                     </div>
 
@@ -578,17 +541,13 @@
                         <label for="weight">Weight (In kg): &nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" maxlength="7"
-                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{
-                'is-invalid': f.weight.invalid && f.weight.touched,
-                'is-valid':
-                  f.weight.valid && (f.weight.dirty || f.weight.touched)
-              }" />
+                            (keyup)="weightVal()" placeholder="weight (In kg)" formControlName="weight" [ngClass]="{ 'is-invalid': f.weight.invalid && f.weight.touched, 
+                              'is-valid':f.weight.valid && (f.weight.dirty || f.weight.touched)  }" />
                         <div *ngIf="f.weight.errors" class="invalid-feedback">
                             <div *ngIf="f.weight.errors.required">
                                 Weight is required
                             </div>
                         </div>
-
 
                     </div>
 
@@ -598,9 +557,7 @@
                             (keyup)="muacVal()" (keypress)="validationService.onlyIntegerAndDecimal($event)"
                             (keydown)="restrictZero($event)" formControlName="muac" [ngClass]="{
                     'is-invalid': f.muac.invalid && f.muac.touched,
-                    'is-valid':
-                      f.muac.valid && (f.muac.dirty || f.muac.touched)
-                  }" />
+                    'is-valid': f.muac.valid && (f.muac.dirty || f.muac.touched)  }" />
                         <div *ngIf="f.muac.errors" class="invalid-feedback">
                             <div *ngIf="f.muac.errors.required">
                                 MUAC is required
@@ -612,8 +569,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="diarrhea">Whether experienced Diarrhea:
-                        </label>
+                        <label for="diarrhea">Whether experienced Diarrhea: &nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
 
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="diarrhea" id="yes" value="Y"
@@ -632,7 +589,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="supplementary">Supplementary food provided or not:
+                        <label for="supplementary">Supplementary food provided<br> or not: &nbsp;<span
+                                class="text-danger">*&nbsp;</span>
                         </label>
 
                         <div class="form-check-inline">
@@ -652,7 +610,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="healthcare">Whether visiting the health care centre:
+                        <label for="healthcare">Whether visiting the health care centre: &nbsp;<span
+                                class="text-danger">*&nbsp;</span>
                         </label>
 
                         <div class="form-check-inline">
@@ -728,21 +687,10 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="birthweight">Birth weight of child (In kg): &nbsp;<span
-                                class="text-danger">*&nbsp;</span></label>
+                        <label for="birthweight">Birth weight of child (In kg):</label>
                         <input type="text" class="form-control" maxlength="5"
                             (keypress)="validationService.onlyIntegerAndDecimal($event)" (keyup)="birthWeightVal()"
-                            placeholder="Birth Weight (In kg)" formControlName="birthweight" [ngClass]="{
-                    'is-invalid': e.birthweight.invalid && e.birthweight.touched,
-                    'is-valid':
-                      e.birthweight.valid && (e.birthweight.dirty || e.birthweight.touched)
-                  }" />
-                        <div *ngIf="e.birthweight.errors" class="invalid-feedback">
-                            <div *ngIf="e.birthweight.errors.required">
-                                Birth weight is required
-                            </div>
-                        </div>
-
+                            placeholder="Birth Weight (In kg)" formControlName="birthweight" />
                     </div>
 
                     <div class="form-group col-md-3">
@@ -949,8 +897,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="diarrhea">Whether experienced Diarrhea:
-                        </label>
+                        <label for="diarrhea">Whether experienced Diarrhea: &nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
 
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio" name="diarrhea" id="yes" value="Y"
@@ -969,7 +917,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="supplementary">Supplementary food provided or not:
+                        <label for="supplementary">Supplementary food provided<br> or not: &nbsp;<span
+                                class="text-danger">*&nbsp;</span>
                         </label>
 
                         <div class="form-check-inline">
@@ -989,7 +938,8 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="healthcare">Whether visiting the health care centre:
+                        <label for="healthcare">Whether visiting the health care centre: &nbsp;<span
+                                class="text-danger">*&nbsp;</span>
                         </label>
 
                         <div class="form-check-inline">
