@@ -43,8 +43,9 @@
                             <td>{{item.expectedDateOfDelivery == null ? '-' : item.expectedDateOfDelivery}}</td>
                             <td>{{item.actualDateOfDelivery == null ? '-' : item.actualDateOfDelivery}}</td>
                             <td>
-                                <i class="fas fa-edit" title="Edit" *ngIf="updateMode" (click)="openPwView(i)"></i>
+                                <i class="fas fa-edit" title="Edit" *ngIf="updateMode" (click)="openPwEdit(i)"></i>
                                 <i class="fas fa-trash" title="Wrong Entry" *ngIf="deleteMode" (click)="deletePregnency(item,i)"></i>
+                                <i class="fa fa-eye fa-lg" title="View Child" (click)="ViewPw(i)"></i>
                             </td>
                         </tr>
                     </tbody>

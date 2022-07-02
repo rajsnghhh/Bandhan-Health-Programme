@@ -52,11 +52,11 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
     this.childDob = this.data?.childWiselactatingmotherList?.dob;
 
-    let after6date = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
+    let after6date = moment(moment(this.childDob).add(6, 'M').format('YYYY-MM-DD')).add(-1, 'days').format('YYYY-MM-DD');
     if (after6date > this.today) {
       this.maxFirstVisit = this.today;
     } else {
-      this.maxFirstVisit = moment(after6date).add(-1, 'days').format('YYYY-MM-DD');
+      this.maxFirstVisit = after6date;
     }
     this.muacRec6MinmaxDate();
     this.muacRec12MinmaxDate();
@@ -279,7 +279,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   /* Muac record for 6 month min max date set */
   muacRec6MinmaxDate() {
     this.muac6MinDate = moment(this.childDob).add(6, 'M').format('YYYY-MM-DD');
-    let value = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
+    let value = moment(moment(this.childDob).add(12, 'M').format('YYYY-MM-DD')).add(-1, 'days').format('YYYY-MM-DD');
     if (value > this.today) {
       this.muac6MaxDate = this.today;
     } else {
@@ -290,7 +290,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   /* Muac record for 12 month min max date set */
   muacRec12MinmaxDate() {
     this.muac12MinDate = moment(this.childDob).add(12, 'M').format('YYYY-MM-DD');
-    let value = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
+    let value = moment(moment(this.childDob).add(18, 'M').format('YYYY-MM-DD')).add(-1, 'days').format('YYYY-MM-DD');
     if (value > this.today) {
       this.muac12MaxDate = this.today;
     } else {
@@ -301,7 +301,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   /* Muac record for 18 month min max date set */
   muacRec18MinmaxDate() {
     this.muac18MinDate = moment(this.childDob).add(18, 'M').format('YYYY-MM-DD');
-    let value = moment(this.childDob).add(24, 'M').format('YYYY-MM-DD');
+    let value = moment(moment(this.childDob).add(24, 'M').format('YYYY-MM-DD')).add(-1, 'days').format('YYYY-MM-DD');
     if (value > this.today) {
       this.muac18MaxDate = this.today;
     } else {

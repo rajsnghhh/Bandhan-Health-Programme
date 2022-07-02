@@ -31,6 +31,7 @@ export class PwViewComponent implements OnInit {
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
   maxEdd: string;
   miscarriageAbortionMinDate: string;
+  viewMode: boolean;
 
   constructor(private http: HttpClient, private httpService: HttpService, private fb: FormBuilder,
     public validationService: ValidationService, private toaster: ToastrService, private sidebarService: SidebarService,
@@ -40,8 +41,18 @@ export class PwViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.enableActualDelivery();
     console.log(this.data.pregnantWomanRegisterData, 'editpage');
+
+    this.editMode();
+
+    if (this.data.viewMode) {
+      this.viewMode = this.data.viewMode;
+      this.editMode();
+      this.pwRegisterForm.disable();
+    }
+  }
+
+  editMode() {
     this.pwRegisterForm.patchValue({
       initialWeight: this.data.pregnantWomanRegisterData.initialWeight,
       lastMenstrualDate: this.data.pregnantWomanRegisterData.lastMenstrualPeriod,
@@ -54,6 +65,7 @@ export class PwViewComponent implements OnInit {
       pregnancyComplication: this.data.pregnantWomanRegisterData.pregnancyComplication,
       beforeDeliveryWeight: this.data.pregnantWomanRegisterData.weightBeforeDelivery,
       delivery: this.data.pregnantWomanRegisterData.delivery,
+      deliveryNo: this.data.pregnantWomanRegisterData.miscarriage != null ? 'miscarriage' : this.data.pregnantWomanRegisterData.abortion != null ? 'abortion' : '',
       miscarriage: this.data.pregnantWomanRegisterData.miscarriage,
       abortion: this.data.pregnantWomanRegisterData.abortion,
       actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
@@ -67,12 +79,32 @@ export class PwViewComponent implements OnInit {
       this.checkAncComplete = false;
     }
 
-    if (this.data.pregnantWomanRegisterData.actualDateOfDelivery !== null) {
-      this.deliveryStatusYes = true;
-      this.pwRegisterForm.controls['actualDeliveryDate'].enable();
-      this.pwRegisterForm.controls['liveStill'].enable();
-      this.pwRegisterForm.controls['deliveryPlace'].enable();
+    if (this.data.pregnantWomanRegisterData.delivery == 'Y') {
+      this.checkDeliveryStatus('Y');
+      this.enableActualDelivery();
     }
+    if (this.data.pregnantWomanRegisterData.delivery == 'N') {
+      this.checkDeliveryStatus('N');
+      let value = (this.data.pregnantWomanRegisterData.miscarriage != null) ? 'miscarriage' : 'abortion'
+      if (value == 'miscarriage') {
+        this.pwRegisterForm.controls['miscarriage'].enable();
+        this.pwRegisterForm.controls['abortion'].disable();
+        this.pwRegisterForm.get('miscarriage').setValidators(Validators.required);
+        this.pwRegisterForm.get('abortion').clearAsyncValidators();
+        this.pwRegisterForm.controls['abortion'].reset();
+        this.miscarriage = true;
+        this.abortion = false;
+      } else if (value == 'abortion') {
+        this.pwRegisterForm.controls['miscarriage'].disable();
+        this.pwRegisterForm.controls['abortion'].enable();
+        this.pwRegisterForm.get('abortion').setValidators(Validators.required);
+        this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
+        this.pwRegisterForm.controls['miscarriage'].reset();
+        this.miscarriage = false;
+        this.abortion = true;
+      }
+    }
+    this.enableDeliveryStatusNo();
   }
 
   createForm() {
@@ -89,8 +121,8 @@ export class PwViewComponent implements OnInit {
       beforeDeliveryWeight: [null, this.weightRange],
       delivery: [''],
       deliveryNo: [''],
-      miscarriage: [null],
-      abortion: [null],
+      miscarriage: [''],
+      abortion: [''],
       actualDeliveryDate: [''],
       liveStill: [''],
       deliveryPlace: [''],
@@ -114,11 +146,7 @@ export class PwViewComponent implements OnInit {
     this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.miscarriageAbortionMinDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     let after12date = moment(value).add(12, 'M').format('YYYY-MM-DD');
-    if (after12date > this.today) {
-      this.maxEdd = this.today;
-    } else {
-      this.maxEdd = after12date;
-    }
+    this.maxEdd = after12date;
     this.Anc1stMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('expectedDeliveryDate').reset();
     this.pwRegisterForm.get('anc1st').reset();
@@ -144,56 +172,103 @@ export class PwViewComponent implements OnInit {
     if (value == 'N') {
       this.deliveryStatusNo = true;
       this.deliveryStatusYes = false;
+      this.pwRegisterForm.get('deliveryNo').setValidators(Validators.required);
+      this.pwRegisterForm.get('actualDeliveryDate').clearAsyncValidators();
+      this.pwRegisterForm.get('liveStill').clearAsyncValidators();
+      this.pwRegisterForm.get('deliveryPlace').clearAsyncValidators();
     } else if (value == 'Y') {
       this.deliveryStatusYes = true;
       this.deliveryStatusNo = false;
+      this.pwRegisterForm.get('deliveryNo').clearAsyncValidators();
+      this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
+      this.pwRegisterForm.get('abortion').clearAsyncValidators();
+      this.pwRegisterForm.controls['miscarriage'].disable();
+      this.pwRegisterForm.controls['abortion'].disable();
+      this.enableActualDelivery();
     } else {
       this.deliveryStatusNo = false;
       this.deliveryStatusYes = false;
+      this.pwRegisterForm.get('deliveryNo').clearAsyncValidators();
+      this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
+      this.pwRegisterForm.get('abortion').clearAsyncValidators();
+      this.pwRegisterForm.get('actualDeliveryDate').clearAsyncValidators();
+      this.pwRegisterForm.get('liveStill').clearAsyncValidators();
+      this.pwRegisterForm.get('deliveryPlace').clearAsyncValidators();
     }
   }
 
   checkDeliveryStatusNo(value) {
+    this.enableDeliveryStatusNo();
     if (value == 'miscarriage') {
+      this.pwRegisterForm.controls['miscarriage'].enable();
+      this.pwRegisterForm.controls['abortion'].disable();
+      this.pwRegisterForm.get('miscarriage').setValidators(Validators.required);
+      this.pwRegisterForm.get('abortion').clearAsyncValidators();
+      this.pwRegisterForm.controls['miscarriage'].reset();
+      this.pwRegisterForm.controls['abortion'].reset();
       this.miscarriage = true;
       this.abortion = false;
     } else if (value == 'abortion') {
+      this.pwRegisterForm.controls['miscarriage'].disable();
+      this.pwRegisterForm.controls['abortion'].enable();
+      this.pwRegisterForm.get('abortion').setValidators(Validators.required);
+      this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
+      this.pwRegisterForm.controls['miscarriage'].reset();
+      this.pwRegisterForm.controls['abortion'].reset();
       this.miscarriage = false;
       this.abortion = true;
     } else {
       this.miscarriage = false;
       this.abortion = false;
+      this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
+      this.pwRegisterForm.get('abortion').clearAsyncValidators();
+    }
+  }
+
+  enableDeliveryStatusNo() {
+    if (this.pwRegisterForm.controls['lastMenstrualDate'].value == null) {
+      this.pwRegisterForm.controls['miscarriage'].disable();
+      this.pwRegisterForm.controls['abortion'].disable();
+    } else {
+      this.pwRegisterForm.controls['miscarriage'].enable();
+      this.pwRegisterForm.controls['abortion'].enable();
     }
   }
 
   anc1stDate(value) {
+    this.pwRegisterForm.controls.anc2nd.setValue(null);
+    this.pwRegisterForm.controls.anc3rd.setValue(null);
+    this.pwRegisterForm.controls.anc4th.setValue(null);
     this.actualDeliveryDate = value;
     this.Anc2ndMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
-    if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
-      this.pwRegisterForm.controls['anc3rd'].value !== null) {
+    if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+      this.pwRegisterForm.controls['anc3rd'].value != null) {
       this.showMessage = true;
     } else {
       this.showMessage = false;
     }
   }
   anc2ndDate(value) {
+    this.pwRegisterForm.controls.anc3rd.setValue(null);
+    this.pwRegisterForm.controls.anc4th.setValue(null);
     this.actualDeliveryDate = value;
     this.Anc3rdMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
-    if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
-      this.pwRegisterForm.controls['anc3rd'].value !== null) {
+    if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+      this.pwRegisterForm.controls['anc3rd'].value != null) {
       this.showMessage = true;
     } else {
       this.showMessage = false;
     }
   }
   anc3rdDate(value) {
+    this.pwRegisterForm.controls.anc4th.setValue(null);
     this.actualDeliveryDate = value;
     this.Anc4thMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
-    if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
-      this.pwRegisterForm.controls['anc3rd'].value !== null) {
+    if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+      this.pwRegisterForm.controls['anc3rd'].value != null) {
       this.showMessage = true;
     } else {
       this.showMessage = false;
@@ -202,8 +277,8 @@ export class PwViewComponent implements OnInit {
   anc4thDate(value) {
     this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
-    if (this.pwRegisterForm.controls['anc1st'].value !== null && this.pwRegisterForm.controls['anc2nd'].value !== null &&
-      this.pwRegisterForm.controls['anc3rd'].value !== null) {
+    if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+      this.pwRegisterForm.controls['anc3rd'].value != null) {
       this.showMessage = true;
     } else {
       this.showMessage = false;
@@ -211,40 +286,36 @@ export class PwViewComponent implements OnInit {
   }
 
   enableActualDelivery() {
-    let disable: boolean;
-
     if (this.pwRegisterForm.controls['initialWeight'].value == null || this.pwRegisterForm.controls['lastMenstrualDate'].value == null ||
-      this.pwRegisterForm.controls['expectedDeliveryDate'].value == null || this.pwRegisterForm.controls['beforeDeliveryWeight'].value == null) {
+      this.pwRegisterForm.controls['expectedDeliveryDate'].value == null || this.pwRegisterForm.controls['beforeDeliveryWeight'].value == null ||
+      this.pwRegisterForm.controls['ancComplete'].value == 'N' || this.pwRegisterForm.controls['ancComplete'].value == null) {
       this.pwRegisterForm.controls['actualDeliveryDate'].disable();
-      disable = true;
-    } else {
-      this.pwRegisterForm.controls['actualDeliveryDate'].enable();
-      disable = false;
-    }
-
-    if (this.pwRegisterForm.controls['ancComplete'].value == 'N' || disable) {
-      this.pwRegisterForm.controls['actualDeliveryDate'].disable();
+      this.pwRegisterForm.controls['liveStill'].disable();
+      this.pwRegisterForm.controls['deliveryPlace'].disable();
+      this.pwRegisterForm.get('actualDeliveryDate').clearAsyncValidators();
+      this.pwRegisterForm.get('liveStill').clearAsyncValidators();
+      this.pwRegisterForm.get('deliveryPlace').clearAsyncValidators();
       this.pwRegisterForm.controls['actualDeliveryDate'].reset();
       this.pwRegisterForm.controls['liveStill'].reset();
       this.pwRegisterForm.controls['deliveryPlace'].reset();
-    } else if (this.pwRegisterForm.controls['ancComplete'].value == null || disable) {
-      this.pwRegisterForm.controls['actualDeliveryDate'].disable();
     } else {
       this.pwRegisterForm.controls['actualDeliveryDate'].enable();
+      this.pwRegisterForm.controls['liveStill'].enable();
+      this.pwRegisterForm.controls['deliveryPlace'].enable();
+      this.pwRegisterForm.get('actualDeliveryDate').setValidators(Validators.required);
+      this.pwRegisterForm.get('liveStill').setValidators(Validators.required);
+      this.pwRegisterForm.get('deliveryPlace').setValidators(Validators.required);
     }
-
-    this.pwRegisterForm.controls['liveStill'].disable();
-    this.pwRegisterForm.controls['deliveryPlace'].disable();
   }
 
   enableliveStillDelivery() {
-    if (this.pwRegisterForm.controls['actualDeliveryDate'].value == null) {
-      this.pwRegisterForm.controls['liveStill'].disable();
-      this.pwRegisterForm.controls['deliveryPlace'].disable();
-    } else {
-      this.pwRegisterForm.controls['liveStill'].enable();
-      this.pwRegisterForm.controls['deliveryPlace'].enable();
-    }
+    // if (this.pwRegisterForm.controls['actualDeliveryDate'].value == null) {
+    //   this.pwRegisterForm.controls['liveStill'].disable();
+    //   this.pwRegisterForm.controls['deliveryPlace'].disable();
+    // } else {
+    //   this.pwRegisterForm.controls['liveStill'].enable();
+    //   this.pwRegisterForm.controls['deliveryPlace'].enable();
+    // }
   }
 
   checkMotherDeath(value) {
@@ -319,8 +390,8 @@ export class PwViewComponent implements OnInit {
             pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
             weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
             delivery: this.pwRegisterForm.value.delivery,
-            miscarriage: this.pwRegisterForm.value.miscarriage,
-            abortion: this.pwRegisterForm.value.abortion,
+            miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
+            abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
             actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
             livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
             placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null

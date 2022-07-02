@@ -26,7 +26,7 @@
             <div class="form-group col-md">
                 <label for="lastMenstrualDate">Last Menstrual Period (LMP):</label>
                 <input type="date" class="form-control" formControlName="lastMenstrualDate" placeholder="dd-mm-yyyy"
-                (change)="restrictAncDate($event.target.value)" (change)="enableActualDelivery()"
+                (change)="restrictAncDate($event.target.value)" (change)="enableActualDelivery()" (change)="enableDeliveryStatusNo()"
                 (keydown)="restrictTypeOfDate()" [max]="today"/>
             </div>
             <div class="form-group col-md">
@@ -113,7 +113,7 @@
 <br>
 <div class="row" *ngIf="deliveryStatusNo">
     <div class="form-group col-md">
-        <label>Reason :</label> <br>
+        <label>Reason :&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
         <label>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <input type="radio" value="miscarriage" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
@@ -124,26 +124,47 @@
               <span>Abortion</span>
           </label>
     </div>
-    <div class="form-group col-md" *ngIf="miscarriage">
-            <label for="miscarriage">Miscarriage:</label>
+    <div class="form-group col-md" *ngIf="miscarriage"> 
+            <label for="miscarriage">Miscarriage:&nbsp;<span class="text-danger">*&nbsp;</span></label>
             <input type="date" class="form-control" formControlName="miscarriage" placeholder="dd-mm-yyyy"
-            (keydown)="restrictTypeOfDate()" [min]="miscarriageAbortionMinDate" [max]="today"/>
+            (keydown)="restrictTypeOfDate()"[ngClass]="{
+                'is-invalid': f.miscarriage.invalid && f.miscarriage.touched,
+                'is-valid':
+                  f.miscarriage.valid && (f.miscarriage.dirty || f.miscarriage.touched)
+              }" [min]="miscarriageAbortionMinDate" [max]="today"/>
+              <div *ngIf="f.miscarriage.errors" class="invalid-feedback">
+                <div *ngIf="f.miscarriage.errors.required">Miscarriage Date selection is required</div>
+              </div>
     </div>
     <div class="form-group col-md" *ngIf="abortion">
-        <label for="abortion">Abortion:</label>
+        <label for="abortion">Abortion:&nbsp;<span class="text-danger">*&nbsp;</span></label>
         <input type="date" class="form-control" formControlName="abortion" placeholder="dd-mm-yyyy"
-        (keydown)="restrictTypeOfDate()" [min]="miscarriageAbortionMinDate" [max]="today"/>
+        (keydown)="restrictTypeOfDate()" [ngClass]="{
+            'is-invalid': f.abortion.invalid && f.abortion.touched,
+            'is-valid':
+              f.abortion.valid && (f.abortion.dirty || f.abortion.touched)
+          }" [min]="miscarriageAbortionMinDate" [max]="today"/>
+          <div *ngIf="f.abortion.errors" class="invalid-feedback">
+            <div *ngIf="f.abortion.errors.required">Abortion Date selection is required</div>
+          </div>
     </div>
 </div>
    
     <div class="row" *ngIf="deliveryStatusYes">
         <div class="form-group col-md">
-            <label for="actualDeliveryDate">Actual Date of Delivery:</label>
+            <label for="actualDeliveryDate">Actual Date of Delivery:&nbsp;<span class="text-danger">*&nbsp;</span></label>
             <input type="date" class="form-control" formControlName="actualDeliveryDate" placeholder="dd-mm-yyyy"
-            (change)="enableliveStillDelivery()" (keydown)="restrictTypeOfDate()" [min]="actualDeliveryDate" [max]="today"/>
+            (change)="enableliveStillDelivery()" (keydown)="restrictTypeOfDate()" [ngClass]="{
+                'is-invalid': f.actualDeliveryDate.invalid && f.actualDeliveryDate.touched,
+                'is-valid':
+                  f.actualDeliveryDate.valid && (f.actualDeliveryDate.dirty || f.actualDeliveryDate.touched)
+              }" [min]="actualDeliveryDate" [max]="today"/>
+              <div *ngIf="f.actualDeliveryDate.errors" class="invalid-feedback">
+                <div *ngIf="f.actualDeliveryDate.errors.required">Actual Date of Delivery selection is required</div>
+              </div>
         </div>
         <div class="form-group col-md">
-            <label>Livebirth or Stillbirth:</label> <br>
+            <label>Livebirth or Stillbirth:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" value="Live" formControlName="liveStill"> &nbsp;
@@ -155,7 +176,7 @@
               </label>
         </div>
         <div class="form-group col-md">
-            <label>Place of Delivery :</label> <br>
+            <label>Place of Delivery :&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" value="Home" formControlName="deliveryPlace"> &nbsp;
@@ -204,7 +225,7 @@
         </div>
     </div>
 <br>
-    <div class="addEditBtn">
+    <div class="addEditBtn" *ngIf="!viewMode">
         <button type="submit" class="btn btn-success" (click)="onSave()">Save</button>
     </div>
     </form>

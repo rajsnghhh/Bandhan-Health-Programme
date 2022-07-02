@@ -241,7 +241,7 @@ export class PwRegisterComponent implements OnInit {
   openPwStatus(womenList) {
     const dialogRef = this.dialog.open(PwStatusComponent, {
       width: '500px',
-      height: '270px',
+      height: '280px',
       data: { nonPregnantWomenList: womenList }
     });
 

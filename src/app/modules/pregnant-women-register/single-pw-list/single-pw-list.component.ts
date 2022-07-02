@@ -7,7 +7,7 @@ import { ConfirmationDialogService } from '../../shared/confirmation-dialog/conf
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { PwHistoryComponent } from '../pw-history/pw-history.component';
 import { PwViewComponent } from '../pw-view/pw-view.component';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-single-pw-list',
   templateUrl: './single-pw-list.component.html',
@@ -22,6 +22,7 @@ export class SinglePwListComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
+  diffLmpAndCurrent: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SinglePwListComponent>,
     public dialog: MatDialog, private httpService: HttpService, private confirmationDialogService: ConfirmationDialogService,
@@ -34,7 +35,30 @@ export class SinglePwListComponent implements OnInit {
     this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
     this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
     this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-    this.pregnantWomanRegisterDetailList = this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList;
+    this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList.forEach((item) => {
+      this.pregnantWomanRegisterDetailList.push({
+        "abortion": item.abortion,
+        "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.lastMenstrualPeriod == null)
+          ? '-'
+          : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(2)) + " Month")
+          : item.actualDateOfDelivery,
+        "antenatalCheckup": item.antenatalCheckup,
+        "delivery": item.delivery,
+        "expectedDateOfDelivery": item.expectedDateOfDelivery,
+        "firstAncCheckup": item.firstAncCheckup,
+        "fourthAncCheckup": item.fourthAncCheckup,
+        "initialWeight": item.initialWeight,
+        "lastMenstrualPeriod": item.lastMenstrualPeriod,
+        "livebirthOrStillbirth": item.livebirthOrStillbirth,
+        "miscarriage": item.miscarriage,
+        "placeOfDelivery": item.placeOfDelivery,
+        "pregnancyComplication": item.pregnancyComplication,
+        "pregnantWomanRegisterId": item.pregnantWomanRegisterId,
+        "secondAncCheckup": item.secondAncCheckup,
+        "thirdAncCheckup": item.thirdAncCheckup,
+        "weightBeforeDelivery": item.weightBeforeDelivery
+      })
+    });
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
@@ -62,21 +86,36 @@ export class SinglePwListComponent implements OnInit {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-      this.pregnantWomanRegisterDetailList = res.responseObject.pregnantWomanList.find(x => x.familyDetailId == this.data.id).pregnantWomanRegisterDetailList;
+      this.pregnantWomanRegisterDetailList = res?.responseObject?.pregnantWomanList.find(x => x.familyDetailId == this.data.id)?.pregnantWomanRegisterDetailList;
       console.log(this.pregnantWomanRegisterDetailList, 'listpage');
     })
   }
 
-  openPwView(i) {
+  openPwEdit(i) {
     const dialogRef = this.dialog.open(PwViewComponent, {
       width: '1000px',
       height: '550px',
       data: {
-        pregnantWomanRegisterData: this.pregnantWomanRegisterDetailList[i],
+        pregnantWomanRegisterData: this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList[i],
         familyDetailId: this.data.singlePregnantWomenList.familyDetailId
       }
     });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPregnantWomenList(this.data.villageMasterId)
+    });
+  }
+
+  ViewPw(i) {
+    const dialogRef = this.dialog.open(PwViewComponent, {
+      width: '1000px',
+      height: '550px',
+      data: {
+        viewMode: true,
+        pregnantWomanRegisterData: this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList[i],
+        familyDetailId: this.data.singlePregnantWomenList.familyDetailId
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       this.getPregnantWomenList(this.data.villageMasterId)
     });
