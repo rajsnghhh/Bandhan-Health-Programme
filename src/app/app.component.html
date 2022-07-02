@@ -1,41 +1,45 @@
 <div class="webaccess">
-<nav *ngIf="user">
-    <app-sidebar (valueChange)="fullscreenMethod($event)"></app-sidebar>
-</nav>
+    <nav *ngIf="user">
+        <app-sidebar (valueChange)="fullscreenMethod($event)"></app-sidebar>
+    </nav>
 
-<section class=" dashboard_part"
-    [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'">
+    <section class=" dashboard_part"
+        [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'">
 
-    <mat-toolbar *ngIf="user"
-        style="background-color: #ffff;margin-left: -330px; margin-bottom: 40px; width: 220%;padding-left: 28%;">
-        <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
-        </span>
+        <mat-toolbar *ngIf="user"
+            style="background-color: #ffff;margin-left: -330px; margin-bottom: 40px; width: 220%;padding-left: 28%;">
+            <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
+            </span>
 
-        <i class="fas fa-user-circle" style="font-size:40px;color: #8b4545;" mat-button [matMenuTriggerFor]="menu" 
-        title="My Profile"></i>
+            <i class="fas fa-user-circle" style="font-size:40px;color: #8b4545;" mat-button [matMenuTriggerFor]="menu"
+                title="My Profile"></i>
 
-        <mat-menu #menu="matMenu">
-            <div class="userMenu">
-                <div class="userMenu" style="background-color: #499;padding: 5px 25px;">
-                    <span style="color: #ffff;font-weight: 500;font-size: medium;"> Welcome </span>
-                    <span style="color: #ffff;font-weight: 500;font-size: medium;">
-                    {{user.responseObject.userdetailDTO.userFirstName}} 
-                    {{user.responseObject.userdetailDTO.userMiddleName}}
-                    {{user.responseObject.userdetailDTO.userLastName}}
+            <mat-menu #menu="matMenu">
+                <div class="userMenu">
+                    <div class="userMenu" style="background-color: #499;padding: 5px 25px;">
+                        <span style="color: #ffff;font-weight: 500;font-size: medium;"> Welcome </span>
+                        <span style="color: #ffff;font-weight: 500;font-size: medium;">
+                            {{user.responseObject.userdetailDTO.userFirstName}}
+                            {{user.responseObject.userdetailDTO.userMiddleName}}
+                            {{user.responseObject.userdetailDTO.userLastName}}
+                            ({{user.responseObject.RoledetailDTO.roleShortName}})
+                        </span>
+                    </div>
+                    <span> Login ID: {{user.responseObject.userdetailDTO.loginId}}
+                        <!-- &nbsp;&nbsp;  &nbsp;&nbsp; Role: {{user.responseObject.RoledetailDTO.roleShortName}} -->
+
                     </span>
-                </div>                
-                <span>Role : {{user.responseObject.RoledetailDTO.roleShortName}}</span> 
-                <button class="btn btn-danger" style="padding: 3px;" (click)="logout()"> <i
-                    class="fa fa-power-off"></i>Logout</button>
-            </div>
-        </mat-menu>
-    </mat-toolbar>
+                    <button class="btn btn-danger" style="padding: 3px;" (click)="logout()"> <i
+                            class="fa fa-power-off"></i>Logout</button>
+                </div>
+            </mat-menu>
+        </mat-toolbar>
 
-    <div class="main_content_inner">
-        <router-outlet></router-outlet>
-    </div>
+        <div class="main_content_inner">
+            <router-outlet></router-outlet>
+        </div>
 
-</section>
+    </section>
 </div>
 
 <h1 class="notSupport">**Not Supported In This Browser Or Change Settings**</h1>

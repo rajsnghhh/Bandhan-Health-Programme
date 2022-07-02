@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor(public validationService: ValidationService, private accountService: LoginService, private confirmationDialogService: ConfirmationDialogService) {
     this.accountService.user.subscribe((x) => { this.user = x; });
-    // console.log(this.user, 'appComponent')
+    console.log(this.user, 'appComponent')
   }
 
   fullscreenMethod(data) {
@@ -31,6 +31,7 @@ export class AppComponent {
       )
 
       .catch(() => '');
+      
   }
 
 }

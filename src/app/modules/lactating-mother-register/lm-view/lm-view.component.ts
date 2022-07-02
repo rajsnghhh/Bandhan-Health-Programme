@@ -65,6 +65,9 @@ export class LmViewComponent implements OnInit, DoCheck {
       this.villageID = params['villageID'];
     });
 
+    let JSONDatas = { regionID: this.regionID, branchID: this.branchID, blockID: this.blockID, gpID: this.gpID, villageID: this.villageID }
+    localStorage.setItem("datas", JSON.stringify(JSONDatas));
+
     if (this.setStatus == 'viewCentralLM') {
       this.getLactatingMotherList(this.villageID)
     } else {

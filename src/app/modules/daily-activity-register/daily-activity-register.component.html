@@ -6,7 +6,7 @@
 
                 <form class="form-signin" [formGroup]="locationForm">
 
-                    <div class="row" *ngIf="role != 'HCO' && role != 'HCOI' && role != 'TL' ">
+                    <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
