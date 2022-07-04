@@ -61,7 +61,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
-
+  branchVillageMapId: any;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpClient, private modalService: NgbModal, public validationService: ValidationService,
@@ -148,6 +148,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -171,6 +173,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.branch == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -186,6 +190,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.selectedBlock = this.locationForm.get('block').value;
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.block == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -199,6 +205,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
+    this.existingFamilyList = [];
+    this.locationForm.controls.viewChild.setValue('');
     if (this.locationForm.value.gp == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -207,7 +215,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
   }
 
-  changeVillage(villagename, a) {
+  changeVillage(villageId, a) {
+    this.existingFamilyList = [];
+    this.locationForm.controls.viewChild.setValue('');
     if (this.locationForm.value.gram == '') {
       this.showError('No Data Found');
       this.locationForm.controls.viewChild.setValue('');
@@ -215,19 +225,23 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
     else {
       this.locationForm.controls.viewChild.setValue('2');
-      let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
+      // this.branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
+      this.branchVillageMapId= this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageId)?.branchVillageMapId;
+
+      console.log(this.branchVillageMapId, 'branchVillageMapId');
+
       let obj = {
         activeStatus: "A",
         dataAccessDTO: this.httpService.dataAccessDTO,
-        id: branchVillageMapId
+        id: this.branchVillageMapId
       }
       this.loader = false;
       setTimeout(() => {
         this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
           this.loader = true;
           this.existingFamilyListAll = response.responseObject;
-          this.existingFamilyListZero = this.existingFamilyListAll.filter((x) => x.existingChildCount == 0);
-          this.existingFamilyListNonZero = this.existingFamilyListAll.filter((x) => x.existingChildCount != 0);
+          this.existingFamilyListZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount == 0);
+          this.existingFamilyListNonZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount != 0);
           console.log(this.existingFamilyList);
           console.log(this.existingFamilyListNonZero);
           console.log(this.existingFamilyListZero);

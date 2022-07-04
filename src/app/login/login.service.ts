@@ -23,7 +23,7 @@ export class LoginService {
 
 
     constructor(
-        private router: Router,private httpService: HttpService,
+        private router: Router,
         private http: HttpClient, private confirmationDialogService: ConfirmationDialogService,
     ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
