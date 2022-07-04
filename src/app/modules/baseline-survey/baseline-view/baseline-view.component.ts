@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -54,7 +55,7 @@ export class BaselineViewComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    private confirmationDialogService: ConfirmationDialogService, private route: Router, public validationService: ValidationService, public sidebarService: SidebarService) { }
+    private confirmationDialogService: ConfirmationDialogService, private http: HttpClient, private route: Router, public validationService: ValidationService, public sidebarService: SidebarService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -65,22 +66,28 @@ export class BaselineViewComponent implements OnInit {
     this.createForm();
     this.householdFamDetails();
 
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
 
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let Dto = {
+          dataAccessDTO: {
+            userId: dataAccessDTO.userName,
+            userName: dataAccessDTO.userId,
+          },
+          branchId: res.branchId
         }
-      })
-    }
-
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
