@@ -537,6 +537,7 @@ class LoginComponent {
                         this.router.navigate(['/reset']);
                     }
                     else {
+                        location.reload();
                         this.router.navigate(['/core']);
                         this.showSuccess('Login Successful');
                     }

@@ -225,8 +225,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
     else {
       this.locationForm.controls.viewChild.setValue('2');
-      // this.branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
-      this.branchVillageMapId= this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageId)?.branchVillageMapId;
+      this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageId)?.branchVillageMapId;
 
       console.log(this.branchVillageMapId, 'branchVillageMapId');
 
