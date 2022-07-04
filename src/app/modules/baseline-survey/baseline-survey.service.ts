@@ -70,6 +70,10 @@ export class BaselineSurveyService {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }
 
+  VillageWiseSSList(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getActiveSwasthyaSahayikaListOfAVillage`, obj)
+  }
+
 }
 
 

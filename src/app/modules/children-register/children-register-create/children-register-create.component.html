@@ -151,7 +151,6 @@
                   <thead>
                     <tr>
                       <th>SL<br>No</th>
-                      <!-- <th>Household<br> No.</th> -->
                       <th>Family <br>No.</th>
                       <th>Name</th>
                       <th>Husband</th>
@@ -165,9 +164,6 @@
                     <tr
                       *ngFor="let item of existingFamilyList  | grdFilter: {familyNumber : searchText, firstName :searchText,middleName : searchText, lastName:searchText } | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                       <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                      <!-- <td>
-                                                {{item.familyNumber.slice(0,item.familyNumber.indexOf("."))}}
-                                            </td> -->
                       <td>{{item.familyNumber}}</td>
                       <td>{{item.firstName }} {{item.middleName}}
                         {{item.lastName}}</td>

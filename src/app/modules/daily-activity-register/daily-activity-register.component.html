@@ -149,8 +149,7 @@
                                             <th style="padding: 0px;">Alone /<br> With SS</th>
                                             <th style="padding: 0px;">Name of SS</th>
                                             <th style="padding: 0px;">View</th>
-                                            <th style="padding: 0px;"
-                                                *ngIf="role == 'AC' || role == 'HCOI/ TL' || role == 'HCO' ">Action</th>
+                                            <th style="padding: 0px;" *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
                                     </thead>
 
@@ -194,12 +193,10 @@
                                                 (click)="viewDARModal(editDAR, item)">
                                                 View
                                             </td>
-                                            <td style="padding: 0px;"
-                                                *ngIf="role == 'AC' || role == 'HCOI/ TL' || role == 'HCO' "><i
-                                                    class="fas fa-edit" title="Edit DAR"
-                                                    (click)="editDARModal(editDAR, item)"></i>
-                                                <i class="fas fa-trash" title="Delete DAR"
-                                                    (click)="deleteDAR(item,i)"></i>
+                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
+                                                    (click)="editDARModal(editDAR, item)" *ngIf="updateMode"></i>
+                                                <i class="fas fa-trash" title="Delete DAR" (click)="deleteDAR(item,i)"
+                                                    *ngIf="deleteMode"></i>
                                             </td>
                                         </tr>
 

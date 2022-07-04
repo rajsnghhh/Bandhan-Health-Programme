@@ -17,7 +17,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
 
 export class BaselineViewComponent implements OnInit {
   locationForm: FormGroup;
-  baselineDetails: any;
+  baselineDetails: Array<any> = [];
   modalContent: any;
   modalReference: any;
   modalIndex: any;
@@ -50,8 +50,7 @@ export class BaselineViewComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
-
-
+  ssNameFilter: Array<any> = [];
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -101,6 +100,7 @@ export class BaselineViewComponent implements OnInit {
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
     console.log(this.createMode);
+
   }
 
   changeRegion(region) {
@@ -123,13 +123,20 @@ export class BaselineViewComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
-
+    this.locationForm.controls.ssByList.setValue('');
+    this.baselineDetails = [];
+    this.swasthyaSahayika = [];
+    this.villagesOfBranch = [];
+    this.villageDtoList = [];
+    this.gpDtoList = [];
     if (this.locationForm.value.region == '') {
-      this.showError('No Data Found');
+      this.showErrorss('No Data Found');
       this.baselineDetails = [];
       this.villageDtoList = [];
       this.villagesOfBranch = [];
       this.gpDtoList = [];
+      this.swasthyaSahayika = [];
+      this.locationForm.controls.ssByList.setValue('');
     }
   }
 
@@ -152,13 +159,21 @@ export class BaselineViewComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
-
+    this.locationForm.controls.ssByList.setValue('');
+    this.baselineDetails = [];
+    this.swasthyaSahayika = [];
+    this.villagesOfBranch = [];
+    this.villageDtoList = [];
+    this.gpDtoList = [];
     if (this.locationForm.value.branch == '') {
-      this.showError('No Data Found');
+      this.showErrorss('No Data Found');
+      this.locationForm.controls.ssByList.setValue('');
       this.baselineDetails = [];
       this.villageDtoList = [];
       this.villagesOfBranch = [];
       this.gpDtoList = [];
+      this.swasthyaSahayika = [];
+
     }
   }
 
@@ -167,31 +182,49 @@ export class BaselineViewComponent implements OnInit {
     this.selectedBlock = this.locationForm.get('block').value;
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.ssByList.setValue('');
+    this.baselineDetails = [];
+    this.swasthyaSahayika = [];
+    this.villageDtoList = [];
     if (this.locationForm.value.block == '') {
-      this.showError('No Data Found');
+      this.showErrorss('No Data Found');
+      this.locationForm.controls.ssByList.setValue('');
       this.baselineDetails = [];
       this.villageDtoList = [];
       this.gpDtoList = [];
+      this.swasthyaSahayika = [];
     }
   }
   changeGp(gpName) {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.ssByList.setValue('');
+    this.baselineDetails = [];
+    this.swasthyaSahayika = [];
     if (this.locationForm.value.gp == '') {
-      this.showError('No Data Found');
+      this.showErrorss('No Data Found');
+      this.locationForm.controls.ssByList.setValue('');
       this.baselineDetails = [];
       this.villageDtoList = [];
+      this.swasthyaSahayika = [];
     }
   }
 
-  changeVillage(villagename) {
-    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId;
+  changeVillage(villageId) {
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageId)?.branchVillageMapId;
     this.householdFamDetails(this.branchVillageMapId);
+    this.locationForm.controls.ssByList.setValue('');
+    this.baselineDetails = [];
+    this.swasthyaSahayika = [];
     if (this.locationForm.value.gram == '') {
-      this.showError('No Data Found');
+      this.showErrorss('No Data Found');
+      this.locationForm.controls.ssByList.setValue('');
       this.baselineDetails = [];
+      this.swasthyaSahayika = [];
     }
+    this.villageWiseSSList(villageId);
+
   }
 
   householdFamDetails(branchVillageMapId = null) {
@@ -223,6 +256,8 @@ export class BaselineViewComponent implements OnInit {
       block: ['', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
+      ssByList: [''],
+
     });
   }
 
@@ -599,6 +634,63 @@ export class BaselineViewComponent implements OnInit {
 
     })
 
+  }
+
+  villageWiseSSList(villageId) {
+    let req = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      villageMasterId: parseInt(villageId)
+    }
+
+    console.log(req, 'villbyss');
+    this.baselineService.VillageWiseSSList(req).subscribe((res) => {
+      this.swasthyaSahayika = res.responseObject;
+      console.log(this.swasthyaSahayika, 'this.swasthyaSahayika');
+    });
+  }
+
+
+  ssWiseViewList(ssName) {
+    console.log(ssName);
+    let obj = {
+      activeStatus: "A",
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      id: this.branchVillageMapId
+    }
+
+    //API call for viewing HouseholdWithFamilyDetails
+    this.loader = false;
+    this.baselineService.baselineViewDetail(obj).subscribe((response: any) => {
+
+      this.baselineDetails = response.responseObject;
+      console.log(this.baselineDetails);
+      this.callSSfilter(ssName);
+      this.loader = true;
+    })
+
+
+  }
+
+  callSSfilter(ssName) {
+    this.ssNameFilter = this.baselineDetails.filter((item) => item.swasthyaSahayikaDTO.name == ssName);
+    console.log(this.ssNameFilter);
+
+    if (ssName) {
+      if (this.ssNameFilter.length == 0) {
+        this.showErrorss('No matched data with' + ' ' + ssName);
+        this.baselineDetails = this.ssNameFilter;
+      } else {
+        this.baselineDetails = this.ssNameFilter;
+      }
+
+    }
+
+  }
+
+  showErrorss(message) {
+    this.toaster.error(message, '', {
+      timeOut: 3000,
+    });
   }
 
 
