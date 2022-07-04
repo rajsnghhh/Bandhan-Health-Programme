@@ -70,7 +70,7 @@ export class BeneficiaryInfoComponent implements OnInit {
     this.locationForm.controls.region.setValue('');
     this.locationForm.controls.stateOrRegion.setValue('');
 
-    if (projectId != '') {
+    if (this.projectWiseBeneficiaryList.length == 0) {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;

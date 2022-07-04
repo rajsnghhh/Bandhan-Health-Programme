@@ -105,6 +105,57 @@ export class PwViewComponent implements OnInit {
       }
     }
     this.enableDeliveryStatusNo();
+
+    if (this.data.pregnantWomanRegisterData.lastMenstrualPeriod != null) {
+      this.actualDeliveryDate = moment(this.data.pregnantWomanRegisterData.lastMenstrualPeriod).add(1, 'days').format('YYYY-MM-DD');
+      this.miscarriageAbortionMinDate = moment(this.data.pregnantWomanRegisterData.lastMenstrualPeriod).add(1, 'days').format('YYYY-MM-DD');
+      let after12date = moment(this.data.pregnantWomanRegisterData.lastMenstrualPeriod).add(12, 'M').format('YYYY-MM-DD');
+      this.maxEdd = after12date;
+      this.Anc1stMin = moment(this.data.pregnantWomanRegisterData.lastMenstrualPeriod).add(1, 'days').format('YYYY-MM-DD');
+    }
+
+    if (this.data.pregnantWomanRegisterData.firstAncCheckup != null) {
+      this.actualDeliveryDate = this.data.pregnantWomanRegisterData.firstAncCheckup;
+      this.Anc2ndMin = moment(this.data.pregnantWomanRegisterData.firstAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+      if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+        this.pwRegisterForm.controls['anc3rd'].value != null) {
+        this.showMessage = true;
+      } else {
+        this.showMessage = false;
+      }
+    }
+
+    if (this.data.pregnantWomanRegisterData.secondAncCheckup != null) {
+      this.actualDeliveryDate = this.data.pregnantWomanRegisterData.secondAncCheckup;
+      this.Anc3rdMin = moment(this.data.pregnantWomanRegisterData.secondAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+      if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+        this.pwRegisterForm.controls['anc3rd'].value != null) {
+        this.showMessage = true;
+      } else {
+        this.showMessage = false;
+      }
+    }
+
+    if (this.data.pregnantWomanRegisterData.thirdAncCheckup != null) {
+      this.actualDeliveryDate = this.data.pregnantWomanRegisterData.thirdAncCheckup;
+      this.Anc4thMin = moment(this.data.pregnantWomanRegisterData.thirdAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+      if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+        this.pwRegisterForm.controls['anc3rd'].value != null) {
+        this.showMessage = true;
+      } else {
+        this.showMessage = false;
+      }
+    }
+
+    if (this.data.pregnantWomanRegisterData.fourthAncCheckup != null) {
+      this.actualDeliveryDate = moment(this.data.pregnantWomanRegisterData.fourthAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+      if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
+        this.pwRegisterForm.controls['anc3rd'].value != null) {
+        this.showMessage = true;
+      } else {
+        this.showMessage = false;
+      }
+    }
   }
 
   createForm() {
