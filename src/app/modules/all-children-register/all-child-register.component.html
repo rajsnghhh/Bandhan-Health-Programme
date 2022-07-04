@@ -109,7 +109,7 @@
                 }">
                 <option value="">-- Select Village --</option>
                 <option *ngFor="let vill of villageDtoList">
-                  {{ vill.villageName }}
+                  {{ vill }}
                 </option>
               </select>
               <div *ngIf="f.gram.errors" class="invalid-feedback">
@@ -140,6 +140,7 @@
                           <th>Mother Name</th>
                           <th>Child Name</th>
                           <th>Age</th>
+                          <th>Source</th>
                           <th>Last MUAC <br> collected</th>
                           <th>Current Status</th>
                           <th>Action</th>
@@ -155,6 +156,7 @@
                           <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
                           <td>{{item.childName}}</td>
                           <td>{{item.childAge}}</td>
+                          <td>{{item.latestMuacTag == null ? '-' : item.latestMuacTag}}</td>
                           <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
                           <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
                                           : item.latestMuacIndicatorName == 'GREEN' ? 'success' 

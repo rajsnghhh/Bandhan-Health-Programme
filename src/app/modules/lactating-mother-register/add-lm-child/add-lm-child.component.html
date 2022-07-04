@@ -64,7 +64,7 @@
             </div>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" *ngIf="enableSecondVisitDate">
             <div class="form-group col-md">
               <label for="secondVisitDate">Second visit Date:</label>
               <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit" [max]="maxFirstVisit"

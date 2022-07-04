@@ -9,6 +9,7 @@ import { AddChildMuacComponent } from './add-child-muac/add-child-muac.component
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ValidationService } from '../shared/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-all-child-register',
@@ -44,7 +45,7 @@ export class AllChildRegisterComponent implements OnInit {
   page = 1;
   pageSize = 6;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService,
+  constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog,
     public validationService: ValidationService, private toaster: ToastrService,) { }
 
@@ -55,33 +56,28 @@ export class AllChildRegisterComponent implements OnInit {
     this.createForm();
     this.getChildrenList();
 
-    // let dataAccessDTO = {
-    //   userId: this.sidebarService.userId,
-    //   userName: this.sidebarService.loginId,
-    // }
-
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let Dto = {
+          dataAccessDTO: {
+            userId: dataAccessDTO.userName,
+            userName: dataAccessDTO.userId,
+          },
+          branchId: res.branchId
         }
-      })
-    }
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.regionBranchHide = false;
-    } else {
-      this.regionBranchHide = true;
-    }
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 105)?.accessDetailList
@@ -156,7 +152,9 @@ export class AllChildRegisterComponent implements OnInit {
     }
   }
   changeGp(gpName) {
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList.map((i) => {
+      return (i.villageName)
+    }).sort();
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.gp == '') {
@@ -196,7 +194,7 @@ export class AllChildRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
-    
+
     this.loader = false;
     this.httpService.getChildrenRegister(req).subscribe((res) => {
       this.childrenBetween6And59Months = res.responseObject?.eligibleChildren?.childrenBetween6And59Months;
@@ -229,7 +227,7 @@ export class AllChildRegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewMuaclistComponent, {
       width: '700px',
       height: '400px',
-      data: { childId: childDetails.childDetailId, childDob: childDetails.dob }
+      data: { childId: childDetails.childDetailId, childDob: childDetails.dob, latestMuacTag: childDetails.latestMuacTag }
     });
 
     dialogRef.afterClosed().subscribe(result => {
