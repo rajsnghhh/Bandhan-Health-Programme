@@ -35,7 +35,6 @@ export class DailyActivityRegisterComponent implements OnInit {
   page = 1;
   pageSize = 6;
   p: any;
-  role: any;
   modalContent: any;
   modalReference: any;
   modalIndex: any;
@@ -79,15 +78,19 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+    console.log(this.updateMode);
+
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 137)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+    console.log(this.deleteMode);
 
-      this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   changeRegion(region) {
@@ -107,6 +110,13 @@ export class DailyActivityRegisterComponent implements OnInit {
       );
     }, 1000);
     this.locationForm.controls.branch.setValue('');
+    this.locationForm.controls.hco.setValue('');
+    this.locationForm.controls.fromDate.setValue('');
+    this.locationForm.controls.toDate.setValue('');
+    this.darList = [];
+    this.darViewFamilyList = [];
+    this.branchList = [];
+    this.hcoList = [];
     if (this.locationForm.value.region == '') {
       this.locationForm.controls.hco.setValue('');
       this.locationForm.controls.fromDate.setValue('');
