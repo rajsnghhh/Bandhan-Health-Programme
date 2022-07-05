@@ -11,6 +11,8 @@ import { HttpService } from '../../core/http/http.service';
 export class GeographicalStateWiseComponent implements OnInit {
   stateWiseList: Array<any> = [];
   loader: boolean = true;
+  projectCode: any;
+  donorName: any;
 
   constructor(@Optional() public dialogRef: MatDialogRef<GeographicalStateWiseComponent>, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private httpService: HttpService,
@@ -23,7 +25,12 @@ export class GeographicalStateWiseComponent implements OnInit {
     }
     this.loader = false;
     this.http.post(`${this.httpService.baseURL}report/getStateWiseDetails`, Dto).subscribe((res: any) => {
-      this.stateWiseList = res.responseObject?.stateWiseList;
+      this.projectCode = res.responseObject?.stateWiseList[0].project_code
+      this.donorName = res.responseObject?.stateWiseList[0].donor_name
+      if (res.responseObject?.stateWiseList[0].stateName != null) {
+        this.stateWiseList = res.responseObject?.stateWiseList;
+      }
+      console.log(res)
       this.loader = true;
     }, error => {
       this.loader = true;
