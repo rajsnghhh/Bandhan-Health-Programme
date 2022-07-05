@@ -43,7 +43,6 @@ export class LocationComponent implements OnInit {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
       } else {
-        debugger
         let Dto = {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
