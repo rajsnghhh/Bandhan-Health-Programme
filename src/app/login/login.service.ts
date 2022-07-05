@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { User } from './user';
 import { ConfirmationDialogService } from '../modules/shared/confirmation-dialog/confirmation-dialog.service';
+import { HttpService } from '../modules/core/http/http.service';
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class LoginService {
 
 
     constructor(
-        private router: Router,
+        private router: Router, private httpService: HttpService,
         private http: HttpClient, private confirmationDialogService: ConfirmationDialogService,
     ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
@@ -55,10 +56,11 @@ export class LoginService {
                 localStorage.setItem('user', JSON.stringify(user));
 
                 let dataDTO = {
-                    userId: user?.responseObject?.userdetailDTO?.loginId,
-                    userName: user?.responseObject?.userdetailDTO?.userId
+                    userId: user?.responseObject?.userdetailDTO?.userId,
+                    userName: user?.responseObject?.userdetailDTO?.loginId
                 }
                 localStorage.setItem('dataAccessDTO', JSON.stringify(dataDTO));
+                this.httpService.setDataAccessDto();
                 this.userSubject.next(user);
                 console.log("**********************", user);
                 return user;

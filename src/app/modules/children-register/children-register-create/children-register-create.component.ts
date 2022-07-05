@@ -84,13 +84,13 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       status: 'A'
     });
 
-    let dataAccessDTO = {
-      userId: this.sidebarService.userId,
-      userName: this.sidebarService.loginId,
-    }
+    // let dataAccessDTO = {
+    //   userId: this.sidebarService.userId,
+    //   userName: this.sidebarService.loginId,
+    // }
 
     let Dto = {
-      dataAccessDTO: dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
     if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
@@ -105,20 +105,20 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
-      console.log(this.updateMode);
-      
- 
+    console.log(this.updateMode);
+
+
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
-      console.log(this.deleteMode);
+    console.log(this.deleteMode);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
-      console.log(this.createMode);
+    console.log(this.createMode);
 
   }
 

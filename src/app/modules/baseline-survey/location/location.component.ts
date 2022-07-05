@@ -43,12 +43,9 @@ export class LocationComponent implements OnInit {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
       } else {
-        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        debugger
         let Dto = {
-          dataAccessDTO: {
-            userId: dataAccessDTO.userName,
-            userName: dataAccessDTO.userId,
-          },
+          dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
         this.regionBranchHide = res.regionBranchHide;

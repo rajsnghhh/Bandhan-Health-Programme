@@ -9,18 +9,27 @@ import { environment } from 'src/environments/environment';
 })
 export class HttpService {
   baseURL = environment.apiUrl;
+  dataAccessDTO: any;
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': 'Basic dXNlcjE6c2VjcmV0MQ=='
 
   })
 
-  dataAccessDTO = {
-    userId: this.sidebarService.userId,
-    userName: this.sidebarService.loginId,
+  // dataAccessDTO = {
+  //   userId: this.sidebarService.userId,
+  //   userName: this.sidebarService.loginId,
+  // }
+
+  constructor(private http: HttpClient, private sidebarService: SidebarService) {
   }
 
-  constructor(private http: HttpClient, private sidebarService: SidebarService) { }
+  setDataAccessDto() {
+    let data = JSON.parse(localStorage.getItem('dataAccessDTO'));
+    this.dataAccessDTO = {
+      ...data
+    }
+  }
 
   postRequest(url, body): Observable<any> {
     return this.http.post(this.baseURL + url, body, { headers: this.headers })
