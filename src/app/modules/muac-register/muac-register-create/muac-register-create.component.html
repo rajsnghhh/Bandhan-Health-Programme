@@ -74,7 +74,7 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td><i class="fas fa-edit" title="Edit Muac" *ngIf="updateMode"
+                                <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit Muac" *ngIf="updateMode"
                                         (click)="editModal(editMuac, item)"></i>
                                     <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
                                         (click)="deleteMuac(item, i)"></i>
