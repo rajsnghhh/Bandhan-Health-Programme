@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from 'src/app/login/login.service';
+import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from './sidebar.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   @Output() public valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private loginService: LoginService, private router: Router, private sidebarService: SidebarService) { }
+  constructor(private loginService: LoginService, private httpService: HttpService,
+    private router: Router, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.loginService.user.subscribe(res => {
@@ -36,6 +38,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.sidebarService.subMenuList = this.menuList;
       console.log(this.menuList, 'menuList');
     });
+    this.httpService.setDataAccessDto();
   }
 
   menuClick(i) {
