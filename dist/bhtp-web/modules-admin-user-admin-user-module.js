@@ -1485,6 +1485,9 @@ class BaselineSurveyService {
     listOfBranchesOfARegion(obj) {
         return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
     }
+    VillageWiseSSList(obj) {
+        return this.http.post(`${this.baseURL}swasthyasahayika/getActiveSwasthyaSahayikaListOfAVillage`, obj);
+    }
 }
 BaselineSurveyService.ɵfac = function BaselineSurveyService_Factory(t) { return new (t || BaselineSurveyService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
 BaselineSurveyService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BaselineSurveyService, factory: BaselineSurveyService.ɵfac, providedIn: 'root' });

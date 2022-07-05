@@ -95,7 +95,7 @@
                     </div>
                     <div class="white_box_tittle list_header">
 
-                        <div class="QA_table ">
+                        <div class="QA_table">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                 <table
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
@@ -193,7 +193,8 @@
                                                 (click)="viewDARModal(editDAR, item)">
                                                 View
                                             </td>
-                                            <td style="padding: 0px;"><i class="fas fa-edit" title="Edit DAR"
+                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i
+                                                    class="fas fa-edit" title="Edit DAR"
                                                     (click)="editDARModal(editDAR, item)" *ngIf="updateMode"></i>
                                                 <i class="fas fa-trash" title="Delete DAR" (click)="deleteDAR(item,i)"
                                                     *ngIf="deleteMode"></i>
@@ -300,7 +301,10 @@
                                     <td>{{item.age}}</td>
                                     <td>{{item.sex}}</td>
                                     <td>{{item.dob.substring(0,10).split('-').reverse().join('-')}}</td>
-                                    <td>-</td>
+                                    <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                    : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
+                                    : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : 'grey'}}"><i
+                                            class="fa fa-circle fa-lg"></i></td>
                                     <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                             (change)="changeChildbox($event,item)" formControlName="child"></td>
                                 </tr>
@@ -312,7 +316,7 @@
 
                 </fieldset>
 
-                <div class="row">
+                <div class="row" *ngIf="roleAccess?.indexOf('HCO') != -1 || roleAccess?.indexOf('TL') != -1">
                     <div class="form-group col-md-2">
                         <label for="ss">
                             Visited With SS&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -331,6 +335,7 @@
                                     &nbsp;&nbsp;No</label>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="form-group col-md-4" *ngIf="changeSS == 'Y'">
@@ -339,6 +344,44 @@
 
                         <select class="form-select" formControlName="sahayika" id="swasthyaSahayika"
                             (change)="changeSahika($event.target.value)">
+                            <option value="">-- Select SS --</option>
+                            <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
+                                {{ ss.swasthyaSahayikaName }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="roleAccess?.indexOf('HCO') == -1 || roleAccess?.indexOf('TL') == -1">
+                    <div class="form-group col-md-2">
+                        <label for="ss">
+                            Visited With SS&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" name="ss" type="radio" id="yes" value="Y"
+                                formControlName="ss" (change)="changess($event.target.value)"
+                                [attr.disabled]="isDisabled" />
+                            <label class="form-check-label" for="">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" id="no" value="N" formControlName="ss"
+                                    (change)="changess($event.target.value)" [attr.disabled]="isDisabled" />
+                                <label class="form-check-label" for="">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-4" *ngIf="changeSS == 'Y'">
+                        <label for="sahayika">
+                            Name of SS :</label>
+
+                        <select class="form-select" formControlName="sahayika" id="swasthyaSahayika"
+                            (change)="changeSahika($event.target.value)" [attr.disabled]="isDisabled">
                             <option value="">-- Select SS --</option>
                             <option *ngFor="let ss of swasthyaSahayika" [value]="ss.swasthyaSahayikaId">
                                 {{ ss.swasthyaSahayikaName }}
@@ -369,28 +412,28 @@
 
                                                     <!-- Enable/Disable Using Lactating Mother and Main PurposeMasterName Status -->
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating Mother')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating Mother')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'Y' && item.mainPurposeMasterName.includes('Lactating Mother')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating mother')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInLactatingMother == 'N' && item.mainPurposeMasterName.includes('Lactating Mother')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)">
@@ -400,28 +443,28 @@
 
                                                     <!-- Enable/Disable Using PregnantWoman and Main PurposeMasterName Status -->
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('Pregnant Woman')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('Pregnant Woman')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'Y' && item.mainPurposeMasterName.includes('Pregnant Woman')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('pregnant woman')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.presentInPregnantWoman == 'N' && item.mainPurposeMasterName.includes('Pregnant Woman')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)">
@@ -431,28 +474,28 @@
 
                                                     <!-- Enable/Disable Using PEM and Main PurposeMasterName Status -->
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'Y' && item.mainPurposeMasterName.includes('PEM')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM status')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && editListCheck.hasChildPresentInPem == 'N' && item.mainPurposeMasterName.includes('PEM')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault" [attr.disabled]="isDisabled"
                                                             (change)="changeVisitbox($event, items)">
@@ -462,28 +505,28 @@
 
                                                     <!-- Enable/Disable Using For All and For General and Main PurposeMasterName Status -->
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For general')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For General Member')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For all')">
+                                                        *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For All')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For general')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For General Member')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For all')">
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For All')">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)">

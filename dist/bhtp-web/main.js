@@ -346,32 +346,7 @@ class SidebarComponent {
             this.menuList = res === null || res === void 0 ? void 0 : res.responseObject.menuDetailList;
             this.sidebarService.subMenuList = this.menuList;
             console.log(this.menuList, 'menuList');
-            this.checkRoledetailDTO();
         });
-    }
-    checkRoledetailDTO() {
-        var _a, _b, _c, _d;
-        let req = {
-            dataAccessDTO: {
-                userId: this.sidebarService.userId,
-                userName: this.sidebarService.loginId,
-            }
-        };
-        if (((_b = (_a = this.sidebarService) === null || _a === void 0 ? void 0 : _a.RoleDTOName) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1 || ((_d = (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.RoleDTOName) === null || _d === void 0 ? void 0 : _d.indexOf('TL')) != -1) {
-            this.sidebarService.listOfBranchesOfUser(req).subscribe((res) => {
-                var _a, _b, _c, _d;
-                this.sidebarService.branchId = (_a = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.branchId;
-                this.sidebarService.branchName = (_b = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
-                this.sidebarService.donorName = (_d = (_c = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _c === void 0 ? void 0 : _c.donorMasterDto) === null || _d === void 0 ? void 0 : _d.donorName;
-            });
-            this.sidebarService.regionBranchHide = false;
-        }
-        else {
-            this.sidebarService.listOfRegionsOfUser(req).subscribe((res) => {
-                this.sidebarService.listOfRegion = res.responseObject;
-            });
-            this.sidebarService.regionBranchHide = true;
-        }
     }
     menuClick(i) {
         // console.log(i);
@@ -602,9 +577,9 @@ function AppComponent_mat_toolbar_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matMenuTriggerFor", _r4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"](" ", ctx_r1.user.responseObject.userdetailDTO.userFirstName, " ", ctx_r1.user.responseObject.userdetailDTO.userMiddleName, " ", ctx_r1.user.responseObject.userdetailDTO.userLastName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate4"](" ", ctx_r1.user.responseObject.userdetailDTO.userFirstName, " ", ctx_r1.user.responseObject.userdetailDTO.userMiddleName, " ", ctx_r1.user.responseObject.userdetailDTO.userLastName, " (", ctx_r1.user.responseObject.RoledetailDTO.roleShortName, ") ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Role : ", ctx_r1.user.responseObject.RoledetailDTO.roleShortName, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" Login ID: ", ctx_r1.user.responseObject.userdetailDTO.loginId, " ");
 } }
 class AppComponent {
     constructor(validationService, accountService, confirmationDialogService) {
@@ -613,7 +588,7 @@ class AppComponent {
         this.confirmationDialogService = confirmationDialogService;
         this.title = 'bhp-web';
         this.accountService.user.subscribe((x) => { this.user = x; });
-        // console.log(this.user, 'appComponent')
+        console.log(this.user, 'appComponent');
     }
     fullscreenMethod(data) {
         this.fullscreenData = data;
@@ -630,7 +605,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, AppComponent_nav_1_Template, 2, 0, "nav", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "section", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, AppComponent_mat_toolbar_3_Template, 17, 5, "mat-toolbar", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, AppComponent_mat_toolbar_3_Template, 17, 6, "mat-toolbar", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "router-outlet");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1057,14 +1032,45 @@ class SidebarService {
         this.listOfRegion = [];
         this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
         this.subMenuList = [];
+        this.villagesOfBranch = [];
     }
-    //HCO ** TL
-    listOfBranchesOfUser(obj) {
-        return this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, obj);
-    }
-    //Other Higher level
-    listOfRegionsOfUser(obj) {
-        return this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, obj);
+    checkRoledetailDTO() {
+        var _a, _b, _c, _d, _e, _f;
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let user = JSON.parse(localStorage.getItem('user'));
+        let req = {
+            dataAccessDTO: {
+                userId: dataAccessDTO.userName,
+                userName: dataAccessDTO.userId,
+            }
+        };
+        if (((_c = (_b = (_a = user === null || user === void 0 ? void 0 : user.responseObject) === null || _a === void 0 ? void 0 : _a.RoledetailDTO) === null || _b === void 0 ? void 0 : _b.roleShortName) === null || _c === void 0 ? void 0 : _c.indexOf('HCO')) != -1 ||
+            ((_f = (_e = (_d = user === null || user === void 0 ? void 0 : user.responseObject) === null || _d === void 0 ? void 0 : _d.RoledetailDTO) === null || _e === void 0 ? void 0 : _e.roleShortName) === null || _f === void 0 ? void 0 : _f.indexOf('TL')) != -1) {
+            return new Promise((resolve, reject) => {
+                this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, req).subscribe((res) => {
+                    var _a, _b, _c, _d;
+                    this.branchId = (_a = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _a === void 0 ? void 0 : _a.branchId;
+                    this.branchName = (_b = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
+                    this.donorName = (_d = (_c = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _c === void 0 ? void 0 : _c.donorMasterDto) === null || _d === void 0 ? void 0 : _d.donorName;
+                    resolve({
+                        regionBranchHide: false,
+                        branchId: this.branchId
+                    });
+                });
+            });
+        }
+        else {
+            return new Promise((resolve, reject) => {
+                this.http.post(`${this.baseURL}branch/getListOfRegionsOfUser`, req).subscribe((res) => {
+                    this.listOfRegion = res.responseObject;
+                    this.regionBranchHide = true;
+                    resolve({
+                        region: this.listOfRegion,
+                        regionBranchHide: this.regionBranchHide
+                    });
+                });
+            });
+        }
     }
 }
 SidebarService.ɵfac = function SidebarService_Factory(t) { return new (t || SidebarService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };

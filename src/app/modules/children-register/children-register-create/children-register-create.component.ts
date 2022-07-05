@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -60,10 +61,10 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
-
+  branchVillageMapId: any;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
-    private http: HttpService, private modalService: NgbModal, public validationService: ValidationService,
+    private http: HttpClient, private modalService: NgbModal, public validationService: ValidationService,
     private httpService: HttpService, private toaster: ToastrService, private sidebarService: SidebarService, private baselineService: BaselineSurveyService) { }
 
   ngDoCheck(): void {
@@ -84,22 +85,23 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       status: 'A'
     });
 
-    // let dataAccessDTO = {
-    //   userId: this.sidebarService.userId,
-    //   userName: this.sidebarService.loginId,
-    // }
-
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
-        this.villagesOfBranch = res.responseObject;
-      })
-    }
-    this.regionList = this.sidebarService.listOfRegion;
-    this.regionBranchHide = this.sidebarService.regionBranchHide;
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let Dto = {
+          dataAccessDTO: res.dataAccessDTO,
+          branchId: res.branchId
+        }
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
@@ -142,6 +144,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -165,6 +169,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.branch == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -180,6 +186,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.selectedBlock = this.locationForm.get('block').value;
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.locationForm.controls.viewChild.setValue('');
+    this.existingFamilyList = [];
     if (this.locationForm.value.block == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -193,6 +201,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
+    this.existingFamilyList = [];
+    this.locationForm.controls.viewChild.setValue('');
     if (this.locationForm.value.gp == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -201,7 +211,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
   }
 
-  changeVillage(villagename, a) {
+  changeVillage(villageId, a) {
+    this.existingFamilyList = [];
+    this.locationForm.controls.viewChild.setValue('');
     if (this.locationForm.value.gram == '') {
       this.showError('No Data Found');
       this.locationForm.controls.viewChild.setValue('');
@@ -209,19 +221,22 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     }
     else {
       this.locationForm.controls.viewChild.setValue('2');
-      let branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
+      this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageId)?.branchVillageMapId;
+
+      console.log(this.branchVillageMapId, 'branchVillageMapId');
+
       let obj = {
         activeStatus: "A",
-        dataAccessDTO: this.http.dataAccessDTO,
-        id: branchVillageMapId
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        id: this.branchVillageMapId
       }
       this.loader = false;
       setTimeout(() => {
         this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
           this.loader = true;
           this.existingFamilyListAll = response.responseObject;
-          this.existingFamilyListZero = this.existingFamilyListAll.filter((x) => x.existingChildCount == 0);
-          this.existingFamilyListNonZero = this.existingFamilyListAll.filter((x) => x.existingChildCount != 0);
+          this.existingFamilyListZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount == 0);
+          this.existingFamilyListNonZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount != 0);
           console.log(this.existingFamilyList);
           console.log(this.existingFamilyListNonZero);
           console.log(this.existingFamilyListZero);
@@ -330,7 +345,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   getMoreDetails(famid) {
     let postBody = {
       activeStatus: "A",
-      dataAccessDTO: this.http.dataAccessDTO,
+      dataAccessDTO: this.httpService.dataAccessDTO,
       id: famid
     }
 

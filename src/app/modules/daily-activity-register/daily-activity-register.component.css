@@ -45,3 +45,21 @@ legend.scheduler-border {
   background: #499;
   text-align: center;
 }
+
+#table_wrapper tbody .danger {
+  color: #cd0202;
+}
+
+#table_wrapper tbody .success {
+  color: #24d524;
+}
+
+#table_wrapper tbody .warning {
+  color: #f7cd00;
+}
+
+#table_wrapper tbody .grey {
+  color: #828bb2;
+}
+
+
