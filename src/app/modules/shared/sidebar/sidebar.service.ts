@@ -30,8 +30,8 @@ export class SidebarService {
     let user = JSON.parse(localStorage.getItem('user'));
     let req = {
       dataAccessDTO: {
-        userId: dataAccessDTO.userName,
-        userName: dataAccessDTO.userId,
+        userId: dataAccessDTO.userId,
+        userName: dataAccessDTO.userName,
       }
     }
     if (user?.responseObject?.RoledetailDTO?.roleShortName?.indexOf('HCO') != -1 ||
@@ -43,7 +43,8 @@ export class SidebarService {
           this.donorName = res?.responseObject[0]?.donorMasterDto?.donorName;
           resolve({
             regionBranchHide: false,
-            branchId: this.branchId
+            branchId: this.branchId,
+            dataAccessDTO: req.dataAccessDTO
           })
         });
       })

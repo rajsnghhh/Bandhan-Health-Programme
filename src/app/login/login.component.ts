@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit {
                 this.accountService.userFirstTime = data;
                 this.router.navigate(['/reset']);
               } else {
-                location.reload();
                 this.router.navigate(['/core']);
                 this.showSuccess('Login Successful');
               }
