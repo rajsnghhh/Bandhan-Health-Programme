@@ -11,10 +11,6 @@ export class MuacRegisterService {
 
   constructor(private http: HttpClient) { }
 
-  villagesOfBranch(obj): any {
-    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
-  }
-
   listOfBranchesOfARegion(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }

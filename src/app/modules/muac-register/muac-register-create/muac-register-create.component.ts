@@ -1,4 +1,5 @@
 
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +18,7 @@ import { MuacRegisterService } from '../muac-register.service';
 export class MuacRegisterCreateComponent implements OnInit {
   locationForm: FormGroup;
   muacList: any;
-  muacCampList: any;
+  muacCampList: Array<any> = [];
   modalContent: any;
   modalReference: any;
   muacDetails = {
@@ -39,7 +40,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   ProjectStartDate: any;
   ProjectEndDate: any;
   MuacList: any;
-  loader: boolean = false;
+  loader: boolean = true;
   villagesOfBranch: Array<any> = [];
   regionList: Array<any> = [];
   branchList: Array<any> = [];
@@ -47,13 +48,18 @@ export class MuacRegisterCreateComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
+  regionBranchHide: boolean;
+  branchId: any;
+  hcoBranchId: any;
 
 
   constructor(private httpService: HttpService, private muacService: MuacRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private router: Router,
-    private fb: FormBuilder, private sidebarService: SidebarService) { }
+    private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    console.log(this.sidebarService.userId);
+
 
     this.locForm();
 
@@ -61,26 +67,29 @@ export class MuacRegisterCreateComponent implements OnInit {
       muacCampId: 0,
       startDate: '',
       endDate: '',
-      userId: 100,
+      userId: this.sidebarService.userId,
       createdDateTime: new Date().toISOString().slice(0, 10)
     });
 
-
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.muacService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        this.hcoBranchId = res.branchId;
+        this.changeBranch(res.branchId)
+        let Dto = {
+          dataAccessDTO: res.dataAccessDTO,
+          branchId: res.branchId
         }
-      })
-    }
-
-    this.regionList = this.sidebarService.listOfRegion;
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
@@ -98,24 +107,17 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
-  changeRegion(region) {
-    let regionId = this.regionList.find(
-      (reg) => reg.regionName == region
-    )?.regionMasterId;
+  changeRegion(regionId) {
+    console.log(regionId, 'regionId');
+
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId,
     };
 
-
-    this.muacService.listOfBranchesOfARegion(req).subscribe(
-      (res) => {
-        this.branchList = res?.responseObject;
-      },
-      (error) => {
-        this.branchList = null;
-      }
-    );
+    this.muacService.listOfBranchesOfARegion(req).subscribe((res) => {
+      this.branchList = res?.responseObject;
+    }, (error) => { this.branchList = null; });
 
     this.locationForm.controls.branch.setValue('');
     this.muacCampList = [];
@@ -126,40 +128,15 @@ export class MuacRegisterCreateComponent implements OnInit {
     }
   }
 
-  changeBranch(branch) {
-    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value
-    let Dto = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-    this.muacService.villagesOfBranch(Dto).subscribe((res) => {
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch2');
-      this.muacListData(this.sidebarService.branchId);
-    });
-
-    if (this.locationForm.value.branch == '') {
-      this.showError('No Data Found');
-      this.muacCampList = [];
-      this.muacAdd = true;
-    }
-  }
-
-  createModal(createMuac) {
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(createMuac, {
-      windowClass: 'createMuac',
-    });
-  }
-
-  muacListData(branchId) {
+  changeBranch(branchId) {
+    this.branchId = branchId;
     let obj = {
       activeStatus: 'A',
       dataAccessDTO: this.httpService.dataAccessDTO,
-      id: branchId
+      id: branchId 
     }
+
+    this.loader = false;
 
     //API call for viewing muacList
     setTimeout(() => {
@@ -167,6 +144,9 @@ export class MuacRegisterCreateComponent implements OnInit {
         this.loader = true;
         this.muacList = response.responseObject;
         this.muacCampList = response.responseObject.muaccampDetailList;
+        if (this.muacCampList.length == 0) {
+          this.showError('No Data Found');
+        }
         console.log(this.muacCampList);
         this.getMinDate(this.muacList);
       },
@@ -175,6 +155,21 @@ export class MuacRegisterCreateComponent implements OnInit {
         })
     }, 1000);
 
+    if(!branchId){
+      if (this.locationForm.value.branch == '') {
+        this.showError('No Data Found');
+        this.muacCampList = [];
+        this.muacAdd = true;
+      }
+    }
+    
+  }
+
+  createModal(createMuac) {
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(createMuac, {
+      windowClass: 'createMuac',
+    });
   }
 
   locForm() {
@@ -229,7 +224,7 @@ export class MuacRegisterCreateComponent implements OnInit {
       muacCampId: 0,
       startDate: '',
       endDate: '',
-      userId: 100,
+      userId: this.sidebarService.userId,
       createdDateTime: new Date().toISOString().slice(0, 10)
     }];
   }
@@ -255,6 +250,10 @@ export class MuacRegisterCreateComponent implements OnInit {
     if (this.locationForm.value.branch == '') {
       flag = false;
     }
+
+    if(this.branchId) {
+      flag = true;
+    }
     return flag;
   }
 
@@ -263,7 +262,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     let postBody = {
       activeStatus: 'A',
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId,
+      branchId: this.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
       projectStartDate: this.muacList.projectStartDate,
@@ -273,6 +272,8 @@ export class MuacRegisterCreateComponent implements OnInit {
       branchCloseDate: this.muacList.branchCloseDate,
       muacCampDTOList: this.muacDetails.muacInfo,
     }
+
+    console.log(postBody);
 
     if ((this.muacDetails.muacInfo[0].startDate) > (this.muacDetails.muacInfo[0].endDate)) {
       this.showError('End date should be after the start date');
@@ -286,18 +287,8 @@ export class MuacRegisterCreateComponent implements OnInit {
 
       if (response.status === true) {
         this.showSuccess(response.message);
-        let currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentUrl]);
-        });
-        this.muacDetails.muacInfo = [{
-          muacCampId: 0,
-          startDate: '',
-          endDate: '',
-          userId: 100,
-          createdDateTime: new Date().toISOString().slice(0, 10)
-        }];
-
+        this.muacModalDismiss();
+        this.changeBranch(this.branchId);
       } else {
         this.showError(response.message);
       }
@@ -353,7 +344,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     let postBody = {
       activeStatus: 'A',
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId,
+      branchId: this.branchId,
       projectMasterId: this.muacList.projectMasterId,
       projectName: this.muacList.projectName,
       projectStartDate: this.muacList.projectStartDate,
@@ -365,7 +356,7 @@ export class MuacRegisterCreateComponent implements OnInit {
         muacCampId: this.muacEditInfo.muacCampId,
         startDate: this.muacDetails.muacInfo[0].startDate,
         endDate: this.muacDetails.muacInfo[0].endDate,
-        userId: 100,
+        userId: this.sidebarService.userId,
         createdDateTime: new Date().toISOString().slice(0, 10)
       }],
     }
@@ -383,18 +374,8 @@ export class MuacRegisterCreateComponent implements OnInit {
 
       if (response.status === true) {
         this.showSuccess(response.message);
-        let currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentUrl]);
-        });
-        this.muacDetails.muacInfo = [{
-          muacCampId: 0,
-          startDate: '',
-          endDate: '',
-          userId: 100,
-          createdDateTime: new Date().toISOString().slice(0, 10)
-        }];
-
+        this.muacModalDismiss();
+        this.changeBranch(this.branchId);
       } else {
         this.showError(response.message);
       }
@@ -403,15 +384,14 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
-
   deleteMuac(item, i) {
     const post = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId,
+      branchId: this.branchId,
       muacCampId: item.muacCampId,
       status: 'D',
-      userId: 100,
+      userId: this.sidebarService.userId,
       createdDateTime: item.startDate
     }
 
