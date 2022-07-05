@@ -84,17 +84,16 @@ export class MuacRegisterCreateComponent implements OnInit {
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
-
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 97)?.accessDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
   }

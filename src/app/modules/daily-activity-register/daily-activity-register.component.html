@@ -305,8 +305,19 @@
                                     : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                     : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : 'grey'}}"><i
                                             class="fa fa-circle fa-lg"></i></td>
-                                    <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                            (change)="changeChildbox($event,item)" formControlName="child"></td>
+                                    <td *ngIf="item.active_flag == 'A' && mode == 'E'"><input class="form-check-input"
+                                            type="checkbox" value="" id="flexCheckDefault"
+                                            (change)="changeChildbox($event,item)" checked></td>
+                                    <td *ngIf="item.active_flag == 'D'  && mode == 'E'"><input class="form-check-input"
+                                            type="checkbox" value="" id="flexCheckDefault"
+                                            (change)="changeChildbox($event,item)"></td>
+                                    <td *ngIf="item.active_flag == 'A' && mode == 'V'"><input class="form-check-input"
+                                            type="checkbox" value="" id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                            (change)="changeChildbox($event,item)" checked></td>
+                                    <td *ngIf="item.active_flag == 'D'  && mode == 'V'"><input class="form-check-input"
+                                            type="checkbox" value="" id="flexCheckDefault" [attr.disabled]="isDisabled"
+                                            (change)="changeChildbox($event,item)"></td>
+
                                 </tr>
 
                             </tbody>
