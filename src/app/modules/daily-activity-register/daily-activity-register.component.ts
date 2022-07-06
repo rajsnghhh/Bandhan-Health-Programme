@@ -6,7 +6,6 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { DailyActivityRegisterService } from './daily-activity-register.service';
 import { HttpService } from '../core/http/http.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -263,6 +262,7 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
   darViewFamily(item) {
+
     this.darViewFamilyList = item;
 
     console.log(this.darViewChildList, 'this.darViewChildList');
@@ -276,18 +276,12 @@ export class DailyActivityRegisterComponent implements OnInit {
   }
 
   changeChildbox(e, item) {
-    var data = e.target.checked;
-    if (data) {
-      this.childbox.push({
-        active_flag: "A",
-        childId: item.childId,
-        darChildMapId: item.darChildMapId,
-      });
-      console.log(this.childbox);
+    console.log(e.target.checked, item);
+    if (e.target.checked == true) {
+      item.active_flag = 'A'
     } else {
-      this.childbox.pop();
+      item.active_flag = 'D'
     }
-
   }
 
   changeVisitbox(e, items) {
@@ -295,12 +289,9 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     if (e.target.checked) {
       items.answer = 'Y';
-    }
-
-    else {
+    } else {
       items.answer = 'N';
     }
-
     console.log(e.target.checked, items);
   }
 
@@ -317,6 +308,8 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     this.editListCheck = item;
     this.darViewChildList = this.editListCheck.darChildList;
+    console.log(this.darViewChildList, '  this.darViewChildList   this.darViewChildList ');
+
 
     this.editForms();
     let req = {
@@ -394,7 +387,6 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   editForms() {
     this.editForm = this.fb.group({
-      child: [''],
       ss: [this.editListCheck.visitedWithSS ? this.editListCheck.visitedWithSS : this.changeSS],
       sahayika: [this.editListCheck.ssId ? this.editListCheck.ssId : '']
     });
@@ -433,7 +425,10 @@ export class DailyActivityRegisterComponent implements OnInit {
       latitude: item.latitude,
       longitude: item.longitude,
       active_flag: "D",
-      visitPurposeData: this.visitData
+      visitPurposeData: this.visitData,
+      presentInPregnantWoman: item.presentInPregnantWoman,
+      presentInLactatingMother: item.presentInLactatingMother,
+      hasChildPresentInPem: item.hasChildPresentInPem
     }
 
     console.log(obj);
@@ -444,10 +439,11 @@ export class DailyActivityRegisterComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.darViewFamilyList.splice(i, 1);
+      } else {
+        this.showError(res.message)
       }
 
     });
-
 
   }
 
@@ -471,6 +467,15 @@ export class DailyActivityRegisterComponent implements OnInit {
       ssid = null;
     }
 
+    const newArrayOfObj = item.darChildList.map(({
+      childId: childDetailId,
+      ...rest
+    }) => ({
+      childDetailId,
+      ...rest
+    }));
+
+    console.log(newArrayOfObj);
 
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -479,11 +484,14 @@ export class DailyActivityRegisterComponent implements OnInit {
       visitDate: item.darVisitDate,
       visitedWithSS: chng,
       ssId: ssid ? ssid : ssid,
-      childList: this.childbox,
+      childList: newArrayOfObj,
       latitude: item.latitude,
       longitude: item.longitude,
       active_flag: "A",
-      visitPurposeData: this.visitData
+      visitPurposeData: this.visitData,
+      presentInPregnantWoman: item.presentInPregnantWoman,
+      presentInLactatingMother: item.presentInLactatingMother,
+      hasChildPresentInPem: item.hasChildPresentInPem
     }
 
     console.log(obj);
@@ -494,6 +502,10 @@ export class DailyActivityRegisterComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.modalDismiss();
+        this.toDateChange();
+        this.viewDAREntryList();
+      } else {
+        this.showError(res.message);
       }
 
     });

@@ -1,26 +1,26 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="white_box QA_section mb_30">
         <h2 class="page-title">Muac Camp Creation</h2>
 
         <div style="float: right;">
-            <div class="add_button ">
-                <button class="btn btn-primary" *ngIf="createMode"  (click)="createModal(createMuac)" [disabled]="!addMuacDisabled()">Add
-                    Muac Camp</button>
+            <div class="add_button" >
+                <button class="btn btn-primary" *ngIf="createMode" (click)="createModal(createMuac)"
+                    [disabled]="!addMuacDisabled()">Add Muac
+                    Camp</button>
             </div>
         </div>
+
         <form class="form-signin" [formGroup]="locationForm">
 
-            <div class="row">
+            <div class="row" *ngIf="regionBranchHide">
                 <div class="form-group col-md">
                     <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <select class="form-select" (change)="changeRegion($event.target.value)" formControlName="region"
-                        id="region" [ngClass]="{
-                  'is-invalid': l.region.invalid && l.region.touched,
-                  'is-valid':
-                    l.region.valid && (l.region.dirty || l.region.touched)
-                }">
+                        id="region" [ngClass]="{  'is-invalid': l.region.invalid && l.region.touched, 'is-valid':
+                    l.region.valid && (l.region.dirty || l.region.touched) }">
                         <option value="">-- Select Region --</option>
-                        <option *ngFor="let region of regionList">
+                        <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
                             {{region.regionName}}
                         </option>
                     </select>
@@ -33,12 +33,10 @@
                     <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <select class="form-select" (change)="changeBranch($event.target.value)" formControlName="branch"
                         id="branch" [ngClass]="{
-                  'is-invalid': l.branch.invalid && l.branch.touched,
-                  'is-valid':
-                    l.branch.valid && (l.branch.dirty || l.branch.touched)
-                }">
+                  'is-invalid': l.branch.invalid && l.branch.touched, 'is-valid':
+                    l.branch.valid && (l.branch.dirty || l.branch.touched)  }">
                         <option value="">-- Select Branch --</option>
-                        <option *ngFor="let branch of branchList">
+                        <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
                             {{ branch.branchName }}
                         </option>
                     </select>
@@ -63,7 +61,7 @@
                                 <th>Camp Number</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Action</th>
+                                <th *ngIf="updateMode || deleteMode">Action</th>
                             </tr>
                         </thead>
 
@@ -73,8 +71,10 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td><i class="fas fa-edit" title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
-                                    <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode" (click)="deleteMuac(item, i)"></i>
+                                <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit Muac"
+                                        *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
+                                    <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
+                                        (click)="deleteMuac(item, i)"></i>
                                 </td>
                             </tr>
                         </tbody>

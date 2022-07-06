@@ -271,7 +271,23 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="moreFamData.pregnantWoman=='Y'">
+                            <label for="pregnancy">Are you pregnant now?
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="pregnancy" id="pregnancy" [ngClass]="{ 'is-invalid': f.pregnancy.invalid && f.pregnancy.touched,
+                            'is-valid': f.pregnancy.valid && (f.pregnancy.dirty || f.pregnancy.touched) }"
+                                [attr.disabled]="isDisabled">
+                                <option value="">-- Select Pregnancy --</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="NA">N/A</option>
+                            </select>
+                            <div *ngIf="f.pregnancy.errors" class="invalid-feedback">
+                                <div *ngIf="f.pregnancy.errors.required">Pregnancy selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="moreFamData.pregnantWoman=='N'">
                             <label for="pregnancy">Are you pregnant now?
                                 :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" formControlName="pregnancy" id="pregnancy" [ngClass]="{ 'is-invalid': f.pregnancy.invalid && f.pregnancy.touched,

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -35,7 +36,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   registerSearch: any;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
-    public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService) { }
+    public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService,
+    private httpClient: HttpClient) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -78,34 +80,25 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       }
     }
 
-    // window.onbeforeunload = function () {
-    //   localStorage.removeItem("datas")
-    // }
-
     this.createForm();
 
-    let obj = { dataAccessDTO: this.http.dataAccessDTO }
-    this.centralService.listOfRegionsOfUser(obj).subscribe((res) => {
-      this.regionList = res.responseObject;
-      console.log(this.regionList);
-    });
-
-
-    let Dto = {
-      dataAccessDTO: this.http.dataAccessDTO,
-      branchId: this.sidebarService.branchId
-    }
-
-    if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
-      this.centralService.villagesOfBranch(Dto).subscribe((res) => {
-        if (res.sessionDTO.status == true) {
-          this.villagesOfBranch = res.responseObject;
-          console.log(this.villagesOfBranch, 'villagesOfBranch1');
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let Dto = {
+          dataAccessDTO: res.dataAccessDTO,
+          branchId: res.branchId
         }
-      })
-    }
-
-    // this.regionList = this.sidebarService.listOfRegion;
+        this.regionBranchHide = res.regionBranchHide;
+        this.httpClient.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        })
+      }
+    });
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
@@ -178,7 +171,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     console.log(this.branchId);
 
     let Dto = {
-      dataAccessDTO:this.http.dataAccessDTO,
+      dataAccessDTO: this.http.dataAccessDTO,
       branchId: branchId
     }
 
