@@ -678,12 +678,8 @@ class ChildrenRegisterCreateComponent {
                 this.regionBranchHide = res.regionBranchHide;
             }
             else {
-                let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
                 let Dto = {
-                    dataAccessDTO: {
-                        userId: dataAccessDTO.userName,
-                        userName: dataAccessDTO.userId,
-                    },
+                    dataAccessDTO: res.dataAccessDTO,
                     branchId: res.branchId
                 };
                 this.regionBranchHide = res.regionBranchHide;
@@ -797,7 +793,6 @@ class ChildrenRegisterCreateComponent {
         }
         else {
             this.locationForm.controls.viewChild.setValue('2');
-            // this.branchVillageMapId = this.villagesOfBranch[0].gpDtoList[0].villageDtoList.find(i => i.villageName == villagename)?.branchVillageMapId;
             this.branchVillageMapId = (_c = (_b = (_a = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)) === null || _a === void 0 ? void 0 : _a.gpDtoList.find(gp => gp.name == this.selectedGp)) === null || _b === void 0 ? void 0 : _b.villageDtoList.find(vill => vill.villageMasterId == villageId)) === null || _c === void 0 ? void 0 : _c.branchVillageMapId;
             console.log(this.branchVillageMapId, 'branchVillageMapId');
             let obj = {
