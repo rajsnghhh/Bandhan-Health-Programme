@@ -221,13 +221,13 @@ export class PwRegisterComponent implements OnInit {
       data: {
         id: pregnantWomenList.familyDetailId,
         singlePregnantWomenList: pregnantWomenList,
-        villageMasterId: this.villageMasterId
+        villageMasterId: this.setStatus == 'viewCentral' ? this.villageID : this.villageMasterId
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.setStatus == 'viewCentral') {
-        this.getPregnantWomenList(this.villageID)
+        this.getPregnantWomenList(this.villageID);
       } else
         this.getPregnantWomenList(this.villageMasterId);
 

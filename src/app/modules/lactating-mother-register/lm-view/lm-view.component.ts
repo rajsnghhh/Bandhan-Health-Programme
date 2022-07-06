@@ -69,7 +69,7 @@ export class LmViewComponent implements OnInit, DoCheck {
     localStorage.setItem("datas", JSON.stringify(JSONDatas));
 
     if (this.setStatus == 'viewCentralLM') {
-      this.getLactatingMotherList(this.villageID)
+      this.getLactatingMotherList(this.villageID);
     } else {
 
       this.createForm();
@@ -92,13 +92,11 @@ export class LmViewComponent implements OnInit, DoCheck {
           })
         }
       });
-
-      this.createUpdateMode = this.sidebarService.subMenuList
-        .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-        .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
-        .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
-
     }
+    this.createUpdateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 
   /* on change Region dropdown getting Branch list */
@@ -268,7 +266,11 @@ export class LmViewComponent implements OnInit, DoCheck {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          this.getLactatingMotherList(this.villageMasterId);
+          if (this.setStatus == 'viewCentralLM') {
+            this.getLactatingMotherList(this.villageID);
+          } else {
+            this.getLactatingMotherList(this.villageMasterId);
+          }
         });
       } else {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
@@ -280,7 +282,11 @@ export class LmViewComponent implements OnInit, DoCheck {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          this.getLactatingMotherList(this.villageMasterId);
+          if (this.setStatus == 'viewCentralLM') {
+            this.getLactatingMotherList(this.villageID);
+          } else {
+            this.getLactatingMotherList(this.villageMasterId);
+          }
         });
       }
 
