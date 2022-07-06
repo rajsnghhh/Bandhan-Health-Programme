@@ -28,7 +28,11 @@ export class UserHhSsRemapHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.regionList = this.sidebarService.listOfRegion;
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+      }
+    });
   }
 
   createForm() {
