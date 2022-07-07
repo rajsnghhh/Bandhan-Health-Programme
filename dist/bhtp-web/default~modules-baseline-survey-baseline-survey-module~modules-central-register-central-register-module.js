@@ -312,12 +312,8 @@ class LocationComponent {
                 this.regionBranchHide = res.regionBranchHide;
             }
             else {
-                let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
                 let Dto = {
-                    dataAccessDTO: {
-                        userId: dataAccessDTO.userName,
-                        userName: dataAccessDTO.userId,
-                    },
+                    dataAccessDTO: res.dataAccessDTO,
                     branchId: res.branchId
                 };
                 this.regionBranchHide = res.regionBranchHide;

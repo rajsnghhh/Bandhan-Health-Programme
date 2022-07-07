@@ -80,6 +80,10 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       }
     }
 
+    window.onbeforeunload = function () {
+      localStorage.removeItem("datas")
+    }
+
     this.createForm();
 
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
@@ -221,7 +225,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
     this.blockId = blockId;
     console.log(this.blockId);
 
-    this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
+    this.gpList = this.villagesOfBranch?.find(block => block.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
 
     if (!this.localStorageData) {
@@ -313,20 +317,18 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   routePEMStatus(PEMitem) {
-    if (PEMitem.pemStatus == 'RED' || PEMitem.pemStatus == 'GREEN' || PEMitem.pemStatus == 'YELLOW') {
-      console.log(PEMitem);
-      this.route.navigate(['/pem-register/create'], {
-        queryParams: {
-          familyID: PEMitem.familyDetailId,
-          status: 'viewCentralPEM',
-          regionID: this.regionId,
-          branchID: this.branchId ? this.branchId : this.sidebarService.branchId,
-          blockID: this.blockId,
-          gpID: this.gpId,
-          villageID: this.villageId,
-        }
-      });
-    }
+    console.log(PEMitem);
+    this.route.navigate(['/pem-register/create'], {
+      queryParams: {
+        familyID: PEMitem.familyDetailId,
+        status: 'viewCentralPEM',
+        regionID: this.regionId,
+        branchID: this.branchId ? this.branchId : this.sidebarService.branchId,
+        blockID: this.blockId,
+        gpID: this.gpId,
+        villageID: this.villageId,
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -142,11 +142,15 @@
                                                 [ngStyle]="{'color':item.lactatingWomanStatus == 'Y' ? 'blue' : '',
                                                 'font-weight':item.lactatingWomanStatus == 'Y' ? 'bold' : '', 'cursor': item.lactatingWomanStatus == 'Y' ? 'pointer' : ''}">
                                                 {{item.lactatingWomanStatus}}</td>
-                                            <td (click)="routePEMStatus(item)"
-                                                [ngStyle]="{'color':item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'blue' : '',
-                                                'font-weight':item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'bold' : '', 
-                                                'cursor': item.pemStatus == 'YELLOW' || item.pemStatus == 'RED' || item.pemStatus == 'GREEN' ? 'pointer' : ''}">
-                                                {{item.pemStatus}}</td>
+                                            <td *ngIf=" item.pemStatus.includes('R') || item.pemStatus.includes('G') || item.pemStatus.includes('Y')"
+                                                (click)="routePEMStatus(item)"
+                                                [ngStyle]="{'color':item.pemStatus.includes('R') || item.pemStatus.includes('G') || item.pemStatus.includes('Y') ? 'blue' : '',
+                                                'font-weight':item.pemStatus.includes('R')||  item.pemStatus.includes('G') || item.pemStatus.includes('Y') ? 'bold' : '', 
+                                                'cursor': item.pemStatus.includes('R')||  item.pemStatus.includes('G') || item.pemStatus.includes('Y') ? 'pointer' : ''}">
+                                                Y</td>
+                                            <td *ngIf="item.pemStatus == 'N'">N</td>
+                                            <td *ngIf="item.pemStatus == 'N/A'">N/A</td>
+
                                         </tr>
                                     </tbody>
 

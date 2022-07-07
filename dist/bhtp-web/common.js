@@ -52,9 +52,6 @@ class MuacRegisterService {
         this.http = http;
         this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
     }
-    villagesOfBranch(obj) {
-        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
-    }
     listOfBranchesOfARegion(obj) {
         return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
     }
