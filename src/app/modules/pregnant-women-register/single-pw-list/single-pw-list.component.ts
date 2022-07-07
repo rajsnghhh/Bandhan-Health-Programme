@@ -19,10 +19,12 @@ export class SinglePwListComponent implements OnInit {
   familyNumber: any;
   husbandOrGuardianName: any;
   pregnantWomanRegisterDetailList: Array<any> = [];
+  // pwList: Array<any> = [];
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
   diffLmpAndCurrent: any;
+  // allPregnantWomanRegisterId: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SinglePwListComponent>,
     public dialog: MatDialog, private httpService: HttpService, private confirmationDialogService: ConfirmationDialogService,
@@ -87,6 +89,7 @@ export class SinglePwListComponent implements OnInit {
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
       this.pregnantWomanRegisterDetailList = res?.responseObject?.pregnantWomanList.find(x => x.familyDetailId == this.data.id)?.pregnantWomanRegisterDetailList;
+      this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList = this.pregnantWomanRegisterDetailList
       console.log(this.pregnantWomanRegisterDetailList, 'listpage');
     })
   }
@@ -102,7 +105,7 @@ export class SinglePwListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.data.villageMasterId)
+      this.getPregnantWomenList(this.data.villageMasterId);
     });
   }
 
@@ -117,7 +120,7 @@ export class SinglePwListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.data.villageMasterId)
+      this.getPregnantWomenList(this.data.villageMasterId);
     });
   }
 

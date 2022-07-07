@@ -70,7 +70,10 @@ export class PwViewComponent implements OnInit {
       abortion: this.data.pregnantWomanRegisterData.abortion,
       actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
       liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
-      deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
+      deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery,
+      womenDeath: this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus == null ? 'N' : 'Y',
+      deathTime: this.data.pregnantWomanRegisterData?.familyDeathRegister?.timeOfDeath,
+      deathReason: this.data.pregnantWomanRegisterData?.familyDeathRegister?.familyDeathComment
     })
 
     if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
@@ -155,6 +158,10 @@ export class PwViewComponent implements OnInit {
       } else {
         this.showMessage = false;
       }
+    }
+
+    if (this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus == 'Y') {
+      this.checkMotherDeath(this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus);
     }
   }
 
@@ -411,15 +418,21 @@ export class PwViewComponent implements OnInit {
           },
           familyDeathRegister: {
             deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: 0,
             timeOfDeath: this.pwRegisterForm.value.deathTime,
-            familyDeathComment: this.pwRegisterForm.value.deathReason
           }
         }
         console.log(Dto, 'reqAdd')
-        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
           console.log(res, 'responseAdd')
-          this.dialogRef.close();
-          this.showSuccess('Success');
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError('Error');
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')
@@ -449,15 +462,25 @@ export class PwViewComponent implements OnInit {
           },
           familyDeathRegister: {
             deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
+              ? 0
+              : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
+                ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
+                : 0,
             timeOfDeath: this.pwRegisterForm.value.deathTime,
-            familyDeathComment: this.pwRegisterForm.value.deathReason
           }
         }
         console.log(Dto, 'reqEdit')
-        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
           console.log(res, 'responseEdit')
-          this.dialogRef.close();
-          this.showSuccess('Success');
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError('Error');
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')
