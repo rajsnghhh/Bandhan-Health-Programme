@@ -271,7 +271,11 @@ class UserHhSsRemapHomeComponent {
     }
     ngOnInit() {
         this.createForm();
-        this.regionList = this.sidebarService.listOfRegion;
+        this.sidebarService.checkRoledetailDTO().then((res) => {
+            if (res.regionBranchHide) {
+                this.regionList = res.region;
+            }
+        });
     }
     createForm() {
         this.locationForm = this.fb.group({

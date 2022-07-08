@@ -5,6 +5,7 @@ import { SsUnmapRemapRoutingModule } from './ss-unmap-remap-routing.module';
 import { SsUnmapRemapComponent } from './ss-unmap-remap.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CommonModule,
     SsUnmapRemapRoutingModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule, LoaderModule
   ]
 })
 export class SsUnmapRemapModule { }

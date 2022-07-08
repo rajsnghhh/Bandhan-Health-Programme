@@ -1,3 +1,5 @@
+<app-loader [hidden]="loader"></app-loader>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -58,6 +60,18 @@
                             <div *ngIf="f.hcouser.errors" class="invalid-feedback">
                                 <div *ngIf="f.hcouser.errors.required">Role selection is required</div>
                             </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="ssUnmapRemapForm.value.hcouser">
+                            <label>Filter By SS List:</label>
+                            <select class="form-select" formControlName="ssByList" id="ssByList"
+                                (change)="ssWiseViewList($event.target.value)">
+                                <option value="">-- View All List --</option>
+                                <option *ngFor="let ss of ssLists">
+                                    {{ ss.swasthyaSahayikaName }}
+                                </option>
+                                <option value="SS">List With No SS</option>
+                            </select>
                         </div>
 
                         <div class="white_box_tittle list_header">

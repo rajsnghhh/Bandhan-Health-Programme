@@ -749,7 +749,7 @@ export class BaselineCreateComponent implements OnInit {
         this.resetBaselineCreate();
       }
       else {
-        this.showError(response.responseObject);
+        this.showError(response.message);
       }
 
     })

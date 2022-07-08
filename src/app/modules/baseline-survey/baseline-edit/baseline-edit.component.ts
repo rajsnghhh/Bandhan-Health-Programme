@@ -321,7 +321,7 @@ export class BaselineEditComponent implements OnInit {
         this.backEditHousehold();
       }
       else {
-        this.showError(response.responseObject);
+        this.showError(response.message);
       }
 
     })

@@ -2096,9 +2096,9 @@ class LmViewComponent {
                     });
                 }
             });
-            this.createUpdateMode = ((_c = (_b = (_a = this.sidebarService.subMenuList
-                .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
         }
+        this.createUpdateMode = ((_c = (_b = (_a = this.sidebarService.subMenuList
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
     }
     /* on change Region dropdown getting Branch list */
     changeRegion(region) {
@@ -2257,7 +2257,12 @@ class LmViewComponent {
                     }
                 });
                 dialogRef.afterClosed().subscribe(result => {
-                    this.getLactatingMotherList(this.villageMasterId);
+                    if (this.setStatus == 'viewCentralLM') {
+                        this.getLactatingMotherList(this.villageID);
+                    }
+                    else {
+                        this.getLactatingMotherList(this.villageMasterId);
+                    }
                 });
             }
             else {
@@ -2270,7 +2275,12 @@ class LmViewComponent {
                     }
                 });
                 dialogRef.afterClosed().subscribe(result => {
-                    this.getLactatingMotherList(this.villageMasterId);
+                    if (this.setStatus == 'viewCentralLM') {
+                        this.getLactatingMotherList(this.villageID);
+                    }
+                    else {
+                        this.getLactatingMotherList(this.villageMasterId);
+                    }
                 });
             }
         });
