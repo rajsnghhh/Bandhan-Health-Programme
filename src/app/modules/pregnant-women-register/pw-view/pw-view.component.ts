@@ -297,7 +297,7 @@ export class PwViewComponent implements OnInit {
     this.pwRegisterForm.controls.anc2nd.setValue(null);
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc2ndMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -310,7 +310,7 @@ export class PwViewComponent implements OnInit {
   anc2ndDate(value) {
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc3rdMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -322,7 +322,7 @@ export class PwViewComponent implements OnInit {
   }
   anc3rdDate(value) {
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc4thMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -453,7 +453,7 @@ export class PwViewComponent implements OnInit {
             fourthAncCheckup: this.pwRegisterForm.value.anc4th,
             pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
             weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-            delivery: this.pwRegisterForm.value.delivery,
+            delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
             miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
             abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
             actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
@@ -487,6 +487,8 @@ export class PwViewComponent implements OnInit {
         });
 
       }
+    } else {
+      this.showError('From is invalid');
     }
 
 
