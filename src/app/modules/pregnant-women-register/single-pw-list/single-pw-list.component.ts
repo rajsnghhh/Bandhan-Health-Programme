@@ -19,10 +19,12 @@ export class SinglePwListComponent implements OnInit {
   familyNumber: any;
   husbandOrGuardianName: any;
   pregnantWomanRegisterDetailList: Array<any> = [];
+  // pwList: Array<any> = [];
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
   diffLmpAndCurrent: any;
+  // allPregnantWomanRegisterId: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SinglePwListComponent>,
     public dialog: MatDialog, private httpService: HttpService, private confirmationDialogService: ConfirmationDialogService,
@@ -86,7 +88,33 @@ export class SinglePwListComponent implements OnInit {
       this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
       this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
       this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-      this.pregnantWomanRegisterDetailList = res?.responseObject?.pregnantWomanList.find(x => x.familyDetailId == this.data.id)?.pregnantWomanRegisterDetailList;
+      this.pregnantWomanRegisterDetailList = [];
+      res?.responseObject?.pregnantWomanList.find(x => x.familyDetailId == this.data.id)?.pregnantWomanRegisterDetailList.forEach((item) => {
+        this.pregnantWomanRegisterDetailList.push({
+          "abortion": item.abortion,
+          "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.lastMenstrualPeriod == null)
+            ? '-'
+            : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(2)) + " Month")
+            : item.actualDateOfDelivery,
+          "antenatalCheckup": item.antenatalCheckup,
+          "delivery": item.delivery,
+          "expectedDateOfDelivery": item.expectedDateOfDelivery,
+          "firstAncCheckup": item.firstAncCheckup,
+          "fourthAncCheckup": item.fourthAncCheckup,
+          "initialWeight": item.initialWeight,
+          "lastMenstrualPeriod": item.lastMenstrualPeriod,
+          "livebirthOrStillbirth": item.livebirthOrStillbirth,
+          "miscarriage": item.miscarriage,
+          "placeOfDelivery": item.placeOfDelivery,
+          "pregnancyComplication": item.pregnancyComplication,
+          "pregnantWomanRegisterId": item.pregnantWomanRegisterId,
+          "secondAncCheckup": item.secondAncCheckup,
+          "thirdAncCheckup": item.thirdAncCheckup,
+          "weightBeforeDelivery": item.weightBeforeDelivery
+        })
+      });
+      this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList = [];
+      this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList = this.pregnantWomanRegisterDetailList
       console.log(this.pregnantWomanRegisterDetailList, 'listpage');
     })
   }
@@ -102,7 +130,7 @@ export class SinglePwListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.data.villageMasterId)
+      this.getPregnantWomenList(this.data.villageMasterId);
     });
   }
 
@@ -117,7 +145,7 @@ export class SinglePwListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getPregnantWomenList(this.data.villageMasterId)
+      this.getPregnantWomenList(this.data.villageMasterId);
     });
   }
 

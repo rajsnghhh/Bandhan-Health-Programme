@@ -70,7 +70,10 @@ export class PwViewComponent implements OnInit {
       abortion: this.data.pregnantWomanRegisterData.abortion,
       actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
       liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
-      deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
+      deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery,
+      womenDeath: this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus == null ? 'N' : 'Y',
+      deathTime: this.data.pregnantWomanRegisterData?.familyDeathRegister?.timeOfDeath,
+      deathReason: this.data.pregnantWomanRegisterData?.familyDeathRegister?.familyDeathComment
     })
 
     if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
@@ -155,6 +158,10 @@ export class PwViewComponent implements OnInit {
       } else {
         this.showMessage = false;
       }
+    }
+
+    if (this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus == 'Y') {
+      this.checkMotherDeath(this.data.pregnantWomanRegisterData?.familyDeathRegister?.deathStatus);
     }
   }
 
@@ -290,7 +297,7 @@ export class PwViewComponent implements OnInit {
     this.pwRegisterForm.controls.anc2nd.setValue(null);
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc2ndMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -303,7 +310,7 @@ export class PwViewComponent implements OnInit {
   anc2ndDate(value) {
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc3rdMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -315,7 +322,7 @@ export class PwViewComponent implements OnInit {
   }
   anc3rdDate(value) {
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = value;
+    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.Anc4thMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -411,15 +418,21 @@ export class PwViewComponent implements OnInit {
           },
           familyDeathRegister: {
             deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: 0,
             timeOfDeath: this.pwRegisterForm.value.deathTime,
-            familyDeathComment: this.pwRegisterForm.value.deathReason
           }
         }
         console.log(Dto, 'reqAdd')
-        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
           console.log(res, 'responseAdd')
-          this.dialogRef.close();
-          this.showSuccess('Success');
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError('Error');
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')
@@ -440,7 +453,7 @@ export class PwViewComponent implements OnInit {
             fourthAncCheckup: this.pwRegisterForm.value.anc4th,
             pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
             weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-            delivery: this.pwRegisterForm.value.delivery,
+            delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
             miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
             abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
             actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
@@ -449,21 +462,33 @@ export class PwViewComponent implements OnInit {
           },
           familyDeathRegister: {
             deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
+              ? 0
+              : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
+                ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
+                : 0,
             timeOfDeath: this.pwRegisterForm.value.deathTime,
-            familyDeathComment: this.pwRegisterForm.value.deathReason
           }
         }
         console.log(Dto, 'reqEdit')
-        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
           console.log(res, 'responseEdit')
-          this.dialogRef.close();
-          this.showSuccess('Success');
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError('Error');
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')
         });
 
       }
+    } else {
+      this.showError('From is invalid');
     }
 
 
