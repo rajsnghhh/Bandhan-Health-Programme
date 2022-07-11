@@ -9,7 +9,7 @@ import { BaselineEditComponent } from './baseline-edit/baseline-edit.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { LocationModule } from './location/location.module';
-import { baselineFilterPipe } from '../shared/sidebar/baseline-view-search.pipe';
+import { baselineFilterPipe } from '../shared/baseline-view-search.pipe';
 
 @NgModule({
   declarations: [BaselineCreateComponent, BaselineViewComponent, BaselineEditComponent, baselineFilterPipe],

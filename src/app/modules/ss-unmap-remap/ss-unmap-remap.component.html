@@ -1,3 +1,5 @@
+<app-loader [hidden]="loader"></app-loader>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -60,6 +62,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-md" *ngIf="ssUnmapRemapForm.value.hcouser">
+                            <label>Filter By SS List:</label>
+                            <select class="form-select" formControlName="ssByList" id="ssByList"
+                                (change)="ssWiseViewList($event.target.value)">
+                                <option value="">-- View All List --</option>
+                                <option *ngFor="let ss of ssLists">
+                                    {{ ss.swasthyaSahayikaName }}
+                                </option>
+                                <option value="SS">List With No SS</option>
+                            </select>
+                        </div>
+
                         <div class="white_box_tittle list_header">
 
                             <div class="QA_table ">
@@ -71,8 +85,8 @@
 
                                         <thead id="header-fixed">
                                             <tr>
-                                                <th>SL No</th>
-                                                <th>Household No</th>
+                                                <th style="width: 9%;">SL No</th>
+                                                <th style="width: 9%;">Household No</th>
                                                 <th>Branch</th>
                                                 <th>Village of Household</th>
                                                 <th>SS Name</th>
@@ -82,8 +96,8 @@
 
                                         <tbody>
                                             <tr *ngFor="let item of userMappedHHList; index as i">
-                                                <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                                <td>{{ item.houseHoldNumber}}</td>
+                                                <td style="width: 9%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                                <td style="width: 9%;">{{ item.houseHoldNumber}}</td>
                                                 <td>{{item.branchName}}</td>
                                                 <td>{{item.villageName}}</td>
                                                 <td>{{item.swasthyaSahayikaName ? item.swasthyaSahayikaName : '-'}}</td>

@@ -32,6 +32,8 @@ export class SsUnmapRemapComponent implements OnInit {
     ssHhMapRemapDtoList: [],
   };
   ssId: any;
+  loader: boolean = true;
+  ssNameFilter: any;
 
   constructor(private fb: FormBuilder, private ssUnmapRemapService: SsUnmapRemapService,
     private httpService: HttpService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
@@ -52,7 +54,8 @@ export class SsUnmapRemapComponent implements OnInit {
     this.ssUnmapRemapForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
-      hcouser: ['', Validators.required]
+      hcouser: ['', Validators.required],
+      ssByList: ['', Validators.required]
     });
   }
 
@@ -119,14 +122,16 @@ export class SsUnmapRemapComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       userId: this.hcouserId
     }
+    this.loader = false;
     this.ssUnmapRemapService.viewUsersMappedHhAndSsDetails(obj).subscribe((res) => {
       this.userMappedHHList = res.responseObject;
       console.log(this.userMappedHHList, 'this.userMappedHHList');
-
+      this.loader = true;
     });
 
     this.userMappedHHList = [];
     this.mapUnmapDto.ssHhMapRemapDtoList = [];
+    this.ssUnmapRemapForm.controls.ssByList.setValue('');
     if (this.ssUnmapRemapForm.value.branch == '') {
       this.userMappedHHList = [];
       this.mapUnmapDto.ssHhMapRemapDtoList = [];
@@ -238,6 +243,51 @@ export class SsUnmapRemapComponent implements OnInit {
 
     })
 
+  }
+
+  ssWiseViewList(swasthyaSahayikaName) {
+    console.log(swasthyaSahayikaName);
+
+    let obj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      userId: this.hcouserId
+    }
+    this.loader = false;
+    this.ssUnmapRemapService.viewUsersMappedHhAndSsDetails(obj).subscribe((res) => {
+      this.userMappedHHList = res.responseObject;
+      console.log(this.userMappedHHList, 'this.userMappedHHList');
+      this.callSSfilter(swasthyaSahayikaName);
+      this.loader = true;
+    });
+
+  }
+
+
+  callSSfilter(swasthyaSahayikaName) {
+    if (swasthyaSahayikaName == 'SS') {
+      this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName === null);
+      console.log(this.ssNameFilter, 'this.nossNameFilter');
+    } else {
+      this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
+      console.log(this.ssNameFilter, 'this.ssNameFilter');
+    }
+
+    if (swasthyaSahayikaName) {
+      if (this.ssNameFilter.length == 0) {
+        this.showErrorss('No matched data with' + ' ' + swasthyaSahayikaName);
+        this.userMappedHHList = this.ssNameFilter;
+      }
+      else {
+        this.userMappedHHList = this.ssNameFilter;
+      }
+    }
+
+  }
+
+  showErrorss(message) {
+    this.toaster.error(message, '', {
+      timeOut: 3000,
+    });
   }
 
   showSuccess(message) {

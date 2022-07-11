@@ -741,7 +741,7 @@ export class FamilyInfoCreateComponent implements OnInit {
           this.route.navigate(['Baseline-Survey/view']);
         }
         else {
-          this.showError(response.responseObject);
+          this.showError(response.message);
         }
 
       })
@@ -756,7 +756,7 @@ export class FamilyInfoCreateComponent implements OnInit {
           this.resetBaselineCreate();
         }
         else {
-          this.showError(response.responseObject);
+          this.showError(response.message);
         }
 
       })

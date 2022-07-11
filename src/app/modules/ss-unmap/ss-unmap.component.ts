@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { ValidationService } from '../shared/services/validation.service';
 import { SsUnmapService } from './ss-unmap.service';
 
 @Component({
@@ -20,10 +21,15 @@ export class SsUnmapComponent implements OnInit {
   pageSize = 5;
   p: any;
   branchId: any;
-
+  searchText: any;
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private ssUnmapService: SsUnmapService,
-    private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService,) { }
+    private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService, public validationService: ValidationService) { }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
 

@@ -426,7 +426,7 @@ export class BaselineViewComponent implements OnInit {
         this.householdFamDetails();
       }
       else {
-        this.showError(response.responseObject);
+        this.showError(response.message);
       }
     })
 
@@ -553,7 +553,7 @@ export class BaselineViewComponent implements OnInit {
           this.familyDetails.splice(i, 1);
         }
         else {
-          this.showErrorr(response.responseObject);
+          this.showErrorr(response.message);
         }
 
       })

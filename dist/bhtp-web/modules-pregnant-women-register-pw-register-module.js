@@ -1489,7 +1489,7 @@ class PwRegisterComponent {
             data: {
                 id: pregnantWomenList.familyDetailId,
                 singlePregnantWomenList: pregnantWomenList,
-                villageMasterId: this.villageMasterId
+                villageMasterId: this.setStatus == 'viewCentral' ? this.villageID : this.villageMasterId
             }
         });
         dialogRef.afterClosed().subscribe(result => {
