@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { LocationComponent } from '../location/location.component';
   templateUrl: './baseline-create.component.html',
   styleUrls: ['./baseline-create.component.css']
 })
-export class BaselineCreateComponent implements OnInit {
+export class BaselineCreateComponent implements OnInit, DoCheck {
   baselineSurvey: FormGroup;
   haveChildren: string = 'N';
   childbelow18: string;
@@ -46,10 +46,15 @@ export class BaselineCreateComponent implements OnInit {
   loader: boolean = true;
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
   @ViewChild(LocationComponent) locationComponent: LocationComponent;
+  timeToTentativeEndDate: any;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
     public sidebarService: SidebarService) { }
+
+  ngDoCheck(): void {
+    this.timeToTentativeEndDate = this.baselineService.timeToTentativeEndDate;
+  }
 
   ngOnInit(): void {
     this.getMinDate();
@@ -1009,5 +1014,8 @@ export class BaselineCreateComponent implements OnInit {
     return false;
   }
 
+  ngOnDestroy(): void {
+    this.baselineService.timeToTentativeEndDate = '';
+  }
 }
 

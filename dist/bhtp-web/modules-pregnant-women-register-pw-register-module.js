@@ -643,6 +643,7 @@ function SinglePwListComponent_ng_template_11_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 class SinglePwListComponent {
+    // allPregnantWomanRegisterId: Array<any> = [];
     constructor(data, dialogRef, dialog, httpService, confirmationDialogService, http, toaster, sidebarService) {
         this.data = data;
         this.dialogRef = dialogRef;
@@ -703,7 +704,33 @@ class SinglePwListComponent {
             this.pwName = this.data.singlePregnantWomenList.firstName + ' ' + this.data.singlePregnantWomenList.middleName + ' ' + this.data.singlePregnantWomenList.lastName;
             this.husbandOrGuardianName = this.data.singlePregnantWomenList.husbandOrGuardianName;
             this.familyNumber = this.data.singlePregnantWomenList.familyNumber;
-            this.pregnantWomanRegisterDetailList = (_b = (_a = res === null || res === void 0 ? void 0 : res.responseObject) === null || _a === void 0 ? void 0 : _a.pregnantWomanList.find(x => x.familyDetailId == this.data.id)) === null || _b === void 0 ? void 0 : _b.pregnantWomanRegisterDetailList;
+            this.pregnantWomanRegisterDetailList = [];
+            (_b = (_a = res === null || res === void 0 ? void 0 : res.responseObject) === null || _a === void 0 ? void 0 : _a.pregnantWomanList.find(x => x.familyDetailId == this.data.id)) === null || _b === void 0 ? void 0 : _b.pregnantWomanRegisterDetailList.forEach((item) => {
+                this.pregnantWomanRegisterDetailList.push({
+                    "abortion": item.abortion,
+                    "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.lastMenstrualPeriod == null)
+                        ? '-'
+                        : ((moment__WEBPACK_IMPORTED_MODULE_4__(new Date(moment__WEBPACK_IMPORTED_MODULE_4__(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(2)) + " Month")
+                        : item.actualDateOfDelivery,
+                    "antenatalCheckup": item.antenatalCheckup,
+                    "delivery": item.delivery,
+                    "expectedDateOfDelivery": item.expectedDateOfDelivery,
+                    "firstAncCheckup": item.firstAncCheckup,
+                    "fourthAncCheckup": item.fourthAncCheckup,
+                    "initialWeight": item.initialWeight,
+                    "lastMenstrualPeriod": item.lastMenstrualPeriod,
+                    "livebirthOrStillbirth": item.livebirthOrStillbirth,
+                    "miscarriage": item.miscarriage,
+                    "placeOfDelivery": item.placeOfDelivery,
+                    "pregnancyComplication": item.pregnancyComplication,
+                    "pregnantWomanRegisterId": item.pregnantWomanRegisterId,
+                    "secondAncCheckup": item.secondAncCheckup,
+                    "thirdAncCheckup": item.thirdAncCheckup,
+                    "weightBeforeDelivery": item.weightBeforeDelivery
+                });
+            });
+            this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList = [];
+            this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList = this.pregnantWomanRegisterDetailList;
             console.log(this.pregnantWomanRegisterDetailList, 'listpage');
         });
     }
@@ -1981,6 +2008,7 @@ class PwViewComponent {
         }
     }
     editMode() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         this.pwRegisterForm.patchValue({
             initialWeight: this.data.pregnantWomanRegisterData.initialWeight,
             lastMenstrualDate: this.data.pregnantWomanRegisterData.lastMenstrualPeriod,
@@ -1998,7 +2026,10 @@ class PwViewComponent {
             abortion: this.data.pregnantWomanRegisterData.abortion,
             actualDeliveryDate: this.data.pregnantWomanRegisterData.actualDateOfDelivery,
             liveStill: this.data.pregnantWomanRegisterData.livebirthOrStillbirth,
-            deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery
+            deliveryPlace: this.data.pregnantWomanRegisterData.placeOfDelivery,
+            womenDeath: ((_b = (_a = this.data.pregnantWomanRegisterData) === null || _a === void 0 ? void 0 : _a.familyDeathRegister) === null || _b === void 0 ? void 0 : _b.deathStatus) == null ? 'N' : 'Y',
+            deathTime: (_d = (_c = this.data.pregnantWomanRegisterData) === null || _c === void 0 ? void 0 : _c.familyDeathRegister) === null || _d === void 0 ? void 0 : _d.timeOfDeath,
+            deathReason: (_f = (_e = this.data.pregnantWomanRegisterData) === null || _e === void 0 ? void 0 : _e.familyDeathRegister) === null || _f === void 0 ? void 0 : _f.familyDeathComment
         });
         if (this.data.pregnantWomanRegisterData.antenatalCheckup == 'Y') {
             this.checkAncComplete = true;
@@ -2082,6 +2113,9 @@ class PwViewComponent {
             else {
                 this.showMessage = false;
             }
+        }
+        if (((_h = (_g = this.data.pregnantWomanRegisterData) === null || _g === void 0 ? void 0 : _g.familyDeathRegister) === null || _h === void 0 ? void 0 : _h.deathStatus) == 'Y') {
+            this.checkMotherDeath((_k = (_j = this.data.pregnantWomanRegisterData) === null || _j === void 0 ? void 0 : _j.familyDeathRegister) === null || _k === void 0 ? void 0 : _k.deathStatus);
         }
     }
     createForm() {
@@ -2214,7 +2248,7 @@ class PwViewComponent {
         this.pwRegisterForm.controls.anc2nd.setValue(null);
         this.pwRegisterForm.controls.anc3rd.setValue(null);
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = value;
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.Anc2ndMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2228,7 +2262,7 @@ class PwViewComponent {
     anc2ndDate(value) {
         this.pwRegisterForm.controls.anc3rd.setValue(null);
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = value;
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.Anc3rdMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2241,7 +2275,7 @@ class PwViewComponent {
     }
     anc3rdDate(value) {
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = value;
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.Anc4thMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2337,15 +2371,22 @@ class PwViewComponent {
                     },
                     familyDeathRegister: {
                         deathStatus: this.pwRegisterForm.value.womenDeath,
+                        familyDeathComment: this.pwRegisterForm.value.deathReason,
+                        family_death_register_id: 0,
                         timeOfDeath: this.pwRegisterForm.value.deathTime,
-                        familyDeathComment: this.pwRegisterForm.value.deathReason
                     }
                 };
                 console.log(Dto, 'reqAdd');
                 this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
                     console.log(res, 'responseAdd');
-                    this.dialogRef.close();
-                    this.showSuccess('Success');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.dialogRef.close();
+                        this.showError('Error');
+                    }
                 }, error => {
                     this.dialogRef.close();
                     this.showError('Error');
@@ -2367,7 +2408,7 @@ class PwViewComponent {
                         fourthAncCheckup: this.pwRegisterForm.value.anc4th,
                         pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
                         weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-                        delivery: this.pwRegisterForm.value.delivery,
+                        delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
                         miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
                         abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
                         actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
@@ -2376,20 +2417,34 @@ class PwViewComponent {
                     },
                     familyDeathRegister: {
                         deathStatus: this.pwRegisterForm.value.womenDeath,
+                        familyDeathComment: this.pwRegisterForm.value.deathReason,
+                        family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
+                            ? 0
+                            : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
+                                ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
+                                : 0,
                         timeOfDeath: this.pwRegisterForm.value.deathTime,
-                        familyDeathComment: this.pwRegisterForm.value.deathReason
                     }
                 };
                 console.log(Dto, 'reqEdit');
                 this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
                     console.log(res, 'responseEdit');
-                    this.dialogRef.close();
-                    this.showSuccess('Success');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.dialogRef.close();
+                        this.showError('Error');
+                    }
                 }, error => {
                     this.dialogRef.close();
                     this.showError('Error');
                 });
             }
+        }
+        else {
+            this.showError('From is invalid');
         }
     }
     closeDialog() {

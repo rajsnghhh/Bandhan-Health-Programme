@@ -1644,7 +1644,7 @@ class FamilyInfoCreateComponent {
                     this.route.navigate(['Baseline-Survey/view']);
                 }
                 else {
-                    this.showError(response.responseObject);
+                    this.showError(response.message);
                 }
             });
         }
@@ -1656,7 +1656,7 @@ class FamilyInfoCreateComponent {
                     this.resetBaselineCreate();
                 }
                 else {
-                    this.showError(response.responseObject);
+                    this.showError(response.message);
                 }
             });
         }
@@ -2285,9 +2285,9 @@ FamilyInfoCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.f.bbMicro.errors);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.moreFamData.pregnantWoman == "Y");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.moreFamData.pregnantWoman == "N");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "N");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](30);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.haveChildren === "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);

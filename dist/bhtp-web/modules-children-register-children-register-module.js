@@ -1518,13 +1518,12 @@ ChildrenRegisterModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
 /*!***********************************************!*\
   !*** ./src/app/modules/shared/search.pipe.ts ***!
   \***********************************************/
-/*! exports provided: GrdFilterPipe, GrdFilterPipes */
+/*! exports provided: GrdFilterPipe */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GrdFilterPipe", function() { return GrdFilterPipe; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GrdFilterPipes", function() { return GrdFilterPipes; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 
 
@@ -1559,29 +1558,6 @@ GrdFilterPipe.ɵpipe = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePip
                 name: 'grdFilter'
             }]
     }], null, null); })();
-class GrdFilterPipes {
-    transform(items, filter, defaultFilter) {
-        if (!filter) {
-            return items;
-        }
-        if (!Array.isArray(items)) {
-            return items;
-        }
-        if (filter && Array.isArray(items)) {
-            let filterKeys = Object.keys(filter);
-            if (defaultFilter) {
-                return items.filter(item => filterKeys.reduce((x, keyName) => (x && new RegExp(filter[keyName], 'gi').test(item[keyName])) || filter[keyName] == "", true));
-            }
-            else {
-                return items.filter(item => {
-                    return filterKeys.some((keyName) => {
-                        return new RegExp(filter[keyName], 'gi').test(item[keyName]) || filter[keyName] == "";
-                    });
-                });
-            }
-        }
-    }
-}
 
 
 /***/ }),

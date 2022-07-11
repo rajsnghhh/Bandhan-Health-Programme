@@ -25,7 +25,8 @@ export class LocationComponent implements OnInit {
   branchId: any;
   regionBranchHide: boolean;
   loader: boolean = true;
-
+  branchEnddateDetailDTO: any;
+  timeToTentativeEndDate: any;
 
   constructor(
     private http: HttpClient,
@@ -46,6 +47,17 @@ export class LocationComponent implements OnInit {
         let Dto = {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
+        }
+        let user = JSON.parse(localStorage.getItem('user'));
+        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+          console.log(true, '1');
+          this.baselineService.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+          console.log(true, '2');
+          this.baselineService.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+        } else {
+          this.baselineService.timeToTentativeEndDate = '';
         }
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
@@ -82,29 +94,44 @@ export class LocationComponent implements OnInit {
     this.locationForm.controls.block.setValue('');
     this.locationForm.controls.gp.setValue('');
     this.locationForm.controls.gram.setValue('');
+    this.baselineService.timeToTentativeEndDate = '';
     this.locationForm.controls.swasthyaSahayika.setValue('');
     if (!this.locationForm.value.region) {
       this.villageDtoList = [];
       this.villagesOfBranch = [];
       this.gpDtoList = [];
+      this.baselineService.timeToTentativeEndDate = '';
     }
   }
 
-  changeBranch(branch) {
+  changeBranch(brnchId) {
 
-    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto?.donorName
+    console.log(brnchId, 'brnchId');
+    this.branchEnddateDetailDTO = this.branchList.find(bran => bran.branchId == brnchId)?.branchBaselineSurveyEnddateDetailDTO;
+    console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
+    if (this.branchEnddateDetailDTO?.actualEndDate != null) {
+      console.log(true, '1');
+      this.baselineService.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToActualEndDate;
+    } else if (this.branchEnddateDetailDTO?.timeToTentativeEndDate != null) {
+      console.log(true, '2');
+      this.baselineService.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToTentativeEndDate;
+    } else {
+      this.baselineService.timeToTentativeEndDate = '';
+    }
+
+    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchId == brnchId)?.donorMasterDto?.donorName;
     console.log(this.sidebarService.donorName);
 
-    this.sidebarService.donorMasterDto = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto
+    this.sidebarService.donorMasterDto = this.branchList?.find(bran => bran.branchId == brnchId)?.donorMasterDto
     console.log(this.sidebarService.donorMasterDto);
 
 
-    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value;
+    // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    // this.sidebarService.branchName = this.locationForm.get('branch').value;
 
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
+      branchId: brnchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;

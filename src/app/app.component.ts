@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { User } from './login/user';
+import { BaselineSurveyService } from './modules/baseline-survey/baseline-survey.service';
 import { ConfirmationDialogService } from './modules/shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from './modules/shared/services/validation.service';
 
@@ -14,7 +15,9 @@ export class AppComponent {
   fullscreenData: boolean;
   user: User;
 
-  constructor(public validationService: ValidationService, private accountService: LoginService, private confirmationDialogService: ConfirmationDialogService) {
+  constructor(public validationService: ValidationService, private accountService: LoginService,
+    private confirmationDialogService: ConfirmationDialogService,private baselineService: BaselineSurveyService
+    ) {
     this.accountService.user.subscribe((x) => { this.user = x; });
     console.log(this.user, 'appComponent')
   }
@@ -27,7 +30,10 @@ export class AppComponent {
   logout() {
 
     this.confirmationDialogService.confirm('', 'Are you sure you want to log out ?')
-      .then(() => this.accountService.logout()
+      .then(() => {
+        this.accountService.logout();
+        this.baselineService.timeToTentativeEndDate = '';
+      }
       )
 
       .catch(() => '');

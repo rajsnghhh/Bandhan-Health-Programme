@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class BaselineSurveyService {
   baseURL = environment.apiUrl;
-
+  timeToTentativeEndDate:any;
+  
   constructor(private http: HttpClient) { }
 
   getCasteView(obj): any {

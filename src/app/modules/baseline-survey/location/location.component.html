@@ -29,7 +29,7 @@
             f.branch.valid && (f.branch.dirty || f.branch.touched)
         }">
         <option value="">-- Select Branch --</option>
-        <option *ngFor="let branch of branchList">
+        <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
           {{ branch.branchName }}
         </option>
       </select>
