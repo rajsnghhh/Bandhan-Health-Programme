@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-@media (max-width:1350px) {
+@media (max-width:450px) {
   .webaccess{
     display: none;
   }
@@ -22,7 +22,7 @@
   }
 }
 
-@media (min-width:1350px) {
+@media (min-width:450px) {
   .notSupport{
     display: none;
   }
