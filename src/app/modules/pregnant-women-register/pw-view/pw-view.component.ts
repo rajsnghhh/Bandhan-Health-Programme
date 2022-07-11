@@ -168,7 +168,7 @@ export class PwViewComponent implements OnInit {
   createForm() {
     this.pwRegisterForm = this.fb.group({
       initialWeight: [null, this.weightRange],
-      lastMenstrualDate: [null],
+      lastMenstrualDate: [null, Validators.required],
       expectedDeliveryDate: [null],
       ancComplete: [null],
       anc1st: [null],
