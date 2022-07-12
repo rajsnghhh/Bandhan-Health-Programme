@@ -10,3 +10,7 @@ table tr th {
     display: flex;
     flex-direction: row-reverse;
 }
+table.table thead {
+  position: sticky;
+  top: 60px;
+}
