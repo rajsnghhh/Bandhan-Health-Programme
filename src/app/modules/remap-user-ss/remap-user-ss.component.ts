@@ -52,8 +52,7 @@ export class RemapUserSsComponent implements OnInit {
     this.remapUserSSForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
-      hco: ['', Validators.required],
-      ssByList: ['', Validators.required]
+      hco: ['', Validators.required]
     })
   }
 
@@ -110,26 +109,38 @@ export class RemapUserSsComponent implements OnInit {
   }
 
   changeHco(hcoUserId) {
-    this.getActiveSS(hcoUserId);
     this.hcoUserId = hcoUserId;
     console.log(this.hcoUserId);
-    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
-    this.loader = false;
 
-    this.remapUserSSService.getActiveSsListOfAnUser(Dto).subscribe((res: any) => {
-      this.hcoSSList = res.responseObject;
-      console.log(this.hcoSSList);
-      if (this.hcoSSList == null) {
-        this.showError('No Data Found');
-      }
-      this.loader = true;
-    }, error => {
-      this.showError('Error');
-      this.loader = true;
-    });
+    if (hcoUserId == 'NA') {
+      let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+      this.loader = false;
+      console.log(obj);
+
+      this.remapUserSSService.getListOfUnmappedSSOfABranch(obj).subscribe((res: any) => {
+        this.hcoSSList = res.responseObject;
+        console.log(this.hcoSSList);
+        this.loader = true;
+      });
+    } else {
+      let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
+      this.loader = false;
+
+      this.remapUserSSService.getActiveSsListOfAnUser(Dto).subscribe((res: any) => {
+        this.hcoSSList = res.responseObject;
+        console.log(this.hcoSSList);
+        if (this.hcoSSList == null) {
+          this.showError('No Data Found');
+        }
+        this.loader = true;
+      }, error => {
+        this.showError('Error');
+        this.loader = true;
+      });
+
+    }
 
     this.hcoSSList = [];
-    this.remapUserSSForm.controls.ssByList.setValue('');
     if (this.remapUserSSForm.value.hco == '') {
       this.hcoSSList = [];
     }
@@ -223,48 +234,6 @@ export class RemapUserSsComponent implements OnInit {
 
     })
 
-  }
-
-  ssWiseViewList(swasthyaSahayikaName) {
-    console.log(swasthyaSahayikaName);
-
-    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
-    this.loader = false;
-
-    this.remapUserSSService.getActiveSsListOfAnUser(Dto).subscribe((res: any) => {
-      this.hcoSSList = res.responseObject;
-      console.log(this.hcoSSList);
-      this.callSSfilter(swasthyaSahayikaName);
-      this.loader = true;
-    });
-
-  }
-
-
-  callSSfilter(swasthyaSahayikaName) {
-    if (swasthyaSahayikaName == 'SS') {
-      this.ssNameFilter = this.hcoSSList?.filter((item) => item.swasthyaSahayikaName === null);
-      console.log(this.ssNameFilter, 'this.nossNameFilter');
-    } else {
-      this.ssNameFilter = this.hcoSSList?.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
-      console.log(this.ssNameFilter, 'this.ssNameFilter');
-    }
-
-    if (swasthyaSahayikaName) {
-      if (this.ssNameFilter?.length == 0) {
-        this.showErrorss('No matched data with' + ' ' + swasthyaSahayikaName);
-        this.hcoSSList = this.ssNameFilter;
-      }
-      else {
-        this.hcoSSList = this.ssNameFilter;
-      }
-    }
-
-  }
-  showErrorss(message) {
-    this.toaster.error(message, '', {
-      timeOut: 3000,
-    });
   }
 
   showSuccess(message) {

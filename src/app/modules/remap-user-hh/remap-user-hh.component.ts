@@ -30,6 +30,7 @@ export class RemapUserHhComponent implements OnInit {
     selectedUserId: '',
     userHhUnmapRemapDtoList: [],
   };
+  ssNameFilter:any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserHHService: RemapUserHhService,
     private toaster: ToastrService, private modalService: NgbModal) { }
@@ -48,7 +49,8 @@ export class RemapUserHhComponent implements OnInit {
     this.remapUserHhForm = this.fb.group({
       region: ['', Validators.required],
       branch: ['', Validators.required],
-      hco: ['', Validators.required]
+      hco: ['', Validators.required],
+      ssByList: ['', Validators.required]
     })
   }
 
@@ -109,6 +111,7 @@ export class RemapUserHhComponent implements OnInit {
   }
 
   changeHco(hcoUserId) {
+    this.changeHcouser(hcoUserId);
     this.hcoUserId = hcoUserId;
     console.log(this.hcoUserId);
     let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
@@ -243,6 +246,48 @@ export class RemapUserHhComponent implements OnInit {
 
   modalDismiss() {
     this.modalReference.close();
+  }
+
+  ssWiseViewList(swasthyaSahayikaName) {
+    console.log(swasthyaSahayikaName);
+
+    let Dto = { dataAccessDTO: this.httpService.dataAccessDTO, userId: this.hcoUserId }
+    this.loader = false;
+
+    this.remapUserHHService.viewUsersMappedHHDetails(Dto).subscribe((res: any) => {
+      this.hcoHHList = res.responseObject;
+      console.log(this.hcoHHList);
+      this.callSSfilter(swasthyaSahayikaName);
+      this.loader = true;
+    });
+
+  }
+
+  callSSfilter(swasthyaSahayikaName) {
+    if (swasthyaSahayikaName == 'SS') {
+      this.ssNameFilter = this.hcoHHList?.filter((item) => item.swasthyaSahayikaName === null);
+      console.log(this.ssNameFilter, 'this.nossNameFilter');
+    } else {
+      this.ssNameFilter = this.hcoHHList?.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
+      console.log(this.ssNameFilter, 'this.ssNameFilter');
+    }
+
+    if (swasthyaSahayikaName) {
+      if (this.ssNameFilter?.length == 0) {
+        this.showErrorss('No matched data with' + ' ' + swasthyaSahayikaName);
+        this.hcoHHList = this.ssNameFilter;
+      }
+      else {
+        this.hcoHHList = this.ssNameFilter;
+      }
+    }
+
+  }
+
+  showErrorss(message) {
+    this.toaster.error(message, '', {
+      timeOut: 3000,
+    });
   }
 
   showSuccess(message) {

@@ -27,4 +27,8 @@ export class SsUnmapService {
     return this.http.post(`${this.baseURL}remap/unmapSsFromAllMappedHhAndUser`, obj)
   }
 
+  hcoListOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj)
+  }
+
 }

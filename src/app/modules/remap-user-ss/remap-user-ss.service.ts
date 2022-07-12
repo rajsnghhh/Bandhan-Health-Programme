@@ -30,4 +30,7 @@ export class RemapUserSsService {
     return this.http.post(`${this.baseURL}remap/remapSsWithUser`, obj)
   }
 
+  getListOfUnmappedSSOfABranch(obj): any {
+    return this.http.post(`${this.baseURL}remap/getListOfUnmappedSSOfAVillage`, obj)
+  }
 }

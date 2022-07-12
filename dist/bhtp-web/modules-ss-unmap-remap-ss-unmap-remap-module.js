@@ -545,16 +545,17 @@ class SsUnmapRemapComponent {
         });
     }
     callSSfilter(swasthyaSahayikaName) {
+        var _a, _b, _c;
         if (swasthyaSahayikaName == 'SS') {
-            this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName === null);
+            this.ssNameFilter = (_a = this.userMappedHHList) === null || _a === void 0 ? void 0 : _a.filter((item) => item.swasthyaSahayikaName === null);
             console.log(this.ssNameFilter, 'this.nossNameFilter');
         }
         else {
-            this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
+            this.ssNameFilter = (_b = this.userMappedHHList) === null || _b === void 0 ? void 0 : _b.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
             console.log(this.ssNameFilter, 'this.ssNameFilter');
         }
         if (swasthyaSahayikaName) {
-            if (this.ssNameFilter.length == 0) {
+            if (((_c = this.ssNameFilter) === null || _c === void 0 ? void 0 : _c.length) == 0) {
                 this.showErrorss('No matched data with' + ' ' + swasthyaSahayikaName);
                 this.userMappedHHList = this.ssNameFilter;
             }

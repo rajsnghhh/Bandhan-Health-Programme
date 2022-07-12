@@ -1,88 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~modules-baseline-survey-baseline-survey-module~modules-central-register-central-register-module"],{
 
-/***/ "SMi9":
-/*!********************************************************************!*\
-  !*** ./src/app/modules/baseline-survey/baseline-survey.service.ts ***!
-  \********************************************************************/
-/*! exports provided: BaselineSurveyService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaselineSurveyService", function() { return BaselineSurveyService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ "AytR");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-
-
-
-
-class BaselineSurveyService {
-    constructor(http) {
-        this.http = http;
-        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
-    }
-    getCasteView(obj) {
-        return this.http.post(`${this.baseURL}castemaster/view`, obj);
-    }
-    getEducationDetails(obj) {
-        return this.http.post(`${this.baseURL}educationalqualificationmaster/view`, obj);
-    }
-    monthlyIncomeDetails(obj) {
-        return this.http.post(`${this.baseURL}monthlyincomemaster/view`, obj);
-    }
-    religionDetails(obj) {
-        return this.http.post(`${this.baseURL}religionmaster/view`, obj);
-    }
-    occupationDetails(obj) {
-        return this.http.post(`${this.baseURL}occupationmaster/view`, obj);
-    }
-    getIdCardDetails(obj) {
-        return this.http.post(`${this.baseURL}identitycardtypes/view`, obj);
-    }
-    saveBaselineSurvey(obj) {
-        return this.http.post(`${this.baseURL}baselinesurvey/saveOrUpdate`, obj);
-    }
-    baselineView(obj) {
-        return this.http.post(`${this.baseURL}baselinesurvey/view`, obj);
-    }
-    baselineViewDetail(obj) {
-        return this.http.post(`${this.baseURL}baselinesurvey/view/detail`, obj);
-    }
-    deleteFamily(obj) {
-        return this.http.post(`${this.baseURL}familydetail/saveOrUpdate`, obj);
-    }
-    viewMoreFamilyDetails(obj) {
-        return this.http.post(`${this.baseURL}familydetail/view`, obj);
-    }
-    baselineSurveyStatus(obj) {
-        return this.http.post(`${this.baseURL}baselinesurvey/status`, obj);
-    }
-    villagesOfBranch(obj) {
-        return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj);
-    }
-    ssVillageWiseList(obj) {
-        return this.http.post(`${this.baseURL}swasthyasahayika/villageWiseList`, obj);
-    }
-    listOfBranchesOfARegion(obj) {
-        return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj);
-    }
-    VillageWiseSSList(obj) {
-        return this.http.post(`${this.baseURL}swasthyasahayika/getActiveSwasthyaSahayikaListOfAVillage`, obj);
-    }
-}
-BaselineSurveyService.ɵfac = function BaselineSurveyService_Factory(t) { return new (t || BaselineSurveyService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
-BaselineSurveyService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BaselineSurveyService, factory: BaselineSurveyService.ɵfac, providedIn: 'root' });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BaselineSurveyService, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
-        args: [{
-                providedIn: 'root'
-            }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
-
-
-/***/ }),
-
 /***/ "SfUW":
 /*!************************************************************************!*\
   !*** ./src/app/modules/baseline-survey/location/location.component.ts ***!
@@ -135,11 +52,12 @@ function LocationComponent_div_2_div_10_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r9.f.region.errors.required);
 } }
 function LocationComponent_div_2_option_19_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 24);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const branch_r14 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", branch_r14.branchId);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", branch_r14.branchName, " ");
 } }
@@ -189,7 +107,7 @@ function LocationComponent_div_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "option", 8);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18, "-- Select Branch --");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, LocationComponent_div_2_option_19_Template, 2, 1, "option", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, LocationComponent_div_2_option_19_Template, 2, 2, "option", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, LocationComponent_div_2_div_20_Template, 2, 1, "div", 10);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -307,6 +225,7 @@ class LocationComponent {
     ngOnInit() {
         this.createForm();
         this.sidebarService.checkRoledetailDTO().then((res) => {
+            var _a, _b, _c, _d;
             if (res.regionBranchHide) {
                 this.regionList = res.region;
                 this.regionBranchHide = res.regionBranchHide;
@@ -316,6 +235,19 @@ class LocationComponent {
                     dataAccessDTO: res.dataAccessDTO,
                     branchId: res.branchId
                 };
+                let user = JSON.parse(localStorage.getItem('user'));
+                console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+                if (((_a = user.responseObject.branchBaselineSurveyEnddateDetailDTO) === null || _a === void 0 ? void 0 : _a.actualEndDate) != null) {
+                    console.log(true, '1');
+                    this.baselineService.timeToTentativeEndDate = (_b = user.responseObject.branchBaselineSurveyEnddateDetailDTO) === null || _b === void 0 ? void 0 : _b.timeToActualEndDate;
+                }
+                else if (((_c = user.responseObject.branchBaselineSurveyEnddateDetailDTO) === null || _c === void 0 ? void 0 : _c.timeToTentativeEndDate) != null) {
+                    console.log(true, '2');
+                    this.baselineService.timeToTentativeEndDate = (_d = user.responseObject.branchBaselineSurveyEnddateDetailDTO) === null || _d === void 0 ? void 0 : _d.timeToTentativeEndDate;
+                }
+                else {
+                    this.baselineService.timeToTentativeEndDate = '';
+                }
                 this.regionBranchHide = res.regionBranchHide;
                 this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res) => {
                     if (res.sessionDTO.status == true) {
@@ -342,24 +274,40 @@ class LocationComponent {
         this.locationForm.controls.block.setValue('');
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.gram.setValue('');
+        this.baselineService.timeToTentativeEndDate = '';
         this.locationForm.controls.swasthyaSahayika.setValue('');
         if (!this.locationForm.value.region) {
             this.villageDtoList = [];
             this.villagesOfBranch = [];
             this.gpDtoList = [];
+            this.baselineService.timeToTentativeEndDate = '';
         }
     }
-    changeBranch(branch) {
-        var _a, _b, _c, _d, _e, _f, _g;
-        this.sidebarService.donorName = (_c = (_b = (_a = this.branchList) === null || _a === void 0 ? void 0 : _a.find(bran => bran.branchName == branch)) === null || _b === void 0 ? void 0 : _b.donorMasterDto) === null || _c === void 0 ? void 0 : _c.donorName;
+    changeBranch(brnchId) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+        console.log(brnchId, 'brnchId');
+        this.branchEnddateDetailDTO = (_a = this.branchList.find(bran => bran.branchId == brnchId)) === null || _a === void 0 ? void 0 : _a.branchBaselineSurveyEnddateDetailDTO;
+        console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
+        if (((_b = this.branchEnddateDetailDTO) === null || _b === void 0 ? void 0 : _b.actualEndDate) != null) {
+            console.log(true, '1');
+            this.baselineService.timeToTentativeEndDate = (_c = this.branchEnddateDetailDTO) === null || _c === void 0 ? void 0 : _c.timeToActualEndDate;
+        }
+        else if (((_d = this.branchEnddateDetailDTO) === null || _d === void 0 ? void 0 : _d.timeToTentativeEndDate) != null) {
+            console.log(true, '2');
+            this.baselineService.timeToTentativeEndDate = (_e = this.branchEnddateDetailDTO) === null || _e === void 0 ? void 0 : _e.timeToTentativeEndDate;
+        }
+        else {
+            this.baselineService.timeToTentativeEndDate = '';
+        }
+        this.sidebarService.donorName = (_h = (_g = (_f = this.branchList) === null || _f === void 0 ? void 0 : _f.find(bran => bran.branchId == brnchId)) === null || _g === void 0 ? void 0 : _g.donorMasterDto) === null || _h === void 0 ? void 0 : _h.donorName;
         console.log(this.sidebarService.donorName);
-        this.sidebarService.donorMasterDto = (_e = (_d = this.branchList) === null || _d === void 0 ? void 0 : _d.find(bran => bran.branchName == branch)) === null || _e === void 0 ? void 0 : _e.donorMasterDto;
+        this.sidebarService.donorMasterDto = (_k = (_j = this.branchList) === null || _j === void 0 ? void 0 : _j.find(bran => bran.branchId == brnchId)) === null || _k === void 0 ? void 0 : _k.donorMasterDto;
         console.log(this.sidebarService.donorMasterDto);
-        this.sidebarService.branchId = (_g = (_f = this.branchList) === null || _f === void 0 ? void 0 : _f.find(bran => bran.branchName == branch)) === null || _g === void 0 ? void 0 : _g.branchId;
-        this.sidebarService.branchName = this.locationForm.get('branch').value;
+        // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+        // this.sidebarService.branchName = this.locationForm.get('branch').value;
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
-            branchId: this.sidebarService.branchId
+            branchId: brnchId
         };
         this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
             this.villagesOfBranch = res.responseObject;

@@ -23,6 +23,8 @@ export class SsUnmapComponent implements OnInit {
   branchId: any;
   searchText: any;
   searchFullscreen: boolean;
+  userList: Array<any> = [];
+  hcoUserNameFilter: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private ssUnmapService: SsUnmapService,
     private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService, public validationService: ValidationService) { }
@@ -81,12 +83,24 @@ export class SsUnmapComponent implements OnInit {
       this.ssList = [];
     }
 
+    let obj2 = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: branchId
+    }
+    this.ssUnmapService.hcoListOfBranch(obj2).subscribe((res) => {
+      this.userList = res.responseObject;
+      console.log(this.userList, 'this.userList');
+
+    });
+
   }
 
   createForm() {
     this.ssUnmapForm = this.fb.group({
       region: ['', Validators.required],
-      branch: ['', Validators.required]
+      branch: ['', Validators.required],
+      hcouser: ['', Validators.required]
+
     });
   }
 
@@ -122,6 +136,41 @@ export class SsUnmapComponent implements OnInit {
       };
     });
 
+  }
+
+  hcoUserWiseViewList(hcoUser) {
+    console.log(hcoUser);
+
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
+    this.ssUnmapService.listOfswasthyasahayika(obj).subscribe((res) => {
+      this.ssList = res.responseObject?.ssDtoList;
+      console.log(this.ssList);
+      this.callSSfilter(hcoUser);
+    });
+
+  }
+
+  callSSfilter(hcoUser) {
+
+    this.hcoUserNameFilter = this.ssList?.filter((item) => item.userDto.userFirstName == hcoUser);
+      console.log(this.hcoUserNameFilter, 'this.hcoUserNameFilter');
+
+    if (hcoUser) {
+      if (this.hcoUserNameFilter?.length == 0) {
+        this.showErrorss('No matched data with' + ' ' + hcoUser);
+        this.ssList = this.hcoUserNameFilter;
+      }
+      else {
+        this.ssList = this.hcoUserNameFilter;
+      }
+    }
+
+  }
+  
+  showErrorss(message) {
+    this.toaster.error(message, '', {
+      timeOut: 3000,
+    });
   }
 
   showSuccess(message) {
