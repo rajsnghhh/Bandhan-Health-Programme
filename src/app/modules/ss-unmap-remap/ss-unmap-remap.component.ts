@@ -265,15 +265,15 @@ export class SsUnmapRemapComponent implements OnInit {
 
   callSSfilter(swasthyaSahayikaName) {
     if (swasthyaSahayikaName == 'SS') {
-      this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName === null);
+      this.ssNameFilter = this.userMappedHHList?.filter((item) => item.swasthyaSahayikaName === null);
       console.log(this.ssNameFilter, 'this.nossNameFilter');
     } else {
-      this.ssNameFilter = this.userMappedHHList.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
+      this.ssNameFilter = this.userMappedHHList?.filter((item) => item.swasthyaSahayikaName == swasthyaSahayikaName);
       console.log(this.ssNameFilter, 'this.ssNameFilter');
     }
 
     if (swasthyaSahayikaName) {
-      if (this.ssNameFilter.length == 0) {
+      if (this.ssNameFilter?.length == 0) {
         this.showErrorss('No matched data with' + ' ' + swasthyaSahayikaName);
         this.userMappedHHList = this.ssNameFilter;
       }
