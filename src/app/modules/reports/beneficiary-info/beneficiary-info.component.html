@@ -144,7 +144,7 @@
                   </div>
             </div>
 
-            <div class="add_button" *ngIf="selectFilter">
+            <div class="add_button" *ngIf="stateWiseFilter || regionWiseFilter">
               <button class="btn btn-primary" (click)="generateReport()">
                   <i class="fa fa-file-text-o"></i>Generate Report
               </button>    
@@ -198,7 +198,7 @@
                       <tbody>
                           <tr *ngFor="let item of projectWiseBeneficiaryList;index as i">
                               <td style="font-size: 13px;">{{i+1}}</td>
-                              <td style="font-size: 13px;">{{item.name ? item.name : ''}}</td>
+                              <td style="font-size: 13px;word-wrap: break-word;">{{item.name ? item.name : ''}}</td>
                               <td style="font-size: 13px;">{{item.pemCurrent ? item.pemCurrent : '0'}}</td>
                               <td style="font-size: 13px;">{{item.pemCumulative ? item.pemCumulative : '0'}}</td>
                               <td style="font-size: 13px;">{{item.lmCurrent ? item.lmCurrent : '0'}}</td>
