@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -52,6 +52,9 @@ export class BaselineViewComponent implements OnInit {
   deleteMode: boolean;
   createMode: boolean;
   ssNameFilter: Array<any> = [];
+  branchEnddateDetailDTO: any;
+  timeToTentativeEndDate: any;
+  branchID: any;
 
   constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -76,6 +79,19 @@ export class BaselineViewComponent implements OnInit {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
+        // this.branchID = res.branchId;
+        // console.log(this.branchID);
+        let user = JSON.parse(localStorage.getItem('user'));
+        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+          console.log(true, '1');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+          console.log(true, '2');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+        } else {
+          this.timeToTentativeEndDate = '';
+        }
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
@@ -89,20 +105,19 @@ export class BaselineViewComponent implements OnInit {
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
-    console.log(this.updateMode);
-
+    // console.log(this.updateMode);
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
-    console.log(this.deleteMode);
+    // console.log(this.deleteMode);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
-    console.log(this.createMode);
+    // console.log(this.createMode);
 
   }
 
@@ -117,6 +132,8 @@ export class BaselineViewComponent implements OnInit {
     this.baselineService.listOfBranchesOfARegion(req).subscribe(
       (res) => {
         this.branchList = res?.responseObject;
+        console.log(this.branchList);
+
       },
       (error) => {
         this.branchList = null;
@@ -132,6 +149,7 @@ export class BaselineViewComponent implements OnInit {
     this.villagesOfBranch = [];
     this.villageDtoList = [];
     this.gpDtoList = [];
+    this.timeToTentativeEndDate = '';
     if (this.locationForm.value.region == '') {
       this.showErrorss('No Data Found');
       this.baselineDetails = [];
@@ -140,20 +158,32 @@ export class BaselineViewComponent implements OnInit {
       this.gpDtoList = [];
       this.swasthyaSahayika = [];
       this.locationForm.controls.ssByList.setValue('');
+      this.timeToTentativeEndDate = '';
     }
   }
 
-  changeBranch(branch) {
+  changeBranch(brnchId) {
+    console.log(brnchId, 'brnchId');
+    this.branchEnddateDetailDTO = this.branchList.find(bran => bran.branchId == brnchId)?.branchBaselineSurveyEnddateDetailDTO;
+    console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
+    if (this.branchEnddateDetailDTO?.actualEndDate != null) {
+      console.log(true, '1');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToActualEndDate;
+    } else if (this.branchEnddateDetailDTO?.timeToTentativeEndDate != null) {
+      console.log(true, '2');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToTentativeEndDate;
+    } else {
+      this.timeToTentativeEndDate = '';
+    }
 
-    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchName == branch)?.donorMasterDto?.donorName;
+    this.sidebarService.donorName = this.branchList?.find(bran => bran.branchId == brnchId)?.donorMasterDto?.donorName;
     console.log(this.sidebarService.donorName);
 
-
-    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value
+    // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchId == branchId)?.branchId;
+    // this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
+      branchId: brnchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;
@@ -178,6 +208,7 @@ export class BaselineViewComponent implements OnInit {
       this.swasthyaSahayika = [];
 
     }
+
   }
 
   changeBlock(blockname) {
@@ -695,6 +726,5 @@ export class BaselineViewComponent implements OnInit {
       timeOut: 3000,
     });
   }
-
 
 }

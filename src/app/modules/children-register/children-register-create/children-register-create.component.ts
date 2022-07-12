@@ -62,6 +62,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   deleteMode: boolean;
   createMode: boolean;
   branchVillageMapId: any;
+  branchEnddateDetailDTO: any;
+  timeToTentativeEndDate: any;
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpClient, private modalService: NgbModal, public validationService: ValidationService,
@@ -93,6 +95,17 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         let Dto = {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
+        }
+        let user = JSON.parse(localStorage.getItem('user'));
+        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+          console.log(true, '1');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+          console.log(true, '2');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+        } else {
+          this.timeToTentativeEndDate = '';
         }
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
@@ -146,6 +159,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     this.locationForm.controls.gram.setValue('');
     this.locationForm.controls.viewChild.setValue('');
     this.existingFamilyList = [];
+    this.timeToTentativeEndDate = '';
     if (this.locationForm.value.region == '') {
       this.showError('No Data Found');
       this.existingFamilyList = [];
@@ -153,15 +167,28 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.villagesOfBranch = [];
       this.gpDtoList = [];
       this.locationForm.controls.viewChild.setValue('');
+      this.timeToTentativeEndDate = '';
     }
   }
 
-  changeBranch(branch) {
-    this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    this.sidebarService.branchName = this.locationForm.get('branch').value
+  changeBranch(brnchId) {
+    console.log(brnchId, 'brnchId');
+    this.branchEnddateDetailDTO = this.branchList.find(bran => bran.branchId == brnchId)?.branchBaselineSurveyEnddateDetailDTO;
+    console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
+    if (this.branchEnddateDetailDTO?.actualEndDate != null) {
+      console.log(true, '1');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToActualEndDate;
+    } else if (this.branchEnddateDetailDTO?.timeToTentativeEndDate != null) {
+      console.log(true, '2');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToTentativeEndDate;
+    } else {
+      this.timeToTentativeEndDate = '';
+    }
+    // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
+    // this.sidebarService.branchName = this.locationForm.get('branch').value
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.sidebarService.branchId
+      branchId: brnchId
     }
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
       this.villagesOfBranch = res.responseObject;

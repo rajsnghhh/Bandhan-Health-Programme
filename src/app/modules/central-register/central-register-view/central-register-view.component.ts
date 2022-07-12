@@ -34,6 +34,8 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   localStorageData: any;
   loader: boolean = true;
   registerSearch: any;
+  branchEnddateDetailDTO: any;
+  timeToTentativeEndDate: any;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
     public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService,
@@ -95,6 +97,17 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
+        let user = JSON.parse(localStorage.getItem('user'));
+        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+          console.log(true, '1');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+          console.log(true, '2');
+          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+        } else {
+          this.timeToTentativeEndDate = '';
+        }
         this.regionBranchHide = res.regionBranchHide;
         this.httpClient.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
@@ -151,11 +164,13 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       this.villagesOfBranch = [];
       this.gpList = [];
       this.centralDetails = [];
+      this.timeToTentativeEndDate = '';
       if (!this.centralViewForm.value.region) {
         this.villageList = [];
         this.villagesOfBranch = [];
         this.gpList = [];
         this.centralDetails = [];
+        this.timeToTentativeEndDate = '';
       }
     } else {
       this.centralViewForm.controls.branch.setValue('');
@@ -166,6 +181,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       this.villagesOfBranch = [];
       this.gpList = [];
       this.centralDetails = [];
+      this.timeToTentativeEndDate = '';
     }
 
   }
@@ -173,6 +189,18 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   changeBranch(branchId) {
     this.branchId = branchId;
     console.log(this.branchId);
+
+    this.branchEnddateDetailDTO = this.branchList.find(bran => bran.branchId == branchId)?.branchBaselineSurveyEnddateDetailDTO;
+    console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
+    if (this.branchEnddateDetailDTO?.actualEndDate != null) {
+      console.log(true, '1');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToActualEndDate;
+    } else if (this.branchEnddateDetailDTO?.timeToTentativeEndDate != null) {
+      console.log(true, '2');
+      this.timeToTentativeEndDate = this.branchEnddateDetailDTO?.timeToTentativeEndDate;
+    } else {
+      this.timeToTentativeEndDate = '';
+    }
 
     let Dto = {
       dataAccessDTO: this.http.dataAccessDTO,

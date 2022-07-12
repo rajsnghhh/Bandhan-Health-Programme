@@ -4,7 +4,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white_box QA_section mb_30">
-                <h2 class="page-title">View Household Info</h2>
+                <div class="row">
+                    <div class="col">
+                        <h2 class="page-title">View Household Info</h2>
+                    </div>
+                    <div class="col">
+                        <h4 style="color:blue;">{{timeToTentativeEndDate}}</h4>
+                    </div>
+                </div>
 
                 <form class="form-signin" [formGroup]="locationForm">
 
@@ -36,7 +43,7 @@
                                 f.branch.valid && (f.branch.dirty || f.branch.touched)
                             }">
                                 <option value="">-- Select Branch --</option>
-                                <option *ngFor="let branch of branchList">
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
                                     {{ branch.branchName }}
                                 </option>
                             </select>
@@ -212,7 +219,7 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">Family Details</h2>
-                <span class="close" title="close" (click)="modalDismiss()" 
+                <span class="close" title="close" (click)="modalDismiss()"
                     style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
             </div>
 
