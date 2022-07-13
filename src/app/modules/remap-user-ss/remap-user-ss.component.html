@@ -51,7 +51,7 @@
                                     {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
                                     {{hco.role_shortname}}
                                 </option>
-                                <option value="NA">No User</option>
+                                <option value="NA" *ngIf="remapUserSSForm.value.branch">No User</option>
                             </select>
                             <div *ngIf="f.hco.errors" class="invalid-feedback">
                                 <div *ngIf="f.hco.errors.required">Role selection is required</div>
