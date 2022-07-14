@@ -59,7 +59,7 @@
                         <div class="form-group col-md" *ngIf="ssForm.value.branch">
                             <label for="staffWiseList">Staff Wise SS List:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="staffWiseSSList($event)"
+                            <select class="form-select" (change)="staffWiseSSList($event.target.value)"
                                 formControlName="staffWiseList" id="staffWiseList" [ngClass]="{'is-invalid': f.staffWiseList.invalid && f.staffWiseList.touched, 'is-valid':
                                 f.staffWiseList.valid && (f.staffWiseList.dirty || f.staffWiseList.touched) }">
                                 <option value="">-- View SS List --</option>
@@ -67,6 +67,7 @@
                                 <option *ngFor="let staff of staffList" value="{{staff.user_id}}">
                                     {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}}
                                 </option>
+                                <option value="NA">No User</option>
                             </select>
                             <div *ngIf="f.staffWiseList.errors" class="invalid-feedback">
                                 <div *ngIf="f.staffWiseList.errors.required">Staff wise list selection is required</div>
@@ -75,8 +76,9 @@
 
                     </div>
 
-                    <div class="row" >
-                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode" style ="display: flex; justify-content:flex-end">
+                    <div class="row">
+                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode"
+                            style="display: flex; justify-content:flex-end">
                             <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
                         </div>
                     </div>
@@ -91,12 +93,13 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th style="padding: 0px;">SL No</th>
-                                            <th style="padding: 0px;">Name</th>
-                                            <th style="padding: 0px;">Guardian<br> Name</th>
-                                            <th >Mobile</th>
-                                            <th style="padding: 0px;">Village/ Gram <br>Sansad/ Locality</th>
-                                            <th style="padding: 0px;">Staff In<br> Charge</th>
+                                            <th style="width: 6%;">SL <br>No</th>
+                                            <th style="width: 17%;">Name</th>
+                                            <th style="width: 20%;">Guardian Name</th>
+                                            <th style="width: 10%;">Mobile</th>
+                                            <th style="width: 17%;">Village/ Gram <br>Sansad/ Locality</th>
+                                            <th style="width: 17%;">Staff In<br> Charge</th>
+                                            <th>User<br> Active</th>
                                             <th *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
                                     </thead>
@@ -105,16 +108,18 @@
 
                                         <tr
                                             *ngFor="let item of staffWiseSSLists | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td style="padding: 0px;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="padding: 0px;">{{item.ssName}} </td>
-                                          <td style="padding: 0px;">{{item.ssHusbandOrGuardianName}}</td>
-                                          <td >{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
-                                          <td style="padding: 0px;">{{item.villageDto.villageName}}</td>
-                                          <td style="padding: 0px;"> {{ item.userDto.userFirstName}} {{item.userDto.userMiddleName}}
-                                                {{item.userDto.userLastName}}</td>
-                                            <td style="padding: 0px;" *ngIf="updateMode || deleteMode"><i
-                                                    class="fas fa-edit" title="Edit SS" *ngIf="updateMode"
-                                                    (click)="editSSForm(item, createSS)"></i>
+                                            <td style="width: 6%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 17%;">{{item.ssName}} </td>
+                                            <td style="width: 20%;">{{item.ssHusbandOrGuardianName}}</td>
+                                            <td style="width: 10%;">{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
+                                            <td style="width: 17%;">{{item.villageDto.villageName}}</td>
+                                            <td style="width: 17%;"> {{ item.userDto? item.userDto.userFirstName :
+                                                '-'}} {{item.userDto ? item.userDto.userMiddleName : '-'}}
+                                                {{item.userDto ? item.userDto.userLastName : '-'}}</td>
+                                            <td>{{item.userDto ? item.userDto.isMappedUserActive :
+                                                '-'}}</td>
+                                            <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit SS"
+                                                    *ngIf="updateMode" (click)="editSSForm(item, createSS)"></i>
 
                                                 <i class="fas fa-trash" title="Delete SS" *ngIf="deleteMode"
                                                     (click)="deleteSSForm(item, i)"></i>

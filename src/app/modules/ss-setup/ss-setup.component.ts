@@ -138,7 +138,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   ssLists() {
-    let obj = {dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
     this.ssService.listOfswasthyasahayika(obj).subscribe((res) => {
       this.ssList = res.responseObject?.ssDtoList;
       console.log(this.ssList);
@@ -177,7 +177,7 @@ export class SsSetupComponent implements OnInit {
     console.log(this.editssData?.ssId, 'this.editssData?.ssIdcreate');
     console.log('branchId', this.branchId);
 
-    let obj = {dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
 
     this.ssService.blockGPVillOfBranch(obj).subscribe((res) => {
       this.blockList = res.responseObject;
@@ -387,19 +387,17 @@ export class SsSetupComponent implements OnInit {
   }
 
   staffWiseSSList(e) {
-    console.log(e.target.value);
-
-    if (e.target.value == '') {
-      this.staffWiseSSLists = [];
-    }
-
-    if (e.target.value == 1) {
-      this.staffWiseSSLists = this.ssList;
-    } else {
-      this.staffIdWiseList = this.ssList.filter(item => item.userDto.userId == e.target.value);
+    console.log(e);
+    if (e == 'NA') {
+      this.staffIdWiseList = this.ssList?.filter(item => item.userDto === null);
       this.staffWiseSSLists = this.staffIdWiseList;
       console.log(this.staffIdWiseList);
-
+    } else if (e == 1) {
+      this.staffWiseSSLists = this.ssList;
+    } else {
+      this.staffIdWiseList = this.ssList?.filter(item => item.userDto?.userId == e);
+      this.staffWiseSSLists = this.staffIdWiseList;
+      console.log(this.staffIdWiseList);
     }
 
   }

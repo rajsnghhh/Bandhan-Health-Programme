@@ -151,26 +151,18 @@ export class SsUnmapComponent implements OnInit {
   }
 
   callSSfilter(hcoUser) {
+    console.log(hcoUser);
 
-    this.hcoUserNameFilter = this.ssList?.filter((item) => item.userDto.userFirstName == hcoUser);
-      console.log(this.hcoUserNameFilter, 'this.hcoUserNameFilter');
-
-    if (hcoUser) {
-      if (this.hcoUserNameFilter?.length == 0) {
-        this.showErrorss('No matched data with' + ' ' + hcoUser);
-        this.ssList = this.hcoUserNameFilter;
-      }
-      else {
-        this.ssList = this.hcoUserNameFilter;
-      }
+    if (hcoUser == 'NA') {
+      this.ssList = this.ssList?.filter(item => item.userDto === null);
+      console.log(this.ssList);
+    } else if (hcoUser == '') {
+      this.ssList = this.ssList;
+    } else {
+      this.ssList = this.ssList?.filter(item => item.userDto?.userId == hcoUser);
+      console.log(this.ssList);
     }
 
-  }
-  
-  showErrorss(message) {
-    this.toaster.error(message, '', {
-      timeOut: 3000,
-    });
   }
 
   showSuccess(message) {
