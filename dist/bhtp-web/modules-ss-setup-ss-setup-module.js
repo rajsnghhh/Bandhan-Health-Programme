@@ -1033,7 +1033,7 @@ class SsSetupComponent {
             swasthyaSahayikaDTO: {
                 swasthyaSahayikaMasterId: ((_c = this.editssData) === null || _c === void 0 ? void 0 : _c.ssId) ? (_d = this.editssData) === null || _d === void 0 ? void 0 : _d.ssId : 0,
                 name: this.validationService.camelize(this.ssCreateForm.value.ssName.trim()),
-                husbandOrGuardianName: this.ssCreateForm.value.husbandName,
+                husbandOrGuardianName: this.validationService.camelize(this.ssCreateForm.value.husbandName.trim()),
                 contactNumber: this.ssCreateForm.value.contactNo ? this.ssCreateForm.value.contactNo : null,
                 address: this.ssCreateForm.value.address,
                 blockMasterId: this.ssCreateForm.value.block,
