@@ -1,0 +1,19 @@
+.example-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .example-header-image {
+    background-color: #499;
+  }
+  .icons{margin: 0 10%;
+  margin-top: 1px;}
+
+  /* .mat-card {
+    transition: box-shadow 296ms cubic-bezier(10.4, 0, 10.2, 25);
+    display: block;
+    position: relative;
+    padding: 16px;
+    border-radius: 4px;
+} */
