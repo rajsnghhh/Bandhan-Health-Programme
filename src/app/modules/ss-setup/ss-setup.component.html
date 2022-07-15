@@ -98,8 +98,8 @@
                                             <th style="width: 20%;">Guardian Name</th>
                                             <th style="width: 10%;">Mobile</th>
                                             <th style="width: 17%;">Village/ Gram <br>Sansad/ Locality</th>
-                                            <th style="width: 17%;">Staff In<br> Charge</th>
-                                            <th>User<br> Active</th>
+                                            <th style="width: 15%;">Staff In<br> Charge</th>
+                                            <th >User<br> Active</th>
                                             <th *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
                                     </thead>
@@ -113,7 +113,7 @@
                                             <td style="width: 20%;">{{item.ssHusbandOrGuardianName}}</td>
                                             <td style="width: 10%;">{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
                                             <td style="width: 17%;">{{item.villageDto.villageName}}</td>
-                                            <td style="width: 17%;"> {{ item.userDto? item.userDto.userFirstName :
+                                            <td style="width: 15%;"> {{ item.userDto? item.userDto.userFirstName :
                                                 '-'}} {{item.userDto ? item.userDto.userMiddleName : '-'}}
                                                 {{item.userDto ? item.userDto.userLastName : '-'}}</td>
                                             <td>{{item.userDto ? item.userDto.isMappedUserActive :
