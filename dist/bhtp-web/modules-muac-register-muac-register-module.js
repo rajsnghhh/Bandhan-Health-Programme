@@ -107,12 +107,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _muac_register_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../muac-register.service */ "SICW");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "1kSV");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../shared/sidebar/sidebar.service */ "dBge");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../shared/loader/loader.component */ "G/xV");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ "ofXK");
-
+/* harmony import */ var _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../shared/sidebar/sidebar.service */ "dBge");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../shared/loader/loader.component */ "G/xV");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
 
@@ -447,12 +445,11 @@ function MuacRegisterCreateComponent_ng_template_29_Template(rf, ctx) { if (rf &
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", !ctx_r7.checkMuacDisabled());
 } }
 class MuacRegisterCreateComponent {
-    constructor(httpService, muacService, modalService, toaster, router, fb, sidebarService, http) {
+    constructor(httpService, muacService, modalService, toaster, fb, sidebarService, http) {
         this.httpService = httpService;
         this.muacService = muacService;
         this.modalService = modalService;
         this.toaster = toaster;
-        this.router = router;
         this.fb = fb;
         this.sidebarService = sidebarService;
         this.http = http;
@@ -530,10 +527,11 @@ class MuacRegisterCreateComponent {
         //API call for viewing muacList
         setTimeout(() => {
             this.muacService.muacCampList(obj).subscribe((response) => {
+                var _a, _b;
                 this.loader = true;
                 this.muacList = response.responseObject;
-                this.muacCampList = response.responseObject.muaccampDetailList;
-                if (this.muacCampList.length == 0) {
+                this.muacCampList = (_a = response.responseObject) === null || _a === void 0 ? void 0 : _a.muaccampDetailList;
+                if (((_b = this.muacCampList) === null || _b === void 0 ? void 0 : _b.length) == 0) {
                     this.showError('No Data Found');
                 }
                 console.log(this.muacCampList);
@@ -566,8 +564,9 @@ class MuacRegisterCreateComponent {
         return this.locationForm.controls;
     }
     editModal(editMuac, item) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         this.muacEditInfo = item;
+        console.log(this.muacEditInfo, 'muacEditInfo');
         this.muacDetails.muacInfo[0].startDate = item.startDate;
         this.muacDetails.muacInfo[0].endDate = item.endDate;
         this.modalContent = '';
@@ -577,23 +576,94 @@ class MuacRegisterCreateComponent {
         var index = this.MuacList.muaccampDetailList.findIndex(function (items) { return items.muacCampId === item.muacCampId; });
         console.log(index, 'index');
         if (index == 0) {
-            this.editMinDate = this.ProjectStartDate;
-            var secondindexstartdate = this.MuacList.muaccampDetailList.filter((items, index) => index == 1);
-            console.log((_a = secondindexstartdate[0]) === null || _a === void 0 ? void 0 : _a.startDate, 'secondindex');
-            this.editMaxDate = moment__WEBPACK_IMPORTED_MODULE_2__((_b = secondindexstartdate[0]) === null || _b === void 0 ? void 0 : _b.startDate).subtract(1, "days").format("YYYY-MM-DD");
+            if (this.MuacList.muaccampDetailList.length == 1) {
+                console.log('branchOpenDate', (_a = this.muacList) === null || _a === void 0 ? void 0 : _a.branchOpenDate);
+                console.log('branchCloseDate', (_b = this.muacList) === null || _b === void 0 ? void 0 : _b.branchCloseDate);
+                console.log('projectStartDate', (_c = this.muacList) === null || _c === void 0 ? void 0 : _c.projectStartDate);
+                console.log('projectEndDate', (_d = this.muacList) === null || _d === void 0 ? void 0 : _d.projectEndDate);
+                var projectStartDate = (_e = this.muacList) === null || _e === void 0 ? void 0 : _e.projectStartDate;
+                var branchOpenDate = (_f = this.muacList) === null || _f === void 0 ? void 0 : _f.branchOpenDate;
+                if (projectStartDate < branchOpenDate) {
+                    console.log("projectStartDate is lesser than branchOpenDate");
+                    this.setStartDate = branchOpenDate;
+                    console.log(this.setStartDate, 'setStartDate');
+                }
+                else if (projectStartDate > branchOpenDate) {
+                    console.log("projectStartDate is greater than branchOpenDate");
+                    this.setStartDate = projectStartDate;
+                    console.log(this.setStartDate, 'setStartDate');
+                }
+                else {
+                    console.log("both are equal");
+                    this.setStartDate = projectStartDate;
+                    console.log(this.setStartDate, 'setStartDate');
+                }
+                var dateString = this.setStartDate;
+                var minDateToSet = moment__WEBPACK_IMPORTED_MODULE_2__(dateString).add(1, "days").format("YYYY-MM-DD");
+                this.editMinDate = minDateToSet;
+                var secondindexstartdate = this.MuacList.projectEndDate;
+                console.log(secondindexstartdate, 'secondindex12');
+                this.editMaxDate = moment__WEBPACK_IMPORTED_MODULE_2__(secondindexstartdate).subtract(1, "days").format("YYYY-MM-DD");
+            }
+            else {
+                this.editMinDate = this.MuacList.projectStartDate;
+                var secondindexstartdate = this.MuacList.muaccampDetailList[index + 1];
+                console.log(secondindexstartdate.startDate, 'secondinde23x');
+                this.editMaxDate = moment__WEBPACK_IMPORTED_MODULE_2__(secondindexstartdate.startDate).subtract(1, "days").format("YYYY-MM-DD");
+            }
         }
         else if (index == this.MuacList.muaccampDetailList.length - 1) {
-            this.editMaxDate = this.ProjectEndDate;
+            this.editMaxDate = this.MuacList.projectEndDate;
             var secondlastindexstartdate = this.MuacList.muaccampDetailList.filter((items, index) => index == this.MuacList.muaccampDetailList.length - 2);
-            console.log((_c = secondlastindexstartdate[0]) === null || _c === void 0 ? void 0 : _c.endDate, 'secondindex');
-            this.editMinDate = moment__WEBPACK_IMPORTED_MODULE_2__((_d = secondlastindexstartdate[0]) === null || _d === void 0 ? void 0 : _d.endDate).add(1, "days").format("YYYY-MM-DD");
+            console.log((_g = secondlastindexstartdate[0]) === null || _g === void 0 ? void 0 : _g.endDate, 'secondindex');
+            this.editMinDate = moment__WEBPACK_IMPORTED_MODULE_2__((_h = secondlastindexstartdate[0]) === null || _h === void 0 ? void 0 : _h.endDate).add(1, "days").format("YYYY-MM-DD");
         }
         else {
             var afterindex = this.MuacList.muaccampDetailList.filter((items, indexs) => indexs == index + 1);
-            this.editMaxDate = moment__WEBPACK_IMPORTED_MODULE_2__((_e = afterindex[0]) === null || _e === void 0 ? void 0 : _e.startDate).subtract(1, "days").format("YYYY-MM-DD");
+            this.editMaxDate = moment__WEBPACK_IMPORTED_MODULE_2__((_j = afterindex[0]) === null || _j === void 0 ? void 0 : _j.startDate).subtract(1, "days").format("YYYY-MM-DD");
             var beforeindex = this.MuacList.muaccampDetailList.filter((items, indexs) => indexs == index - 1);
-            this.editMinDate = moment__WEBPACK_IMPORTED_MODULE_2__((_f = beforeindex[0]) === null || _f === void 0 ? void 0 : _f.endDate).add(1, "days").format("YYYY-MM-DD");
+            this.editMinDate = moment__WEBPACK_IMPORTED_MODULE_2__((_k = beforeindex[0]) === null || _k === void 0 ? void 0 : _k.endDate).add(1, "days").format("YYYY-MM-DD");
         }
+    }
+    saveEditMuac() {
+        let postBody = {
+            activeStatus: 'A',
+            dataAccessDTO: this.httpService.dataAccessDTO,
+            branchId: this.branchId,
+            projectMasterId: this.muacList.projectMasterId,
+            projectName: this.muacList.projectName,
+            projectStartDate: this.muacList.projectStartDate,
+            projectEndDate: this.muacList.projectEndDate,
+            branchName: this.muacList.branchName,
+            branchOpenDate: this.muacList.branchOpenDate,
+            branchCloseDate: this.muacList.branchCloseDate,
+            muacCampDTOList: [{
+                    muacCampId: this.muacEditInfo.muacCampId,
+                    startDate: this.muacDetails.muacInfo[0].startDate,
+                    endDate: this.muacDetails.muacInfo[0].endDate,
+                    userId: this.sidebarService.userId,
+                    createdDateTime: new Date().toISOString().slice(0, 10)
+                }],
+        };
+        console.log(postBody);
+        if ((this.muacDetails.muacInfo[0].startDate) > (this.muacDetails.muacInfo[0].endDate) ||
+            (this.muacDetails.muacInfo[0].startDate) == (this.muacDetails.muacInfo[0].endDate)) {
+            this.showError('End date should be after the start date');
+            return;
+        }
+        // API call for Edit muac
+        this.muacService.saveMuac(postBody).subscribe((response) => {
+            this.muacSave = response;
+            console.log(this.muacSave);
+            if (response.status === true) {
+                this.showSuccess(response.message);
+                this.muacModalDismiss();
+                this.changeBranch(this.branchId);
+            }
+            else {
+                this.showError(response.message);
+            }
+        });
     }
     muacModalDismiss() {
         this.modalReference.close();
@@ -661,25 +731,81 @@ class MuacRegisterCreateComponent {
         });
     }
     getMinDate(muacList) {
-        console.log('projectStartDate', muacList.projectStartDate);
-        console.log('projectEndDate', muacList.projectEndDate);
-        this.ProjectStartDate = muacList.projectStartDate;
-        this.ProjectEndDate = muacList.projectEndDate;
         this.MuacList = muacList;
-        var dateString = muacList.projectStartDate;
-        var projectDate = moment__WEBPACK_IMPORTED_MODULE_2__(dateString).add(1, "days").format("YYYY-MM-DD");
-        this.minDate = projectDate;
-        this.maxDate = muacList.projectEndDate;
-        let lastMuacDate = muacList.muaccampDetailList;
-        const muacEndDate = lastMuacDate[lastMuacDate.length - 1];
-        const muacEndDateSet = muacEndDate === null || muacEndDate === void 0 ? void 0 : muacEndDate.endDate;
-        const muacDate = moment__WEBPACK_IMPORTED_MODULE_2__(muacEndDateSet).add(1, "days").format("YYYY-MM-DD");
         if (muacList.muaccampDetailList.length == 0) {
-            this.minDate = projectDate;
+            console.log('branchOpenDate', muacList === null || muacList === void 0 ? void 0 : muacList.branchOpenDate);
+            console.log('branchCloseDate', muacList === null || muacList === void 0 ? void 0 : muacList.branchCloseDate);
+            console.log('projectStartDate', muacList === null || muacList === void 0 ? void 0 : muacList.projectStartDate);
+            console.log('projectEndDate', muacList === null || muacList === void 0 ? void 0 : muacList.projectEndDate);
+            var projectStartDate = muacList === null || muacList === void 0 ? void 0 : muacList.projectStartDate;
+            var branchOpenDate = muacList === null || muacList === void 0 ? void 0 : muacList.branchOpenDate;
+            if (projectStartDate < branchOpenDate) {
+                console.log("projectStartDate is lesser than branchOpenDate");
+                this.setStartDate = branchOpenDate;
+                console.log(this.setStartDate, 'setStartDate');
+            }
+            else if (projectStartDate > branchOpenDate) {
+                console.log("projectStartDate is greater than branchOpenDate");
+                this.setStartDate = projectStartDate;
+                console.log(this.setStartDate, 'setStartDate');
+            }
+            else {
+                console.log("both are equal");
+                this.setStartDate = projectStartDate;
+                console.log(this.setStartDate, 'setStartDate');
+            }
+            var dateString = this.setStartDate;
+            var minDateToSet = moment__WEBPACK_IMPORTED_MODULE_2__(dateString).add(1, "days").format("YYYY-MM-DD");
+            this.minDate = minDateToSet;
+            var projectEndDate = muacList === null || muacList === void 0 ? void 0 : muacList.projectEndDate;
+            var branchCloseDate = muacList === null || muacList === void 0 ? void 0 : muacList.branchCloseDate;
+            if (projectEndDate < branchCloseDate) {
+                console.log("projectEndDate is lesser than branchCloseDate");
+                this.setEndDate = projectEndDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            else if (projectEndDate > branchCloseDate) {
+                console.log("projectEndDate is greater than branchCloseDate");
+                this.setEndDate = branchCloseDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            else {
+                console.log("both are equal");
+                this.setEndDate = projectEndDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            this.maxDate = this.setEndDate;
         }
         else {
+            let lastMuacDate = muacList === null || muacList === void 0 ? void 0 : muacList.muaccampDetailList;
+            const muacEndDate = lastMuacDate[lastMuacDate.length - 1];
+            const muacEndDateSet = muacEndDate === null || muacEndDate === void 0 ? void 0 : muacEndDate.endDate;
+            console.log(muacEndDateSet);
+            const muacDate = moment__WEBPACK_IMPORTED_MODULE_2__(muacEndDateSet).add(1, "days").format("YYYY-MM-DD");
             this.minDate = muacDate;
+            var projectEndDate = muacList === null || muacList === void 0 ? void 0 : muacList.projectEndDate;
+            var branchCloseDate = muacList === null || muacList === void 0 ? void 0 : muacList.branchCloseDate;
+            if (projectEndDate < branchCloseDate) {
+                console.log("projectEndDate is lesser than branchCloseDate");
+                this.setEndDate = projectEndDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            else if (projectEndDate > branchCloseDate) {
+                console.log("projectEndDate is greater than branchCloseDate");
+                this.setEndDate = branchCloseDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            else {
+                console.log("both are equal");
+                this.setEndDate = projectEndDate;
+                console.log(this.setEndDate, 'setEndDate');
+            }
+            this.maxDate = this.setEndDate;
         }
+    }
+    addDays(numOfDays, date = new Date()) {
+        date.setDate(date.getDate() + numOfDays);
+        return date;
     }
     expectEndDate(e) {
         // var dtStartDate = new Date(e.target.value);
@@ -692,50 +818,7 @@ class MuacRegisterCreateComponent {
             this.day = '0' + this.day.toString();
         // var maxDate = this.year + '-' + this.month + '-' + this.day;
         this.selStartDate = moment__WEBPACK_IMPORTED_MODULE_2__(this.addDays(1, new Date(e.target.value))).format('YYYY-MM-DD');
-        console.log(this.selStartDate);
-    }
-    addDays(numOfDays, date = new Date()) {
-        date.setDate(date.getDate() + numOfDays);
-        return date;
-    }
-    saveEditMuac() {
-        let postBody = {
-            activeStatus: 'A',
-            dataAccessDTO: this.httpService.dataAccessDTO,
-            branchId: this.branchId,
-            projectMasterId: this.muacList.projectMasterId,
-            projectName: this.muacList.projectName,
-            projectStartDate: this.muacList.projectStartDate,
-            projectEndDate: this.muacList.projectEndDate,
-            branchName: this.muacList.branchName,
-            branchOpenDate: this.muacList.branchOpenDate,
-            branchCloseDate: this.muacList.branchCloseDate,
-            muacCampDTOList: [{
-                    muacCampId: this.muacEditInfo.muacCampId,
-                    startDate: this.muacDetails.muacInfo[0].startDate,
-                    endDate: this.muacDetails.muacInfo[0].endDate,
-                    userId: this.sidebarService.userId,
-                    createdDateTime: new Date().toISOString().slice(0, 10)
-                }],
-        };
-        console.log(postBody);
-        if ((this.muacDetails.muacInfo[0].startDate) > (this.muacDetails.muacInfo[0].endDate)) {
-            this.showError('End date should be after the start date');
-            return;
-        }
-        // API call for Edit muac
-        this.muacService.saveMuac(postBody).subscribe((response) => {
-            this.muacSave = response;
-            console.log(this.muacSave);
-            if (response.status === true) {
-                this.showSuccess(response.message);
-                this.muacModalDismiss();
-                this.changeBranch(this.branchId);
-            }
-            else {
-                this.showError(response.message);
-            }
-        });
+        console.log(this.selStartDate, 'selstartdate');
     }
     deleteMuac(item, i) {
         const post = {
@@ -779,7 +862,7 @@ class MuacRegisterCreateComponent {
         return false;
     }
 }
-MuacRegisterCreateComponent.ɵfac = function MuacRegisterCreateComponent_Factory(t) { return new (t || MuacRegisterCreateComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_3__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_muac_register_service__WEBPACK_IMPORTED_MODULE_4__["MuacRegisterService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_8__["SidebarService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClient"])); };
+MuacRegisterCreateComponent.ɵfac = function MuacRegisterCreateComponent_Factory(t) { return new (t || MuacRegisterCreateComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_3__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_muac_register_service__WEBPACK_IMPORTED_MODULE_4__["MuacRegisterService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_7__["SidebarService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClient"])); };
 MuacRegisterCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MuacRegisterCreateComponent, selectors: [["app-muac-register-create"]], decls: 31, vars: 6, consts: [[3, "hidden"], [1, "container"], [1, "white_box", "QA_section", "mb_30"], [1, "page-title"], [2, "float", "right"], [1, "add_button"], ["class", "btn btn-primary", 3, "disabled", "click", 4, "ngIf"], [1, "form-signin", 3, "formGroup"], ["class", "row", 4, "ngIf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], ["id", "DataTables_Table_0_wrapper", 1, "dataTables_wrapper", "no-footer"], ["role", "grid", "aria-describedby", "DataTables_Table_0_info", 1, "table", "lms_table_active", "dataTable", "no-footer", "dtr-inline", "collapsed", "table", "table-striped", 2, "table-layout", "fixed"], [4, "ngIf"], [4, "ngFor", "ngForOf"], ["createMuac", ""], ["editMuac", ""], [1, "btn", "btn-primary", 3, "disabled", "click"], [1, "row"], [1, "form-group", "col-md"], ["for", "region"], [1, "text-danger"], ["formControlName", "region", "id", "region", 1, "form-select", 3, "ngClass", "change"], ["value", ""], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "branch"], ["formControlName", "branch", "id", "branch", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [1, "invalid-feedback"], ["class", "fas fa-edit", "title", "Edit Muac", 3, "click", 4, "ngIf"], ["class", "fas fa-trash", "title", "Delete Muac", 3, "click", 4, "ngIf"], ["title", "Edit Muac", 1, "fas", "fa-edit", 3, "click"], ["title", "Delete Muac", 1, "fas", "fa-trash", 3, "click"], [1, "modal-content"], [1, "modal-header"], [1, "col-md-7"], ["id", "modal-basic-title", 1, "modal-title"], [1, "col-md-2"], [1, "close", 2, "cursor", "pointer", "font-size", "35px", 3, "click"], [1, "modal-body"], ["id", "table_wrapper"], ["id", "table_wrapper", 1, "table", "table-striped"], [2, "text-align", "center"], ["style", "text-align: center;", 4, "ngFor", "ngForOf"], [1, "col-md-12"], ["type", "button", 1, "btn", "btn-primary", "bttn", 3, "disabled", "click"], ["type", "date", 1, "form-control", 3, "ngModel", "min", "max", "ngModelChange", "keydown", "change"], ["type", "date", 1, "form-control", 3, "ngModel", "min", "max", "disabled", "ngModelChange", "keydown"], ["type", "date", 1, "form-control", 3, "ngModel", "min", "max", "ngModelChange", "keydown"]], template: function MuacRegisterCreateComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-loader", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
@@ -839,7 +922,7 @@ MuacRegisterCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.updateMode || ctx.deleteMode);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.muacCampList);
-    } }, directives: [_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_10__["LoaderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_x"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgModel"]], styles: [".modal-content[_ngcontent-%COMP%] {\r\n    height: 280px;\r\n    overflow-x: hidden;\r\n    width: 600px;\r\n  }\r\n\r\n  .close[_ngcontent-%COMP%] {\r\n    margin-left: 280px;\r\n  }\r\n\r\n  #table_wrapper[_ngcontent-%COMP%]   .table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\r\n  border-bottom: 0 solid transparent;\r\n  background-color: #fff;\r\n  padding: 17px 30px;\r\n  line-height: 16px;\r\n  font-size: 15px;\r\n  font-weight: 600;\r\n  color: #FFFFFF;\r\n  white-space: nowrap;\r\n  text-transform: capitalize;\r\n  font-family: \"Rajdhani\", sans-serif;\r\n  border: 0;\r\n  background: #499;\r\n  text-align: center;\r\n  overflow-y: auto;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm11YWMtcmVnaXN0ZXItY3JlYXRlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxhQUFhO0lBQ2Isa0JBQWtCO0lBQ2xCLFlBQVk7RUFDZDs7RUFFQTtJQUNFLGtCQUFrQjtFQUNwQjs7RUFFRjtFQUNFLGtDQUFrQztFQUNsQyxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGNBQWM7RUFDZCxtQkFBbUI7RUFDbkIsMEJBQTBCO0VBQzFCLG1DQUFtQztFQUNuQyxTQUFTO0VBQ1QsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnQkFBZ0I7QUFDbEIiLCJmaWxlIjoibXVhYy1yZWdpc3Rlci1jcmVhdGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tb2RhbC1jb250ZW50IHtcclxuICAgIGhlaWdodDogMjgwcHg7XHJcbiAgICBvdmVyZmxvdy14OiBoaWRkZW47XHJcbiAgICB3aWR0aDogNjAwcHg7XHJcbiAgfVxyXG5cclxuICAuY2xvc2Uge1xyXG4gICAgbWFyZ2luLWxlZnQ6IDI4MHB4O1xyXG4gIH1cclxuICBcclxuI3RhYmxlX3dyYXBwZXIgLnRhYmxlIHRoZWFkIHtcclxuICBib3JkZXItYm90dG9tOiAwIHNvbGlkIHRyYW5zcGFyZW50O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgcGFkZGluZzogMTdweCAzMHB4O1xyXG4gIGxpbmUtaGVpZ2h0OiAxNnB4O1xyXG4gIGZvbnQtc2l6ZTogMTVweDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGNvbG9yOiAjRkZGRkZGO1xyXG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XHJcbiAgZm9udC1mYW1pbHk6IFwiUmFqZGhhbmlcIiwgc2Fucy1zZXJpZjtcclxuICBib3JkZXI6IDA7XHJcbiAgYmFja2dyb3VuZDogIzQ5OTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgb3ZlcmZsb3cteTogYXV0bztcclxufVxyXG4iXX0= */"] });
+    } }, directives: [_shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_9__["LoaderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_x"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgModel"]], styles: [".modal-content[_ngcontent-%COMP%] {\r\n    height: 280px;\r\n    overflow-x: hidden;\r\n    width: 600px;\r\n  }\r\n\r\n  .close[_ngcontent-%COMP%] {\r\n    margin-left: 280px;\r\n  }\r\n\r\n  #table_wrapper[_ngcontent-%COMP%]   .table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\r\n  border-bottom: 0 solid transparent;\r\n  background-color: #fff;\r\n  padding: 17px 30px;\r\n  line-height: 16px;\r\n  font-size: 15px;\r\n  font-weight: 600;\r\n  color: #FFFFFF;\r\n  white-space: nowrap;\r\n  text-transform: capitalize;\r\n  font-family: \"Rajdhani\", sans-serif;\r\n  border: 0;\r\n  background: #499;\r\n  text-align: center;\r\n  overflow-y: auto;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm11YWMtcmVnaXN0ZXItY3JlYXRlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxhQUFhO0lBQ2Isa0JBQWtCO0lBQ2xCLFlBQVk7RUFDZDs7RUFFQTtJQUNFLGtCQUFrQjtFQUNwQjs7RUFFRjtFQUNFLGtDQUFrQztFQUNsQyxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGNBQWM7RUFDZCxtQkFBbUI7RUFDbkIsMEJBQTBCO0VBQzFCLG1DQUFtQztFQUNuQyxTQUFTO0VBQ1QsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnQkFBZ0I7QUFDbEIiLCJmaWxlIjoibXVhYy1yZWdpc3Rlci1jcmVhdGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tb2RhbC1jb250ZW50IHtcclxuICAgIGhlaWdodDogMjgwcHg7XHJcbiAgICBvdmVyZmxvdy14OiBoaWRkZW47XHJcbiAgICB3aWR0aDogNjAwcHg7XHJcbiAgfVxyXG5cclxuICAuY2xvc2Uge1xyXG4gICAgbWFyZ2luLWxlZnQ6IDI4MHB4O1xyXG4gIH1cclxuICBcclxuI3RhYmxlX3dyYXBwZXIgLnRhYmxlIHRoZWFkIHtcclxuICBib3JkZXItYm90dG9tOiAwIHNvbGlkIHRyYW5zcGFyZW50O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgcGFkZGluZzogMTdweCAzMHB4O1xyXG4gIGxpbmUtaGVpZ2h0OiAxNnB4O1xyXG4gIGZvbnQtc2l6ZTogMTVweDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGNvbG9yOiAjRkZGRkZGO1xyXG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XHJcbiAgZm9udC1mYW1pbHk6IFwiUmFqZGhhbmlcIiwgc2Fucy1zZXJpZjtcclxuICBib3JkZXI6IDA7XHJcbiAgYmFja2dyb3VuZDogIzQ5OTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgb3ZlcmZsb3cteTogYXV0bztcclxufVxyXG4iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](MuacRegisterCreateComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -847,7 +930,7 @@ MuacRegisterCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["
                 templateUrl: './muac-register-create.component.html',
                 styleUrls: ['./muac-register-create.component.css']
             }]
-    }], function () { return [{ type: _core_http_http_service__WEBPACK_IMPORTED_MODULE_3__["HttpService"] }, { type: _muac_register_service__WEBPACK_IMPORTED_MODULE_4__["MuacRegisterService"] }, { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"] }, { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }, { type: _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_8__["SidebarService"] }, { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _core_http_http_service__WEBPACK_IMPORTED_MODULE_3__["HttpService"] }, { type: _muac_register_service__WEBPACK_IMPORTED_MODULE_4__["MuacRegisterService"] }, { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"] }, { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }, { type: _shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_7__["SidebarService"] }, { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClient"] }]; }, null); })();
 
 
 /***/ })
