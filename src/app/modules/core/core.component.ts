@@ -37,9 +37,9 @@ export class CoreComponent implements OnInit, AfterViewInit {
       datasets: [{
         data: [300, 50, 100],
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
+          'rgb(245, 57, 97)',
+          'rgb(20, 154, 245)',
+          'rgb(255, 189, 32)'
         ],
         hoverOffset: 4
       }]
@@ -56,7 +56,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
     this.ctx2 = this.canvas2.getContext('2d');
 
     const bardata = {
-      labels: ['Child Information'],
+      labels: [''],
       datasets: [{
         label: 'Child Below 5 Years',
         data: [27],

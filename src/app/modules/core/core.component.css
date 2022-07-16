@@ -5,15 +5,37 @@
   }
 
   .example-header-image {
-    background-color: #499;
+   display: flex;
+   width: 250px;
+   margin-top: 7px;
   }
-  .icons{margin: 0 10%;
-  margin-top: 1px;}
+  .icons{
+    margin: 0 10%;
+}
 
-  /* .mat-card {
-    transition: box-shadow 296ms cubic-bezier(10.4, 0, 10.2, 25);
-    display: block;
-    position: relative;
-    padding: 16px;
-    border-radius: 4px;
-} */
+.mat-card {
+    padding: 12px 0px 0px 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 20%;
+    height: 70px;
+    border-radius: 5px;
+}
+.mat-card:hover{
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 12px 10px, rgba(0, 0, 0, 0.22) 0px 1px 0px;
+}
+
+h4 {
+  font: 600 15px/37px Roboto,"Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  margin: 0 16px;
+}
+
+.chartbox{
+  width:50%;
+}
+
+.chartbox:hover{
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 12px 10px, rgba(0, 0, 0, 0.22) 0px 1px 0px;
+}

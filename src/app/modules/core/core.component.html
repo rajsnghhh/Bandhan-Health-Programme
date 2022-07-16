@@ -8,69 +8,74 @@
 
 <!-- <img src="assets/core_image.jpg" alt="" style="width: 80vw; height: 80vh;"> -->
 <div class="example-card">
-    <mat-card >
-        <mat-card-header>
-            <div mat-card-avatar class="example-header-image">
+    <div class="mat-card" >
+            <div class="example-header-image">
               <div class="icons"><i class='fas fa-hand-holding-usd fa-2x'></i></div>
-            </div>
-          <mat-card-title>Donor :  1</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar  class="example-header-image"><div class="icons"><i class="fa fa-file-text-o fa-2x" ></i></div></div>
-          <mat-card-title>Project :  3</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fas fa-code-branch fa-2x" ></i></div>
-          <mat-card-title>Branch :  12</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fa fa-map-marker fa-2x" ></i></div>
-          <mat-card-title>Region :  6</mat-card-title>
-        </mat-card-header>
-      </mat-card>
+          <h4>Donor :  1</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+          <div  class="example-header-image">
+            <div class="icons"><i class="fa fa-file-text-o fa-2x" ></i>
+          </div>
+          <h4>Project :  3</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+        
+          <div class="example-header-image"> 
+            <div class="icons"><i class="fas fa-code-branch fa-2x" ></i></div>
+          <h4>Branch :  12</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+          <div class="example-header-image">
+            <div class="icons">
+            <i class="fa fa-map-marker fa-2x" ></i>
+          </div>
+          <h4>Region :  6</h4>
+        </div>
+      </div>
 </div>
 <br>
 <div class="example-card">
-    <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fa fa-university fa-2x" ></i></div>
-          <mat-card-title>State :  3</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fa fa-building fa-2x"></i></div>
-          <mat-card-title>District :  5</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fa fa-cubes fa-2x"></i></div>
-          <mat-card-title>Block :  8</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-      <mat-card >
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"><i class="fa fa-home fa-2x"></i></div>
-          <mat-card-title>Village :  235</mat-card-title>
-        </mat-card-header>
-      </mat-card>
+    <div class="mat-card" >
+          <div class="example-header-image">
+            <div class="icons"><i class="fa fa-university fa-2x" ></i></div>
+          <h4>State :  3</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+          <div class="example-header-image">
+            <div class="icons"><i class="fa fa-building fa-2x"></i></div>
+          <h4>District :  5</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+          <div class="example-header-image">
+             <div class="icons"><i class="fa fa-cubes fa-2x"></i></div>
+          <h4>Block :  8</h4>
+        </div>
+      </div>
+      <div class="mat-card" >
+          <div class="example-header-image"> 
+            <div class="icons"><i class="fa fa-home fa-2x"></i></div>
+          <h4>Village :  235</h4>
+        </div>
+      </div>
 </div>
 
-<br>
+<br><br>
 <div style="display: flex;margin: 10px 50px 5px 0px;">
-    <div style="width:50%;">
+    <div class="chartbox">
         <canvas id="myChart1" #mychart1></canvas>
-        <p style="margin: 8px 35%;">Family Information</p>
+        <p style="margin: 8px 35%; color: black; font-weight: 400;
+        font-size: 16px;">Family Information</p>
      </div>
-    
-     <div style="width:50%;">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+     <div class="chartbox">
         <canvas id="myChart2" #mychart2></canvas>
+        <p style="margin: 8px 35%; color: black;font-weight: 400;
+        font-size: 16px;">Child Information</p>
      </div>
 </div>
