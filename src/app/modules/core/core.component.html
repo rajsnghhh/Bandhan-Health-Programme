@@ -7,25 +7,26 @@
 
 
 <!-- <img src="assets/core_image.jpg" alt="" style="width: 80vw; height: 80vh;"> -->
+<app-loader [hidden]="loader"></app-loader>
 <div class="example-card">
     <div class="mat-card" >
             <div class="example-header-image">
               <div class="icons"><i class='fas fa-hand-holding-usd fa-2x'></i></div>
-          <h4>Donor :  1</h4>
+          <h4>Donor :  {{totalDonor}}</h4>
         </div>
       </div>
       <div class="mat-card" >
           <div  class="example-header-image">
             <div class="icons"><i class="fa fa-file-text-o fa-2x" ></i>
           </div>
-          <h4>Project :  3</h4>
+          <h4>Project :  {{totalProjectMasterId}}</h4>
         </div>
       </div>
       <div class="mat-card" >
         
           <div class="example-header-image"> 
             <div class="icons"><i class="fas fa-code-branch fa-2x" ></i></div>
-          <h4>Branch :  12</h4>
+          <h4>Branch :  {{totalBranch}}</h4>
         </div>
       </div>
       <div class="mat-card" >
@@ -33,7 +34,7 @@
             <div class="icons">
             <i class="fa fa-map-marker fa-2x" ></i>
           </div>
-          <h4>Region :  6</h4>
+          <h4>Region :  {{totalRegion}}</h4>
         </div>
       </div>
 </div>
@@ -42,30 +43,30 @@
     <div class="mat-card" >
           <div class="example-header-image">
             <div class="icons"><i class="fa fa-university fa-2x" ></i></div>
-          <h4>State :  3</h4>
+          <h4>State :  {{totalStateName}}</h4>
         </div>
       </div>
       <div class="mat-card" >
           <div class="example-header-image">
             <div class="icons"><i class="fa fa-building fa-2x"></i></div>
-          <h4>District :  5</h4>
+          <h4>District :  {{totalDistrict}}</h4>
         </div>
       </div>
       <div class="mat-card" >
           <div class="example-header-image">
              <div class="icons"><i class="fa fa-cubes fa-2x"></i></div>
-          <h4>Block :  8</h4>
+          <h4>Block :  {{totalBlock}}</h4>
         </div>
       </div>
       <div class="mat-card" >
           <div class="example-header-image"> 
             <div class="icons"><i class="fa fa-home fa-2x"></i></div>
-          <h4>Village :  235</h4>
+          <h4>Village :  {{totalVillageLocality}}</h4>
         </div>
       </div>
 </div>
 
-<br><br>
+<br>
 <div style="display: flex;margin: 10px 50px 5px 0px;">
     <div class="chartbox">
         <canvas id="myChart1" #mychart1></canvas>
