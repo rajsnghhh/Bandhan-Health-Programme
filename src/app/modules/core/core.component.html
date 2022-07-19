@@ -7,7 +7,7 @@
 
 
 <!-- <img src="assets/core_image.jpg" alt="" style="width: 80vw; height: 80vh;"> -->
-<app-loader [hidden]="loader"></app-loader>
+<!-- <app-loader</app-loader> -->
 <div class="example-card">
     <div class="mat-card" >
             <div class="example-header-image">
@@ -67,16 +67,48 @@
 </div>
 
 <br>
-<div style="display: flex;margin: 10px 50px 5px 0px;">
+<div style="display: flex;margin: 10px 30px 5px 10px;">
     <div class="chartbox">
+      <div [hidden]="loader" style="margin: -70px 38%;margin-top: 20%">
+        <div class="spinner-grow text-danger" role="status">
+          <span class="sr-only">Loading...</span>
+        </div> &nbsp;&nbsp;
+        <div class="spinner-grow text-warning" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>&nbsp;&nbsp;
+        <div class="spinner-grow text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
         <canvas id="myChart1" #mychart1></canvas>
         <p style="margin: 8px 35%; color: black; font-weight: 400;
         font-size: 16px;">Family Information</p>
+        <div class="downloadrefreshicon">
+          <i class="fa fa-download fa-lg" title="Download Chart"></i>&nbsp;&nbsp;
+          <i class="fa fa-refresh fa-lg" title="Refresh Chart "></i>
+        </div>
+      
      </div>
+
     &nbsp;&nbsp;&nbsp;&nbsp;
      <div class="chartbox">
+      <div [hidden]="loader" style="margin: -70px 38%;margin-top: 20%">
+        <div class="spinner-grow text-danger" role="status">
+          <span class="sr-only">Loading...</span>
+        </div> &nbsp;&nbsp;
+        <div class="spinner-grow text-warning" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>&nbsp;&nbsp;
+        <div class="spinner-grow text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
         <canvas id="myChart2" #mychart2></canvas>
         <p style="margin: 8px 35%; color: black;font-weight: 400;
         font-size: 16px;">Child Information</p>
+         <div class="downloadrefreshicon">
+          <i class="fa fa-download fa-lg" title="Download Chart"></i>&nbsp;&nbsp;
+          <i class="fa fa-refresh fa-lg" title="Refresh Chart "></i>
+        </div>
      </div>
 </div>
