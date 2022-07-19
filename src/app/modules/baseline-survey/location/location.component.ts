@@ -126,8 +126,8 @@ export class LocationComponent implements OnInit {
     console.log(this.sidebarService.donorMasterDto);
 
 
-    // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-    // this.sidebarService.branchName = this.locationForm.get('branch').value;
+    this.sidebarService.branchId = brnchId;
+    this.sidebarService.branchName = this.branchList?.find(bran => bran.branchId == brnchId)?.branchName;
 
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
