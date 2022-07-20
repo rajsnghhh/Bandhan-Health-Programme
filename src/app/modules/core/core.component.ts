@@ -36,8 +36,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
     private http: HttpClient, private toaster: ToastrService,) { }
 
   ngOnInit() {
-
-
+    // this.loader = true;
     this.http.post(`${this.httpService.baseURL}report/getGeographicalOutreach`, this.Dto).subscribe((res: any) => {
       let donorName: Array<any> = [];
       let block: Array<any> = [];
@@ -79,46 +78,53 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.loader = false;
     let familyInfoGraphData = JSON.parse(localStorage.getItem('familyInfoGraphData'));
+
     if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
-      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
-        let familyCount: Array<any> = [];
-        let pemCumulative: Array<any> = [];
-        let lmCumulative: Array<any> = [];
-        let pwCumulative: Array<any> = [];
-        res.responseObject.projectWiseBeneficiaryList.map((i) => {
-          familyCount.push(i.totalFamilyCount);
-          pemCumulative.push(i.pemCumulative);
-          lmCumulative.push(i.lmCumulative);
-          pwCumulative.push(i.pwCumulative);
-        })
-        let totalFamilyCount = familyCount.reduce((a, b) => a + b, 0);
-        let totalPemCumulative = pemCumulative.reduce((a, b) => a + b, 0);
-        let totalLmCumulative = lmCumulative.reduce((a, b) => a + b, 0);
-        let totalPwCumulative = pwCumulative.reduce((a, b) => a + b, 0);
-        let otherFamilyCount = totalFamilyCount - (totalPemCumulative + totalLmCumulative + totalPwCumulative);
-        this.percentageFamilyCount = ((otherFamilyCount / totalFamilyCount) * 100).toFixed(2);
-        this.percentagePemCumulative = ((totalPemCumulative / totalFamilyCount) * 100).toFixed(2);
-        this.percentageLmCumulative = ((totalLmCumulative / totalFamilyCount) * 100).toFixed(2);
-        this.percentagePwCumulative = ((totalPwCumulative / totalFamilyCount) * 100).toFixed(2);
-        let familyInfoGraphData = [this.percentageFamilyCount, this.percentagePemCumulative, this.percentageLmCumulative, this.percentagePwCumulative];
-        localStorage.setItem('familyInfoGraphData', JSON.stringify(familyInfoGraphData));
-        this.doughnutChart(familyInfoGraphData);
-        this.barChart();
-        this.loader = true;
-      });
+      this.getChartData();
     } else {
       this.doughnutChart(familyInfoGraphData);
-      this.barChart();
+      this.barChart(familyInfoGraphData);
       this.loader = true;
     }
+  }
+
+  getChartData() {
+    this.loader = false;
+    this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
+
+      let totalFamilyCount = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.totalFamilyCount, 0);
+      let totalPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pemCumulative, 0);
+      let totalLmCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.lmCumulative, 0);
+      let totalPwCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pwCumulative, 0);
+
+      let totalBelow5Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below5Cumulative, 0);
+      let totalBelow2Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below2Cumulative, 0);
+      let totalChildPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.childPemCumulative, 0);
+      let totalGirl14To18Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
+
+      let otherFamilyCount = totalFamilyCount - (totalPemCumulative + totalLmCumulative + totalPwCumulative);
+
+      this.percentageFamilyCount = ((otherFamilyCount / totalFamilyCount) * 100).toFixed(2);
+      this.percentagePemCumulative = ((totalPemCumulative / totalFamilyCount) * 100).toFixed(2);
+      this.percentageLmCumulative = ((totalLmCumulative / totalFamilyCount) * 100).toFixed(2);
+      this.percentagePwCumulative = ((totalPwCumulative / totalFamilyCount) * 100).toFixed(2);
+
+      let familyInfoGraphData = [[this.percentageFamilyCount, this.percentagePemCumulative, this.percentageLmCumulative, this.percentagePwCumulative]
+        , [otherFamilyCount, totalPemCumulative, totalLmCumulative, totalPwCumulative]
+        , [totalBelow5Cumulative, totalBelow2Cumulative, totalChildPemCumulative, totalGirl14To18Cumulative]];
+
+      localStorage.setItem('familyInfoGraphData', JSON.stringify(familyInfoGraphData));
+      this.doughnutChart(familyInfoGraphData);
+      this.barChart(familyInfoGraphData);
+      this.loader = true;
+    });
   }
 
   doughnutChart(value) {
     this.canvas1 = this.mychart1.nativeElement;
     this.ctx1 = this.canvas1.getContext('2d');
-    let label = value;
+    let label = value[0];
     let a: Array<any> = ['Total Family', 'PEM', 'LM', 'PW'];
     let labels = [];
     a.forEach(i => {
@@ -127,11 +133,10 @@ export class CoreComponent implements OnInit, AfterViewInit {
           labels.push(i + ' ' + x + '%')
       })
     });
-    console.log(labels)
     const doughnutdata = {
       labels: labels,
       datasets: [{
-        data: value,
+        data: value[1],
         backgroundColor: [
           'rgb(75, 192, 192)',
           'rgb(245, 57, 97)',
@@ -151,7 +156,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
           callbacks: {
             label: function (tooltipItem, data) {
               let label1 = a[tooltipItem.index];
-              return label1 + ' : ' + label[tooltipItem.index] + ' %';
+              return label1 + ' : ' + data.datasets[0].data[tooltipItem.index];
             }
           }
 
@@ -160,33 +165,32 @@ export class CoreComponent implements OnInit, AfterViewInit {
     });
   }
 
-  barChart() {
+  barChart(value) {
     this.canvas2 = this.mychart2.nativeElement;
     this.ctx2 = this.canvas2.getContext('2d');
-
     const bardata = {
       labels: [''],
       datasets: [{
-        label: 'Child Below 5 Years',
-        data: [27],
+        label: `Child Below 5 Years`,
+        data: [value[2][0]],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2
       }, {
         label: 'Child Below 2 Years',
-        data: [59],
+        data: [value[2][1]],
         backgroundColor: "rgba(255, 159, 64, 0.5)",
         borderColor: 'rgb(255, 159, 64)',
         borderWidth: 2
       }, {
         label: 'Child PEM',
-        data: [80],
+        data: [value[2][2]],
         backgroundColor: "rgba(255, 205, 86, 0.6)",
         borderColor: 'rgb(255, 205, 86)',
         borderWidth: 2
       }, {
         label: 'Adolescent Girls',
-        data: [64],
+        data: [value[2][3]],
         backgroundColor: "rgba(54, 162, 235, 0.5)",
         borderColor: 'rgb(54, 162, 235)',
         borderWidth: 2
@@ -201,7 +205,11 @@ export class CoreComponent implements OnInit, AfterViewInit {
         scales: {
           yAxes: [{
             ticks: {
-              min: 0, max: 100
+              min: 0
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Child Count.'
             }
           }]
         }
@@ -209,5 +217,21 @@ export class CoreComponent implements OnInit, AfterViewInit {
     });
   }
 
+  download(chartId, documentName) {
+    const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      const url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = documentName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 'image/jpeg', 1);
+  }
 
+  refreshChart() {
+    localStorage.removeItem('familyInfoGraphData');
+    this.getChartData();
+  }
 }

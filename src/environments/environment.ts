@@ -18,6 +18,10 @@ export const environment = {
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
 
+  // New Test Server
+  // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+
+
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
 

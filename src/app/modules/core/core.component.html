@@ -7,7 +7,7 @@
 
 
 <!-- <img src="assets/core_image.jpg" alt="" style="width: 80vw; height: 80vh;"> -->
-<!-- <app-loader</app-loader> -->
+
 <div class="example-card">
     <div class="mat-card" >
             <div class="example-header-image">
@@ -84,8 +84,8 @@
         <p style="margin: 8px 35%; color: black; font-weight: 400;
         font-size: 16px;">Family Information</p>
         <div class="downloadrefreshicon">
-          <i class="fa fa-download fa-lg" title="Download Chart"></i>&nbsp;&nbsp;
-          <i class="fa fa-refresh fa-lg" title="Refresh Chart "></i>
+          <i class="fa fa-download fa-lg" title="Download Chart" (click)="download('myChart1','Family Information Chart')"></i>&nbsp;&nbsp;
+          <i class="fa fa-refresh fa-lg" title="Refresh Chart" (click)="refreshChart()"></i>
         </div>
       
      </div>
@@ -107,8 +107,8 @@
         <p style="margin: 8px 35%; color: black;font-weight: 400;
         font-size: 16px;">Child Information</p>
          <div class="downloadrefreshicon">
-          <i class="fa fa-download fa-lg" title="Download Chart"></i>&nbsp;&nbsp;
-          <i class="fa fa-refresh fa-lg" title="Refresh Chart "></i>
+          <i class="fa fa-download fa-lg" title="Download Chart" (click)="download('myChart2','Child Information Chart')"></i>&nbsp;&nbsp;
+          <i class="fa fa-refresh fa-lg" title="Refresh Chart" (click)="refreshChart()"></i>
         </div>
      </div>
 </div>
