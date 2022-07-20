@@ -223,7 +223,7 @@ export class AllChildRegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewMuaclistComponent, {
       width: '700px',
       height: '400px',
-      data: { childId: childDetails.childDetailId, childDob: childDetails.dob, latestMuacTag: childDetails.latestMuacTag }
+      data: { childId: childDetails.childDetailId, childDob: childDetails.dob }
     });
 
     dialogRef.afterClosed().subscribe(result => {

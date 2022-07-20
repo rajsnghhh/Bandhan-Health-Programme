@@ -20,6 +20,7 @@
                         <th>Height</th>
                         <th>Weight</th>
                         <th>MUAC</th>
+                        <th>Source</th>
                         <th *ngIf="disableAction">Action</th>
                     </tr>
                 </thead>
@@ -32,9 +33,14 @@
                         <td>{{item.height}}</td>
                         <td>{{item.weight}}</td>
                         <td>{{item.muac}}</td>
+                        <td>{{item.muacRegisterTag}}</td>
                         <td style="padding: 0px 0px 0px 32px;" *ngIf="disableAction">
-                            <i class="fas fa-edit" title="Edit MUAC" (click)="onEdit(i)" *ngIf="updateMode"></i> 
-                            <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(i)" *ngIf="deleteMode"></i>
+                            <div *ngIf="item.muacRegisterTag == 'PEM' ? false: true" style="display: inline-block;">
+                                <i class="fas fa-edit" title="Edit MUAC" (click)="onEdit(i)" *ngIf="updateMode" ></i> 
+                            </div>
+                            <div *ngIf="item.muacRegisterTag == 'PEM' ? false: true" style="display: inline-block;">
+                                <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(i)" *ngIf="deleteMode"></i>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
