@@ -284,7 +284,7 @@ class LocationComponent {
         }
     }
     changeBranch(brnchId) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         console.log(brnchId, 'brnchId');
         this.branchEnddateDetailDTO = (_a = this.branchList.find(bran => bran.branchId == brnchId)) === null || _a === void 0 ? void 0 : _a.branchBaselineSurveyEnddateDetailDTO;
         console.log(this.branchEnddateDetailDTO, 'branchEnddateDetailDTO');
@@ -303,8 +303,8 @@ class LocationComponent {
         console.log(this.sidebarService.donorName);
         this.sidebarService.donorMasterDto = (_k = (_j = this.branchList) === null || _j === void 0 ? void 0 : _j.find(bran => bran.branchId == brnchId)) === null || _k === void 0 ? void 0 : _k.donorMasterDto;
         console.log(this.sidebarService.donorMasterDto);
-        // this.sidebarService.branchId = this.branchList?.find(bran => bran.branchName == branch)?.branchId;
-        // this.sidebarService.branchName = this.locationForm.get('branch').value;
+        this.sidebarService.branchId = brnchId;
+        this.sidebarService.branchName = (_m = (_l = this.branchList) === null || _l === void 0 ? void 0 : _l.find(bran => bran.branchId == brnchId)) === null || _m === void 0 ? void 0 : _m.branchName;
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: brnchId

@@ -18,6 +18,9 @@ export const environment = {
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
 
+  //Training
+  // apiUrl: 'http://192.168.149.75:6184/bhp/api/v1/training/'
+
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
 
@@ -33,7 +36,7 @@ export const environment = {
 };
 
 /*
- * For easier debugging in development mode, you can import the following file
+ * For easier debugging in development mode, you can import the following filel
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
  * This import should be commented out in production mode because it will have a negative impact

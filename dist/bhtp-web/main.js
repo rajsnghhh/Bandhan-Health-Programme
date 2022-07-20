@@ -114,9 +114,11 @@ const environment = {
     // Local
     // apiUrl: 'http://192.168.153.56:6180/bhp/api/v1/'
     // Development 
-    apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
+    // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
     //New Development Server
     // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+    //Training
+    apiUrl: 'http://192.168.149.75:6184/bhp/api/v1/training/'
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // Staging
