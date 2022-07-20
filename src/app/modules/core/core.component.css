@@ -30,12 +30,21 @@ h4 {
   margin: 0 16px;
 }
 
+.downloadrefreshicon{
+  padding-right: 30px;
+  margin-top: -25px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .chartbox{
   width:50%;
 }
 
 .chartbox:hover{
+  padding: 5px ;
   background-color: white;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 12px 10px, rgba(0, 0, 0, 0.22) 0px 1px 0px;
+  transition: 0.4s ease-in-out !important;
 }

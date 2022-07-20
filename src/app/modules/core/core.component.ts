@@ -1,5 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Chart } from 'chart.js'
+import { ToastrService } from 'ngx-toastr';
+import { HttpService } from './http/http.service';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -12,34 +16,133 @@ export class CoreComponent implements OnInit, AfterViewInit {
   canvas2: any;
   ctx2: any;
   @ViewChild('mychart2') mychart2: any;
-
-  constructor() { }
+  loader: boolean = true;
+  Dto = {
+    dataAccessDTO: this.httpService.dataAccessDTO,
+  }
+  totalDonor: any;
+  totalBlock: any;
+  totalBranch: any;
+  totalDistrict: any;
+  totalProjectMasterId: any;
+  totalRegion: any;
+  totalStateName: any;
+  totalVillageLocality: any;
+  percentageFamilyCount: any;
+  percentagePemCumulative: any;
+  percentageLmCumulative: any;
+  percentagePwCumulative: any;
+  constructor(private httpService: HttpService, public dialog: MatDialog,
+    private http: HttpClient, private toaster: ToastrService,) { }
 
   ngOnInit() {
+    // this.loader = true;
+    this.http.post(`${this.httpService.baseURL}report/getGeographicalOutreach`, this.Dto).subscribe((res: any) => {
+      let donorName: Array<any> = [];
+      let block: Array<any> = [];
+      let branch: Array<any> = [];
+      let district: Array<any> = [];
+      let projectMasterId: Array<any> = [];
+      let region: any = [];
+      let stateName: any = [];
+      let villageLocality: Array<any> = [];
+      res.responseObject?.geographicalOutreachList.map(i => {
+        donorName.push(i.donorName);
+        block.push(i.block);
+        branch.push(i.branch);
+        district.push(i.district);
+        projectMasterId.push(i.projectMasterId);
+        region += i.regionId + ',';
+        stateName += i.stateName + ',';
+        villageLocality.push(i.villageLocality);
+      })
+      let arr = new Array();
+      arr = stateName.slice(0, (stateName.length - 1)).split(",");
+      let removeNullState = arr.filter((i) => i != 'null');
+      let arr1 = new Array();
+      arr1 = region.slice(0, (region.length - 1)).split(",");
+      let removeNullRegion = arr1.filter((i) => i != 'null');
+      this.totalDonor = [...new Set(donorName)].length;
+      this.totalBlock = block.reduce((a, b) => a + b, 0);
+      this.totalBranch = branch.reduce((a, b) => a + b, 0);
+      this.totalDistrict = district.reduce((a, b) => a + b, 0);
+      this.totalProjectMasterId = [...new Set(projectMasterId)].length;
+      this.totalRegion = [...new Set(removeNullRegion)].length;
+      this.totalStateName = [...new Set(removeNullState)].length;
+      this.totalVillageLocality = villageLocality.reduce((a, b) => a + b, 0);
+    }, error => {
+    });
+
+
+
   }
 
   ngAfterViewInit(): void {
-    this.doughnutChart();
-    this.barChart();
+    let familyInfoGraphData = JSON.parse(localStorage.getItem('familyInfoGraphData'));
 
+    if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
+      this.getChartData();
+    } else {
+      this.doughnutChart(familyInfoGraphData);
+      this.barChart(familyInfoGraphData);
+      this.loader = true;
+    }
   }
 
-  doughnutChart() {
+  getChartData() {
+    this.loader = false;
+    this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
+
+      let totalFamilyCount = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.totalFamilyCount, 0);
+      let totalPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pemCumulative, 0);
+      let totalLmCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.lmCumulative, 0);
+      let totalPwCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pwCumulative, 0);
+
+      let totalBelow5Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below5Cumulative, 0);
+      let totalBelow2Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below2Cumulative, 0);
+      let totalChildPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.childPemCumulative, 0);
+      let totalGirl14To18Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
+
+      let otherFamilyCount = totalFamilyCount - (totalPemCumulative + totalLmCumulative + totalPwCumulative);
+
+      this.percentageFamilyCount = ((otherFamilyCount / totalFamilyCount) * 100).toFixed(2);
+      this.percentagePemCumulative = ((totalPemCumulative / totalFamilyCount) * 100).toFixed(2);
+      this.percentageLmCumulative = ((totalLmCumulative / totalFamilyCount) * 100).toFixed(2);
+      this.percentagePwCumulative = ((totalPwCumulative / totalFamilyCount) * 100).toFixed(2);
+
+      let familyInfoGraphData = [[this.percentageFamilyCount, this.percentagePemCumulative, this.percentageLmCumulative, this.percentagePwCumulative]
+        , [otherFamilyCount, totalPemCumulative, totalLmCumulative, totalPwCumulative]
+        , [totalBelow5Cumulative, totalBelow2Cumulative, totalChildPemCumulative, totalGirl14To18Cumulative]];
+
+      localStorage.setItem('familyInfoGraphData', JSON.stringify(familyInfoGraphData));
+      this.doughnutChart(familyInfoGraphData);
+      this.barChart(familyInfoGraphData);
+      this.loader = true;
+    });
+  }
+
+  doughnutChart(value) {
     this.canvas1 = this.mychart1.nativeElement;
     this.ctx1 = this.canvas1.getContext('2d');
-
+    let label = value[0];
+    let a: Array<any> = ['Total Family', 'PEM', 'LM', 'PW'];
+    let labels = [];
+    a.forEach(i => {
+      label.forEach(x => {
+        if (a.indexOf(i) == label.indexOf(x))
+          labels.push(i + ' ' + x + '%')
+      })
+    });
     const doughnutdata = {
-      labels: [
-        'PEM',
-        'LM',
-        'PW'
-      ],
+      labels: labels,
       datasets: [{
-        data: [300, 50, 100],
+        data: value[1],
         backgroundColor: [
+          'rgb(75, 192, 192)',
           'rgb(245, 57, 97)',
           'rgb(20, 154, 245)',
-          'rgb(255, 189, 32)'
+          'rgb(255, 189, 32)',
+
         ],
         hoverOffset: 4
       }]
@@ -47,34 +150,49 @@ export class CoreComponent implements OnInit, AfterViewInit {
 
     new Chart(this.ctx1, {
       type: 'doughnut',
-      data: doughnutdata
+      data: doughnutdata,
+      options: {
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              let label1 = a[tooltipItem.index];
+              return label1 + ' : ' + data.datasets[0].data[tooltipItem.index];
+            }
+          }
+
+        },
+      }
     });
   }
 
-  barChart() {
+  barChart(value) {
     this.canvas2 = this.mychart2.nativeElement;
     this.ctx2 = this.canvas2.getContext('2d');
-
     const bardata = {
       labels: [''],
       datasets: [{
-        label: 'Child Below 5 Years',
-        data: [27],
+        label: `Child Below 5 Years`,
+        data: [value[2][0]],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2
-      }
-        , {
+      }, {
         label: 'Child Below 2 Years',
-        data: [59],
+        data: [value[2][1]],
         backgroundColor: "rgba(255, 159, 64, 0.5)",
         borderColor: 'rgb(255, 159, 64)',
         borderWidth: 2
       }, {
         label: 'Child PEM',
-        data: [80],
-        backgroundColor: "rgba(255, 205, 86, 0.5)",
+        data: [value[2][2]],
+        backgroundColor: "rgba(255, 205, 86, 0.6)",
         borderColor: 'rgb(255, 205, 86)',
+        borderWidth: 2
+      }, {
+        label: 'Adolescent Girls',
+        data: [value[2][3]],
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: 'rgb(54, 162, 235)',
         borderWidth: 2
       }
       ]
@@ -87,7 +205,11 @@ export class CoreComponent implements OnInit, AfterViewInit {
         scales: {
           yAxes: [{
             ticks: {
-              min: 0, max: 100
+              min: 0
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Child Count.'
             }
           }]
         }
@@ -95,5 +217,21 @@ export class CoreComponent implements OnInit, AfterViewInit {
     });
   }
 
+  download(chartId, documentName) {
+    const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      const url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = documentName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 'image/jpeg', 1);
+  }
 
+  refreshChart() {
+    localStorage.removeItem('familyInfoGraphData');
+    this.getChartData();
+  }
 }
