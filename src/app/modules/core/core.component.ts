@@ -78,7 +78,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    let familyInfoGraphData = JSON.parse(localStorage.getItem('familyInfoGraphData'));
+    let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
 
     if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
       this.getChartData();
@@ -114,7 +114,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
         , [otherFamilyCount, totalPemCumulative, totalLmCumulative, totalPwCumulative]
         , [totalBelow5Cumulative, totalBelow2Cumulative, totalChildPemCumulative, totalGirl14To18Cumulative]];
 
-      localStorage.setItem('familyInfoGraphData', JSON.stringify(familyInfoGraphData));
+      localStorage.setItem('familyChildInfoGraphData', JSON.stringify(familyInfoGraphData));
       this.doughnutChart(familyInfoGraphData);
       this.barChart(familyInfoGraphData);
       this.loader = true;
@@ -219,6 +219,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
 
   download(chartId, documentName) {
     const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+    this.fillCanvasBackgroundWithColor(canvas, 'white');
     canvas.toBlob(function (blob) {
       const url = URL.createObjectURL(blob);
       var link = document.createElement('a');
@@ -230,8 +231,17 @@ export class CoreComponent implements OnInit, AfterViewInit {
     }, 'image/jpeg', 1);
   }
 
+  fillCanvasBackgroundWithColor(canvas, color) {
+    const context = canvas.getContext('2d');
+    context.save();
+    context.globalCompositeOperation = 'destination-over';
+    context.fillStyle = color;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.restore();
+  }
+
   refreshChart() {
-    localStorage.removeItem('familyInfoGraphData');
+    localStorage.removeItem('familyChildInfoGraphData');
     this.getChartData();
   }
 }

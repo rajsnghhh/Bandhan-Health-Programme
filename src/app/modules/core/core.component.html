@@ -1,114 +1,125 @@
-<!-- <h2> An application developed to keep records of poor girls & woman who are not capable of taking care of their health
-    issues and child nurturing.</h2> -->
-<!-- <h2>The goal of Bandhan Health Program is to create health awareness among mothers and adolescent girls, to ensure easy
-    accessibility to health services available at the government and non government level in a sustainable level. In
-    addition, Bandhan Health Program works to reduce health expenditure of poor families, as well as to develop health
-    entrepreneurs/volunteers.</h2> -->
-
-
-<!-- <img src="assets/core_image.jpg" alt="" style="width: 80vw; height: 80vh;"> -->
-
 <div class="example-card">
-    <div class="mat-card" >
-            <div class="example-header-image">
-              <div class="icons"><i class='fas fa-hand-holding-usd fa-2x'></i></div>
-          <h4>Donor :  {{totalDonor}}</h4>
-        </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fas fa-hand-holding-usd fa-2x"></i></div>
+      <h4>Donor : {{ totalDonor }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fa fa-file-text-o fa-2x"></i></div>
+      <h4>Project : {{ totalProjectMasterId }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fas fa-code-branch fa-2x"></i></div>
+      <h4>Branch : {{ totalBranch }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons">
+        <i class="fa fa-map-marker fa-2x"></i>
       </div>
-      <div class="mat-card" >
-          <div  class="example-header-image">
-            <div class="icons"><i class="fa fa-file-text-o fa-2x" ></i>
-          </div>
-          <h4>Project :  {{totalProjectMasterId}}</h4>
-        </div>
-      </div>
-      <div class="mat-card" >
-        
-          <div class="example-header-image"> 
-            <div class="icons"><i class="fas fa-code-branch fa-2x" ></i></div>
-          <h4>Branch :  {{totalBranch}}</h4>
-        </div>
-      </div>
-      <div class="mat-card" >
-          <div class="example-header-image">
-            <div class="icons">
-            <i class="fa fa-map-marker fa-2x" ></i>
-          </div>
-          <h4>Region :  {{totalRegion}}</h4>
-        </div>
-      </div>
+      <h4>Region : {{ totalRegion }}</h4>
+    </div>
+  </div>
 </div>
-<br>
+<br />
 <div class="example-card">
-    <div class="mat-card" >
-          <div class="example-header-image">
-            <div class="icons"><i class="fa fa-university fa-2x" ></i></div>
-          <h4>State :  {{totalStateName}}</h4>
-        </div>
-      </div>
-      <div class="mat-card" >
-          <div class="example-header-image">
-            <div class="icons"><i class="fa fa-building fa-2x"></i></div>
-          <h4>District :  {{totalDistrict}}</h4>
-        </div>
-      </div>
-      <div class="mat-card" >
-          <div class="example-header-image">
-             <div class="icons"><i class="fa fa-cubes fa-2x"></i></div>
-          <h4>Block :  {{totalBlock}}</h4>
-        </div>
-      </div>
-      <div class="mat-card" >
-          <div class="example-header-image"> 
-            <div class="icons"><i class="fa fa-home fa-2x"></i></div>
-          <h4>Village :  {{totalVillageLocality}}</h4>
-        </div>
-      </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fa fa-university fa-2x"></i></div>
+      <h4>State : {{ totalStateName }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fa fa-building fa-2x"></i></div>
+      <h4>District : {{ totalDistrict }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fa fa-cubes fa-2x"></i></div>
+      <h4>Block : {{ totalBlock }}</h4>
+    </div>
+  </div>
+  <div class="mat-card">
+    <div class="example-header-image">
+      <div class="icons"><i class="fa fa-home fa-2x"></i></div>
+      <h4>Village : {{ totalVillageLocality }}</h4>
+    </div>
+  </div>
 </div>
 
-<br>
-<div style="display: flex;margin: 10px 30px 5px 10px;">
-    <div class="chartbox">
-      <div [hidden]="loader" style="margin: -70px 38%;margin-top: 20%">
-        <div class="spinner-grow text-danger" role="status">
-          <span class="sr-only">Loading...</span>
-        </div> &nbsp;&nbsp;
-        <div class="spinner-grow text-warning" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>&nbsp;&nbsp;
-        <div class="spinner-grow text-info" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
+<br />
+<div style="display: flex; margin: 10px 30px 5px 10px">
+  <div class="chartbox">
+    <div [hidden]="loader" style="margin: -70px 38%; margin-top: 20%">
+      <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
-        <canvas id="myChart1" #mychart1></canvas>
-        <p style="margin: 8px 35%; color: black; font-weight: 400;
-        font-size: 16px;">Family Information</p>
-        <div class="downloadrefreshicon">
-          <i class="fa fa-download fa-lg" title="Download Chart" (click)="download('myChart1','Family Information Chart')"></i>&nbsp;&nbsp;
-          <i class="fa fa-refresh fa-lg" title="Refresh Chart" (click)="refreshChart()"></i>
-        </div>
-      
-     </div>
+      &nbsp;&nbsp;
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      &nbsp;&nbsp;
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <canvas id="myChart1" #mychart1></canvas>
+    <p style="margin: 8px 35%; color: black; font-weight: 400; font-size: 16px">
+      Family Information
+    </p>
+    <div class="downloadrefreshicon">
+      <i
+        class="fa fa-download fa-lg"
+        title="Download Chart"
+        (click)="download('myChart1', 'Family Information Chart')"
+      ></i
+      >&nbsp;&nbsp;
+      <i
+        class="fa fa-refresh fa-lg"
+        title="Refresh Chart"
+        (click)="refreshChart()"
+      ></i>
+    </div>
+  </div>
 
-    &nbsp;&nbsp;&nbsp;&nbsp;
-     <div class="chartbox">
-      <div [hidden]="loader" style="margin: -70px 38%;margin-top: 20%">
-        <div class="spinner-grow text-danger" role="status">
-          <span class="sr-only">Loading...</span>
-        </div> &nbsp;&nbsp;
-        <div class="spinner-grow text-warning" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>&nbsp;&nbsp;
-        <div class="spinner-grow text-info" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="chartbox">
+    <div [hidden]="loader" style="margin: -70px 38%; margin-top: 20%">
+      <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
-        <canvas id="myChart2" #mychart2></canvas>
-        <p style="margin: 8px 35%; color: black;font-weight: 400;
-        font-size: 16px;">Child Information</p>
-         <div class="downloadrefreshicon">
-          <i class="fa fa-download fa-lg" title="Download Chart" (click)="download('myChart2','Child Information Chart')"></i>&nbsp;&nbsp;
-          <i class="fa fa-refresh fa-lg" title="Refresh Chart" (click)="refreshChart()"></i>
-        </div>
-     </div>
+      &nbsp;&nbsp;
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      &nbsp;&nbsp;
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <canvas id="myChart2" #mychart2></canvas>
+    <p style="margin: 8px 35%; color: black; font-weight: 400; font-size: 16px">
+      Child Information
+    </p>
+    <div class="downloadrefreshicon">
+      <i
+        class="fa fa-download fa-lg"
+        title="Download Chart"
+        (click)="download('myChart2', 'Child Information Chart')"
+      ></i
+      >&nbsp;&nbsp;
+      <i
+        class="fa fa-refresh fa-lg"
+        title="Refresh Chart"
+        (click)="refreshChart()"
+      ></i>
+    </div>
+  </div>
 </div>
