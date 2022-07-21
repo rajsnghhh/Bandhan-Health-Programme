@@ -171,28 +171,30 @@ export class CoreComponent implements OnInit, AfterViewInit {
     const bardata = {
       labels: [''],
       datasets: [{
-        label: `Child Below 5 Years`,
+        label: `Child Below 5 Years (${value[2][0]})`,
+        yAxisID: '5c',
         data: [value[2][0]],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2
       }, {
-        label: 'Child Below 2 Years',
+        label: `Child Below 2 Years (${value[2][1]})`,
         data: [value[2][1]],
         backgroundColor: "rgba(255, 159, 64, 0.5)",
         borderColor: 'rgb(255, 159, 64)',
         borderWidth: 2
       }, {
-        label: 'Child PEM',
-        data: [value[2][2]],
-        backgroundColor: "rgba(255, 205, 86, 0.6)",
-        borderColor: 'rgb(255, 205, 86)',
-        borderWidth: 2
-      }, {
-        label: 'Adolescent Girls',
+        label: `Adolescent Girls (${value[2][3]})`,
         data: [value[2][3]],
         backgroundColor: "rgba(54, 162, 235, 0.5)",
         borderColor: 'rgb(54, 162, 235)',
+        borderWidth: 2
+      }, {
+        label: `Child PEM (${value[2][2]})`,
+        yAxisID: 'cp',
+        data: [value[2][2]],
+        backgroundColor: "rgba(255, 205, 86, 0.6)",
+        borderColor: 'rgb(255, 205, 86)',
         borderWidth: 2
       }
       ]
@@ -203,17 +205,32 @@ export class CoreComponent implements OnInit, AfterViewInit {
       data: bardata,
       options: {
         scales: {
-          yAxes: [{
-            ticks: {
-              min: 0
-            },
-            scaleLabel: {
-              display: true,
-              labelString: 'Child Count.'
-            }
-          }]
+          yAxes: [
+            {
+              id: '5c',
+              type: 'linear',
+              position: 'left',
+              ticks: {
+                min: 0,
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Child Count.'
+              }
+            }, {
+              id: 'cp',
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                min: 0,
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Child PEM Count.'
+              }
+            }]
         }
-      },
+      }
     });
   }
 
