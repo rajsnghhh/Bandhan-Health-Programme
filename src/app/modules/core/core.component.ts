@@ -176,26 +176,34 @@ export class CoreComponent implements OnInit, AfterViewInit {
         data: [value[2][0]],
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: 'rgb(255, 99, 132)',
-        borderWidth: 2
+        borderWidth: 2,
+        categoryPercentage: 1,
+        barPercentage: 0.7
       }, {
         label: `Child Below 2 Years (${value[2][1]})`,
         data: [value[2][1]],
         backgroundColor: "rgba(255, 159, 64, 0.5)",
         borderColor: 'rgb(255, 159, 64)',
-        borderWidth: 2
+        borderWidth: 2,
+        categoryPercentage: 1.3,
+        barPercentage: 0.6
       }, {
         label: `Adolescent Girls (${value[2][3]})`,
         data: [value[2][3]],
         backgroundColor: "rgba(54, 162, 235, 0.5)",
         borderColor: 'rgb(54, 162, 235)',
-        borderWidth: 2
+        borderWidth: 2,
+        categoryPercentage: 0.4,
+        barPercentage: 1.7
       }, {
         label: `Child PEM (${value[2][2]})`,
         yAxisID: 'cp',
         data: [value[2][2]],
         backgroundColor: "rgba(255, 205, 86, 0.6)",
         borderColor: 'rgb(255, 205, 86)',
-        borderWidth: 2
+        borderWidth: 2,
+        categoryPercentage: 1,
+        barPercentage: 0.7
       }
       ]
     };
