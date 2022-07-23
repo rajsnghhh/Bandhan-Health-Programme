@@ -1,6 +1,7 @@
 <app-loader [hidden]="loader"></app-loader>
 <img src="assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;margin-left: -551px;
 margin-top: -54px;" >
+<div class="overlay"></div>
 <div
   class="card"
   style="
@@ -9,11 +10,14 @@ margin-top: -54px;" >
     left: 50%;
     transform: translate(-50%, -50%);
     width: 25%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(255, 255, 255, 0.4) 0px 10px 30px;
+    opacity: 0.95;
+    border: 1px;
+    border-radius: 10px;
   "
 >
-  <h4 class="card-header" style="background-color: #499; color: #ffffff;" >Login</h4>
-  <div class="card-body" style="padding: 0rem 1rem">
+  <h4 class="card-header" style="background-color: #156060; color: #ffffff;border-radius: 8px 8px 0px 0px;" >Bandhan Health Program</h4>
+  <div class="card-body" style="padding: 0rem 1rem;">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
 
@@ -86,6 +90,8 @@ margin-top: -54px;" >
             margin-left: 50%;
             margin-top: 34px;
             transform: translate(-50%, -50%);
+            background-color: #156060;
+            border-color: #156060;
           "
         >
           <span
