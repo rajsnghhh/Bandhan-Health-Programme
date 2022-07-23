@@ -32,7 +32,6 @@ export class BeneficiaryInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-
     this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res: any) => {
       this.projectList = res.responseObject.projectList;
     });
@@ -70,7 +69,7 @@ export class BeneficiaryInfoComponent implements OnInit {
     this.locationForm.controls.region.setValue('');
     this.locationForm.controls.stateOrRegion.setValue('');
 
-    if (this.projectWiseBeneficiaryList.length == 0) {
+    if (projectId == 'all') {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
