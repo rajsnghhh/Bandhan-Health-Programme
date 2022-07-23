@@ -21,7 +21,7 @@ export const environment = {
   // New Test Server
   // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
 
-  //Training
+  // Training
   // apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
 
   // Staging
