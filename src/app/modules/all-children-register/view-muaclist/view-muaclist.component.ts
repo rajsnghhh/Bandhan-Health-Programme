@@ -39,7 +39,7 @@ export class ViewMuaclistComponent implements OnInit {
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
     this.disableAction = (this.updateMode == false && this.deleteMode == false) ? false
-      : (this.data.latestMuacTag == 'PEM') ? false : true;
+      : true;
 
   }
 
