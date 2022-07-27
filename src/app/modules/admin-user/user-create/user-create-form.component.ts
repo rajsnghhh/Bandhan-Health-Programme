@@ -272,9 +272,20 @@ export class UserCreateFormComponent implements OnInit {
       emailSecondary: this.userForm.value.secondaryEmail,
       mobileNumber: this.userForm.value.primaryMobile,
       mobileNumberSecondary: this.userForm.value.secondaryMobile,
-      currentBranchId: (this.data.userData.roleShortName?.indexOf('HCO') != -1) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
-      roleShortName: (this.data.userData.roleShortName?.indexOf('HCO') != -1) ? this.data.userData.roleShortName : this.userForm.value.userRole,
-      roleMasterId: this.roleList.find(role => role.roleShortName == ((this.data.userData.roleShortName?.indexOf('HCO') != -1) ? this.data.userData.roleShortName : this.userForm.value.userRole))?.roleMasterId,
+
+      currentBranchId: (this.data.createMode == true)
+        ? this.userForm.value.branch || this.userForm.value.baseBranch
+        : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
+
+      roleShortName: (this.data.createMode == true)
+        ? this.userForm.value.userRole
+        : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
+
+      roleMasterId: this.roleList.find(role => role.roleShortName ==
+        ((this.data.createMode == true)
+          ? this.userForm.value.userRole
+          : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole)
+      )?.roleMasterId,
       branchList: (this.userForm.value.userRole?.indexOf('HCO') != -1) ?
         this.branch : null,
       regionList: (this.userForm.value.userRole?.indexOf('HCO') != -1 || this.userForm.value.userRole?.indexOf('AC') != -1) ?
