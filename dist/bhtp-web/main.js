@@ -124,9 +124,9 @@ const environment = {
     // New Test Server
     // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
     // Training
-    // apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
+    apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
     // Staging
-    apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
+    // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
     // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
@@ -1897,7 +1897,7 @@ CoreComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.mychart1 = _t.first);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.mychart2 = _t.first);
-    } }, decls: 96, vars: 10, consts: [[1, "example-card"], [1, "mat-card"], [1, "example-header-image"], [1, "icons"], ["src", "assets/Donate-1.svg", "alt", "Poop Logo", 2, "width", "35px"], [1, "fa", "fa-file-text-o", "fa-2x"], [1, "fas", "fa-code-branch", "fa-2x"], [1, "fa", "fa-map-marker", "fa-2x"], [1, "fa", "fa-university", "fa-2x"], [1, "fa", "fa-building", "fa-2x"], [1, "fa", "fa-cubes", "fa-2x"], ["src", "assets/village.svg", "alt", "Poop Logo", 2, "width", "35px"], [2, "display", "flex", "margin", "10px 30px 5px 10px"], [1, "chartbox"], [2, "margin", "-70px 38%", "margin-top", "20%", 3, "hidden"], ["role", "status", 1, "spinner-grow", "text-danger"], [1, "sr-only"], ["role", "status", 1, "spinner-grow", "text-warning"], ["role", "status", 1, "spinner-grow", "text-info"], ["id", "myChart1"], ["mychart1", ""], [2, "margin", "8px 35%", "color", "black", "font-weight", "400", "font-size", "16px"], [1, "downloadrefreshicon"], ["title", "Download Chart", 1, "fa", "fa-download", "fa-lg", 3, "click"], ["title", "Refresh Chart", 1, "fa", "fa-refresh", "fa-lg", 3, "click"], ["id", "myChart2"], ["mychart2", ""]], template: function CoreComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, decls: 96, vars: 10, consts: [[1, "example-card"], [1, "mat-card"], [1, "example-header-image"], [1, "icons"], ["src", "assets/Donate-1.svg", "alt", "Poop Logo", 2, "width", "35px"], [1, "fa", "fa-file-text-o", "fa-2x"], [1, "fas", "fa-code-branch", "fa-2x"], [1, "fa", "fa-map-marker", "fa-2x"], [1, "fa", "fa-university", "fa-2x"], [1, "fa", "fa-building", "fa-2x"], [1, "fa", "fa-cubes", "fa-2x"], ["src", "assets/village.svg", "alt", "Poop Logo", 2, "width", "35px"], [2, "display", "flex", "margin", "10px 30px 5px 10px"], [1, "chartbox"], [2, "margin", "-125px 34%", "margin-top", "20%", 3, "hidden"], ["role", "status", 1, "spinner-grow", "text-danger"], [1, "sr-only"], ["role", "status", 1, "spinner-grow", "text-warning"], ["role", "status", 1, "spinner-grow", "text-info"], ["id", "myChart1"], ["mychart1", ""], [2, "margin", "8px 35%", "color", "black", "font-weight", "400", "font-size", "16px"], [1, "downloadrefreshicon"], ["title", "Download Chart", 1, "fa", "fa-download", "fa-lg", 3, "click"], ["title", "Refresh Chart", 1, "fa", "fa-refresh", "fa-lg", 3, "click"], ["id", "myChart2"], ["mychart2", ""]], template: function CoreComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
