@@ -2287,7 +2287,7 @@ FamilyInfoCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "N");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "N" || (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "NA");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](30);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.haveChildren === "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
