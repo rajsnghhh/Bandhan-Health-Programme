@@ -219,7 +219,7 @@
               <th>Date of Birth</th>
               <th>Age</th>
               <th>Sex</th>
-              <th>Action</th>
+              <th *ngIf="updateMode || deleteMode">Action</th>
             </tr>
           </thead>
 
@@ -231,8 +231,8 @@
               <td>{{items.dob.substring(0,10).split('-').reverse().join('-')}}</td>
               <td>{{items.age}}</td>
               <td>{{items.sex}}</td>
-              <td><i class="fas fa-edit" title="Edit Child" (click)="editChild(items, i, EditChild)"
-                  *ngIf="updateMode"></i>
+              <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit Child"
+                  (click)="editChild(items, i, EditChild)" *ngIf="updateMode"></i>
                 <i class="fas fa-trash" title="Delete Child" (click)="deleteChild(items, i)" *ngIf="deleteMode"></i>
               </td>
             </tr>
