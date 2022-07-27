@@ -83,14 +83,16 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
+    if (this.dashboardAccess == true) {
+      let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
 
-    if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
-      this.getChartData();
-    } else {
-      this.doughnutChart(familyInfoGraphData);
-      this.barChart(familyInfoGraphData);
-      this.loader = true;
+      if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
+        this.getChartData();
+      } else {
+        this.doughnutChart(familyInfoGraphData);
+        this.barChart(familyInfoGraphData);
+        this.loader = true;
+      }
     }
   }
 
