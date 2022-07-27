@@ -407,7 +407,7 @@ class BeneficiaryInfoComponent {
         this.locationForm.controls.gp.setValue('');
         this.locationForm.controls.region.setValue('');
         this.locationForm.controls.stateOrRegion.setValue('');
-        if (this.projectWiseBeneficiaryList.length == 0) {
+        if (projectId == 'all') {
             this.loader = false;
             this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res) => {
                 this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
