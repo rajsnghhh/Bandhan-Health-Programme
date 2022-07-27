@@ -1,8 +1,14 @@
+<div *ngIf="!dashboardAccess">
+<h1 style="color: #499;text-align: center;font-size: xxx-large;">Welcome</h1>
+<h1 style="color: #499;text-align: center;font-size: xxx-large;">Bandhan Health Program</h1>
+</div>
+
+<div *ngIf="dashboardAccess">
 <div class="example-card">
   <div class="mat-card">
     <div class="example-header-image">
       <div class="icons">
-        <img src="assets/Donate-1.svg" style="width: 35px;"  alt="Poop Logo"/>
+        <img src="assets/Donate-1.svg" style="width: 35px;"/>
       </div>
       <h4>Donor : {{ totalDonor }}</h4>
     </div>
@@ -126,4 +132,5 @@
       ></i>
     </div>
   </div>
+</div>
 </div>
