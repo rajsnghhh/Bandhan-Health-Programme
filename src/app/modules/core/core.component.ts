@@ -32,11 +32,16 @@ export class CoreComponent implements OnInit, AfterViewInit {
   percentagePemCumulative: any;
   percentageLmCumulative: any;
   percentagePwCumulative: any;
+  dashboardAccess: boolean;
+
   constructor(private httpService: HttpService, public dialog: MatDialog,
     private http: HttpClient, private toaster: ToastrService,) { }
 
   ngOnInit() {
-    // this.loader = true;
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
+    this.dashboardAccess = (user.responseObject.RoledetailDTO.roleShortName == 'PM') ? true : false;
+
     this.http.post(`${this.httpService.baseURL}report/getGeographicalOutreach`, this.Dto).subscribe((res: any) => {
       let donorName: Array<any> = [];
       let block: Array<any> = [];
@@ -57,18 +62,18 @@ export class CoreComponent implements OnInit, AfterViewInit {
         villageLocality.push(i.villageLocality);
       })
       let arr = new Array();
-      arr = stateName.slice(0, (stateName.length - 1)).split(",");
+      arr = stateName.slice(0, (stateName?.length - 1)).split(",");
       let removeNullState = arr.filter((i) => i != 'null');
       let arr1 = new Array();
-      arr1 = region.slice(0, (region.length - 1)).split(",");
+      arr1 = region.slice(0, (region?.length - 1)).split(",");
       let removeNullRegion = arr1.filter((i) => i != 'null');
-      this.totalDonor = [...new Set(donorName)].length;
+      this.totalDonor = [...new Set(donorName)]?.length;
       this.totalBlock = block.reduce((a, b) => a + b, 0);
       this.totalBranch = branch.reduce((a, b) => a + b, 0);
       this.totalDistrict = district.reduce((a, b) => a + b, 0);
-      this.totalProjectMasterId = [...new Set(projectMasterId)].length;
-      this.totalRegion = [...new Set(removeNullRegion)].length;
-      this.totalStateName = [...new Set(removeNullState)].length;
+      this.totalProjectMasterId = [...new Set(projectMasterId)]?.length;
+      this.totalRegion = [...new Set(removeNullRegion)]?.length;
+      this.totalStateName = [...new Set(removeNullState)]?.length;
       this.totalVillageLocality = villageLocality.reduce((a, b) => a + b, 0);
     }, error => {
     });
@@ -122,10 +127,10 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   doughnutChart(value) {
-    this.canvas1 = this.mychart1.nativeElement;
-    this.ctx1 = this.canvas1.getContext('2d');
+    this.canvas1 = this.mychart1?.nativeElement;
+    this.ctx1 = this.canvas1?.getContext('2d');
     let label = value[0];
-    let a: Array<any> = ['Total Family', 'PEM', 'LM', 'PW'];
+    let a: Array<any> = ['General Family', 'PEM', 'LM', 'PW'];
     let labels = [];
     a.forEach(i => {
       label.forEach(x => {
@@ -166,8 +171,8 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   barChart(value) {
-    this.canvas2 = this.mychart2.nativeElement;
-    this.ctx2 = this.canvas2.getContext('2d');
+    this.canvas2 = this.mychart2?.nativeElement;
+    this.ctx2 = this.canvas2?.getContext('2d');
     const bardata = {
       labels: [''],
       datasets: [{
@@ -251,7 +256,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   fillCanvasBackgroundWithColor(canvas, color) {
-    const context = canvas.getContext('2d');
+    const context = canvas?.getContext('2d');
     context.save();
     context.globalCompositeOperation = 'destination-over';
     context.fillStyle = color;
