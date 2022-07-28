@@ -209,8 +209,20 @@ export class UserCreateFormComponent implements OnInit {
       let data = e.regionMasterId.toString()
       this.regionMultiId.push(data);
     });
-
     this.getBaseBranch(this.regionMultiId);
+  }
+
+  onSelectAll(i) {
+    this.regionMultiId = [];
+    i.forEach(e => {
+      let data = e.regionMasterId.toString()
+      this.regionMultiId.push(data);
+    });
+    this.getBaseBranch(this.regionMultiId);
+  }
+
+  onDeSelectAll(i) {
+    this.branchList = [];
   }
 
   getBaseBranch(regionMultiId) {
