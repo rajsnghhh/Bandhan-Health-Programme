@@ -1151,7 +1151,7 @@ class UserCreateFormComponent {
         this.currentBranchId = value;
     }
     onSave() {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d;
         console.log(this.userForm);
         if (this.userForm.value.multiRegion != null) {
             this.userForm.value.multiRegion.forEach(x => delete x.regionName);
@@ -1169,12 +1169,19 @@ class UserCreateFormComponent {
             emailSecondary: this.userForm.value.secondaryEmail,
             mobileNumber: this.userForm.value.primaryMobile,
             mobileNumberSecondary: this.userForm.value.secondaryMobile,
-            currentBranchId: (((_a = this.data.userData.roleShortName) === null || _a === void 0 ? void 0 : _a.indexOf('HCO')) != -1) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
-            roleShortName: (((_b = this.data.userData.roleShortName) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1) ? this.data.userData.roleShortName : this.userForm.value.userRole,
-            roleMasterId: (_c = this.roleList.find(role => { var _a; return role.roleShortName == ((((_a = this.data.userData.roleShortName) === null || _a === void 0 ? void 0 : _a.indexOf('HCO')) != -1) ? this.data.userData.roleShortName : this.userForm.value.userRole); })) === null || _c === void 0 ? void 0 : _c.roleMasterId,
-            branchList: (((_d = this.userForm.value.userRole) === null || _d === void 0 ? void 0 : _d.indexOf('HCO')) != -1) ?
+            currentBranchId: (this.data.createMode == true)
+                ? this.userForm.value.branch || this.userForm.value.baseBranch
+                : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
+            roleShortName: (this.data.createMode == true)
+                ? this.userForm.value.userRole
+                : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
+            roleMasterId: (_a = this.roleList.find(role => role.roleShortName ==
+                ((this.data.createMode == true)
+                    ? this.userForm.value.userRole
+                    : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole))) === null || _a === void 0 ? void 0 : _a.roleMasterId,
+            branchList: (((_b = this.userForm.value.userRole) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1) ?
                 this.branch : null,
-            regionList: (((_e = this.userForm.value.userRole) === null || _e === void 0 ? void 0 : _e.indexOf('HCO')) != -1 || ((_f = this.userForm.value.userRole) === null || _f === void 0 ? void 0 : _f.indexOf('AC')) != -1) ?
+            regionList: (((_c = this.userForm.value.userRole) === null || _c === void 0 ? void 0 : _c.indexOf('HCO')) != -1 || ((_d = this.userForm.value.userRole) === null || _d === void 0 ? void 0 : _d.indexOf('AC')) != -1) ?
                 this.region : this.userForm.value.multiRegion
         };
         console.log(Dto);

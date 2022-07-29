@@ -118,11 +118,11 @@ const environment = {
     // Development 
     // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
     //New Development Server
-    apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+    // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // New Test Server
-    // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+    apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
     // Training
     // apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
     // Staging
@@ -1920,14 +1920,16 @@ class CoreComponent {
         });
     }
     ngAfterViewInit() {
-        let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
-        if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
-            this.getChartData();
-        }
-        else {
-            this.doughnutChart(familyInfoGraphData);
-            this.barChart(familyInfoGraphData);
-            this.loader = true;
+        if (this.dashboardAccess == true) {
+            let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
+            if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
+                this.getChartData();
+            }
+            else {
+                this.doughnutChart(familyInfoGraphData);
+                this.barChart(familyInfoGraphData);
+                this.loader = true;
+            }
         }
     }
     getChartData() {
