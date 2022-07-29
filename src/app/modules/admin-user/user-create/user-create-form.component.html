@@ -45,8 +45,10 @@
           [data]="regionList"
           [disabled]="disableMultiRegion"
           formControlName="multiRegion"
+          (onSelectAll)="onSelectAll($event)"
           (onSelect)="onItemSelect($event)"
           (onDeSelect)="onDeSelect($event)"
+          (onDeSelectAll)="onDeSelectAll($event)"
           [ngClass]="{
             'is-invalid': f.multiRegion.invalid && f.multiRegion.touched,
             'is-valid': f.multiRegion.valid && (f.multiRegion.dirty || f.multiRegion.touched)

@@ -1,6 +1,11 @@
 <app-loader [hidden]="loader"></app-loader>
-<img src="../../../assets/login_bg.jpg" alt="" style="width: 100vw;height: 100vh;     margin-left: -551px;
-margin-top: -54px;" >
+<img
+  src="../../../assets/login_bg.jpg"
+  alt=""
+  style="width: 100vw; height: 100vh; margin-left: -551px; margin-top: -54px"
+/>
+<div class="overlay"></div>
+
 <div
   class="card"
   style="
@@ -9,47 +14,72 @@ margin-top: -54px;" >
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 10px 30px;
+    opacity: 0.95;
+    border: 1px;
+    border-radius: 10px;
   "
 >
-  <h4 class="card-header" style="background-color: #499; color: #ffffff;" >Reset Password</h4>
+  <h4
+    class="card-header"
+    style="
+      background-color: #156060;
+      color: #ffffff;
+      border-radius: 8px 8px 0px 0px;
+      font-size: large;
+      text-align: center;
+    "
+  >
+    Reset Password
+  </h4>
   <div class="card-body" style="padding: 0rem 1rem">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-     
-        <div class="form-group ">
-            <label for="newPassword">New Password <span class="text-danger">*</span></label>
-            <div style="display: grid; grid-template-columns: 5fr -0.1fr;">
-             
-            <input
-              [type]="show ? 'text' : 'password'"
-              style="border: 1px solid black;"
-              placeholder="Enter new password"
-              formControlName="newPassword"
-              class="form-control"
-              [maxlength]="20"
-              [minlength]="4"
-              [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }"
-            />
-            <div style="margin: -26px 0px 0px 450px;z-index: 99999;">
-              <div *ngIf="show; else elseblock">
-                <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
-              </div>
-              <ng-template #elseblock
-                ><i class="fa fa-eye-slash" (click)="password()"></i
-              ></ng-template>
+      <div class="form-group">
+        <label for="newPassword"
+          >New Password <span class="text-danger">*</span></label
+        >
+        <div style="display: grid; grid-template-columns: 5fr -0.1fr">
+          <input
+            [type]="show ? 'text' : 'password'"
+            style="border: 1px solid black"
+            placeholder="Enter new password"
+            formControlName="newPassword"
+            class="form-control"
+            [maxlength]="20"
+            [minlength]="4"
+            [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }"
+          />
+          <div style="margin: -26px 0px 0px 450px; z-index: 99999">
+            <div *ngIf="show; else elseblock">
+              <i class="fa fa-eye" (click)="password()" *ngIf="show"></i>
             </div>
-        <div></div>
-          <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
-            <div *ngIf="f.newPassword.errors.required" style="margin-left: 41px;">Password is required</div>
+            <ng-template #elseblock
+              ><i class="fa fa-eye-slash" (click)="password()"></i
+            ></ng-template>
+          </div>
+          <div></div>
+          <div
+            *ngIf="submitted && f.newPassword.errors"
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="f.newPassword.errors.required"
+              style="margin-left: 41px"
+            >
+              Password is required
+            </div>
           </div>
         </div>
-          </div>
-     <br>
-      <div class="form-group ">
-        <label for="confirmPassword">Confirm Password &nbsp;<span class="text-danger">*</span></label>
-         
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="confirmPassword"
+          >Confirm Password &nbsp;<span class="text-danger">*</span></label
+        >
+
         <input
           type="password"
-          style="border: 1px solid black;"
+          style="border: 1px solid black"
           formControlName="confirmPassword"
           placeholder="Enter again"
           class="form-control"
@@ -57,21 +87,31 @@ margin-top: -54px;" >
           [minlength]="4"
           [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
         />
-        
-      <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-        <div *ngIf="f.confirmPassword.errors.required" style="margin-left: 41px;">Password is required</div>
-      </div>
+
+        <div
+          *ngIf="submitted && f.confirmPassword.errors"
+          class="invalid-feedback"
+        >
+          <div
+            *ngIf="f.confirmPassword.errors.required"
+            style="margin-left: 41px"
+          >
+            Password is required
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
         <button
           [disabled]="loading"
-          class="btn btn-primary"
+          class="btn"
           style="
             margin-left: 35%;
             margin-top: 34px;
             transform: translate(-50%, -50%);
             padding: 4px 14px 4px 14px;
+            background-color: #156060;
+            color: #ffffff;
           "
         >
           <span
@@ -80,19 +120,20 @@ margin-top: -54px;" >
           ></span>
           <span class="fa-passwd-reset fa-stack">
             <i class="fa fa-undo fa-stack-2x"></i>
-            <i class="fa fa-lock" style="margin-left: 12px;"></i>
-        </span>
+            <i class="fa fa-lock" style="margin-left: 12px"></i>
+          </span>
           Reset
         </button>
 
-        <button type="button" class="btn btn-danger" routerLink="../login" style="padding: 8px 14px 8px 14px;
-        margin: 0px 0px 8px -36px;">
-            <i class="fa fa-times fa-lg" aria-hidden="true"></i> Cancel
+        <button
+          type="button"
+          class="btn btn-danger"
+          routerLink="../login"
+          style="padding: 8px 14px 8px 14px; margin: 0px 0px 8px -36px"
+        >
+          <i class="fa fa-times fa-lg" aria-hidden="true"></i> Cancel
         </button>
-        
-
       </div>
     </form>
   </div>
 </div>
-
