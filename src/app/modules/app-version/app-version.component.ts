@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { AppVersionService } from './app-version.service';
 
@@ -14,30 +15,34 @@ export class AppVersionComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   appVerList: Array<any> = [];
+  skipValue: string;
 
   constructor(private appService: AppVersionService, private httpService: HttpService, private modalService: NgbModal,
-    private fb: FormBuilder, config: NgbModalConfig) {
+    private fb: FormBuilder, config: NgbModalConfig, private toaster: ToastrService,) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
+    this.viewListOfAllVersion();
+  }
+
+  viewListOfAllVersion() {
     let postObj = { dataAccessDTO: this.httpService.dataAccessDTO }
     this.appService.listToGetAllAppVersions(postObj).subscribe((res: any) => {
       this.appVerList = res.responseObject;
       console.log(this.appVerList);
     });
-
-    this.createForm();
   }
 
   createForm() {
     this.appVerForm = this.fb.group({
       applicationVersion: ['', Validators.required],
-      applicationUrl: ['', Validators.required],
-      updateDet: ['', Validators.required]
-
+      applicationUrl: ['', [Validators.required, Validators.pattern(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)]],
+      updateDet: ['', Validators.required],
+      skippable: ['N', Validators.required],
     })
+
   }
 
   get f() {
@@ -45,6 +50,7 @@ export class AppVersionComponent implements OnInit {
   }
 
   createAppVersion(createAppVer) {
+    this.createForm();
     this.modalContent = '';
     this.modalReference = this.modalService.open(createAppVer, {
       windowClass: 'createAppVer',
@@ -87,6 +93,13 @@ export class AppVersionComponent implements OnInit {
 
   }
 
+  skippableOrNot(e) {
+    this.skipValue = e.target.value;
+    console.log(this.skipValue);
+
+
+  }
+
   saveAppVersions() {
 
     let postObj = {
@@ -94,7 +107,7 @@ export class AppVersionComponent implements OnInit {
       appVersionDto: {
         app_version_master_id: 0,
         app_version: this.appVerForm.value.applicationVersion,
-        skippable: "N",
+        skippable: this.appVerForm.value.skippable,
         update_details: this.appVerForm.value.updateDet,
         app_link: this.appVerForm.value.applicationUrl,
         created_on: null,
@@ -112,11 +125,73 @@ export class AppVersionComponent implements OnInit {
 
     this.appService.appVersionSave(postObj).subscribe((res: any) => {
       console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.appVerModalDismiss();
+        this.viewListOfAllVersion();
+      }
+      else {
+        this.showError(res.message);
+      }
+
     });
 
 
   }
 
+  delteAppVer(item) {
+
+    console.log(item);
+
+    let postObj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      appVersionDto: {
+        app_version_master_id: item.app_version_master_id,
+        app_version: item.app_version,
+        skippable: item.skippable,
+        update_details: item.update_details,
+        app_link: item.app_link,
+        created_on: null,
+        created_by: null,
+        active_flag: 'D',
+        updated_on: null,
+        updated_by: null,
+        deleted_on: null,
+        deleted_by: null
+      }
+    }
+
+    console.log(postObj);
+
+
+    this.appService.appVersionSave(postObj).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.viewListOfAllVersion();
+      }
+      else {
+        this.showError(res.message);
+      }
+
+    });
+
+  }
+
+  showSuccess(message) {
+    this.toaster.success(message, 'Application Version', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Application Version', {
+      timeOut: 3000,
+    });
+  }
+
 
 
 }
+
+

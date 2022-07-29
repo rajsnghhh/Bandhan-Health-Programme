@@ -4,7 +4,7 @@
 }
 
 .close {
-  margin-left: 290px;
+  margin-left: 430px;
 }
 
 .modal-content {
@@ -17,12 +17,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 130%;
-  height: 300px;
+  width: 180%;
+  height: 350px;
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;
   border: 1pxsolidrgba(0, 0, 0, .2);
   border-radius: 0.3rem;
   outline: 0;
+  margin-left: -170px
 }
