@@ -22,9 +22,9 @@
 
                                 <thead id="header-fixed">
                                     <tr>
-                                        <th>SL No</th>
-                                        <th>App Version</th>
-                                        <th>App URL</th>
+                                        <th style="width: 6%;">SL No</th>
+                                        <th style="width: 10%;">App Version</th>
+                                        <th style="width: 50%;">App URL</th>
                                         <th>App Details</th>
                                         <th>Action</th>
                                     </tr>
@@ -32,9 +32,9 @@
 
                                 <tbody>
                                     <tr *ngFor="let item of appVerList ; index as i">
-                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                        <td>{{item.app_version}} </td>
-                                        <td>{{item.app_link}}</td>
+                                        <td style="width: 6%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td style="width: 10%;" class="ellipse">{{item.app_version}} </td>
+                                        <td style="width: 50%;">{{item.app_link}}</td>
                                         <td> {{ item.update_details}}</td>
                                         <td><i class="fas fa-edit" title="Edit SS"></i>
                                             <i class="fas fa-trash" title="Delete SS" (click)="delteAppVer(item)"></i>
@@ -165,7 +165,8 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn btn-sm" (click)="saveAppVersions()">Save</button>
+                <button type="button" class=" btn btn-primary bttn btn-sm" (click)="saveAppVersions()"
+                    [disabled]="!checkFieldDisabled()">Save</button>
             </div>
         </div>
 

@@ -38,10 +38,12 @@ export class AppVersionComponent implements OnInit {
   createForm() {
     this.appVerForm = this.fb.group({
       applicationVersion: ['', Validators.required],
-      applicationUrl: ['', [Validators.required, Validators.pattern(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)]],
+      applicationUrl: ['https://play.google.com/store/apps/details?id=app.bandhan.bhp', [Validators.required, Validators.pattern(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)]],
       updateDet: ['', Validators.required],
       skippable: ['N', Validators.required],
     })
+
+    // this.appVerForm?.markAllAsTouched();
 
   }
 
@@ -176,6 +178,22 @@ export class AppVersionComponent implements OnInit {
 
     });
 
+  }
+
+  checkFieldDisabled() {
+    let flag = true;
+
+    if (!this.appVerForm.value.applicationVersion) {
+      flag = false;
+    } else if (!this.appVerForm.value.applicationUrl) {
+      flag = false;
+    } else if (!this.appVerForm.value.updateDet) {
+      flag = false;
+    } else if (this.f.applicationUrl.errors?.pattern) {
+      flag = false
+    }
+
+    return flag;
   }
 
   showSuccess(message) {
