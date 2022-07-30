@@ -89,7 +89,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
       if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
         this.getChartData();
       } else {
-        this.doughnutChart(familyInfoGraphData);
+        this.familyBarChart(familyInfoGraphData);
         this.barChart(familyInfoGraphData);
         this.loader = true;
       }
@@ -122,52 +122,129 @@ export class CoreComponent implements OnInit, AfterViewInit {
         , [totalBelow5Cumulative, totalBelow2Cumulative, totalChildPemCumulative, totalGirl14To18Cumulative]];
 
       localStorage.setItem('familyChildInfoGraphData', JSON.stringify(familyInfoGraphData));
-      this.doughnutChart(familyInfoGraphData);
+      this.familyBarChart(familyInfoGraphData);
       this.barChart(familyInfoGraphData);
       this.loader = true;
     });
   }
 
-  doughnutChart(value) {
+  // doughnutChart(value) {
+  //   this.canvas1 = this.mychart1?.nativeElement;
+  //   this.ctx1 = this.canvas1?.getContext('2d');
+  //   let label = value[0];
+  //   let a: Array<any> = ['General Family', 'PEM', 'LM', 'PW'];
+  //   let labels = [];
+  //   a.forEach(i => {
+  //     label.forEach(x => {
+  //       if (a.indexOf(i) == label.indexOf(x))
+  //         labels.push(i + ' ' + x + '%')
+  //     })
+  //   });
+  //   const doughnutdata = {
+  //     labels: labels,
+  //     datasets: [{
+  //       data: value[1],
+  //       backgroundColor: [
+  //         'rgb(75, 192, 192)',
+  //         'rgb(245, 57, 97)',
+  //         'rgb(20, 154, 245)',
+  //         'rgb(255, 189, 32)',
+
+  //       ],
+  //       hoverOffset: 4
+  //     }]
+  //   };
+
+  //   new Chart(this.ctx1, {
+  //     type: 'doughnut',
+  //     data: doughnutdata,
+  //     options: {
+  //       tooltips: {
+  //         callbacks: {
+  //           label: function (tooltipItem, data) {
+  //             let label1 = a[tooltipItem.index];
+  //             return label1 + ' : ' + data.datasets[0].data[tooltipItem.index];
+  //           }
+  //         }
+
+  //       },
+  //     }
+  //   });
+  // }
+
+  familyBarChart(value) {
     this.canvas1 = this.mychart1?.nativeElement;
     this.ctx1 = this.canvas1?.getContext('2d');
-    let label = value[0];
-    let a: Array<any> = ['General Family', 'PEM', 'LM', 'PW'];
-    let labels = [];
-    a.forEach(i => {
-      label.forEach(x => {
-        if (a.indexOf(i) == label.indexOf(x))
-          labels.push(i + ' ' + x + '%')
-      })
-    });
-    const doughnutdata = {
-      labels: labels,
+    let label: Array<any> = ['LM Family', 'PW Family', 'PEM Family'];
+    const bardata = {
+      labels: [''],
       datasets: [{
-        data: value[1],
-        backgroundColor: [
-          'rgb(75, 192, 192)',
-          'rgb(245, 57, 97)',
-          'rgb(20, 154, 245)',
-          'rgb(255, 189, 32)',
-
-        ],
-        hoverOffset: 4
-      }]
+        label: `LM Family (${value[1][2]})`,
+        yAxisID: 'lm',
+        data: [value[1][2]],
+        backgroundColor: "rgba(255, 159, 64, 0.5)",
+        borderColor: 'rgb(255, 159, 64)',
+        borderWidth: 2,
+        barPercentage: 0.8
+      }, {
+        label: `PW Family (${value[1][3]})`,
+        data: [value[1][3]],
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 2,
+        barPercentage: 0.8
+      }, {
+        label: `PEM Family (${value[1][1]})`,
+        yAxisID: 'pem',
+        data: [value[1][1]],
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: 'rgb(255, 99, 132)',
+        borderWidth: 2,
+        categoryPercentage: 1,
+        barPercentage: 0.6
+      }
+      ]
     };
-
+    debugger
     new Chart(this.ctx1, {
-      type: 'doughnut',
-      data: doughnutdata,
+      type: 'bar',
+      data: bardata,
       options: {
-        tooltips: {
-          callbacks: {
-            label: function (tooltipItem, data) {
-              let label1 = a[tooltipItem.index];
-              return label1 + ' : ' + data.datasets[0].data[tooltipItem.index];
-            }
-          }
-
+        scales: {
+          yAxes: [
+            {
+              id: 'lm',
+              type: 'linear',
+              position: 'left',
+              ticks: {
+                min: 0,
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'LM & PW Family Count.'
+              }
+            }, {
+              id: 'pem',
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                min: 0,
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'PEM Family Count.'
+              }
+            }]
         },
+        // tooltips: {
+        //   callbacks: {
+        //     label: function (tooltipItem, data) {
+        //       let label1 = label[tooltipItem.datasetIndex];
+        //       return label1 + ' : ' + data.datasets[0].data[tooltipItem.datasetIndex];
+        //     }
+        //   }
+
+        // }
       }
     });
   }
@@ -181,8 +258,8 @@ export class CoreComponent implements OnInit, AfterViewInit {
         label: `Child Below 5 Years (${value[2][0]})`,
         yAxisID: '5c',
         data: [value[2][0]],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: "rgba(255, 205, 86, 0.6)",
+        borderColor: 'rgb(255, 205, 86)',
         borderWidth: 2
       }, {
         label: `Child Below 2 Years (${value[2][1]})`,
@@ -200,8 +277,8 @@ export class CoreComponent implements OnInit, AfterViewInit {
         label: `Child PEM (${value[2][2]})`,
         yAxisID: 'cp',
         data: [value[2][2]],
-        backgroundColor: "rgba(255, 205, 86, 0.6)",
-        borderColor: 'rgb(255, 205, 86)',
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2,
         categoryPercentage: 1,
         barPercentage: 0.7
