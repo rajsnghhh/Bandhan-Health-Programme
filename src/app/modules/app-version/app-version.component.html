@@ -1,0 +1,175 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Application Version</h2>
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                        <i class="fas fa-plus-circle" style="cursor: pointer"
+                            (click)="createAppVersion(createAppVer)">&nbsp;Create New Version</i>
+                    </div>
+                </div>
+
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                <thead id="header-fixed">
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>App Version</th>
+                                        <th>App URL</th>
+                                        <th>App Details</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of appVerList ; index as i">
+                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td>{{item.app_version}} </td>
+                                        <td>{{item.app_link}}</td>
+                                        <td> {{ item.update_details}}</td>
+                                        <td><i class="fas fa-edit" title="Edit SS"></i>
+                                            <i class="fas fa-trash" title="Delete SS" (click)="delteAppVer(item)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #createAppVer>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h2 class="modal-title" id="modal-basic-title" style="color: #499;">Create New Version</h2>
+                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="editssData?.ssId">Edit SS</h3> -->
+                </div>
+
+                <div class="col-md-2">
+                    <span class="close" (click)="appVerModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <form class="form-signin" [formGroup]="appVerForm">
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="applicationVersion">Application Version:&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="like 1.1.8"
+                            formControlName="applicationVersion" maxlength="20" [ngClass]="{
+                          'is-invalid': f.applicationVersion.invalid && f.applicationVersion.touched,
+                          'is-valid':
+                            f.applicationVersion.valid &&
+                            (f.applicationVersion.dirty || f.applicationVersion.touched)
+                        }" />
+                        <div *ngIf="f.applicationVersion.errors" class="invalid-feedback">
+                            <div *ngIf="f.applicationVersion.errors.required">
+                                Application Version is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="applicationUrl">Application URL:&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="https://www.google.com"
+                            formControlName="applicationUrl" [ngClass]="{
+                      'is-invalid': f.applicationUrl.invalid && f.applicationUrl.touched,
+                      'is-valid':
+                        f.applicationUrl.valid &&
+                        (f.applicationUrl.dirty || f.applicationUrl.touched)
+                    }" />
+                        <div *ngIf="f.applicationUrl.errors" class="invalid-feedback">
+                            <div *ngIf="f.applicationUrl.errors.required">
+                                Please provide url
+                            </div>
+
+                            <div *ngIf="f.applicationUrl.errors.pattern">
+                                Please provide valid url
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="skippable">
+                            Skippable or Not ?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                        <div class="form-check-inline">
+                            <input class="form-check-input" name="skippable" type="radio" id="yes" value="Y"
+                                formControlName="skippable" (change)="skippableOrNot($event)" />
+                            <label class="form-check-label" for="">
+                                &nbsp;&nbsp;Yes</label>
+
+                            <div class="form-check-inline">
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" id="no" value="N"
+                                    formControlName="skippable" (change)="skippableOrNot($event)" [checked] />
+                                <label class="form-check-label" for="">
+                                    &nbsp;&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- </div> -->
+
+                    <!-- <div class="row"> -->
+
+                    <div class="form-group col-md-9">
+                        <label for="applicationUrl">Comments:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Enter new update details"
+                            formControlName="updateDet" [ngClass]="{
+                      'is-invalid': f.updateDet.invalid && f.updateDet.touched,
+                      'is-valid':
+                        f.updateDet.valid &&
+                        (f.updateDet.dirty || f.updateDet.touched)
+                    }" />
+                        <div *ngIf="f.updateDet.errors" class="invalid-feedback">
+                            <div *ngIf="f.updateDet.errors.required">
+                                Update Details is required
+                            </div>
+                            <div *ngIf="f.updateDet.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary bttn btn-sm" (click)="saveAppVersions()">Save</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</ng-template>

@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'remap-user-hh', loadChildren: () => import('./modules/remap-user-hh/remap-user-hh.module').then(m => m.RemapUserHhModule), canActivate: [AuthGuard] },
   { path: 'remap-user-ss', loadChildren: () => import('./modules/remap-user-ss/remap-user-ss.module').then(m => m.RemapUserSsModule), canActivate: [AuthGuard] },
   { path: 'close-baseline', loadChildren: () => import('./modules/close-baseline/close-baseline.module').then(m => m.CloseBaselineModule), canActivate: [AuthGuard] },
+  { path: 'app-version', loadChildren: () => import('./modules/app-version/app-version.module').then(m => m.AppVersionModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

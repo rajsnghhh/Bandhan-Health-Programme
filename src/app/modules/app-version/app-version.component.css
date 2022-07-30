@@ -1,0 +1,29 @@
+.fa-plus-circle {
+  color: #499;
+  font-size: 20px;
+}
+
+.close {
+  margin-left: 430px;
+}
+
+.modal-content {
+  height: 300px;
+  overflow-x: auto;
+  width: 750px;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 180%;
+  height: 350px;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1pxsolidrgba(0, 0, 0, .2);
+  border-radius: 0.3rem;
+  outline: 0;
+  margin-left: -170px
+}

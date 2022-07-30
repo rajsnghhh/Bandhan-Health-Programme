@@ -118,11 +118,11 @@ const environment = {
     // Development 
     // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
     //New Development Server
-    apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+    // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // New Test Server
-    // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+    apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
     // Training
     // apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
     // Staging
@@ -1920,14 +1920,16 @@ class CoreComponent {
         });
     }
     ngAfterViewInit() {
-        let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
-        if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
-            this.getChartData();
-        }
-        else {
-            this.doughnutChart(familyInfoGraphData);
-            this.barChart(familyInfoGraphData);
-            this.loader = true;
+        if (this.dashboardAccess == true) {
+            let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
+            if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
+                this.getChartData();
+            }
+            else {
+                this.doughnutChart(familyInfoGraphData);
+                this.barChart(familyInfoGraphData);
+                this.loader = true;
+            }
         }
     }
     getChartData() {
@@ -2181,6 +2183,7 @@ const routes = [
     { path: 'remap-user-hh', loadChildren: () => __webpack_require__.e(/*! import() | modules-remap-user-hh-remap-user-hh-module */ "modules-remap-user-hh-remap-user-hh-module").then(__webpack_require__.bind(null, /*! ./modules/remap-user-hh/remap-user-hh.module */ "jjFV")).then(m => m.RemapUserHhModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'remap-user-ss', loadChildren: () => __webpack_require__.e(/*! import() | modules-remap-user-ss-remap-user-ss-module */ "modules-remap-user-ss-remap-user-ss-module").then(__webpack_require__.bind(null, /*! ./modules/remap-user-ss/remap-user-ss.module */ "5riV")).then(m => m.RemapUserSsModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'close-baseline', loadChildren: () => Promise.all(/*! import() | modules-close-baseline-close-baseline-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~340fd73e"), __webpack_require__.e("modules-close-baseline-close-baseline-module")]).then(__webpack_require__.bind(null, /*! ./modules/close-baseline/close-baseline.module */ "iWkA")).then(m => m.CloseBaselineModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'app-version', loadChildren: () => __webpack_require__.e(/*! import() | modules-app-version-app-version-module */ "modules-app-version-app-version-module").then(__webpack_require__.bind(null, /*! ./modules/app-version/app-version.module */ "jM0E")).then(m => m.AppVersionModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {
