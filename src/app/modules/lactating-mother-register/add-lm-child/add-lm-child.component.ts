@@ -317,109 +317,116 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
 
   /* Depending on condition form is Save or Edit */
   onSave() {
-
-    if (!this.childBirthForm.value.firstVisitDate) {
-      this.showError('Please Enter First Visit Date');
-      return;
-    }
-
-    if (!this.childBirthForm.value.secondVisitDate) {
-      this.showError('Please Enter Second Visit Date');
-      return;
-    }
-
-    if (this.after6m == false) {
-      if (!this.childBirthForm.value.muacDate6) {
-        this.showError('Enter record date for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac6month) {
-        this.showError('Enter muac value for after 6 months');
-        return;
+    let muacDate = ['muacDate6', 'muacDate12', 'muacDate18', 'muacDate24'];
+    let muac = ['muac6month', 'muac12month', 'muac18month', 'muac24month'];
+    let range = (this.after24m == false) ? 3 : (this.after18m == false) ? 2 : (this.after12m == false) ? 1 : (this.after6m == false) ? 0 : -1;
+    if (range >= 0) {
+      for (let i = 0; i <= range; i++) {
+        if (!this.childBirthForm.get(muacDate[i]).value) {
+          let x = muacDate[i].length == 9 ? -1 : -2
+          this.showError(`Enter record date for after ${muacDate[i].slice(x)} months`);
+          return;
+        }
+        if (!this.childBirthForm.get(muac[i]).value) {
+          let x = muac[i].length == 10 ? 5 : 6
+          this.showError(`Enter muac value for after ${muac[i].slice(4, x)} months`);
+          return;
+        }
       }
     }
 
-    if (this.after12m == false) {
-      if (!this.childBirthForm.value.muacDate6) {
-        this.showError('Enter record date for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac6month) {
-        this.showError('Enter muac value for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muacDate12) {
-        this.showError('Enter record date for after 12 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac12month) {
-        this.showError('Enter muac value for after 12 months');
-        return;
-      }
-    }
+    // if (this.after6m == false) {
+    //   if (!this.childBirthForm.value.muacDate6) {
+    //     this.showError('Enter record date for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac6month) {
+    //     this.showError('Enter muac value for after 6 months');
+    //     return;
+    //   }
+    // }
 
-    if (this.after18m == false) {
-      if (!this.childBirthForm.value.muacDate6) {
-        this.showError('Enter record date for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac6month) {
-        this.showError('Enter muac value for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muacDate12) {
-        this.showError('Enter record date for after 12 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac12month) {
-        this.showError('Enter muac value for after 12 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muacDate18) {
-        this.showError('Enter record date for after 18 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac18month) {
-        this.showError('Enter muac value for after 18 months');
-        return;
-      }
-    }
+    // if (this.after12m == false) {
+    //   if (!this.childBirthForm.value.muacDate6) {
+    //     this.showError('Enter record date for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac6month) {
+    //     this.showError('Enter muac value for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muacDate12) {
+    //     this.showError('Enter record date for after 12 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac12month) {
+    //     this.showError('Enter muac value for after 12 months');
+    //     return;
+    //   }
+    // }
 
-    if (this.after24m == false) {
-      if (!this.childBirthForm.value.muacDate6) {
-        this.showError('Enter record date for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac6month) {
-        this.showError('Enter muac value for after 6 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muacDate12) {
-        this.showError('Enter record date for after 12 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac12month) {
-        this.showError('Enter muac value for after 12 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muacDate18) {
-        this.showError('Enter record date for after 18 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac18month) {
-        this.showError('Enter muac value for after 18 months');
-        return;
-      }
+    // if (this.after18m == false) {
+    //   if (!this.childBirthForm.value.muacDate6) {
+    //     this.showError('Enter record date for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac6month) {
+    //     this.showError('Enter muac value for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muacDate12) {
+    //     this.showError('Enter record date for after 12 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac12month) {
+    //     this.showError('Enter muac value for after 12 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muacDate18) {
+    //     this.showError('Enter record date for after 18 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac18month) {
+    //     this.showError('Enter muac value for after 18 months');
+    //     return;
+    //   }
+    // }
 
-      if (!this.childBirthForm.value.muacDate24) {
-        this.showError('Enter record date for after 24 months');
-        return;
-      }
-      if (!this.childBirthForm.value.muac24month) {
-        this.showError('Enter muac value for after 24 months');
-        return;
-      }
-    }
+    // if (this.after24m == false) {
+    //   if (!this.childBirthForm.value.muacDate6) {
+    //     this.showError('Enter record date for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac6month) {
+    //     this.showError('Enter muac value for after 6 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muacDate12) {
+    //     this.showError('Enter record date for after 12 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac12month) {
+    //     this.showError('Enter muac value for after 12 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muacDate18) {
+    //     this.showError('Enter record date for after 18 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac18month) {
+    //     this.showError('Enter muac value for after 18 months');
+    //     return;
+    //   }
+
+    //   if (!this.childBirthForm.value.muacDate24) {
+    //     this.showError('Enter record date for after 24 months');
+    //     return;
+    //   }
+    //   if (!this.childBirthForm.value.muac24month) {
+    //     this.showError('Enter muac value for after 24 months');
+    //     return;
+    //   }
+    // }
 
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
