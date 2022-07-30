@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { AppVersionService } from './app-version.service';
 
 @Component({
@@ -16,15 +17,39 @@ export class AppVersionComponent implements OnInit {
   modalReference: any;
   appVerList: Array<any> = [];
   skipValue: string;
+  editAppVerData: any;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  viewModalData: any;
 
   constructor(private appService: AppVersionService, private httpService: HttpService, private modalService: NgbModal,
-    private fb: FormBuilder, config: NgbModalConfig, private toaster: ToastrService,) {
+    private fb: FormBuilder, private sidebarService: SidebarService, private toaster: ToastrService, config: NgbModalConfig) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
     this.viewListOfAllVersion();
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Application Version')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+    console.log(this.createMode);
+
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Application Version')?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+    console.log(this.updateMode);
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Application Version')?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+    console.log(this.deleteMode);
   }
 
   viewListOfAllVersion() {
@@ -37,13 +62,15 @@ export class AppVersionComponent implements OnInit {
 
   createForm() {
     this.appVerForm = this.fb.group({
-      applicationVersion: ['', Validators.required],
-      applicationUrl: ['https://play.google.com/store/apps/details?id=app.bandhan.bhp', [Validators.required, Validators.pattern(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)]],
-      updateDet: ['', Validators.required],
-      skippable: ['N', Validators.required],
+      applicationVersion: [this.editAppVerData?.app_version ? this.editAppVerData?.app_version : '', Validators.required],
+      applicationUrl: [this.editAppVerData?.app_link ? this.editAppVerData?.app_link :
+        'https://play.google.com/store/apps/details?id=app.bandhan.bhp', [Validators.required,
+        Validators.pattern(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)]],
+      updateDet: [this.editAppVerData?.update_details ? this.editAppVerData?.update_details : '', Validators.required],
+      skippable: [this.editAppVerData?.skippable ? this.editAppVerData?.skippable : 'N', Validators.required],
     })
 
-    // this.appVerForm?.markAllAsTouched();
+    this.appVerForm?.markAllAsTouched();
 
   }
 
@@ -52,54 +79,34 @@ export class AppVersionComponent implements OnInit {
   }
 
   createAppVersion(createAppVer) {
+    console.log(this.editAppVerData?.app_version_master_id, 'this.editAppVerData?.app_version_master_id');
+    console.log(this.editAppVerData, 'createAppVerData');
     this.createForm();
     this.modalContent = '';
     this.modalReference = this.modalService.open(createAppVer, {
       windowClass: 'createAppVer',
     });
 
-    // console.log(this.editssData?.ssId, 'this.editssData?.ssIdcreate');
-    // console.log('branchId', this.branchId);
+  }
 
-    // let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
-
-    // this.ssService.blockGPVillOfBranch(obj).subscribe((res) => {
-    //   this.blockList = res.responseObject;
-    //   console.log(this.blockList, 'blockList');
-    //   this.changeBlock(this.editssData?.blockDto?.blockId);
-    //   this.changeGP(this.editssData?.gpDto?.gpId);
-    // })
-
-    // setTimeout(() => {
-    //   this.modalContent = '';
-    //   this.modalReference = this.modalService.open(createSS, {
-    //     windowClass: 'createMuac',
-    //   });
-    //   this.createSSForm();
-    // }, 1000);
-
-    // let obj2 = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
-
-    // this.staffLists();
-
+  editAppVersion(createAppVer, item) {
+    this.editAppVerData = item;
+    this.createAppVersion(createAppVer);
   }
 
   appVerModalDismiss() {
-    // if (this.editssData?.ssId) {
-    //   this.editssData = []
-    //   this.modalReference?.close();
-    // }
-    // else {
-    this.modalReference?.close();
-    // }
-
+    if (this.editAppVerData?.app_version_master_id) {
+      this.editAppVerData = []
+      this.modalReference?.close();
+    }
+    else {
+      this.modalReference?.close();
+    }
   }
 
   skippableOrNot(e) {
     this.skipValue = e.target.value;
     console.log(this.skipValue);
-
-
   }
 
   saveAppVersions() {
@@ -107,7 +114,7 @@ export class AppVersionComponent implements OnInit {
     let postObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       appVersionDto: {
-        app_version_master_id: 0,
+        app_version_master_id: this.editAppVerData?.app_version_master_id ? this.editAppVerData?.app_version_master_id : 0,
         app_version: this.appVerForm.value.applicationVersion,
         skippable: this.appVerForm.value.skippable,
         update_details: this.appVerForm.value.updateDet,
@@ -124,7 +131,6 @@ export class AppVersionComponent implements OnInit {
 
     console.log(postObj);
 
-
     this.appService.appVersionSave(postObj).subscribe((res: any) => {
       console.log(res);
       if (res.status == true) {
@@ -138,11 +144,9 @@ export class AppVersionComponent implements OnInit {
 
     });
 
-
   }
 
   delteAppVer(item) {
-
     console.log(item);
 
     let postObj = {
@@ -164,7 +168,6 @@ export class AppVersionComponent implements OnInit {
     }
 
     console.log(postObj);
-
 
     this.appService.appVersionSave(postObj).subscribe((res: any) => {
       console.log(res);
@@ -207,8 +210,6 @@ export class AppVersionComponent implements OnInit {
       timeOut: 3000,
     });
   }
-
-
 
 }
 
