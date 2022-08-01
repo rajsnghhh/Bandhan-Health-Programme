@@ -6,7 +6,7 @@
 
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Application Version</h2>
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end" *ngIf=" createMode">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createAppVersion(createAppVer)">&nbsp;Create New Version</i>
                     </div>
@@ -22,22 +22,28 @@
 
                                 <thead id="header-fixed">
                                     <tr>
-                                        <th>SL No</th>
-                                        <th>App Version</th>
-                                        <th>App URL</th>
-                                        <th>App Details</th>
-                                        <th>Action</th>
+                                        <th style="width: 5%;">SL No</th>
+                                        <th style="width: 20%;">App Version</th>
+                                        <th style="width: 55%;">App URL</th>
+                                        <!-- <th style="width: 15%;">App Details</th> -->
+                                        <th style="width: 10%;">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr *ngFor="let item of appVerList ; index as i">
-                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                        <td>{{item.app_version}} </td>
-                                        <td>{{item.app_link}}</td>
-                                        <td> {{ item.update_details}}</td>
-                                        <td><i class="fas fa-edit" title="Edit SS"></i>
-                                            <i class="fas fa-trash" title="Delete SS" (click)="delteAppVer(item)"></i>
+                                        <td style="width: 5%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td style="width: 20%;">{{item.app_version}} </td>
+                                        <td style="width: 55%;">{{item.app_link}}</td>
+                                        <!-- <td style="width: 15%;"> {{item.update_details}}</td> -->
+                                        <td *ngIf="item.active_flag == 'A'" style="width: 10%;"><i class="fas fa-edit"
+                                                title="Edit App Version" (click)="editAppVersion(createAppVer, item)"
+                                                *ngIf="updateMode"></i>
+                                            <i class="fas fa-trash" title="Close App Version"
+                                                (click)="delteAppVer(item)" *ngIf="deleteMode"></i>
+                                        </td>
+                                        <td *ngIf="item.active_flag == 'D'" style="color: #dc3545;width: 10%;"><b>Ver.
+                                                Closed </b>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -60,8 +66,10 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <h2 class="modal-title" id="modal-basic-title" style="color: #499;">Create New Version</h2>
-                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="editssData?.ssId">Edit SS</h3> -->
+                    <h2 class="modal-title" id="modal-basic-title" *ngIf="!editAppVerData?.app_version_master_id"
+                        style="color: #499;">Create Version</h2>
+                    <h2 class="modal-title" id="modal-basic-title" *ngIf="editAppVerData?.app_version_master_id"
+                        style="color: #499;">Edit Version</h2>
                 </div>
 
                 <div class="col-md-2">
@@ -104,11 +112,11 @@
                     }" />
                         <div *ngIf="f.applicationUrl.errors" class="invalid-feedback">
                             <div *ngIf="f.applicationUrl.errors.required">
-                                Please provide url
+                                Application url is required
                             </div>
 
                             <div *ngIf="f.applicationUrl.errors.pattern">
-                                Please provide valid url
+                                Application url is not valid
                             </div>
                         </div>
                     </div>
@@ -134,10 +142,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- </div> -->
-
-                    <!-- <div class="row"> -->
 
                     <div class="form-group col-md-9">
                         <label for="applicationUrl">Comments:&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -165,11 +169,11 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn btn-sm" (click)="saveAppVersions()">Save</button>
+                <button type="button" class=" btn btn-primary bttn btn-sm" (click)="saveAppVersions()"
+                    [disabled]="!checkFieldDisabled()">Save</button>
             </div>
         </div>
 
     </div>
-
 
 </ng-template>

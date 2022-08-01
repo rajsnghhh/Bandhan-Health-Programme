@@ -185,6 +185,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/close-baseline']);
     }
 
+    if (routeId == 208 || routeId == 209 || routeId == 210 || routeId == 211) {
+      this.router.navigate(['/app-version']);
+    }
+
   }
 
 
