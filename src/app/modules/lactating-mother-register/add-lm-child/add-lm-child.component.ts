@@ -215,10 +215,10 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       weight12month: ['', this.weightRange],
       weight18month: ['', this.weightRange],
       weight24month: ['', this.weightRange],
-      muac6month: ['', this.muacRange],
-      muac12month: ['', this.muacRange],
-      muac18month: ['', this.muacRange],
-      muac24month: ['', this.muacRange],
+      muac6month: [''],
+      muac12month: [''],
+      muac18month: [''],
+      muac24month: [''],
       firstVisitDate: [''],
       secondVisitDate: [''],
       checkChildDeath: [null],
@@ -334,7 +334,6 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         }
       }
     }
-
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
         let Dto = {
@@ -486,6 +485,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           }
         });
       }
+    } else {
+      this.showError('From is invalid');
     }
   }
 

@@ -182,8 +182,8 @@ export class PwViewComponent implements OnInit {
       miscarriage: [''],
       abortion: [''],
       actualDeliveryDate: [''],
-      liveStill: [''],
-      deliveryPlace: [''],
+      liveStill: [null],
+      deliveryPlace: [null],
       womenDeath: ['N'],
       deathTime: [null],
       deathReason: [null],
@@ -230,14 +230,19 @@ export class PwViewComponent implements OnInit {
     if (value == 'N') {
       this.deliveryStatusNo = true;
       this.deliveryStatusYes = false;
+      this.pwRegisterForm.controls['deliveryNo'].enable();
       this.pwRegisterForm.get('deliveryNo').setValidators(Validators.required);
       this.pwRegisterForm.get('actualDeliveryDate').clearAsyncValidators();
-      this.pwRegisterForm.get('liveStill').clearAsyncValidators();
-      this.pwRegisterForm.get('deliveryPlace').clearAsyncValidators();
+      this.pwRegisterForm.get('liveStill').clearValidators();
+      this.pwRegisterForm.get('deliveryPlace').clearValidators();
+      this.pwRegisterForm.controls['actualDeliveryDate'].disable();
+      this.pwRegisterForm.controls['liveStill'].disable();
+      this.pwRegisterForm.controls['deliveryPlace'].disable();
     } else if (value == 'Y') {
+      this.pwRegisterForm.get('deliveryNo').clearValidators();
+      this.pwRegisterForm.controls['deliveryNo'].disable();
       this.deliveryStatusYes = true;
       this.deliveryStatusNo = false;
-      this.pwRegisterForm.get('deliveryNo').clearAsyncValidators();
       this.pwRegisterForm.get('miscarriage').clearAsyncValidators();
       this.pwRegisterForm.get('abortion').clearAsyncValidators();
       this.pwRegisterForm.controls['miscarriage'].disable();
@@ -347,12 +352,12 @@ export class PwViewComponent implements OnInit {
     if (this.pwRegisterForm.controls['initialWeight'].value == null || this.pwRegisterForm.controls['lastMenstrualDate'].value == null ||
       this.pwRegisterForm.controls['expectedDeliveryDate'].value == null || this.pwRegisterForm.controls['beforeDeliveryWeight'].value == null ||
       this.pwRegisterForm.controls['ancComplete'].value == 'N' || this.pwRegisterForm.controls['ancComplete'].value == null) {
-      this.pwRegisterForm.controls['actualDeliveryDate'].disable();
-      this.pwRegisterForm.controls['liveStill'].disable();
-      this.pwRegisterForm.controls['deliveryPlace'].disable();
       this.pwRegisterForm.get('actualDeliveryDate').clearAsyncValidators();
       this.pwRegisterForm.get('liveStill').clearAsyncValidators();
       this.pwRegisterForm.get('deliveryPlace').clearAsyncValidators();
+      this.pwRegisterForm.controls['actualDeliveryDate'].disable();
+      this.pwRegisterForm.controls['liveStill'].disable();
+      this.pwRegisterForm.controls['deliveryPlace'].disable();
       this.pwRegisterForm.controls['actualDeliveryDate'].reset();
       this.pwRegisterForm.controls['liveStill'].reset();
       this.pwRegisterForm.controls['deliveryPlace'].reset();
@@ -373,6 +378,8 @@ export class PwViewComponent implements OnInit {
     // } else {
     //   this.pwRegisterForm.controls['liveStill'].enable();
     //   this.pwRegisterForm.controls['deliveryPlace'].enable();
+    //   this.pwRegisterForm.get('liveStill').setValidators(Validators.required);
+    //   this.pwRegisterForm.get('deliveryPlace').setValidators(Validators.required);
     // }
   }
 
@@ -488,7 +495,7 @@ export class PwViewComponent implements OnInit {
 
       }
     } else {
-      this.showError('From is invalid');
+      this.showError('Please fill-up the form correctly ');
     }
 
 

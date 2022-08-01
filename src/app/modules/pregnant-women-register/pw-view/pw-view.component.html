@@ -27,7 +27,16 @@
                 <label for="lastMenstrualDate">Last Menstrual Period (LMP):&nbsp;<span class="text-danger">*&nbsp;</span></label>
                 <input type="date" class="form-control" formControlName="lastMenstrualDate" placeholder="dd-mm-yyyy"
                 (change)="restrictAncDate($event.target.value)" (change)="enableActualDelivery()" (change)="enableDeliveryStatusNo()"
-                (keydown)="restrictTypeOfDate()" [max]="today"/>
+                (keydown)="restrictTypeOfDate()" [max]="today" 
+                [ngClass]="{
+                  'is-invalid': f.lastMenstrualDate.invalid && f.lastMenstrualDate.touched,
+                  'is-valid':
+                    f.lastMenstrualDate.valid &&
+                    (f.lastMenstrualDate.dirty || f.lastMenstrualDate.touched)
+                }"/>
+                <div *ngIf="f.lastMenstrualDate.errors" class="invalid-feedback">
+                  <div *ngIf="f.lastMenstrualDate.errors.required">Last Menstrual Period is required</div>
+                </div>
             </div>
             <div class="form-group col-md">
                 <label for="expectedDeliveryDate">Expected Date of Delivery (EDD):</label>
@@ -116,13 +125,18 @@
         <label>Reason :&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
         <label>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" value="miscarriage" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
+            <input type="radio" value="miscarriage" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"
+            [ngClass]="{ 'is-invalid': submitted && f.deliveryNo.errors?.required}"> &nbsp;
               <span>Miscarriage</span>
           </label> &nbsp;&nbsp;&nbsp;
           <label>
-            <input type="radio" value="abortion" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"> &nbsp;
+            <input type="radio" value="abortion" formControlName="deliveryNo" (click)="checkDeliveryStatusNo($event.target.value)"
+            [ngClass]="{ 'is-invalid': submitted && f.deliveryNo.errors?.required}"> &nbsp;
               <span>Abortion</span>
           </label>
+          <div *ngIf="f.deliveryNo.errors" class="invalid-radio">
+            <div *ngIf="f.deliveryNo.errors.required">&nbsp;&nbsp;&nbsp;Reason selection is required</div>
+          </div>
     </div>
     <div class="form-group col-md" *ngIf="miscarriage"> 
             <label for="miscarriage">Miscarriage:&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -167,25 +181,35 @@
             <label>Livebirth or Stillbirth:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" value="Live" formControlName="liveStill"> &nbsp;
+                <input type="radio" value="Live" formControlName="liveStill"
+                [ngClass]="{ 'is-invalid': submitted && f.liveStill.errors?.required}"> &nbsp;
                   <span>Live</span>
               </label> &nbsp;&nbsp;&nbsp;
               <label>
-                <input type="radio" value="Still" formControlName="liveStill"> &nbsp;
+                <input type="radio" value="Still" formControlName="liveStill"
+                [ngClass]="{ 'is-invalid': submitted && f.liveStill.errors?.required}"> &nbsp;
                   <span>Still</span>
               </label>
+              <div *ngIf="f.liveStill.errors" class="invalid-radio">
+                <div *ngIf="f.liveStill.errors.required">&nbsp;&nbsp;&nbsp;Live / Still selection is required</div>
+              </div>
         </div>
         <div class="form-group col-md">
             <label>Place of Delivery :&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" value="Home" formControlName="deliveryPlace"> &nbsp;
+                <input type="radio" value="Home" formControlName="deliveryPlace"
+                [ngClass]="{ 'is-invalid': submitted && f.deliveryPlace.errors?.required}"> &nbsp;
                   <span>Home</span>
               </label> &nbsp;&nbsp;&nbsp;
               <label>
-                <input type="radio" value="Institution" formControlName="deliveryPlace"> &nbsp;
+                <input type="radio" value="Institution" formControlName="deliveryPlace"
+                [ngClass]="{ 'is-invalid': submitted && f.deliveryPlace.errors?.required}"> &nbsp;
                   <span>Institution</span>
               </label>
+              <div *ngIf="f.deliveryPlace.errors" class="invalid-radio">
+                <div *ngIf="f.deliveryPlace.errors.required">&nbsp;&nbsp;&nbsp;Delivery place selection is required</div>
+              </div>
         </div>
     </div>
 <br>
