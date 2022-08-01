@@ -56,7 +56,7 @@
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  width: 220px !important;
+  width: 200px !important;
   transform: translate(0, 15px) !important;
   background-color: white;
   color: #828BB2;
@@ -82,5 +82,5 @@
 
 .card-header {
   color: white;
-  background-color: #95d0d0;
+  background-color: #499;
 }
