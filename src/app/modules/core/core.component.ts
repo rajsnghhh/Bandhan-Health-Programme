@@ -175,7 +175,6 @@ export class CoreComponent implements OnInit, AfterViewInit {
   familyBarChart(value) {
     this.canvas1 = this.mychart1?.nativeElement;
     this.ctx1 = this.canvas1?.getContext('2d');
-    let label: Array<any> = ['LM Family', 'PW Family', 'PEM Family'];
     const bardata = {
       labels: [''],
       datasets: [{
@@ -205,7 +204,6 @@ export class CoreComponent implements OnInit, AfterViewInit {
       }
       ]
     };
-    debugger
     new Chart(this.ctx1, {
       type: 'bar',
       data: bardata,
@@ -236,15 +234,14 @@ export class CoreComponent implements OnInit, AfterViewInit {
               }
             }]
         },
-        // tooltips: {
-        //   callbacks: {
-        //     label: function (tooltipItem, data) {
-        //       let label1 = label[tooltipItem.datasetIndex];
-        //       return label1 + ' : ' + data.datasets[0].data[tooltipItem.datasetIndex];
-        //     }
-        //   }
-
-        // }
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              let label1 = data.datasets[tooltipItem.datasetIndex].label.slice(0, (data.datasets[tooltipItem.datasetIndex].label.indexOf('(')));
+              return label1 + ' :  ' + data.datasets[tooltipItem.datasetIndex].data[0];
+            }
+          }
+        }
       }
     });
   }
@@ -315,6 +312,14 @@ export class CoreComponent implements OnInit, AfterViewInit {
                 labelString: 'Child PEM Count.'
               }
             }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              let label1 = data.datasets[tooltipItem.datasetIndex].label.slice(0, (data.datasets[tooltipItem.datasetIndex].label.indexOf('(')));
+              return label1 + ' :  ' + data.datasets[tooltipItem.datasetIndex].data[0];
+            }
+          }
         }
       }
     });

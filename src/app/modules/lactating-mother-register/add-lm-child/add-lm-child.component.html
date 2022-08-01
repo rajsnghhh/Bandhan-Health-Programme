@@ -161,7 +161,7 @@
                         (f.muac6month.dirty || f.muac6month.touched)
                     }" />
               <div *ngIf="f.muac6month.errors" class="invalid-feedback">
-                <div *ngIf="f.muacDate6.errors?.required">MUAC is required</div>
+                <div *ngIf="f.muac6month.errors?.required">MUAC is required</div>
                 <div *ngIf="f.muac6month.errors.notInMuacRange">
                   MUAC should be 1 to 30 cm
                 </div>

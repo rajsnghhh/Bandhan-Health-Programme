@@ -152,7 +152,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after12m = true;
       this.after18m = true;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.required);
+      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
     }
     else if (year >= 1 && year < 2 && month < 6) {
@@ -160,8 +160,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after12m = false;
       this.after18m = true;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.required);
-      this.childBirthForm.get('muac12month').setValidators(Validators.required);
+      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
       this.childBirthForm.get('muacDate12').setValidators(Validators.required);
     }
@@ -170,9 +170,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after12m = false;
       this.after18m = false;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.required);
-      this.childBirthForm.get('muac12month').setValidators(Validators.required);
-      this.childBirthForm.get('muac18month').setValidators(Validators.required);
+      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
       this.childBirthForm.get('muacDate12').setValidators(Validators.required);
       this.childBirthForm.get('muacDate18').setValidators(Validators.required);
@@ -182,10 +182,10 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after12m = false;
       this.after18m = false;
       this.after24m = false;
-      this.childBirthForm.get('muac6month').setValidators(Validators.required);
-      this.childBirthForm.get('muac12month').setValidators(Validators.required);
-      this.childBirthForm.get('muac18month').setValidators(Validators.required);
-      this.childBirthForm.get('muac24month').setValidators(Validators.required);
+      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('muac24month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muacDate6').setValidators(Validators.required);
       this.childBirthForm.get('muacDate12').setValidators(Validators.required);
       this.childBirthForm.get('muacDate18').setValidators(Validators.required);
@@ -215,10 +215,10 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       weight12month: ['', this.weightRange],
       weight18month: ['', this.weightRange],
       weight24month: ['', this.weightRange],
-      muac6month: ['', Validators.compose([this.muacRange])],
-      muac12month: ['', Validators.compose([this.muacRange])],
-      muac18month: ['', Validators.compose([this.muacRange])],
-      muac24month: ['', Validators.compose([this.muacRange])],
+      muac6month: ['', this.muacRange],
+      muac12month: ['', this.muacRange],
+      muac18month: ['', this.muacRange],
+      muac24month: ['', this.muacRange],
       firstVisitDate: [''],
       secondVisitDate: [''],
       checkChildDeath: [null],
@@ -248,8 +248,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     }
   }
   /* MUAC range between 1 to 30, validation */
-  muacRange(controls: AbstractControl): { [key: string]: any } | null {
-    if (controls.value >= 1 && controls.value <= 30 || controls.value == null) {
+  muacRange(controls: AbstractControl): { [key: string]: any } {
+    if (controls.value >= 1 && controls.value <= 30) {
       return null;
     }
     return { 'notInMuacRange': true };
@@ -334,99 +334,6 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         }
       }
     }
-
-    // if (this.after6m == false) {
-    //   if (!this.childBirthForm.value.muacDate6) {
-    //     this.showError('Enter record date for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac6month) {
-    //     this.showError('Enter muac value for after 6 months');
-    //     return;
-    //   }
-    // }
-
-    // if (this.after12m == false) {
-    //   if (!this.childBirthForm.value.muacDate6) {
-    //     this.showError('Enter record date for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac6month) {
-    //     this.showError('Enter muac value for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muacDate12) {
-    //     this.showError('Enter record date for after 12 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac12month) {
-    //     this.showError('Enter muac value for after 12 months');
-    //     return;
-    //   }
-    // }
-
-    // if (this.after18m == false) {
-    //   if (!this.childBirthForm.value.muacDate6) {
-    //     this.showError('Enter record date for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac6month) {
-    //     this.showError('Enter muac value for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muacDate12) {
-    //     this.showError('Enter record date for after 12 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac12month) {
-    //     this.showError('Enter muac value for after 12 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muacDate18) {
-    //     this.showError('Enter record date for after 18 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac18month) {
-    //     this.showError('Enter muac value for after 18 months');
-    //     return;
-    //   }
-    // }
-
-    // if (this.after24m == false) {
-    //   if (!this.childBirthForm.value.muacDate6) {
-    //     this.showError('Enter record date for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac6month) {
-    //     this.showError('Enter muac value for after 6 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muacDate12) {
-    //     this.showError('Enter record date for after 12 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac12month) {
-    //     this.showError('Enter muac value for after 12 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muacDate18) {
-    //     this.showError('Enter record date for after 18 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac18month) {
-    //     this.showError('Enter muac value for after 18 months');
-    //     return;
-    //   }
-
-    //   if (!this.childBirthForm.value.muacDate24) {
-    //     this.showError('Enter record date for after 24 months');
-    //     return;
-    //   }
-    //   if (!this.childBirthForm.value.muac24month) {
-    //     this.showError('Enter muac value for after 24 months');
-    //     return;
-    //   }
-    // }
 
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
