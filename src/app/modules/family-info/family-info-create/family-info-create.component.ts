@@ -62,7 +62,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   childSetData: any;
   activeChild: any = [];
   isDisabled: boolean = false;
-  
+
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal,
@@ -73,6 +73,7 @@ export class FamilyInfoCreateComponent implements OnInit {
     this.routes.queryParams.subscribe(params => {
       this.famData = params;
       console.log(this.famData, 'famdata');
+      console.log(this.famData?.famid, 'familyki id');
     });
 
     if (this.famData.famid) {
