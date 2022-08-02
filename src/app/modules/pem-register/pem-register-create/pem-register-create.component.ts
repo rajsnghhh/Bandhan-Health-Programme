@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -273,14 +273,14 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.pemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : ''],
       birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : ''],
-      height: ['', Validators.required],
-      weight: ['', Validators.required],
+      height: ['', Validators.compose([Validators.required, this.heightRange])],
+      weight: ['', Validators.compose([Validators.required, this.weightRange])],
       breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
       breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
       breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
       breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
       pemDate: ['', Validators.required],
-      muac: ['', Validators.required],
+      muac: ['', Validators.compose([Validators.required, this.muacRange])],
       immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
       immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
       diarrhea: [item?.latestPemCounsellingExperiencedDiarrhea ? item?.latestPemCounsellingExperiencedDiarrhea : '', Validators.required],
@@ -654,14 +654,14 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     this.editPemForm = this.fb.group({
       delivery: [item?.childBasicStatusDto?.placeOfDelivery ? item?.childBasicStatusDto?.placeOfDelivery : null],
       birthweight: [item?.childBasicStatusDto?.birthWeight ? item?.childBasicStatusDto?.birthWeight : null],
-      height: [item?.muacData?.height ? item?.muacData?.height : '', Validators.required],
-      weight: [item?.muacData?.weight ? item?.muacData?.weight : '', Validators.required],
+      height: [item?.muacData?.height ? item?.muacData?.height : '', Validators.compose([Validators.required, this.heightRange])],
+      weight: [item?.muacData?.weight ? item?.muacData?.weight : '', Validators.compose([Validators.required, this.weightRange])],
       breastfeeding6: [item?.childBasicStatusDto?.ebfUpto6Complete ? item?.childBasicStatusDto?.ebfUpto6Complete : ''],
       breastfeeding12: [item?.childBasicStatusDto?.ebfUpto12Complete ? item?.childBasicStatusDto?.ebfUpto12Complete : ''],
       breastfeeding18: [item?.childBasicStatusDto?.ebfUpto18Complete ? item?.childBasicStatusDto?.ebfUpto18Complete : ''],
       breastfeeding24: [item?.childBasicStatusDto?.ebfUpto24Complete ? item?.childBasicStatusDto?.ebfUpto24Complete : ''],
       pemDate: [item?.pemDate, Validators.required],
-      muac: [item?.muacData?.muac ? item?.muacData?.muac : '', Validators.required],
+      muac: [item?.muacData?.muac ? item?.muacData?.muac : '', Validators.compose([Validators.required, this.muacRange])],
       immunization12: [item?.childBasicStatusDto?.primaryImmunizationUpto12Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto12Completed : ''],
       immunization24: [item?.childBasicStatusDto?.primaryImmunizationUpto24Completed ? item?.childBasicStatusDto?.primaryImmunizationUpto24Completed : ''],
       diarrhea: [item?.experiencedDiarrhea ? item?.experiencedDiarrhea : '', Validators.required],
@@ -787,6 +787,36 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     })
 
   }
+
+  /* MUAC range between 1 to 30, validation */
+  muacRange(controls: AbstractControl): { [key: string]: any } {
+    if (controls.value >= 1 && controls.value <= 30) {
+      return null;
+    }
+    return { 'notInMuacRange': true };
+  }
+  /* weight range between 0 to 25, validation */
+  weightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
+      return null;
+    }
+    return { 'notInWeightRange': true };
+  }
+  /* Birth Weight range between 0 to 9, validation */
+  birthWeightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 0 && controls.value <= 9 || controls.value == null) {
+      return null;
+    }
+    return { 'notInBirthWeightRange': true };
+  }
+  /* Height range between 10 to 180, validation */
+  heightRange(controls: AbstractControl): { [key: string]: any } | null {
+    if (controls.value >= 10 && controls.value <= 180 || controls.value == null || controls.value == '') {
+      return null;
+    }
+    return { 'notInHeightRange': true };
+  }
+
 
   deletePEMData(item, i) {
     console.log(item);

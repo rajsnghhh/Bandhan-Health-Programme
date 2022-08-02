@@ -154,7 +154,7 @@ function AddLmChildComponent_div_92_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r6.f.muacDate6.errors == null ? null : ctx_r6.f.muacDate6.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r6.f.muac6month.errors == null ? null : ctx_r6.f.muac6month.errors.required);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r6.f.muac6month.errors.notInMuacRange);
 } }
@@ -496,7 +496,7 @@ class AddLmChildComponent {
             this.after12m = true;
             this.after18m = true;
             this.after24m = true;
-            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
+            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
             this.childBirthForm.get('muacDate6').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
         }
         else if (year >= 1 && year < 2 && month < 6) {
@@ -504,8 +504,8 @@ class AddLmChildComponent {
             this.after12m = false;
             this.after18m = true;
             this.after24m = true;
-            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
+            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
             this.childBirthForm.get('muacDate6').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
             this.childBirthForm.get('muacDate12').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
         }
@@ -514,9 +514,9 @@ class AddLmChildComponent {
             this.after12m = false;
             this.after18m = false;
             this.after24m = true;
-            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
+            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
             this.childBirthForm.get('muacDate6').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
             this.childBirthForm.get('muacDate12').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
             this.childBirthForm.get('muacDate18').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
@@ -526,10 +526,10 @@ class AddLmChildComponent {
             this.after12m = false;
             this.after18m = false;
             this.after24m = false;
-            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
-            this.childBirthForm.get('muac24month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
+            this.childBirthForm.get('muac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
+            this.childBirthForm.get('muac24month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, this.muacRange]));
             this.childBirthForm.get('muacDate6').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
             this.childBirthForm.get('muacDate12').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
             this.childBirthForm.get('muacDate18').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
@@ -558,10 +558,10 @@ class AddLmChildComponent {
             weight12month: ['', this.weightRange],
             weight18month: ['', this.weightRange],
             weight24month: ['', this.weightRange],
-            muac6month: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([this.muacRange])],
-            muac12month: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([this.muacRange])],
-            muac18month: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([this.muacRange])],
-            muac24month: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([this.muacRange])],
+            muac6month: ['', this.muacRange],
+            muac12month: ['', this.muacRange],
+            muac18month: ['', this.muacRange],
+            muac24month: ['', this.muacRange],
             firstVisitDate: [''],
             secondVisitDate: [''],
             checkChildDeath: [null],
@@ -591,7 +591,7 @@ class AddLmChildComponent {
     }
     /* MUAC range between 1 to 30, validation */
     muacRange(controls) {
-        if (controls.value >= 1 && controls.value <= 30 || controls.value == null) {
+        if (controls.value >= 1 && controls.value <= 30) {
             return null;
         }
         return { 'notInMuacRange': true };
@@ -674,94 +674,6 @@ class AddLmChildComponent {
                 }
             }
         }
-        // if (this.after6m == false) {
-        //   if (!this.childBirthForm.value.muacDate6) {
-        //     this.showError('Enter record date for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac6month) {
-        //     this.showError('Enter muac value for after 6 months');
-        //     return;
-        //   }
-        // }
-        // if (this.after12m == false) {
-        //   if (!this.childBirthForm.value.muacDate6) {
-        //     this.showError('Enter record date for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac6month) {
-        //     this.showError('Enter muac value for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate12) {
-        //     this.showError('Enter record date for after 12 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac12month) {
-        //     this.showError('Enter muac value for after 12 months');
-        //     return;
-        //   }
-        // }
-        // if (this.after18m == false) {
-        //   if (!this.childBirthForm.value.muacDate6) {
-        //     this.showError('Enter record date for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac6month) {
-        //     this.showError('Enter muac value for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate12) {
-        //     this.showError('Enter record date for after 12 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac12month) {
-        //     this.showError('Enter muac value for after 12 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate18) {
-        //     this.showError('Enter record date for after 18 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac18month) {
-        //     this.showError('Enter muac value for after 18 months');
-        //     return;
-        //   }
-        // }
-        // if (this.after24m == false) {
-        //   if (!this.childBirthForm.value.muacDate6) {
-        //     this.showError('Enter record date for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac6month) {
-        //     this.showError('Enter muac value for after 6 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate12) {
-        //     this.showError('Enter record date for after 12 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac12month) {
-        //     this.showError('Enter muac value for after 12 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate18) {
-        //     this.showError('Enter record date for after 18 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac18month) {
-        //     this.showError('Enter muac value for after 18 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muacDate24) {
-        //     this.showError('Enter record date for after 24 months');
-        //     return;
-        //   }
-        //   if (!this.childBirthForm.value.muac24month) {
-        //     this.showError('Enter muac value for after 24 months');
-        //     return;
-        //   }
-        // }
         if (this.childBirthForm.valid) {
             if (this.data.editMode == false) {
                 let Dto = {

@@ -1085,8 +1085,10 @@ class FamilyInfoCreateComponent {
     }
     ngOnInit() {
         this.routes.queryParams.subscribe(params => {
+            var _a;
             this.famData = params;
             console.log(this.famData, 'famdata');
+            console.log((_a = this.famData) === null || _a === void 0 ? void 0 : _a.famid, 'familyki id');
         });
         if (this.famData.famid) {
             console.log(this.famData, 'adds');
@@ -2287,7 +2289,7 @@ FamilyInfoCreateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "N" || (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "NA");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "N" || (ctx.moreFamData == null ? null : ctx.moreFamData.pregnantWoman) == "NA" || ctx.famData.famid == undefined);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](30);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.haveChildren === "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);

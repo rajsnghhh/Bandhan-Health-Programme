@@ -1005,9 +1005,9 @@ function DailyActivityRegisterComponent_ng_template_40_Template(rf, ctx) { if (r
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](23);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx_r6.darViewChildList);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.indexOf("HCO")) != -1 || (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.indexOf("TL")) != -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.includes("HCO")) != -1 || (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.includes("TL")) != -1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.indexOf("HCO")) == -1 || (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.indexOf("TL")) == -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.includes("HCO")) == -1 || (ctx_r6.roleAccess == null ? null : ctx_r6.roleAccess.includes("TL")) == -1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](7);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx_r6.visitData);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);

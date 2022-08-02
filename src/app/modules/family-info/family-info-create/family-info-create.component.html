@@ -287,7 +287,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md" *ngIf="moreFamData?.pregnantWoman=='N' || moreFamData?.pregnantWoman=='NA'">
+                        <div class="form-group col-md"
+                            *ngIf="moreFamData?.pregnantWoman=='N' || moreFamData?.pregnantWoman=='NA' || famData.famid == undefined ">
                             <label for="pregnancy">Are you pregnant now?
                                 :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" formControlName="pregnancy" id="pregnancy" [ngClass]="{ 'is-invalid': f.pregnancy.invalid && f.pregnancy.touched,

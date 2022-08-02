@@ -112,9 +112,9 @@
                                     <tr>
                                         <th style="width: 4%;">SL<br>No</th>
                                         <th style="width: 10%;">Family No.</th>
-                                        <th style="width: 10%;">Mother Name</th>
+                                        <th style="width: 15%;">Mother Name</th>
                                         <th style="width: 20%;">Child Name</th>
-                                        <th style="width: 25%;">Age</th>
+                                        <th style="width: 20%;">Age</th>
                                         <th style="width: 10%;">Current<br>Status</th>
                                         <th>PEM Register<br> Data Entry</th>
                                         <th *ngIf="createMode">Add PEM</th>
@@ -127,7 +127,7 @@
                                         *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                         <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                         <td>{{pem.familyNumber}}</td>
-                                        <td>{{pem.firstName}}</td>
+                                        <td>{{pem.firstName}} {{pem.middleName}} {{pem.lastName}}</td>
                                         <td>{{pem.childName}}</td>
                                         <td>{{pem.childAge}}</td>
                                         <td class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
