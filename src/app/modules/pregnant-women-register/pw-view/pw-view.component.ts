@@ -399,6 +399,12 @@ export class PwViewComponent implements OnInit {
   onSave() {
     console.log(this.pwRegisterForm)
     this.pwRegisterForm.markAllAsTouched();
+
+    if (this.pwRegisterForm.get('delivery').value == 'Y' && this.pwRegisterForm.get('actualDeliveryDate').value == null) {
+      this.showError('Please fill-up Actual Date of Delivery ');
+      return;
+    }
+
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {
         let Dto = {
