@@ -372,15 +372,15 @@ export class PwViewComponent implements OnInit {
   }
 
   enableliveStillDelivery() {
-    // if (this.pwRegisterForm.controls['actualDeliveryDate'].value == null) {
-    //   this.pwRegisterForm.controls['liveStill'].disable();
-    //   this.pwRegisterForm.controls['deliveryPlace'].disable();
-    // } else {
-    //   this.pwRegisterForm.controls['liveStill'].enable();
-    //   this.pwRegisterForm.controls['deliveryPlace'].enable();
-    //   this.pwRegisterForm.get('liveStill').setValidators(Validators.required);
-    //   this.pwRegisterForm.get('deliveryPlace').setValidators(Validators.required);
-    // }
+    if (this.pwRegisterForm.controls['actualDeliveryDate'].value == null) {
+      this.pwRegisterForm.controls['liveStill'].disable();
+      this.pwRegisterForm.controls['deliveryPlace'].disable();
+    } else {
+      this.pwRegisterForm.controls['liveStill'].enable();
+      this.pwRegisterForm.controls['deliveryPlace'].enable();
+      this.pwRegisterForm.get('liveStill').setValidators(Validators.required);
+      this.pwRegisterForm.get('deliveryPlace').setValidators(Validators.required);
+    }
   }
 
   checkMotherDeath(value) {
@@ -498,7 +498,6 @@ export class PwViewComponent implements OnInit {
           this.dialogRef.close();
           this.showError('Error')
         });
-
       }
     } else {
       this.showError('Please fill-up the form correctly ');
