@@ -43,9 +43,13 @@ export class PwStatusComponent implements OnInit {
         pregnantWomanStatus: this.pwStatusForm.value.pregnantStatus
       }
       console.log(Dto);
-      this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
-        this.dialogRef.close();
-        this.showSuccess('Success');
+      this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res: any) => {
+        if (res.status) {
+          this.dialogRef.close();
+          this.showSuccess('Success');
+        } else {
+          this.showError(res.message);
+        }
       }, error => {
         this.dialogRef.close();
         this.showError('Error')

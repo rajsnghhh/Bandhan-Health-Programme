@@ -40,9 +40,11 @@ export class SinglePwListComponent implements OnInit {
     this.data.singlePregnantWomenList.pregnantWomanRegisterDetailList.forEach((item) => {
       this.pregnantWomanRegisterDetailList.push({
         "abortion": item.abortion,
-        "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.lastMenstrualPeriod == null)
+        "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.abortion == null) ? (item.miscarriage == null) ? (item.lastMenstrualPeriod == null)
           ? '-'
-          : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(2)) + " Month")
+          : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(1)) + " Month")
+          : 'Miscarriage'
+          : 'Abortion'
           : item.actualDateOfDelivery,
         "antenatalCheckup": item.antenatalCheckup,
         "delivery": item.delivery,
@@ -92,9 +94,11 @@ export class SinglePwListComponent implements OnInit {
       res?.responseObject?.pregnantWomanList.find(x => x.familyDetailId == this.data.id)?.pregnantWomanRegisterDetailList.forEach((item) => {
         this.pregnantWomanRegisterDetailList.push({
           "abortion": item.abortion,
-          "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.lastMenstrualPeriod == null)
+          "actualDateOfDelivery": (item.actualDateOfDelivery == null) ? (item.abortion == null) ? (item.miscarriage == null) ? (item.lastMenstrualPeriod == null)
             ? '-'
-            : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(2)) + " Month")
+            : ((moment(new Date(moment(new Date()).format('YYYY-MM-DD'))).diff(new Date(item.lastMenstrualPeriod), 'months', true).toFixed(1)) + " Month")
+            : 'Miscarriage'
+            : 'Abortion'
             : item.actualDateOfDelivery,
           "antenatalCheckup": item.antenatalCheckup,
           "delivery": item.delivery,
@@ -183,10 +187,14 @@ export class SinglePwListComponent implements OnInit {
     }
     if (i === (this.pregnantWomanRegisterDetailList.length - 1)) {
       this.confirmationDialogService.confirm('', 'Do you want to make as wrong entry ?').then(() => {
-        this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res) => {
-          this.dialogRef.close();
-          this.showSuccess('Delete');
-          this.getPregnantWomenList(this.data.villageMasterId);
+        this.http.post(`${this.httpService.baseURL}pwr/updateFamilyPregnantWomanDetail`, Dto).subscribe((res: any) => {
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Delete');
+            this.getPregnantWomenList(this.data.villageMasterId);
+          } else {
+            this.showError(res.message);
+          }
         })
       }).catch(() => '');
     } else {

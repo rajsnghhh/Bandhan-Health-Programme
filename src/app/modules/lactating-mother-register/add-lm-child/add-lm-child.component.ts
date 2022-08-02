@@ -334,7 +334,6 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         }
       }
     }
-
     if (this.childBirthForm.valid) {
       if (this.data.editMode == false) {
         let Dto = {
@@ -486,6 +485,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           }
         });
       }
+    } else {
+      this.showError('From is invalid');
     }
   }
 

@@ -30,3 +30,7 @@
   display: flex;
   justify-content: left;
 }
+
+.invalid-radio{
+  color: red;
+}
