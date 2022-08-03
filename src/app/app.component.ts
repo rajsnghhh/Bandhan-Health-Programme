@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordComponent } from './login/change-password/change-password.component';
 import { LoginService } from './login/login.service';
 import { User } from './login/user';
 import { BaselineSurveyService } from './modules/baseline-survey/baseline-survey.service';
@@ -16,8 +18,9 @@ export class AppComponent {
   user: User;
 
   constructor(public validationService: ValidationService, private accountService: LoginService,
-    private confirmationDialogService: ConfirmationDialogService,private baselineService: BaselineSurveyService
-    ) {
+    private confirmationDialogService: ConfirmationDialogService, private baselineService: BaselineSurveyService,
+    public dialog: MatDialog,
+  ) {
     this.accountService.user.subscribe((x) => { this.user = x; });
     console.log(this.user, 'appComponent')
   }
@@ -25,6 +28,17 @@ export class AppComponent {
   fullscreenMethod(data) {
     this.fullscreenData = data;
     this.validationService.val = this.fullscreenData;
+  }
+
+  openChangePassword() {
+    const dialogRef = this.dialog.open(ChangePasswordComponent, {
+      width: '500px',
+      height: '450px',
+      data: {
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   logout() {
@@ -37,7 +51,7 @@ export class AppComponent {
       )
 
       .catch(() => '');
-      
+
   }
 
 }

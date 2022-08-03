@@ -7,12 +7,14 @@ import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './login.component';
 import { ResetComponent } from './reset/reset.component';
 import { LoaderModule } from '../modules/shared/loader/loader.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     LoginComponent,
-    ResetComponent
+    ResetComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
