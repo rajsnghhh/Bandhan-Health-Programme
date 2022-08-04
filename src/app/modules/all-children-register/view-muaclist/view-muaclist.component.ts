@@ -91,9 +91,13 @@ export class ViewMuaclistComponent implements OnInit {
     }
 
     this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
-      this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
-        this.viewMuacChildList();
-        this.showSuccess('Delete');
+      this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res: any) => {
+        if (res.status) {
+          this.viewMuacChildList();
+          this.showSuccess('Delete');
+        } else {
+          this.showError(res.message);
+        }
       })
     }).catch(() => '');
   }
@@ -104,6 +108,12 @@ export class ViewMuaclistComponent implements OnInit {
 
   showSuccess(message) {
     this.toaster.success(message, 'Child MUAC delete', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Error', {
       timeOut: 3000,
     });
   }

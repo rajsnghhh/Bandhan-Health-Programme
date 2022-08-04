@@ -35,6 +35,7 @@ export class AppComponent {
       width: '500px',
       height: '450px',
       data: {
+        userId: this.user.responseObject.userdetailDTO.userId
       }
     });
     dialogRef.afterClosed().subscribe(result => {

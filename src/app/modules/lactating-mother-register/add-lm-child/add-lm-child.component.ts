@@ -401,7 +401,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         console.log(Dto, 'reqAdd')
         this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
           console.log(res, 'responseAdd');
-          if (res.status == true) {
+          if (res.status) {
             this.showSuccess(res.message);
             this.dialogRef.close();
           }
@@ -476,7 +476,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
           console.log(res, 'responseedit');
 
-          if (res.status == true) {
+          if (res.status) {
             this.showSuccess(res.message);
             this.dialogRef.close();
           }

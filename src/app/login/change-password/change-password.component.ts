@@ -14,10 +14,8 @@ import { ValidationService } from 'src/app/modules/shared/services/validation.se
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   loading = false;
-  submitted = false;
-  show: boolean = false;
-  loader: boolean = true;
-  // formBuilder: any;
+  showOldPassword: boolean = false;
+  showNewPassword: boolean = false;
 
   constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
@@ -42,26 +40,46 @@ export class ChangePasswordComponent implements OnInit {
 
 
   onSubmit() {
-    this.submitted = true;
-    let newPassword = this.changePasswordForm.get('newPassword').value;
-    let confirmPassword = this.changePasswordForm.get('confirmPassword').value;
-
-
-
+    let Dto = {
+      userId: this.data?.userId,
+      inputPassword: this.changePasswordForm.value.oldPassword,
+      newPassword: this.changePasswordForm.value.newPassword
+    }
+    if (this.changePasswordForm.value.newPassword == this.changePasswordForm.value.confirmPassword) {
+      this.http.post(`${this.httpService.baseURL}user/changePassword`, Dto)
+        .subscribe((res: any) => {
+          if (res.status) {
+            this.showSuccess('Success');
+            this.dialogRef.close();
+          } else {
+            this.showError(res.message);
+          }
+        },
+          error => {
+            this.showError('Error');
+            this.dialogRef.close();
+          });
+    } else {
+      this.checkBothPasswordSame('Error');
+    }
   }
 
-  password() {
-    this.show = !this.show;
+  showHideOldPassword() {
+    this.showOldPassword = !this.showOldPassword;
+  }
+
+  showHideNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
   }
 
   showError(message) {
-    this.toaster.error(message, 'Error in password reset', {
+    this.toaster.error(message, 'Error in password change', {
       timeOut: 4000,
     });
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Password reset successful', {
+    this.toaster.success(message, 'Password change successful', {
       timeOut: 3000,
     });
   }

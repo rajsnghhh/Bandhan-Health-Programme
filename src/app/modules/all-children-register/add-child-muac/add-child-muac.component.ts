@@ -141,9 +141,13 @@ export class AddChildMuacComponent implements OnInit {
 
       console.log(addDto);
       if (this.campDate && this.campNotPresent || this.muacForm.value.muacCampNo == null) {
-        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
-          this.dialogRef.close();
-          this.showSuccess('Success');
+        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res: any) => {
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.showError(res.message);
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')
@@ -169,9 +173,13 @@ export class AddChildMuacComponent implements OnInit {
       console.log(editDto);
 
       if (this.muacForm.valid) {
-        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res) => {
-          this.dialogRef.close();
-          this.showSuccess('Success');
+        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res: any) => {
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.showError(res.message);
+          }
         }, error => {
           this.dialogRef.close();
           this.showError('Error')

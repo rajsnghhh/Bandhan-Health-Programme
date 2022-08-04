@@ -32,7 +32,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
   percentagePemCumulative: any;
   percentageLmCumulative: any;
   percentagePwCumulative: any;
-  dashboardAccess: boolean;
+  // dashboardAccess: boolean;
 
   constructor(private httpService: HttpService, public dialog: MatDialog,
     private http: HttpClient, private toaster: ToastrService,) { }
@@ -40,7 +40,7 @@ export class CoreComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem('user'));
     console.log(user)
-    this.dashboardAccess = (user.responseObject.RoledetailDTO.roleShortName == 'PM') ? true : false;
+    // this.dashboardAccess = (user.responseObject.RoledetailDTO.roleShortName == 'PM') ? true : false;
 
     this.http.post(`${this.httpService.baseURL}report/getGeographicalOutreach`, this.Dto).subscribe((res: any) => {
       let donorName: Array<any> = [];
@@ -83,17 +83,17 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.dashboardAccess == true) {
-      let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
+    // if (this.dashboardAccess == true) {
+    let familyInfoGraphData = JSON.parse(localStorage.getItem('familyChildInfoGraphData'));
 
-      if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
-        this.getChartData();
-      } else {
-        this.familyBarChart(familyInfoGraphData);
-        this.barChart(familyInfoGraphData);
-        this.loader = true;
-      }
+    if (familyInfoGraphData == null || familyInfoGraphData.length == 0) {
+      this.getChartData();
+    } else {
+      this.familyBarChart(familyInfoGraphData);
+      this.barChart(familyInfoGraphData);
+      this.loader = true;
     }
+    // }
   }
 
   getChartData() {
