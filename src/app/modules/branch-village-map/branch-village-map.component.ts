@@ -44,6 +44,7 @@ export class BranchVillageMapComponent implements OnInit {
   };
   role: any;
   createMode: boolean;
+  checks = false;
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
@@ -257,11 +258,32 @@ export class BranchVillageMapComponent implements OnInit {
         this.checkMapDataPushPop.branchId = this.branchId,
         this.checkMapDataPushPop.villageIdList.push({ villageId: villId });
     } else {
+      // document.getElementById("flexCheckDefaults").checked = false;
       var i = this.checkMapDataPushPop.villageIdList.findIndex(list => list.villageId == villId);
       this.checkMapDataPushPop.villageIdList.splice(i, 1);
     }
     console.log(this.checkMapDataPushPop, 'checkMapDataPushPop');
 
+  }
+
+  selectAll(e) {
+    if (e.target.checked == true) {
+      this.checkMapDataPushPop.villageIdList = []
+      this.checks = true;
+      // document.getElementById("flexCheckDefault").checked = true;
+      this.unmappedVillageList.forEach((item) => {
+        var tt = item.villageMasterId;
+        this.mapVillCheck(e, tt);
+      })
+
+    } else {
+      this.checks = false;
+      this.unmappedVillageList.forEach((item) => {
+        var tt = item.villageMasterId;
+        this.mapVillCheck(e, tt);
+      })
+
+    }
   }
 
   saveMapVill() {

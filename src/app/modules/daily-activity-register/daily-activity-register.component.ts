@@ -81,7 +81,17 @@ export class DailyActivityRegisterComponent implements OnInit {
           if (res.sessionDTO.status == true) {
             this.villagesOfBranch = res.responseObject;
           }
-        })
+        });
+
+        let Dato = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          branchId: res.branchId
+        }
+
+        this.dailyActivityService.hcoListOfBranch(Dato).subscribe((res: any) => {
+          this.hcoList = res.responseObject;
+          console.log(this.hcoList, 'hcoList');
+        });
       }
     });
 
@@ -458,14 +468,12 @@ export class DailyActivityRegisterComponent implements OnInit {
       chng = item.visitedWithSS
     }
 
-    var ssid;
-    if (this.changeSS == 'Y') {
-      ssid = this.sidebarService.swasthyaSahayikaId;
-    }
 
-    if (this.changeSS == 'N') {
-      ssid = null;
-    }
+
+    // var ssid;
+    // if (this.changeSS == 'Y') {
+    //   ssid = this.sidebarService.swasthyaSahayikaId;
+    // }
 
     const newArrayOfObj = item.darChildList.map(({
       childId: childDetailId,
@@ -483,7 +491,7 @@ export class DailyActivityRegisterComponent implements OnInit {
       familyId: item.familyId,
       visitDate: item.darVisitDate,
       visitedWithSS: chng,
-      ssId: ssid ? ssid : ssid,
+      ssId: this.editForm.value.sahayika ? this.editForm.value.sahayika : this.sidebarService.swasthyaSahayikaId,
       childList: newArrayOfObj,
       latitude: item.latitude,
       longitude: item.longitude,
@@ -494,7 +502,18 @@ export class DailyActivityRegisterComponent implements OnInit {
       hasChildPresentInPem: item.hasChildPresentInPem
     }
 
+
     console.log(obj);
+    if (obj.visitedWithSS == 'Y') {
+      if (!obj.ssId) {
+        this.showError('Please select name of ss ');
+        return;
+      }
+    }
+
+    if (this.changeSS == 'N') {
+      obj.ssId = null;
+    }
 
     this.dailyActivityService.saveEditDAR(obj).subscribe((res) => {
       console.log(res);

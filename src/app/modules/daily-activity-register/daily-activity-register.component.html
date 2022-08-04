@@ -43,14 +43,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-md" *ngIf="roleAccess != 'HCO'">
                             <label for="hco">HCO/ HCOI/ TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeHco($event.target.value)" formControlName="hco"
                                 id="hco" [ngClass]="{
-                              'is-invalid': l.hco.invalid && l.hco.touched,
-                              'is-valid':
-                                l.hco.valid && (l.hco.dirty || l.hco.touched)
-                            }">
+                                  'is-invalid': l.hco.invalid && l.hco.touched,
+                                  'is-valid':
+                                    l.hco.valid && (l.hco.dirty || l.hco.touched)
+                                }">
                                 <option value="">-- Select Role --</option>
                                 <option *ngFor="let hco of hcoList" value='{{hco.user_id}}'>
                                     {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
@@ -61,9 +65,7 @@
                                 <div *ngIf="l.hco.errors.required">Role selection is required</div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
                         <div class="form-group col-md">
                             <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="date" class="form-control" formControlName="fromDate"
@@ -91,6 +93,8 @@
                             </div>
 
                         </div>
+
+
 
                     </div>
                     <div class="white_box_tittle list_header">
