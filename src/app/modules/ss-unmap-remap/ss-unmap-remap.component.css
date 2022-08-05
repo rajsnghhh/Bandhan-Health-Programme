@@ -28,7 +28,7 @@ table thead, tbody tr {
 
 /* Optional: show position indicator in colour */
 ::-webkit-scrollbar-thumb {
-    background: rgb(158, 1, 1);
+    background: grey;
 }
 
 

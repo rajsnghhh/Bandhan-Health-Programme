@@ -7,7 +7,7 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Create Swasthya Sahayika</h2>
 
-                    <div class="box_right d-flex lms_block col-md-6" *ngIf="ssForm.value.branch">
+                    <div class="box_right d-flex lms_block col-md-6" *ngIf="branchId || branchID">
                         <div class="serach_field_2">
                             <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
@@ -23,7 +23,7 @@
                 </div>
 
                 <form class="form-signin" [formGroup]="ssForm">
-                    <div class="row">
+                    <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
@@ -55,8 +55,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group col-md" *ngIf="ssForm.value.branch">
+                    <div class="row">
+                        <div class="form-group col-md" *ngIf="branchId || branchID">
                             <label for="staffWiseList">Staff Wise SS List:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="staffWiseSSList($event.target.value)"
@@ -77,7 +79,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="ssForm.value.branch && createMode"
+                        <div class="form-group col-md" *ngIf="(branchID || branchId) && createMode"
                             style="display: flex; justify-content:flex-end">
                             <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
                         </div>
@@ -99,7 +101,7 @@
                                             <th style="width: 10%;">Mobile</th>
                                             <th style="width: 17%;">Village/ Gram <br>Sansad/ Locality</th>
                                             <th style="width: 15%;">Staff In<br> Charge</th>
-                                            <th >User<br> Active</th>
+                                            <th>User<br> Active</th>
                                             <th *ngIf="updateMode || deleteMode">Action</th>
                                         </tr>
                                     </thead>

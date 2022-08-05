@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,6 +29,7 @@ export class SsSetupComponent implements OnInit {
   modalReference: any;
   branchId: any;
   blockList: Array<any> = [];
+  villagesOfBranch: Array<any> = [];
   gpList: Array<any> = [];
   villList: Array<any> = [];
   staffList: Array<any> = [];
@@ -39,9 +41,11 @@ export class SsSetupComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   role: any;
+  regionBranchHide: boolean;
+  branchID: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
-    private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal,
+    private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal, private http: HttpClient,
     private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngDoCheck(): void {
@@ -53,10 +57,31 @@ export class SsSetupComponent implements OnInit {
     console.log(this.role);
     this.createForm();
 
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    this.ssService.listOfRegionsOfUser(obj).subscribe((res) => {
-      this.regionList = res.responseObject;
-      console.log(this.regionList);
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.branchID = res.branchId;
+
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let Dto = {
+          dataAccessDTO: {
+            userId: dataAccessDTO.userName,
+            userName: dataAccessDTO.userId,
+          },
+          branchId: res.branchId
+        }
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        });
+
+        this.ssLists();
+        this.staffLists();
+      }
     });
 
     this.createMode = this.sidebarService.subMenuList
@@ -74,6 +99,8 @@ export class SsSetupComponent implements OnInit {
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 177)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
+
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   ssModalDismiss() {
@@ -138,7 +165,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   ssLists() {
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId ? this.branchId : this.branchID };
     this.ssService.listOfswasthyasahayika(obj).subscribe((res) => {
       this.ssList = res.responseObject?.ssDtoList;
       console.log(this.ssList);
@@ -152,7 +179,7 @@ export class SsSetupComponent implements OnInit {
   }
 
   staffLists() {
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId ? this.branchId : this.branchID }
 
     this.ssService.staffListOfBranch(obj).subscribe((res) => {
       this.staffList = res.responseObject;
@@ -177,7 +204,7 @@ export class SsSetupComponent implements OnInit {
     console.log(this.editssData?.ssId, 'this.editssData?.ssIdcreate');
     console.log('branchId', this.branchId);
 
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId ? this.branchId : this.branchID }
 
     this.ssService.blockGPVillOfBranch(obj).subscribe((res) => {
       this.blockList = res.responseObject;
@@ -194,7 +221,7 @@ export class SsSetupComponent implements OnInit {
       this.createSSForm();
     }, 1000);
 
-    let obj2 = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId }
+    let obj2 = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId ? this.branchId : this.branchID }
 
     this.staffLists();
 

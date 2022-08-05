@@ -398,6 +398,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   saveAddChild() {
     this.childDetails.childInfo.forEach(a => {
       a.familyDetailId = this.familyID
+      a.childName = this.validationService.camelize(a.childName.trim());
     })
 
     this.childDetails.childInfo.forEach((item) => {
@@ -489,6 +490,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
     let firstCopyOFEFD = JSON.stringify(this.existingFamilyDetails);
     this.childDetails.childInfo.forEach((item, index) => {
       let ageCheck = item.dob
+      item.childName = this.validationService.camelize(item.childName.trim());
       if (ageCheck) {
         // today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10);
         const convertAge = new Date(ageCheck);
@@ -546,6 +548,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         return;
       }
     }
+
+
 
     const postBody = {
       childDetailDTOList: [
@@ -609,6 +613,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       this.existingChildList = this.existingFamilyDetails.childDetailDTOList;
       return;
     }
+
+    console.log(postBody, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+
 
     this.childService.saveChild(postBody).subscribe((response: any) => {
       console.log(response, 'response');

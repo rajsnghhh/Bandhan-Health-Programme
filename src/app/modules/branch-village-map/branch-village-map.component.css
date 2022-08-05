@@ -4,7 +4,7 @@
 
 .modal-content {
   height: 430px;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   width: 750px;
   margin-left: -90px;
 }
@@ -20,4 +20,58 @@
   background-color: #499;
   color: #FFFFFF;
   font-family: "Rajdhani", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  /* Remove scrollbar space */
+  height: 8px;
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+::-webkit-scrollbar-thumb {
+  width: 30px;
+  /* Remove scrollbar space */
+  height: 30px;
+  border-radius: 10px;
+}
+
+/* Optional: show position indicator in colour */
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
+table tbody {
+  display: block;
+  height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+table thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.QA_tableFull {
+  margin-left: 890px;
+}
+
+.QA_tableHalf {
+  margin-left: 720px;
+}
+
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom-right-radius: calc(0.3rem - 1px);
+  border-bottom-left-radius: calc(0.3rem - 1px);
+  margin-top: -140px;
 }

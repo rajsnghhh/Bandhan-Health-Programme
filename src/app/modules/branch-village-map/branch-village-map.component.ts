@@ -1,9 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { BranchVillageMapService } from './branch-village-map.service';
 
@@ -44,11 +46,26 @@ export class BranchVillageMapComponent implements OnInit {
   };
   role: any;
   createMode: boolean;
-  checks = false;
+  newArrayOfObj: Array<any> = [];
+  checkedAllData = false;
+  regionBranchHide: boolean;
+  villagesOfBranch: Array<any> = [];
+  branchID: any;
+  branchNAme: any;
+  districtNAme: any;
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
-    private sidebarService: SidebarService) { }
+    private sidebarService: SidebarService, private http: HttpClient, private validationService: ValidationService,
+    config: NgbModalConfig) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
     this.role = this.sidebarService.RoleDTOName;
@@ -56,10 +73,41 @@ export class BranchVillageMapComponent implements OnInit {
 
     this.createForm();
 
-    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
-    this.branchVillMapService.listOfRegionsOfUser(obj).subscribe((res) => {
-      this.regionList = res.responseObject;
-      console.log(this.regionList);
+    this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.branchID = res.branchId;
+      this.branchNAme = res.branchName;
+      this.districtNAme = res.districtName
+      console.log(res, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
+
+      if (res.regionBranchHide) {
+        this.regionList = res.region;
+        this.regionBranchHide = res.regionBranchHide;
+      } else {
+        let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
+        let Dto = {
+          dataAccessDTO: {
+            userId: dataAccessDTO.userName,
+            userName: dataAccessDTO.userId,
+          },
+          branchId: res.branchId
+        }
+        this.regionBranchHide = res.regionBranchHide;
+        this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          if (res.sessionDTO.status == true) {
+            this.villagesOfBranch = res.responseObject;
+          }
+        });
+
+        let Dtos = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          branchId: res.branchId
+        }
+        this.branchVillMapService.flatListVillagesOfBranch(Dtos).subscribe((res) => {
+          this.mappedVillageList = res.responseObject;
+          console.log(this.mappedVillageList, 'mappedVillageList');
+        });
+      }
     });
 
     this.createMode = this.sidebarService.subMenuList
@@ -67,6 +115,7 @@ export class BranchVillageMapComponent implements OnInit {
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 57)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
+    this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
   changeRegion(regionId) {
@@ -127,7 +176,6 @@ export class BranchVillageMapComponent implements OnInit {
       region: ['', Validators.required],
       branch: ['', Validators.required]
     });
-
   }
 
   get f() {
@@ -145,7 +193,6 @@ export class BranchVillageMapComponent implements OnInit {
   }
 
   mapVillage(mapVill) {
-
     this.modalContent = '';
     this.modalReference = this.modalService.open(mapVill, {
       windowClass: 'mapVill',
@@ -153,10 +200,7 @@ export class BranchVillageMapComponent implements OnInit {
     this.mapVillForms(mapVill);
 
     // Api call for viewing state list
-    let obj = {
-      dataAccessDTO: this.httpService.dataAccessDTO
-    }
-
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO }
     this.branchVillMapService.getStateList(obj).subscribe((res) => {
       this.stateList = res.responseObject.stateList;
       console.log(this.stateList);
@@ -165,11 +209,7 @@ export class BranchVillageMapComponent implements OnInit {
 
   changeState(stateId) {
 
-    let obj = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      stateId: stateId
-    }
-
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, stateId: stateId }
     this.branchVillMapService.getDistrictAndBlockList(obj).subscribe((res) => {
       this.districtList = res.responseObject.stateWiseDistrictList;
       console.log(this.districtList);
@@ -178,13 +218,17 @@ export class BranchVillageMapComponent implements OnInit {
     this.mapVillForm.controls.district.setValue('');
     this.mapVillForm.controls.block.setValue('');
     this.mapVillForm.controls.gp.setValue('');
-    this.unmappedVillageList = [];
+    this.newArrayOfObj = [];
     this.checkMapDataPushPop.villageIdList = [];
+    const input = document.getElementById('flexCheckDefaults') as HTMLInputElement | null;
+    if (input != null) {
+      input.checked = false;
+    }
     if (this.mapVillForm.value.state == '') {
       this.mapVillForm.controls.district.setValue('');
       this.mapVillForm.controls.block.setValue('');
       this.mapVillForm.controls.gp.setValue('');
-      this.unmappedVillageList = [];
+      this.newArrayOfObj = [];
       this.checkMapDataPushPop.villageIdList = [];
     }
 
@@ -198,13 +242,14 @@ export class BranchVillageMapComponent implements OnInit {
 
     this.mapVillForm.controls.block.setValue('');
     this.mapVillForm.controls.gp.setValue('');
-    this.unmappedVillageList = [];
+    this.newArrayOfObj = [];
     this.checkMapDataPushPop.villageIdList = [];
-
+    const input = document.getElementById('flexCheckDefaults') as HTMLInputElement | null;
+    if (input != null) { input.checked = false }
     if (this.mapVillForm.value.district == '') {
       this.mapVillForm.controls.block.setValue('');
       this.mapVillForm.controls.gp.setValue('');
-      this.unmappedVillageList = [];
+      this.newArrayOfObj = [];
       this.checkMapDataPushPop.villageIdList = [];
     }
   }
@@ -215,11 +260,13 @@ export class BranchVillageMapComponent implements OnInit {
     this.gpList = this.blockList.find(gp => gp.blockMasterId == blockId)?.gpDtoList;
     console.log(this.gpList);
     this.mapVillForm.controls.gp.setValue('');
-    this.unmappedVillageList = [];
+    this.newArrayOfObj = [];
     this.checkMapDataPushPop.villageIdList = [];
+    const input = document.getElementById('flexCheckDefaults') as HTMLInputElement | null;
+    if (input != null) { input.checked = false }
     if (this.mapVillForm.value.block == '') {
       this.mapVillForm.controls.gp.setValue('');
-      this.unmappedVillageList = [];
+      this.newArrayOfObj = [];
       this.checkMapDataPushPop.villageIdList = [];
     }
   }
@@ -230,13 +277,25 @@ export class BranchVillageMapComponent implements OnInit {
     let obj = { dataAccessDTO: this.httpService.dataAccessDTO, gpMunicipalId: GPID };
     this.branchVillMapService.getUnmappedVillagesOfGP(obj).subscribe((res) => {
       this.unmappedVillageList = res.responseObject;
+
+      this.newArrayOfObj = this.unmappedVillageList?.map(({
+        isChecked = false,
+        ...rest
+      }) => ({
+        isChecked,
+        ...rest
+      }));
+
       console.log(this.unmappedVillageList);
+      console.log(this.newArrayOfObj, 'newArrayOfObj');
     });
 
-    this.unmappedVillageList = [];
+    this.newArrayOfObj = [];
+    this.checkedAllData = false;
     this.checkMapDataPushPop.villageIdList = [];
     if (this.mapVillForm.value.gp == '') {
-      this.unmappedVillageList = [];
+      this.newArrayOfObj = [];
+      this.checkedAllData = false;
       this.checkMapDataPushPop.villageIdList = [];
     }
 
@@ -248,42 +307,79 @@ export class BranchVillageMapComponent implements OnInit {
 
   branchVillModalDismiss() {
     this.modalReference?.close();
-    this.unmappedVillageList = [];
+    this.newArrayOfObj = [];
   }
 
-  mapVillCheck(e, villId) {
+  mapVillCheck(e, i) {
+    this.checkedAllData = false;
     var checkboxData = e.target.checked;
+    this.checkMapDataPushPop.villageIdList = []
+
     if (checkboxData) {
-      this.checkMapDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
-        this.checkMapDataPushPop.branchId = this.branchId,
-        this.checkMapDataPushPop.villageIdList.push({ villageId: villId });
+
+      this.newArrayOfObj[i].isChecked = true;
+      var data = this.newArrayOfObj.filter(it => it.isChecked == true)
+      if (data.length != this.newArrayOfObj.length) {
+        this.checkedAllData = false
+      } else {
+        this.checkedAllData = true
+      }
+      console.log(this.newArrayOfObj, 'Checked');
     } else {
-      // document.getElementById("flexCheckDefaults").checked = false;
-      var i = this.checkMapDataPushPop.villageIdList.findIndex(list => list.villageId == villId);
-      this.checkMapDataPushPop.villageIdList.splice(i, 1);
+      this.newArrayOfObj[i].isChecked = false
+      var data = this.newArrayOfObj.filter(it => it.isChecked == true)
+      if (data.length != this.newArrayOfObj.length) {
+        this.checkedAllData = false
+      } else {
+        this.checkedAllData = true
+      }
+      console.log(this.newArrayOfObj, 'unchecked');
     }
-    console.log(this.checkMapDataPushPop, 'checkMapDataPushPop');
 
   }
 
   selectAll(e) {
+    this.checkMapDataPushPop.villageIdList = []
+    this.checkedAllData = false;
     if (e.target.checked == true) {
-      this.checkMapDataPushPop.villageIdList = []
-      this.checks = true;
-      // document.getElementById("flexCheckDefault").checked = true;
-      this.unmappedVillageList.forEach((item) => {
-        var tt = item.villageMasterId;
-        this.mapVillCheck(e, tt);
-      })
+      this.checkedAllData = true
+      this.newArrayOfObj?.forEach(it => {
+        it.isChecked = true;
+        console.log(this.newArrayOfObj, 'checked');
+      });
 
     } else {
-      this.checks = false;
-      this.unmappedVillageList.forEach((item) => {
-        var tt = item.villageMasterId;
-        this.mapVillCheck(e, tt);
+      this.checkedAllData = false
+      this.newArrayOfObj?.forEach(it => {
+        it.isChecked = false;
+        console.log(this.newArrayOfObj, 'unchecked');
       })
 
     }
+
+  }
+
+  disabledMap() {
+    let flag = true;
+    var data = this.newArrayOfObj?.filter(it => it.isChecked == true);
+
+    if (data?.length == 0) {
+      flag = false;
+    } else if (!this.newArrayOfObj) {
+      flag = false;
+    }
+    return flag;
+  }
+
+  allDisabledCheck() {
+
+    let flag = true;
+    if (!this.mapVillForm.value.gp) {
+      flag = false;
+    } else if (!this.newArrayOfObj) {
+      flag = false;
+    }
+    return flag;
   }
 
   saveMapVill() {
@@ -308,12 +404,23 @@ export class BranchVillageMapComponent implements OnInit {
   }
 
   map() {
+
+    var data = this.newArrayOfObj.filter(it => it.isChecked == true)
+
+    data.forEach(it => {
+      this.checkMapDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
+        this.checkMapDataPushPop.branchId = this.branchId ? this.branchId : this.branchID,
+        this.checkMapDataPushPop.villageIdList.push({ villageId: it.villageMasterId });
+
+      console.log(this.checkMapDataPushPop, 'finaldata for mapping');
+    })
+
     this.branchVillMapService.mapVillagesToABranch(this.checkMapDataPushPop).subscribe((res) => {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
         this.branchVillModalDismiss();
-        this.changeBranch(this.branchId);
+        this.changeBranch(this.branchId ? this.branchId : this.branchID);
       }
       else {
         this.showError(res.message);
@@ -352,7 +459,7 @@ export class BranchVillageMapComponent implements OnInit {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
-        this.changeBranch(this.branchId);
+        this.changeBranch(this.branchId ? this.branchId : this.branchID);
       }
       else {
         this.showError(res.message);

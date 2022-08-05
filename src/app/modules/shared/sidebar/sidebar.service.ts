@@ -20,6 +20,7 @@ export class SidebarService {
   swasthyaSahayikaName: any;
   subMenuList: Array<any> = [];
   donorName: any;
+  districtName: any;
   donorMasterDto: any;
   villagesOfBranch: Array<any> = [];
 
@@ -38,12 +39,17 @@ export class SidebarService {
       user?.responseObject?.RoledetailDTO?.roleShortName?.indexOf('TL') != -1) {
       return new Promise((resolve, reject) => {
         this.http.post(`${this.baseURL}branch/getListOfBranchesOfUser`, req).subscribe((res: any) => {
+          console.log(res, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+
           this.branchId = res?.responseObject[0]?.branchId;
           this.branchName = res?.responseObject[0]?.branchName;
           this.donorName = res?.responseObject[0]?.donorMasterDto?.donorName;
+          this.districtName = res?.responseObject[0]?.districtMasterDto?.districtName;
           resolve({
             regionBranchHide: false,
             branchId: this.branchId,
+            branchName: this.branchName,
+            districtName: this.districtName,
             dataAccessDTO: req.dataAccessDTO
           })
         });

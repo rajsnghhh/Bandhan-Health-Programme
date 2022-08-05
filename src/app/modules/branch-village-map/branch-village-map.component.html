@@ -2,15 +2,20 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white_box QA_section mb_30">
-
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Branch-Village Map</h2>
-
+                    <div class="row">
+                        <div class="form-group col-md" [ngClass]="searchFullscreen ? 'QA_tableFull' : 'QA_tableHalf'">
+                            <button class="btn btn-primary" (click)="mapVillage(mapVill)"
+                                *ngIf="(branchID || branchId) && createMode">Map
+                                Village</button>
+                        </div>
+                    </div>
                 </div>
 
                 <form class="form-signin" [formGroup]="branchVillageForm">
 
-                    <div class="row">
+                    <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeRegion($event.target.value)"
@@ -42,15 +47,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-
-                        <div class="form-group col-md-12" style="display: flex; justify-content:flex-end">
-                            <button class="btn btn-primary" (click)="mapVillage(mapVill)"
-                                *ngIf="branchVillageForm.value.branch && createMode">Map
-                                Village</button>
-                        </div>
-                    </div>
-
                     <div class=" white_box_tittle list_header">
 
                         <div class="QA_table ">
@@ -61,11 +57,11 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th>SL No</th>
-                                            <th>District</th>
-                                            <th>Block</th>
-                                            <th>GP</th>
-                                            <th>Village</th>
+                                            <th style="width: 8%;">SL No</th>
+                                            <th style="width: 18%;">District</th>
+                                            <th style="width: 18%;">Block</th>
+                                            <th style="width: 18%;">GP</th>
+                                            <th style="width: 25%;">Village</th>
                                             <th *ngIf="createMode">Un-Map Village</th>
                                         </tr>
                                     </thead>
@@ -73,13 +69,13 @@
                                     <tbody>
 
                                         <tr *ngFor="let unmap of mappedVillageList; index as i">
-                                            <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td>{{unmap.districtDto.districtName}}</td>
-                                            <td>{{unmap.blockDto.blockName}}</td>
-                                            <td>{{unmap.gpDto.gpName}}</td>
-                                            <td>{{unmap.villageName}}</td>
+                                            <td style="width: 8%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 18%;">{{unmap.districtDto.districtName}}</td>
+                                            <td style="width: 18%;">{{unmap.blockDto.blockName}}</td>
+                                            <td style="width: 18%;">{{unmap.gpDto.gpName}}</td>
+                                            <td style="width: 25%;">{{unmap.villageName}}</td>
                                             <td *ngIf="createMode"><input class="form-check-input" type="checkbox"
-                                                    value="" id="flexCheckDefault"
+                                                    value="" id="flexCheckDefaul"
                                                     (change)="unMapVillCheck($event, unmap.villageId)">
                                             </td>
                                         </tr>
@@ -90,23 +86,15 @@
                                     <div class="form-group col-md-6">
                                         <button type="button" class=" btn btn-primary bttn"
                                             [disabled]="checkUnmapDataPushPop.villageIdList.length == 0"
-                                            (click)="saveunmapVill()" *ngIf="createMode">Unmap</button>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <!-- <pagination-controls
-                                            class="d-flex justify-content-end p-1 current ngx-pagination1"
-                                            (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                        </pagination-controls> -->
+                                            (click)="saveunmapVill()"
+                                            *ngIf="(branchID || branchId) && createMode">Unmap</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                 </form>
-
             </div>
         </div>
     </div>
@@ -121,20 +109,19 @@
                 <div class="form-group col-md-5">
                     <label for="branch" style="font-weight: 500;
                     font-size: 1.05rem;">Branch :</label>&nbsp;&nbsp;&nbsp;
-                    {{branchName}}
+                    {{branchName? branchName: branchNAme}}
                 </div>
 
                 <div class="form-group col-md-5">
                     <label for="" style="font-weight: 500;
                         font-size: 1.05rem;">District :</label>&nbsp;&nbsp;&nbsp;
-                    {{districtName ? districtName : '-'}}
+                    {{districtName ? districtName : districtNAme}}
                 </div>
 
                 <div class="col-md-2">
                     <span class="close" (click)="branchVillModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
-
             </div>
 
         </div>
@@ -226,23 +213,35 @@
                                         <th>Block</th>
                                         <th>GP</th>
                                         <th>Village</th>
-                                        <th>Map Village<br> <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefaults" style="margin-left:15px;"
-                                                (change)="selectAll($event)"> All</th>
+                                        <th *ngIf="checkedAllData == true">Map Village<br> <input
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefaults"
+                                                style="margin-left:15px;" [checked]="true" (change)="selectAll($event)"
+                                                [disabled]="!allDisabledCheck()"> All
+                                        </th>
+
+                                        <th *ngIf="checkedAllData == false">Map Village<br> <input
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefaults"
+                                                style="margin-left:15px;" [checked]="false" (change)="selectAll($event)"
+                                                [disabled]="!allDisabledCheck()"> All
+                                        </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
 
-                                    <tr *ngFor="let map of unmappedVillageList ; index as i">
+                                    <tr *ngFor="let map of newArrayOfObj ; index as i">
                                         <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                         <td>{{map.districtDetailsDto.districtName}}</td>
                                         <td>{{map.blockDetailsDto.blockName}}</td>
                                         <td>{{map.gpDetailsDto.name}}</td>
                                         <td>{{map.villageName}}</td>
-                                        <td> <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault" [checked]="checks"
-                                                (change)="mapVillCheck($event, map.villageMasterId)"> </td>
+                                        <td *ngIf="map.isChecked == true"> <input class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault" [checked]="true"
+                                                (change)="mapVillCheck($event,i)"> </td>
+
+                                        <td *ngIf="map.isChecked == false"> <input class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault" [checked]="false"
+                                                (change)="mapVillCheck($event,i)"> </td>
                                     </tr>
 
                                 </tbody>
@@ -257,7 +256,7 @@
         <div class="modal-footer">
             <div class="row">
                 <button type="button" class=" btn btn-primary bttn" (click)="saveMapVill()"
-                    [disabled]="checkMapDataPushPop.villageIdList.length == 0">Map</button>
+                    [disabled]="!disabledMap()">Map</button>
             </div>
         </div>
     </div>

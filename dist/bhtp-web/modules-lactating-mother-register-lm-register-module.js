@@ -824,6 +824,9 @@ class AddLmChildComponent {
                 });
             }
         }
+        else {
+            this.showError('From is invalid');
+        }
     }
     /* Close the dialog pop-up */
     closeDialog() {
