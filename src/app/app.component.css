@@ -27,3 +27,15 @@
     display: none;
   }
 }
+
+.changePassword{
+  margin-top: 3px;
+  color: #0d7d83;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.changePassword:hover{
+  letter-spacing: 1px;
+  font-size: 14px;
+}

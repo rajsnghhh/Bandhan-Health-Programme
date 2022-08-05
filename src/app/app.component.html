@@ -25,10 +25,8 @@
                             ({{user.responseObject.RoledetailDTO.roleShortName}})
                         </span>
                     </div>
-                    <span> Login ID: {{user.responseObject.userdetailDTO.loginId}}
-                        <!-- &nbsp;&nbsp;  &nbsp;&nbsp; Role: {{user.responseObject.RoledetailDTO.roleShortName}} -->
-
-                    </span>
+                    <span> Login ID: {{user.responseObject.userdetailDTO.loginId}}</span>
+                    <p (click)="openChangePassword()" class="changePassword">Change Password </p>
                     <button class="btn btn-danger" style="padding: 3px;" (click)="logout()"> <i
                             class="fa fa-power-off"></i>Logout</button>
                 </div>
