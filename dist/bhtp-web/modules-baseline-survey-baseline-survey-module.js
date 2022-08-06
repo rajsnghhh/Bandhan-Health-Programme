@@ -1141,14 +1141,15 @@ class BaselineCreateComponent {
         let item = this.baselineSurvey.value;
         let idValue = '';
         let tfamily;
-        item.firstName = this.validationService.firstCaps(item.firstName.trim());
-        item.middleName = this.validationService.firstCaps(item.middleName.trim());
-        item.lastName = this.validationService.firstCaps(item.lastName.trim());
-        item.husbandName = this.validationService.firstCaps(item.husbandName.trim());
+        item.firstName = this.validationService.camelize(this.baselineSurvey.value.firstName.trim());
+        item.middleName = this.validationService.camelize(this.baselineSurvey.value.middleName.trim());
+        item.lastName = this.validationService.camelize(this.baselineSurvey.value.lastName.trim());
+        item.husbandName = this.validationService.camelize(this.baselineSurvey.value.husbandName.trim());
         this.childDetails.childInfo.forEach(item => {
             if (item.childName == '') {
                 this.childDetails.childInfo = [];
             }
+            item.childName = this.validationService.camelize(item.childName.trim());
         });
         if (item.idtype == 1) {
             idValue = item.aadhar;

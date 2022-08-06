@@ -1127,8 +1127,13 @@ class ViewMuaclistComponent {
         };
         this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
             this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res) => {
-                this.viewMuacChildList();
-                this.showSuccess('Delete');
+                if (res.status) {
+                    this.viewMuacChildList();
+                    this.showSuccess('Delete');
+                }
+                else {
+                    this.showError(res.message);
+                }
             });
         }).catch(() => '');
     }
@@ -1137,6 +1142,11 @@ class ViewMuaclistComponent {
     }
     showSuccess(message) {
         this.toaster.success(message, 'Child MUAC delete', {
+            timeOut: 3000,
+        });
+    }
+    showError(message) {
+        this.toaster.error(message, 'Error', {
             timeOut: 3000,
         });
     }
@@ -1505,8 +1515,13 @@ class AddChildMuacComponent {
             console.log(addDto);
             if (this.campDate && this.campNotPresent || this.muacForm.value.muacCampNo == null) {
                 this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res) => {
-                    this.dialogRef.close();
-                    this.showSuccess('Success');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.showError(res.message);
+                    }
                 }, error => {
                     this.dialogRef.close();
                     this.showError('Error');
@@ -1533,8 +1548,13 @@ class AddChildMuacComponent {
             console.log(editDto);
             if (this.muacForm.valid) {
                 this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res) => {
-                    this.dialogRef.close();
-                    this.showSuccess('Success');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.showError(res.message);
+                    }
                 }, error => {
                     this.dialogRef.close();
                     this.showError('Error');

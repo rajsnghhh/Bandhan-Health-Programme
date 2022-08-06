@@ -740,7 +740,7 @@ class AddLmChildComponent {
                 console.log(Dto, 'reqAdd');
                 this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
                     console.log(res, 'responseAdd');
-                    if (res.status == true) {
+                    if (res.status) {
                         this.showSuccess(res.message);
                         this.dialogRef.close();
                     }
@@ -814,7 +814,7 @@ class AddLmChildComponent {
                 console.log(Dto, 'reqEdit');
                 this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res) => {
                     console.log(res, 'responseedit');
-                    if (res.status == true) {
+                    if (res.status) {
                         this.showSuccess(res.message);
                         this.dialogRef.close();
                     }

@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpService } from 'src/app/modules/core/http/http.service';
 import { RoleAccessService } from './role-access.service';
 import { ValidationService } from '../shared/services/validation.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-role-access',
@@ -21,7 +23,8 @@ export class RoleAccessComponent implements OnInit {
 
 
   constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: FormBuilder,
-    private toaster: ToastrService, private validationService: ValidationService) { }
+    private toaster: ToastrService, private validationService: ValidationService, private sidebarService: SidebarService,
+    private route: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -30,6 +33,11 @@ export class RoleAccessComponent implements OnInit {
   ngOnInit(): void {
 
     this.createForm();
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Role Access')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.route.navigate(['/role-access']) : this.route.navigate(['/error']);
   }
 
   createForm() {

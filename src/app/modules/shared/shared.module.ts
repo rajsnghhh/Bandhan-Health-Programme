@@ -10,9 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
-  declarations: [SharedComponent, SidebarComponent, ConfirmationDialogComponent],
+  declarations: [SharedComponent, SidebarComponent, ConfirmationDialogComponent, ErrorComponent],
   imports: [
     CommonModule,
     AppRoutingModule, NgbModule, NgMultiSelectDropDownModule.forRoot(), ReactiveFormsModule,

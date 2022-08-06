@@ -271,9 +271,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AccountRoutingModule", function() { return AccountRoutingModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layout/layout.component */ "gKIf");
-/* harmony import */ var _login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login.component */ "vtpD");
-/* harmony import */ var _reset_reset_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./reset/reset.component */ "+wDY");
+/* harmony import */ var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./change-password/change-password.component */ "OZ9i");
+/* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layout/layout.component */ "gKIf");
+/* harmony import */ var _login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login.component */ "vtpD");
+/* harmony import */ var _reset_reset_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reset/reset.component */ "+wDY");
+
 
 
 
@@ -283,10 +285,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     {
-        path: '', component: _layout_layout_component__WEBPACK_IMPORTED_MODULE_2__["LayoutComponent"],
+        path: '', component: _layout_layout_component__WEBPACK_IMPORTED_MODULE_3__["LayoutComponent"],
         children: [
-            { path: '', component: _login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
-            { path: 'reset', component: _reset_reset_component__WEBPACK_IMPORTED_MODULE_4__["ResetComponent"] }
+            { path: '', component: _login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
+            { path: 'reset', component: _reset_reset_component__WEBPACK_IMPORTED_MODULE_5__["ResetComponent"] },
+            { path: 'changePassword', component: _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_2__["ChangePasswordComponent"] }
         ]
     }
 ];
@@ -324,6 +327,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./login.component */ "vtpD");
 /* harmony import */ var _reset_reset_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./reset/reset.component */ "+wDY");
 /* harmony import */ var _modules_shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../modules/shared/loader/loader.module */ "iFG+");
+/* harmony import */ var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./change-password/change-password.component */ "OZ9i");
+
 
 
 
@@ -344,7 +349,8 @@ AccountModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInje
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](AccountModule, { declarations: [_layout_layout_component__WEBPACK_IMPORTED_MODULE_4__["LayoutComponent"],
         _login_component__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"],
-        _reset_reset_component__WEBPACK_IMPORTED_MODULE_6__["ResetComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+        _reset_reset_component__WEBPACK_IMPORTED_MODULE_6__["ResetComponent"],
+        _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_8__["ChangePasswordComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
         _account_routing_module__WEBPACK_IMPORTED_MODULE_2__["AccountRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
         _modules_shared_loader_loader_module__WEBPACK_IMPORTED_MODULE_7__["LoaderModule"]] }); })();
@@ -354,7 +360,8 @@ AccountModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInje
                 declarations: [
                     _layout_layout_component__WEBPACK_IMPORTED_MODULE_4__["LayoutComponent"],
                     _login_component__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"],
-                    _reset_reset_component__WEBPACK_IMPORTED_MODULE_6__["ResetComponent"]
+                    _reset_reset_component__WEBPACK_IMPORTED_MODULE_6__["ResetComponent"],
+                    _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_8__["ChangePasswordComponent"]
                 ],
                 imports: [
                     _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
