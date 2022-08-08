@@ -1,6 +1,7 @@
 
 import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -50,13 +51,19 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
 
   constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
-    public sidebarService: SidebarService) { }
+    public sidebarService: SidebarService, private router: Router,) { }
 
   ngDoCheck(): void {
     this.timeToTentativeEndDate = this.baselineService.timeToTentativeEndDate;
   }
 
   ngOnInit(): void {
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Baseline Survey')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/Baseline-Survey/create']) : this.router.navigate(['/error']);
+
     this.getMinDate();
     this.createForm();
     this.childDetails.childInfo = [];

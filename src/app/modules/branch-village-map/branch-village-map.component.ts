@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -57,7 +58,7 @@ export class BranchVillageMapComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
-    private sidebarService: SidebarService, private http: HttpClient, private validationService: ValidationService,
+    private sidebarService: SidebarService, private http: HttpClient, private validationService: ValidationService, private router: Router,
     config: NgbModalConfig) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -109,6 +110,11 @@ export class BranchVillageMapComponent implements OnInit {
         });
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Branch-Village Map')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/branch-villageMap']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

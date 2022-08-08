@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { User } from './user';
 import { ConfirmationDialogService } from '../modules/shared/confirmation-dialog/confirmation-dialog.service';
 import { HttpService } from '../modules/core/http/http.service';
-
+import CryptoJS from 'crypto-js';
 
 @Injectable({
     providedIn: 'root'
@@ -60,6 +60,8 @@ export class LoginService {
                     userName: user?.responseObject?.userdetailDTO?.loginId
                 }
                 localStorage.setItem('dataAccessDTO', JSON.stringify(dataDTO));
+                const passwordAES = CryptoJS.AES.encrypt(password, 'encryptionCode').toString();
+                localStorage.setItem('cachedData', JSON.stringify(passwordAES));
                 this.httpService.setDataAccessDto();
                 this.userSubject.next(user);
                 console.log("**********************", user);

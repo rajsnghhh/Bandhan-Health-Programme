@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
@@ -26,7 +27,7 @@ export class RegionBranchHomeComponent implements OnInit {
   deleteAccess: boolean;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private http: HttpClient,
-    private baselineService: BaselineSurveyService, private toaster: ToastrService,
+    private router: Router, private toaster: ToastrService,
     private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
     private sidebarService: SidebarService,) { }
 
@@ -42,6 +43,11 @@ export class RegionBranchHomeComponent implements OnInit {
       this.stateSelectForm.get('state').patchValue(this.stateMasterId);
       this.getRegionAndBranchList(this.stateMasterId);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Region & Branch')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/region-branch']) : this.router.navigate(['/error']);
 
     this.createAccess = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

@@ -8,6 +8,7 @@ import { HttpService } from '../core/http/http.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-daily-activity-register',
@@ -54,7 +55,7 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
-    private modalService: NgbModal, private confirmationDialogService: ConfirmationDialogService) { }
+    private modalService: NgbModal, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
 
   ngOnInit(): void {
     let roleAccessDTO = JSON.parse(localStorage.getItem('user'));
@@ -95,19 +96,22 @@ export class DailyActivityRegisterComponent implements OnInit {
       }
     });
 
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/daily-activity-register']) : this.router.navigate(['/error']);
+
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
     console.log(this.updateMode);
 
-
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
       .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
     console.log(this.deleteMode);
-
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }

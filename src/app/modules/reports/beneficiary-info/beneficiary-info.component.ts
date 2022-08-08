@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-beneficiary-info',
@@ -28,13 +30,18 @@ export class BeneficiaryInfoComponent implements OnInit {
   tableHeadName: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
-    private http: HttpClient, private toaster: ToastrService,) { }
+    private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
     this.http.post(`${this.httpService.baseURL}report/getAllProject`, this.Dto).subscribe((res: any) => {
       this.projectList = res.responseObject.projectList;
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Reports')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Beneficiary Information Report')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/report/beneficiaryInfo']) : this.router.navigate(['/error']);
   }
   createForm() {
     this.locationForm = this.fb.group({

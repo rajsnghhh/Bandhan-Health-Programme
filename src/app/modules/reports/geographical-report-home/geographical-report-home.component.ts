@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
+import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { GeographicalStateWiseComponent } from '../geographical-state-wise/geographical-state-wise.component';
 
 @Component({
@@ -16,7 +18,8 @@ export class GeographicalReportHomeComponent implements OnInit {
   loader: boolean = true;
 
   constructor(private httpService: HttpService, public dialog: MatDialog,
-    private http: HttpClient, private toaster: ToastrService,) { }
+    private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService,
+    private router: Router) { }
 
   ngOnInit(): void {
     let Dto = {
@@ -31,23 +34,28 @@ export class GeographicalReportHomeComponent implements OnInit {
       this.loader = true;
     });
 
-  }
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Reports')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Geographical Outreach Report')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/report/geographicalReport']) : this.router.navigate(['/error']);
+  
+}
 
-  collaps(value) {
-    const dialogRef = this.dialog.open(GeographicalStateWiseComponent, {
-      width: '700px',
-      height: '400px',
-      data: { projectMasterId: value }
-    });
+collaps(value) {
+  const dialogRef = this.dialog.open(GeographicalStateWiseComponent, {
+    width: '700px',
+    height: '400px',
+    data: { projectMasterId: value }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
+  dialogRef.afterClosed().subscribe(result => {
+  });
 
-  }
+}
 
-  showError(message) {
-    this.toaster.error(message, 'Error', {
-      timeOut: 3000,
-    });
-  }
+showError(message) {
+  this.toaster.error(message, 'Error', {
+    timeOut: 3000,
+  });
+}
 }

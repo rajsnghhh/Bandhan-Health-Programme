@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
+import CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-location',
@@ -48,17 +49,28 @@ export class LocationComponent implements OnInit {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
-        let user = JSON.parse(localStorage.getItem('user'));
-        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
-        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
-          console.log(true, '1');
-          this.baselineService.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
-        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
-          console.log(true, '2');
-          this.baselineService.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
-        } else {
-          this.baselineService.timeToTentativeEndDate = '';
+        // let user = JSON.parse(localStorage.getItem('user'));
+        const password = JSON.parse(localStorage.getItem('cachedData'));
+        const bytes = CryptoJS.AES.decrypt(password, 'encryptionCode');
+        let objs = {
+          deviceType: "W",
+          loginId: this.sidebarService.loginId,
+          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
         }
+        this.baselineService.login(objs).subscribe((res: any) => {
+          console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');
+
+          // console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+          if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+            console.log(true, '1');
+            this.baselineService.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+          } else if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+            console.log(true, '2');
+            this.baselineService.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+          } else {
+            this.baselineService.timeToTentativeEndDate = '';
+          }
+        });
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {

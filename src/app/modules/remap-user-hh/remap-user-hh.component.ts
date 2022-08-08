@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { RemapUserHhService } from './remap-user-hh.service';
 
 @Component({
@@ -30,10 +32,10 @@ export class RemapUserHhComponent implements OnInit {
     selectedUserId: '',
     userHhUnmapRemapDtoList: [],
   };
-  ssNameFilter:any;
+  ssNameFilter: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserHHService: RemapUserHhService,
-    private toaster: ToastrService, private modalService: NgbModal) { }
+    private toaster: ToastrService, private modalService: NgbModal, private router: Router, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -43,6 +45,12 @@ export class RemapUserHhComponent implements OnInit {
       this.regionList = res.responseObject;
       console.log(this.regionList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Remap User with Household')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/remap-user-hh']) : this.router.navigate(['/error']);
+
   }
 
   createForm() {

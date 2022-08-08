@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
@@ -28,7 +29,7 @@ export class UserTableComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService,) { }
+    private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -39,6 +40,11 @@ export class UserTableComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}user/getListOfAllRegions`, Dto).subscribe((res: any) => {
       this.regionList = res.responseObject;
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/user']) : this.router.navigate(['/error']);
 
     this.createAccess = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList

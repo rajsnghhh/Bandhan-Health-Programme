@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { SsUnmapRemapService } from './ss-unmap-remap.service';
 
 @Component({
@@ -37,7 +39,7 @@ export class SsUnmapRemapComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private ssUnmapRemapService: SsUnmapRemapService,
     private httpService: HttpService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal, private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -47,6 +49,11 @@ export class SsUnmapRemapComponent implements OnInit {
       this.regionList = res.responseObject;
       console.log(this.regionList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap/ Remap SS from one or multiple households of the same user')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/ss-unmap-remap']) : this.router.navigate(['/error']);
 
   }
 

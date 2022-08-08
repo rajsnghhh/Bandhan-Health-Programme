@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { CentralRegisterService } from '../central-register.service';
+import CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-central-register-view',
@@ -39,7 +41,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
 
   constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
     public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient, private baselineService: BaselineSurveyService) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -97,17 +99,26 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
-        let user = JSON.parse(localStorage.getItem('user'));
-        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
-        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
-          console.log(true, '1');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
-        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
-          console.log(true, '2');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
-        } else {
-          this.timeToTentativeEndDate = '';
+        // let user = JSON.parse(localStorage.getItem('user'));
+        const password = JSON.parse(localStorage.getItem('cachedData'));
+        const bytes = CryptoJS.AES.decrypt(password, 'encryptionCode'); let objs = {
+          deviceType: "W",
+          loginId: this.sidebarService.loginId,
+          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
         }
+        this.baselineService.login(objs).subscribe((res: any) => {
+          console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');
+          // console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+          if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+            console.log(true, '1');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+          } else if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+            console.log(true, '2');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+          } else {
+            this.timeToTentativeEndDate = '';
+          }
+        });
         this.regionBranchHide = res.regionBranchHide;
         this.httpClient.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {

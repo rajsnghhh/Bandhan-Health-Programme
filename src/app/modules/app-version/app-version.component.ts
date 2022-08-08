@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -24,13 +25,18 @@ export class AppVersionComponent implements OnInit {
   viewModalData: any;
 
   constructor(private appService: AppVersionService, private httpService: HttpService, private modalService: NgbModal,
-    private fb: FormBuilder, private sidebarService: SidebarService, private toaster: ToastrService, config: NgbModalConfig) {
+    private fb: FormBuilder, private sidebarService: SidebarService, private router: Router, private toaster: ToastrService, config: NgbModalConfig) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
     this.viewListOfAllVersion();
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Application Version')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/app-version']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList

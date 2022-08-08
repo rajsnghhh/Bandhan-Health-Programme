@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -47,7 +47,7 @@ export class LmViewComponent implements OnInit, DoCheck {
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe,
-    public validationService: ValidationService, private activatedRoute: ActivatedRoute) { }
+    public validationService: ValidationService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -93,6 +93,13 @@ export class LmViewComponent implements OnInit, DoCheck {
         }
       });
     }
+
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Lacteting Mother Register')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/lmr']) : this.router.navigate(['/error']);
+
     this.createUpdateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
       .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList

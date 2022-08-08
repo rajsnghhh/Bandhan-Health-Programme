@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { RemapUserSsService } from './remap-user-ss.service';
 
 @Component({
@@ -33,7 +35,8 @@ export class RemapUserSsComponent implements OnInit {
   ssLists: Array<any> = [];
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserSSService: RemapUserSsService,
-    private toaster: ToastrService, private modalService: NgbModal, config: NgbModalConfig) {
+    private toaster: ToastrService, private modalService: NgbModal, private router: Router, private sidebarService: SidebarService,
+    config: NgbModalConfig) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -46,6 +49,10 @@ export class RemapUserSsComponent implements OnInit {
       console.log(this.regionList);
     });
 
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Remap User with SS')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/remap-user-ss']) : this.router.navigate(['/error']);
   }
 
   createForm() {

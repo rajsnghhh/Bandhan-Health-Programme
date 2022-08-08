@@ -76,7 +76,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     public validationService: ValidationService, private sidebarService: SidebarService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private router: Router) { }
 
 
   ngDoCheck(): void {
@@ -130,6 +130,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         }
       });
     }
+
+    this.sidebarService.subMenuList
+    .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+    .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'PEM Register')?.accessDetailList
+    .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pem-register/create']) : this.router.navigate(['/error']);
+
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList

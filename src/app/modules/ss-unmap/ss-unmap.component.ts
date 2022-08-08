@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { SsUnmapService } from './ss-unmap.service';
 
 @Component({
@@ -27,7 +29,8 @@ export class SsUnmapComponent implements OnInit {
   hcoUserNameFilter: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private ssUnmapService: SsUnmapService,
-    private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService, public validationService: ValidationService) { }
+    private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService,
+    public validationService: ValidationService, private sidebarService: SidebarService, private router: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -42,6 +45,11 @@ export class SsUnmapComponent implements OnInit {
       this.regionList = res.responseObject;
       console.log(this.regionList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap SS from User and All HH')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/ss-unmap']) : this.router.navigate(['/error']);
   }
 
   changeRegion(regionId) {

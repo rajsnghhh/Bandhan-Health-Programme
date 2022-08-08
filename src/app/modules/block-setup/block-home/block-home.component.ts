@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
 import { ConfirmationDialogService } from '../../shared/confirmation-dialog/confirmation-dialog.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
@@ -29,7 +29,7 @@ export class BlockHomeComponent implements OnInit {
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService,
     private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
-    private sidebarService: SidebarService,) { }
+    private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -39,6 +39,11 @@ export class BlockHomeComponent implements OnInit {
     this.http.post(`${this.httpService.baseURL}state/getListOfAllStates`, Dto).subscribe((res: any) => {
       this.stateList = res.responseObject.stateList;
     });
+
+    this.sidebarService.subMenuList
+    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+    .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Block')?.accessDetailList
+    .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/block']) : this.router.navigate(['/error']);
 
     this.createAccess = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

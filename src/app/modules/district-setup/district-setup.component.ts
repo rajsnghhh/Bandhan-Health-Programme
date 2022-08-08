@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -33,7 +34,7 @@ export class DistrictSetupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private districtService: DistrictSetupService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
-    private validationService: ValidationService, private sidebarService: SidebarService) { }
+    private validationService: ValidationService, private sidebarService: SidebarService, private router : Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -47,6 +48,11 @@ export class DistrictSetupComponent implements OnInit {
       this.stateList = res.responseObject.stateList;
       console.log(this.stateList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'District')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/district-setup']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

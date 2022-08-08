@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -46,7 +47,7 @@ export class SsSetupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal, private http: HttpClient,
-    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService) { }
+    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -83,6 +84,11 @@ export class SsSetupComponent implements OnInit {
         this.staffLists();
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Swasthya Sahayika')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/ss-setup']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

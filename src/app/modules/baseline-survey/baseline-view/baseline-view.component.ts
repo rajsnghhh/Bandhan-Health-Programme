@@ -9,6 +9,7 @@ import { ConfirmationDialogService } from '../../shared/confirmation-dialog/conf
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
+import CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-baseline-view',
@@ -66,6 +67,12 @@ export class BaselineViewComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.sidebarService.subMenuList
+    .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+    .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
+    .find(accessType => accessType.accessType == 'view')?.accessType ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
+
+
     this.createForm();
     this.householdFamDetails();
 
@@ -81,17 +88,27 @@ export class BaselineViewComponent implements OnInit {
         }
         // this.branchID = res.branchId;
         // console.log(this.branchID);
-        let user = JSON.parse(localStorage.getItem('user'));
-        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
-        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
-          console.log(true, '1');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
-        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
-          console.log(true, '2');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
-        } else {
-          this.timeToTentativeEndDate = '';
+        // let user = JSON.parse(localStorage.getItem('user'));
+        const password = JSON.parse(localStorage.getItem('cachedData'));
+        const bytes = CryptoJS.AES.decrypt(password, 'encryptionCode');
+        let objs = {
+          deviceType: "W",
+          loginId: this.sidebarService.loginId,
+          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
         }
+        this.baselineService.login(objs).subscribe((res: any) => {
+          console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');
+          // console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+          if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+            console.log(true, '1');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+          } else if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+            console.log(true, '2');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+          } else {
+            this.timeToTentativeEndDate = '';
+          }
+        });
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {

@@ -8,6 +8,8 @@ import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { ChildrenRegisterService } from '../children-register.service';
+import CryptoJS from 'crypto-js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-children-register-create',
@@ -67,7 +69,8 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
     private http: HttpClient, private modalService: NgbModal, public validationService: ValidationService,
-    private httpService: HttpService, private toaster: ToastrService, private sidebarService: SidebarService, private baselineService: BaselineSurveyService) { }
+    private httpService: HttpService, private toaster: ToastrService, private sidebarService: SidebarService,
+    private baselineService: BaselineSurveyService, private router: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -96,17 +99,27 @@ export class ChildrenRegisterCreateComponent implements OnInit {
           dataAccessDTO: res.dataAccessDTO,
           branchId: res.branchId
         }
-        let user = JSON.parse(localStorage.getItem('user'));
-        console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
-        if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
-          console.log(true, '1');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
-        } else if (user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
-          console.log(true, '2');
-          this.timeToTentativeEndDate = user.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
-        } else {
-          this.timeToTentativeEndDate = '';
+        // let user = JSON.parse(localStorage.getItem('user'));
+        const password = JSON.parse(localStorage.getItem('cachedData'));
+        const bytes = CryptoJS.AES.decrypt(password, 'encryptionCode');
+        let objs = {
+          deviceType: "W",
+          loginId: this.sidebarService.loginId,
+          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
         }
+        this.baselineService.login(objs).subscribe((res: any) => {
+          console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');
+          // console.log(user.responseObject.branchBaselineSurveyEnddateDetailDTO, 'branchBaselineSurveyEnddateDetailDTO');
+          if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.actualEndDate != null) {
+            console.log(true, '1');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToActualEndDate;
+          } else if (res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate != null) {
+            console.log(true, '2');
+            this.timeToTentativeEndDate = res.responseObject.branchBaselineSurveyEnddateDetailDTO?.timeToTentativeEndDate;
+          } else {
+            this.timeToTentativeEndDate = '';
+          }
+        });
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
@@ -115,6 +128,11 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         })
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/children-register/create']) : this.router.navigate(['/error']);
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList

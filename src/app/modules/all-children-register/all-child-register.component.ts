@@ -10,6 +10,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ValidationService } from '../shared/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-child-register',
@@ -46,7 +47,7 @@ export class AllChildRegisterComponent implements OnInit {
   pageSize = 6;
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
-    private baselineService: BaselineSurveyService, public dialog: MatDialog,
+    private baselineService: BaselineSurveyService, public dialog: MatDialog, private router: Router,
     public validationService: ValidationService, private toaster: ToastrService,) { }
 
   ngDoCheck(): void {
@@ -73,6 +74,11 @@ export class AllChildRegisterComponent implements OnInit {
         })
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'All Children Register')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/acr']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList

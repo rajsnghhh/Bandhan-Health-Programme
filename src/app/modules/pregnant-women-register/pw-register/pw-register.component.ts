@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
@@ -53,9 +53,15 @@ export class PwRegisterComponent implements OnInit {
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Pregnant Woman Register')?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
+
     this.activatedRoute.queryParams.subscribe(params => {
       this.setStatus = params['status'];
       this.familyID = params['familyID'];

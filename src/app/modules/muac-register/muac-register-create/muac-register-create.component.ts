@@ -57,7 +57,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   constructor(private httpService: HttpService, private muacService: MuacRegisterService,
     private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder,
-    private sidebarService: SidebarService, private http: HttpClient) { }
+    private sidebarService: SidebarService, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.sidebarService.userId);
@@ -91,6 +91,11 @@ export class MuacRegisterCreateComponent implements OnInit {
         })
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/muac-register/create']) : this.router.navigate(['/error']);
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList

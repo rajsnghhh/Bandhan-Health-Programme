@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -44,7 +45,7 @@ export class VillageSetupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
     private sidebarService: SidebarService, private modalService: NgbModal, private validationService: ValidationService,
-    private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+    private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -64,6 +65,11 @@ export class VillageSetupComponent implements OnInit {
       this.stateList = res.responseObject.stateList;
       console.log(this.stateList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Village/ Gram Sansad/ Locality')?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/village-setup']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

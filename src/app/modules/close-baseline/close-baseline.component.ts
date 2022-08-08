@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { CloseBaselineService } from './close-baseline.service';
 
 @Component({
@@ -28,8 +30,8 @@ export class CloseBaselineComponent implements OnInit {
   pageSize = 6;
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private closeBaselineService: CloseBaselineService,
-    private modalService: NgbModal, config: NgbModalConfig, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService,) {
+    private modalService: NgbModal, config: NgbModalConfig, private toaster: ToastrService, private router: Router,
+    private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -41,6 +43,11 @@ export class CloseBaselineComponent implements OnInit {
       this.regionList = res.responseObject;
       console.log(this.regionList);
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Close Baseline Survey Activity for a branch')?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/close-baseline']) : this.router.navigate(['/error']);
   }
 
   createForm() {

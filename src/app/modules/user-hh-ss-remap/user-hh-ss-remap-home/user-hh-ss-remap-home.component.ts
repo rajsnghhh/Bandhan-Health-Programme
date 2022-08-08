@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
@@ -24,7 +25,7 @@ export class UserHhSsRemapHomeComponent implements OnInit {
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder,
     private sidebarService: SidebarService, private confirmationDialogService: ConfirmationDialogService,
-    private baselineService: BaselineSurveyService, private toaster: ToastrService,) { }
+    private baselineService: BaselineSurveyService, private toaster: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -33,6 +34,11 @@ export class UserHhSsRemapHomeComponent implements OnInit {
         this.regionList = res.region;
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Household SS Remap')?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? this.router.navigate(['/user-hh-ss-remap']) : this.router.navigate(['/error']);
   }
 
   createForm() {

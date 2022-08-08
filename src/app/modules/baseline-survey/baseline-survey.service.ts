@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class BaselineSurveyService {
   baseURL = environment.apiUrl;
-  timeToTentativeEndDate:any;
-  
+  timeToTentativeEndDate: any;
+
   constructor(private http: HttpClient) { }
 
   getCasteView(obj): any {
@@ -75,6 +75,9 @@ export class BaselineSurveyService {
     return this.http.post(`${this.baseURL}swasthyasahayika/getActiveSwasthyaSahayikaListOfAVillage`, obj)
   }
 
+  login(obj): any {
+    return this.http.post(`${this.baseURL}user/login`, obj)
+  }
 }
 
 
