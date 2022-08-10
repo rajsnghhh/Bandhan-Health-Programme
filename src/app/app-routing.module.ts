@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: 'close-baseline', loadChildren: () => import('./modules/close-baseline/close-baseline.module').then(m => m.CloseBaselineModule), canActivate: [AuthGuard] },
   { path: 'app-version', loadChildren: () => import('./modules/app-version/app-version.module').then(m => m.AppVersionModule), canActivate: [AuthGuard] },
   { path: 'error', component: ErrorComponent, canActivate: [AuthGuard] },
+  { path: 'ss-training', loadChildren: () => import('./modules/ss-training/ss-training.module').then(m => m.SsTrainingModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 
