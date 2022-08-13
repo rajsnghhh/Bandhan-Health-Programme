@@ -287,16 +287,16 @@ export class UserCreateFormComponent implements OnInit {
 
       currentBranchId: (this.data.createMode == true)
         ? this.userForm.value.branch || this.userForm.value.baseBranch
-        : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
+        : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
 
       roleShortName: (this.data.createMode == true)
         ? this.userForm.value.userRole
-        : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
+        : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
 
       roleMasterId: this.roleList.find(role => role.roleShortName ==
         ((this.data.createMode == true)
           ? this.userForm.value.userRole
-          : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole)
+          : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole)
       )?.roleMasterId,
       branchList: (this.userForm.value.userRole?.indexOf('HCO') != -1) ?
         this.branch : null,
