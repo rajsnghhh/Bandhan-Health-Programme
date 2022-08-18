@@ -96,7 +96,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       if (this.data.editMode == false) {
         this.childBirthForm.reset();
       } else {
-        this.enableSecondVisitDate = this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate != null ? true : false;
+        this.restrictSecondDate(this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate);
         this.childBirthForm.patchValue({
           place: this.data?.childWiselactatingmotherList?.childBasicStatusDto.placeOfDelivery,
           birthWeight: this.data?.childWiselactatingmotherList?.childBasicStatusDto.birthWeight,

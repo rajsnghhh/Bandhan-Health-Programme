@@ -444,7 +444,7 @@ export class PwViewComponent implements OnInit {
             this.showSuccess('Success');
           } else {
             this.dialogRef.close();
-            this.showError('Error');
+            this.showError(res.message);
           }
         }, error => {
           this.dialogRef.close();
@@ -492,7 +492,7 @@ export class PwViewComponent implements OnInit {
             this.showSuccess('Success');
           } else {
             this.dialogRef.close();
-            this.showError('Error');
+            this.showError(res.message);
           }
         }, error => {
           this.dialogRef.close();
