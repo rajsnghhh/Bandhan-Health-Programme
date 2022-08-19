@@ -50,8 +50,8 @@ export class RemapUserSsComponent implements OnInit {
     });
 
     this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Remap User with SS')?.accessDetailList
+      .find(functionMasterId => functionMasterId.functionMasterId == 3)?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 206)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/remap-user-ss']) : this.router.navigate(['/error']);
   }
 

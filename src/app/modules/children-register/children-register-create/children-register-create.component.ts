@@ -131,25 +131,25 @@ export class ChildrenRegisterCreateComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 81 || item.subFunctionMasterId == 82 || item.subFunctionMasterId == 83 || item.subFunctionMasterId == 84)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/children-register/create']) : this.router.navigate(['/error']);
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 81 || item.subFunctionMasterId == 82 || item.subFunctionMasterId == 83 || item.subFunctionMasterId == 84)?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
     console.log(this.updateMode);
 
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 81 || item.subFunctionMasterId == 82 || item.subFunctionMasterId == 83 || item.subFunctionMasterId == 84)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
     console.log(this.deleteMode);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Child Info')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 81 || item.subFunctionMasterId == 82 || item.subFunctionMasterId == 83 || item.subFunctionMasterId == 84)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
     console.log(this.createMode);
 

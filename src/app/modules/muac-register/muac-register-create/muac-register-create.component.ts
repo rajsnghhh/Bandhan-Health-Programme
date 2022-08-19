@@ -94,21 +94,21 @@ export class MuacRegisterCreateComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/muac-register/create']) : this.router.navigate(['/error']);
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'MUAC Camp')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
   }

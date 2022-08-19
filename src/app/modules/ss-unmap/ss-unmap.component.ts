@@ -48,7 +48,7 @@ export class SsUnmapComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap SS from User and All HH')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 194)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/ss-unmap']) : this.router.navigate(['/error']);
   }
 

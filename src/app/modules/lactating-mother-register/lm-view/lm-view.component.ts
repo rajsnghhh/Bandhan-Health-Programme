@@ -97,12 +97,12 @@ export class LmViewComponent implements OnInit, DoCheck {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Lacteting Mother Register')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/lmr']) : this.router.navigate(['/error']);
 
     this.createUpdateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 121)?.accessDetailList
+      .find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
   }
 

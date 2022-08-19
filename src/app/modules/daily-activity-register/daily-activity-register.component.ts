@@ -98,18 +98,18 @@ export class DailyActivityRegisterComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 137 || item.subFunctionMasterId == 138 || item.subFunctionMasterId == 139 || item.subFunctionMasterId == 140)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/daily-activity-register']) : this.router.navigate(['/error']);
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 137 || item.subFunctionMasterId == 138 || item.subFunctionMasterId == 139 || item.subFunctionMasterId == 140)?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
     console.log(this.updateMode);
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Daily Activity Register')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 137 || item.subFunctionMasterId == 138 || item.subFunctionMasterId == 139 || item.subFunctionMasterId == 140)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
     console.log(this.deleteMode);
 

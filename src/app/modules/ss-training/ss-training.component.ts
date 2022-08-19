@@ -128,6 +128,12 @@ export class SsTrainingComponent implements OnInit {
     this.ssTrainingScheduleForm = this.fb.group({
       trainingType: ['', Validators.required],
       duration: ['', Validators.required],
+      trainername: ['', Validators.required],
+      trainerdesignation: ['', Validators.required],
+      trainingtopic: ['', Validators.required],
+
+
+
 
     });
   }

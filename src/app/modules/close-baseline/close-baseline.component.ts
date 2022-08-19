@@ -45,8 +45,8 @@ export class CloseBaselineComponent implements OnInit {
     });
 
     this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Close Baseline Survey Activity for a branch')?.accessDetailList
+      .find(functionMasterId => functionMasterId.functionMasterId == 4)?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 207)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/close-baseline']) : this.router.navigate(['/error']);
   }
 

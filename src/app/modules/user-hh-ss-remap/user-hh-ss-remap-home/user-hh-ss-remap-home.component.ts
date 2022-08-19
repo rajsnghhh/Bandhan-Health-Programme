@@ -37,7 +37,7 @@ export class UserHhSsRemapHomeComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Household SS Remap')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 185 || item.subFunctionMasterId == 189)?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? this.router.navigate(['/user-hh-ss-remap']) : this.router.navigate(['/error']);
   }
 

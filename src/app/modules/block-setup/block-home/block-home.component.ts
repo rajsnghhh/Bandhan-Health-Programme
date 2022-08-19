@@ -41,9 +41,9 @@ export class BlockHomeComponent implements OnInit {
     });
 
     this.sidebarService.subMenuList
-    .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-    .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Block')?.accessDetailList
-    .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/block']) : this.router.navigate(['/error']);
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 37 || item.subFunctionMasterId == 38 || item.subFunctionMasterId == 39 || item.subFunctionMasterId == 40)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/block']) : this.router.navigate(['/error']);
 
     this.createAccess = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList

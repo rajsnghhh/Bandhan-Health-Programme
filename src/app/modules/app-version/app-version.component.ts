@@ -35,7 +35,7 @@ export class AppVersionComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Application Version')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 208 || item.subFunctionMasterId == 209 || item.subFunctionMasterId == 210 || item.subFunctionMasterId == 211)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/app-version']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList

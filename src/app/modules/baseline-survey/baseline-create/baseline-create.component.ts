@@ -61,7 +61,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Baseline Survey')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 65 || item.subFunctionMasterId == 66 || item.subFunctionMasterId == 67 || item.subFunctionMasterId == 68)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/Baseline-Survey/create']) : this.router.navigate(['/error']);
 
     this.getMinDate();

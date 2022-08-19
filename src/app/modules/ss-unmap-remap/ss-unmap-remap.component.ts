@@ -51,8 +51,8 @@ export class SsUnmapRemapComponent implements OnInit {
     });
 
     this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap/ Remap SS from one or multiple households of the same user')?.accessDetailList
+      .find(functionMasterId => functionMasterId.functionMasterId == 3)?.subMenuDetailList
+      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 203)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? this.router.navigate(['/ss-unmap-remap']) : this.router.navigate(['/error']);
 
   }

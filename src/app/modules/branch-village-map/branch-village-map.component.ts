@@ -113,7 +113,7 @@ export class BranchVillageMapComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Branch-Village Map')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 57 || item.subFunctionMasterId == 58 || item.subFunctionMasterId == 59 || item.subFunctionMasterId == 60)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/branch-villageMap']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList

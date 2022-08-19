@@ -68,9 +68,9 @@ export class BaselineViewComponent implements OnInit {
   ngOnInit(): void {
 
     this.sidebarService.subMenuList
-    .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
-    .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')?.accessDetailList
-    .find(accessType => accessType.accessType == 'view')?.accessType ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
+      .find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 73 || item.subFunctionMasterId == 74 || item.subFunctionMasterId == 75 || item.subFunctionMasterId == 76)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
 
 
     this.createForm();

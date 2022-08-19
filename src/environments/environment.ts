@@ -22,7 +22,7 @@ export const environment = {
   // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
 
   // Training
-  // apiUrl: 'http://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
+  // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
 
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'

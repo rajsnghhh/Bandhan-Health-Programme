@@ -131,7 +131,9 @@
                 <div *ngIf="s.hcouser.errors" class="invalid-feedback">
                     <div *ngIf="s.hcouser.errors.required">User selection is required</div>
                 </div>
-            </div>
+            </div><br>
+
+            <span style="color:#dc3545 ;">NOTE: All household mapped with this SS will be unmapped</span>
 
         </form>
     </div>
@@ -142,7 +144,6 @@
                 (click)="saveRemapUserSSFromModal()">Remap
             </button>
         </div>
-
     </div>
 
 </ng-template>

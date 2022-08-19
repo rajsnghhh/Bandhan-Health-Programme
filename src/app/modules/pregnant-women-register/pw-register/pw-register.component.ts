@@ -59,8 +59,8 @@ export class PwRegisterComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Pregnant Woman Register')?.accessDetailList
-      .find(accessType => accessType.accessType == 'update')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
+      .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.setStatus = params['status'];

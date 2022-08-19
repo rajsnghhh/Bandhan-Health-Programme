@@ -34,7 +34,7 @@ export class DistrictSetupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private httpService: HttpService, private districtService: DistrictSetupService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
-    private validationService: ValidationService, private sidebarService: SidebarService, private router : Router) { }
+    private validationService: ValidationService, private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -51,22 +51,22 @@ export class DistrictSetupComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'District')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 186 || item.subFunctionMasterId == 187 || item.subFunctionMasterId == 188 || item.subFunctionMasterId == 189)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/district-setup']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(item => item.subFunctionMasterId == 186 || item.subFunctionMasterId == 187 || item.subFunctionMasterId == 188 || item.subFunctionMasterId == 189)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
     this.updateMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(item => item.subFunctionMasterId == 186 || item.subFunctionMasterId == 187 || item.subFunctionMasterId == 188 || item.subFunctionMasterId == 189)?.accessDetailList
       .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
 
     this.deleteMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
-      .find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 185 || subFunctionMasterId.subFunctionMasterId == 186)?.accessDetailList
+      .find(item => item.subFunctionMasterId == 186 || item.subFunctionMasterId == 187 || item.subFunctionMasterId == 188 || item.subFunctionMasterId == 189)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
   }

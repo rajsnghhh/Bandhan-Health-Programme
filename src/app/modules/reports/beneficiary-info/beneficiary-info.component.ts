@@ -40,7 +40,7 @@ export class BeneficiaryInfoComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Reports')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Beneficiary Information Report')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 195 || item.subFunctionMasterId == 196 || item.subFunctionMasterId == 197 || item.subFunctionMasterId == 198)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/report/beneficiaryInfo']) : this.router.navigate(['/error']);
   }
   createForm() {

@@ -73,7 +73,7 @@
             <form class="form-signin" [formGroup]="ssTrainingScheduleForm">
                 <div class="row">
                     <div class="form-group col-md">
-                        <label for="trainingType">Type of training :&nbsp;<span
+                        <label for="trainingType">Type of Training :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
                         <!-- (change)="TrainingType($event.target.value)" -->
                         <select class="form-select" formControlName="trainingType" id="trainingType" [ngClass]="{'is-invalid': t.trainingType.invalid && t.trainingType.touched,
@@ -100,6 +100,56 @@
                             <div *ngIf="t.duration.errors.minlength">
                                 Minimum length should be 3
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="trainername">Trainer Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Trainer Name" formControlName="trainername"
+                            maxlength="45" style="text-transform: capitalize" [ngClass]="{'is-invalid': t.trainername.invalid && t.trainername.touched,'is-valid': t.trainername.valid && 
+                            (t.trainername.dirty || t.trainername.touched)}" />
+                        <div *ngIf="t.trainername.errors" class="invalid-feedback">
+                            <div *ngIf="t.trainername.errors.required">
+                                Please enter trainer name
+                            </div>
+                            <div *ngIf="t.trainername.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="trainerdesignation">Trainer Designation:&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Trainer Designation"
+                            formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize"
+                            [ngClass]="{'is-invalid': t.trainerdesignation.invalid && t.trainerdesignation.touched,'is-valid': t.trainerdesignation.valid && 
+                            (t.trainerdesignation.dirty || t.trainerdesignation.touched)}" />
+                        <div *ngIf="t.trainerdesignation.errors" class="invalid-feedback">
+                            <div *ngIf="t.trainerdesignation.errors.required">
+                                Please enter trainer designation
+                            </div>
+                            <div *ngIf="t.trainerdesignation.errors.minlength">
+                                Minimum length should be 3
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="trainingtopic">Topic of training :&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <!-- (change)="trainingtopic($event.target.value)" -->
+                        <select class="form-select" formControlName="trainingtopic" id="trainingtopic" [ngClass]="{'is-invalid': t.trainingtopic.invalid && t.trainingtopic.touched,
+                          'is-valid': t.trainingtopic.valid && (t.trainingtopic.dirty || t.trainingtopic.touched) }">
+                            <option value="">-- Select Training Topic --</option>
+                            <!-- <option *ngFor="let trainingtopic of trainingtopicList" value="{{trainingtopic.regionMasterId}}">
+                                {{region.regionName}}
+                            </option> -->
+                        </select>
+                        <div *ngIf="t.trainingtopic.errors" class="invalid-feedback">
+                            <div *ngIf="t.trainingtopic.errors.required">Training Topic selection is required</div>
                         </div>
                     </div>
                 </div>

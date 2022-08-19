@@ -48,6 +48,10 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+    this.sidebarService.subMenuList.find(item => item.functionShortName == 'Household Info')?.subMenuDetailList.find(item => item.
+      subFunctionMasterId == 89 || item.subFunctionMasterId == 90 || item.subFunctionMasterId == 91 || item.subFunctionMasterId == 92)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? this.route.navigate(['/central-register/view']) : this.route.navigate(['/error']);
+
     this.localStorageData = JSON.parse(localStorage.getItem("datas"));
     console.log(this.localStorageData, 'localstorage');
     this.createForm();

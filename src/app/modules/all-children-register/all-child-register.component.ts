@@ -77,7 +77,8 @@ export class AllChildRegisterComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'All Children Register')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 105 || item.subFunctionMasterId == 106 || item.subFunctionMasterId == 107
+        || item.subFunctionMasterId == 108)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/acr']) : this.router.navigate(['/error']);
 
     this.createMode = this.sidebarService.subMenuList

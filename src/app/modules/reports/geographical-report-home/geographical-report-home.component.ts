@@ -36,26 +36,25 @@ export class GeographicalReportHomeComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Reports')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Geographical Outreach Report')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 161 || item.subFunctionMasterId == 162 || item.subFunctionMasterId == 163 || item.subFunctionMasterId == 164)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/report/geographicalReport']) : this.router.navigate(['/error']);
-  
-}
+  }
 
-collaps(value) {
-  const dialogRef = this.dialog.open(GeographicalStateWiseComponent, {
-    width: '700px',
-    height: '400px',
-    data: { projectMasterId: value }
-  });
+  collaps(value) {
+    const dialogRef = this.dialog.open(GeographicalStateWiseComponent, {
+      width: '700px',
+      height: '400px',
+      data: { projectMasterId: value }
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-  });
+    dialogRef.afterClosed().subscribe(result => {
+    });
 
-}
+  }
 
-showError(message) {
-  this.toaster.error(message, 'Error', {
-    timeOut: 3000,
-  });
-}
+  showError(message) {
+    this.toaster.error(message, 'Error', {
+      timeOut: 3000,
+    });
+  }
 }

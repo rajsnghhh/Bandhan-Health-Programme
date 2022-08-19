@@ -43,7 +43,7 @@ export class UserTableComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 1 || item.subFunctionMasterId == 2 || item.subFunctionMasterId == 3 || item.subFunctionMasterId == 4)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/user']) : this.router.navigate(['/error']);
 
     this.createAccess = this.sidebarService.subMenuList

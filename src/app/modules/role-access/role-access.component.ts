@@ -36,7 +36,7 @@ export class RoleAccessComponent implements OnInit {
 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
-      .find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Role Access')?.accessDetailList
+      .find(item => item.subFunctionMasterId == 5 || item.subFunctionMasterId == 6 || item.subFunctionMasterId == 7 || item.subFunctionMasterId == 8)?.accessDetailList
       .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/role-access']) : this.router.navigate(['/error']);
   }
 
