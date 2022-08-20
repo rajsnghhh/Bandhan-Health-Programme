@@ -142,7 +142,7 @@
                           <th>Name</th>
                           <th>Age</th>
                           <th>Current Pregnancy Status</th>
-                          <th>Action</th>
+                          <th *ngIf="createMode || updateMode">Action</th>
                         </tr>
                       </thead>
 
@@ -155,7 +155,7 @@
                           <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
                           <td>{{item.age}}</td>
                           <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                          <td><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
+                          <td *ngIf="createMode || updateMode"><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
                         </tr>
                       </tbody>
                     </table>
