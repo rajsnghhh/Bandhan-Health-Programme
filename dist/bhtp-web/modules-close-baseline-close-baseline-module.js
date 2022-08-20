@@ -344,7 +344,7 @@ class CloseBaselineComponent {
             console.log(this.regionList);
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Close Baseline Survey Activity for a branch')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/close-baseline']) : this.router.navigate(['/error']);
+            .find(functionMasterId => functionMasterId.functionMasterId == 4)) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 207)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/close-baseline']) : this.router.navigate(['/error']);
     }
     createForm() {
         this.closeBaselineForm = this.fb.group({

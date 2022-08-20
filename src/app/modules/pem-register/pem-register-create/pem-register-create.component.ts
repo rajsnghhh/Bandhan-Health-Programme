@@ -129,13 +129,14 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
           })
         }
       });
+
+      this.sidebarService.subMenuList
+        .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+        .find(item => item.subFunctionMasterId == 113 || item.subFunctionMasterId == 114 || item.subFunctionMasterId == 115 || item.subFunctionMasterId == 116)?.accessDetailList
+        .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pem-register/create']) : this.router.navigate(['/error']);
+
+
     }
-
-    this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(item => item.subFunctionMasterId == 113 || item.subFunctionMasterId == 114 || item.subFunctionMasterId == 115 || item.subFunctionMasterId == 116)?.accessDetailList
-      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pem-register/create']) : this.router.navigate(['/error']);
-
 
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList

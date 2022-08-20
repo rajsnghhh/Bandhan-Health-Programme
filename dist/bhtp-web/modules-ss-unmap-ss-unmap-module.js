@@ -267,7 +267,7 @@ class SsUnmapComponent {
             console.log(this.regionList);
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap SS from User and All HH')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/ss-unmap']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 194)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/ss-unmap']) : this.router.navigate(['/error']);
     }
     changeRegion(regionId) {
         console.log(regionId);

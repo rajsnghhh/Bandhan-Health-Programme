@@ -611,11 +611,11 @@ class SinglePwListComponent {
             });
         });
         this.updateMode = ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
         this.deleteMode = ((_f = (_e = (_d = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _d === void 0 ? void 0 : _d.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)) === null || _e === void 0 ? void 0 : _e.accessDetailList.find(accessType => accessType.accessType == 'delete')) === null || _f === void 0 ? void 0 : _f.accessType) ? true : false;
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _d === void 0 ? void 0 : _d.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _e === void 0 ? void 0 : _e.accessDetailList.find(accessType => accessType.accessType == 'delete')) === null || _f === void 0 ? void 0 : _f.accessType) ? true : false;
         this.createMode = ((_j = (_h = (_g = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _g === void 0 ? void 0 : _g.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 129)) === null || _h === void 0 ? void 0 : _h.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _j === void 0 ? void 0 : _j.accessType) ? true : false;
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _g === void 0 ? void 0 : _g.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _h === void 0 ? void 0 : _h.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _j === void 0 ? void 0 : _j.accessType) ? true : false;
     }
     /* get the all Pregnant Women List */
     getPregnantWomenList(villageMasterId = null) {
@@ -1298,7 +1298,7 @@ class PwRegisterComponent {
     ngOnInit() {
         var _a, _b, _c;
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Pregnant Woman Register')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
         this.activatedRoute.queryParams.subscribe(params => {
             this.setStatus = params['status'];
             this.familyID = params['familyID'];
@@ -2410,7 +2410,7 @@ class PwViewComponent {
                     }
                     else {
                         this.dialogRef.close();
-                        this.showError('Error');
+                        this.showError(res.message);
                     }
                 }, error => {
                     this.dialogRef.close();
@@ -2460,7 +2460,7 @@ class PwViewComponent {
                     }
                     else {
                         this.dialogRef.close();
-                        this.showError('Error');
+                        this.showError(res.message);
                     }
                 }, error => {
                     this.dialogRef.close();

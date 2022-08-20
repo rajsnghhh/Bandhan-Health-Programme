@@ -383,7 +383,7 @@ class BeneficiaryInfoComponent {
             this.projectList = res.responseObject.projectList;
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Reports')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Beneficiary Information Report')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/report/beneficiaryInfo']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Reports')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 195 || item.subFunctionMasterId == 196 || item.subFunctionMasterId == 197 || item.subFunctionMasterId == 198)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/report/beneficiaryInfo']) : this.router.navigate(['/error']);
     }
     createForm() {
         this.locationForm = this.fb.group({
@@ -1251,7 +1251,7 @@ class GeographicalReportHomeComponent {
             this.loader = true;
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Reports')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Geographical Outreach Report')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/report/geographicalReport']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Reports')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 161 || item.subFunctionMasterId == 162 || item.subFunctionMasterId == 163 || item.subFunctionMasterId == 164)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/report/geographicalReport']) : this.router.navigate(['/error']);
     }
     collaps(value) {
         const dialogRef = this.dialog.open(_geographical_state_wise_geographical_state_wise_component__WEBPACK_IMPORTED_MODULE_1__["GeographicalStateWiseComponent"], {

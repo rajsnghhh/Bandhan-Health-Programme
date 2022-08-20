@@ -144,7 +144,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       gram: [this.localStorageData?.villageID ? this.localStorageData?.villageID : '', Validators.required],
     });
 
-    if (this.localStorageData) {
+    if (this.localStorageData != null) {
       this.centralViewForm.markAllAsTouched();
     }
   }

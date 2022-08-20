@@ -353,7 +353,9 @@ class CentralRegisterViewComponent {
         this.searchFullscreen = this.validationService.val;
     }
     ngOnInit() {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e, _f;
+        ((_c = (_b = (_a = this.sidebarService.subMenuList.find(item => item.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.
+            subFunctionMasterId == 89 || item.subFunctionMasterId == 90 || item.subFunctionMasterId == 91 || item.subFunctionMasterId == 92)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.route.navigate(['/central-register/view']) : this.route.navigate(['/error']);
         this.localStorageData = JSON.parse(localStorage.getItem("datas"));
         console.log(this.localStorageData, 'localstorage');
         this.createForm();
@@ -361,7 +363,7 @@ class CentralRegisterViewComponent {
             if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
                 let Dto = {
                     dataAccessDTO: this.http.dataAccessDTO,
-                    branchId: ((_a = this.localStorageData) === null || _a === void 0 ? void 0 : _a.branchID) ? (_b = this.localStorageData) === null || _b === void 0 ? void 0 : _b.branchID : (_c = this.sidebarService) === null || _c === void 0 ? void 0 : _c.branchId
+                    branchId: ((_d = this.localStorageData) === null || _d === void 0 ? void 0 : _d.branchID) ? (_e = this.localStorageData) === null || _e === void 0 ? void 0 : _e.branchID : (_f = this.sidebarService) === null || _f === void 0 ? void 0 : _f.branchId
                 };
                 if (this.sidebarService.RoleDTOName.indexOf('HCO') != -1 || this.sidebarService.RoleDTOName.indexOf('TL') != -1) {
                     this.centralService.villagesOfBranch(Dto).subscribe((res) => {

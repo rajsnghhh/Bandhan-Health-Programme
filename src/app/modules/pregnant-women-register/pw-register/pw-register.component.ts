@@ -57,11 +57,6 @@ export class PwRegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-      .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
-      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
-
     this.activatedRoute.queryParams.subscribe(params => {
       this.setStatus = params['status'];
       this.familyID = params['familyID'];
@@ -96,6 +91,11 @@ export class PwRegisterComponent implements OnInit {
             }
           })
         }
+
+        this.sidebarService.subMenuList
+        .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+        .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
+        .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
       });
     }
   }

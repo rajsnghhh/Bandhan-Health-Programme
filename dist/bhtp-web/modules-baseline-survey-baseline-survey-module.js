@@ -953,7 +953,7 @@ class BaselineCreateComponent {
     ngOnInit() {
         var _a, _b, _c;
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Baseline Survey')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/Baseline-Survey/create']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 65 || item.subFunctionMasterId == 66 || item.subFunctionMasterId == 67 || item.subFunctionMasterId == 68)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/Baseline-Survey/create']) : this.router.navigate(['/error']);
         this.getMinDate();
         this.createForm();
         this.childDetails.childInfo = [];
@@ -4093,7 +4093,7 @@ class BaselineViewComponent {
     ngOnInit() {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Household Info')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'Household Info')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 73 || item.subFunctionMasterId == 74 || item.subFunctionMasterId == 75 || item.subFunctionMasterId == 76)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
         this.createForm();
         this.householdFamDetails();
         this.sidebarService.checkRoledetailDTO().then((res) => {

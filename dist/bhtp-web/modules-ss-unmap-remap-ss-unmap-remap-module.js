@@ -393,7 +393,7 @@ class SsUnmapRemapComponent {
             console.log(this.regionList);
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'Unmap/ Remap SS from one or multiple households of the same user')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/ss-unmap-remap']) : this.router.navigate(['/error']);
+            .find(functionMasterId => functionMasterId.functionMasterId == 3)) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 203)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/ss-unmap-remap']) : this.router.navigate(['/error']);
     }
     createForm() {
         this.ssUnmapRemapForm = this.fb.group({

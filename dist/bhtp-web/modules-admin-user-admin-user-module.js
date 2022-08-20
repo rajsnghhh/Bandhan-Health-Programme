@@ -199,7 +199,7 @@ class UserTableComponent {
             this.regionList = res.responseObject;
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/user']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 1 || item.subFunctionMasterId == 2 || item.subFunctionMasterId == 3 || item.subFunctionMasterId == 4)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/user']) : this.router.navigate(['/error']);
         this.createAccess = ((_f = (_e = (_d = this.sidebarService.subMenuList
             .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _d === void 0 ? void 0 : _d.subMenuDetailList.find(subFunctionMasterId => subFunctionMasterId.subFunctionMasterId == 1)) === null || _e === void 0 ? void 0 : _e.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _f === void 0 ? void 0 : _f.accessType) ? true : false;
         this.updateAccess = ((_j = (_h = (_g = this.sidebarService.subMenuList
@@ -1187,14 +1187,14 @@ class UserCreateFormComponent {
             mobileNumberSecondary: this.userForm.value.secondaryMobile,
             currentBranchId: (this.data.createMode == true)
                 ? this.userForm.value.branch || this.userForm.value.baseBranch
-                : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
+                : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.currentBranchId : this.userForm.value.branch || this.userForm.value.baseBranch,
             roleShortName: (this.data.createMode == true)
                 ? this.userForm.value.userRole
-                : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
+                : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole,
             roleMasterId: (_a = this.roleList.find(role => role.roleShortName ==
                 ((this.data.createMode == true)
                     ? this.userForm.value.userRole
-                    : (this.data.userData.activeHouseholdCount != 0 && this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole))) === null || _a === void 0 ? void 0 : _a.roleMasterId,
+                    : (this.data.userData.activeHouseholdCount != 0 || this.data.userData.activeSsCount != 0) ? this.data.userData.roleShortName : this.userForm.value.userRole))) === null || _a === void 0 ? void 0 : _a.roleMasterId,
             branchList: (((_b = this.userForm.value.userRole) === null || _b === void 0 ? void 0 : _b.indexOf('HCO')) != -1) ?
                 this.branch : null,
             regionList: (((_c = this.userForm.value.userRole) === null || _c === void 0 ? void 0 : _c.indexOf('HCO')) != -1 || ((_d = this.userForm.value.userRole) === null || _d === void 0 ? void 0 : _d.indexOf('AC')) != -1) ?

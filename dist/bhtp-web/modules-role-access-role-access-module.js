@@ -178,7 +178,7 @@ class RoleAccessComponent {
         var _a, _b, _c;
         this.createForm();
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Role Access')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/role-access']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 5 || item.subFunctionMasterId == 6 || item.subFunctionMasterId == 7 || item.subFunctionMasterId == 8)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/role-access']) : this.router.navigate(['/error']);
     }
     createForm() {
         this.roleAccessForm = this.fb.group({

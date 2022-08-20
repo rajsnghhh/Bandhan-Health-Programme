@@ -198,7 +198,7 @@ class UserHhSsRemapHomeComponent {
             }
         });
         ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(subFunctionShortName => subFunctionShortName.subFunctionShortName == 'User Household SS Remap')) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/user-hh-ss-remap']) : this.router.navigate(['/error']);
+            .find(functionShortName => functionShortName.functionShortName == 'System Administration')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 185 || item.subFunctionMasterId == 189)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'update')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/user-hh-ss-remap']) : this.router.navigate(['/error']);
     }
     createForm() {
         this.locationForm = this.fb.group({
