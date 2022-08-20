@@ -50,6 +50,8 @@ export class PwRegisterComponent implements OnInit {
   blockID: any;
   gpID: any;
   villageID: any;
+  updateMode: boolean;
+  createMode: boolean;
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
@@ -92,10 +94,20 @@ export class PwRegisterComponent implements OnInit {
           })
         }
 
+        this.updateMode = this.sidebarService.subMenuList
+          .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+          .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
+          .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+        this.createMode = this.sidebarService.subMenuList
+          .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+          .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
+          .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
         this.sidebarService.subMenuList
-        .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
-        .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
-        .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
+          .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+          .find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)?.accessDetailList
+          .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
       });
     }
   }
