@@ -1296,9 +1296,6 @@ class PwRegisterComponent {
         this.loader = true;
     }
     ngOnInit() {
-        var _a, _b, _c;
-        ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
         this.activatedRoute.queryParams.subscribe(params => {
             this.setStatus = params['status'];
             this.familyID = params['familyID'];
@@ -1316,6 +1313,7 @@ class PwRegisterComponent {
         else {
             this.createForm();
             this.sidebarService.checkRoledetailDTO().then((res) => {
+                var _a, _b, _c;
                 if (res.regionBranchHide) {
                     this.regionList = res.region;
                     this.regionBranchHide = res.regionBranchHide;
@@ -1332,6 +1330,8 @@ class PwRegisterComponent {
                         }
                     });
                 }
+                ((_c = (_b = (_a = this.sidebarService.subMenuList
+                    .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 129 || item.subFunctionMasterId == 130 || item.subFunctionMasterId == 131 || item.subFunctionMasterId == 132)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/pw-register']) : this.router.navigate(['/error']);
             });
         }
     }

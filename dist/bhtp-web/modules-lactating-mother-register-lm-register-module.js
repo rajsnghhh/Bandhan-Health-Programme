@@ -1902,7 +1902,7 @@ class LmViewComponent {
         this.searchFullscreen = this.validationService.val;
     }
     ngOnInit() {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c;
         this.activatedRoute.queryParams.subscribe(params => {
             this.setStatus = params['status'];
             this.familyID = params['familyID'];
@@ -1921,6 +1921,7 @@ class LmViewComponent {
             this.createForm();
             this.getLactatingMotherList();
             this.sidebarService.checkRoledetailDTO().then((res) => {
+                var _a, _b, _c;
                 if (res.regionBranchHide) {
                     this.regionList = res.region;
                     this.regionBranchHide = res.regionBranchHide;
@@ -1937,12 +1938,12 @@ class LmViewComponent {
                         }
                     });
                 }
+                ((_c = (_b = (_a = this.sidebarService.subMenuList
+                    .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/lmr']) : this.router.navigate(['/error']);
             });
         }
-        ((_c = (_b = (_a = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'view')) === null || _c === void 0 ? void 0 : _c.accessType) ? this.router.navigate(['/lmr']) : this.router.navigate(['/error']);
-        this.createUpdateMode = ((_f = (_e = (_d = this.sidebarService.subMenuList
-            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _d === void 0 ? void 0 : _d.subMenuDetailList.find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)) === null || _e === void 0 ? void 0 : _e.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _f === void 0 ? void 0 : _f.accessType) ? true : false;
+        this.createUpdateMode = ((_c = (_b = (_a = this.sidebarService.subMenuList
+            .find(functionShortName => functionShortName.functionShortName == 'Registers')) === null || _a === void 0 ? void 0 : _a.subMenuDetailList.find(item => item.subFunctionMasterId == 121 || item.subFunctionMasterId == 122 || item.subFunctionMasterId == 123 || item.subFunctionMasterId == 124)) === null || _b === void 0 ? void 0 : _b.accessDetailList.find(accessType => accessType.accessType == 'create')) === null || _c === void 0 ? void 0 : _c.accessType) ? true : false;
     }
     /* on change Region dropdown getting Branch list */
     changeRegion(region) {
