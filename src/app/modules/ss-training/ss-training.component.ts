@@ -25,6 +25,7 @@ export class SsTrainingComponent implements OnInit {
   setFromDate: any;
   setToDate: any;
   durationValue: any;
+  branchID: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig) {
@@ -40,13 +41,14 @@ export class SsTrainingComponent implements OnInit {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
       } else {
+        this.branchID = res.branchId;
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
         let Dto = {
           dataAccessDTO: {
             userId: dataAccessDTO.userName,
             userName: dataAccessDTO.userId,
           },
-          branchId: res.branchId
+          branchId: this.branchID
         }
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
@@ -109,7 +111,9 @@ export class SsTrainingComponent implements OnInit {
   }
 
   changeBranch(branchId) {
-    console.log(branchId);
+    this.branchID = branchId;
+    console.log(this.branchID);
+
   }
 
   viewParticipantsDetails(detailsOfParticipants) {
@@ -124,8 +128,13 @@ export class SsTrainingComponent implements OnInit {
     this.modalReference?.close();
   }
 
-  editSSTrainingEvents() {
+  editSSTrainingEvents(SSTraining) {
     console.log('editSSTrainingEvents');
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(SSTraining, {
+      windowClass: 'SSTraining',
+    });
+    this.ssTrainingFormModal();
   }
 
   deleteSSTrainingEvents() {
@@ -134,13 +143,12 @@ export class SsTrainingComponent implements OnInit {
 
 
   createSSTrainingEvent(SSTraining) {
-    console.log(this.viewSSTrainingEventForm.value.branch, 'branchId');
+    console.log(this.branchID, 'branchId');
     this.modalContent = '';
     this.modalReference = this.modalService.open(SSTraining, {
       windowClass: 'SSTraining',
     });
     this.ssTrainingFormModal();
-    this.getMinDate();
     this.createSSTrainingEventForm.controls['duration'].disable();
     this.createSSTrainingEventForm.controls['toDate'].disable();
     if (!this.createSSTrainingEventForm.value.trainingType) {
@@ -166,6 +174,7 @@ export class SsTrainingComponent implements OnInit {
 
   TrainingType(e) {
     console.log(e);
+    this.getMinDate();
 
     if (e == 1) {
       this.createSSTrainingEventForm.controls.duration.setValue(6);

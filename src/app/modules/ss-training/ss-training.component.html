@@ -5,8 +5,8 @@
 
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">SS Training Events</h2>
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="viewSSTrainingEventForm.value.branch">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                        <!--   *ngIf="viewSSTrainingEventForm.value.branch" -->
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
@@ -84,7 +84,7 @@
                                             style="cursor: pointer; color: blue;">View</td>
                                         <td>
                                             <i class="fas fa-edit" title="Edit SS Training Events"
-                                                (click)="editSSTrainingEvents()"> </i>
+                                                (click)="editSSTrainingEvents(SSTraining)"> </i>
                                             <i class="fas fa-trash" title="Delete SS Training Events"
                                                 (click)="deleteSSTrainingEvents()"></i>
                                         </td>

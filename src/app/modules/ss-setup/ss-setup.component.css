@@ -12,10 +12,12 @@
 .form-group {
   margin-bottom: 1.5rem;
 }
+
 .search_inner button {
   padding-right: 1px;
-  margin-left: 374px;
+  margin-left: 4px;
   height: 63%;
+  margin-top: 14px;
 }
 
 .search_inner_fullscreen button {
@@ -34,27 +36,45 @@
 }
 
 .search_inner input {
-  width: 70%;
-  margin-left: 465px;
+  width: 112%;
+  margin-top: 20px;
 }
 
 .search_inner_fullscreen input {
-  width: 74%;
-  margin-left: 625px;
+  width: 132%;
+  margin-left: 5px;
   font-size: 13px;
   height: 40px;
   border-radius: 5px;
   padding-left: 55px;
   border: 1px solid #2daab8;
   padding-right: 15px;
-}
-
-.fa {
-  margin-left: -75px;
+  margin-top: 18px;
 }
 
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: 80px;
+  margin-left: -14px;
+  font-size: 18px;
+  margin-top: -5px;
+}
+
+.fa {
+  margin-left: -1335px;
+  margin-top: 22px;
+}
+
+.fa-plus-circle {
+  color: #499;
+  font-size: 20px;
+  margin-left: 640px;
+  cursor: pointer;
+}
+
+.fa-plus-circles {
+  color: #499;
+  font-size: 20px;
+  margin-left: 820px;
+  cursor: pointer;
 }
