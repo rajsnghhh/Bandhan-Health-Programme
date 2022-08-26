@@ -39,3 +39,42 @@
   letter-spacing: 1px;
   font-size: 14px;
 }
+
+.nav_bar{
+  background-color: #ffff;
+  margin-left: -330px; 
+  margin-bottom: 40px; 
+  width: 220%;
+  padding-left: 28%;
+}
+.nav_header{
+  color: #499; 
+  font-size: 30px; 
+  margin-left: 16px;
+  padding-right: 34%;
+}
+.nav_user_icon{
+  font-size:40px;
+  color: #8b4545;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .nav_bar{
+    background-color: #ffff;
+    margin-left: -460px; 
+    margin-bottom: 40px; 
+    width: 160%;
+    padding-left: 28%;
+  }
+  .nav_header{
+    color: #499; 
+    font-size: 30px; 
+    margin-left: 300px;
+    padding-right: 34%;
+  }
+  .nav_user_icon{
+    font-size:40px;
+    color: #8b4545;
+    margin-left: -20px;
+  }
+}
