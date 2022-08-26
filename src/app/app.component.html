@@ -6,12 +6,11 @@
     <section class=" dashboard_part"
         [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'">
 
-        <mat-toolbar *ngIf="user"
-            style="background-color: #ffff;margin-left: -330px; margin-bottom: 40px; width: 220%;padding-left: 28%;">
-            <span style="color: #499; font-size: 30px; margin-left: 16px;padding-right: 34%;">Bandhan Health Program
+        <mat-toolbar *ngIf="user" class="nav_bar">
+            <span class="nav_header">Bandhan Health Program
             </span>
 
-            <i class="fas fa-user-circle" style="font-size:40px;color: #8b4545;" mat-button [matMenuTriggerFor]="menu"
+            <i class="fas fa-user-circle nav_user_icon" mat-button [matMenuTriggerFor]="menu"
                 title="My Profile"></i>
 
             <mat-menu #menu="matMenu">
