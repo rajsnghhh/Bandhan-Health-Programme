@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-@media (max-width:450px) {
+@media (max-width:992px) {
   .webaccess{
     display: none;
   }
@@ -22,7 +22,7 @@
   }
 }
 
-@media (min-width:450px) {
+@media (min-width:993px) {
   .notSupport{
     display: none;
   }
@@ -63,8 +63,8 @@
     background-color: #ffff;
     margin-left: -460px; 
     margin-bottom: 40px; 
-    width: 160%;
-    padding-left: 28%;
+    width: 166%;
+    padding-left: 21%;
   }
   .nav_header{
     color: #499; 
@@ -75,6 +75,6 @@
   .nav_user_icon{
     font-size:40px;
     color: #8b4545;
-    margin-left: -20px;
+    margin-left: 20px;
   }
 }
