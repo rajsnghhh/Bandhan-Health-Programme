@@ -35,7 +35,7 @@ export const environment = {
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
 
   // New Production Server
-  // apiUrl: 'http://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
+  // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
 
   // Soumen Machine
   // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'

@@ -447,7 +447,7 @@ class CentralRegisterViewComponent {
             gp: [((_g = this.localStorageData) === null || _g === void 0 ? void 0 : _g.gpID) ? (_h = this.localStorageData) === null || _h === void 0 ? void 0 : _h.gpID : '', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
             gram: [((_j = this.localStorageData) === null || _j === void 0 ? void 0 : _j.villageID) ? (_k = this.localStorageData) === null || _k === void 0 ? void 0 : _k.villageID : '', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
         });
-        if (this.localStorageData) {
+        if (this.localStorageData != null) {
             this.centralViewForm.markAllAsTouched();
         }
     }

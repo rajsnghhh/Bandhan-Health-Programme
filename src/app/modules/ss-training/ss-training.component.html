@@ -2,14 +2,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white_box QA_section mb_30">
-                <h2 class="page-title">Swasthya Sahayika Training</h2>
-                <div class="row">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">SS Training Events</h2>
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end">
-                        <button class="btn btn-primary" (click)="createSSTrainingEvent(SSTraining)">Create</button>
+                        <!--   *ngIf="viewSSTrainingEventForm.value.branch" -->
+                        <i class="fas fa-plus-circle" style="cursor: pointer"
+                            (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
+                            Training Event</i>
                     </div>
                 </div>
 
-                <form class="form-signin" [formGroup]="ssTrainingForm">
+                <form class="form-signin" [formGroup]="viewSSTrainingEventForm">
 
                     <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
@@ -44,97 +48,192 @@
 
                     </div>
                 </form>
+
+                <div class="white_box_tittle list_header">
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                                <thead id="header-fixed">
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Type of<br> Training</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>SS Participated</th>
+                                        <th>SS Completed<br> Training</th>
+                                        <th>Status</th>
+                                        <th>Participants<br> Details</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Basic</td>
+                                        <td>23-08-2022</td>
+                                        <td>25-08-2022</td>
+                                        <td>7</td>
+                                        <td>2</td>
+                                        <td>Ongoing </td>
+                                        <td (click)="viewParticipantsDetails(detailsOfParticipants)"
+                                            style="cursor: pointer; color: blue;">View</td>
+                                        <td>
+                                            <i class="fas fa-edit" title="Edit SS Training Events"
+                                                (click)="editSSTrainingEvents(SSTraining)"> </i>
+                                            <i class="fas fa-trash" title="Delete SS Training Events"
+                                                (click)="deleteSSTrainingEvents()"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #detailsOfParticipants>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-md">
+                    <h3 class="modal-title" id="modal-basic-title">Participants Details</h3>
+                </div>
+                <div class="col-md">
+                    <span class="close" (click)="detailsOfParticipantsModalDismiss()"
+                        style="cursor: pointer;font-size: 35px;">&times;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="white_box_tittle list_header">
+
+                <div class="QA_table ">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                        <table
+                            class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                            role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                            <thead id="header-fixed">
+                                <tr>
+                                    <th>SS Name</th>
+                                    <th>Branch</th>
+                                    <th>Village</th>
+                                    <th>Staff In Charge</th>
+                                    <th>Attendance</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align: center;">
+                                <tr>
+                                    <td>Rashmi Singh</td>
+                                    <td>Mednipur</td>
+                                    <td>Kankalitala</td>
+                                    <td>Rony Roy</td>
+                                    <td>Monday</td>
+                                    <td>Ongoing </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
-</div>
+
+</ng-template>
+
 
 <ng-template #SSTraining>
 
     <div class="modal-content">
         <div class="modal-header">
-
             <div class="row">
-                <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Schedule SS Training</h3>
-                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit Village</h3> -->
+                <div class="col-md">
+                    <h3 class="modal-title" id="modal-basic-title">Create SS Training</h3>
+                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit SS Training</h3> -->
                 </div>
-
-                <div class="col-md-2">
+                <div class="col-md">
                     <span class="close" (click)="ssTrainingModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
             </div>
-
         </div>
 
         <div class="modal-body">
-            <form class="form-signin" [formGroup]="ssTrainingScheduleForm">
+            <form class="form-signin" [formGroup]="createSSTrainingEventForm">
                 <div class="row">
                     <div class="form-group col-md">
                         <label for="trainingType">Type of Training :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
-                        <!-- (change)="TrainingType($event.target.value)" -->
-                        <select class="form-select" formControlName="trainingType" id="trainingType" [ngClass]="{'is-invalid': t.trainingType.invalid && t.trainingType.touched,
-                          'is-valid': t.trainingType.valid && (t.trainingType.dirty || t.trainingType.touched) }">
+                        <select class="form-select" formControlName="trainingType" id="trainingType" [ngClass]="{'is-invalid':
+                         t.trainingType.invalid && t.trainingType.touched,
+                          'is-valid': t.trainingType.valid && (t.trainingType.dirty || t.trainingType.touched) }"
+                            (change)="TrainingType($event.target.value)">
                             <option value="">-- Select Training Type --</option>
+                            <option value="1">Basic Training</option>
+                            <option value="2">Technical Training</option>
+                            <option value="3">Refreshers Training</option>
+                            <option value="4">Follow Up training</option>
                             <!-- <option *ngFor="let trainingType of trainingTypeList" value="{{trainingType.regionMasterId}}">
                                 {{region.regionName}}
                             </option> -->
                         </select>
                         <div *ngIf="t.trainingType.errors" class="invalid-feedback">
-                            <div *ngIf="t.trainingType.errors.required">trainingType selection is required</div>
+                            <div *ngIf="t.trainingType.errors.required">Type Of Training selection is required</div>
                         </div>
                     </div>
 
                     <div class="form-group col-md">
-                        <label for="duration">Duration:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" placeholder="duration " formControlName="duration"
-                            maxlength="45" style="text-transform: capitalize" [ngClass]="{'is-invalid': t.duration.invalid && t.duration.touched,'is-valid': t.duration.valid && 
-                            (t.duration.dirty || t.duration.touched)}" />
-                        <div *ngIf="t.duration.errors" class="invalid-feedback">
-                            <div *ngIf="t.duration.errors.required">
-                                duration Name is required
-                            </div>
-                            <div *ngIf="t.duration.errors.minlength">
-                                Minimum length should be 3
-                            </div>
-                        </div>
+                        <label for="duration">Duration:</label>
+                        <input type="text" class="form-control" placeholder="Training Duration"
+                            formControlName="duration">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md">
-                        <label for="trainername">Trainer Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="text" class="form-control" placeholder="Trainer Name" formControlName="trainername"
-                            maxlength="45" style="text-transform: capitalize" [ngClass]="{'is-invalid': t.trainername.invalid && t.trainername.touched,'is-valid': t.trainername.valid && 
-                            (t.trainername.dirty || t.trainername.touched)}" />
-                        <div *ngIf="t.trainername.errors" class="invalid-feedback">
-                            <div *ngIf="t.trainername.errors.required">
-                                Please enter trainer name
-                            </div>
-                            <div *ngIf="t.trainername.errors.minlength">
-                                Minimum length should be 3
-                            </div>
+                        <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="date" class="form-control" formControlName="fromDate"
+                            (keydown)="restrictTypeOfDate()" [min]="setFromDate"
+                            (change)="expectToDate($event.target.value)"
+                            [ngClass]="{'is-invalid': t.fromDate.invalid &&
+                             t.fromDate.touched, 'is-valid': t.fromDate.valid && (t.fromDate.dirty || t.fromDate.touched) }">
+                        <div *ngIf="t.fromDate.errors" class="invalid-feedback">
+                            <div *ngIf="t.fromDate.errors.required">From Date selection is required</div>
                         </div>
                     </div>
 
                     <div class="form-group col-md">
-                        <label for="trainerdesignation">Trainer Designation:&nbsp;<span
-                                class="text-danger">*&nbsp;</span></label>
+                        <label for="toDate">To Date :</label>
+                        <input type="date" class="form-control" formControlName="toDate" [min]="setToDate">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="trainername">Trainer Name:</label>
+                        <input type="text" class="form-control" placeholder="Trainer Name" formControlName="trainername"
+                            maxlength="45" style="text-transform: capitalize">
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="trainerdesignation">Trainer Designation:</label>
                         <input type="text" class="form-control" placeholder="Trainer Designation"
-                            formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize"
-                            [ngClass]="{'is-invalid': t.trainerdesignation.invalid && t.trainerdesignation.touched,'is-valid': t.trainerdesignation.valid && 
-                            (t.trainerdesignation.dirty || t.trainerdesignation.touched)}" />
-                        <div *ngIf="t.trainerdesignation.errors" class="invalid-feedback">
-                            <div *ngIf="t.trainerdesignation.errors.required">
-                                Please enter trainer designation
-                            </div>
-                            <div *ngIf="t.trainerdesignation.errors.minlength">
-                                Minimum length should be 3
-                            </div>
-                        </div>
+                            formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize">
                     </div>
 
                     <div class="form-group col-md">

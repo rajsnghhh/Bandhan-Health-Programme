@@ -6,19 +6,10 @@
 
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Create Swasthya Sahayika</h2>
-
-                    <div class="box_right d-flex lms_block col-md-6" *ngIf="branchId || branchID">
-                        <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
-                                <form active="#">
-                                    <div class="search_field">
-                                        <input type="text" name="search" placeholder="Search SS Info here..."
-                                            [(ngModel)]="searchText">
-                                    </div>
-                                    <button type="submit"> <i class="fa fa-search"></i> </button>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="form-group col-md" *ngIf="(branchID || branchId) && createMode">
+                        <i class="fas fa-plus-circle"
+                            [ngClass]=" searchFullscreen ? 'fa-plus-circles' : ' fa-plus-circle' "
+                            (click)="createSwasthyaSahayika(createSS)">&nbsp;Create SS</i>
                     </div>
                 </div>
 
@@ -58,7 +49,8 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md" *ngIf="branchId || branchID">
+
+                        <div class="form-group col-md-6" *ngIf="branchId || branchID">
                             <label for="staffWiseList">Staff Wise SS List:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="staffWiseSSList($event.target.value)"
@@ -76,12 +68,18 @@
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md" *ngIf="(branchID || branchId) && createMode"
-                            style="display: flex; justify-content:flex-end">
-                            <button class="btn btn-primary" (click)="createSwasthyaSahayika(createSS)">Create</button>
+                        <div class="box_right d-flex lms_block col-md-6" *ngIf="branchId || branchID">
+                            <div class="serach_field_2">
+                                <div [ngClass]=" searchFullscreen ? 'search_inner_fullscreen ' : ' search_inner' ">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search" placeholder="Search SS Info here..."
+                                                [(ngModel)]="searchText">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
