@@ -10,12 +10,11 @@
             <span class="nav_header">Bandhan Health Program
             </span>
 
-            <i class="fas fa-user-circle nav_user_icon" mat-button [matMenuTriggerFor]="menu"
-                title="My Profile"></i>
+            <i class="fas fa-user-circle nav_user_icon" mat-button [matMenuTriggerFor]="menu" title="My Profile"></i>
 
             <mat-menu #menu="matMenu">
                 <div class="userMenu">
-                    <div class="userMenu" style="background-color: #499;padding: 5px 25px;">
+                    <div class="userMenu" style="background-color: #499; padding: 10px 25px; margin-top: -15px;">
                         <span style="color: #ffff;font-weight: 500;font-size: medium;"> Welcome </span>
                         <span style="color: #ffff;font-weight: 500;font-size: medium;">
                             {{user.responseObject.userdetailDTO.userFirstName}}

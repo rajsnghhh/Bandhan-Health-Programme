@@ -834,6 +834,7 @@ table.dataTable tbody td {
   /* line 479, H:/admin_project/hospital/scss/_reset.scss */
   .white_box {
     padding: 30px 20px;
+    width: 102%;
   }
 }
 
@@ -3718,7 +3719,8 @@ table.dataTable {
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   /* line 2, H:/admin_project/hospital/scss/_sidebar.scss */
   .sidebar {
-    width: 25%;
+    width: 18%;
+    height: 100%;
   }
 }
 

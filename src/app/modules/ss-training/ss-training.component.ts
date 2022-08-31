@@ -25,7 +25,19 @@ export class SsTrainingComponent implements OnInit {
   setFromDate: any;
   setToDate: any;
   durationValue: any;
+  regionName: any;
+  regionID: any;
   branchID: any;
+  ssEventList: Array<any> = [];
+  eventSSList: Array<any> = [];
+  ssList: Array<any> = [];
+  ssTrainingType: Array<any> = [];
+  ssTrainingTopic: Array<any> = [];
+  ssTrainingDataPushPop = {
+    dataAccessDTO: {},
+    branchId: '',
+    ssIdList: [],
+  };
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig) {
@@ -57,15 +69,7 @@ export class SsTrainingComponent implements OnInit {
           }
         });
 
-        // let Dato = {
-        //   dataAccessDTO: this.httpService.dataAccessDTO,
-        //   branchId: res.branchId
-        // }
-
-        // this.dailyActivityService.hcoListOfBranch(Dato).subscribe((res: any) => {
-        //   this.hcoList = res.responseObject;
-        //   console.log(this.hcoList, 'hcoList');
-        // });
+        this.changeBranch(this.branchID);
       }
     });
   }
@@ -82,46 +86,46 @@ export class SsTrainingComponent implements OnInit {
   }
 
   changeRegion(regionId) {
-    console.log(regionId);
-    let req = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
+    this.regionID = regionId; console.log(this.regionID);
+
+    this.regionName = this.regionList.find((reg) => reg.regionMasterId == this.regionID)?.regionName;
+    console.log(this.regionName, 'this.regionName');
+
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: this.regionID };
 
     this.ssTrainingService.listOfBranchesOfARegion(req).subscribe((res) => {
       this.branchList = res.responseObject;
       console.log(this.branchList);
     });
 
-    // this.locationForm.controls.branch.setValue('');
-    // this.locationForm.controls.hco.setValue('');
-    // this.locationForm.controls.fromDate.setValue('');
-    // this.locationForm.controls.toDate.setValue('');
-    // this.darList = [];
-    // this.darViewFamilyList = [];
-    // this.branchList = [];
-    // this.hcoList = [];
-    // if (this.locationForm.value.region == '') {
-    //   this.locationForm.controls.hco.setValue('');
-    //   this.locationForm.controls.fromDate.setValue('');
-    //   this.locationForm.controls.toDate.setValue('');
-    //   this.darList = [];
-    //   this.darViewFamilyList = [];
-    //   this.branchList = [];
-    //   this.hcoList = [];
-    //   this.showError('No Data Found');
-    // }
+    this.viewSSTrainingEventForm.controls.branch.setValue('');
+    this.ssEventList = [];
+    if (this.viewSSTrainingEventForm.value.region == '') {
+      this.viewSSTrainingEventForm.controls.branch.setValue('');
+      this.ssEventList = [];
+      this.branchList = [];
+    }
   }
 
   changeBranch(branchId) {
     this.branchID = branchId;
     console.log(this.branchID);
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchID };
 
+    this.ssTrainingService.branchWiseSSTrainingEventList(req).subscribe((res) => {
+      this.ssEventList = res.responseObject.branchWiseSsTrainingEventList;
+      console.log(this.ssEventList);
+    });
   }
 
-  viewParticipantsDetails(detailsOfParticipants) {
+  viewParticipantsDetails(detailsOfParticipants, ssList) {
+    this.eventSSList = ssList;
+    console.log(this.eventSSList, 'ssList');
+
     this.modalContent = '';
     this.modalReference = this.modalService.open(detailsOfParticipants, {
       windowClass: 'detailsOfParticipants',
     });
-
   }
 
   detailsOfParticipantsModalDismiss() {
@@ -141,9 +145,11 @@ export class SsTrainingComponent implements OnInit {
     console.log('deleteSSTrainingEvents');
   }
 
-
   createSSTrainingEvent(SSTraining) {
-    console.log(this.branchID, 'branchId');
+    console.log(this.branchID, 'branchID');
+    console.log(this.regionID, 'regionID');
+    console.log(this.regionName, 'this.regionName');
+
     this.modalContent = '';
     this.modalReference = this.modalService.open(SSTraining, {
       windowClass: 'SSTraining',
@@ -154,6 +160,17 @@ export class SsTrainingComponent implements OnInit {
     if (!this.createSSTrainingEventForm.value.trainingType) {
       this.createSSTrainingEventForm.controls['fromDate'].disable();
     }
+
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO };
+
+    this.ssTrainingService.ssTrainingTypeAndTopic(req).subscribe((res) => {
+      this.ssTrainingType = res.responseObject.ssTrainingType;
+      this.ssTrainingTopic = res.responseObject.ssTrainingTopic;
+      console.log(this.ssTrainingType, ' this.ssTrainingType');
+      console.log(this.ssTrainingTopic, ' this.ssTrainingTopic');
+    });
+
+
   }
 
   ssTrainingFormModal() {
@@ -165,6 +182,8 @@ export class SsTrainingComponent implements OnInit {
       trainername: [''],
       trainerdesignation: [''],
       trainingtopic: ['', Validators.required],
+      ssbranch: [this.viewSSTrainingEventForm.value.branch, Validators.required],
+      participantType: ['fresh', Validators.required]
     });
   }
 
@@ -172,7 +191,7 @@ export class SsTrainingComponent implements OnInit {
     return this.createSSTrainingEventForm.controls;
   }
 
-  TrainingType(e) {
+  changeTrainingType(e) {
     console.log(e);
     this.getMinDate();
 
@@ -180,18 +199,26 @@ export class SsTrainingComponent implements OnInit {
       this.createSSTrainingEventForm.controls.duration.setValue(6);
       this.createSSTrainingEventForm.value.duration = 6;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+      this.createSSTrainingEventForm.controls.participantType.setValue('fresh');
     } else if (e == 2) {
       this.createSSTrainingEventForm.controls.duration.setValue(1);
       this.createSSTrainingEventForm.value.duration = 1;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+      this.createSSTrainingEventForm.controls.participantType.setValue('fresh')
     } else if (e == 3) {
       this.createSSTrainingEventForm.controls.duration.setValue(2);
       this.createSSTrainingEventForm.value.duration = 2;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.viewSSList();
     } else if (e == 4) {
       this.createSSTrainingEventForm.controls.duration.setValue(2);
       this.createSSTrainingEventForm.value.duration = 2;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.viewSSList();
+    } else {
+      this.ssList = [];
     }
     console.log(this.createSSTrainingEventForm.value.duration, 'formdurationvalue');
     console.log(this.durationValue, 'vardurationvalue');
@@ -205,6 +232,7 @@ export class SsTrainingComponent implements OnInit {
       this.createSSTrainingEventForm.controls.fromDate.setValue('');
       this.createSSTrainingEventForm.controls.toDate.setValue('');
     }
+
   }
 
   getMinDate() {
@@ -242,6 +270,85 @@ export class SsTrainingComponent implements OnInit {
     }
   }
 
+  changessbranch(branchId) {
+    console.log(branchId);
+    this.viewSSList();
+    this.changeparticipantType('fresh');
+    this.createSSTrainingEventForm.controls.participantType.setValue('fresh');
+    // const input = document.getElementById('flexCheckDefault') as HTMLInputElement | null;
+    // if (input == null) { input.checked = true }
+    console.log(this.ssList, 'xxxxx');
+    var tt = this.ssList.filter(item => item.swasthya_sahayika_id);
+    console.log(tt);
+
+    var bt = this.ssTrainingDataPushPop.ssIdList.filter(item => item.ssId);
+    console.log(bt);
+
+
+
+  }
+
+  changeparticipantType(participantType) {
+    let ssListObj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: this.createSSTrainingEventForm.value.ssbranch,
+      trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
+    }
+
+    this.ssTrainingService.getSSList(ssListObj).subscribe((res: any) => {
+      this.ssList = res.responseObject;
+      console.log(this.ssList, 'this.ssList');
+
+      if (participantType == 'fresh') {
+        this.ssList = this.ssList.filter((item) => item.status == 'fresh');
+        console.log(this.ssList, ' freshSSList');
+      } else if (participantType == 'absent') {
+        this.ssList = this.ssList.filter((item) => item.status != 'fresh');
+        console.log(this.ssList, 'absentSSList');
+      } else {
+        this.ssList = [];
+      }
+
+    });
+
+  }
+
+  selectSSForTraining(e, ss) {
+    console.log(ss);
+
+    var checkboxData = e.target.checked;
+    if (checkboxData) {
+      this.ssTrainingDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
+        this.ssTrainingDataPushPop.ssIdList.push({ ssId: ss.swasthya_sahayika_id });
+    }
+    else {
+      var i = this.ssTrainingDataPushPop.ssIdList.findIndex(list => list.ssId == ss.swasthya_sahayika_id);
+      this.ssTrainingDataPushPop.ssIdList.splice(i, 1);
+    }
+
+    console.log(this.ssTrainingDataPushPop, 'ssTrainingDataPushPop');
+
+  }
+
+  viewSSList() {
+    let ssListObj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: this.createSSTrainingEventForm.value.ssbranch,
+      trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
+    }
+
+    this.ssTrainingService.getSSList(ssListObj).subscribe((res: any) => {
+      this.ssList = res.responseObject;
+      console.log(this.ssList, 'this.ssList');
+    });
+
+  }
+
+  saveSSTrainingForm() {
+    console.log('save');
+
+  }
+
   ssTrainingModalDismiss() {
     // console.log(this.villageId);
 
@@ -252,10 +359,9 @@ export class SsTrainingComponent implements OnInit {
     // }
     // else {
     this.modalReference?.close();
+    this.ssTrainingDataPushPop.ssIdList = [];
     // }
   }
-
-  restrictTypeOfDate() { return false; }
 
   showSuccess(message) {
     this.toaster.success(message, 'SS Training Event', {
@@ -268,4 +374,6 @@ export class SsTrainingComponent implements OnInit {
       timeOut: 2000,
     });
   }
+
+  restrictTypeOfDate() { return false; }
 }

@@ -5,8 +5,8 @@
 
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">SS Training Events</h2>
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
-                        <!--   *ngIf="viewSSTrainingEventForm.value.branch" -->
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="viewSSTrainingEventForm.value.branch || branchID">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
@@ -14,7 +14,6 @@
                 </div>
 
                 <form class="form-signin" [formGroup]="viewSSTrainingEventForm">
-
                     <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
                             <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
@@ -45,7 +44,6 @@
                                 <div *ngIf="l.branch.errors.required">Branch selection is required</div>
                             </div>
                         </div>
-
                     </div>
                 </form>
 
@@ -56,33 +54,33 @@
                             <table
                                 class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                 role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
-
                                 <thead id="header-fixed">
                                     <tr>
-                                        <th>SL No</th>
-                                        <th>Type of<br> Training</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>SS Participated</th>
-                                        <th>SS Completed<br> Training</th>
-                                        <th>Status</th>
-                                        <th>Participants<br> Details</th>
-                                        <th>Action</th>
+                                        <th style="width:8%;">SL No</th>
+                                        <th style="width:25%;">Type of<br> Training</th>
+                                        <th style="width:20%;">Start Date</th>
+                                        <th style="width:20%;">End Date</th>
+                                        <th style="width:20%;">SS Participated</th>
+                                        <th style="width:20%;">SS Completed<br> Training</th>
+                                        <th style="width:25%;">Status</th>
+                                        <th style="width:20%;">Participants<br> Details</th>
+                                        <th style="width:20%;">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Basic</td>
-                                        <td>23-08-2022</td>
-                                        <td>25-08-2022</td>
-                                        <td>7</td>
-                                        <td>2</td>
-                                        <td>Ongoing </td>
-                                        <td (click)="viewParticipantsDetails(detailsOfParticipants)"
+                                    <tr *ngFor="let event of ssEventList; index as i">
+                                        <td style="width:8%;">{{i+1}}</td>
+                                        <td style="width:25%;">{{event.training_type_name}}</td>
+                                        <td style="width:20%;">{{event.ss_training_event_start_date}}</td>
+                                        <td style="width:20%;">{{event.ss_training_event_end_date}}</td>
+                                        <td style="width:20%;">{{event.ssCount}}</td>
+                                        <td style="width:20%;">{{event.ssCompletedTraining}}</td>
+                                        <td style="width:25%;">{{event.status}} </td>
+                                        <td style="width:20%;"
+                                            (click)="viewParticipantsDetails(detailsOfParticipants, event.ssList)"
                                             style="cursor: pointer; color: blue;">View</td>
-                                        <td>
+                                        <td style="width: 20%;">
                                             <i class="fas fa-edit" title="Edit SS Training Events"
                                                 (click)="editSSTrainingEvents(SSTraining)"> </i>
                                             <i class="fas fa-trash" title="Delete SS Training Events"
@@ -91,9 +89,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -126,23 +124,27 @@
 
                             <thead id="header-fixed">
                                 <tr>
-                                    <th>SS Name</th>
-                                    <th>Branch</th>
-                                    <th>Village</th>
-                                    <th>Staff In Charge</th>
-                                    <th>Attendance</th>
-                                    <th>Status</th>
+                                    <th style="width:5%;">SL No</th>
+                                    <th style="width:15%;">SS Name</th>
+                                    <th style="width:15%;">Branch</th>
+                                    <th style="width:20%;">Village</th>
+                                    <th style="width:20%;">Staff In Charge</th>
+                                    <th style="width:10%;">Attendance</th>
+                                    <th style="width:20%;">Status</th>
                                 </tr>
                             </thead>
 
                             <tbody style="text-align: center;">
-                                <tr>
-                                    <td>Rashmi Singh</td>
-                                    <td>Mednipur</td>
-                                    <td>Kankalitala</td>
-                                    <td>Rony Roy</td>
-                                    <td>Monday</td>
-                                    <td>Ongoing </td>
+                                <tr *ngFor="let eventSS of eventSSList; index as i">
+                                    <td style="width:5%;">{{i+1}}</td>
+                                    <td style="width:15%;">{{eventSS.swasthya_sahayika_name}}</td>
+                                    <td style="width:15%;">{{eventSS.branch_name}}</td>
+                                    <td style="width:20%;">{{eventSS.village_name}}</td>
+                                    <td style="width:20%;">{{eventSS.user_firstname}} {{eventSS.user_middlename}}
+                                        {{eventSS.user_lastname}}
+                                    </td>
+                                    <td style="width:10%;">{{eventSS.countAttendance}}</td>
+                                    <td style="width:20%;">{{eventSS.status}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -162,11 +164,14 @@
     <div class="modal-content">
         <div class="modal-header">
             <div class="row">
-                <div class="col-md">
+                <div class="col-md-4">
                     <h3 class="modal-title" id="modal-basic-title">Create SS Training</h3>
                     <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit SS Training</h3> -->
                 </div>
-                <div class="col-md">
+                <div class="col-md-6">
+                    <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName}}</h3>
+                </div>
+                <div class="col-md-2">
                     <span class="close" (click)="ssTrainingModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
@@ -182,15 +187,12 @@
                         <select class="form-select" formControlName="trainingType" id="trainingType" [ngClass]="{'is-invalid':
                          t.trainingType.invalid && t.trainingType.touched,
                           'is-valid': t.trainingType.valid && (t.trainingType.dirty || t.trainingType.touched) }"
-                            (change)="TrainingType($event.target.value)">
+                            (change)="changeTrainingType($event.target.value)">
                             <option value="">-- Select Training Type --</option>
-                            <option value="1">Basic Training</option>
-                            <option value="2">Technical Training</option>
-                            <option value="3">Refreshers Training</option>
-                            <option value="4">Follow Up training</option>
-                            <!-- <option *ngFor="let trainingType of trainingTypeList" value="{{trainingType.regionMasterId}}">
-                                {{region.regionName}}
-                            </option> -->
+                            <option *ngFor="let trainingType of ssTrainingType"
+                                value="{{trainingType.training_type_master_id}}">
+                                {{trainingType.training_type_name}}
+                            </option>
                         </select>
                         <div *ngIf="t.trainingType.errors" class="invalid-feedback">
                             <div *ngIf="t.trainingType.errors.required">Type Of Training selection is required</div>
@@ -236,16 +238,17 @@
                             formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize">
                     </div>
 
-                    <div class="form-group col-md">
-                        <label for="trainingtopic">Topic of training :&nbsp;<span
+                    <div class="form-group col-md" *ngIf="createSSTrainingEventForm.value.trainingType== 3">
+                        <label for="trainingtopic">Topic of Training :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
                         <!-- (change)="trainingtopic($event.target.value)" -->
                         <select class="form-select" formControlName="trainingtopic" id="trainingtopic" [ngClass]="{'is-invalid': t.trainingtopic.invalid && t.trainingtopic.touched,
                           'is-valid': t.trainingtopic.valid && (t.trainingtopic.dirty || t.trainingtopic.touched) }">
                             <option value="">-- Select Training Topic --</option>
-                            <!-- <option *ngFor="let trainingtopic of trainingtopicList" value="{{trainingtopic.regionMasterId}}">
-                                {{region.regionName}}
-                            </option> -->
+                            <option *ngFor="let trainingtopic of ssTrainingTopic"
+                                value="{{trainingtopic.ss_training_event_topic_id}}">
+                                {{trainingtopic.ss_training_event_topic_name}}
+                            </option>
                         </select>
                         <div *ngIf="t.trainingtopic.errors" class="invalid-feedback">
                             <div *ngIf="t.trainingtopic.errors.required">Training Topic selection is required</div>
@@ -253,15 +256,90 @@
                     </div>
                 </div>
 
-            </form>
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">ADD SS</legend>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="ssbranch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changessbranch($event.target.value)"
+                                formControlName="ssbranch" id="ssbranch" [ngClass]="{ 'is-invalid': t.ssbranch.invalid && t.ssbranch.touched,
+                          'is-valid': t.ssbranch.valid && (t.ssbranch.dirty || t.ssbranch.touched) }"
+                                style="width: 97%;">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="t.ssbranch.errors" class="invalid-feedback">
+                                <div *ngIf="t.ssbranch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
 
+                        <div class="form-group col-md-6"
+                            *ngIf="createSSTrainingEventForm.value.trainingType == 1 ||createSSTrainingEventForm.value.trainingType == 2">
+                            <label for="participantType">Participant Type:&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeparticipantType($event.target.value)"
+                                formControlName="participantType" id="participantType"
+                                [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
+                          'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 97%;">
+                                <option value="">-- Select Participant --</option>
+                                <option value="fresh">Fresh SS</option>
+                                <option value="absent">Absent SS</option>
+                            </select>
+                            <div *ngIf="t.participantType.errors" class="invalid-feedback">
+                                <div *ngIf="t.participantType.errors.required">Participant selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="QA_table ">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                                <thead id="header-fixed">
+                                    <tr>
+                                        <th style="width:5%;">SL No</th>
+                                        <th style="width:20%;">SS Name</th>
+                                        <th style="width:15%;">Branch</th>
+                                        <th style="width:20%;">Village</th>
+                                        <th style="width:20%;">Staff In Charge</th>
+                                        <th style="width:8%;">Select</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align: center;">
+                                    <tr *ngFor="let ss of ssList; index as i">
+                                        <td style="width:5%;">{{i+1}}</td>
+                                        <td style="width:20%;">{{ss.swasthya_sahayika_name}}</td>
+                                        <td style="width:15%;">{{ss.branch_name}}</td>
+                                        <td style="width:20%;">{{ss.village_name}}</td>
+                                        <td style="width:20%;">{{ss.user_firstname}} {{ss.user_middlename}}
+                                            {{ss.user_lastname}}
+                                        </td>
+                                        <td style="width:8%;"><input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault" (change)="selectSSForTraining($event, ss)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
         </div>
 
-        <!-- <div class="modal-footer">
+        <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn" (click)="saveVillForm()">Save</button>
+                <button type="button" class=" btn btn-primary bttn"
+                    [disabled]="ssTrainingDataPushPop.ssIdList.length == 0" (click)="saveSSTrainingForm()">Save</button>
             </div>
-        </div> -->
+        </div>
 
     </div>
 
