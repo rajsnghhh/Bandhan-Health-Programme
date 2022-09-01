@@ -108,7 +108,7 @@
 }
 
 
-table.table thead tr:after {
+/* table.table thead tr:after {
   content: '';
   overflow-y: scroll;
   visibility: hidden;
@@ -134,4 +134,9 @@ table.table tbody tr td {
     width: 50%;
     padding: 5px;
     text-align:center;
+} */
+
+table.table thead {
+  position: sticky;
+  top: 60px;
 }
