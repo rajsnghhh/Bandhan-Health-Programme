@@ -26,4 +26,8 @@ export class SsTrainingService {
     return this.http.post(`${this.baseURL}sstraining/getSSList`, obj)
   }
 
+  createUpdateDeleteSSTraining(obj): any {
+    return this.http.post(`${this.baseURL}sstraining/saveUpdateDeleteSsTrainingEvent`, obj)
+  }
+
 }

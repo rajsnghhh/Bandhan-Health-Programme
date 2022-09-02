@@ -31,13 +31,21 @@ export class SsTrainingComponent implements OnInit {
   ssEventList: Array<any> = [];
   eventSSList: Array<any> = [];
   ssList: Array<any> = [];
+  AllSSList: Array<any> = [];
   ssTrainingType: Array<any> = [];
   ssTrainingTopic: Array<any> = [];
-  ssTrainingDataPushPop = {
-    dataAccessDTO: {},
-    branchId: '',
-    ssIdList: [],
-  };
+  ssTrainingDataPushPop = [];
+  newCheckedArray: Array<any> = [];
+  checkedData: any;
+  allBranchID: Array<any> = [];
+  indexWiseSSLIST: any;
+  ssIndex: any;
+  checked: any;
+  checkedSS: Array<any> = [];
+  page = 1;
+  pageSize = 6;
+  p: any;
+  isDisabled: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig) {
@@ -54,6 +62,8 @@ export class SsTrainingComponent implements OnInit {
         this.regionBranchHide = res.regionBranchHide;
       } else {
         this.branchID = res.branchId;
+        console.log(this.branchID);
+
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
         let Dto = {
           dataAccessDTO: {
@@ -95,6 +105,10 @@ export class SsTrainingComponent implements OnInit {
 
     this.ssTrainingService.listOfBranchesOfARegion(req).subscribe((res) => {
       this.branchList = res.responseObject;
+      this.branchList.forEach((item) => {
+        this.allBranchID.push(item.branchId)
+        console.log(this.allBranchID);
+      });
       console.log(this.branchList);
     });
 
@@ -109,6 +123,7 @@ export class SsTrainingComponent implements OnInit {
 
   changeBranch(branchId) {
     this.branchID = branchId;
+    this.allBranchID.push(this.branchID);
     console.log(this.branchID);
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchID };
 
@@ -130,19 +145,6 @@ export class SsTrainingComponent implements OnInit {
 
   detailsOfParticipantsModalDismiss() {
     this.modalReference?.close();
-  }
-
-  editSSTrainingEvents(SSTraining) {
-    console.log('editSSTrainingEvents');
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(SSTraining, {
-      windowClass: 'SSTraining',
-    });
-    this.ssTrainingFormModal();
-  }
-
-  deleteSSTrainingEvents() {
-    console.log('deleteSSTrainingEvents');
   }
 
   createSSTrainingEvent(SSTraining) {
@@ -170,7 +172,6 @@ export class SsTrainingComponent implements OnInit {
       console.log(this.ssTrainingTopic, ' this.ssTrainingTopic');
     });
 
-
   }
 
   ssTrainingFormModal() {
@@ -191,50 +192,6 @@ export class SsTrainingComponent implements OnInit {
     return this.createSSTrainingEventForm.controls;
   }
 
-  changeTrainingType(e) {
-    console.log(e);
-    this.getMinDate();
-
-    if (e == 1) {
-      this.createSSTrainingEventForm.controls.duration.setValue(6);
-      this.createSSTrainingEventForm.value.duration = 6;
-      this.durationValue = this.createSSTrainingEventForm.value.duration;
-      this.changeparticipantType('fresh');
-      this.createSSTrainingEventForm.controls.participantType.setValue('fresh');
-    } else if (e == 2) {
-      this.createSSTrainingEventForm.controls.duration.setValue(1);
-      this.createSSTrainingEventForm.value.duration = 1;
-      this.durationValue = this.createSSTrainingEventForm.value.duration;
-      this.changeparticipantType('fresh');
-      this.createSSTrainingEventForm.controls.participantType.setValue('fresh')
-    } else if (e == 3) {
-      this.createSSTrainingEventForm.controls.duration.setValue(2);
-      this.createSSTrainingEventForm.value.duration = 2;
-      this.durationValue = this.createSSTrainingEventForm.value.duration;
-      this.viewSSList();
-    } else if (e == 4) {
-      this.createSSTrainingEventForm.controls.duration.setValue(2);
-      this.createSSTrainingEventForm.value.duration = 2;
-      this.durationValue = this.createSSTrainingEventForm.value.duration;
-      this.viewSSList();
-    } else {
-      this.ssList = [];
-    }
-    console.log(this.createSSTrainingEventForm.value.duration, 'formdurationvalue');
-    console.log(this.durationValue, 'vardurationvalue');
-    this.createSSTrainingEventForm.controls.fromDate.setValue('');
-    this.createSSTrainingEventForm.controls.toDate.setValue('');
-    if (this.createSSTrainingEventForm.value.trainingType) {
-      this.createSSTrainingEventForm.controls['fromDate'].enable();
-    } else {
-      this.createSSTrainingEventForm.controls['fromDate'].disable();
-      this.createSSTrainingEventForm.controls.duration.setValue('');
-      this.createSSTrainingEventForm.controls.fromDate.setValue('');
-      this.createSSTrainingEventForm.controls.toDate.setValue('');
-    }
-
-  }
-
   getMinDate() {
     let today = new Date().toISOString().slice(0, 10);
     this.setFromDate = moment(today).add(1, "days").format("YYYY-MM-DD");
@@ -253,7 +210,8 @@ export class SsTrainingComponent implements OnInit {
     if (this.createSSTrainingEventForm.value.trainingType == 2) {
       this.setToDate = this.createSSTrainingEventForm.value.fromDate;
       this.createSSTrainingEventForm.controls.toDate.setValue(this.setToDate);
-      console.log(this.setToDate);
+      this.createSSTrainingEventForm.value.toDate = this.setToDate;
+      console.log(this.setToDate, 'ifcondition');
     } else {
       e = new Date(e.replace(/-/g, "/"));
       var endDate: any, noOfDaysToAdd = (this.durationValue - 1), count = 0;
@@ -266,86 +224,199 @@ export class SsTrainingComponent implements OnInit {
       this.setToDate = moment(endDate).format("YYYY-MM-DD");
       this.createSSTrainingEventForm.controls.toDate.setValue(this.setToDate);
       this.createSSTrainingEventForm.value.toDate = this.setToDate;
-      console.log(this.setToDate);
+      console.log(this.setToDate, 'elsecondition');
     }
   }
 
-  changessbranch(branchId) {
-    console.log(branchId);
-    this.viewSSList();
-    this.changeparticipantType('fresh');
+  changeTrainingType(e) {
+    this.getMinDate();
     this.createSSTrainingEventForm.controls.participantType.setValue('fresh');
-    // const input = document.getElementById('flexCheckDefault') as HTMLInputElement | null;
-    // if (input == null) { input.checked = true }
-    console.log(this.ssList, 'xxxxx');
-    var tt = this.ssList.filter(item => item.swasthya_sahayika_id);
-    console.log(tt);
+    this.createSSTrainingEventForm.controls.trainingtopic.setValue('');
 
-    var bt = this.ssTrainingDataPushPop.ssIdList.filter(item => item.ssId);
-    console.log(bt);
+    if (e == 1) {
+      this.createSSTrainingEventForm.controls.duration.setValue(6);
+      this.createSSTrainingEventForm.value.duration = 6;
+      this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+    } else if (e == 2) {
+      this.createSSTrainingEventForm.controls.duration.setValue(1);
+      this.createSSTrainingEventForm.value.duration = 1;
+      this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+    } else if (e == 3) {
+      this.createSSTrainingEventForm.controls.duration.setValue(2);
+      this.createSSTrainingEventForm.value.duration = 2;
+      this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+    } else if (e == 4) {
+      this.createSSTrainingEventForm.controls.duration.setValue(2);
+      this.createSSTrainingEventForm.value.duration = 2;
+      this.durationValue = this.createSSTrainingEventForm.value.duration;
+      this.changeparticipantType('fresh');
+    } else {
+      this.ssList = [];
+    }
 
-
+    console.log(this.createSSTrainingEventForm.value.duration, 'formdurationvalue');
+    console.log(this.durationValue, 'vardurationvalue');
+    this.createSSTrainingEventForm.controls.fromDate.setValue('');
+    this.createSSTrainingEventForm.controls.toDate.setValue('');
+    if (this.createSSTrainingEventForm.value.trainingType) {
+      this.createSSTrainingEventForm.controls['fromDate'].enable();
+    } else {
+      this.createSSTrainingEventForm.controls['fromDate'].disable();
+      this.createSSTrainingEventForm.controls.duration.setValue('');
+      this.createSSTrainingEventForm.controls.fromDate.setValue('');
+      this.createSSTrainingEventForm.controls.toDate.setValue('');
+    }
 
   }
 
   changeparticipantType(participantType) {
     let ssListObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.createSSTrainingEventForm.value.ssbranch,
+      branchId: this.allBranchID,
       trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
     }
 
     this.ssTrainingService.getSSList(ssListObj).subscribe((res: any) => {
-      this.ssList = res.responseObject;
+      this.AllSSList = res.responseObject;
+      this.AllSSList = this.AllSSList?.map(({
+        isChecked = false,
+        ...rest
+      }) => ({
+        isChecked,
+        ...rest
+      }));
+      this.ssList = this.AllSSList;
+
       console.log(this.ssList, 'this.ssList');
 
-      if (participantType == 'fresh') {
-        this.ssList = this.ssList.filter((item) => item.status == 'fresh');
-        console.log(this.ssList, ' freshSSList');
-      } else if (participantType == 'absent') {
-        this.ssList = this.ssList.filter((item) => item.status != 'fresh');
-        console.log(this.ssList, 'absentSSList');
-      } else {
-        this.ssList = [];
+      this.ssList = this.ssList?.filter((item) => item.branch_id == this.createSSTrainingEventForm.value.ssbranch);
+      console.log(this.ssList, 'this.specificSSList');
+
+      if (this.createSSTrainingEventForm.value.trainingType == 1 || this.createSSTrainingEventForm.value.trainingType == 2) {
+        if (participantType == 'fresh') {
+          this.ssList = this.ssList?.filter((item) => item.status == 'fresh');
+          console.log(this.ssList, ' freshSSList');
+        } else if (participantType == 'absent') {
+          this.ssList = this.ssList?.filter((item) => item.status != 'fresh');
+          console.log(this.ssList, 'absentSSList');
+        }
+        else {
+          this.ssList = [];
+        }
+
       }
 
     });
 
   }
 
-  selectSSForTraining(e, ss) {
-    console.log(ss);
+  filterSSList(participantType) {
+    this.ssList = this.AllSSList;
+    console.log(this.ssList, 'this.ssList');
+    this.ssList = this.ssList.filter((item) => item.branch_id == this.createSSTrainingEventForm.value.ssbranch);
+    console.log(this.ssList, 'this.specificSSList');
 
-    var checkboxData = e.target.checked;
-    if (checkboxData) {
-      this.ssTrainingDataPushPop.dataAccessDTO = this.httpService.dataAccessDTO,
-        this.ssTrainingDataPushPop.ssIdList.push({ ssId: ss.swasthya_sahayika_id });
-    }
-    else {
-      var i = this.ssTrainingDataPushPop.ssIdList.findIndex(list => list.ssId == ss.swasthya_sahayika_id);
-      this.ssTrainingDataPushPop.ssIdList.splice(i, 1);
-    }
+    if (this.createSSTrainingEventForm.value.trainingType == 1 || this.createSSTrainingEventForm.value.trainingType == 2) {
+      if (participantType == 'fresh') {
+        this.ssList = this.ssList.filter((item) => item.status == 'fresh');
+        console.log(this.ssList, ' freshSSList');
+      } else if (participantType == 'absent') {
+        this.ssList = this.ssList.filter((item) => item.status != 'fresh');
+        console.log(this.ssList, 'absentSSList');
+      }
+      else {
+        this.ssList = [];
+      }
 
-    console.log(this.ssTrainingDataPushPop, 'ssTrainingDataPushPop');
+    }
+  }
+
+  changessbranch() {
+    this.filterSSList('fresh');
+    this.createSSTrainingEventForm.controls.participantType.setValue('fresh');
+    if (this.checked) {
+      this.selectSSForTraining(this.indexWiseSSLIST, this.ssIndex, this.checked);
+    }
+  }
+
+  selectSSForTraining(SSLIST, index, e) {
+    this.indexWiseSSLIST = SSLIST;
+    console.log(this.indexWiseSSLIST);
+
+    this.ssIndex = index;
+    this.checked = e;
+
+    if (this.checked == true) {
+      this.AllSSList.find(list => list.swasthya_sahayika_id == this.indexWiseSSLIST?.swasthya_sahayika_id).isChecked = true;
+      console.log(this.AllSSList, 'ALLSSLIST');
+    } else {
+      this.AllSSList.find(list => list.swasthya_sahayika_id == this.indexWiseSSLIST?.swasthya_sahayika_id).isChecked = false;
+      console.log(this.AllSSList, 'ALLSSLIST');
+    }
 
   }
 
-  viewSSList() {
-    let ssListObj = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.createSSTrainingEventForm.value.ssbranch,
-      trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
+  disabledSaveTrainingForm() {
+    let flag = true;
+    if (!this.createSSTrainingEventForm.value.trainingType || !this.createSSTrainingEventForm.value.fromDate) {
+      flag = false;
+    }
+    if (this.createSSTrainingEventForm.value.trainingType == 3) {
+      if (!this.createSSTrainingEventForm.value.trainingtopic) {
+        flag = false;
+      }
     }
 
-    this.ssTrainingService.getSSList(ssListObj).subscribe((res: any) => {
-      this.ssList = res.responseObject;
-      console.log(this.ssList, 'this.ssList');
-    });
-
+    var check = [];
+    check = this.AllSSList?.filter(item => item.isChecked == true);
+    console.log(check?.length);
+    if (check?.length == 0) {
+      flag = false;
+    }
+    return flag;
   }
 
   saveSSTrainingForm() {
-    console.log('save');
+    this.ssTrainingDataPushPop = [];
+    this.checkedSS = this.AllSSList.filter(item => item.isChecked == true);
+    this.checkedSS.forEach((item => {
+      this.checkedSS = item.swasthya_sahayika_id;
+      console.log(this.checkedSS, 'checkedSS');
+      this.ssTrainingDataPushPop.push(this.checkedSS);
+      console.log(this.ssTrainingDataPushPop);
+    }));
+
+    let ssSaveObj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      training_event_master_id: 0,
+      active_flag: 'UA',
+      ss_training_event_type: this.createSSTrainingEventForm.value.trainingType,
+      ss_training_event_topic_master_id: this.createSSTrainingEventForm.value.trainingtopic ?
+        this.createSSTrainingEventForm.value.trainingtopic : 0,
+      ss_training_event_start_date: this.createSSTrainingEventForm.value.fromDate,
+      ss_training_event_end_date: this.setToDate,
+      trainer_name: this.createSSTrainingEventForm.value.trainername,
+      trainer_designation: this.createSSTrainingEventForm.value.trainerdesignation,
+      branchId: this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.branchID,
+      ssList: this.ssTrainingDataPushPop
+    }
+
+    console.log(ssSaveObj, 'ssSaveObj');
+
+    this.ssTrainingService.createUpdateDeleteSSTraining(ssSaveObj).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.ssTrainingModalDismiss();
+        this.changeBranch(this.branchID);
+      } else {
+        this.showError(res.message);
+      }
+
+    })
 
   }
 
@@ -359,8 +430,28 @@ export class SsTrainingComponent implements OnInit {
     // }
     // else {
     this.modalReference?.close();
-    this.ssTrainingDataPushPop.ssIdList = [];
+    this.ssList = [];
+    this.ssTrainingDataPushPop = [];
+    // this.branchID = '';
+    // this.allBranchID = [];
+    // console.log(this.AllSSList, '   this.AllSSList');
+    // console.log(this.ssList, ' this.ssList', this.branchID, 'this.branchID');
+
+
     // }
+  }
+
+  editSSTrainingEvents(SSTraining) {
+    console.log('editSSTrainingEvents');
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(SSTraining, {
+      windowClass: 'SSTraining',
+    });
+    this.ssTrainingFormModal();
+  }
+
+  deleteSSTrainingEvents() {
+    console.log('deleteSSTrainingEvents');
   }
 
   showSuccess(message) {
@@ -371,7 +462,7 @@ export class SsTrainingComponent implements OnInit {
 
   showError(message) {
     this.toaster.error(message, 'SS Training Event', {
-      timeOut: 2000,
+      timeOut: 3000,
     });
   }
 

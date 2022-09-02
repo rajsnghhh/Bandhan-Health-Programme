@@ -13,7 +13,7 @@ export const environment = {
   // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
 
   //New Development Server
-  // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+  apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
 
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
@@ -41,7 +41,7 @@ export const environment = {
   // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
 
   // Chayan Machine
-  apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'
 };
 
 /*
