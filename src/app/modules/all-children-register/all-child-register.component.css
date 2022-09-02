@@ -71,6 +71,44 @@
   margin-left: 140px;
 }
 
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .search_inner input {
+    width: 70%;
+    margin-left: 344px;
+  }
+  .search_inner_fullscreen button {
+    padding-right: 1px;
+    margin-left: 460px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 60%;
+    background: transparent;
+    font-size: 12px;
+    padding-left: 19px;
+    font-size: 18px;
+    color: #2daab8;
+    border: 0;
+  }
+
+  .search_inner_fullscreen input {
+    width: 74%;
+    margin-left: 460px;
+    font-size: 13px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 55px;
+    border: 1px solid #2daab8;
+    padding-right: 15px;
+  }
+  
+  .serach_field_2 .search_inner button i {
+    font-size: 18px;
+    color: #2daab8;
+    margin-left: -40px;
+  }
+}
+
 .QA_section .QA_table tbody .danger {
   color: #cd0202;
 }

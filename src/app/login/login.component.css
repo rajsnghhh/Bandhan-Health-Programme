@@ -90,3 +90,35 @@ input {
   margin-top: -54px;
 
 }
+
+.card{
+  position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 10px 30px;
+    opacity: 0.95;
+    border: 1px;
+    border-radius: 10px;
+}
+.login_img{
+  width: 100vw; height: 100vh; margin-left: -551px; margin-top: -54px
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .card{
+    position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32%;
+      box-shadow: rgba(255, 255, 255, 0.1) 0px 10px 30px;
+      opacity: 0.95;
+      border: 1px;
+      border-radius: 10px;
+  }
+  .login_img{
+    width: 100vw; height: 100vh; margin-left: -405px; margin-top: -50px
+  }
+}
