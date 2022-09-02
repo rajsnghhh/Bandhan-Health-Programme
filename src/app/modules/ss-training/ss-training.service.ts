@@ -13,4 +13,17 @@ export class SsTrainingService {
   listOfBranchesOfARegion(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }
+
+  branchWiseSSTrainingEventList(obj): any {
+    return this.http.post(`${this.baseURL}sstraining/getSSTrainingEventList`, obj)
+  }
+
+  ssTrainingTypeAndTopic(obj): any {
+    return this.http.post(`${this.baseURL}sstraining/getSSTrainingTypeAndTopic`, obj)
+  }
+
+  getSSList(obj): any {
+    return this.http.post(`${this.baseURL}sstraining/getSSList`, obj)
+  }
+
 }
