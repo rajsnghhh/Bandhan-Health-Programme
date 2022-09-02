@@ -6,7 +6,7 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">SS Training Events</h2>
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="viewSSTrainingEventForm.value.branch || branchID">
+                        *ngIf="viewSSTrainingEventForm.value.branch || lowerRoleBranchId">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
