@@ -129,8 +129,8 @@
                             <thead id="header-fixed">
                                 <tr>
                                     <th style="width:5%;">SL No</th>
-                                    <th style="width:20%;">SS Name</th>
-                                    <th style="width:15%;">Branch</th>
+                                    <th style="width:25%;">SS Name</th>
+                                    <th style="width:20%;">Branch</th>
                                     <th style="width:20%;">Village</th>
                                     <th style="width:20%;">Staff In Charge</th>
                                     <th style="width:10%;">Attendance</th>
@@ -141,8 +141,8 @@
                             <tbody style="text-align: center;">
                                 <tr *ngFor="let eventSS of eventSSList; index as i">
                                     <td style="width:5%;">{{i+1}}</td>
-                                    <td style="width:20%;">{{eventSS.swasthya_sahayika_name}}</td>
-                                    <td style="width:15%;">{{eventSS.branch_name}}</td>
+                                    <td style="width:25%;">{{eventSS.swasthya_sahayika_name}}</td>
+                                    <td style="width:20%;">{{eventSS.branch_name}}</td>
                                     <td style="width:20%;">{{eventSS.village_name}}</td>
                                     <td style="width:20%;">{{eventSS.user_firstname ? eventSS.user_firstname : '-'}}
                                         {{eventSS.user_middlename}}
@@ -235,13 +235,16 @@
                     <div class="form-group col-md">
                         <label for="trainername">Trainer Name:</label>
                         <input type="text" class="form-control" placeholder="Trainer Name" formControlName="trainername"
-                            maxlength="45" style="text-transform: capitalize">
+                            maxlength="45" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize">
                     </div>
 
                     <div class="form-group col-md">
                         <label for="trainerdesignation">Trainer Designation:</label>
                         <input type="text" class="form-control" placeholder="Trainer Designation"
-                            formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize">
+                            formControlName="trainerdesignation" maxlength="45"
+                            (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize">
                     </div>
 
                     <div class="form-group col-md" *ngIf="createSSTrainingEventForm.value.trainingType== 3">
@@ -280,32 +283,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6"
-                            *ngIf=" createSSTrainingEventForm.value.trainingType == 1 ||createSSTrainingEventForm.value.trainingType == 2">
+                        <div class="form-group col-md-6">
                             <label for="participantType">Participant Type:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeparticipantType($event.target.value)"
-                                formControlName="participantType" id="participantType" [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
-                      'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }"
-                                style="width: 100%;">
-                                <option value="">-- Select Participant --</option>
-                                <option value="fresh">Fresh SS</option>
-                                <option value="absent">Absent SS</option>
-                            </select>
-                            <div *ngIf="t.participantType.errors" class="invalid-feedback">
-                                <div *ngIf="t.participantType.errors.required">Participant selection is required</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6"
-                            *ngIf=" createSSTrainingEventForm.value.trainingType == 3 ||createSSTrainingEventForm.value.trainingType == 4">
-                            <label for="participantType">Participant Type:&nbsp;<span
-                                    class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeparticipantType($event.target.value)"
-                                formControlName="participantType" id="participantType" [attr.disabled]="isDisabled"
+                                formControlName="participantType" id="participantType"
                                 [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
-                          'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }"
-                                style="width: 100%;">
+                          'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 100%;">
                                 <option value="">-- Select Participant --</option>
                                 <option value="fresh">Fresh SS</option>
                                 <option value="absent">Absent SS</option>
@@ -327,7 +311,7 @@
                                     <tr>
                                         <th style="width:5%;">SL No</th>
                                         <th style="width:20%;">SS Name</th>
-                                        <th style="width:15%;">Branch</th>
+                                        <th style="width:20%;">Branch</th>
                                         <th style="width:20%;">Village</th>
                                         <th style="width:20%;">Staff In Charge</th>
                                         <th style="width:8%;">Select</th>
@@ -338,7 +322,7 @@
                                     <tr *ngFor="let ss of ssList; index as i">
                                         <td style="width:5%;">{{i+1}}</td>
                                         <td style="width:20%;">{{ss.swasthya_sahayika_name}}</td>
-                                        <td style="width:15%;">{{ss.branch_name}}</td>
+                                        <td style="width:20%;">{{ss.branch_name}}</td>
                                         <td style="width:20%;">{{ss.village_name ? ss.village_name : '-'}}</td>
                                         <td style="width:20%;">{{ss.user_firstname ? ss.user_firstname :'-'}}
                                             {{ss.user_middlename}}
@@ -365,7 +349,7 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn" [disabled]="!disabledSaveTrainingForm()"
+                <button type="button" class=" btn btn-primary btn-sm" [disabled]="!disabledSaveTrainingForm()"
                     (click)="saveSSTrainingForm()">Save</button>
             </div>
         </div>

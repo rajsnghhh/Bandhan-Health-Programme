@@ -7,6 +7,7 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { SsTrainingService } from './ss-training.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from '../shared/services/validation.service';
 
 @Component({
   selector: 'app-ss-training',
@@ -46,10 +47,11 @@ export class SsTrainingComponent implements OnInit {
   page = 1;
   pageSize = 6;
   p: any;
-  isDisabled: boolean = false;
+  afterSaveBranchId: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
-    private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig) {
+    private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig,
+    private validationService: ValidationService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -63,6 +65,7 @@ export class SsTrainingComponent implements OnInit {
         this.regionBranchHide = res.regionBranchHide;
       } else {
         this.lowerRoleBranchId = res.branchId;
+        this.afterSaveBranchId = res.branchId
         this.branchList = res.branchLIST;
 
         this.allBranchID.push(this.lowerRoleBranchId);
@@ -83,7 +86,6 @@ export class SsTrainingComponent implements OnInit {
           }
         });
 
-        // this.changeBranch(this.lowerRoleBranchId);
         let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.lowerRoleBranchId };
 
         this.ssTrainingService.branchWiseSSTrainingEventList(req).subscribe((res) => {
@@ -133,7 +135,7 @@ export class SsTrainingComponent implements OnInit {
 
   changeBranch(branchId) {
     this.upperRoleBranchId = branchId;
-    // this.allBranchID.push(this.upperRoleBranchId);
+    this.afterSaveBranchId = branchId
 
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
 
@@ -160,7 +162,6 @@ export class SsTrainingComponent implements OnInit {
   createSSTrainingEvent(SSTraining) {
     console.log(this.lowerRoleBranchId, 'lowerRoleBranchId');
     console.log(this.upperRoleBranchId, 'upperRoleBranchId');
-
     console.log(this.regionID, 'regionID');
     console.log(this.regionName, 'this.regionName');
 
@@ -170,10 +171,10 @@ export class SsTrainingComponent implements OnInit {
     });
     this.ssTrainingFormModal();
     this.createSSTrainingEventForm.controls['duration'].disable();
+    this.createSSTrainingEventForm.controls['fromDate'].disable();
     this.createSSTrainingEventForm.controls['toDate'].disable();
-    if (!this.createSSTrainingEventForm.value.trainingType) {
-      this.createSSTrainingEventForm.controls['fromDate'].disable();
-    }
+    this.createSSTrainingEventForm.controls['ssbranch'].disable();
+    this.createSSTrainingEventForm.controls['participantType'].disable();
 
     let req = { dataAccessDTO: this.httpService.dataAccessDTO };
 
@@ -250,23 +251,33 @@ export class SsTrainingComponent implements OnInit {
       this.createSSTrainingEventForm.value.duration = 6;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
       this.changeparticipantType('fresh');
+      this.createSSTrainingEventForm.controls['ssbranch'].enable();
+      this.createSSTrainingEventForm.controls['participantType'].enable();
     } else if (e == 2) {
       this.createSSTrainingEventForm.controls.duration.setValue(1);
       this.createSSTrainingEventForm.value.duration = 1;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
       this.changeparticipantType('fresh');
+      this.createSSTrainingEventForm.controls['ssbranch'].enable();
+      this.createSSTrainingEventForm.controls['participantType'].enable();
     } else if (e == 3) {
       this.createSSTrainingEventForm.controls.duration.setValue(2);
       this.createSSTrainingEventForm.value.duration = 2;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
       this.changeparticipantType('fresh');
+      this.createSSTrainingEventForm.controls['ssbranch'].enable();
+      this.createSSTrainingEventForm.controls['participantType'].disable();
     } else if (e == 4) {
       this.createSSTrainingEventForm.controls.duration.setValue(2);
       this.createSSTrainingEventForm.value.duration = 2;
       this.durationValue = this.createSSTrainingEventForm.value.duration;
-      this.changeparticipantType('fresh');
+      this.changeparticipantType('fresh')
+      this.createSSTrainingEventForm.controls['ssbranch'].enable();
+      this.createSSTrainingEventForm.controls['participantType'].disable();
     } else {
       this.ssList = [];
+      this.createSSTrainingEventForm.controls['ssbranch'].disable();
+      this.createSSTrainingEventForm.controls['participantType'].disable();
     }
 
     console.log(this.createSSTrainingEventForm.value.duration, 'formdurationvalue');
@@ -303,9 +314,8 @@ export class SsTrainingComponent implements OnInit {
       this.ssList = this.AllSSList;
 
       console.log(this.ssList, 'this.ssList');
-
-      console.log(this.lowerRoleBranchId, "New");
-      console.log(this.upperRoleBranchId, "New");
+      console.log(this.lowerRoleBranchId, "lowerRoleBranchId");
+      console.log(this.upperRoleBranchId, "upperRoleBranchId");
 
 
       this.ssList = this.ssList?.filter((item) => item.branch_id == this.upperRoleBranchId ? this.upperRoleBranchId : this.lowerRoleBranchId);
@@ -322,7 +332,6 @@ export class SsTrainingComponent implements OnInit {
         else {
           this.ssList = [];
         }
-
       }
 
     });
@@ -423,25 +432,25 @@ export class SsTrainingComponent implements OnInit {
         this.createSSTrainingEventForm.value.trainingtopic : 0,
       ss_training_event_start_date: this.createSSTrainingEventForm.value.fromDate,
       ss_training_event_end_date: this.setToDate,
-      trainer_name: this.createSSTrainingEventForm.value.trainername,
-      trainer_designation: this.createSSTrainingEventForm.value.trainerdesignation,
+      trainer_name: this.validationService.camelize(this.createSSTrainingEventForm.value.trainername.trim()),
+      trainer_designation: this.validationService.camelize(this.createSSTrainingEventForm.value.trainerdesignation.trim()),
       branchId: this.upperRoleBranchId ? this.upperRoleBranchId : this.lowerRoleBranchId,
       ssList: this.ssTrainingDataPushPop
     }
 
     console.log(ssSaveObj, 'ssSaveObj');
 
-    this.ssTrainingService.createUpdateDeleteSSTraining(ssSaveObj).subscribe((res: any) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-        this.ssTrainingModalDismiss();
-        this.changeBranch(this.upperRoleBranchId ? this.upperRoleBranchId : this.lowerRoleBranchId);
-      } else {
-        this.showError(res.message);
-      }
+    // this.ssTrainingService.createUpdateDeleteSSTraining(ssSaveObj).subscribe((res: any) => {
+    //   console.log(res);
+    //   if (res.status == true) {
+    //     this.showSuccess(res.message);
+    //     this.ssTrainingModalDismiss();
+    //     this.changeBranch(this.afterSaveBranchId);
+    //   } else {
+    //     this.showError(res.message);
+    //   }
 
-    })
+    // })
 
   }
 
@@ -456,6 +465,7 @@ export class SsTrainingComponent implements OnInit {
     // else {
     this.modalReference?.close();
     this.ssList = [];
+    this.allBranchID = [];
     this.ssTrainingDataPushPop = [];
     // this.branchID = '';
     // this.allBranchID = [];
