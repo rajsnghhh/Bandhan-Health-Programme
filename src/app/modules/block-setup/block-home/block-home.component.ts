@@ -64,7 +64,7 @@ export class BlockHomeComponent implements OnInit {
   openCreateBlock() {
     const dialogRef = this.dialog.open(BlockSetupFormComponent, {
       width: '500px',
-      height: '345px',
+      height: '370px',
       data: { editMode: false }
     });
 
