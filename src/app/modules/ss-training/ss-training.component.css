@@ -2,6 +2,10 @@
   margin-right: 885px;
 }
 
+.closes {
+  margin-left: 610px;
+}
+
 .modal-content {
   height: 430px;
   overflow-x: hidden;

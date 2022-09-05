@@ -6,7 +6,7 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">SS Training Events</h2>
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="viewSSTrainingEventForm.value.branch || branchID">
+                        *ngIf="viewSSTrainingEventForm.value.branch || lowerRoleBranchId">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
@@ -69,7 +69,8 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr *ngFor="let event of ssEventList; index as i">
+                                    <tr
+                                        *ngFor="let event of ssEventList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                         <td style="width:8%;">{{i+1}}</td>
                                         <td style="width:25%;">{{event.training_type_name}}</td>
                                         <td style="width:20%;">{{event.ss_training_event_start_date}}</td>
@@ -89,6 +90,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                            </pagination-controls>
                         </div>
                     </div>
 
@@ -107,7 +111,7 @@
                     <h3 class="modal-title" id="modal-basic-title">Participants Details</h3>
                 </div>
                 <div class="col-md">
-                    <span class="close" (click)="detailsOfParticipantsModalDismiss()"
+                    <span class="closes" (click)="detailsOfParticipantsModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
             </div>
@@ -125,8 +129,8 @@
                             <thead id="header-fixed">
                                 <tr>
                                     <th style="width:5%;">SL No</th>
-                                    <th style="width:15%;">SS Name</th>
-                                    <th style="width:15%;">Branch</th>
+                                    <th style="width:25%;">SS Name</th>
+                                    <th style="width:20%;">Branch</th>
                                     <th style="width:20%;">Village</th>
                                     <th style="width:20%;">Staff In Charge</th>
                                     <th style="width:10%;">Attendance</th>
@@ -137,14 +141,16 @@
                             <tbody style="text-align: center;">
                                 <tr *ngFor="let eventSS of eventSSList; index as i">
                                     <td style="width:5%;">{{i+1}}</td>
-                                    <td style="width:15%;">{{eventSS.swasthya_sahayika_name}}</td>
-                                    <td style="width:15%;">{{eventSS.branch_name}}</td>
+                                    <td style="width:25%;">{{eventSS.swasthya_sahayika_name}}</td>
+                                    <td style="width:20%;">{{eventSS.branch_name}}</td>
                                     <td style="width:20%;">{{eventSS.village_name}}</td>
-                                    <td style="width:20%;">{{eventSS.user_firstname}} {{eventSS.user_middlename}}
+                                    <td style="width:20%;">{{eventSS.user_firstname ? eventSS.user_firstname : '-'}}
+                                        {{eventSS.user_middlename}}
                                         {{eventSS.user_lastname}}
                                     </td>
-                                    <td style="width:10%;">{{eventSS.countAttendance}}</td>
-                                    <td style="width:20%;">{{eventSS.status}}</td>
+                                    <td style="width:10%;">{{eventSS.countAttendance ? eventSS.countAttendance : '-'}}
+                                    </td>
+                                    <td style="width:20%;">{{eventSS.status ? eventSS.status : '-'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -169,7 +175,7 @@
                     <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit SS Training</h3> -->
                 </div>
                 <div class="col-md-6">
-                    <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName}}</h3>
+                    <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName ? regionName :'NA'}}</h3>
                 </div>
                 <div class="col-md-2">
                     <span class="close" (click)="ssTrainingModalDismiss()"
@@ -229,19 +235,21 @@
                     <div class="form-group col-md">
                         <label for="trainername">Trainer Name:</label>
                         <input type="text" class="form-control" placeholder="Trainer Name" formControlName="trainername"
-                            maxlength="45" style="text-transform: capitalize">
+                            maxlength="45" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize">
                     </div>
 
                     <div class="form-group col-md">
                         <label for="trainerdesignation">Trainer Designation:</label>
                         <input type="text" class="form-control" placeholder="Trainer Designation"
-                            formControlName="trainerdesignation" maxlength="45" style="text-transform: capitalize">
+                            formControlName="trainerdesignation" maxlength="45"
+                            (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize">
                     </div>
 
                     <div class="form-group col-md" *ngIf="createSSTrainingEventForm.value.trainingType== 3">
                         <label for="trainingtopic">Topic of Training :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
-                        <!-- (change)="trainingtopic($event.target.value)" -->
                         <select class="form-select" formControlName="trainingtopic" id="trainingtopic" [ngClass]="{'is-invalid': t.trainingtopic.invalid && t.trainingtopic.touched,
                           'is-valid': t.trainingtopic.valid && (t.trainingtopic.dirty || t.trainingtopic.touched) }">
                             <option value="">-- Select Training Topic --</option>
@@ -251,7 +259,7 @@
                             </option>
                         </select>
                         <div *ngIf="t.trainingtopic.errors" class="invalid-feedback">
-                            <div *ngIf="t.trainingtopic.errors.required">Training Topic selection is required</div>
+                            <div *ngIf="t.trainingtopic.errors.required">Topic of Training selection is required</div>
                         </div>
                     </div>
                 </div>
@@ -264,7 +272,7 @@
                             <select class="form-select" (change)="changessbranch($event.target.value)"
                                 formControlName="ssbranch" id="ssbranch" [ngClass]="{ 'is-invalid': t.ssbranch.invalid && t.ssbranch.touched,
                           'is-valid': t.ssbranch.valid && (t.ssbranch.dirty || t.ssbranch.touched) }"
-                                style="width: 97%;">
+                                style="width: 99%;">
                                 <option value="">-- Select Branch --</option>
                                 <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
                                     {{ branch.branchName }}
@@ -275,14 +283,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6"
-                            *ngIf="createSSTrainingEventForm.value.trainingType == 1 ||createSSTrainingEventForm.value.trainingType == 2">
+                        <div class="form-group col-md-6">
                             <label for="participantType">Participant Type:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changeparticipantType($event.target.value)"
                                 formControlName="participantType" id="participantType"
                                 [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
-                          'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 97%;">
+                          'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 100%;">
                                 <option value="">-- Select Participant --</option>
                                 <option value="fresh">Fresh SS</option>
                                 <option value="absent">Absent SS</option>
@@ -291,6 +298,7 @@
                                 <div *ngIf="t.participantType.errors.required">Participant selection is required</div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="QA_table ">
@@ -303,7 +311,7 @@
                                     <tr>
                                         <th style="width:5%;">SL No</th>
                                         <th style="width:20%;">SS Name</th>
-                                        <th style="width:15%;">Branch</th>
+                                        <th style="width:20%;">Branch</th>
                                         <th style="width:20%;">Village</th>
                                         <th style="width:20%;">Staff In Charge</th>
                                         <th style="width:8%;">Select</th>
@@ -314,20 +322,25 @@
                                     <tr *ngFor="let ss of ssList; index as i">
                                         <td style="width:5%;">{{i+1}}</td>
                                         <td style="width:20%;">{{ss.swasthya_sahayika_name}}</td>
-                                        <td style="width:15%;">{{ss.branch_name}}</td>
-                                        <td style="width:20%;">{{ss.village_name}}</td>
-                                        <td style="width:20%;">{{ss.user_firstname}} {{ss.user_middlename}}
+                                        <td style="width:20%;">{{ss.branch_name}}</td>
+                                        <td style="width:20%;">{{ss.village_name ? ss.village_name : '-'}}</td>
+                                        <td style="width:20%;">{{ss.user_firstname ? ss.user_firstname :'-'}}
+                                            {{ss.user_middlename}}
                                             {{ss.user_lastname}}
                                         </td>
-                                        <td style="width:8%;"><input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault" (change)="selectSSForTraining($event, ss)">
+                                        <td style="width:8%;"> <input class="form-check-input" type="checkbox" checked
+                                                value="" id="flexCheckDefault" *ngIf="ss.isChecked == true"
+                                                (change)="selectSSForTraining(ss, i, $event.target.checked,ss.swasthya_sahayika_id)">
+
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault" *ngIf="ss.isChecked == false"
+                                                (change)="selectSSForTraining(ss, i, $event.target.checked,ss.swasthya_sahayika_id)">
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
 
                 </fieldset>
 
@@ -336,8 +349,8 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary bttn"
-                    [disabled]="ssTrainingDataPushPop.ssIdList.length == 0" (click)="saveSSTrainingForm()">Save</button>
+                <button type="button" class=" btn btn-primary btn-sm" [disabled]="!disabledSaveTrainingForm()"
+                    (click)="saveSSTrainingForm()">Save</button>
             </div>
         </div>
 

@@ -189,6 +189,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/app-version']);
     }
 
+    if (routeId == 212 || routeId == 213 || routeId == 214 || routeId == 215) {
+      this.router.navigate(['/ss-training']);
+    }
+
   }
 
 
