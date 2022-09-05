@@ -52,7 +52,7 @@ export class SidebarService {
             branchName: this.branchName,
             districtName: this.districtName,
             dataAccessDTO: req.dataAccessDTO,
-            branchLIST : res?.responseObject
+            branchLIST: res?.responseObject
           })
         });
       })

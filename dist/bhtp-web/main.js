@@ -533,7 +533,7 @@ class SidebarComponent {
         if (routeId == 208 || routeId == 209 || routeId == 210 || routeId == 211) {
             this.router.navigate(['/app-version']);
         }
-        if (routeId == 212) {
+        if (routeId == 212 || routeId == 213 || routeId == 214 || routeId == 215) {
             this.router.navigate(['/ss-training']);
         }
     }
@@ -1897,6 +1897,7 @@ class SidebarService {
         this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl;
         this.subMenuList = [];
         this.villagesOfBranch = [];
+        this.branchLIST = [];
     }
     checkRoledetailDTO() {
         var _a, _b, _c, _d, _e, _f;
@@ -1918,12 +1919,14 @@ class SidebarService {
                     this.branchName = (_b = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _b === void 0 ? void 0 : _b.branchName;
                     this.donorName = (_d = (_c = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _c === void 0 ? void 0 : _c.donorMasterDto) === null || _d === void 0 ? void 0 : _d.donorName;
                     this.districtName = (_f = (_e = res === null || res === void 0 ? void 0 : res.responseObject[0]) === null || _e === void 0 ? void 0 : _e.districtMasterDto) === null || _f === void 0 ? void 0 : _f.districtName;
+                    this.branchLIST = res === null || res === void 0 ? void 0 : res.responseObject;
                     resolve({
                         regionBranchHide: false,
                         branchId: this.branchId,
                         branchName: this.branchName,
                         districtName: this.districtName,
-                        dataAccessDTO: req.dataAccessDTO
+                        dataAccessDTO: req.dataAccessDTO,
+                        branchLIST: res === null || res === void 0 ? void 0 : res.responseObject
                     });
                 });
             });

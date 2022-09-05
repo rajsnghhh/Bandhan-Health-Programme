@@ -8,7 +8,7 @@
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="viewSSTrainingEventForm.value.branch || lowerRoleBranchId">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
-                            (click)="createSSTrainingEvent(SSTraining)">&nbsp;Schedule SS
+                            (click)="createSSTrainingEvents(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
                     </div>
                 </div>
@@ -73,8 +73,10 @@
                                         *ngFor="let event of ssEventList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                         <td style="width:8%;">{{i+1}}</td>
                                         <td style="width:25%;">{{event.training_type_name}}</td>
-                                        <td style="width:20%;">{{event.ss_training_event_start_date}}</td>
-                                        <td style="width:20%;">{{event.ss_training_event_end_date}}</td>
+                                        <td style="width:20%;">
+                                            {{event.ss_training_event_start_date.split("-").reverse().join("-")}}</td>
+                                        <td style="width:20%;">
+                                            {{event.ss_training_event_end_date.split("-").reverse().join("-")}}</td>
                                         <td style="width:20%;">{{event.ssCount}}</td>
                                         <td style="width:20%;">{{event.ssCompletedTraining}}</td>
                                         <td style="width:25%;">{{event.status}} </td>
@@ -83,9 +85,9 @@
                                             style="cursor: pointer; color: blue;">View</td>
                                         <td style="width: 20%;">
                                             <i class="fas fa-edit" title="Edit SS Training Events"
-                                                (click)="editSSTrainingEvents(SSTraining)"> </i>
+                                                (click)="editSSTrainingEvents(event, SSTraining)"> </i>
                                             <i class="fas fa-trash" title="Delete SS Training Events"
-                                                (click)="deleteSSTrainingEvents()"></i>
+                                                (click)="deleteSSTrainingEvents(event)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -129,10 +131,10 @@
                             <thead id="header-fixed">
                                 <tr>
                                     <th style="width:5%;">SL No</th>
-                                    <th style="width:25%;">SS Name</th>
+                                    <th style="width:30%;">SS Name</th>
                                     <th style="width:20%;">Branch</th>
-                                    <th style="width:20%;">Village</th>
-                                    <th style="width:20%;">Staff In Charge</th>
+                                    <th style="width:25%;">Village</th>
+                                    <th style="width:25%;">Staff In Charge</th>
                                     <th style="width:10%;">Attendance</th>
                                     <th style="width:20%;">Status</th>
                                 </tr>
@@ -141,10 +143,10 @@
                             <tbody style="text-align: center;">
                                 <tr *ngFor="let eventSS of eventSSList; index as i">
                                     <td style="width:5%;">{{i+1}}</td>
-                                    <td style="width:25%;">{{eventSS.swasthya_sahayika_name}}</td>
+                                    <td style="width:30%;">{{eventSS.swasthya_sahayika_name}}</td>
                                     <td style="width:20%;">{{eventSS.branch_name}}</td>
-                                    <td style="width:20%;">{{eventSS.village_name}}</td>
-                                    <td style="width:20%;">{{eventSS.user_firstname ? eventSS.user_firstname : '-'}}
+                                    <td style="width:25%;">{{eventSS.village_name}}</td>
+                                    <td style="width:25%;">{{eventSS.user_firstname ? eventSS.user_firstname : '-'}}
                                         {{eventSS.user_middlename}}
                                         {{eventSS.user_lastname}}
                                     </td>
@@ -164,24 +166,34 @@
 
 </ng-template>
 
-
 <ng-template #SSTraining>
 
     <div class="modal-content">
         <div class="modal-header">
             <div class="row">
                 <div class="col-md-4">
-                    <h3 class="modal-title" id="modal-basic-title">Create SS Training</h3>
-                    <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="villageId">Edit SS Training</h3> -->
+                    <h3 class="modal-title" id="modal-basic-title"
+                        *ngIf="!SSTrainingEditData?.training_event_master_id">Create SS Training</h3>
+                    <h3 class="modal-title" id="modal-basic-title" *ngIf="SSTrainingEditData?.training_event_master_id">
+                        Edit SS Training</h3>
                 </div>
                 <div class="col-md-6">
                     <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName ? regionName :'NA'}}</h3>
                 </div>
+
                 <div class="col-md-2">
                     <span class="close" (click)="ssTrainingModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <h3 style="margin-left:-40px;">Branch Name:&nbsp;&nbsp;{{branchName ? branchName :'NA'}}</h3>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
         <div class="modal-body">
@@ -286,7 +298,7 @@
                         <div class="form-group col-md-6">
                             <label for="participantType">Participant Type:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" (change)="changeparticipantType($event.target.value)"
+                            <select class="form-select" (change)="filterSSList($event.target.value)"
                                 formControlName="participantType" id="participantType"
                                 [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
                           'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 100%;">
@@ -310,9 +322,9 @@
                                 <thead id="header-fixed">
                                     <tr>
                                         <th style="width:5%;">SL No</th>
-                                        <th style="width:20%;">SS Name</th>
+                                        <th style="width:25%;">SS Name</th>
                                         <th style="width:20%;">Branch</th>
-                                        <th style="width:20%;">Village</th>
+                                        <th style="width:25%;">Village</th>
                                         <th style="width:20%;">Staff In Charge</th>
                                         <th style="width:8%;">Select</th>
                                     </tr>
@@ -321,9 +333,9 @@
                                 <tbody style="text-align: center;">
                                     <tr *ngFor="let ss of ssList; index as i">
                                         <td style="width:5%;">{{i+1}}</td>
-                                        <td style="width:20%;">{{ss.swasthya_sahayika_name}}</td>
+                                        <td style="width:25%;">{{ss.swasthya_sahayika_name}}</td>
                                         <td style="width:20%;">{{ss.branch_name}}</td>
-                                        <td style="width:20%;">{{ss.village_name ? ss.village_name : '-'}}</td>
+                                        <td style="width:25%;">{{ss.village_name ? ss.village_name : '-'}}</td>
                                         <td style="width:20%;">{{ss.user_firstname ? ss.user_firstname :'-'}}
                                             {{ss.user_middlename}}
                                             {{ss.user_lastname}}
