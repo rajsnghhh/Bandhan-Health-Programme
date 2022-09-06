@@ -84,10 +84,12 @@
                                             (click)="viewParticipantsDetails(detailsOfParticipants, event.ssList)"
                                             style="cursor: pointer; color: blue;">View</td>
                                         <td style="width: 20%;">
-                                            <i class="fas fa-edit" title="Edit SS Training Events"
+                                            <i class="fas fa-edit" title="Edit SS Training Event"
                                                 (click)="editSSTrainingEvents(event, SSTraining)"> </i>
-                                            <i class="fas fa-trash" title="Delete SS Training Events"
+                                            <i class="fas fa-trash" title="Delete SS Training Event"
                                                 (click)="deleteSSTrainingEvents(event)"></i>
+                                            <i class="fas fa-check-circle" title="Approve SS Training Event"
+                                                (click)="approveSSTrainingEvents(event)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -279,7 +281,7 @@
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">ADD SS</legend>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="ssbranch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changessbranch($event.target.value)"
                                 formControlName="ssbranch" id="ssbranch" [ngClass]="{ 'is-invalid': t.ssbranch.invalid && t.ssbranch.touched,
@@ -295,7 +297,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="participantType">Participant Type:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="filterSSList($event.target.value)"
@@ -309,6 +311,20 @@
                             <div *ngIf="t.participantType.errors" class="invalid-feedback">
                                 <div *ngIf="t.participantType.errors.required">Participant selection is required</div>
                             </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="staff">Staff In Charge:</label>
+                            <select class="form-select" (change)="changestaff($event.target.value)"
+                                formControlName="staff" id="staff">
+                                <option value="">-- Filter By Staff --</option>
+                                <option value="viewall">View All</option>
+                                <option *ngFor="let staff of staffList" value='{{staff.user_id}}'>
+                                    {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}} -
+                                    {{staff.role_shortname}}
+                                </option>
+                                <option value="nouser">No User</option>
+                            </select>
                         </div>
 
                     </div>

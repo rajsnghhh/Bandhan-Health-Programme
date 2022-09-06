@@ -30,4 +30,12 @@ export class SsTrainingService {
     return this.http.post(`${this.baseURL}sstraining/saveUpdateDeleteSsTrainingEvent`, obj)
   }
 
+  approveSSTraining(obj): any {
+    return this.http.post(`${this.baseURL}sstraining/approveSSTrainingEvent`, obj)
+  }
+
+  staffListOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj)
+  }
+
 }
