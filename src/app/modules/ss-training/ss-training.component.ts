@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from '../shared/services/validation.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ss-training',
@@ -50,15 +51,22 @@ export class SsTrainingComponent implements OnInit {
   SSTrainingEditData: any;
   staffList: Array<any> = [];
   staffID: any;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  role: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig,
-    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService,) {
+    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
+    this.role = this.sidebarService.RoleDTOName;
+    console.log(this.role, 'role');
+
     this.createForm();
 
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
@@ -97,6 +105,26 @@ export class SsTrainingComponent implements OnInit {
         });
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 7)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 212 || item.subFunctionMasterId == 213 || item.subFunctionMasterId == 214 || item.subFunctionMasterId == 215)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/ss-training']) : this.router.navigate(['/error']);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 7)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 212 || item.subFunctionMasterId == 213 || item.subFunctionMasterId == 214 || item.subFunctionMasterId == 215)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 7)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 212 || item.subFunctionMasterId == 213 || item.subFunctionMasterId == 214 || item.subFunctionMasterId == 215)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 7)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 212 || item.subFunctionMasterId == 213 || item.subFunctionMasterId == 214 || item.subFunctionMasterId == 215)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   createForm() {
@@ -415,6 +443,7 @@ export class SsTrainingComponent implements OnInit {
   }
 
   filterSSList(participantType) {
+    this.createSSTrainingEventForm.controls.staff.setValue('');
     this.ssList = this.AllSSList;
     console.log(this.ssList, 'this.ssList');
     console.log(this.upperRoleBranchId, 'this.upperRoleBranchId ');
@@ -590,6 +619,14 @@ export class SsTrainingComponent implements OnInit {
   }
 
   approveSSTrainingEvents(event) {
+
+    this.confirmationDialogService.confirm('', 'Are you sure you want to approve ss training record ?')
+      .then(() => this.approveSS(event)
+      )
+      .catch(() => '');
+  }
+
+  approveSS(event) {
     var ssTrainingObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       training_event_master_id: event.training_event_master_id

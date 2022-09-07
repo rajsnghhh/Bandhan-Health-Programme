@@ -6,7 +6,7 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">SS Training Events</h2>
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="viewSSTrainingEventForm.value.branch || lowerRoleBranchId">
+                        *ngIf="(viewSSTrainingEventForm.value.branch || lowerRoleBranchId)&& createMode">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="createSSTrainingEvents(SSTraining)">&nbsp;Schedule SS
                             Training Event</i>
@@ -64,7 +64,7 @@
                                         <th style="width:20%;">SS Completed<br> Training</th>
                                         <th style="width:25%;">Status</th>
                                         <th style="width:20%;">Participants<br> Details</th>
-                                        <th style="width:20%;">Action</th>
+                                        <th style="width:20%;" *ngIf="updateMode || deleteMode">Action</th>
                                     </tr>
                                 </thead>
 
@@ -83,13 +83,14 @@
                                         <td style="width:20%;"
                                             (click)="viewParticipantsDetails(detailsOfParticipants, event.ssList)"
                                             style="cursor: pointer; color: blue;">View</td>
-                                        <td style="width: 20%;">
+                                        <td style="width: 20%;" *ngIf="updateMode || deleteMode">
                                             <i class="fas fa-edit" title="Edit SS Training Event"
-                                                (click)="editSSTrainingEvents(event, SSTraining)"> </i>
+                                                (click)="editSSTrainingEvents(event, SSTraining)" *ngIf="updateMode">
+                                            </i>
                                             <i class="fas fa-trash" title="Delete SS Training Event"
-                                                (click)="deleteSSTrainingEvents(event)"></i>
+                                                (click)="deleteSSTrainingEvents(event)" *ngIf="deleteMode"></i>
                                             <i class="fas fa-check-circle" title="Approve SS Training Event"
-                                                (click)="approveSSTrainingEvents(event)"></i>
+                                                (click)="approveSSTrainingEvents(event)" *ngIf="role=='PO'"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -179,7 +180,8 @@
                     <h3 class="modal-title" id="modal-basic-title" *ngIf="SSTrainingEditData?.training_event_master_id">
                         Edit SS Training</h3>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="lowerRoleBranchId"></div>
+                <div class="col-md-6" *ngIf="!lowerRoleBranchId">
                     <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName ? regionName :'NA'}}</h3>
                 </div>
 
