@@ -127,6 +127,11 @@ export class SsTrainingComponent implements OnInit {
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
+  imgchange() {
+    console.log('pic');
+    
+    // document.getElementById("result").value = document.getElementById("img1").src;
+  }
   createForm() {
     this.viewSSTrainingEventForm = this.fb.group({
       region: ['', Validators.required],

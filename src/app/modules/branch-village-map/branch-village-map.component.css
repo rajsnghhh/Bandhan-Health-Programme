@@ -3,7 +3,7 @@
 }
 
 .modal-content {
-  height: 430px;
+  height: 520px;
   /* overflow-x: hidden; */
   width: 750px;
   margin-left: -90px;
@@ -24,20 +24,16 @@
 
 ::-webkit-scrollbar {
   width: 8px;
-  /* Remove scrollbar space */
   height: 8px;
   background: transparent;
-  /* Optional: just make scrollbar invisible */
 }
 
 ::-webkit-scrollbar-thumb {
   width: 30px;
-  /* Remove scrollbar space */
   height: 30px;
   border-radius: 10px;
 }
 
-/* Optional: show position indicator in colour */
 ::-webkit-scrollbar-thumb {
   background: grey;
 }
@@ -53,14 +49,6 @@ table thead, tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
-}
-
-.QA_tableFull {
-  margin-left: 890px;
-}
-
-.QA_tableHalf {
-  margin-left: 720px;
 }
 
 .modal-footer {

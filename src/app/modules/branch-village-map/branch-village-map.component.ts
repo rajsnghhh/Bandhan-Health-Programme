@@ -388,7 +388,9 @@ export class BranchVillageMapComponent implements OnInit {
     return flag;
   }
 
-  saveMapVill() {
+  saveMapVills() {
+    console.log('savevillmap');
+    
     if (this.mapVillForm.value.district != this.districtId) {
       this.confirmationDialogService.confirm('', 'You are mapping villages of a different district with the' + ' ' + this.branchName + ' ' + '.')
         .then(() => this.map()
