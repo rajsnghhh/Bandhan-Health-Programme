@@ -55,12 +55,18 @@ export class SsTrainingComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   role: any;
+  searchText: any;
+  searchFullscreen: boolean;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig,
     private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) {
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
   }
 
   ngOnInit(): void {
@@ -127,11 +133,6 @@ export class SsTrainingComponent implements OnInit {
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
-  imgchange() {
-    console.log('pic');
-    
-    // document.getElementById("result").value = document.getElementById("img1").src;
-  }
   createForm() {
     this.viewSSTrainingEventForm = this.fb.group({
       region: ['', Validators.required],

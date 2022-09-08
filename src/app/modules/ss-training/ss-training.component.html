@@ -12,10 +12,6 @@
                             Training Event</i>
                     </div>
                 </div>
-                <div class="form-group col-md">
-                    <label for="pic">Picture:</label>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdJCdrKPaxsM571AC_HxW5XbdV5uY9YCZgQw&usqp=CAU" style="width:500px;height:300px;" />
-                </div>
 
                 <form class="form-signin" [formGroup]="viewSSTrainingEventForm">
                     <div class="row" *ngIf="regionBranchHide">
@@ -51,6 +47,21 @@
                     </div>
                 </form>
 
+                <div class="box_right d-flex lms_block col-md-6">
+                    <div class="serach_field_2">
+                        <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <form active="#">
+                                <div class="search_field">
+                                    <input type="text" name="search" placeholder="Search by Type Of Training..."
+                                        [(ngModel)]="searchText">
+                                </div>
+                                <button type="submit"> <i class="fa fa-search"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="white_box_tittle list_header">
 
                     <div class="QA_table ">
@@ -74,7 +85,7 @@
 
                                 <tbody>
                                     <tr
-                                        *ngFor="let event of ssEventList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        *ngFor="let event of ssEventList | ssTraining: {training_type_name :searchText } | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                         <td style="width:8%;">{{i+1}}</td>
                                         <td style="width:25%;">{{event.training_type_name}}</td>
                                         <td style="width:20%;">
@@ -208,7 +219,7 @@
             <form class="form-signin" [formGroup]="createSSTrainingEventForm">
                 <div class="row">
                     <div class="form-group col-md">
-                        <label for="trainingType">Type of Training :&nbsp;<span
+                        <label for="trainingType">Type of Training:&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
                         <select class="form-select" formControlName="trainingType" id="trainingType" [ngClass]="{'is-invalid':
                          t.trainingType.invalid && t.trainingType.touched,
@@ -234,7 +245,7 @@
 
                 <div class="row">
                     <div class="form-group col-md">
-                        <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <label for="fromDate">From Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <input type="date" class="form-control" formControlName="fromDate"
                             (keydown)="restrictTypeOfDate()" [min]="setFromDate"
                             (change)="expectToDate($event.target.value)"
@@ -246,7 +257,7 @@
                     </div>
 
                     <div class="form-group col-md">
-                        <label for="toDate">To Date :</label>
+                        <label for="toDate">To Date:</label>
                         <input type="date" class="form-control" formControlName="toDate" [min]="setToDate">
                     </div>
                 </div>
@@ -288,7 +299,7 @@
                     <legend class="scheduler-border">ADD SS</legend>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label for="ssbranch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <label for="ssbranch">Branch:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changessbranch($event.target.value)"
                                 formControlName="ssbranch" id="ssbranch" [ngClass]="{ 'is-invalid': t.ssbranch.invalid && t.ssbranch.touched,
                           'is-valid': t.ssbranch.valid && (t.ssbranch.dirty || t.ssbranch.touched) }"
