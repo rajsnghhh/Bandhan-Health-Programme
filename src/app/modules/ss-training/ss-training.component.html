@@ -45,22 +45,33 @@
                             </div>
                         </div>
                     </div>
-                </form>
 
-                <div class="box_right d-flex lms_block col-md-6">
-                    <div class="serach_field_2">
-                        <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                            <form active="#">
-                                <div class="search_field">
-                                    <input type="text" name="search" placeholder="Search by Type Of Training..."
-                                        [(ngModel)]="searchText">
-                                </div>
-                                <button type="submit"> <i class="fa fa-search"></i> </button>
-                            </form>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="filterStartDate">Start Date :</label>
+                            <input type="date" class="form-control" formControlName="filterStartDate"
+                                (change)="filterDateWiseSSTrainingList()">
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="filterEndDate">End Date :</label>
+                            <input type="date" class="form-control" formControlName="filterEndDate"
+                                (change)="filterDateWiseSSTrainingList()">
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="filterTraining">Filter By Training Type :</label>
+                            <select class="form-select" formControlName="filterTraining" id="filterTraining"
+                                (change)="filterListByTrainingType($event.target.value)">
+                                <option value="">-- Type Of Training --</option>
+                                <option *ngFor="let filterTraining of ssTrainingType"
+                                    value="{{filterTraining.training_type_master_id}}">
+                                    {{filterTraining.training_type_name}}
+                                </option>
+                            </select>
                         </div>
                     </div>
-
-                </div>
+                </form>
 
                 <div class="white_box_tittle list_header">
 
@@ -85,7 +96,7 @@
 
                                 <tbody>
                                     <tr
-                                        *ngFor="let event of ssEventList | ssTraining: {training_type_name :searchText } | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        *ngFor="let event of ssEventList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                         <td style="width:8%;">{{i+1}}</td>
                                         <td style="width:25%;">{{event.training_type_name}}</td>
                                         <td style="width:20%;">
@@ -96,7 +107,7 @@
                                         <td style="width:20%;">{{event.ssCompletedTraining}}</td>
                                         <td style="width:25%;">{{event.status}} </td>
                                         <td style="width:20%;"
-                                            (click)="viewParticipantsDetails(detailsOfParticipants, event.ssList)"
+                                            (click)="viewParticipantsDetails(detailsOfParticipants, event)"
                                             style="cursor: pointer; color: blue;">View</td>
                                         <td style="width: 20%;" *ngIf="updateMode || deleteMode">
                                             <i class="fas fa-edit" title="Edit SS Training Event"
@@ -105,7 +116,7 @@
                                             <i class="fas fa-trash" title="Delete SS Training Event"
                                                 (click)="deleteSSTrainingEvents(event)" *ngIf="deleteMode"></i>
                                             <i class="fas fa-check-circle" title="Approve SS Training Event"
-                                                (click)="approveSSTrainingEvents(event)" *ngIf="role=='PO'"></i>
+                                                (click)="approveSSTrainingEvents(event)" *ngIf="approveMode"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -177,6 +188,17 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <h3 class="modal-title" style="margin-left:20px;" *ngIf="attendanceImage.length != 0">Event Captured Images :
+        </h3>
+        <div class="row">
+            <div class="col-md" *ngFor="let attendance of attendanceImage; index as i">
+                <a href="{{attendance.ss_training_attendance_page_image_url}}" target="_blank">
+                    <img src="{{attendance.ss_training_attendance_page_image_url}}">
+                    <h4 style="margin-left:100px ;">Page : {{attendance.ss_training_event_attendance_page_no}}</h4>
+                </a>
             </div>
         </div>
 

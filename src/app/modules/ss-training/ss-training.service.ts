@@ -38,4 +38,8 @@ export class SsTrainingService {
     return this.http.post(`${this.baseURL}branch/getListOfActiveHcoITL`, obj)
   }
 
+  imageOfAEvent(obj): any {
+    return this.http.post(`${this.baseURL}/image/getFile`, obj)
+  }
+
 }
