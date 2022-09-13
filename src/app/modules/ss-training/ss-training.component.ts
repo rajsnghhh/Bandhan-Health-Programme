@@ -275,6 +275,7 @@ export class SsTrainingComponent implements OnInit {
     if (event.ss_training_event_start_date > today) {
       this.createSSTrainingEvents(SSTraining);
     } else {
+      this.ssTrainingModalDismiss();
       this.showError('Event is not available for edit');
       return;
     }
