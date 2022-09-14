@@ -1191,6 +1191,7 @@ class SsTrainingComponent {
             this.createSSTrainingEvents(SSTraining);
         }
         else {
+            this.ssTrainingModalDismiss();
             this.showError('Event is not available for edit');
             return;
         }

@@ -90,7 +90,8 @@
                                         <th style="width:20%;">SS Completed<br> Training</th>
                                         <th style="width:25%;">Status</th>
                                         <th style="width:20%;">Participants<br> Details</th>
-                                        <th style="width:20%;" *ngIf="updateMode || deleteMode">Action</th>
+                                        <th style="width:20%;" *ngIf="updateMode || deleteMode || approveMode">Action
+                                        </th>
                                     </tr>
                                 </thead>
 
@@ -142,7 +143,7 @@
                     <h3 class="modal-title" id="modal-basic-title">Participants Details</h3>
                 </div>
                 <div class="col-md">
-                    <span class="closes" (click)="detailsOfParticipantsModalDismiss()"
+                    <span class="close" (click)="detailsOfParticipantsModalDismiss()"
                         style="cursor: pointer;font-size: 35px;">&times;</span>
                 </div>
             </div>
@@ -211,28 +212,29 @@
     <div class="modal-content">
         <div class="modal-header">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md">
                     <h3 class="modal-title" id="modal-basic-title"
                         *ngIf="!SSTrainingEditData?.training_event_master_id">Create SS Training</h3>
                     <h3 class="modal-title" id="modal-basic-title" *ngIf="SSTrainingEditData?.training_event_master_id">
                         Edit SS Training</h3>
+                    <h3 style="margin-left: 410px;
+                        margin-top: -49px;" *ngIf="!lowerRoleBranchId">Region Name:&nbsp;&nbsp;{{regionName ?
+                        regionName :'NA'}}</h3>
+                    <h3 style="margin-left: 410px;
+                          margin-top: -49px;" *ngIf="lowerRoleBranchId">Branch Name:&nbsp;&nbsp;{{branchName ?
+                        branchName :'NA'}}</h3>
+                    <h3 style="margin-left:411px;" *ngIf="!lowerRoleBranchId">Branch Name:&nbsp;&nbsp;{{branchName ?
+                        branchName :'NA'}}</h3>
                 </div>
-                <div class="col-md-6" *ngIf="lowerRoleBranchId"></div>
-                <div class="col-md-6" *ngIf="!lowerRoleBranchId">
-                    <h3 style="margin-left:100px;">Region Name:&nbsp;&nbsp;{{regionName ? regionName :'NA'}}</h3>
-                </div>
+            </div>
 
-                <div class="col-md-2">
-                    <span class="close" (click)="ssTrainingModalDismiss()"
-                        style="cursor: pointer;font-size: 35px;">&times;</span>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6">
-                        <h3 style="margin-left:-40px;">Branch Name:&nbsp;&nbsp;{{branchName ? branchName :'NA'}}</h3>
-                    </div>
-                </div>
-
+            <div class="col-md">
+                <span (click)="ssTrainingModalDismiss()"
+                    style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 60px;"
+                    *ngIf="!lowerRoleBranchId">&times;</span>
+                <span (click)="ssTrainingModalDismiss()"
+                    style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 22px;"
+                    *ngIf="lowerRoleBranchId">&times;</span>
             </div>
 
         </div>
