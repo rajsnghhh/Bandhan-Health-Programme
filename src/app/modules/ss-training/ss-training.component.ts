@@ -89,8 +89,8 @@ export class SsTrainingComponent implements OnInit {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
         let Dto = {
           dataAccessDTO: {
-            userId: dataAccessDTO.userName,
-            userName: dataAccessDTO.userId,
+            userId: dataAccessDTO.userId,
+            userName: dataAccessDTO.userName,
           },
           branchId: this.lowerRoleBranchId
         }

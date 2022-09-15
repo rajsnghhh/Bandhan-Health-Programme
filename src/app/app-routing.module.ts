@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'app-version', loadChildren: () => import('./modules/app-version/app-version.module').then(m => m.AppVersionModule), canActivate: [AuthGuard] },
   { path: 'error', component: ErrorComponent, canActivate: [AuthGuard] },
   { path: 'ss-training', loadChildren: () => import('./modules/ss-training/ss-training.module').then(m => m.SsTrainingModule), canActivate: [AuthGuard] },
+  { path: 'material-distribution-register', loadChildren: () => import('./modules/material-distribution-register/material-distribution-register.module').then(m => m.MaterialDistributionRegisterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

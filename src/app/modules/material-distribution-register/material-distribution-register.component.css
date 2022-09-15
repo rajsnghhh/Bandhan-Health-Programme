@@ -1,0 +1,25 @@
+.fa-plus-circle {
+    color: #499;
+    font-size: 20px;
+}
+.modal-content {
+    height: 430px;
+    overflow-x: hidden;
+    width: 850px;
+    margin-left: -130px;
+  }
+
+  .table th {
+    border-bottom: 0 solid transparent;
+    background-color: #fff;
+    line-height: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    text-transform: capitalize;
+    font-family: "Rajdhani", sans-serif;
+    border: 0;
+    background: #499;
+    text-align: center;
+  }

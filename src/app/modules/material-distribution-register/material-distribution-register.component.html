@@ -1,0 +1,205 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Material Distribution Register</h2>
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                        <!--  *ngIf="(viewSSTrainingEventForm.value.branch || lowerRoleBranchId)&& createMode"
+                         (click)="createSSTrainingEvents(SSTraining)" -->
+                        <i class="fas fa-plus-circle" style="cursor: pointer">&nbsp;Create Material Distribution
+                            Register</i>
+                    </div>
+                </div>
+
+                <form class="form-signin" [formGroup]="viewMaterialDistributionForm">
+
+                    <div class="row" *ngIf="regionBranchHide">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region"
+                                [ngClass]="{'is-invalid': m.region.invalid
+                                 && m.region.touched,  'is-valid':  m.region.valid && (m.region.dirty || m.region.touched) }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="m.region.errors" class="invalid-feedback">
+                                <div *ngIf="m.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{'is-invalid': m.branch.invalid && m.branch.touched,
+                              'is-valid': m.branch.valid && (m.branch.dirty || m.branch.touched) }">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.branch.errors" class="invalid-feedback">
+                                <div *ngIf="m.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" id="block" [ngClass]="{'is-invalid': m.block.invalid 
+                                && m.block.touched,'is-valid': m.block.valid && 
+                                (m.block.dirty || m.block.touched) }">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
+                                    {{ block.blockName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.block.errors" class="invalid-feedback">
+                                <div *ngIf="m.block.errors.required">Block selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{'is-invalid': m.gp.invalid && m.gp.touched,
+                              'is-valid': m.gp.valid && (m.gp.dirty || m.gp.touched) }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.gp.errors" class="invalid-feedback">
+                                <div *ngIf="m.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">Village/ Gram Sansad/ Locality
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeVillage($event.target.value)"
+                                formControlName="gram" id="gram" [ngClass]="{'is-invalid': m.gram.invalid && m.gram.touched,
+                              'is-valid': m.gram.valid && (m.gram.dirty || m.gram.touched) }">
+                                <option value="">-- Select Village --</option>
+                                <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
+                                    {{ vill.villageName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.gram.errors" class="invalid-feedback">
+                                <div *ngIf="m.gram.errors.required">
+                                    Village selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table ">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th style="width: 6%;">SL No</th>
+                                            <th style="width: 17%;">Family No.</th>
+                                            <th style="width: 20%;">Family Head Name</th>
+                                            <th style="width: 10%;">Guardian Name</th>
+                                            <th style="width: 17%;">No. of time distributed</th>
+                                            <th style="width: 15%;">Distribution Details</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!--  *ngFor="let item of staffWiseSSLists | paginate: { itemsPerPage: 5, currentPage: p }; index as i" -->
+                                        <tr>
+                                            <td style="width: 6%;">1</td>
+                                            <td style="width: 17%;">125</td>
+                                            <td style="width: 20%;">Test 1</td>
+                                            <td style="width: 10%;">Test 2</td>
+                                            <td style="width: 17%;">5</td>
+                                            <td style="width: 15%;"
+                                                (click)="viewdistributionDetails(detailsOfDistribution)"
+                                                style="cursor: pointer; color: blue;">view</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #detailsOfDistribution>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">Distribution Details</h3>
+            </div>
+            <div class="col-md">
+                <span class="close" (click)="detailsOfDistributionModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -25px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="white_box_tittle list_header">
+
+                <div class="QA_table ">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                        <table
+                            class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                            role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                            <thead id="header-fixed">
+                                <tr>
+                                    <th style="width:5%;">SL No</th>
+                                    <th style="width:30%;">Distribution Date</th>
+                                    <th style="width:20%;">Beneficiary Name</th>
+                                    <th style="width:25%;">Beneficiary Type</th>
+                                    <th style="width:25%;">Distribution</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align: center;">
+                                <tr>
+                                    <td style="width:5%;">1</td>
+                                    <td style="width:30%;">13-09-2022</td>
+                                    <td style="width:20%;">Rumila Bibi</td>
+                                    <td style="width:25%;">PW</td>
+                                    <td style="width:25%;">Item One (si1, si2), Item Two (si 1)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>
