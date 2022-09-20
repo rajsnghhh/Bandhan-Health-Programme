@@ -4,7 +4,7 @@ import { MaterialDistributionRegisterRoutingModule } from './material-distributi
 import { MaterialDistributionRegisterComponent } from './material-distribution-register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [MaterialDistributionRegisterComponent],
@@ -12,7 +12,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CommonModule,
     MaterialDistributionRegisterRoutingModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
 export class MaterialDistributionRegisterModule { }

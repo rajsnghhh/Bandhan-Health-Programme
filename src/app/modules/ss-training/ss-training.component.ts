@@ -430,7 +430,8 @@ export class SsTrainingComponent implements OnInit {
     let ssListObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.allBranchID,
-      trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
+      trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType,
+      training_event_master_id: this.SSTrainingEditData?.training_event_master_id ? this.SSTrainingEditData?.training_event_master_id : 0,
     }
 
     this.ssTrainingService.getSSList(ssListObj).subscribe((res: any) => {

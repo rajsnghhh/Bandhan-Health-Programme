@@ -963,6 +963,7 @@ class UserCreateFormComponent {
         console.log(this.data, 'Edit');
         this.createForm();
         this.regionList = this.data.regionList;
+        console.log(this.regionList);
         let Dto = {
             dataAccessDTO: this.httpService.dataAccessDTO,
         };

@@ -6,10 +6,10 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Material Distribution Register</h2>
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end">
-                        <!--  *ngIf="(viewSSTrainingEventForm.value.branch || lowerRoleBranchId)&& createMode"
-                         (click)="createSSTrainingEvents(SSTraining)" -->
-                        <i class="fas fa-plus-circle" style="cursor: pointer">&nbsp;Create Material Distribution
-                            Register</i>
+                        <!--  *ngIf="viewMaterialDistributionForm.value.gram-->
+                        <i class="fas fa-plus-circle" style="cursor: pointer"
+                            (click)="viewEligibleFamilyDetails(eligibleFamilyDetails)">&nbsp;Create Material
+                            Distribution Register</i>
                     </div>
                 </div>
 
@@ -117,6 +117,7 @@
                                             <th style="width: 10%;">Guardian Name</th>
                                             <th style="width: 17%;">No. of time distributed</th>
                                             <th style="width: 15%;">Distribution Details</th>
+                                            <th style="width: 8%;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -131,6 +132,13 @@
                                             <td style="width: 15%;"
                                                 (click)="viewdistributionDetails(detailsOfDistribution)"
                                                 style="cursor: pointer; color: blue;">view</td>
+                                            <td style="width: 8%;">
+                                                <i class="fas fa-edit" title="Edit Material Distributed Family"
+                                                    (click)="editMaterialDistributedFamily()">
+                                                </i>
+                                                <i class="fas fa-trash" title="Delete Material Distributed Family"
+                                                    (click)="deleteMaterialDistributedFamily()"></i>
+                                            </td>
                                         </tr>
                                     </tbody>
 
@@ -159,7 +167,7 @@
                 <h3 class="modal-title" id="modal-basic-title">Distribution Details</h3>
             </div>
             <div class="col-md">
-                <span class="close" (click)="detailsOfDistributionModalDismiss()"
+                <span class="close" (click)="viewDistributionDetailsModalDismiss()"
                     style="cursor: pointer;font-size: 35px;float: right; margin-top: -25px;">&times;</span>
             </div>
 
@@ -199,6 +207,208 @@
 
             </div>
         </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #eligibleFamilyDetails>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-md">
+                    <!-- *ngIf="!SSTrainingEditData?.training_event_master_id" -->
+                    <h3 class="modal-title" id="modal-basic-title"> Eligible Family List</h3>
+                    <!-- <h3 class="modal-title" id="modal-basic-title">Edit Material Distribution</h3> -->
+                </div>
+            </div>
+
+            <div class="col-md">
+                <span (click)="eligibleFamilyDetailsModalDismiss()"
+                    style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 20px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="QA_table ">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                        role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                        <thead id="header-fixed">
+                            <tr>
+                                <th style="width:5%;">SL<br>No</th>
+                                <th style="width:10%;">Family<br>No</th>
+                                <th style="width:25%;">Name</th>
+                                <th style="width:20%;">Husband Name</th>
+                                <th style="width:12%;">Child Under<br>2 yr</th>
+                                <th style="width:8%;">Child 2<br>to 5 yr</th>
+                                <th style="width:14%;">Adolescent Girl<br>14 to 18 yr</th>
+                                <th style="width:8%;">Pregnant</th>
+                                <th style="width:10%;">Distribute<br>Material</th>
+                            </tr>
+                        </thead>
+
+                        <tbody style="text-align: center;">
+                            <tr *ngFor="let item of eligibleFamilyList; index as i">
+                                <td style="width:5%;">{{i+1}}</td>
+                                <td style="width:10%;">{{item.family_number}}</td>
+                                <td style="width:25%;">{{item.first_name}} {{item.middle_name}} {{item.last_name}}
+                                </td>
+                                <td style="width:20%;">{{item.husband_or_guardian_name}}</td>
+                                <td style="width:12%;">{{item.below2Current ? item.below2Current :'-'}}</td>
+                                <td style="width:8%;">{{item.below5Current ? item.below5Current :'-'}}</td>
+                                <td style="width:14%;">{{item.girl14To18Current ? item.girl14To18Current: '-'}}</td>
+                                <td style="width:8%;">{{item.pregnant_woman}}</td>
+                                <td style="width:10%;"> <i class="fas fa-file" title="Distribute Material"
+                                        (click)="createMaterialDistribution(materialDistribution, item)"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #materialDistribution>
+
+    <div class="modal-content">
+        <!-- <div class="modal-header">
+            <div class="row">
+                <div class="col-md">
+
+                </div>
+            </div>
+
+            <div class="col-md">
+                <span (click)="createMaterialDistributionModalDismiss()"
+                    style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 20px;">&times;</span>
+            </div>
+
+        </div> -->
+
+        <div class="modal-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Beneficiary List</legend>
+                <div class="QA_table" id="beneficiaryScroll">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                        <table
+                            class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                            role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed">
+
+                            <thead id="header-fixed">
+                                <tr>
+                                    <th style="width:5%;">SL No</th>
+                                    <th style="width:15%;">Name</th>
+                                    <th style="width:20%;">Age</th>
+                                    <th style="width:8%;">Sex</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align: center;">
+                                <tr *ngFor="let item of eligibleChildList; index as i">
+                                    <td style="width:5%;">{{i+1}}</td>
+                                    <td style="width:5%;">{{item.child_name}}</td>
+                                    <td style="width:5%;">{{item.dob}}</td>
+                                    <td style="width:15%;">{{item.sex}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Distribute Material</legend>
+
+                <form class="form-signin" [formGroup]="createMaterialDistributionForm">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="itemList">
+                                Item List:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="itemList" id="itemList" [ngClass]="{'is-invalid':
+                         t.itemList.invalid && t.itemList.touched,
+                          'is-valid': t.itemList.valid && (t.itemList.dirty || t.itemList.touched) }"
+                                (change)="changeitemList($event.target.value)">
+                                <option value="">-- Select Item List --</option>
+                                <!-- <option *ngFor="let itemList of ssitemList" value="{{itemList.training_type_master_id}}">
+                                {{itemList.training_type_name}}
+                            </option> -->
+                                <option value="1">IEC Material</option>
+                                <option value="2">Nutrition Garden Kit</option>
+                                <option value="3">Others</option>
+                            </select>
+                            <div *ngIf="t.itemList.errors" class="invalid-feedback">
+                                <div *ngIf="t.itemList.errors.required">Selection of Item List is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" *ngIf="createMaterialDistributionForm.value.itemList != 3">
+                            <label for="subItemList">Sub Item List:&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+
+                            <!-- 
+                      (onSelectAll)="onSelectAll($event)" 
+                      (onDeSelectAll)="onDeSelectAll($event)"> -->
+
+                            <ng-multiselect-dropdown [placeholder]="'Select Multiple Sub Item List'"
+                                [settings]="dropdownSettings" [data]="itemList" formControlName="subItems"
+                                (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" [ngClass]="{
+                             'is-invalid': t.subItems.invalid && t.subItems.touched,
+                             'is-valid': t.subItems.valid && (t.subItems.dirty || t.subItems.touched)}">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="t.subItems.errors" class="invalid-feedback">
+                                <div *ngIf="t.subItems.errors.required">
+                                    Selection of Sub Item List is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" *ngIf="createMaterialDistributionForm.value.itemList == 3">
+                            <label for="enterSubItem">Sub Item:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="text" class="form-control" placeholder="Enter Sub Item"
+                                formControlName="enterSubItem" maxlength="45"
+                                (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                style="text-transform: capitalize"
+                                [ngClass]="{
+                                    'is-invalid': t.enterSubItem.invalid && t.enterSubItem.touched,
+                                    'is-valid': t.enterSubItem.valid && (t.enterSubItem.dirty || t.enterSubItem.touched)}">
+                            <div *ngIf="t.enterSubItem.errors" class="invalid-feedback">
+                                <div *ngIf="t.enterSubItem.errors.required">Sub Item is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <!-- <div class="row">
+                [disabled]="!disabledSaveTrainingForm()"
+                <div class="col-md-6"> <button type="button" class=" btn btn-primary btn-sm"
+                        (click)="createMaterialDistributionModalDismiss()">Close</button></div>
+                <div class="col-md-6"> <button type="button" class=" btn btn-primary btn-sm"
+                        (click)="createMaterialDistributionSave()">Save</button></div>
+
+            </div> -->
+            <div class="text-center">
+                <button class="btn btn-primary m-1"  (click)="createMaterialDistributionModalDismiss()">
+                    <i class="fas fa-check-circle m-1"></i>Close
+                </button>
+                <button class="btn btn-secondary m-1"  (click)="createMaterialDistributionSave()">
+                    <i class="fa fa-refresh m-1"></i>Save
+                </button>
+            </div>
+        </div>
+
+
 
     </div>
 

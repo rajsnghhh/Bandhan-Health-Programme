@@ -1062,8 +1062,8 @@ class SsTrainingComponent {
                 let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
                 let Dto = {
                     dataAccessDTO: {
-                        userId: dataAccessDTO.userName,
-                        userName: dataAccessDTO.userId,
+                        userId: dataAccessDTO.userId,
+                        userName: dataAccessDTO.userName,
                     },
                     branchId: this.lowerRoleBranchId
                 };
@@ -1352,11 +1352,13 @@ class SsTrainingComponent {
         }
     }
     changeparticipantType(participantType, staffID) {
+        var _a, _b;
         console.log(this.allBranchID, 'this.allBranchIDthis.allBranchID');
         let ssListObj = {
             dataAccessDTO: this.httpService.dataAccessDTO,
             branchId: this.allBranchID,
-            trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType
+            trainingTypeMasterId: this.createSSTrainingEventForm.value.trainingType,
+            training_event_master_id: ((_a = this.SSTrainingEditData) === null || _a === void 0 ? void 0 : _a.training_event_master_id) ? (_b = this.SSTrainingEditData) === null || _b === void 0 ? void 0 : _b.training_event_master_id : 0,
         };
         this.ssTrainingService.getSSList(ssListObj).subscribe((res) => {
             var _a, _b, _c, _d, _e;

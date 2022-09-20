@@ -17,4 +17,13 @@ export class MaterialDistributionRegisterService {
   getVillagesOfBranch(obj): any {
     return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
   }
+
+  getEligibleFamilyDetails(obj): any {
+    return this.http.post(`${this.baseURL}mdregister/getEligibleMdRegisterFamily`, obj)
+  }
+
+  getFamilyChildDetails(obj): any {
+    return this.http.post(`${this.baseURL}mdregister/getFamilyChildDetails`, obj)
+  }
+
 }
