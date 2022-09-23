@@ -26,4 +26,11 @@ export class MaterialDistributionRegisterService {
     return this.http.post(`${this.baseURL}mdregister/getFamilyChildDetails`, obj)
   }
 
+  getItemSubItemList(obj): any {
+    return this.http.post(`${this.baseURL}mdregister/getItemSubItemList`, obj)
+  }
+
+  saveUpdateDeleteMaterialDistribution(obj): any {
+    return this.http.post(`${this.baseURL}mdregister/saveUpdateDeleteMaterialDistribution`, obj)
+  }
 }

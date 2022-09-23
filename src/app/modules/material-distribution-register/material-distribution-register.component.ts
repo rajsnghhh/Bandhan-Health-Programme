@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
@@ -33,11 +34,13 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   eligibleFamilyList: Array<any> = [];
   eligibleChildList: Array<any> = [];
   itemList: Array<any> = [];
+  subItemList: Array<any> = [];
   subItemMultiItem: Array<any> = [];
+  familyDetails: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
-    private validationService: ValidationService,) {
+    private validationService: ValidationService, private toaster: ToastrService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -172,7 +175,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       windowClass: 'eligibleFamilyDetails',
     });
 
-    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: '1' };
+    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: 1 };
 
     this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
       this.eligibleFamilyList = res.responseObject;
@@ -196,15 +199,18 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     return this.createMaterialDistributionForm.controls;
   }
 
-  createMaterialDistribution(materialDistribution, childItem) {
-    console.log(childItem.family_detail_id, 'family_detail_id');
+  createMaterialDistribution(materialDistribution, fam_details) {
+    this.familyDetails = fam_details;
+    console.log(this.familyDetails, 'this.familyDetails');
+
+    console.log(fam_details.family_detail_id, 'family_detail_id');
 
     this.modalContent = '';
     this.modalReference = this.modalService.open(materialDistribution, {
       windowClass: 'materialDistribution',
     });
 
-    let viewChildObj = { dataAccessDTO: this.httpService.dataAccessDTO, family_detail_id: childItem.family_detail_id };
+    let viewChildObj = { dataAccessDTO: this.httpService.dataAccessDTO, family_detail_id: fam_details.family_detail_id };
 
     this.materialDistributionService.getFamilyChildDetails(viewChildObj).subscribe((res: any) => {
       this.eligibleChildList = res.responseObject;
@@ -212,45 +218,32 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     });
     this.create_materialDistributionForm();
 
-
-    console.log(this.itemList, 'itemlist');
-
+    this.getItemList();
 
   }
 
-  changeitemList(itemId) {
-    if (this.createMaterialDistributionForm.value.itemList == 1) {
-      this.itemList = [
-        { itemId: 1, itemName: 'India' },
-        { itemId: 2, itemName: 'Singapore' },
-        { itemId: 3, itemName: 'Germany' },
-        { itemId: 4, itemName: 'France' },
-        { itemId: 5, itemName: 'South Korea' },
-        { itemId: 6, itemName: 'Sweden' }
-      ];
-      console.log(this.itemList, '1');
+  getItemList() {
 
-    }
+    let ItemObj = { dataAccessDTO: this.httpService.dataAccessDTO };
 
+    this.materialDistributionService.getItemSubItemList(ItemObj).subscribe((res: any) => {
+      this.itemList = res.responseObject;
+      console.log(this.itemList, 'this.itemList');
+    })
+  }
 
-    if (this.createMaterialDistributionForm.value.itemList == 2) {
-      this.itemList = [
-        { itemId: 7, itemName: 'Engineer' },
-        { itemId: 8, itemName: 'Doctor' },
-        { itemId: 9, itemName: 'Actor' },
-        { itemId: 10, itemName: 'Cricketer' },
-        { itemId: 11, itemName: 'Singer' },
-        { itemId: 12, itemName: 'Dancer' }
-      ];
-      console.log(this.itemList, '2');
-    }
+  changeItemList(itemId) {
+    console.log(itemId);
+
+    this.subItemList = this.itemList.find(item => item.item_id == itemId)?.subItemList;
+    console.log(this.subItemList, 'subItemList');
 
 
     this.dropdownSettings = {
       singleSelection: false,
       enableCheckAll: false,
-      idField: 'itemId',
-      textField: 'itemName',
+      idField: 'sub_item_id',
+      textField: 'sub_item_name',
       // selectAllText: 'Select All',
       // unSelectAllText: 'Unselect All',
       // itemsShowLimit: 3,
@@ -261,16 +254,14 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
   onItemSelect(item: any) {
     console.log(item);
-    this.subItemMultiItem.push(item);
+    this.subItemMultiItem.push(item.sub_item_id);
     console.log(this.subItemMultiItem);
   }
 
   onItemDeSelect(item: any) {
     console.log(item);
     console.log(this.subItemMultiItem);
-    const index: number = this.subItemMultiItem.findIndex(
-      (x) => x.itemId == item.itemId
-    );
+    const index: number = this.subItemMultiItem.findIndex((x) => x == item.sub_item_id);
     if (index !== -1) {
       this.subItemMultiItem.splice(index, 1);
       console.log(this.subItemMultiItem);
@@ -282,19 +273,71 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.modalReference?.close();
   }
 
+  disabledSaveMaterialTraining() {
+    let flag = true;
+
+    if (this.createMaterialDistributionForm.value.itemList == 'OTHERS') {
+      if (!this.createMaterialDistributionForm.value.enterSubItem) {
+        flag = false;
+      }
+    } else if (this.subItemMultiItem.length == 0) {
+      flag = false;
+    }
+
+    return flag;
+  }
+
   createMaterialDistributionSave() {
     console.log('createMaterialDistributionSave');
+    console.log(this.familyDetails, 'xxxxxxxxxxsavexxx');
 
+
+    let saveReq = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      material_distribution_register_id: 0,
+      active_flag: 'C',
+      family_detail_id: this.familyDetails.family_detail_id,
+      pregnant_woman: this.familyDetails.pregnant_woman,
+      subItems: this.subItemMultiItem,
+      otherItem: this.createMaterialDistributionForm.value.enterSubItem
+    };
+
+    console.log(saveReq, 'saveReq');
+
+    this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.createMaterialDistributionModalDismiss();
+        // this.changeBranch(this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.lowerRoleBranchId);
+      } else {
+        this.showError(res.message);
+      }
+
+    })
   }
 
   editMaterialDistributedFamily() {
     console.log('editMaterialDistributedFamily');
+    
 
   }
 
   deleteMaterialDistributedFamily() {
     console.log('deleteMaterialDistributedFamily');
 
+  }
+
+  showSuccess(message) {
+    this.toaster.success(message, 'Material Distribution Register', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Material Distribution Register', {
+      timeOut: 3000,
+    });
   }
 
 
