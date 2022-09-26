@@ -235,8 +235,8 @@ export class SsTrainingComponent implements OnInit {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO };
 
     this.ssTrainingService.ssTrainingTypeAndTopic(req).subscribe((res) => {
-      this.ssTrainingType = res.responseObject.ssTrainingType;
-      this.ssTrainingTopic = res.responseObject.ssTrainingTopic;
+      this.ssTrainingType = res.responseObject?.ssTrainingType;
+      this.ssTrainingTopic = res.responseObject?.ssTrainingTopic;
       console.log(this.ssTrainingType, ' this.ssTrainingType');
       console.log(this.ssTrainingTopic, ' this.ssTrainingTopic');
     });

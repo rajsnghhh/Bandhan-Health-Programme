@@ -28,6 +28,22 @@ export class BeneficiaryInfoComponent implements OnInit {
   };
   loader: boolean = true;
   tableHeadName: any;
+  totalPemCurrent = 0;
+  totalpemCumulative = 0;
+  lmCurrent = 0;
+  lmCumulative = 0;
+  pwCurrent = 0;
+  pwCumulative = 0;
+  totalFamilyCount = 0;
+  below5Current = 0;
+  below5Cumulative = 0;
+  below2Current = 0;
+  below2Cumulative = 0;
+  childPemCurrent = 0;
+  childPemCumulative = 0;
+  girl14To18Current = 0;
+  girl14To18Cumulative = 0;
+
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService, private router: Router) { }
@@ -80,12 +96,42 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        console.log(this.projectWiseBeneficiaryList, ' this.projectWiseBeneficiaryList');
+        // this.projectWiseBeneficiaryList.forEach((item) => {
+        //   this.pemCurrentArray.push(item.pemCurrent);
+        //   console.log(this.pemCurrentArray);
+        //   this.pemCurrent = this.pemCurrentArray.reduce(function (x, y) {
+        //     return x + y;
+        //   }, 0);
+        //   console.log(this.pemCurrent, 'this.pemCurrent');
+        // })
+        this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
+        this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
+        this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
+        this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
+        this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
+        this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
+        this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
+        this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
+        this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
+        this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
+        this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
+        this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
+        this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
+        this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
+        this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
         this.loader = true;
       }, error => {
         this.loader = true;
       });
     }
 
+  }
+
+  totalCount(arr, key) {
+    let x = 0;
+    arr.filter(i => { x += i[key] })
+    return x;
   }
 
   checkStateOrRegion(value) {
@@ -195,6 +241,21 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoStateWise`, Dto1).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
+        this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
+        this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
+        this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
+        this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
+        this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
+        this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
+        this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
+        this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
+        this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
+        this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
+        this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
+        this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
+        this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
+        this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
         this.loader = true;
       }, error => {
         this.loader = true;
@@ -211,6 +272,23 @@ export class BeneficiaryInfoComponent implements OnInit {
       this.loader = false;
       this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegionWise`, Dto1).subscribe((res: any) => {
         this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+        console.log(this.projectWiseBeneficiaryList, ' this.projectWiseBeneficiaryList');
+        this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
+        this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
+        this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
+        this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
+        this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
+        this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
+        this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
+        this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
+        this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
+        this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
+        this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
+        this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
+        this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
+        this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
+        this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
+
         this.loader = true;
       }, error => {
         this.loader = true;

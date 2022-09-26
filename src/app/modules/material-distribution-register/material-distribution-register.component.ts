@@ -5,6 +5,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
+import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { MaterialDistributionRegisterService } from './material-distribution-register.service';
@@ -44,7 +45,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     config.backdrop = 'static';
     config.keyboard = false;
   }
-
 
   ngOnInit(): void {
 
@@ -271,6 +271,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
   createMaterialDistributionModalDismiss() {
     this.modalReference?.close();
+    this.subItemMultiItem = [];
   }
 
   disabledSaveMaterialTraining() {
@@ -299,7 +300,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       family_detail_id: this.familyDetails.family_detail_id,
       pregnant_woman: this.familyDetails.pregnant_woman,
       subItems: this.subItemMultiItem,
-      otherItem: this.createMaterialDistributionForm.value.enterSubItem
+      otherItem: this.createMaterialDistributionForm.value.enterSubItem ? this.createMaterialDistributionForm.value.enterSubItem : null
     };
 
     console.log(saveReq, 'saveReq');
@@ -317,9 +318,13 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     })
   }
 
+  savingDataDisplayModalDismiss() {
+    this.modalReference?.close();
+  }
+
   editMaterialDistributedFamily() {
     console.log('editMaterialDistributedFamily');
-    
+
 
   }
 

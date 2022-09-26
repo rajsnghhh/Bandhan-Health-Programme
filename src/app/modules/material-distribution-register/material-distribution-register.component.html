@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white_box QA_section mb_30">
-                <!--  *ngIf="viewMaterialDistributionForm.value.gram" -->
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Material Distribution Register</h2>
+                    <!--  *ngIf="viewMaterialDistributionForm.value.gram" -->
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="viewEligibleFamilyDetails(eligibleFamilyDetails)">&nbsp;Create Material
@@ -350,10 +350,6 @@
                             <label for="subItemList">Sub Item List:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
 
-                            <!-- 
-                      (onSelectAll)="onSelectAll($event)" 
-                      (onDeSelectAll)="onDeSelectAll($event)"> -->
-
                             <ng-multiselect-dropdown [placeholder]="'Select Multiple Sub Item List'"
                                 [settings]="dropdownSettings" [data]="subItemList" formControlName="subItems"
                                 (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" [ngClass]="{
@@ -364,22 +360,25 @@
                                 <div *ngIf="t.subItems.errors.required">
                                     Selection of Sub Item List is required
                                 </div>
-                            </div>
+                            </div><br>
+                            <span>Other Sub Item : {{createMaterialDistributionForm.value.enterSubItem}}</span>
                         </div>
 
+                        <!-- style="text-transform: capitalize" -->
                         <div class="form-group col-md-6"
                             *ngIf="createMaterialDistributionForm.value.itemList == 'OTHERS'">
                             <label for="enterSubItem">Sub Item:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="text" class="form-control" placeholder="Enter Sub Item"
                                 formControlName="enterSubItem" maxlength="45"
                                 (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                style="text-transform: capitalize"
+                                
                                 [ngClass]="{
                                     'is-invalid': t.enterSubItem.invalid && t.enterSubItem.touched,
                                     'is-valid': t.enterSubItem.valid && (t.enterSubItem.dirty || t.enterSubItem.touched)}">
                             <div *ngIf="t.enterSubItem.errors" class="invalid-feedback">
                                 <div *ngIf="t.enterSubItem.errors.required">Sub Item is required</div>
-                            </div>
+                            </div><br>
+                            <span>Other Sub Item : {{createMaterialDistributionForm.value.enterSubItem}}</span>
                         </div>
 
                     </div>
