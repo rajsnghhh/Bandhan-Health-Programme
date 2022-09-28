@@ -33,4 +33,8 @@ export class MaterialDistributionRegisterService {
   saveUpdateDeleteMaterialDistribution(obj): any {
     return this.http.post(`${this.baseURL}mdregister/saveUpdateDeleteMaterialDistribution`, obj)
   }
+
+  getMaterialDistributionList(obj): any {
+    return this.http.post(`${this.baseURL}mdregister/getMaterialDistributionList`, obj)
+  }
 }

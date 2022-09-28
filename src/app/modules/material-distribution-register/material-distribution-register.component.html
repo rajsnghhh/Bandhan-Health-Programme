@@ -4,8 +4,8 @@
             <div class="white_box QA_section mb_30">
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Material Distribution Register</h2>
-                    <!--  *ngIf="viewMaterialDistributionForm.value.gram" -->
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="viewMaterialDistributionForm.value.gram && createMode">
                         <i class="fas fa-plus-circle" style="cursor: pointer"
                             (click)="viewEligibleFamilyDetails(eligibleFamilyDetails)">&nbsp;Create Material
                             Distribution Register</i>
@@ -102,7 +102,7 @@
 
                     <div class="white_box_tittle list_header">
 
-                        <div class="QA_table ">
+                        <div class="QA_table">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                 <table
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
@@ -111,33 +111,27 @@
                                     <thead id="header-fixed">
                                         <tr>
                                             <th style="width: 6%;">SL No</th>
-                                            <th style="width: 17%;">Family No.</th>
-                                            <th style="width: 20%;">Family Head Name</th>
-                                            <th style="width: 10%;">Guardian Name</th>
-                                            <th style="width: 17%;">No. of time distributed</th>
+                                            <th style="width: 10%;">Family No.</th>
+                                            <th style="width: 25%;">Family Head Name</th>
+                                            <th style="width: 20%;">Guardian Name</th>
+                                            <th style="width: 15%;">No. of time distributed</th>
                                             <th style="width: 15%;">Distribution Details</th>
-                                            <th style="width: 8%;">Action</th>
                                         </tr>
                                     </thead>
 
-                                    <tbody>
-                                        <!--  *ngFor="let item of staffWiseSSLists | paginate: { itemsPerPage: 5, currentPage: p }; index as i" -->
-                                        <tr>
-                                            <td style="width: 6%;">1</td>
-                                            <td style="width: 17%;">125</td>
-                                            <td style="width: 20%;">Test 1</td>
-                                            <td style="width: 10%;">Test 2</td>
-                                            <td style="width: 17%;">5</td>
+                                    <tbody style="text-align: center;">
+                                        <tr
+                                            *ngFor="let mat of materialDistributionList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td style="width: 6%;">{{i+1}}</td>
+                                            <td style="width: 10%;">{{mat.family_number}}</td>
+                                            <td style="width: 25%;">
+                                                {{mat.first_name}}{{mat.middle_name}} {{mat.last_name}}</td>
+                                            <td style="width: 20%;">{{mat.husband_or_guardian_name}}</td>
+                                            <td style="width: 15%;">{{mat.distributionCount}}</td>
                                             <td style="width: 15%;"
-                                                (click)="viewdistributionDetails(detailsOfDistribution)"
-                                                style="cursor: pointer; color: blue;">view</td>
-                                            <td style="width: 8%;">
-                                                <i class="fas fa-edit" title="Edit Material Distributed Family"
-                                                    (click)="editMaterialDistributedFamily()">
-                                                </i>
-                                                <i class="fas fa-trash" title="Delete Material Distributed Family"
-                                                    (click)="deleteMaterialDistributedFamily()"></i>
-                                            </td>
+                                                (click)="viewdistributionDetails(detailsOfDistribution, mat)"
+                                                style="cursor: pointer; color: blue;">
+                                                view</td>
                                         </tr>
                                     </tbody>
 
@@ -175,7 +169,7 @@
         <div class="modal-body">
             <div class="white_box_tittle list_header">
 
-                <div class="QA_table ">
+                <div class="QA_table">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                         <table
                             class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
@@ -184,20 +178,54 @@
                             <thead id="header-fixed">
                                 <tr>
                                     <th style="width:5%;">SL No</th>
-                                    <th style="width:30%;">Distribution Date</th>
-                                    <th style="width:20%;">Beneficiary Name</th>
-                                    <th style="width:25%;">Beneficiary Type</th>
-                                    <th style="width:25%;">Distribution</th>
+                                    <th style="width:10%;">Distribution Date</th>
+                                    <th style="width:25%;">Beneficiary Name</th>
+                                    <th style="width:20%;">Beneficiary Type</th>
+                                    <th style="width:10%;">Distribution</th>
+                                    <th style="width:12%;" *ngIf="updateMode || deleteMode">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody style="text-align: center;">
-                                <tr>
-                                    <td style="width:5%;">1</td>
-                                    <td style="width:30%;">13-09-2022</td>
-                                    <td style="width:20%;">Rumila Bibi</td>
-                                    <td style="width:25%;">PW</td>
-                                    <td style="width:25%;">Item One (si1, si2), Item Two (si 1)</td>
+                                <tr *ngFor="let mat of materialDistributionListFamilyWise; index as i">
+                                    <td style="width:5%;">{{i+1}}</td>
+                                    <td style="width:10%;">{{mat.distribution_date.split("-").reverse().join("-")}}</td>
+                                    <td>
+                                <tr
+                                    *ngFor="let beneficiary of materialDistributionListFamilyWise[i].childList; index as i">
+                                    <td style="width:25%;">{{beneficiary.child_name}} </td>
+                                </tr>
+                                </td>
+
+                                <td>
+                                    <tr
+                                        *ngFor="let beneficiary of materialDistributionListFamilyWise[i].childList; index as i">
+                                        <td style="width:20%;">{{beneficiary.status}}</td>
+                                    </tr>
+                                </td>
+
+                                <td style="width: 10%;">
+                                    <div class="popover__wrapper">
+                                        <h3 class="popover__title">View</h3>
+                                        <div class="popover__content">
+                                            <div class="card-header">Sub Item List</div>
+                                            <li *ngFor="let sub_item of mat.subItems">
+                                                {{sub_item.md_sub_item_name}}</li>
+                                            <span>Other Item :
+                                                {{materialDistributionListFamilyWise[i].other_item_name}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 12%;" *ngIf="updateMode || deleteMode">
+                                    <i class="fas fa-edit" title="Edit Material Distributed Family"
+                                        (click)="editMaterialDistributedFamily(materialDistribution, mat)"
+                                        *ngIf="updateMode">
+                                    </i>
+                                    <i class="fas fa-trash" title="Delete Material Distributed Family"
+                                        (click)="deleteMaterialDistributedFamily(mat, i)" *ngIf="deleteMode"></i>
+                                </td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -217,9 +245,7 @@
         <div class="modal-header">
             <div class="row">
                 <div class="col-md">
-                    <!-- *ngIf="!SSTrainingEditData?.training_event_master_id" -->
-                    <h3 class="modal-title" id="modal-basic-title"> Eligible Family List</h3>
-                    <!-- <h3 class="modal-title" id="modal-basic-title">Edit Material Distribution</h3> -->
+                    <h3 class="modal-title" id="modal-basic-title">Eligible Family List</h3>
                 </div>
             </div>
 
@@ -227,7 +253,6 @@
                 <span (click)="eligibleFamilyDetailsModalDismiss()"
                     style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 20px;">&times;</span>
             </div>
-
         </div>
 
         <div class="modal-body">
@@ -278,13 +303,12 @@
 
     <div class="modal-content">
         <div class="modal-header">
-            <div class="row">
-                <div class="col-md">
-
-                </div>
-            </div>
 
             <div class="col-md">
+                <!-- <h3 class="modal-title" id="modal-basic-title" *ngIf="!onDistributionEditData?.material_distribution_register_id">
+                    Create </h3>
+                <h3 class="modal-title" id="modal-basic-title" *ngIf="onDistributionEditData?.material_distribution_register_id">
+                    Edit </h3> -->
                 <span (click)="createMaterialDistributionModalDismiss()"
                     style="float: right;cursor: pointer; font-size: 35px; margin-bottom: 20px;">&times;</span>
             </div>
@@ -364,14 +388,12 @@
                             <span>Other Sub Item : {{createMaterialDistributionForm.value.enterSubItem}}</span>
                         </div>
 
-                        <!-- style="text-transform: capitalize" -->
                         <div class="form-group col-md-6"
                             *ngIf="createMaterialDistributionForm.value.itemList == 'OTHERS'">
                             <label for="enterSubItem">Sub Item:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <input type="text" class="form-control" placeholder="Enter Sub Item"
                                 formControlName="enterSubItem" maxlength="45"
                                 (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                
                                 [ngClass]="{
                                     'is-invalid': t.enterSubItem.invalid && t.enterSubItem.touched,
                                     'is-valid': t.enterSubItem.valid && (t.enterSubItem.dirty || t.enterSubItem.touched)}">
@@ -392,7 +414,6 @@
                 <div class="col-md-6"> <button type="button" class=" btn btn-primary btn-sm"
                         (click)="createMaterialDistributionSave()"
                         [disabled]="!disabledSaveMaterialTraining()">Save</button></div>
-
             </div>
         </div>
     </div>

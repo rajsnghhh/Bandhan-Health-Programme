@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
@@ -38,10 +39,19 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   subItemList: Array<any> = [];
   subItemMultiItem: Array<any> = [];
   familyDetails: any;
+  materialDistributionList: Array<any> = [];
+  materialDistributionListFamilyWise: Array<any> = [];
+  onDistributionEditData: any;
+  editItemID: any;
+  viewMode: boolean;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
-    private validationService: ValidationService, private toaster: ToastrService) {
+    private validationService: ValidationService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
+    private router: Router) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -55,9 +65,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
         this.regionBranchHide = res.regionBranchHide;
       } else {
         this.lowerRoleBranchId = res.branchId;
-        // this.branchList = res.branchLIST;
-        // this.branchName = res.branchName;
-        // console.log(this.branchName, 'this.branchName');
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
         let Dto = {
           dataAccessDTO: {
@@ -76,6 +83,27 @@ export class MaterialDistributionRegisterComponent implements OnInit {
         // this.changeBranch(this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.lowerRoleBranchId);
       }
     });
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/material-distribution-register']) : this.router.navigate(['/error']);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
   }
 
   view_materialDistributionForm() {
@@ -94,8 +122,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
   changeRegion(regionId) {
     console.log(regionId, 'regionMasterId');
-    // this.regionName = this.regionList.find((reg) => reg.regionMasterId == this.regionID)?.regionName;
-    // console.log(this.regionName, 'this.regionName');
     if (regionId) {
       let req = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
       this.materialDistributionService.getBranchesOfRegion(req).subscribe((res) => {
@@ -154,9 +180,37 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.villageID = villageId;
     console.log(this.villageID, 'changevillage this.villageID');
 
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: villageId };
+    this.materialDistributionService.getMaterialDistributionList(req).subscribe((res: any) => {
+      this.materialDistributionList = res.responseObject;
+      console.log(this.materialDistributionList, 'this.materialDistributionList');
+    })
   }
 
-  viewdistributionDetails(detailsOfDistribution) {
+  viewdistributionDetails(detailsOfDistribution, mat) {
+    console.log(mat);
+
+    if (mat.pregnant_woman == 'Y') {
+      this.materialDistributionListFamilyWise = mat.material_distribution_List;
+      this.materialDistributionListFamilyWise.forEach((item) => {
+        item.childList = [];
+        item.childList.push({ child_name: mat.first_name + mat.middle_name + ' ' + mat.last_name, status: 'PW' })
+        console.log(item.childList);
+      });
+    } else {
+      this.materialDistributionListFamilyWise = mat.material_distribution_List;
+    }
+
+    this.materialDistributionListFamilyWise = this.materialDistributionListFamilyWise?.map(({
+      family_detail_id = mat.family_detail_id,
+      pregnant_woman = mat.pregnant_woman,
+      ...rest
+    }) => ({
+      family_detail_id, pregnant_woman,
+      ...rest
+    }));
+    console.log(this.materialDistributionListFamilyWise, 'this.materialDistributionListFamilyWise');
+
     this.modalContent = '';
     this.modalReference = this.modalService.open(detailsOfDistribution, {
       windowClass: 'detailsOfParticipants',
@@ -165,7 +219,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   viewDistributionDetailsModalDismiss() {
-    this.modalReference?.close();
+    this.modalReference = this.modalService.dismissAll();
   }
 
   viewEligibleFamilyDetails(eligibleFamilyDetails) {
@@ -175,7 +229,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       windowClass: 'eligibleFamilyDetails',
     });
 
-    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: 1 };
+    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
 
     this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
       this.eligibleFamilyList = res.responseObject;
@@ -187,12 +241,28 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.modalReference = this.modalService.dismissAll();
   }
 
-  create_materialDistributionForm() {
+  create_materialDistributionForm(onDistributionEditData) {
+    console.log(onDistributionEditData, '...create_materialDistributionForm');
+
+    if (onDistributionEditData != '') {
+      this.editItemID = onDistributionEditData?.subItems?.find(item => item.md_item_id)?.md_item_id;
+      console.log(this.editItemID, 'edit_item_ID');
+
+      var edit_sub_item_ID = [];
+      onDistributionEditData?.subItems.forEach(item => {
+        edit_sub_item_ID.push({ sub_item_id: item.md_sub_item_id, sub_item_name: item.md_sub_item_name });
+        console.log(edit_sub_item_ID, ' edit_sub_item_ID ');
+        this.subItemMultiItem.push(item.md_sub_item_id);
+      })
+      console.log(edit_sub_item_ID, ' edit_sub_item_ID ');
+    }
+
     this.createMaterialDistributionForm = this.fb.group({
-      itemList: ['', Validators.required],
-      subItems: ['', Validators.required],
-      enterSubItem: ['', Validators.required]
-    })
+      itemList: [this.editItemID ? this.editItemID : '', Validators.required],
+      subItems: [edit_sub_item_ID ? edit_sub_item_ID : '', Validators.required],
+      enterSubItem: [onDistributionEditData?.other_item_name ? onDistributionEditData?.other_item_name : '', Validators.required]
+    });
+
   }
 
   get t() {
@@ -200,15 +270,25 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   createMaterialDistribution(materialDistribution, fam_details) {
+
+    console.log(this.onDistributionEditData);
+
     this.familyDetails = fam_details;
     console.log(this.familyDetails, 'this.familyDetails');
 
-    console.log(fam_details.family_detail_id, 'family_detail_id');
+    this.create_materialDistributionForm(this.onDistributionEditData);
 
-    this.modalContent = '';
-    this.modalReference = this.modalService.open(materialDistribution, {
-      windowClass: 'materialDistribution',
-    });
+    this.getItemList();
+
+    console.log(fam_details.family_detail_id, 'family_detail_id');
+    setTimeout(() => {
+      this.modalContent = '';
+      this.modalReference = this.modalService.open(materialDistribution, {
+        windowClass: 'materialDistribution',
+      });
+
+    }, 200);
+
 
     let viewChildObj = { dataAccessDTO: this.httpService.dataAccessDTO, family_detail_id: fam_details.family_detail_id };
 
@@ -216,9 +296,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       this.eligibleChildList = res.responseObject;
       console.log(this.eligibleChildList, 'eligibleChildList');
     });
-    this.create_materialDistributionForm();
 
-    this.getItemList();
 
   }
 
@@ -229,7 +307,10 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.materialDistributionService.getItemSubItemList(ItemObj).subscribe((res: any) => {
       this.itemList = res.responseObject;
       console.log(this.itemList, 'this.itemList');
+      this.changeItemList(this.editItemID);
     })
+
+    // console.log(this.onDistributionEditData.subItems, '...createa_materialDistributionForm');
   }
 
   changeItemList(itemId) {
@@ -237,16 +318,13 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     this.subItemList = this.itemList.find(item => item.item_id == itemId)?.subItemList;
     console.log(this.subItemList, 'subItemList');
-
+    console.log(this.onDistributionEditData?.subItems, 'this.onDistributionEditData.subItems');
 
     this.dropdownSettings = {
       singleSelection: false,
       enableCheckAll: false,
       idField: 'sub_item_id',
       textField: 'sub_item_name',
-      // selectAllText: 'Select All',
-      // unSelectAllText: 'Unselect All',
-      // itemsShowLimit: 3,
       allowSearchFilter: true,
     };
 
@@ -272,6 +350,19 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   createMaterialDistributionModalDismiss() {
     this.modalReference?.close();
     this.subItemMultiItem = [];
+    var ID = this.onDistributionEditData?.material_distribution_register_id;
+
+    if (ID) {
+      this.onDistributionEditData = '';
+      ID = 0;
+      this.modalReference?.close();
+      this.editItemID = '';
+    }
+    else {
+      this.modalReference?.close();
+      // this.ssList = [];
+      // this.ssTrainingDataPushPop = [];
+    }
   }
 
   disabledSaveMaterialTraining() {
@@ -291,14 +382,15 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   createMaterialDistributionSave() {
     console.log('createMaterialDistributionSave');
     console.log(this.familyDetails, 'xxxxxxxxxxsavexxx');
+    console.log(this.onDistributionEditData, 'onDistributionEditData');
 
 
     let saveReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      material_distribution_register_id: 0,
-      active_flag: 'C',
-      family_detail_id: this.familyDetails.family_detail_id,
-      pregnant_woman: this.familyDetails.pregnant_woman,
+      material_distribution_register_id: this.onDistributionEditData ? this.onDistributionEditData?.material_distribution_register_id : 0,
+      active_flag: this.onDistributionEditData ? 'U' : 'C',
+      family_detail_id: this.onDistributionEditData ? this.onDistributionEditData?.family_detail_id : this.familyDetails.family_detail_id,
+      pregnant_woman: this.onDistributionEditData ? this.onDistributionEditData?.pregnant_woman : this.familyDetails.pregnant_woman,
       subItems: this.subItemMultiItem,
       otherItem: this.createMaterialDistributionForm.value.enterSubItem ? this.createMaterialDistributionForm.value.enterSubItem : null
     };
@@ -310,7 +402,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.createMaterialDistributionModalDismiss();
-        // this.changeBranch(this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.lowerRoleBranchId);
+        this.eligibleFamilyDetailsModalDismiss();
+        this.viewDistributionDetailsModalDismiss();
+        this.changeVillage(this.villageID);
       } else {
         this.showError(res.message);
       }
@@ -322,14 +416,43 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.modalReference?.close();
   }
 
-  editMaterialDistributedFamily() {
-    console.log('editMaterialDistributedFamily');
-
-
+  editMaterialDistributedFamily(materialDistribution, mat) {
+    this.onDistributionEditData = mat;
+    this.createMaterialDistribution(materialDistribution, mat);
   }
 
-  deleteMaterialDistributedFamily() {
-    console.log('deleteMaterialDistributedFamily');
+
+  deleteMaterialDistributedFamily(mat, i) {
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete distribution detail ?')
+      .then(() => this.delete(mat, i)
+      )
+      .catch(() => '');
+  }
+
+  delete(mat, i) {
+    console.log(mat, 'deleteMaterialDistributedFamily');
+    let deleteReq = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      material_distribution_register_id: mat.material_distribution_register_id,
+      active_flag: 'D',
+      family_detail_id: mat.family_detail_id,
+      pregnant_woman: mat.pregnant_woman,
+      subItems: mat.subItems,
+      otherItem: mat.other_item_map_id
+    };
+
+    console.log(deleteReq);
+
+    this.materialDistributionService.saveUpdateDeleteMaterialDistribution(deleteReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.materialDistributionListFamilyWise.splice(i, 1);
+      } else {
+        this.showError(res.message);
+      }
+
+    })
 
   }
 
@@ -344,6 +467,5 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       timeOut: 3000,
     });
   }
-
 
 }

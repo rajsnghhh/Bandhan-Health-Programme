@@ -1176,8 +1176,9 @@ class SsTrainingComponent {
     typeAndTopicTrainingList() {
         let req = { dataAccessDTO: this.httpService.dataAccessDTO };
         this.ssTrainingService.ssTrainingTypeAndTopic(req).subscribe((res) => {
-            this.ssTrainingType = res.responseObject.ssTrainingType;
-            this.ssTrainingTopic = res.responseObject.ssTrainingTopic;
+            var _a, _b;
+            this.ssTrainingType = (_a = res.responseObject) === null || _a === void 0 ? void 0 : _a.ssTrainingType;
+            this.ssTrainingTopic = (_b = res.responseObject) === null || _b === void 0 ? void 0 : _b.ssTrainingTopic;
             console.log(this.ssTrainingType, ' this.ssTrainingType');
             console.log(this.ssTrainingTopic, ' this.ssTrainingTopic');
         });

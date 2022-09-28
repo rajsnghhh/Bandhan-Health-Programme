@@ -193,8 +193,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/ss-training']);
     }
 
-  }
+    if (routeId == 226 || routeId == 227 || routeId == 228 || routeId == 229) {
+      this.router.navigate(['/material-distribution-register']);
+    }
 
+  }
 
   ngAfterViewInit(): void {
     let a: any = document.querySelectorAll(".card-header");
