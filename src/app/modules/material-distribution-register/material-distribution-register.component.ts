@@ -262,6 +262,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       enterSubItem: [onDistributionEditData?.other_item_name ? onDistributionEditData?.other_item_name : '', Validators.required]
     });
 
+    if (!this.createMaterialDistributionForm.value.itemList) {
+      this.createMaterialDistributionForm.controls.subItems.setValue('');
+      this.subItemMultiItem = [];
+    }
+
   }
 
   get t() {
@@ -269,6 +274,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   createMaterialDistribution(materialDistribution, fam_details) {
+
 
     console.log(this.onDistributionEditData);
 
@@ -335,7 +341,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   onItemDeSelect(item: any) {
     console.log(item);
     console.log(this.subItemMultiItem);
-    const index: number = this.subItemMultiItem.findIndex((x) => x == item.sub_item_id);
+    const index: number = this.subItemMultiItem?.findIndex((x) => x == item?.sub_item_id);
     if (index !== -1) {
       this.subItemMultiItem.splice(index, 1);
       console.log(this.subItemMultiItem);
@@ -390,19 +396,19 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     console.log(saveReq, 'saveReq');
 
-    this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-        this.createMaterialDistributionModalDismiss();
-        this.eligibleFamilyDetailsModalDismiss();
-        this.viewDistributionDetailsModalDismiss();
-        this.changeVillage(this.villageID);
-      } else {
-        this.showError(res.message);
-      }
+    // this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
+    //   console.log(res);
+    //   if (res.status == true) {
+    //     this.showSuccess(res.message);
+    //     this.createMaterialDistributionModalDismiss();
+    //     this.eligibleFamilyDetailsModalDismiss();
+    //     this.viewDistributionDetailsModalDismiss();
+    //     this.changeVillage(this.villageID);
+    //   } else {
+    //     this.showError(res.message);
+    //   }
 
-    })
+    // })
   }
 
   savingDataDisplayModalDismiss() {
