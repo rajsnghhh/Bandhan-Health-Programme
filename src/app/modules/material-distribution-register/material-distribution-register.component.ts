@@ -80,7 +80,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
             console.log(this.villagesOfBranch, 'lowerrankvillagesOfBranch');
           }
         });
-        // this.changeBranch(this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.lowerRoleBranchId);
       }
     });
 
@@ -289,7 +288,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     }, 200);
 
-
     let viewChildObj = { dataAccessDTO: this.httpService.dataAccessDTO, family_detail_id: fam_details.family_detail_id };
 
     this.materialDistributionService.getFamilyChildDetails(viewChildObj).subscribe((res: any) => {
@@ -308,9 +306,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       this.itemList = res.responseObject;
       console.log(this.itemList, 'this.itemList');
       this.changeItemList(this.editItemID);
-    })
-
-    // console.log(this.onDistributionEditData.subItems, '...createa_materialDistributionForm');
+    });
   }
 
   changeItemList(itemId) {
@@ -360,8 +356,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     }
     else {
       this.modalReference?.close();
-      // this.ssList = [];
-      // this.ssTrainingDataPushPop = [];
     }
   }
 
@@ -383,7 +377,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     console.log('createMaterialDistributionSave');
     console.log(this.familyDetails, 'xxxxxxxxxxsavexxx');
     console.log(this.onDistributionEditData, 'onDistributionEditData');
-
 
     let saveReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -421,9 +414,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.createMaterialDistribution(materialDistribution, mat);
   }
 
-
   deleteMaterialDistributedFamily(mat, i) {
-    this.confirmationDialogService.confirm('', 'Are you sure you want to delete distribution detail ?')
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete distribution record ?')
       .then(() => this.delete(mat, i)
       )
       .catch(() => '');
