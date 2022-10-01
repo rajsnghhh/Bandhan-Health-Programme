@@ -4,6 +4,7 @@ import { SsTrainingRoutingModule } from './ss-training-routing.module';
 import { SsTrainingComponent } from './ss-training.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 @NgModule({
   declarations: [SsTrainingComponent],
@@ -12,7 +13,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SsTrainingRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    LoaderModule
   ]
 })
 export class SsTrainingModule { }

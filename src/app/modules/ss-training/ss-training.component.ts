@@ -58,6 +58,7 @@ export class SsTrainingComponent implements OnInit {
   searchFullscreen: boolean;
   attendanceImage: Array<any> = [];
   trainingEventID: any;
+  loader: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig,
@@ -71,12 +72,16 @@ export class SsTrainingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.createForm();
 
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       if (res.regionBranchHide) {
         this.regionList = res.region;
+        this.loader = true;
+
         this.regionBranchHide = res.regionBranchHide;
+
       } else {
         this.lowerRoleBranchId = res.branchId;
         this.branchList = res.branchLIST;
