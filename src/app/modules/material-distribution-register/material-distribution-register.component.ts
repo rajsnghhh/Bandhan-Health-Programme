@@ -396,19 +396,19 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     console.log(saveReq, 'saveReq');
 
-    // this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
-    //   console.log(res);
-    //   if (res.status == true) {
-    //     this.showSuccess(res.message);
-    //     this.createMaterialDistributionModalDismiss();
-    //     this.eligibleFamilyDetailsModalDismiss();
-    //     this.viewDistributionDetailsModalDismiss();
-    //     this.changeVillage(this.villageID);
-    //   } else {
-    //     this.showError(res.message);
-    //   }
+    this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.createMaterialDistributionModalDismiss();
+        this.eligibleFamilyDetailsModalDismiss();
+        this.viewDistributionDetailsModalDismiss();
+        this.changeVillage(this.villageID);
+      } else {
+        this.showError(res.message);
+      }
 
-    // })
+    })
   }
 
   savingDataDisplayModalDismiss() {
