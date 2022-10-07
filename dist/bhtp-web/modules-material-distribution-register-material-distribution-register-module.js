@@ -1141,6 +1141,10 @@ class MaterialDistributionRegisterComponent {
             subItems: [edit_sub_item_ID ? edit_sub_item_ID : '', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             enterSubItem: [(onDistributionEditData === null || onDistributionEditData === void 0 ? void 0 : onDistributionEditData.other_item_name) ? onDistributionEditData === null || onDistributionEditData === void 0 ? void 0 : onDistributionEditData.other_item_name : '', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
+        if (!this.createMaterialDistributionForm.value.itemList) {
+            this.createMaterialDistributionForm.controls.subItems.setValue('');
+            this.subItemMultiItem = [];
+        }
     }
     get t() {
         return this.createMaterialDistributionForm.controls;
@@ -1192,9 +1196,10 @@ class MaterialDistributionRegisterComponent {
         console.log(this.subItemMultiItem);
     }
     onItemDeSelect(item) {
+        var _a;
         console.log(item);
         console.log(this.subItemMultiItem);
-        const index = this.subItemMultiItem.findIndex((x) => x == item.sub_item_id);
+        const index = (_a = this.subItemMultiItem) === null || _a === void 0 ? void 0 : _a.findIndex((x) => x == (item === null || item === void 0 ? void 0 : item.sub_item_id));
         if (index !== -1) {
             this.subItemMultiItem.splice(index, 1);
             console.log(this.subItemMultiItem);
@@ -1242,19 +1247,18 @@ class MaterialDistributionRegisterComponent {
             otherItem: this.createMaterialDistributionForm.value.enterSubItem ? this.createMaterialDistributionForm.value.enterSubItem : null
         };
         console.log(saveReq, 'saveReq');
-        this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res) => {
-            console.log(res);
-            if (res.status == true) {
-                this.showSuccess(res.message);
-                this.createMaterialDistributionModalDismiss();
-                this.eligibleFamilyDetailsModalDismiss();
-                this.viewDistributionDetailsModalDismiss();
-                this.changeVillage(this.villageID);
-            }
-            else {
-                this.showError(res.message);
-            }
-        });
+        // this.materialDistributionService.saveUpdateDeleteMaterialDistribution(saveReq).subscribe((res: any) => {
+        //   console.log(res);
+        //   if (res.status == true) {
+        //     this.showSuccess(res.message);
+        //     this.createMaterialDistributionModalDismiss();
+        //     this.eligibleFamilyDetailsModalDismiss();
+        //     this.viewDistributionDetailsModalDismiss();
+        //     this.changeVillage(this.villageID);
+        //   } else {
+        //     this.showError(res.message);
+        //   }
+        // })
     }
     savingDataDisplayModalDismiss() {
         var _a;
