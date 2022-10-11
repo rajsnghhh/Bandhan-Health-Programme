@@ -48,6 +48,7 @@ h4 {
   margin-top: -25px;
   display: flex;
   flex-direction: row-reverse;
+  cursor: pointer;
 }
 
 .chartbox{
