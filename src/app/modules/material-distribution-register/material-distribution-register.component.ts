@@ -220,11 +220,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       ...rest
     }));
     this.materialDistributionListFamilyWise.forEach(item => {
-      this.viewItemSIDesign(item.subItems,item.mappedString,item);
+      this.viewItemSIDesign(item.subItems, item.mappedString, item);
     })
   }
 
-  viewItemSIDesign(data,mappedStringData,item) {
+  viewItemSIDesign(data, mappedStringData, item) {
     var Arr = []
     Arr = data;
 
@@ -240,14 +240,14 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       myMap.set(d.md_item_name, Arr.filter(v => v.md_item_name == d.md_item_name))
     });
 
-    mappedStringData =this.setItemSubItemName(unique, myMap)
+    mappedStringData = this.setItemSubItemName(unique, myMap)
     console.log(mappedStringData);
-    var data = this.materialDistributionListFamilyWise.find(it => it.distribution_date == item.distribution_date)
+    var data = this.materialDistributionListFamilyWise.find(it => it.material_distribution_register_id == item.material_distribution_register_id)
     data.mappedString = mappedStringData;
     console.log(data);
     console.log(this.materialDistributionListFamilyWise);
-    
-    
+
+
   }
 
   setItemSubItemName(unique, map) {
@@ -263,7 +263,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       this.mappedString += "), "
     })
     this.mappedString = this.mappedString.substring(0, this.mappedString.length - 2)
-    
+
     return this.mappedString;
   }
 
@@ -277,7 +277,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   viewDistributionDetailsModalDismiss() {
-    this.modalReference = this.modalService.dismissAll();
+    // this.modalReference = this.modalService.dismissAll();
+    this.modalReference.close();
   }
 
   viewEligibleFamilyDetails(eligibleFamilyDetails) {
@@ -330,7 +331,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   eligibleFamilyDetailsModalDismiss() {
-    this.modalReference = this.modalService.dismissAll();
+    // this.modalReference = this.modalService.dismissAll();
+    this.modalReference.close();
   }
 
   viewSSForm() {
@@ -500,11 +502,13 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     if (ID) {
       this.onDistributionEditData = '';
       ID = 0;
-      this.modalReference = this.modalService.dismissAll();
+      // this.modalReference = this.modalService.dismissAll();
+      this.modalReference.close();
       this.editItemID = '';
     }
     else {
-      this.modalReference = this.modalService.dismissAll();
+      // this.modalReference = this.modalService.dismissAll();
+      this.modalReference.close();
     }
   }
 
@@ -571,10 +575,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
   }
 
-  savingDataDisplayModalDismiss() {
-    this.modalReference?.close();
-  }
-
   editMaterialDistributedFamily(materialDistribution, mat) {
     this.onDistributionEditData = mat;
     this.createMaterialDistribution(materialDistribution, mat);
@@ -625,5 +625,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
 
 }
