@@ -20,6 +20,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   viewMaterialDistributionForm: FormGroup;
   createMaterialDistributionForm: FormGroup;
+  filterswasthyaSahayikaForm: FormGroup;
   regionBranchHide: boolean;
   regionList: Array<any> = [];
   lowerRoleBranchId: any;
@@ -47,6 +48,18 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
+  pwName: any;
+  pwStatus: any;
+  checked: any;
+  showSelectedSI: any = '';
+  itemID: any;
+  itemName: any;
+  OtherItemStatus: any = 'I';
+  ssList: Array<any> = [];
+  searchFullscreen: boolean;
+  registerSearch: any;
+  mappedString: any = "";
+  mappedStringArray: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
@@ -54,6 +67,10 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     private router: Router) {
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
   }
 
   ngOnInit(): void {
@@ -102,7 +119,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
-
   }
 
   view_materialDistributionForm() {
@@ -139,7 +155,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     if (this.viewMaterialDistributionForm.value.region == '') {
       this.branchList = [];
     }
-
   }
 
   changeBranch(branchId) {
@@ -187,41 +202,82 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   viewdistributionDetails(detailsOfDistribution, mat) {
+    this.materialDistributionListFamilyWise = mat.material_distribution_List;
     console.log(mat);
-
-    if (mat.pregnant_woman == 'Y') {
-      this.materialDistributionListFamilyWise = mat.material_distribution_List;
-      this.materialDistributionListFamilyWise.forEach((item) => {
-        item.childList = [];
-        item.childList.push({ child_name: mat.first_name + mat.middle_name + ' ' + mat.last_name, status: 'PW' })
-        console.log(item.childList);
-      });
-    } else {
-      this.materialDistributionListFamilyWise = mat.material_distribution_List;
-    }
-
-    this.materialDistributionListFamilyWise = this.materialDistributionListFamilyWise?.map(({
-      family_detail_id = mat.family_detail_id,
-      pregnant_woman = mat.pregnant_woman,
-      ...rest
-    }) => ({
-      family_detail_id, pregnant_woman,
-      ...rest
-    }));
-    console.log(this.materialDistributionListFamilyWise, 'this.materialDistributionListFamilyWise');
-
+    this.pwName = mat.first_name + mat.middle_name + ' ' + mat.last_name;
+    this.pwStatus = 'PW';
     this.modalContent = '';
     this.modalReference = this.modalService.open(detailsOfDistribution, {
       windowClass: 'detailsOfParticipants',
     });
 
+    this.mappedStringArray = []
+    this.materialDistributionListFamilyWise = this.materialDistributionListFamilyWise?.map(({
+      mappedString = '',
+      ...rest
+    }) => ({
+      mappedString,
+      ...rest
+    }));
+    this.materialDistributionListFamilyWise.forEach(item => {
+      this.viewItemSIDesign(item.subItems,item.mappedString);
+    })
+    // this.viewItemSIDesign(this.materialDistributionListFamilyWise);
   }
+
+  viewItemSIDesign(data,mappedStringData) {
+    var Arr = []
+    Arr = data;
+
+    console.log(Arr, 'TRR');
+
+
+
+    var unique = this.findUnique(Arr, d => d.md_item_name)
+
+    var myMap = new Map();
+
+    unique.forEach(d => {
+      myMap.set(d.md_item_name, Arr.filter(v => v.md_item_name == d.md_item_name))
+    });
+
+    console.log(this.setItemSubItemName(unique, myMap,mappedStringData))
+  }
+
+  setItemSubItemName(unique, map,mappedStringData) {
+    this.mappedString = ""
+    unique.forEach(key => {
+      this.mappedString += key.md_item_name;
+      this.mappedString += " ("
+      var data = map.get(key.md_item_name);
+      data.forEach(ss => {
+        this.mappedString += ss.md_sub_item_name + ", "
+      })
+      this.mappedString = this.mappedString.substring(0, this.mappedString.length - 2)
+      this.mappedString += "), "
+    })
+    this.mappedString = this.mappedString.substring(0, this.mappedString.length - 2)
+    mappedStringData += this.mappedString
+    console.log( this.materialDistributionListFamilyWise);
+    
+    return mappedStringData;
+  }
+
+  findUnique(arr, predicate) {
+    var found = {};
+    arr?.forEach(d => {
+      found[predicate(d)] = d;
+    });
+    return Object.keys(found).map(key => found[key]);
+  }
+
 
   viewDistributionDetailsModalDismiss() {
     this.modalReference = this.modalService.dismissAll();
   }
 
   viewEligibleFamilyDetails(eligibleFamilyDetails) {
+    this.ssList = [];
     console.log(this.villageID, 'this.villageID');
     this.modalContent = '';
     this.modalReference = this.modalService.open(eligibleFamilyDetails, {
@@ -233,39 +289,57 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
       this.eligibleFamilyList = res.responseObject;
       console.log(this.eligibleFamilyList, 'eligibleFamilyList');
+      this.eligibleFamilyList.forEach((item) => {
+        if (item.swasthya_sahayika_id != null) {
+          this.ssList.push(item.swasthya_sahayika_name);
+          this.ssList = this.ssList.filter((item, i, ar) => ar.indexOf(item) === i)
+          console.log(this.ssList, 'sslist');
+        }
+      })
     });
+
+    this.viewSSForm();
   }
+
+  changeSSFilter(ssvalue) {
+    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
+
+    this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
+      this.eligibleFamilyList = res.responseObject;
+      if (ssvalue == 'noSS') {
+        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id == null);
+        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+      } else if (ssvalue == 'withSS') {
+        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id != null);
+        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+      } else if (ssvalue == '') {
+        this.eligibleFamilyList = this.eligibleFamilyList;
+        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+      }
+      else {
+        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_name == ssvalue);
+        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+      }
+    });
+
+  }
+
 
   eligibleFamilyDetailsModalDismiss() {
     this.modalReference = this.modalService.dismissAll();
   }
 
+  viewSSForm() {
+    this.filterswasthyaSahayikaForm = this.fb.group({
+      swasthyaSahayika: ['']
+    });
+  }
+
   create_materialDistributionForm(onDistributionEditData) {
     console.log(onDistributionEditData, '...create_materialDistributionForm');
-
-    if (onDistributionEditData != '') {
-      this.editItemID = onDistributionEditData?.subItems?.find(item => item.md_item_id)?.md_item_id;
-      console.log(this.editItemID, 'edit_item_ID');
-
-      var edit_sub_item_ID = [];
-      onDistributionEditData?.subItems.forEach(item => {
-        edit_sub_item_ID.push({ sub_item_id: item.md_sub_item_id, sub_item_name: item.md_sub_item_name });
-        console.log(edit_sub_item_ID, ' edit_sub_item_ID ');
-        this.subItemMultiItem.push(item.md_sub_item_id);
-      })
-      console.log(edit_sub_item_ID, ' edit_sub_item_ID ');
-    }
-
     this.createMaterialDistributionForm = this.fb.group({
-      itemList: [this.editItemID ? this.editItemID : '', Validators.required],
-      subItems: [edit_sub_item_ID ? edit_sub_item_ID : '', Validators.required],
-      enterSubItem: [onDistributionEditData?.other_item_name ? onDistributionEditData?.other_item_name : '', Validators.required]
+      enterSubItem: [onDistributionEditData?.other_item_name ? onDistributionEditData?.other_item_name : '']
     });
-
-    if (!this.createMaterialDistributionForm.value.itemList) {
-      this.createMaterialDistributionForm.controls.subItems.setValue('');
-      this.subItemMultiItem = [];
-    }
 
   }
 
@@ -274,9 +348,20 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   createMaterialDistribution(materialDistribution, fam_details) {
+    console.log(this.onDistributionEditData?.subItems);
 
+    if (this.onDistributionEditData?.material_distribution_register_id) {
 
-    console.log(this.onDistributionEditData);
+      if (this.onDistributionEditData.other_item_name) {
+        this.OtherItemStatus = "O"
+      } else {
+        if (this.OtherItemStatus == "O") {
+          this.OtherItemStatus = "I"
+        } else {
+          this.OtherItemStatus = "O"
+        }
+      }
+    }
 
     this.familyDetails = fam_details;
     console.log(this.familyDetails, 'this.familyDetails');
@@ -297,92 +382,162 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     let viewChildObj = { dataAccessDTO: this.httpService.dataAccessDTO, family_detail_id: fam_details.family_detail_id };
 
     this.materialDistributionService.getFamilyChildDetails(viewChildObj).subscribe((res: any) => {
-      this.eligibleChildList = res.responseObject;
+      this.eligibleChildList = this.onDistributionEditData?.childList ? this.onDistributionEditData?.childList : res.responseObject;
       console.log(this.eligibleChildList, 'eligibleChildList');
     });
-
 
   }
 
   getItemList() {
-
     let ItemObj = { dataAccessDTO: this.httpService.dataAccessDTO };
 
     this.materialDistributionService.getItemSubItemList(ItemObj).subscribe((res: any) => {
       this.itemList = res.responseObject;
-      console.log(this.itemList, 'this.itemList');
-      this.changeItemList(this.editItemID);
+      this.itemList.push({ item_id: 'OTHERS', item_name: 'Others' })
+
+      console.log(this.itemList);
+
+
+      this.itemList.forEach(item => {
+        if (item.item_id != "OTHERS") {
+          this.subItemList = item.subItemList
+          console.log(this.subItemList, 'subItemList');
+
+          this.subItemList = this.subItemList?.map(({
+            isChecked = false,
+            ...rest
+          }) => ({
+            isChecked,
+            ...rest
+          }));
+          console.log(this.subItemList, 'subItemList');
+          this.onDistributionEditData?.subItems?.forEach(item => {
+            this.subItemList?.filter(it => it.sub_item_id == item.md_sub_item_id)?.forEach(item1 => {
+              item1.isChecked = true;
+            })
+          })
+          item.subItemList = this.subItemList;
+          console.log(item.subItemList, '351');
+        }
+      })
+
     });
   }
 
-  changeItemList(itemId) {
+  changeItemList(itemSubItemList, itemId, i) {
     console.log(itemId);
+
+    this.itemID = i;
+    console.log(this.itemList);
+    this.itemName = this.itemList.find(item => item.item_id == itemId)?.item_name;
+    console.log(this.itemName);
+
+    if (itemId != 'OTHERS') {
+      this.modalContent = '';
+      this.modalReference = this.modalService.open(itemSubItemList, {
+        windowClass: 'itemSubItemList',
+      });
+    } else {
+      if (this.createMaterialDistributionForm.value.enterSubItem) {
+        this.OtherItemStatus = "O"
+      } else {
+        if (this.OtherItemStatus == "O") {
+          this.OtherItemStatus = "I"
+        } else {
+          this.OtherItemStatus = "O"
+        }
+      }
+
+    }
 
     this.subItemList = this.itemList.find(item => item.item_id == itemId)?.subItemList;
     console.log(this.subItemList, 'subItemList');
-    console.log(this.onDistributionEditData?.subItems, 'this.onDistributionEditData.subItems');
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      enableCheckAll: false,
-      idField: 'sub_item_id',
-      textField: 'sub_item_name',
-      allowSearchFilter: true,
-    };
 
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
-    this.subItemMultiItem.push(item.sub_item_id);
-    console.log(this.subItemMultiItem);
-  }
+  selectSubItemForMD(subItemList, e, type) {
 
-  onItemDeSelect(item: any) {
-    console.log(item);
-    console.log(this.subItemMultiItem);
-    const index: number = this.subItemMultiItem?.findIndex((x) => x == item?.sub_item_id);
-    if (index !== -1) {
-      this.subItemMultiItem.splice(index, 1);
-      console.log(this.subItemMultiItem);
+    if (type == "C") {
+      this.checked = e;
+
+      if (this.checked == true) {
+        this.showSelectedSI = ""
+        this.subItemList.find(list => list.sub_item_id == subItemList?.sub_item_id).isChecked = true;
+        console.log(this.subItemList, 'subItemList');
+      } else {
+        this.showSelectedSI = ""
+        this.subItemList.find(list => list.sub_item_id == subItemList?.sub_item_id).isChecked = false;
+        console.log(this.subItemList, 'subItemList');
+      }
+    } else {
+      this.itemList.find(v => v.item_id == e).subItemList = this.subItemList;
+      this.checked = e;
+
+      if (this.checked % 2 == 1) {
+        this.subItemList.find(list => list.sub_item_id == subItemList?.sub_item_id).isChecked = true;
+        console.log(this.subItemList, 'subItemList');
+        this.itemList[e].subItemList = this.subItemList;
+      } else {
+        this.subItemList.find(list => list.sub_item_id == subItemList?.sub_item_id).isChecked = false;
+        console.log(this.subItemList, 'subItemList');
+        this.itemList[e].subItemList = this.subItemList;
+      }
     }
+  }
 
+  saveLocallySubItem() {
+    console.log(this.subItemList, 'subItemList');
+    this.modalReference.close();
   }
 
   createMaterialDistributionModalDismiss() {
-    this.modalReference?.close();
-    this.subItemMultiItem = [];
     var ID = this.onDistributionEditData?.material_distribution_register_id;
 
     if (ID) {
       this.onDistributionEditData = '';
       ID = 0;
-      this.modalReference?.close();
+      this.modalReference = this.modalService.dismissAll();
       this.editItemID = '';
     }
     else {
-      this.modalReference?.close();
+      this.modalReference = this.modalService.dismissAll();
     }
   }
 
   disabledSaveMaterialTraining() {
-    let flag = true;
+    let flag = false;
 
-    if (this.createMaterialDistributionForm.value.itemList == 'OTHERS') {
-      if (!this.createMaterialDistributionForm.value.enterSubItem) {
-        flag = false;
-      }
-    } else if (this.subItemMultiItem.length == 0) {
-      flag = false;
-    }
+    this.itemList.forEach(item => {
+      item.subItemList?.forEach(item1 => {
+        if (item1.isChecked == true || this.createMaterialDistributionForm.value.enterSubItem) {
+          flag = true
+        }
+      })
+    })
 
     return flag;
   }
 
   createMaterialDistributionSave() {
+    this.subItemMultiItem = [];
     console.log('createMaterialDistributionSave');
     console.log(this.familyDetails, 'xxxxxxxxxxsavexxx');
     console.log(this.onDistributionEditData, 'onDistributionEditData');
+    console.log(this.itemList, 'wholeitemliost');
+    this.itemList.forEach((x) => {
+      if (x.item_id != 'OTHERS') {
+        var multiSub = []
+        multiSub = x.subItemList.filter(it => it.isChecked == true)
+        console.log(multiSub, 'inside loop')
+        multiSub.forEach((y) => {
+          this.subItemMultiItem.push(y.sub_item_id);
+          console.log(this.subItemMultiItem, ' this.subItemMultiItem');
+        })
+      }
+
+    })
+
+    console.log(this.subItemMultiItem, ' finallistsi');
 
     let saveReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -409,6 +564,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       }
 
     })
+
   }
 
   savingDataDisplayModalDismiss() {

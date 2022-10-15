@@ -103,6 +103,7 @@ export class SsTrainingComponent implements OnInit {
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
             this.villagesOfBranch = res.responseObject;
+             this.loader = true;
           }
         });
 

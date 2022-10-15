@@ -1080,6 +1080,7 @@ class SsTrainingComponent {
                 this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res) => {
                     if (res.sessionDTO.status == true) {
                         this.villagesOfBranch = res.responseObject;
+                        this.loader = true;
                     }
                 });
                 this.changeBranch(this.viewSSTrainingEventForm.value.branch ? this.viewSSTrainingEventForm.value.branch : this.lowerRoleBranchId);

@@ -37,4 +37,5 @@ export class MaterialDistributionRegisterService {
   getMaterialDistributionList(obj): any {
     return this.http.post(`${this.baseURL}mdregister/getMaterialDistributionList`, obj)
   }
+
 }
