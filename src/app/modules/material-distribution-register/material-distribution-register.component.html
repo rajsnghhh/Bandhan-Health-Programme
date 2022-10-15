@@ -204,7 +204,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody style="text-align: center;" >
+                            <tbody style="text-align: center;">
                                 <tr *ngFor="let mat of materialDistributionListFamilyWise; index as i">
                                     <td style="width:5%;">{{i+1}}</td>
                                     <td style="width:10%;">{{mat.distribution_date.split("-").reverse().join("-")}}</td>
@@ -227,11 +227,8 @@
                                 <td>
                                     <table style="table-layout:fixed; width:260px;">
                                         <tbody>
-                                            <!-- <tr *ngFor="let sub_item of mappedStringArray"> -->
-                                                <!-- <td style="width:20%;">{{sub_item.md_item_name}}:
-                                                    {{sub_item.md_sub_item_name}}</td> -->
-                                                    <td style="width: 20%;">{{mat.mappedStringData}}</td>
-                                            <!-- </tr> -->
+                                            <td style="width: 20%;">{{!mat.mappedString.includes(null) ?
+                                                mat.mappedString : ''}}</td>
                                             <tr style="word-wrap:break-word;">Other Item :
                                                 {{materialDistributionListFamilyWise[i].other_item_name}}</tr>
 

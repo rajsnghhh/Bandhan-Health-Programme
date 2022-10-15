@@ -220,12 +220,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       ...rest
     }));
     this.materialDistributionListFamilyWise.forEach(item => {
-      this.viewItemSIDesign(item.subItems,item.mappedString);
+      this.viewItemSIDesign(item.subItems,item.mappedString,item);
     })
-    // this.viewItemSIDesign(this.materialDistributionListFamilyWise);
   }
 
-  viewItemSIDesign(data,mappedStringData) {
+  viewItemSIDesign(data,mappedStringData,item) {
     var Arr = []
     Arr = data;
 
@@ -241,10 +240,17 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       myMap.set(d.md_item_name, Arr.filter(v => v.md_item_name == d.md_item_name))
     });
 
-    console.log(this.setItemSubItemName(unique, myMap,mappedStringData))
+    mappedStringData =this.setItemSubItemName(unique, myMap)
+    console.log(mappedStringData);
+    var data = this.materialDistributionListFamilyWise.find(it => it.distribution_date == item.distribution_date)
+    data.mappedString = mappedStringData;
+    console.log(data);
+    console.log(this.materialDistributionListFamilyWise);
+    
+    
   }
 
-  setItemSubItemName(unique, map,mappedStringData) {
+  setItemSubItemName(unique, map) {
     this.mappedString = ""
     unique.forEach(key => {
       this.mappedString += key.md_item_name;
@@ -257,10 +263,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       this.mappedString += "), "
     })
     this.mappedString = this.mappedString.substring(0, this.mappedString.length - 2)
-    mappedStringData += this.mappedString
-    console.log( this.materialDistributionListFamilyWise);
     
-    return mappedStringData;
+    return this.mappedString;
   }
 
   findUnique(arr, predicate) {
