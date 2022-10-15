@@ -32,7 +32,10 @@ export class CoreComponent implements OnInit, AfterViewInit {
   percentagePemCumulative: any;
   percentageLmCumulative: any;
   percentagePwCumulative: any;
+  familyInfoGraphData: any;
   // dashboardAccess: boolean;
+  barChart1;
+  barChart2;
 
   constructor(private httpService: HttpService, public dialog: MatDialog,
     private http: HttpClient, private toaster: ToastrService,) { }
@@ -117,13 +120,13 @@ export class CoreComponent implements OnInit, AfterViewInit {
       this.percentageLmCumulative = ((totalLmCumulative / totalFamilyCount) * 100).toFixed(2);
       this.percentagePwCumulative = ((totalPwCumulative / totalFamilyCount) * 100).toFixed(2);
 
-      let familyInfoGraphData = [[this.percentageFamilyCount, this.percentagePemCumulative, this.percentageLmCumulative, this.percentagePwCumulative]
+      this.familyInfoGraphData = [[this.percentageFamilyCount, this.percentagePemCumulative, this.percentageLmCumulative, this.percentagePwCumulative]
         , [otherFamilyCount, totalPemCumulative, totalLmCumulative, totalPwCumulative]
         , [totalBelow5Cumulative, totalBelow2Cumulative, totalChildPemCumulative, totalGirl14To18Cumulative]];
 
-      localStorage.setItem('familyChildInfoGraphData', JSON.stringify(familyInfoGraphData));
-      this.familyBarChart(familyInfoGraphData);
-      this.barChart(familyInfoGraphData);
+      localStorage.setItem('familyChildInfoGraphData', JSON.stringify(this.familyInfoGraphData));
+      this.familyBarChart(this.familyInfoGraphData);
+      this.barChart(this.familyInfoGraphData);
       this.loader = true;
     });
   }
@@ -204,7 +207,11 @@ export class CoreComponent implements OnInit, AfterViewInit {
       }
       ]
     };
-    new Chart(this.ctx1, {
+    // If condition for remove bar chart previous value
+    if (this.barChart1) {
+      this.barChart1.destroy()
+    }
+    this.barChart1 = new Chart(this.ctx1, {
       type: 'bar',
       data: bardata,
       options: {
@@ -282,8 +289,11 @@ export class CoreComponent implements OnInit, AfterViewInit {
       }
       ]
     };
-
-    new Chart(this.ctx2, {
+    // If condition for remove bar chart previous value
+    if (this.barChart2) {
+      this.barChart2.destroy()
+    }
+    this.barChart2 = new Chart(this.ctx2, {
       type: 'bar',
       data: bardata,
       options: {
