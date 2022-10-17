@@ -103,7 +103,7 @@ export class SsTrainingComponent implements OnInit {
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
             this.villagesOfBranch = res.responseObject;
-             this.loader = true;
+            this.loader = true;
           }
         });
 
@@ -431,6 +431,7 @@ export class SsTrainingComponent implements OnInit {
   }
 
   changeparticipantType(participantType, staffID) {
+    console.log(participantType);
     console.log(this.allBranchID, 'this.allBranchIDthis.allBranchID');
 
     let ssListObj = {
@@ -478,20 +479,6 @@ export class SsTrainingComponent implements OnInit {
         }
         else {
           this.ssList = [];
-        }
-      }
-
-      if (this.createSSTrainingEventForm.value.staff) {
-        console.log(staffID, 'staffID');
-        if (staffID == 'viewall') {
-          this.ssList = this.ssList;
-          console.log(this.ssList, 'viewall');
-        } else if (staffID == 'nouser') {
-          this.ssList = this.ssList.filter(item => item.user_id == null);
-          console.log(this.ssList, 'nullusersslist');
-        } else {
-          this.ssList = this.ssList.filter(item => item.user_id == staffID);
-          console.log(this.ssList, 'staffidsslist');
         }
       }
 
@@ -717,7 +704,24 @@ export class SsTrainingComponent implements OnInit {
 
   changestaff(staffid) {
     this.staffID = staffid;
-    this.changeparticipantType(this.createSSTrainingEventForm.value.participantType, this.staffID);
+    this.changeparticipantTypeBySSName(this.staffID)
+  }
+
+  changeparticipantTypeBySSName(staffID) {
+    this.ssList = this.AllSSList;
+    if (this.createSSTrainingEventForm.value.participantType == 'fresh') {
+      this.ssList = this.ssList.filter(v => v.status == 'fresh')
+    } else {
+      this.ssList = this.ssList.filter(v => v.status != 'fresh')
+    }
+
+    if (staffID == 'viewall') {
+      this.ssList;
+    } else if (staffID == 'nouser') {
+      this.ssList = this.ssList.filter(v => v.user_id == null);
+    } else {
+      this.ssList = this.ssList.filter(v => v.user_id == staffID);
+    }
   }
 
   showSuccess(message) {

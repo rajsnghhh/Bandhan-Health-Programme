@@ -404,8 +404,7 @@
                 <form class="form-signin" [formGroup]="createMaterialDistributionForm">
                     <div class="form-group col-md-12" *ngIf="OtherItemStatus == 'O'">
                         <input type="text" class="form-control" placeholder="Enter Other Sub Item"
-                            formControlName="enterSubItem" maxlength="45"
-                            (keypress)="validationService.onlyAlphabetsAndSpace($event)">
+                            formControlName="enterSubItem">
                     </div>
                 </form>
 

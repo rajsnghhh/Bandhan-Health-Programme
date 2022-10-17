@@ -34,6 +34,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   p: any;
   modalContent: any;
   modalReference: any;
+  eligibleFamilyModal: any;
+  distributionDetailsModal: any;
+  createMaterialModal: any;
   eligibleFamilyList: Array<any> = [];
   eligibleChildList: Array<any> = [];
   itemList: Array<any> = [];
@@ -60,6 +63,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   registerSearch: any;
   mappedString: any = "";
   mappedStringArray: Array<any> = [];
+  eligibleFamilyDetails: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
@@ -207,7 +211,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.pwName = mat.first_name + mat.middle_name + ' ' + mat.last_name;
     this.pwStatus = 'PW';
     this.modalContent = '';
-    this.modalReference = this.modalService.open(detailsOfDistribution, {
+    this.distributionDetailsModal = this.modalService.open(detailsOfDistribution, {
       windowClass: 'detailsOfParticipants',
     });
 
@@ -277,17 +281,21 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   viewDistributionDetailsModalDismiss() {
-    // this.modalReference = this.modalService.dismissAll();
-    this.modalReference.close();
+    this.changeVillage(this.villageID);
+    this.distributionDetailsModal?.close();
   }
 
   viewEligibleFamilyDetails(eligibleFamilyDetails) {
+    this.eligibleFamilyDetails = eligibleFamilyDetails;
+    console.log(this.eligibleFamilyDetails);
+
     this.ssList = [];
     console.log(this.villageID, 'this.villageID');
     this.modalContent = '';
-    this.modalReference = this.modalService.open(eligibleFamilyDetails, {
+    this.eligibleFamilyModal = this.modalService.open(eligibleFamilyDetails, {
       windowClass: 'eligibleFamilyDetails',
     });
+
 
     let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
 
@@ -331,8 +339,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   eligibleFamilyDetailsModalDismiss() {
-    // this.modalReference = this.modalService.dismissAll();
-    this.modalReference.close();
+    this.eligibleFamilyModal.close();
   }
 
   viewSSForm() {
@@ -379,7 +386,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     console.log(fam_details.family_detail_id, 'family_detail_id');
     setTimeout(() => {
       this.modalContent = '';
-      this.modalReference = this.modalService.open(materialDistribution, {
+      this.createMaterialModal = this.modalService.open(materialDistribution, {
         windowClass: 'materialDistribution',
       });
 
@@ -502,13 +509,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     if (ID) {
       this.onDistributionEditData = '';
       ID = 0;
-      // this.modalReference = this.modalService.dismissAll();
-      this.modalReference.close();
+      this.createMaterialModal.close();
       this.editItemID = '';
     }
     else {
-      // this.modalReference = this.modalService.dismissAll();
-      this.modalReference.close();
+      this.createMaterialModal.close();
     }
   }
 
