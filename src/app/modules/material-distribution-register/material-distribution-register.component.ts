@@ -34,6 +34,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   p: any;
   modalContent: any;
   modalReference: any;
+  eligibleFamilyModal: any;
+  distributionDetailsModal: any;
+  createMaterialModal: any;
   eligibleFamilyList: Array<any> = [];
   eligibleChildList: Array<any> = [];
   itemList: Array<any> = [];
@@ -60,6 +63,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   registerSearch: any;
   mappedString: any = "";
   mappedStringArray: Array<any> = [];
+  eligibleFamilyDetails: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
@@ -207,7 +211,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     this.pwName = mat.first_name + mat.middle_name + ' ' + mat.last_name;
     this.pwStatus = 'PW';
     this.modalContent = '';
-    this.modalReference = this.modalService.open(detailsOfDistribution, {
+    this.distributionDetailsModal = this.modalService.open(detailsOfDistribution, {
       windowClass: 'detailsOfParticipants',
     });
 
@@ -220,12 +224,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       ...rest
     }));
     this.materialDistributionListFamilyWise.forEach(item => {
-      this.viewItemSIDesign(item.subItems,item.mappedString);
+      this.viewItemSIDesign(item.subItems, item.mappedString, item);
     })
-    // this.viewItemSIDesign(this.materialDistributionListFamilyWise);
   }
 
-  viewItemSIDesign(data,mappedStringData) {
+  viewItemSIDesign(data, mappedStringData, item) {
     var Arr = []
     Arr = data;
 
@@ -241,10 +244,17 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       myMap.set(d.md_item_name, Arr.filter(v => v.md_item_name == d.md_item_name))
     });
 
-    console.log(this.setItemSubItemName(unique, myMap,mappedStringData))
+    mappedStringData = this.setItemSubItemName(unique, myMap)
+    console.log(mappedStringData);
+    var data = this.materialDistributionListFamilyWise.find(it => it.material_distribution_register_id == item.material_distribution_register_id)
+    data.mappedString = mappedStringData;
+    console.log(data);
+    console.log(this.materialDistributionListFamilyWise);
+
+
   }
 
-  setItemSubItemName(unique, map,mappedStringData) {
+  setItemSubItemName(unique, map) {
     this.mappedString = ""
     unique.forEach(key => {
       this.mappedString += key.md_item_name;
@@ -257,10 +267,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       this.mappedString += "), "
     })
     this.mappedString = this.mappedString.substring(0, this.mappedString.length - 2)
-    mappedStringData += this.mappedString
-    console.log( this.materialDistributionListFamilyWise);
-    
-    return mappedStringData;
+
+    return this.mappedString;
   }
 
   findUnique(arr, predicate) {
@@ -273,16 +281,21 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   viewDistributionDetailsModalDismiss() {
-    this.modalReference = this.modalService.dismissAll();
+    this.changeVillage(this.villageID);
+    this.distributionDetailsModal?.close();
   }
 
   viewEligibleFamilyDetails(eligibleFamilyDetails) {
+    this.eligibleFamilyDetails = eligibleFamilyDetails;
+    console.log(this.eligibleFamilyDetails);
+
     this.ssList = [];
     console.log(this.villageID, 'this.villageID');
     this.modalContent = '';
-    this.modalReference = this.modalService.open(eligibleFamilyDetails, {
+    this.eligibleFamilyModal = this.modalService.open(eligibleFamilyDetails, {
       windowClass: 'eligibleFamilyDetails',
     });
+
 
     let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
 
@@ -326,7 +339,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   eligibleFamilyDetailsModalDismiss() {
-    this.modalReference = this.modalService.dismissAll();
+    this.eligibleFamilyModal.close();
   }
 
   viewSSForm() {
@@ -373,7 +386,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     console.log(fam_details.family_detail_id, 'family_detail_id');
     setTimeout(() => {
       this.modalContent = '';
-      this.modalReference = this.modalService.open(materialDistribution, {
+      this.createMaterialModal = this.modalService.open(materialDistribution, {
         windowClass: 'materialDistribution',
       });
 
@@ -496,11 +509,11 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     if (ID) {
       this.onDistributionEditData = '';
       ID = 0;
-      this.modalReference = this.modalService.dismissAll();
+      this.createMaterialModal.close();
       this.editItemID = '';
     }
     else {
-      this.modalReference = this.modalService.dismissAll();
+      this.createMaterialModal.close();
     }
   }
 
@@ -567,10 +580,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
   }
 
-  savingDataDisplayModalDismiss() {
-    this.modalReference?.close();
-  }
-
   editMaterialDistributedFamily(materialDistribution, mat) {
     this.onDistributionEditData = mat;
     this.createMaterialDistribution(materialDistribution, mat);
@@ -621,5 +630,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
 
 }

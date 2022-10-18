@@ -323,7 +323,7 @@
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">ADD SS</legend>
                     <div class="row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md">
                             <label for="ssbranch">Branch:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="changessbranch($event.target.value)"
                                 formControlName="ssbranch" id="ssbranch" [ngClass]="{ 'is-invalid': t.ssbranch.invalid && t.ssbranch.touched,
@@ -339,7 +339,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md"
+                            *ngIf="createSSTrainingEventForm.value.trainingType== 1||createSSTrainingEventForm.value.trainingType== 2 ">
                             <label for="participantType">Participant Type:&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" (change)="filterSSList($event.target.value)"
@@ -347,7 +348,7 @@
                                 [ngClass]="{ 'is-invalid': t.participantType.invalid && t.participantType.touched,
                           'is-valid': t.participantType.valid && (t.participantType.dirty || t.participantType.touched) }" style="width: 100%;">
                                 <option value="">-- Select Participant --</option>
-                                <option value="fresh">Fresh SS</option>
+                                <option value="fresh">New SS</option>
                                 <option value="absent">Absent SS</option>
                             </select>
                             <div *ngIf="t.participantType.errors" class="invalid-feedback">
