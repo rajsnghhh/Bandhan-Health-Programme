@@ -18,7 +18,7 @@
                         'is-valid': f.project.valid && (f.project.dirty || f.project.touched)
                       }">
                 <option value="">-- Select Project --</option>
-                <option value="all">-- All --</option>
+                <option value="all" *ngIf="roleType == 'PM'">-- All --</option>
                 <option *ngFor="let project of projectList" [value]="project.projectMasterId">
                   {{project.projectName}}
                 </option>
@@ -48,7 +48,8 @@
                     'is-invalid': f.state.invalid && f.state.touched,
                     'is-valid': f.state.valid && (f.state.dirty || f.state.touched)
                   }">
-                <option value="">-- All --</option>
+                <option value=""  *ngIf="roleType == 'PM'">-- All --</option>
+                <option value=""  *ngIf="roleType != 'PM'">-- Select State --</option>
                 <option *ngFor="let state of stateList" [value]="state.stateMasterId">
                   {{state.stateName}}
                 </option>
@@ -62,7 +63,8 @@
                     'is-invalid': f.district.invalid && f.district.touched,
                     'is-valid': f.district.valid && (f.district.dirty || f.district.touched)
                   }">
-                <option value="">-- All --</option>
+                <option value="" *ngIf="roleType == 'PM' ">-- All --</option>
+                <option value=""  *ngIf="roleType != 'PM'">-- Select District --</option>
                 <option *ngFor="let district of stateWiseDistrictList" [value]="district.districtMasterId">
                   {{district.districtName}}
                 </option>
@@ -113,7 +115,7 @@
             </div>
           </div>
 
-          <div class="add_button" *ngIf="stateWiseFilter || regionWiseFilter">
+          <div class="add_button" *ngIf="stateWiseFilter || regionWiseFilter || projectWiseFilter">
             <button class="btn btn-primary" (click)="generateReport()">
               <i class="fa fa-file-text-o"></i>Generate Report
             </button>
