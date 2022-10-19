@@ -108,8 +108,8 @@
                   'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
                 }">
                 <option value="">-- Select Village --</option>
-                <option *ngFor="let vill of villageDtoList">
-                  {{ vill}}
+                <option *ngFor="let vill of villageDtoList" value="{{vill.villageMasterId}}">
+                  {{ vill.villageName }}
                 </option>
               </select>
               <div *ngIf="f.gram.errors" class="invalid-feedback">
@@ -156,7 +156,7 @@
                                   : item.muacIndicatorName == 'GREEN' ? 'success' 
                                   : item.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                         class="fa fa-circle fa-lg"></i></td>
-                    <td style="padding: 0px 0px 0px 32px;">
+                    <td style="padding: 0px 0px 0px 10px;">
                       <i class="fas fa-edit" *ngIf="createUpdateMode" title="Save & Edit"
                         (click)="openAddEditLmChild(item)"></i>
                       <i class="fa fa-eye fa-lg" title="View Child" (click)="ViewLmChild(item)"></i>

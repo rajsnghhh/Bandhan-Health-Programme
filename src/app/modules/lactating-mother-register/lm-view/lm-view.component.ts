@@ -171,9 +171,7 @@ export class LmViewComponent implements OnInit, DoCheck {
   }
   /* on change GP dropdown getting Village list */
   changeGp(gpName) {
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList.map((i) => {
-      return (i.villageName)
-    }).sort();
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.gp == '') {
@@ -181,8 +179,9 @@ export class LmViewComponent implements OnInit, DoCheck {
     }
   }
   /* on change Village dropdown getting LactatingMother List */
-  changeVillage(villagename) {
-    this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
+  changeVillage(villageID) {
+    this.villageMasterId = villageID;
+    // this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.getLactatingMotherList(this.villageMasterId);
     if (this.locationForm.value.gram == '') {
 
