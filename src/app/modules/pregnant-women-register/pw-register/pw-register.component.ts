@@ -187,8 +187,12 @@ export class PwRegisterComponent implements OnInit {
     }
   }
 
-  changeVillage(villagename) {
-    this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
+  changeVillage(villageId) {
+    this.villageMasterId = villageId;
+    // this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)
+    //   ?.gpDtoList.find(gp => gp.name == this.selectedGp)
+    //   ?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
+
     this.getPregnantWomenList(this.villageMasterId);
     if (this.locationForm.value.gram == '') {
 
@@ -215,6 +219,7 @@ export class PwRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
     }
+    console.log(req);
     this.loader = false;
     this.httpService.getPregnantWomenList(req).subscribe((res) => {
       this.allPregnantWomenList = res.responseObject?.pregnantWomanList;

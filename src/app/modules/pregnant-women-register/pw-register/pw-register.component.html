@@ -108,7 +108,7 @@
                   'is-valid': f.gram.valid && (f.gram.dirty || f.gram.touched)
                 }">
                 <option value="">-- Select Village --</option>
-                <option *ngFor="let vill of villageDtoList">
+                <option *ngFor="let vill of villageDtoList" value="{{vill.villageMasterId}}">
                   {{ vill.villageName }}
                 </option>
               </select>

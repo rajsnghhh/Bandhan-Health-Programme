@@ -155,9 +155,7 @@ export class AllChildRegisterComponent implements OnInit {
     }
   }
   changeGp(gpName) {
-    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList.map((i) => {
-      return (i.villageName)
-    }).sort();
+    this.villageDtoList = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == gpName)?.villageDtoList;
     this.selectedGp = this.locationForm.get('gp').value;
     this.locationForm.controls.gram.setValue('');
     if (this.locationForm.value.gp == '') {
@@ -168,8 +166,9 @@ export class AllChildRegisterComponent implements OnInit {
     }
   }
 
-  changeVillage(villagename) {
-    this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
+  changeVillage(villageId) {
+    this.villageMasterId = villageId;
+    // this.villageMasterId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId;
     this.getChildrenList(this.villageMasterId);
     if (this.locationForm.value.gram == '') {
       this.childrenBetween6And59Months = [];
