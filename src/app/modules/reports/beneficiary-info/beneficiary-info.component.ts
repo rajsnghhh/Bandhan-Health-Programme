@@ -221,11 +221,7 @@ export class BeneficiaryInfoComponent implements OnInit {
       });
     }
     else if (this.stateWiseFilter == true) {
-      if ((this.roleType != "PM")
-        && (this.locationForm.get('state').value == "" || this.locationForm.get('district').value == "")) {
-
-        console.log(this.roleType != "PM", this.locationForm.get('state').value == "", this.locationForm.get('district').value == "")
-
+      if ((this.roleType != "PM") && (this.locationForm.get('state').value == "" || this.locationForm.get('district').value == "")) {
         this.showError("Please Select State & District");
       } else {
         this.tableHeadName = this.locationForm.get('state').value ? this.locationForm.get('district').value
@@ -266,37 +262,41 @@ export class BeneficiaryInfoComponent implements OnInit {
       }
     }
     else if (this.regionWiseFilter = true) {
-      this.tableHeadName = this.locationForm.get('region').value ? "Branch" : "Region"
-      let Dto1 = {
-        dataAccessDTO: this.httpService.dataAccessDTO,
-        projectMasterId: this.locationForm.get('project').value,
-        regionMasterId: this.locationForm.get('region').value ? this.locationForm.get('region').value : ""
-      }
-      console.log(Dto1, 'regionWise')
-      this.loader = false;
-      this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegionWise`, Dto1).subscribe((res: any) => {
-        this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
-        console.log(this.projectWiseBeneficiaryList, ' this.projectWiseBeneficiaryList');
-        this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
-        this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
-        this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
-        this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
-        this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
-        this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
-        this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
-        this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
-        this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
-        this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
-        this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
-        this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
-        this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
-        this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
-        this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
+      if ((this.roleType != "PM") && (this.locationForm.get('region').value == "")) {
+        this.showError("Please Select Region");
+      } else {
+        this.tableHeadName = this.locationForm.get('region').value ? "Branch" : "Region"
+        let Dto1 = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          projectMasterId: this.locationForm.get('project').value,
+          regionMasterId: this.locationForm.get('region').value ? this.locationForm.get('region').value : ""
+        }
+        console.log(Dto1, 'regionWise')
+        this.loader = false;
+        this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegionWise`, Dto1).subscribe((res: any) => {
+          this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
+          console.log(this.projectWiseBeneficiaryList, ' this.projectWiseBeneficiaryList');
+          this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
+          this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
+          this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
+          this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
+          this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
+          this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
+          this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
+          this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
+          this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
+          this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
+          this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
+          this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
+          this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
+          this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
+          this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
 
-        this.loader = true;
-      }, error => {
-        this.loader = true;
-      });
+          this.loader = true;
+        }, error => {
+          this.loader = true;
+        });
+      }
     }
   }
 

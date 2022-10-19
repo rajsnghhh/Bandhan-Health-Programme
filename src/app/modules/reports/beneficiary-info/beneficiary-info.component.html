@@ -107,7 +107,8 @@
                         'is-valid':
                           f.region.valid && (f.region.dirty || f.region.touched)
                       }">
-                <option value="">-- All --</option>
+                <option value="" *ngIf="roleType == 'PM' ">-- All --</option>
+                <option value=""  *ngIf="roleType != 'PM'">-- Select Region --</option>
                 <option *ngFor="let region of regionList" [value]="region.regionMasterId">
                   {{region.regionName}}
                 </option>
