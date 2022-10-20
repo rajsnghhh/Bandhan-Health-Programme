@@ -170,25 +170,30 @@
                                                 =='Y' && item.presentInPregnantWoman == 'Y' ? 'PEM, LM, PW' : '' }}
 
                                                 {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
-                                                =='Y' && item.presentInPregnantWoman == 'N' ? 'PEM, LM' : '' }}
+                                                =='Y' && item.presentInPregnantWoman.includes('N') ? 'PEM, LM' : '' }}
 
                                                 {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
-                                                =='N' && item.presentInPregnantWoman == 'N' ? 'PEM' : '' }}
+                                                .includes('N') && item.presentInPregnantWoman.includes('N') ? 'PEM' : ''
+                                                }}
 
-                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
-                                                =='N' && item.presentInPregnantWoman == 'N' ? '' : '' }}
+                                                {{item.hasChildPresentInPem.includes('N') &&
+                                                item.presentInLactatingMother.includes('N') &&
+                                                item.presentInPregnantWoman.includes('N') ? '' : '' }}
 
-                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
+                                                {{item.hasChildPresentInPem.includes('N') &&
+                                                item.presentInLactatingMother
                                                 =='Y' && item.presentInPregnantWoman == 'Y' ? 'LM, PW' : '' }}
 
-                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
-                                                =='N' && item.presentInPregnantWoman == 'Y' ? 'PW' : '' }}
+                                                {{item.hasChildPresentInPem.includes('N') &&
+                                                item.presentInLactatingMother
+                                                .includes('N') && item.presentInPregnantWoman == 'Y' ? 'PW' : '' }}
 
-                                                {{item.hasChildPresentInPem =='N' && item.presentInLactatingMother
-                                                =='Y' && item.presentInPregnantWoman == 'N' ? 'LM' : '' }}
+                                                {{item.hasChildPresentInPem.includes('N') &&
+                                                item.presentInLactatingMother
+                                                =='Y' && item.presentInPregnantWoman.includes('N') ? 'LM' : '' }}
 
                                                 {{item.hasChildPresentInPem =='Y' && item.presentInLactatingMother
-                                                =='N' && item.presentInPregnantWoman == 'Y' ? 'PEM, PW' : '' }}
+                                                .includes('N') && item.presentInPregnantWoman == 'Y' ? 'PEM, PW' : '' }}
                                             </td>
                                             <td style="padding: 0px;">{{item.visitedWithSS}}</td>
                                             <td style="padding: 0px;">{{item.ssName ? item.ssName : '-'}}</td>

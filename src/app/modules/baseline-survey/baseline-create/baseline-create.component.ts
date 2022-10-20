@@ -164,7 +164,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       idtype: [''],
       aadhar: ['', Validators.compose([Validators.required, Validators.minLength(12), Validators.pattern("[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}")])],
       pan: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{5}[0-9]{4}[A-Z]{1}")])],
-      voter: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{3}[0-9]{7}")])],
+      voter: ['', Validators.compose([Validators.required, Validators.pattern("([A-Z]{2}\\/[0-9]{2}\\/[0-9]{3}\\/[0-9]{6})|([A-Z]{3}[0-9]{7})")])],
       religion: ['', Validators.required],
       caste: ['', Validators.required],
       education: [''],
@@ -557,12 +557,18 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
           return;
         }
 
-        var regexp = /^([A-Z]){3}([0-9]){7}?$/;
-        var x = this.baselineSurvey.value.voter;
-        if (!regexp.test(x)) {
+        if (this.f.voter?.errors?.pattern) {
           this.showError('Invalid Voter Card No!');
           return;
         }
+
+        // var regexp = /^([A-Z]){3}([0-9]){7}?$/;
+        //     var x = this.baselineSurvey.value.voter;
+        //     if (!regexp.test(x)) {
+        //       this.showError('Invalid Voter Card No!');
+        //       return;
+        //     }
+
       }
     }
 

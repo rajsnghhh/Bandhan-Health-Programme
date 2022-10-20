@@ -217,10 +217,10 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     this.mappedStringArray = []
     this.materialDistributionListFamilyWise = this.materialDistributionListFamilyWise?.map(({
-      mappedString = '',
+      mappedString = '',family_detail_id = mat.family_detail_id,
       ...rest
     }) => ({
-      mappedString,
+      mappedString,family_detail_id,
       ...rest
     }));
     this.materialDistributionListFamilyWise.forEach(item => {
@@ -339,7 +339,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
   eligibleFamilyDetailsModalDismiss() {
-    this.eligibleFamilyModal.close();
+    this.eligibleFamilyModal?.close();
   }
 
   viewSSForm() {
@@ -551,6 +551,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     })
 
     console.log(this.subItemMultiItem, ' finallistsi');
+console.log(this.onDistributionEditData );
+console.log( this.familyDetails.family_detail_id);
+
 
     let saveReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,

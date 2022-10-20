@@ -240,7 +240,7 @@
               <div class="form-group col-md" *ngIf="idTypeField == 3">
                 <label for="voter">
                   VOTER CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                <input type="text" class="form-control" maxlength="16" placeholder="Like NDF1758462"
+                <input type="text" class="form-control" maxlength="16" placeholder="NDF1758462"
                   formControlName="voter" [ngClass]="{
                     'is-invalid': f.voter.invalid && f.voter.touched,
                     'is-valid':
@@ -250,7 +250,7 @@
                   <div *ngIf="f.voter.errors.required">
                     VOTER CARD Number is required
                   </div>
-                  <div *ngIf="f.voter.errors.minlength || f.voter.errors.pattern">
+                  <div *ngIf="f.voter.errors.pattern">
                     VOTER CARD Number Invalid !
                   </div>
                 </div>

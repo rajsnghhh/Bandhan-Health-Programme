@@ -232,7 +232,7 @@ export class FamilyInfoCreateComponent implements OnInit {
       idtype: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId ? data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId : ''],
       aadhar: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId == 1 ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(12), Validators.pattern("[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}")])],
       pan: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId == 2 ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{5}[0-9]{4}[A-Z]{1}")])],
-      voter: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId == 3 ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern("[A-Z]{3}[0-9]{7}")])],
+      voter: [data?.identityCardDTOList[0]?.identityCardTypesMasterDTO.identityCardTypesMasterId == 3 ? data?.identityCardDTOList[0]?.number : '', Validators.compose([Validators.required, Validators.pattern("([A-Z]{2}\\/[0-9]{2}\\/[0-9]{3}\\/[0-9]{6})|([A-Z]{3}[0-9]{7})")])],
       religion: [data?.religionMasterDTO?.religionMasterId ? data?.religionMasterDTO?.religionMasterId : '', Validators.required],
       caste: [data?.casteTypeMasterDTO?.casteTypeMasterId ? data?.casteTypeMasterDTO?.casteTypeMasterId : '', Validators.required],
       education: [data?.educationalQualificationMasterDTO?.educationalQualificationMasterId ? data?.educationalQualificationMasterDTO?.educationalQualificationMasterId : ''],
@@ -542,12 +542,16 @@ export class FamilyInfoCreateComponent implements OnInit {
           return;
         }
 
-        var regexp = /^([A-Z]){3}([0-9]){7}?$/;
-        var x = this.baselineSurvey.value.voter;
-        if (!regexp.test(x)) {
+        if (this.f.voter?.errors?.pattern) {
           this.showError('Invalid Voter Card No!');
           return;
         }
+        // var regexp = /^([A-Z]){3}([0-9]){7}?$/;
+        // var x = this.baselineSurvey.value.voter;
+        // if (!regexp.test(x)) {
+        //   this.showError('Invalid Voter Card No!');
+        //   return;
+        // }
       }
     }
 
