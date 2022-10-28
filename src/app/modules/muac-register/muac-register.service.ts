@@ -26,4 +26,9 @@ export class MuacRegisterService {
   deleteMuac(obj): any {
     return this.http.post(`${this.baseURL}muaccamp/delete`, obj)
   }
+
+  viewChildrenListOfMuacCamp(obj): any {
+    return this.http.post(`${this.baseURL}muaccamp/viewChildrenListOfMuacCamp`, obj)
+  }
+
 }

@@ -217,10 +217,10 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
     this.mappedStringArray = []
     this.materialDistributionListFamilyWise = this.materialDistributionListFamilyWise?.map(({
-      mappedString = '',family_detail_id = mat.family_detail_id,
+      mappedString = '', family_detail_id = mat.family_detail_id,
       ...rest
     }) => ({
-      mappedString,family_detail_id,
+      mappedString, family_detail_id,
       ...rest
     }));
     this.materialDistributionListFamilyWise.forEach(item => {
@@ -233,8 +233,6 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     Arr = data;
 
     console.log(Arr, 'TRR');
-
-
 
     var unique = this.findUnique(Arr, d => d.md_item_name)
 
@@ -551,8 +549,8 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     })
 
     console.log(this.subItemMultiItem, ' finallistsi');
-console.log(this.onDistributionEditData );
-console.log( this.familyDetails.family_detail_id);
+    console.log(this.onDistributionEditData);
+    console.log(this.familyDetails.family_detail_id);
 
 
     let saveReq = {

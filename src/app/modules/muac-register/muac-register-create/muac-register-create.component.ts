@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -53,11 +53,16 @@ export class MuacRegisterCreateComponent implements OnInit {
   hcoBranchId: any;
   setStartDate: any;
   setEndDate: any;
-
+  ViewChildData: Array<any> = [];
+  muacCampStatus: any;
+  registerSearch: any;
 
   constructor(private httpService: HttpService, private muacService: MuacRegisterService,
-    private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder,
-    private sidebarService: SidebarService, private http: HttpClient, private router: Router) { }
+    private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder, config: NgbModalConfig,
+    private sidebarService: SidebarService, private http: HttpClient, private router: Router) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     console.log(this.sidebarService.userId);
@@ -529,4 +534,26 @@ export class MuacRegisterCreateComponent implements OnInit {
   restrictTypeOfDate() {
     return false;
   }
+
+  ViewChildDataEntry(viewChild, item) {
+    console.log(item.muacCampId);
+
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, muacCampId: item.muacCampId }
+    console.log(obj);
+
+    this.muacService.viewChildrenListOfMuacCamp(obj).subscribe((res: any) => {
+      this.ViewChildData = res.responseObject?.childList;
+      this.muacCampStatus = res.responseObject?.muacCampStats;
+      console.log(res.responseObject);
+      console.log(this.ViewChildData, 'ViewChildData');
+      console.log(this.muacCampStatus, 'muacCampStatus');
+    });
+
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(viewChild, {
+      windowClass: 'viewChild',
+    });
+
+  }
+
 }

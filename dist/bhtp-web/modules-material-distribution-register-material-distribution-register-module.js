@@ -1141,8 +1141,8 @@ class MaterialDistributionRegisterComponent {
         });
         this.mappedStringArray = [];
         this.materialDistributionListFamilyWise = (_a = this.materialDistributionListFamilyWise) === null || _a === void 0 ? void 0 : _a.map((_a) => {
-            var { mappedString = '' } = _a, rest = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(_a, ["mappedString"]);
-            return (Object.assign({ mappedString }, rest));
+            var { mappedString = '', family_detail_id = mat.family_detail_id } = _a, rest = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(_a, ["mappedString", "family_detail_id"]);
+            return (Object.assign({ mappedString, family_detail_id }, rest));
         });
         this.materialDistributionListFamilyWise.forEach(item => {
             this.viewItemSIDesign(item.subItems, item.mappedString, item);
@@ -1237,7 +1237,8 @@ class MaterialDistributionRegisterComponent {
         });
     }
     eligibleFamilyDetailsModalDismiss() {
-        this.eligibleFamilyModal.close();
+        var _a;
+        (_a = this.eligibleFamilyModal) === null || _a === void 0 ? void 0 : _a.close();
     }
     viewSSForm() {
         this.filterswasthyaSahayikaForm = this.fb.group({
@@ -1421,6 +1422,8 @@ class MaterialDistributionRegisterComponent {
             }
         });
         console.log(this.subItemMultiItem, ' finallistsi');
+        console.log(this.onDistributionEditData);
+        console.log(this.familyDetails.family_detail_id);
         let saveReq = {
             dataAccessDTO: this.httpService.dataAccessDTO,
             material_distribution_register_id: this.onDistributionEditData ? (_a = this.onDistributionEditData) === null || _a === void 0 ? void 0 : _a.material_distribution_register_id : 0,
