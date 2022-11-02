@@ -38,7 +38,7 @@ export const environment = {
   // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
 
   // Soumen Machine
-  // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.61:6180/bhp/api/v1/'
 
   // Chayan Machine
   // apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'

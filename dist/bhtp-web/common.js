@@ -64,6 +64,9 @@ class MuacRegisterService {
     deleteMuac(obj) {
         return this.http.post(`${this.baseURL}muaccamp/delete`, obj);
     }
+    viewChildrenListOfMuacCamp(obj) {
+        return this.http.post(`${this.baseURL}muaccamp/viewChildrenListOfMuacCamp`, obj);
+    }
 }
 MuacRegisterService.ɵfac = function MuacRegisterService_Factory(t) { return new (t || MuacRegisterService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
 MuacRegisterService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: MuacRegisterService, factory: MuacRegisterService.ɵfac, providedIn: 'root' });

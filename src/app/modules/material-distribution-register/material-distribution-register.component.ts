@@ -38,6 +38,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   distributionDetailsModal: any;
   createMaterialModal: any;
   eligibleFamilyList: Array<any> = [];
+  filterFamilyList: Array<any> = [];
   eligibleChildList: Array<any> = [];
   itemList: Array<any> = [];
   subItemList: Array<any> = [];
@@ -64,6 +65,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   mappedString: any = "";
   mappedStringArray: Array<any> = [];
   eligibleFamilyDetails: any;
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
@@ -296,9 +298,12 @@ export class MaterialDistributionRegisterComponent implements OnInit {
 
 
     let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
+    this.loader = false;
 
     this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
       this.eligibleFamilyList = res.responseObject;
+      this.filterFamilyList = res.responseObject;
+      this.loader = true;
       console.log(this.eligibleFamilyList, 'eligibleFamilyList');
       this.eligibleFamilyList.forEach((item) => {
         if (item.swasthya_sahayika_id != null) {
@@ -313,25 +318,20 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   }
 
   changeSSFilter(ssvalue) {
-    let viewFamObj = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: this.villageID };
-
-    this.materialDistributionService.getEligibleFamilyDetails(viewFamObj).subscribe((res: any) => {
-      this.eligibleFamilyList = res.responseObject;
-      if (ssvalue == 'noSS') {
-        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id == null);
-        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
-      } else if (ssvalue == 'withSS') {
-        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id != null);
-        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
-      } else if (ssvalue == '') {
-        this.eligibleFamilyList = this.eligibleFamilyList;
-        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
-      }
-      else {
-        this.eligibleFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_name == ssvalue);
-        console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
-      }
-    });
+    if (ssvalue == 'noSS') {
+      this.filterFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id == null);
+      console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+    } else if (ssvalue == 'withSS') {
+      this.filterFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_id != null);
+      console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+    } else if (ssvalue == '') {
+      this.filterFamilyList = this.eligibleFamilyList;
+      console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+    }
+    else {
+      this.filterFamilyList = this.eligibleFamilyList.filter(item => item.swasthya_sahayika_name == ssvalue);
+      console.log(this.eligibleFamilyList, 'this.eligibleFamilyList');
+    }
 
   }
 
