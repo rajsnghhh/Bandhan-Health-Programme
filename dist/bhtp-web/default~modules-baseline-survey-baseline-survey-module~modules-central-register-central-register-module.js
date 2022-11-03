@@ -244,7 +244,7 @@ class LocationComponent {
                 let objs = {
                     deviceType: "W",
                     loginId: this.sidebarService.loginId,
-                    password: JSON.parse(bytes.toString(crypto_js__WEBPACK_IMPORTED_MODULE_2___default.a.enc.Utf8))
+                    password: bytes.toString(crypto_js__WEBPACK_IMPORTED_MODULE_2___default.a.enc.Utf8)
                 };
                 this.baselineService.login(objs).subscribe((res) => {
                     var _a, _b, _c, _d;

@@ -6,9 +6,10 @@ import { MuacRegisterCreateComponent } from './muac-register-create/muac-registe
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { muacChildrenViewFilterPipe } from '../shared/sidebar/muac-children-view-search.pipe';
 
 @NgModule({
-  declarations: [MuacRegisterCreateComponent],
+  declarations: [MuacRegisterCreateComponent, muacChildrenViewFilterPipe],
   imports: [
     CommonModule,
     MuacRegisterRoutingModule,

@@ -5,7 +5,7 @@
 }
 
 .modal-contents {
-  height: 500px;
+  height: 600px;
   width: 1280px;
   margin-left: -390px;
   background: white;
@@ -53,7 +53,7 @@
 #table_wrapper {
   margin: 0 -14px;
   padding: 0 24px;
-  max-height: 46vh;
+  max-height: 40vh;
   overflow: auto;
 }
 
@@ -73,9 +73,42 @@
   color: #000;
   font-size: 13px;
   height: 40px;
-  width: 180%;
+  width: 80%;
   border-radius: 5px;
   padding-left: 55px;
   border: 1px solid #2daab8;
   padding-right: 15px;
+  margin-left: 780px;
+  margin-bottom: 6px;
+}
+
+.serach_field_2 .search_inner button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: 770px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
+#header_fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #499;
+  color: #FFFFFF;
+  font-family: "Rajdhani", sans-serif;
 }

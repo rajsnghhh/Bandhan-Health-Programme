@@ -108,7 +108,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
         const bytes = CryptoJS.AES.decrypt(password, 'encryptionCode'); let objs = {
           deviceType: "W",
           loginId: this.sidebarService.loginId,
-          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
+          password: bytes.toString(CryptoJS.enc.Utf8)
         }
         this.baselineService.login(objs).subscribe((res: any) => {
           console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');

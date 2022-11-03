@@ -213,9 +213,33 @@
     <div class="modal-contents">
         <div class="modal-header">
 
-            <div class="col-md">
-                <h3 class="modal-title" id="modal-basic-title">View Child Data Entry</h3>
-            </div>
+            <form class="form-signin" [formGroup]="viewChildrenListMuacForm">
+                <div class="row">
+                    <div class="col-md">
+                        <h3 class="modal-title" id="modal-basic-title">View Child Data Entry</h3>
+                    </div>
+
+                    <div class="form-group col-md" style="width: 655px; margin-left: -30px;">
+                        <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram"
+                            id="gram">
+                            <option value="">-- Select Village --</option>
+                            <option *ngFor="let vill of villageList" value="{{vill.villageId}}">
+                                {{ vill.villageName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <select class="form-select" formControlName="record" id="record"
+                            (change)="filterByRecord($event.target.value)">
+                            <option value="">-- Select Child MUAC Filter --</option>
+                            <option value="taken">MUAC Data Available</option>
+                            <option value="nottaken">MUAC Data Not Available</option>
+                        </select>
+                    </div>
+
+                </div>
+            </form>
 
             <div class="col-md">
                 <span (click)="modalReference.close()"
@@ -225,57 +249,77 @@
 
 
         <div class="modal-body">
+
             <div class="row">
-                <div class="col-md-8">
-                    <strong style="font-size: large;">Children Count :</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary">Total :
-                        {{muacCampStatus?.totalChildrenCount}}</button>&nbsp;
-                    <button type="button" class="btn btn-secondary"><i class="fa fa-circle fa-lg"
-                            style="color: #cd0202;"></i>{{muacCampStatus?.redChildCount}} </button>&nbsp;
-                    <button type="button" class="btn btn-secondary"> <i class="fa fa-circle fa-lg" title="End Survey"
-                            style="color: #f7cd00;"></i>{{muacCampStatus?.yellowChildCount}}</button>&nbsp;
-                    <button type="button" class="btn btn-secondary"> <i class="fa fa-circle fa-lg"
-                            style="color: #24d524;"></i>{{muacCampStatus?.greenChildCount}}</button>&nbsp;
-                    <button type="button" class="btn btn-secondary">Male
-                        : {{muacCampStatus?.totalMaleChildrenCovered}}</button>&nbsp;
-                    <button type="button" class="btn btn-secondary">Female :
-                        {{muacCampStatus?.totalFemaleChildrenCovered}}</button>&nbsp;
-                    <button type="button" class="btn btn-secondary">Other
-                        : {{muacCampStatus?.totalOtherChildrenCovered}}</button><br><br>
+                <div class="col-md-2">
+                    <strong style="font-size: large;">Children Count :</strong><br>
+                    <span>({{villageName}})</span>
                 </div>
+                <div class="col-md-10">
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Target :
+                        {{ targetChildrenCount}}</button>&nbsp;
 
-                <div class="col-md-4">
-                    <div class="box_right d-flex lms_block col-md-6">
-                        <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                                <form active="#">
-                                    <div class="search_field">
-                                        <input type="text" name="search"
-                                            placeholder="Search by family no., mother & guardian name ..."
-                                            [(ngModel)]="registerSearch">
-                                    </div>
-                                    <button type="submit"> <i class="fa fa-search"></i> </button>
-                                </form>
-                            </div>
-                        </div>
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Achieved :
+                        {{achievementChildrenCount}}</button>&nbsp;
 
-                    </div>
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Not Achieved :
+                        {{targetChildrenCount - achievementChildrenCount}}
+                    </button><br><br>
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"><i class="fa fa-circle fa-lg"
+                            style="color: #cd0202;"></i>{{totalRedChildrenCount}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-exclamation-triangle"
+                            style="color: #ff5c5c;"></i>{{severeChildrenCount}}</button>&nbsp;
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"> <i class="fa fa-circle fa-lg"
+                            title="End Survey" style="color: #f7cd00;"></i>{{totalYellowChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"> <i class="fa fa-circle fa-lg"
+                            style="color: #24d524;"></i>{{totalGreenChildrenCount}}</button><br><br>
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Male :
+                        {{totalMaleChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Female :
+                        {{totalFemaleChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Other
+                        : {{totalOtherChildrenCount}}</button><br><br>
                 </div>
-
-
             </div>
 
+            <div class="col-md-6" *ngIf="viewChildrenListMuacForm.value.gram">
+                <div class="box_right d-flex lms_block col-md-6">
+                    <div class="serach_field_2">
+                        <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                            <form active="#">
+                                <div class="search_field">
+                                    <input type="text" name="search"
+                                        placeholder="Search by family no., mother & guardian name ..."
+                                        [(ngModel)]="registerSearch">
+                                </div>
+                                <button type="submit"> <i class="fa fa-search"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
             <div id="table_wrapper">
-                <table class="table table-striped" id="table_wrapper">
-                    <thead>
+                <table class="table table-striped" id="table_wrapper" *ngIf="viewChildrenListMuacForm.value.gram">
+                    <thead id="header-fixed">
                         <tr style="text-align: center;">
                             <th>SL No</th>
                             <th>Family No.</th>
                             <th>Mother Name</th>
                             <th>Gurdian Name</th>
                             <th>Child Name</th>
-                            <th>Age</th>
-                            <th>Village</th>
+                            <th>DOB</th>
                             <th>MUAC Record Date</th>
                             <th>Height</th>
                             <th>Weight</th>
@@ -285,24 +329,25 @@
                     </thead>
 
                     <tbody>
-
-                        <tr *ngFor="let item of ViewChildData | filter:registerSearch ; index as i"
+                        <tr *ngFor="let item of filterChildList |  muacChildrenViewFilter: {familyNumber : 
+                            registerSearch, firstName :registerSearch,middleName : registerSearch, 
+                            lastName:registerSearch, husbandOrGuardianName : registerSearch}  ; index as i"
                             style="text-align: center;">
                             <td>{{i+1}}</td>
-                            <td>{{item.familyDetails.familyNumber}}</td>
-                            <td>{{item.familyDetails.familyFirstName}} {{item.familyDetails.familyMiddleName}}
-                                {{item.familyDetails.familyLastName}}</td>
-                            <td>{{item.familyDetails.husbandOrGuardianName}}</td>
+                            <td>{{item.familyNumber}}</td>
+                            <td>{{item.firstName}} {{item.middleName}}
+                                {{item.lastName}}</td>
+                            <td>{{item.husbandOrGuardianName}}</td>
                             <td>{{item.childName}}</td>
-                            <td>{{item.childAgeOnMuacCampDay}}</td>
-                            <td>{{item.villageDetails.villageName}}</td>
-                            <td>{{item.muacRecordCreatorDetails.createdOn.split("-").reverse().join("-")}}</td>
-                            <td>{{item.muacDetails.height}}</td>
-                            <td>{{item.muacDetails.weight}}</td>
-                            <td>{{item.muacDetails.muac}}</td>
-                            <td class="{{item.muacDetails.muacIndicatorName == 'RED' ? 'danger' 
-                            : item.muacDetails.muacIndicatorName == 'GREEN' ? 'success' 
-                            : item.muacDetails.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
+                            <td>{{item.childDob.split("-").reverse().join("-")}}</td>
+                            <td>{{item.muacDetails?.muacRecordDate.split("-").reverse().join("-") ?
+                                item.muacDetails?.muacRecordDate.split("-").reverse().join("-") : '-'}}</td>
+                            <td>{{item.muacDetails?.height ? item.muacDetails?.height :'-'}}</td>
+                            <td>{{item.muacDetails?.weight ? item.muacDetails?.weight :'-'}}</td>
+                            <td>{{item.muacDetails?.muac ? item.muacDetails?.muac :'-'}}</td>
+                            <td class="{{item.muacDetails?.muacIndicatorName == 'RED' ? 'danger' 
+                            : item.muacDetails?.muacIndicatorName == 'GREEN' ? 'success' 
+                            : item.muacDetails?.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                                     class="fa fa-circle fa-lg"></i></td>
                         </tr>
 
