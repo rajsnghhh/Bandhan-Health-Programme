@@ -71,7 +71,7 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td> <i class="fa fa-eye fa-lg" title="View Child"
+                                <td> <i class="fa fa-eye fa-lg" title="View Child Data Entry"
                                         (click)="ViewChildDataEntry(viewChild, item)"></i><i class="fas fa-edit"
                                         title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
                                     <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
@@ -214,12 +214,13 @@
         <div class="modal-header">
 
             <form class="form-signin" [formGroup]="viewChildrenListMuacForm">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md">
-                        <h3 class="modal-title" id="modal-basic-title">View Child Data Entry</h3>
+                        <h3 class="modal-title" id="modal-basic-title">View Child<br> Data Entry</h3>
                     </div>
-
-                    <div class="form-group col-md" style="width: 655px; margin-left: -30px;">
+                </div> -->
+                <div class="row">
+                    <div class="form-group col-md" style="margin-left: 215px;">
                         <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram"
                             id="gram">
                             <option value="">-- Select Village --</option>
@@ -229,13 +230,32 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-md">
+                    <div class="form-group col-md" style="margin-right: -65px;
+                    width: 368px;
+                    margin-left: -15px;">
                         <select class="form-select" formControlName="record" id="record"
                             (change)="filterByRecord($event.target.value)">
                             <option value="">-- Select Child MUAC Filter --</option>
                             <option value="taken">MUAC Data Available</option>
                             <option value="nottaken">MUAC Data Not Available</option>
                         </select>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <div class="box_right d-flex lms_block col-md-6">
+                            <div class="serach_field_2">
+                                <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search"
+                                                placeholder="family no., mother & guardian name ..."
+                                                [(ngModel)]="registerSearch">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -290,25 +310,6 @@
                         : {{totalOtherChildrenCount}}</button><br><br>
                 </div>
             </div>
-
-            <div class="col-md-6" *ngIf="viewChildrenListMuacForm.value.gram">
-                <div class="box_right d-flex lms_block col-md-6">
-                    <div class="serach_field_2">
-                        <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                            <form active="#">
-                                <div class="search_field">
-                                    <input type="text" name="search"
-                                        placeholder="Search by family no., mother & guardian name ..."
-                                        [(ngModel)]="registerSearch">
-                                </div>
-                                <button type="submit"> <i class="fa fa-search"></i> </button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
 
             <div id="table_wrapper">
                 <table class="table table-striped" id="table_wrapper" *ngIf="viewChildrenListMuacForm.value.gram">

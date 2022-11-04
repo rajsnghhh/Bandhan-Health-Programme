@@ -551,6 +551,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   ViewChildDataEntry(viewChild, item) {
+    this.villageList = [];
     console.log(item.muacCampId);
 
     let obj = { dataAccessDTO: this.httpService.dataAccessDTO, muacCampId: item.muacCampId, branchId: this.branchId ? this.branchId : this.hcoBranchId }
@@ -575,7 +576,27 @@ export class MuacRegisterCreateComponent implements OnInit {
 
       this.villageWiseMuacData.forEach((item) => {
         this.villageList.push({ villageName: item.villageName, villageId: item.villageId });
-        // console.log(this.villageList, 'villageList');
+        console.log(this.villageList, 'villageList');
+
+        // program to sort array by village name
+
+        function compareName(a, b) {
+
+          // converting to uppercase to have case-insensitive comparison
+          const name1 = a.villageName.toUpperCase();
+          const name2 = b.villageName.toUpperCase();
+
+          let comparison = 0;
+
+          if (name1 > name2) {
+            comparison = 1;
+          } else if (name1 < name2) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+        console.log(this.villageList.sort(compareName));
       });
     });
 
@@ -609,7 +630,7 @@ export class MuacRegisterCreateComponent implements OnInit {
       console.log(this.villageName, 'this.villageName');
     }
 
-  
+
 
     this.childrenList = this.villageWiseMuacData.find(item => item.villageId == villageId)?.childrenList;
     this.filterChildList = this.villageWiseMuacData.find(item => item.villageId == villageId)?.childrenList;
