@@ -5,7 +5,7 @@
 }
 
 .modal-contents {
-  height: 600px;
+  height: 550px;
   width: 1280px;
   margin-left: -390px;
   background: white;
@@ -53,7 +53,7 @@
 #table_wrapper {
   margin: 0 -14px;
   padding: 0 24px;
-  max-height: 46vh;
+  max-height: 44vh;
   overflow: auto;
 }
 
@@ -73,19 +73,26 @@
   color: #000;
   font-size: 13px;
   height: 40px;
-  width: 108%;
+  width: 118%;
   border-radius: 5px;
-  padding-left: 65px;
+  padding-left: 40px;
   border: 1px solid #2daab8;
   padding-right: 15px;
   margin-right: 140px;
   margin-bottom: 6px;
   margin-left: 50px;
+  margin-top: 25px;
+}
+
+.serach_field_2 .search_inner button::before {
+  right: 13px;
+  margin-top: 8px;
 }
 
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
+  margin-top: 20px;
   margin-left: 40px;
 }
 
@@ -112,4 +119,14 @@
   background-color: #499;
   color: #FFFFFF;
   font-family: "Rajdhani", sans-serif;
+}
+
+.modal-header {
+  height: 70px;
+}
+
+.childtable td {
+  padding: 5px;
+  vertical-align: top;
+  border-top: 0 !important;
 }

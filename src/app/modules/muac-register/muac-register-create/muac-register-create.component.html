@@ -220,7 +220,7 @@
                     </div>
                 </div> -->
                 <div class="row">
-                    <div class="form-group col-md" style="margin-left: 215px;">
+                    <div class="form-group col-md" style="margin-left: 215px; margin-top: 25px;">
                         <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram"
                             id="gram">
                             <option value="">-- Select Village --</option>
@@ -230,9 +230,8 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-md" style="margin-right: -65px;
-                    width: 368px;
-                    margin-left: -15px;">
+                    <div class="form-group col-md"
+                        style="margin-right: -65px;  width: 368px;  margin-left: -15px; margin-top: 25px;">
                         <select class="form-select" formControlName="record" id="record"
                             (change)="filterByRecord($event.target.value)">
                             <option value="">-- Select Child MUAC Filter --</option>
@@ -248,7 +247,7 @@
                                     <form active="#">
                                         <div class="search_field">
                                             <input type="text" name="search"
-                                                placeholder="family no., mother & guardian name ..."
+                                                placeholder="search fam no., mother & guardian name ..."
                                                 [(ngModel)]="registerSearch">
                                         </div>
                                         <button type="submit"> <i class="fa fa-search"></i> </button>
@@ -263,7 +262,7 @@
 
             <div class="col-md">
                 <span (click)="modalReference.close()"
-                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -18px;">&times;</span>
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -22px;">&times;</span>
             </div>
         </div>
 
@@ -312,14 +311,15 @@
             </div>
 
             <div id="table_wrapper">
-                <table class="table table-striped" id="table_wrapper" *ngIf="viewChildrenListMuacForm.value.gram">
+                <table class="table table-striped childtable" id="table_wrapper"
+                    *ngIf="viewChildrenListMuacForm.value.gram">
                     <thead id="header-fixed">
                         <tr style="text-align: center;">
-                            <th>SL No</th>
-                            <th>Family No.</th>
-                            <th>Mother Name</th>
-                            <th>Gurdian Name</th>
-                            <th>Child Name</th>
+                            <th style="width:3%;">SL No</th>
+                            <th style="width:3%;">Family No.</th>
+                            <th style="width:16%;">Mother Name</th>
+                            <th style="width:16%;">Gurdian Name</th>
+                            <th style="width:14%;">Child Name</th>
                             <th>DOB</th>
                             <th>MUAC Record Date</th>
                             <th>Height</th>
@@ -334,12 +334,12 @@
                             registerSearch, firstName :registerSearch,middleName : registerSearch, 
                             lastName:registerSearch, husbandOrGuardianName : registerSearch}  ; index as i"
                             style="text-align: center;">
-                            <td>{{i+1}}</td>
-                            <td>{{item.familyNumber}}</td>
-                            <td>{{item.firstName}} {{item.middleName}}
+                            <td style="width:3%;">{{i+1}}</td>
+                            <td style="width:3%;">{{item.familyNumber}}</td>
+                            <td style="width:16%;">{{item.firstName}} {{item.middleName}}
                                 {{item.lastName}}</td>
-                            <td>{{item.husbandOrGuardianName}}</td>
-                            <td>{{item.childName}}</td>
+                            <td style="width:16%;">{{item.husbandOrGuardianName}}</td>
+                            <td style="width:14%;">{{item.childName}}</td>
                             <td>{{item.childDob.split("-").reverse().join("-")}}</td>
                             <td>{{item.muacDetails?.muacRecordDate.split("-").reverse().join("-") ?
                                 item.muacDetails?.muacRecordDate.split("-").reverse().join("-") : '-'}}</td>

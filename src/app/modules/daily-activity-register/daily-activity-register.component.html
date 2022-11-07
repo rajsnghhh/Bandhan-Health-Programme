@@ -93,19 +93,17 @@
                             </div>
 
                         </div>
-
-
-
                     </div>
+
                     <div class="white_box_tittle list_header">
 
-                        <div class="QA_table">
+                        <div class="QA_table" id="tableScroll">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                 <table
                                     class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                     role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                    <thead id="header-fixed">
+                                    <thead id="header_fixed">
                                         <tr>
                                             <th>SL No</th>
                                             <th>Date</th>
@@ -115,8 +113,7 @@
 
                                     <tbody>
 
-                                        <tr
-                                            *ngFor="let item of darList | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
+                                        <tr *ngFor="let item of darList; index as i">
                                             <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td>{{item.darDate}} </td>
                                             <td class="btn-link"
@@ -127,9 +124,9 @@
                                     </tbody>
 
                                 </table>
-                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                <!-- <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
                                     (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls>
+                                </pagination-controls> -->
 
                             </div>
                         </div>
@@ -228,16 +225,20 @@
     </div>
 </div>
 
-
 <ng-template #editDAR let-modal>
     <div class="modal-content">
         <div class="modal-header" style="height: 80px;">
 
-            <div class="white_box QA_section mb_30" style="height: 100px;">
-                <h2 class="page-title" *ngIf="mode =='E'">Edit DAR</h2>
-                <h2 class="page-title" *ngIf="mode =='V'">View DAR</h2>
+            <div class="col-md">
+                <div class="white_box QA_section mb_30" style="height: 100px;">
+                    <h2 class="page-title" *ngIf="mode =='E'">Edit DAR</h2>
+                    <h2 class="page-title" *ngIf="mode =='V'">View DAR</h2>
+                </div>
+            </div>
+
+            <div class="col-md">
                 <span class="close" title="close" (click)="modalDismiss()"
-                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px;float: right;">&times;</span>
             </div>
 
         </div>
