@@ -102,7 +102,7 @@
 
                 <div class="white_box_tittle list_header">
 
-                    <div class="QA_table ">
+                    <div class="QA_table">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                             <table
                                 class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
@@ -111,13 +111,14 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 4%;">SL<br>No</th>
-                                        <th style="width: 10%;">Family No.</th>
+                                        <th style="width: 8%;">Family No.</th>
                                         <th style="width: 15%;">Mother Name</th>
-                                        <th style="width: 20%;">Child Name</th>
+                                        <th style="width: 15%;">Guardian Name</th>
+                                        <th style="width: 15%;">Child Name</th>
                                         <th style="width: 20%;">Age</th>
                                         <th style="width: 10%;">Current<br>Status</th>
-                                        <th>PEM Register<br> Data Entry</th>
-                                        <th *ngIf="createMode">Add PEM</th>
+                                        <th style="width: 10%;">PEM Register<br> Data Entry</th>
+                                        <th *ngIf="createMode" style="width: 10%;">Add PEM</th>
                                     </tr>
                                 </thead>
 
@@ -125,21 +126,23 @@
 
                                     <tr
                                         *ngFor="let pem of pemDetails  | filter: registerSearch | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                        <td>{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                        <td>{{pem.familyNumber}}</td>
-                                        <td>{{pem.firstName}} {{pem.middleName}} {{pem.lastName}}</td>
-                                        <td>{{pem.childName}}</td>
-                                        <td>{{pem.childAge}}</td>
-                                        <td class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
+                                        <td style="width: 4%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                        <td style="width: 8%;">{{pem.familyNumber}}</td>
+                                        <td style="width: 15%;">{{pem.firstName}} {{pem.middleName}} {{pem.lastName}}
+                                        </td>
+                                        <td style="width: 15%;">{{pem.husbandOrGuardianName}} </td>
+                                        <td style="width: 15%;">{{pem.childName}}</td>
+                                        <td style="width: 20%;">{{pem.childAge}}</td>
+                                        <td style="width: 10%;" class="{{pem.latestMuacIndicatorName == 'RED' ? 'danger' 
                                             : pem.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : pem.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                                                 class="fa fa-circle fa-lg"></i></td>
                                         <td class="btn-link"
-                                            style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px;"
+                                            style="color:#0d6efd; text-decoration: none; cursor: pointer; padding: 0px; width: 10%;"
                                             (click)="openModal(pemData, pem.childId, pem.childAge,pem)">View
                                         </td>
-                                        <td *ngIf="createMode"> <i class="fa fa-plus" title="Create PEM"
-                                                (click)="addPemModal(addPem, pem.childId, pem)"></i>
+                                        <td *ngIf="createMode" style="width: 10%;"> <i class="fa fa-plus"
+                                                title="Create PEM" (click)="addPemModal(addPem, pem.childId, pem)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -165,10 +168,13 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">PEM Counselling Data</h2>
-                <span class="close" title="close" (click)="modalDismiss()"
-                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
             </div>
 
+            <div class="col-md">
+                <span class="close" title="close" (click)="modalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -18px;">&times;</span>
+
+            </div>
         </div>
 
         <fieldset class="scheduler-border">
@@ -288,7 +294,7 @@
         </fieldset>
 
 
-        <div id="table_wrapper">
+        <div id="table_wrapper" style="margin: 5px;">
             <table class="table table-striped" id="table_wrapper" style="table-layout: fixed;">
 
                 <thead>
@@ -337,8 +343,12 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">Create PEM Counselling Data</h2>
-                <span class="closes" title="close" (click)="modalDismiss()"
-                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+            </div>
+
+            <div class="col-md">
+                <span class="close" title="close" (click)="modalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -18px;">&times;</span>
+
             </div>
 
         </div>
@@ -657,8 +667,12 @@
 
             <div class="white_box QA_section mb_30" style="height: 100px;">
                 <h2 class="page-title">Edit PEM Counselling Data</h2>
-                <span class="closes" title="close" (click)="modalDismiss()"
-                    style="cursor: pointer;font-size: 35px; margin-bottom: 25px">&times;</span>
+            </div>
+
+            <div class="col-md">
+                <span class="close" title="close" (click)="modalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -18px;">&times;</span>
+
             </div>
 
         </div>

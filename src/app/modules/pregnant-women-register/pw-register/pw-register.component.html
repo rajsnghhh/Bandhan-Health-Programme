@@ -137,12 +137,13 @@
 
                       <thead id="header-fixed">
                         <tr>
-                          <th>SL No</th>
-                          <th>Family No.</th>
-                          <th>Name</th>
-                          <th>Age</th>
-                          <th>Current Pregnancy Status</th>
-                          <th *ngIf="createMode || updateMode">Action</th>
+                          <th style="width:8%;">SL No</th>
+                          <th style="width:10%;">Family No.</th>
+                          <th style="width:20%;">Name</th>
+                          <th style="width:20%;">Guardian Name</th>
+                          <th style="width:10%;">Age</th>
+                          <th style="width:20%;">Current Pregnancy Status</th>
+                          <th style="width:20%;" *ngIf="createMode || updateMode">Action</th>
                         </tr>
                       </thead>
 
@@ -150,12 +151,14 @@
 
                         <tr
                           *ngFor="let item of nonPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                          <td>{{item.familyNumber}}</td>
-                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                          <td>{{item.age}}</td>
-                          <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                          <td *ngIf="createMode || updateMode"><i class="fas fa-edit" title="Edit" (click)="openPwStatus(item)"></i></td>
+                          <td style="width:8%;">{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td style="width:10%;">{{item.familyNumber}}</td>
+                          <td style="width:20%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td style="width:20%;">{{item.husbandOrGuardianName}}</td>
+                          <td style="width:10%;">{{item.age}}</td>
+                          <td style="width:20%;">{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
+                          <td style="width:20%;" *ngIf="createMode || updateMode"><i class="fas fa-edit" title="Edit"
+                              (click)="openPwStatus(item)"></i></td>
                         </tr>
                       </tbody>
                     </table>
@@ -181,13 +184,13 @@
 
                       <thead id="header-fixed">
                         <tr>
-                          <th>SL No</th>
-                          <th>Family No</th>
-                          <th>Name</th>
-                          <th>Husband Name</th>
-                          <th>Age</th>
-                          <th>Current Pregnancy Status</th>
-                          <th>Action</th>
+                          <th style="width: 8%;">SL No</th>
+                          <th style="width: 10%;">Family No</th>
+                          <th style="width: 20%;">Name</th>
+                          <th style="width: 20%;">Guardian Name</th>
+                          <th style="width: 10%;">Age</th>
+                          <th style="width: 20%;">Current Pregnancy Status</th>
+                          <th style="width: 20%;">Action</th>
                         </tr>
                       </thead>
 
@@ -195,13 +198,13 @@
 
                         <tr
                           *ngFor="let item of allPregnantWomenList | filter: pwSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                          <td>{{item.familyNumber}}</td>
-                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                          <td>{{item.husbandOrGuardianName}}</td>
-                          <td>{{item.age}}</td>
-                          <td>{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                          <td><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
+                          <td style="width: 8%;">{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td style="width: 10%;">{{item.familyNumber}}</td>
+                          <td style="width: 20%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td style="width: 20%;">{{item.husbandOrGuardianName}}</td>
+                          <td style="width: 10%;">{{item.age}}</td>
+                          <td style="width: 20%;">{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
+                          <td style="width: 20%;"><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
                         </tr>
                       </tbody>
                     </table>

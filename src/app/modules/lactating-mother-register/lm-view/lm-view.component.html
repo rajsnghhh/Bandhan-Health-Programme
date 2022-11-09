@@ -128,35 +128,37 @@
 
                 <thead>
                   <tr>
-                    <th>SL No</th>
-                    <th>Family <br> No.</th>
-                    <th>Mother <br> Name</th>
-                    <th>Mother <br> Age</th>
-                    <th>Child <br> Name</th>
-                    <th>Child  <br>Sex</th>
-                    <th>Child  <br>Age</th>
-                    <th>Last <br> MUAC <br> collected</th>
-                    <th>Current<br>Status</th>
-                    <th>Action</th>
+                    <th style="width:4%">SL<br>No.</th>
+                    <th style="width:8%">Family<br>No.</th>
+                    <th style="width:20%">Mother Name</th>
+                    <th style="width:6%">Mother<br>Age</th>
+                    <th style="width:20%">Guardian<br>Name</th>
+                    <th style="width:15%">Child Name</th>
+                    <th style="width:5%">Child<br>Sex</th>
+                    <th style="width:20%">Child Age</th>
+                    <th style="width:10%">Last MUAC <br> collected</th>
+                    <th style="width:6%">Current<br>Status</th>
+                    <th style="width:10%">Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
 
                   <tr *ngFor="let item of lactatingmotherregister | filter: lmrSearch;index as i">
-                    <td>{{i+1}}</td>
-                    <td>{{item.familyNumber}}</td>
-                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                    <td>{{item.age}}</td>
-                    <td>{{item.childName}}</td>
-                    <td>{{item.sex}}</td>
-                    <td>{{item.childAge}}</td>
-                    <td>{{item.muac ? item.muac : '-'}}</td>
-                    <td class="{{item.muacIndicatorName == 'RED' ? 'danger' 
+                    <td style="width:4%">{{i+1}}</td>
+                    <td style="width:8%">{{item.familyNumber}}</td>
+                    <td style="width:20%">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                    <td style="width:6%">{{item.age}}</td>
+                    <td style="width:20%">{{item.husbandOrGuardianName}}</td>
+                    <td style="width:15%">{{item.childName}}</td>
+                    <td style="width:5%">{{item.sex}}</td>
+                    <td style="width:20%">{{item.childAge}}</td>
+                    <td style="width:10%">{{item.muac ? item.muac : '-'}}</td>
+                    <td style="width:6%" class="{{item.muacIndicatorName == 'RED' ? 'danger' 
                                   : item.muacIndicatorName == 'GREEN' ? 'success' 
                                   : item.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                         class="fa fa-circle fa-lg"></i></td>
-                    <td style="padding: 0px 0px 0px 10px;">
+                    <td style="width:10%">
                       <i class="fas fa-edit" *ngIf="createUpdateMode" title="Save & Edit"
                         (click)="openAddEditLmChild(item)"></i>
                       <i class="fa fa-eye fa-lg" title="View Child" (click)="ViewLmChild(item)"></i>
@@ -164,6 +166,7 @@
                   </tr>
                 </tbody>
               </table>
+
             </div>
           </div>
         </div>

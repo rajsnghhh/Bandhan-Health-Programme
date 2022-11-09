@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -14,7 +14,6 @@ import { PemRegisterService } from '../pem-register.service';
   templateUrl: './pem-register-create.component.html',
   styleUrls: ['./pem-register-create.component.css']
 })
-
 
 export class PemRegisterCreateComponent implements OnInit, DoCheck {
   pemForm: FormGroup;
@@ -75,8 +74,11 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    public validationService: ValidationService, private sidebarService: SidebarService,
-    private activatedRoute: ActivatedRoute, private router: Router) { }
+    public validationService: ValidationService, private sidebarService: SidebarService, config: NgbModalConfig,
+    private activatedRoute: ActivatedRoute, private router: Router) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
 
   ngDoCheck(): void {
