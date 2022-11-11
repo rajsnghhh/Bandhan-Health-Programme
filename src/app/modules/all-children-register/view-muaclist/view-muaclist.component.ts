@@ -56,9 +56,10 @@ export class ViewMuaclistComponent implements OnInit {
 
   onEdit(index) {
     console.log(this.childMuac[index]);
+   
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
-      height: '450px',
+      height: '550px',
       data: {
         editMode: false,
         muacRecordDate: this.childMuac[index].muacRecordDate,
@@ -68,7 +69,8 @@ export class ViewMuaclistComponent implements OnInit {
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,
         muac: this.childMuac[index].muac,
-        childDob: this.data.childDob
+        childDob: this.data.childDob,
+        disableCamp: this.childMuac[index].muacRegisterTag
       }
     });
 
@@ -81,7 +83,7 @@ export class ViewMuaclistComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       muacDataDto: {
         muacRegisterId: this.childMuac[index].muacRegisterId,
-        muacCampId: null,
+        muacCampId: 'null',
         childId: this.data.childId,
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,

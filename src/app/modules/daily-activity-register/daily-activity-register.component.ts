@@ -5,7 +5,7 @@ import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { DailyActivityRegisterService } from './daily-activity-register.service';
 import { HttpService } from '../core/http/http.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -55,7 +55,10 @@ export class DailyActivityRegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
-    private modalService: NgbModal, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
+    private modalService: NgbModal, private confirmationDialogService: ConfirmationDialogService, private router: Router, config: NgbModalConfig) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     let roleAccessDTO = JSON.parse(localStorage.getItem('user'));
@@ -250,6 +253,12 @@ export class DailyActivityRegisterComponent implements OnInit {
       }
     }
 
+    this.viewingDAREntryList();
+
+
+  }
+
+  viewingDAREntryList() {
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       hcoId: this.hcoId ? this.hcoId : this.sidebarService.userId,
@@ -272,7 +281,6 @@ export class DailyActivityRegisterComponent implements OnInit {
       }
 
     });
-
   }
 
   darViewFamily(item) {
@@ -453,6 +461,9 @@ export class DailyActivityRegisterComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.darViewFamilyList.splice(i, 1);
+        if (this.darViewFamilyList.length == 0) {
+          this.viewingDAREntryList();
+        }
       } else {
         this.showError(res.message)
       }

@@ -10,9 +10,9 @@
     <div class="row">
       <div class="form-group col-md">
         <label for="muacCampNo">MUAC Camp No:</label>
-        <select class="form-select" formControlName="muacCampNo" (change)="campNo($event.target.value)">
-          <option [value]="null">-- Select MUAC Camp No --</option>
-          <option *ngFor="let muacCamp of muacCampList" [value]="muacCamp.muacCampId">
+        <select class="form-select" (change)="campNo($event.target.value)" formControlName="muacCampNo" id="muacCampNo">
+          <option value='null'>-- Select MUAC Camp No --</option>
+          <option *ngFor="let muacCamp of muacCampList" value={{muacCamp.muacCampId}}>
             {{muacCamp.campNumber}}
           </option>
         </select>
@@ -92,8 +92,9 @@
       </div>
     </div>
     <br>
-    <div class="addEditBtn">
-      <button type="submit" class="btn btn-success" (click)="onAddEdit()">{{editMode ? 'Save' :'Update'}}</button>
-    </div>
+
   </form>
+  <div class="addEditBtn">
+    <button type="submit" class="btn btn-success" (click)="onAddEdit()">{{editMode ? 'Save' :'Update'}}</button>
+  </div>
 </div>
