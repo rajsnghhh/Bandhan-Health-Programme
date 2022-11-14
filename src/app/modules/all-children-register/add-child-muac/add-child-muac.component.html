@@ -39,17 +39,12 @@
       <div class="form-group col-md">
         <label for="height">Height (cm):</label>
         <input type="text" class="form-control" placeholder="Enter height" formControlName="height"
-          (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
-          'is-invalid': f.height.invalid && f.height.touched,
-          'is-valid':
-            f.height.valid &&
-            (f.height.dirty || f.height.touched)
-        }" />
-        <div *ngIf="f.height.errors" class="invalid-feedback">
+          (keypress)="validationService.onlyIntegerAndDot($event)" (keyup)="heightKeyup($event)">
+        <!-- <div *ngIf="f.height.errors" class="invalid-feedback">
           <div *ngIf="f.height.errors.notInHeightRange">
             Height should be 10 to 180 cm
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -57,17 +52,12 @@
       <div class="form-group col-md">
         <label for="weight">Weight (kg):</label>
         <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight"
-          (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
-          'is-invalid': f.weight.invalid && f.weight.touched,
-          'is-valid':
-            f.weight.valid &&
-            (f.weight.dirty || f.weight.touched)
-        }" />
-        <div *ngIf="f.weight.errors" class="invalid-feedback">
-          <div *ngIf="f.weight.errors.notInWeightRange">
-            Weight should be 0 to 25 kg
-          </div>
+          (keypress)="validationService.onlyIntegerAndDot($event)" (keyup)="weightKeyup($event)">
+        <!-- <div *ngIf=" f.weight.errors" class="invalid-feedback">
+        <div *ngIf="f.weight.errors.notInWeightRange">
+          Weight should be 1 to 25 kg
         </div>
+      </div> -->
       </div>
     </div>
     <!-- pattern="\d+\.?\d{2}?(?!\d{2})" -->
@@ -75,12 +65,13 @@
       <div class="form-group col-md">
         <label for="muac">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
         <input type="text" class="form-control" placeholder="MUAC" formControlName="muac"
-          (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+          (keypress)="validationService.onlyIntegerAndDot($event)" (keyup)="muacKeyup($event)" [ngClass]="{
         'is-invalid': f.muac.invalid && f.muac.touched,
         'is-valid':
           f.muac.valid &&
           (f.muac.dirty || f.muac.touched)
       }" />
+
         <div *ngIf="f.muac.errors" class="invalid-feedback">
           <div *ngIf="f.muac.errors.required">
             MUAC is required
