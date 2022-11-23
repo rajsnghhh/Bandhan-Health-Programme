@@ -1124,7 +1124,7 @@ class MuacRegisterCreateComponent {
                         this.showSuccess(response.message);
                     }
                     else {
-                        this.showError(response.message);
+                        this.showError(response.responseObject);
                     }
                 });
             }
@@ -1147,12 +1147,14 @@ class MuacRegisterCreateComponent {
         return false;
     }
     ViewChildDataEntry(viewChild, item) {
+        this.loader = false;
         this.villageList = [];
         console.log(item.muacCampId);
         let obj = { dataAccessDTO: this.httpService.dataAccessDTO, muacCampId: item.muacCampId, branchId: this.branchId ? this.branchId : this.hcoBranchId };
         console.log(obj);
         this.muacService.viewChildrenListOfMuacCamp(obj).subscribe((res) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+            this.loader = true;
             console.log(res.responseObject, 'viewChildrenListOfMuacCamp');
             this.muacCampStatus = (_a = res.responseObject) === null || _a === void 0 ? void 0 : _a.muacCampStats;
             this.targetChildrenCount = (_b = this.muacCampStatus) === null || _b === void 0 ? void 0 : _b.targetChildrenCount;

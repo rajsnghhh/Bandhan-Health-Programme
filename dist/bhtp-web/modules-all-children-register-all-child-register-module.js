@@ -1621,10 +1621,6 @@ class AddChildMuacComponent {
         var t = e.target.value;
         e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 4)) : t;
         console.log(t);
-        // const calcDec = Math.pow(10, 3);
-        // t = Math.trunc(t * calcDec) / calcDec;
-        // this.muacForm.value.weight = t
-        // console.log(t);
     }
     heightKeyup(e) {
         var t = e.target.value;

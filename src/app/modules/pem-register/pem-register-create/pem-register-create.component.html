@@ -88,7 +88,7 @@
                                 formControlName="gram" id="gram" [ngClass]="{ 'is-invalid': l.gram.invalid && l.gram.touched,
                               'is-valid': l.gram.valid && (l.gram.dirty || l.gram.touched) }">
                                 <option value="">-- Select Village --</option>
-                                <option *ngFor="let vill of villageDtoList"> {{ vill.villageName }} </option>
+                                <option *ngFor="let vill of villageDtoList" value="{{vill.villageMasterId}}"> {{ vill.villageName }} </option>
                             </select>
                             <div *ngIf="l.gram.errors" class="invalid-feedback">
                                 <div *ngIf="l.gram.errors.required">

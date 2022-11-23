@@ -151,7 +151,8 @@ export class PwViewComponent implements OnInit {
     }
 
     if (this.data.pregnantWomanRegisterData.fourthAncCheckup != null) {
-      this.actualDeliveryDate = moment(this.data.pregnantWomanRegisterData.fourthAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+      this.actualDeliveryDate = this.data.pregnantWomanRegisterData.fourthAncCheckup;
+      // this.actualDeliveryDate = moment(this.data.pregnantWomanRegisterData.fourthAncCheckup).add(1, 'days').format('YYYY-MM-DD');
       if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
         this.pwRegisterForm.controls['anc3rd'].value != null) {
         this.showMessage = true;
@@ -302,7 +303,7 @@ export class PwViewComponent implements OnInit {
     this.pwRegisterForm.controls.anc2nd.setValue(null);
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
+    this.actualDeliveryDate = moment(value).format('YYYY-MM-DD');
     this.Anc2ndMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -315,7 +316,7 @@ export class PwViewComponent implements OnInit {
   anc2ndDate(value) {
     this.pwRegisterForm.controls.anc3rd.setValue(null);
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
+    this.actualDeliveryDate = moment(value).format('YYYY-MM-DD');
     this.Anc3rdMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -327,7 +328,7 @@ export class PwViewComponent implements OnInit {
   }
   anc3rdDate(value) {
     this.pwRegisterForm.controls.anc4th.setValue(null);
-    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
+    this.actualDeliveryDate = moment(value).format('YYYY-MM-DD');
     this.Anc4thMin = moment(value).add(1, 'days').format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -338,7 +339,7 @@ export class PwViewComponent implements OnInit {
     }
   }
   anc4thDate(value) {
-    this.actualDeliveryDate = moment(value).add(1, 'days').format('YYYY-MM-DD');
+    this.actualDeliveryDate = moment(value).format('YYYY-MM-DD');
     this.pwRegisterForm.get('actualDeliveryDate').reset();
     if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
       this.pwRegisterForm.controls['anc3rd'].value != null) {

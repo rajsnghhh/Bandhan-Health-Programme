@@ -70,7 +70,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   blockID: any;
   gpID: any;
   villageID: any;
-  villageName: any;
+  villageid: any;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
@@ -247,11 +247,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     }
   }
 
-  changeVillage(villagename) {
-    this.villageName = villagename;
-    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId;
-    this.villageMasterId = this.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId
-    console.log(this.villageMasterId);
+  changeVillage(villageid) {
+    this.villageid = villageid;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList
+      .find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageid)?.branchVillageMapId;
+    console.log(this.branchVillageMapId, 'this.branchVillageMapId');
+    console.log(this.villageid, 'villageid');
 
     this.viewPEMList();
 
@@ -450,7 +451,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   viewPEMList() {
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      villageMasterId: this.villageID ? this.villageID : this.villageMasterId
+      villageMasterId: this.villageID ? this.villageID : this.villageid
     }
 
     this.pemService.viewPemList(obj).subscribe((res) => {
@@ -588,7 +589,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.modalDismiss();
-        this.changeVillage(this.villageName);
+        this.changeVillage(this.villageid);
       }
       else {
         this.showError(res.message);
@@ -788,7 +789,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.modalDismiss();
-        this.changeVillage(this.villageName);
+        this.changeVillage(this.villageid);
       }
       else {
         this.showError(res.message);

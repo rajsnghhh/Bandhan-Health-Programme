@@ -522,7 +522,7 @@ export class MuacRegisterCreateComponent implements OnInit {
           }
 
           else {
-            this.showError(response.message);
+            this.showError(response.responseObject);
           }
 
         })
@@ -551,6 +551,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   ViewChildDataEntry(viewChild, item) {
+    this.loader = false;
     this.villageList = [];
     console.log(item.muacCampId);
 
@@ -558,6 +559,7 @@ export class MuacRegisterCreateComponent implements OnInit {
     console.log(obj);
 
     this.muacService.viewChildrenListOfMuacCamp(obj).subscribe((res: any) => {
+      this.loader = true;
       console.log(res.responseObject, 'viewChildrenListOfMuacCamp');
       this.muacCampStatus = res.responseObject?.muacCampStats;
       this.targetChildrenCount = this.muacCampStatus?.targetChildrenCount;
