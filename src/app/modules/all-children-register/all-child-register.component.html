@@ -130,39 +130,42 @@
               <div class="white_box_tittle list_header">
                 <div class="QA_table ">
                   <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                    <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                    <table
+                      class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped padd"
                       role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
                       <thead>
                         <tr>
-                          <th>SL No</th>
-                          <th>Family No.</th>
-                          <th>Mother Name</th>
-                          <th>Child Name</th>
-                          <th>Age</th>
-                          <th>Last MUAC <br> collected</th>
-                          <th>Latest Source</th>
-                          <th>Current Status</th>
-                          <th>Action</th>
+                          <th style="width:4%;">SL<br>No.</th>
+                          <th style="width:4%;">Family<br>No.</th>
+                          <th style="width:12%;">Mother Name</th>
+                          <th style="width:12%;">Guardian Name</th>
+                          <th style="width:12%;">Child Name</th>
+                          <th style="width:15%;">Age</th>
+                          <th style="width:6%;">Last MUAC <br> collected</th>
+                          <th style="width:5%;">Latest<br>Source</th>
+                          <th style="width:5%;">Current<br>Status</th>
+                          <th style="width:8%;">Action</th>
                         </tr>
                       </thead>
 
                       <tbody>
 
-                        <tr
+                        <tr 
                           *ngFor="let item of childrenBetween6And59Months | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                          <td>{{item.familyNumber}}</td>
-                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                          <td>{{item.childName}}</td>
-                          <td>{{item.childAge}}</td>
-                          <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
-                          <td>{{item.latestMuacTag == null ? '-' : item.latestMuacTag}}</td>
-                          <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                          <td style="width:4%;">{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td style="width:4%;">{{item.familyNumber}}</td>
+                          <td style="width:12%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td style="width:12%;">{{item.husbandOrGuardianName}}</td>
+                          <td style="width:12%;">{{item.childName}}</td>
+                          <td style="width:15%;">{{item.childAge}}</td>
+                          <td style="width:6%;">{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
+                          <td style="width:5%;">{{item.latestMuacTag == null ? '-' : item.latestMuacTag}}</td>
+                          <td style="width:5%;" class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
                                           : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                           : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                               class="fa fa-circle fa-lg"></i></td>
-                          <td style="padding: 0px 0px 0px 32px;">
+                          <td style="width:8%;">
                             <i class="fa fa-plus-circle fa-lg" title="Add Child MUAC" (click)="openCreateChild(item)"
                               *ngIf="createMode"></i>
                             <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(item)"> </i>
@@ -192,32 +195,34 @@
 
                       <thead>
                         <tr>
-                          <th>SL<br>No</th>
-                          <th>Family No.</th>
-                          <th>Mother Name</th>
-                          <th>Child Name</th>
-                          <th>Child Age</th>
-                          <th>Last MUAC <br> collected</th>
-                          <th>Current Status</th>
-                          <th>Action</th>
+                          <th style="width:4%;">SL<br>No.</th>
+                          <th style="width:4%;">Family<br>No.</th>
+                          <th style="width:12%;">Mother Name</th>
+                          <th style="width:12%;">Guardian Name</th>
+                          <th style="width:12%;">Child Name</th>
+                          <th style="width:15%;">Age</th>
+                          <th style="width:6%;">Last MUAC <br> collected</th>
+                          <th style="width:5%;">Current<br>Status</th>
+                          <th style="width:7%;">Action</th>
                         </tr>
                       </thead>
 
                       <tbody>
 
-                        <tr
+                        <tr 
                           *ngFor="let item of childrenWRTPsdOrBoD | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                          <td>{{item.familyNumber}}</td>
-                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                          <td>{{item.childName}}</td>
-                          <td>{{item.childAge}}</td>
-                          <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
-                          <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                          <td style="width:4%;">{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td style="width:4%;">{{item.familyNumber}}</td>
+                          <td style="width:12%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td style="width:12%;">{{item.husbandOrGuardianName}}</td>
+                          <td style="width:12%;">{{item.childName}}</td>
+                          <td style="width:15%;">{{item.childAge}}</td>
+                          <td style="width:6%;">{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
+                          <td style="width:5%;" class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
                                             : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                               class="fa fa-circle fa-lg"></i></td>
-                          <td style="padding: 0px 0px 0px 32px;">
+                          <td style="width:7%;">
                             <i class="fa fa-plus-circle fa-lg" title="Add Child" (click)="openCreateChild(item)"
                               *ngIf="createMode"></i>
                             <i class="fa fa-eye fa-lg" title="View Child" (click)="openViewChild(item)"> </i>
@@ -247,13 +252,14 @@
 
                       <thead>
                         <tr>
-                          <th>SL<br>No</th>
-                          <th>Family No.</th>
-                          <th>Mother Name</th>
-                          <th>Child Name</th>
-                          <th>Age</th>
-                          <th>Last MUAC <br> collected</th>
-                          <th>Current Status</th>
+                          <th style="width:4%;">SL<br>No.</th>
+                          <th style="width:4%;">Family <br>No.</th>
+                          <th style="width:12%;">Mother Name</th>
+                          <th style="width:12%;">Guardian Name</th>
+                          <th style="width:12%;">Child Name</th>
+                          <th style="width:15%;">Age</th>
+                          <th style="width:6%;">Last MUAC <br> collected</th>
+                          <th style="width:6%;">Current<br>Status</th>
                         </tr>
                       </thead>
 
@@ -261,13 +267,14 @@
 
                         <tr
                           *ngFor="let item of ineligibleChildren | filter: acrSearch | paginate: { itemsPerPage: 6, currentPage: p };index as i">
-                          <td>{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
-                          <td>{{item.familyNumber}}</td>
-                          <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
-                          <td>{{item.childName}}</td>
-                          <td>{{item.childAge}}</td>
-                          <td>{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
-                          <td class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
+                          <td style="width:4%;">{{(p-1)*6+i+1 ? (p-1)*6+i+1 : i+1}}</td>
+                          <td style="width:4%;">{{item.familyNumber}}</td>
+                          <td style="width:12%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                          <td style="width:12%;">{{item.husbandOrGuardianName}}</td>
+                          <td style="width:12%;">{{item.childName}}</td>
+                          <td style="width:15%;">{{item.childAge}}</td>
+                          <td style="width:6%;">{{item.latestMuacValue ? item.latestMuacValue : '-'}}</td>
+                          <td style="width:6%;" class="{{item.latestMuacIndicatorName == 'RED' ? 'danger' 
                                             : item.latestMuacIndicatorName == 'GREEN' ? 'success' 
                                             : item.latestMuacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
                               class="fa fa fa-circle fa-lg"></i></td>

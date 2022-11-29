@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -15,8 +15,10 @@ import { MuacRegisterService } from '../muac-register.service';
   templateUrl: './muac-register-create.component.html',
   styleUrls: ['./muac-register-create.component.css']
 })
+
 export class MuacRegisterCreateComponent implements OnInit {
   locationForm: FormGroup;
+  viewChildrenListMuacForm: FormGroup;
   muacList: any;
   muacCampList: Array<any> = [];
   modalContent: any;
@@ -36,7 +38,6 @@ export class MuacRegisterCreateComponent implements OnInit {
   day: any;
   year: any;
   muacEditInfo: any;
-
   ProjectStartDate: any;
   ProjectEndDate: any;
   MuacList: any;
@@ -53,11 +54,30 @@ export class MuacRegisterCreateComponent implements OnInit {
   hcoBranchId: any;
   setStartDate: any;
   setEndDate: any;
-
+  villageWiseMuacData: Array<any> = [];
+  villageList: Array<any> = [];
+  muacCampStatus: any;
+  registerSearch: any;
+  childrenList: Array<any> = [];
+  villageStats: any;
+  targetChildrenCount: any;
+  achievementChildrenCount: any;
+  totalRedChildrenCount: any;
+  severeChildrenCount: any;
+  totalYellowChildrenCount: any;
+  totalGreenChildrenCount: any;
+  totalMaleChildrenCount: any;
+  totalFemaleChildrenCount: any;
+  totalOtherChildrenCount: any;
+  filterChildList: Array<any> = [];
+  villageName: any;
 
   constructor(private httpService: HttpService, private muacService: MuacRegisterService,
-    private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder,
-    private sidebarService: SidebarService, private http: HttpClient, private router: Router) { }
+    private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder, config: NgbModalConfig,
+    private sidebarService: SidebarService, private http: HttpClient, private router: Router) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     console.log(this.sidebarService.userId);
@@ -502,7 +522,7 @@ export class MuacRegisterCreateComponent implements OnInit {
           }
 
           else {
-            this.showError(response.message);
+            this.showError(response.responseObject);
           }
 
         })
@@ -529,4 +549,133 @@ export class MuacRegisterCreateComponent implements OnInit {
   restrictTypeOfDate() {
     return false;
   }
+
+  ViewChildDataEntry(viewChild, item) {
+    this.loader = false;
+    this.villageList = [];
+    console.log(item.muacCampId);
+
+    let obj = { dataAccessDTO: this.httpService.dataAccessDTO, muacCampId: item.muacCampId, branchId: this.branchId ? this.branchId : this.hcoBranchId }
+    console.log(obj);
+
+    this.muacService.viewChildrenListOfMuacCamp(obj).subscribe((res: any) => {
+      this.loader = true;
+      console.log(res.responseObject, 'viewChildrenListOfMuacCamp');
+      this.muacCampStatus = res.responseObject?.muacCampStats;
+      this.targetChildrenCount = this.muacCampStatus?.targetChildrenCount;
+      this.achievementChildrenCount = this.muacCampStatus?.achievementChildrenCount;
+      this.totalRedChildrenCount = this.muacCampStatus?.totalRedChildrenCount;
+      this.severeChildrenCount = this.muacCampStatus?.severeChildrenCount;
+      this.totalYellowChildrenCount = this.muacCampStatus?.totalYellowChildrenCount;
+      this.totalGreenChildrenCount = this.muacCampStatus?.totalGreenChildrenCount;
+      this.totalMaleChildrenCount = this.muacCampStatus?.totalMaleChildrenCount;
+      this.totalFemaleChildrenCount = this.muacCampStatus?.totalFemaleChildrenCount;
+      this.totalOtherChildrenCount = this.muacCampStatus?.totalOtherChildrenCount;
+
+      console.log(this.muacCampStatus, 'muacCampStatus');
+      this.villageWiseMuacData = res.responseObject?.villageWiseMuacData;
+      console.log(this.villageWiseMuacData, 'villageWiseMuacData');
+
+      this.villageWiseMuacData.forEach((item) => {
+        this.villageList.push({ villageName: item.villageName, villageId: item.villageId });
+        console.log(this.villageList, 'villageList');
+
+        // program to sort array by village name
+
+        function compareName(a, b) {
+
+          // converting to uppercase to have case-insensitive comparison
+          const name1 = a.villageName.toUpperCase();
+          const name2 = b.villageName.toUpperCase();
+
+          let comparison = 0;
+
+          if (name1 > name2) {
+            comparison = 1;
+          } else if (name1 < name2) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+        console.log(this.villageList.sort(compareName));
+      });
+    });
+
+    this.modalContent = '';
+    this.modalReference = this.modalService.open(viewChild, {
+      windowClass: 'viewChild',
+    });
+
+    this.viewChildrenListMuacForms();
+    this.villageName = 'All Village'
+  }
+
+  viewChildrenListMuacForms() {
+    this.viewChildrenListMuacForm = this.fb.group({
+      gram: [''],
+      record: ['']
+    });
+  }
+
+  get c() {
+    return this.viewChildrenListMuacForm.controls;
+  }
+
+  changeVillage(villageId) {
+    this.viewChildrenListMuacForm.controls.record.setValue('');
+    console.log(villageId);
+    if (!this.viewChildrenListMuacForm.value.gram) {
+      this.villageName = 'All Village'
+    } else {
+      this.villageName = this.villageList.find(item => item.villageId == villageId)?.villageName;
+      console.log(this.villageName, 'this.villageName');
+    }
+
+
+
+    this.childrenList = this.villageWiseMuacData.find(item => item.villageId == villageId)?.childrenList;
+    this.filterChildList = this.villageWiseMuacData.find(item => item.villageId == villageId)?.childrenList;
+    console.log(this.childrenList, ' this.childrenList');
+    this.villageStats = this.villageWiseMuacData.find(item => item.villageId == villageId)?.villageStats;
+    if (this.viewChildrenListMuacForm.value.gram) {
+      this.targetChildrenCount = this.villageStats?.targetChildrenCount;
+      this.achievementChildrenCount = this.villageStats?.achievementChildrenCount;
+      this.totalRedChildrenCount = this.villageStats?.totalRedChildrenCount;
+      this.severeChildrenCount = this.villageStats?.severeChildrenCount;
+      this.totalYellowChildrenCount = this.villageStats?.totalYellowChildrenCount;
+      this.totalGreenChildrenCount = this.villageStats?.totalGreenChildrenCount;
+      this.totalMaleChildrenCount = this.villageStats?.totalMaleChildrenCount;
+      this.totalFemaleChildrenCount = this.villageStats?.totalFemaleChildrenCount;
+      this.totalOtherChildrenCount = this.villageStats?.totalOtherChildrenCount;
+    } else {
+      this.targetChildrenCount = this.muacCampStatus?.targetChildrenCount;
+      this.achievementChildrenCount = this.muacCampStatus?.achievementChildrenCount;
+      this.totalRedChildrenCount = this.muacCampStatus?.totalRedChildrenCount;
+      this.severeChildrenCount = this.muacCampStatus?.severeChildrenCount;
+      this.totalYellowChildrenCount = this.muacCampStatus?.totalYellowChildrenCount;
+      this.totalGreenChildrenCount = this.muacCampStatus?.totalGreenChildrenCount;
+      this.totalMaleChildrenCount = this.muacCampStatus?.totalMaleChildrenCount;
+      this.totalFemaleChildrenCount = this.muacCampStatus?.totalFemaleChildrenCount;
+      this.totalOtherChildrenCount = this.muacCampStatus?.totalOtherChildrenCount;
+    }
+
+    console.log(this.villageStats, ' this.villageStats');
+  }
+
+  filterByRecord(value) {
+    console.log(value);
+
+    if (value == 'taken') {
+      this.filterChildList = this.childrenList.filter(item => item.muacDetails != null)
+    } else if (value == 'nottaken') {
+      this.filterChildList = this.childrenList.filter(item => item.muacDetails == null);
+    } else {
+      this.filterChildList = this.childrenList;
+    }
+
+  }
+
 }
+
+

@@ -55,7 +55,7 @@ export class AllChildRegisterComponent implements OnInit {
   }
   ngOnInit(): void {
     this.createForm();
-    this.getChildrenList();
+    // this.getChildrenList();
 
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       if (res.regionBranchHide) {
@@ -191,7 +191,8 @@ export class AllChildRegisterComponent implements OnInit {
     return this.locationForm.controls;
   }
 
-  getChildrenList(villageMasterId = null) {
+  getChildrenList(villageMasterId) {
+    this.villageMasterId = villageMasterId;
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: villageMasterId
@@ -215,7 +216,7 @@ export class AllChildRegisterComponent implements OnInit {
   openCreateChild(childDetails): void {
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
-      height: '450px',
+      height: '550px',
       data: { editMode: true, childId: childDetails.childDetailId, childDob: childDetails.dob }
     });
 
@@ -227,7 +228,7 @@ export class AllChildRegisterComponent implements OnInit {
 
   openViewChild(childDetails) {
     const dialogRef = this.dialog.open(ViewMuaclistComponent, {
-      width: '700px',
+      width: '950px',
       height: '400px',
       data: { childId: childDetails.childDetailId, childDob: childDetails.dob }
     });

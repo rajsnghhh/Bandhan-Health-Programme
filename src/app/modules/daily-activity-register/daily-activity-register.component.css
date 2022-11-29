@@ -10,10 +10,6 @@
   margin-top: -4px;
 }
 
-.close {
-  margin-left: 790px;
-}
-
 fieldset.scheduler-border {
   border: 1px groove #ddd !important;
   padding: 0 1.4em 1.4em 1.4em !important;
@@ -62,4 +58,34 @@ legend.scheduler-border {
   color: #828bb2;
 }
 
+#beneficiaryScroll {
+  margin: 0;
+  padding: 0;
+  max-height: 20vh;
+  overflow: auto;
+}
 
+#header_fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #499;
+  color: #FFFFFF;
+  font-family: "Rajdhani", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 5px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\BHP_WEB\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! D:\BHP\src\polyfills.ts */"hN/g");
 
 
 /***/ }),

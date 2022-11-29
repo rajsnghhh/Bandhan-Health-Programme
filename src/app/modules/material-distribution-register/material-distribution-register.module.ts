@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { materialDistributionFilterPipe } from '../shared/material-distribution-search.pipe';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 @NgModule({
   declarations: [MaterialDistributionRegisterComponent, materialDistributionFilterPipe],
@@ -15,7 +16,7 @@ import { materialDistributionFilterPipe } from '../shared/material-distribution-
     ReactiveFormsModule,
     NgxPaginationModule,
     NgMultiSelectDropDownModule.forRoot(),
-    FormsModule
+    FormsModule, LoaderModule
   ]
 })
 export class MaterialDistributionRegisterModule { }

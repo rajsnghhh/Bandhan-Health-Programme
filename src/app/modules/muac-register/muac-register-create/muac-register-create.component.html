@@ -61,7 +61,7 @@
                                 <th>Camp Number</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th *ngIf="updateMode || deleteMode">Action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -71,8 +71,9 @@
                                 <td>{{item.campNumber}}</td>
                                 <td>{{item.startDate}}</td>
                                 <td>{{item.endDate}}</td>
-                                <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit Muac"
-                                        *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
+                                <td> <i class="fa fa-eye fa-lg" title="View Child Data Entry"
+                                        (click)="ViewChildDataEntry(viewChild, item)"></i><i class="fas fa-edit"
+                                        title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
                                     <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
                                         (click)="deleteMuac(item, i)"></i>
                                 </td>
@@ -91,15 +92,13 @@
     <div class="modal-content">
         <div class="modal-header">
 
-            <div class="row">
-                <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Create Muac</h3>
-                </div>
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">Create Muac</h3>
+            </div>
 
-                <div class="col-md-2">
-                    <span class="close" (click)="muacModalDismiss()"
-                        style="cursor: pointer;font-size: 35px;">&times;</span>
-                </div>
+            <div class="col-md">
+                <span class="close" (click)="muacModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -18px;">&times;</span>
             </div>
 
         </div>
@@ -133,11 +132,14 @@
                 </table>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
-                        (click)="saveMuac()">Submit</button>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
+                            (click)="saveMuac()">Submit</button>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -151,15 +153,13 @@
     <div class="modal-content">
         <div class="modal-header">
 
-            <div class="row">
-                <div class="col-md-7">
-                    <h3 class="modal-title" id="modal-basic-title">Edit Muac</h3>
-                </div>
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">Edit Muac</h3>
+            </div>
 
-                <div class="col-md-2">
-                    <span class="close" (click)="muacModalDismiss()"
-                        style="cursor: pointer;font-size: 35px;">&times;</span>
-                </div>
+            <div class="col-md">
+                <span class="close" (click)="muacModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
             </div>
 
         </div>
@@ -192,15 +192,170 @@
                 </table>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
-                        (click)="saveEditMuac()">Submit</button>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class=" btn btn-primary bttn" [disabled]="!checkMuacDisabled()"
+                            (click)="saveEditMuac()">Submit</button>
+                    </div>
                 </div>
             </div>
 
         </div>
 
+    </div>
+
+</ng-template>
+
+
+<ng-template #viewChild>
+
+    <div class="modal-contents">
+        <div class="modal-header">
+
+            <form class="form-signin" [formGroup]="viewChildrenListMuacForm">
+                <!-- <div class="row">
+                    <div class="col-md">
+                        <h3 class="modal-title" id="modal-basic-title">View Child<br> Data Entry</h3>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="form-group col-md" style="margin-left: 215px; margin-top: 25px;">
+                        <select class="form-select" (change)="changeVillage($event.target.value)" formControlName="gram"
+                            id="gram">
+                            <option value="">-- Select Village --</option>
+                            <option *ngFor="let vill of villageList" value="{{vill.villageId}}">
+                                {{ vill.villageName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md"
+                        style="margin-right: -65px;  width: 368px;  margin-left: -15px; margin-top: 25px;">
+                        <select class="form-select" formControlName="record" id="record"
+                            (change)="filterByRecord($event.target.value)">
+                            <option value="">-- Select Child MUAC Filter --</option>
+                            <option value="taken">MUAC Data Available</option>
+                            <option value="nottaken">MUAC Data Not Available</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md">
+                        <div class="box_right d-flex lms_block col-md-6">
+                            <div class="serach_field_2">
+                                <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search"
+                                                placeholder="search fam no., mother & guardian name ..."
+                                                [(ngModel)]="registerSearch">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="col-md">
+                <span (click)="modalReference.close()"
+                    style="cursor: pointer;font-size: 35px;float:right; margin-top: -22px;">&times;</span>
+            </div>
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <strong style="font-size: large;">Children Count :</strong><br>
+                    <span>({{villageName}})</span>
+                </div>
+                <div class="col-md-10">
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Target :
+                        {{ targetChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Achieved :
+                        {{achievementChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Not Achieved :
+                        {{targetChildrenCount - achievementChildrenCount}}
+                    </button><br><br>
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"><i class="fa fa-circle fa-lg"
+                            style="color: #cd0202;"></i>{{totalRedChildrenCount}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-exclamation-triangle"
+                            style="color: #ff5c5c;"></i>{{severeChildrenCount}}</button>&nbsp;
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"> <i class="fa fa-circle fa-lg"
+                            title="End Survey" style="color: #f7cd00;"></i>{{totalYellowChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;"> <i class="fa fa-circle fa-lg"
+                            style="color: #24d524;"></i>{{totalGreenChildrenCount}}</button><br><br>
+
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Male :
+                        {{totalMaleChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Female :
+                        {{totalFemaleChildrenCount}}</button>&nbsp;
+
+                    <button type="button" class="btn btn-secondary" style="width:300px;">Other
+                        : {{totalOtherChildrenCount}}</button><br><br>
+                </div>
+            </div>
+
+            <div id="table_wrapper">
+                <table class="table table-striped childtable" id="table_wrapper"
+                    *ngIf="viewChildrenListMuacForm.value.gram">
+                    <thead id="header-fixed">
+                        <tr style="text-align: center;">
+                            <th style="width:3%;">SL No</th>
+                            <th style="width:3%;">Family No.</th>
+                            <th style="width:16%;">Mother Name</th>
+                            <th style="width:16%;">Gurdian Name</th>
+                            <th style="width:14%;">Child Name</th>
+                            <th>DOB</th>
+                            <th>MUAC Record Date</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                            <th>MUAC</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of filterChildList |  muacChildrenViewFilter: {familyNumber : 
+                            registerSearch, firstName :registerSearch,middleName : registerSearch, 
+                            lastName:registerSearch, husbandOrGuardianName : registerSearch}  ; index as i"
+                            style="text-align: center;">
+                            <td style="width:3%;">{{i+1}}</td>
+                            <td style="width:3%;">{{item.familyNumber}}</td>
+                            <td style="width:16%;">{{item.firstName}} {{item.middleName}}
+                                {{item.lastName}}</td>
+                            <td style="width:16%;">{{item.husbandOrGuardianName}}</td>
+                            <td style="width:14%;">{{item.childName}}</td>
+                            <td>{{item.childDob.split("-").reverse().join("-")}}</td>
+                            <td>{{item.muacDetails?.muacRecordDate.split("-").reverse().join("-") ?
+                                item.muacDetails?.muacRecordDate.split("-").reverse().join("-") : '-'}}</td>
+                            <td>{{item.muacDetails?.height ? item.muacDetails?.height :'-'}}</td>
+                            <td>{{item.muacDetails?.weight ? item.muacDetails?.weight :'-'}}</td>
+                            <td>{{item.muacDetails?.muac ? item.muacDetails?.muac :'-'}}</td>
+                            <td class="{{item.muacDetails?.muacIndicatorName == 'RED' ? 'danger' 
+                            : item.muacDetails?.muacIndicatorName == 'GREEN' ? 'success' 
+                            : item.muacDetails?.muacIndicatorName == 'YELLOW' ? 'warning' : null}}"><i
+                                    class="fa fa-circle fa-lg"></i></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 </ng-template>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -14,7 +14,6 @@ import { PemRegisterService } from '../pem-register.service';
   templateUrl: './pem-register-create.component.html',
   styleUrls: ['./pem-register-create.component.css']
 })
-
 
 export class PemRegisterCreateComponent implements OnInit, DoCheck {
   pemForm: FormGroup;
@@ -71,12 +70,15 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   blockID: any;
   gpID: any;
   villageID: any;
-  villageName: any;
+  villageid: any;
 
   constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
-    public validationService: ValidationService, private sidebarService: SidebarService,
-    private activatedRoute: ActivatedRoute, private router: Router) { }
+    public validationService: ValidationService, private sidebarService: SidebarService, config: NgbModalConfig,
+    private activatedRoute: ActivatedRoute, private router: Router) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
 
   ngDoCheck(): void {
@@ -245,11 +247,12 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
     }
   }
 
-  changeVillage(villagename) {
-    this.villageName = villagename;
-    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList.find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageName == villagename)?.branchVillageMapId;
-    this.villageMasterId = this.villageDtoList.find(vill => vill.villageName == villagename)?.villageMasterId
-    console.log(this.villageMasterId);
+  changeVillage(villageid) {
+    this.villageid = villageid;
+    this.branchVillageMapId = this.villagesOfBranch.find(block => block.blockName == this.selectedBlock)?.gpDtoList
+      .find(gp => gp.name == this.selectedGp)?.villageDtoList.find(vill => vill.villageMasterId == villageid)?.branchVillageMapId;
+    console.log(this.branchVillageMapId, 'this.branchVillageMapId');
+    console.log(this.villageid, 'villageid');
 
     this.viewPEMList();
 
@@ -448,7 +451,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   viewPEMList() {
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      villageMasterId: this.villageID ? this.villageID : this.villageMasterId
+      villageMasterId: this.villageID ? this.villageID : this.villageid
     }
 
     this.pemService.viewPemList(obj).subscribe((res) => {
@@ -586,7 +589,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.modalDismiss();
-        this.changeVillage(this.villageName);
+        this.changeVillage(this.villageid);
       }
       else {
         this.showError(res.message);
@@ -786,7 +789,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.modalDismiss();
-        this.changeVillage(this.villageName);
+        this.changeVillage(this.villageid);
       }
       else {
         this.showError(res.message);

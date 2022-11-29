@@ -486,7 +486,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         });
       }
     } else {
-      this.showError('From is invalid');
+      this.showError('Form is invalid');
     }
   }
 

@@ -5,6 +5,7 @@
   position: relative;
   color: #ffffff;
 }
+
 .dialog-title::before {
   content: "";
   display: block;
@@ -18,12 +19,36 @@
   border-bottom: 7px solid #0000;
   border-left: 7px solid #0000;
 }
-::ng-deep .mat-dialog-container {
-  padding: 22px 17px;
-}
 
 .dialog-header {
   display: flex;
   justify-content: space-between;
 }
 
+#table_wrapper {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  border: 0px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #499;
+  padding: 12px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+#beneficiaryScroll {
+  margin: 0;
+  padding: 0;
+  max-height: 42vh;
+  overflow: auto;
+}

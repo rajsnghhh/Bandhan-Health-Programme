@@ -27,7 +27,7 @@ export class AddChildMuacComponent implements OnInit {
   muacCampStartDate: string;
   muacCampEndDate: string;
   childDob: string;
-
+  muacCampID: any;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
@@ -37,20 +37,25 @@ export class AddChildMuacComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.editMode = this.data.editMode;
     this.childDob = this.data.childDob;
     this.minMuacRecordDate = this.childDob;
     this.maxMuacRecordDate = this.today;
     this.createForm();
+
+    if (this.data.disableCamp == 'LM') {
+      this.muacForm.get('muacCampNo').disable();
+    }
     if (this.data.editMode === true) {
       this.muacForm.get('muacCampNo').enable();
       this.muacForm.reset();
     } else {
-      this.muacForm.get('muacCampNo').disable();
+      // this.muacForm.get('muacCampNo').disable();
       this.muacForm.patchValue({
         muacDate: (this.data?.muacRecordDate),
         muacCampNo: (this.data?.muacCampNumber),
-        height: (this.data.height),
-        weight: (this.data.weight),
+        height: (this.data.height < 1 ? '' : this.data.height),
+        weight: (this.data.weight < 1 ? '' : this.data.weight),
         muac: (this.data.muac)
       })
     }
@@ -77,9 +82,9 @@ export class AddChildMuacComponent implements OnInit {
   createForm() {
     this.muacForm = this.fb.group({
       muacDate: ['', Validators.required],
-      muacCampNo: [null],
-      height: ['', this.heightRange],
-      weight: ['', this.weightRange],
+      muacCampNo: [''],
+      height: [''],
+      weight: [''],
       muac: ['', [Validators.required, this.muacRange]],
     });
   }
@@ -88,6 +93,10 @@ export class AddChildMuacComponent implements OnInit {
   }
 
   campNo(Id) {
+    this.muacCampID = Id;
+    console.log(this.muacCampID, 'muacCampID');
+
+
     this.muacForm.controls.muacDate.setValue('');
     this.muacCampStartDate = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.startDate;
     this.muacCampEndDate = this.muacCampList.find(muacCampId => muacCampId.muacCampId == Id)?.endDate;
@@ -107,39 +116,55 @@ export class AddChildMuacComponent implements OnInit {
     return { 'notInMuacRange': true };
   }
 
-  weightRange(controls: AbstractControl): { [key: string]: any } | null {
-    if (controls.value >= 0 && controls.value <= 25 || controls.value == null) {
-      return null;
-    }
-    return { 'notInWeightRange': true };
-  }
+  // weightRange(controls: AbstractControl): { [key: string]: any } | null {
+  //   if (controls.value >= 1 && controls.value <= 25 || controls.value == null) {
+  //     return null;
+  //   }
+  //   return { 'notInWeightRange': true };
+  // }
 
-  heightRange(controls: AbstractControl): { [key: string]: any } | null {
-    if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
-      return null;
-    }
-    return { 'notInHeightRange': true };
-  }
+  // heightRange(controls: AbstractControl): { [key: string]: any } | null {
+  //   if (controls.value >= 10 && controls.value <= 180 || controls.value == null) {
+  //     return null;
+  //   }
+  //   return { 'notInHeightRange': true };
+  // }
 
   onAddEdit() {
+    if (this.muacForm.value.height) {
+      if (this.muacForm.value.height < 10 || this.muacForm.value.height > 180) {
+        this.showError('Height should be between 10cm to 180cm');
+        return;
+      }
+    }
+    if (this.muacForm.value.weight) {
+      if (this.muacForm.value.weight < 1 || this.muacForm.value.weight > 25) {
+        this.showError('Weight should be between 1kg to 25kg');
+        return;
+      }
+    }
+
     this.muacForm.markAllAsTouched();
     console.log(this.muacForm)
-    if (this.data.editMode === true && this.muacForm.valid) {
+
+    if (this.data.editMode === true) {
       let addDto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         muacDataDto: {
           muacRegisterId: 0,
-          muacCampId: this.muacForm.value.muacCampNo,
+          muacCampId: this.muacForm.value.muacCampNo ? this.muacForm.value.muacCampNo : null,
           childId: this.data.childId,
-          height: this.muacForm.value.height,
-          weight: this.muacForm.value.weight,
-          muac: this.muacForm.value.muac,
+          height: this.muacForm.value.height ? Math.trunc(this.muacForm.value.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
+          weight: this.muacForm.value.weight ? Math.trunc(this.muacForm.value.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
+          muac: Math.trunc(this.muacForm.value.muac * Math.pow(10, 1)) / Math.pow(10, 1),
           muacRecordDate: this.muacForm.value.muacDate,
           active_flag: "A"
         }
       }
 
-      console.log(addDto);
+      console.log(addDto.muacDataDto.muacCampId);
+      console.log(this.muacForm.value.muacCampNo, 'this.muacForm.value.muacCampNo');
+
       if (this.campDate && this.campNotPresent || this.muacForm.value.muacCampNo == null) {
         this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, addDto).subscribe((res: any) => {
           if (res.status) {
@@ -153,38 +178,41 @@ export class AddChildMuacComponent implements OnInit {
           this.showError('Error')
         })
       } else {
-        this.showError('Data already exis for this MUAC Camp No');
+        this.showError('Data already exist for this MUAC Camp No');
       }
     } else {
+
       let editDto = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         muacDataDto: {
           muacRegisterId: this.data.muacRegisterId,
-          muacCampId: this.muacForm.value.muacCampNo,
+          muacCampId: this.muacForm.value.muacCampNo ? this.muacForm.value.muacCampNo : null,
           childId: this.data.childId,
-          height: this.muacForm.value.height,
-          weight: this.muacForm.value.weight,
-          muac: this.muacForm.value.muac,
+          height: this.muacForm.value.height ? Math.trunc(this.muacForm.value.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
+          weight: this.muacForm.value.weight ? Math.trunc(this.muacForm.value.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
+          muac: Math.trunc(this.muacForm.value.muac * Math.pow(10, 1)) / Math.pow(10, 1),
           muacRecordDate: this.muacForm.value.muacDate,
           active_flag: "A"
         }
       }
 
       console.log(editDto);
+      console.log(this.muacForm.value.muacCampNo, 'this.muacForm.value.muacCampNo');
 
-      if (this.muacForm.valid) {
-        this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res: any) => {
-          if (res.status) {
-            this.dialogRef.close();
-            this.showSuccess('Success');
-          } else {
-            this.showError(res.message);
-          }
-        }, error => {
+
+      // if (this.muacForm.valid) {
+      this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, editDto).subscribe((res: any) => {
+        if (res.status) {
           this.dialogRef.close();
-          this.showError('Error')
-        })
-      }
+          this.showSuccess('Success');
+        } else {
+          this.showError(res.message);
+        }
+      }, error => {
+        this.dialogRef.close();
+        this.showError('Error')
+      })
+      // }
     }
   }
 
@@ -207,4 +235,22 @@ export class AddChildMuacComponent implements OnInit {
     return false;
   }
 
+  weightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 4)) : t;
+    console.log(t);
+
+  }
+
+  heightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
+  }
+
+  muacKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
+  }
 }

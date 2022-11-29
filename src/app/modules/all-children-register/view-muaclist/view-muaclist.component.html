@@ -7,13 +7,13 @@
 
 <div mat-dialog-content>
   <div class="white_box_tittle list_header" *ngIf="childMuac.length !== 0; else noData">
-    <div class="QA_table ">
+    <div class="QA_table" id="beneficiaryScroll">
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
             <table
                 class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
-                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
-
-                <thead>
+                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;" >
+              
+                <thead  id="table_wrapper">
                     <tr>
                         <th>MUAC Date</th>
                         <th>MUAC Camp No</th>
@@ -21,11 +21,11 @@
                         <th>Weight</th>
                         <th>MUAC</th>
                         <th>Source</th>
-                        <th *ngIf="disableAction">Action</th>
+                        <th *ngIf="disableAction" style="width:20%;">Action</th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody style="text-align:center; padding:4px;">
 
                     <tr *ngFor="let item of childMuac;index as i">
                         <td>{{item.muacRecordDate}}</td>
@@ -34,7 +34,7 @@
                         <td>{{item.weight}}</td>
                         <td>{{item.muac}}</td>
                         <td>{{item.muacRegisterTag}}</td>
-                        <td style="padding: 0px 0px 0px 32px;" *ngIf="disableAction">
+                        <td *ngIf="disableAction" style="width:20%;">
                             <div *ngIf="item.muacRegisterTag == 'PEM' ? false: true" style="display: inline-block;">
                                 <i class="fas fa-edit" title="Edit MUAC" (click)="onEdit(i)" *ngIf="updateMode" ></i> 
                             </div>

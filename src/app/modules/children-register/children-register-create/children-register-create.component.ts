@@ -105,7 +105,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         let objs = {
           deviceType: "W",
           loginId: this.sidebarService.loginId,
-          password: JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
+          password: bytes.toString(CryptoJS.enc.Utf8)
         }
         this.baselineService.login(objs).subscribe((res: any) => {
           console.log(res.responseObject.branchBaselineSurveyEnddateDetailDTO, 'forclosebaselinedata');
@@ -488,6 +488,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       if (response.status == true) {
         this.showSuccess(response.message);
         this.childModalDismiss();
+        this.refreshChildData();
         // this.viewExistingChild.dismiss('Cross click')
 
       } else {
@@ -857,6 +858,45 @@ export class ChildrenRegisterCreateComponent implements OnInit {
         x.sex = this.setChild.sex;
       })
     }
+  }
+
+  viewExistingChildModalDismiss() {
+    this.modalReference.close();
+    this.refreshChildData();
+  }
+
+  refreshChildData() {
+    let obj = {
+      activeStatus: "A",
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      id: this.branchVillageMapId
+    }
+    this.loader = false;
+    this.childService.viewExistingFamilyLists(obj).subscribe((response: any) => {
+      console.log(response.responseObject, 'response.responseObject');
+      this.loader = true;
+      this.existingFamilyListAll = response.responseObject;
+      this.existingFamilyListZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount == 0);
+      this.existingFamilyListNonZero = this.existingFamilyListAll?.filter((x) => x.existingChildCount != 0);
+      console.log(this.existingFamilyList);
+      console.log(this.existingFamilyListNonZero);
+      console.log(this.existingFamilyListZero);
+
+      if (this.locationForm.value.viewChild == 2 && this.locationForm.value.gram != '') {
+        this.existingFamilyList = this.existingFamilyListNonZero;
+        this.locationForm.markAllAsTouched();
+      }
+
+      if (this.locationForm.value.viewChild == 3 && this.locationForm.value.gram != '') {
+        this.existingFamilyList = this.existingFamilyListZero;
+        this.locationForm.markAllAsTouched();
+      }
+
+      if (this.locationForm.value.viewChild == 1 && this.locationForm.value.gram != '') {
+        this.existingFamilyList = this.existingFamilyListAll;
+        this.locationForm.markAllAsTouched();
+      }
+    });
   }
 
 }

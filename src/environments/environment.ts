@@ -22,7 +22,7 @@ export const environment = {
   // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
 
   // Training
-  // apiUrl: 'https://bhp-training.bandhan/-konnagar.org:6184/bhp/api/v1/training/'
+  // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
 
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
@@ -38,7 +38,7 @@ export const environment = {
   // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
 
   // Soumen Machine
-  // apiUrl: 'http://192.168.153.91:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.61:6180/bhp/api/v1/'
 
   // Chayan Machine
   // apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'
