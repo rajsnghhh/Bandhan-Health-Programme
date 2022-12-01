@@ -13,13 +13,13 @@ export const environment = {
   // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
 
   //New Development Server
-  apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
 
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
 
   // New Test Server
-  // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+  apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
 
   // Training
   // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
@@ -38,7 +38,7 @@ export const environment = {
   // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
 
   // Soumen Machine
-  // apiUrl: 'http://192.168.153.61:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.58:6180/bhp/api/v1/'
 
   // Chayan Machine
   // apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'

@@ -2144,7 +2144,8 @@ class PwViewComponent {
             }
         }
         if (this.data.pregnantWomanRegisterData.fourthAncCheckup != null) {
-            this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(this.data.pregnantWomanRegisterData.fourthAncCheckup).add(1, 'days').format('YYYY-MM-DD');
+            this.actualDeliveryDate = this.data.pregnantWomanRegisterData.fourthAncCheckup;
+            // this.actualDeliveryDate = moment(this.data.pregnantWomanRegisterData.fourthAncCheckup).add(1, 'days').format('YYYY-MM-DD');
             if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
                 this.pwRegisterForm.controls['anc3rd'].value != null) {
                 this.showMessage = true;
@@ -2292,7 +2293,7 @@ class PwViewComponent {
         this.pwRegisterForm.controls.anc2nd.setValue(null);
         this.pwRegisterForm.controls.anc3rd.setValue(null);
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).format('YYYY-MM-DD');
         this.Anc2ndMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2306,7 +2307,7 @@ class PwViewComponent {
     anc2ndDate(value) {
         this.pwRegisterForm.controls.anc3rd.setValue(null);
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).format('YYYY-MM-DD');
         this.Anc3rdMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2319,7 +2320,7 @@ class PwViewComponent {
     }
     anc3rdDate(value) {
         this.pwRegisterForm.controls.anc4th.setValue(null);
-        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).format('YYYY-MM-DD');
         this.Anc4thMin = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
@@ -2331,7 +2332,7 @@ class PwViewComponent {
         }
     }
     anc4thDate(value) {
-        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).add(1, 'days').format('YYYY-MM-DD');
+        this.actualDeliveryDate = moment__WEBPACK_IMPORTED_MODULE_3__(value).format('YYYY-MM-DD');
         this.pwRegisterForm.get('actualDeliveryDate').reset();
         if (this.pwRegisterForm.controls['anc1st'].value != null && this.pwRegisterForm.controls['anc2nd'].value != null &&
             this.pwRegisterForm.controls['anc3rd'].value != null) {

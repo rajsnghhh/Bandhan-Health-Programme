@@ -825,7 +825,7 @@ class AddLmChildComponent {
             }
         }
         else {
-            this.showError('From is invalid');
+            this.showError('Form is invalid');
         }
     }
     /* Close the dialog pop-up */

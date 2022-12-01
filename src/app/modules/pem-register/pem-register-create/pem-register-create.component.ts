@@ -554,9 +554,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         muacRegisterId: 0,
         muacCampId: null,
         childId: this.childrenId,
-        height: item.height ? item.height : 0,
-        weight: item.weight ? item.weight : 0,
-        muac: item.muac,
+        height: item.height ? Math.trunc(item.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
+        weight: item.weight ? Math.trunc(item.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
+        muac:  Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1),
         active_flag: 'A'
       },
       pemCounsellingDataDto: {
@@ -754,9 +754,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         muacRegisterId: set.muacData.muacRegisterId,
         muacCampId: set.muacData.muacCampId,
         childId: set.childId,
-        height: item.height ? item.height : 0,
-        weight: item.weight ? item.weight : 0,
-        muac: item.muac ? item.muac : 0,
+        height: item.height ? Math.trunc(item.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
+        weight: item.weight ? Math.trunc(item.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
+        muac: item.muac ? Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1): 0,
         active_flag: 'A'
       },
       pemCounsellingDataDto: {
@@ -946,6 +946,24 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       return;
     }
 
+  }
+
+  heightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
+  }
+
+  weightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 4)) : t;
+    console.log(t);
+  }
+
+  muacKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
   }
 
 }

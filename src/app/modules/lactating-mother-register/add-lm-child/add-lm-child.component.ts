@@ -115,7 +115,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           height18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.height,
           height24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.height,
           weight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
-          weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12"),
+          weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
           weight18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
           weight24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
           muac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
@@ -335,6 +335,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       }
     }
     if (this.childBirthForm.valid) {
+      console.log(this.childBirthForm)
       if (this.data.editMode == false) {
         let Dto = {
           dataAccessDTO: this.httpService.dataAccessDTO,
@@ -355,9 +356,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           muacDataList: [{
             muacRegisterId: 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
-            weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
-            muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
+            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "6",
             muacRecordDate: this.childBirthForm.value.muacDate6
@@ -365,9 +366,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
-            weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
-            muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
+            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "12",
             muacRecordDate: this.childBirthForm.value.muacDate12
@@ -375,9 +376,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
-            weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
-            muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
+            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "18",
             muacRecordDate: this.childBirthForm.value.muacDate18
@@ -385,9 +386,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
-            weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
-            muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
+            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "24",
             muacRecordDate: this.childBirthForm.value.muacDate24
@@ -429,9 +430,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           muacDataList: [{
             muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
-            weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
-            muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
+            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "6",
             muacRecordDate: this.childBirthForm.value.muacDate6
@@ -439,9 +440,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
-            weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
-            muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
+            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "12",
             muacRecordDate: this.childBirthForm.value.muacDate12
@@ -449,9 +450,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
-            weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
-            muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
+            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "18",
             muacRecordDate: this.childBirthForm.value.muacDate18
@@ -459,9 +460,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           {
             muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
-            weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
-            muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
+            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "24",
             muacRecordDate: this.childBirthForm.value.muacDate24
@@ -511,5 +512,23 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
 
   restrictTypeOfDate() {
     return false;
+  }
+
+  heightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
+  }
+
+  weightKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 4)) : t;
+    console.log(t);
+  }
+
+  muacKeyup(e) {
+    var t = e.target.value;
+    e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+    console.log(t);
   }
 }

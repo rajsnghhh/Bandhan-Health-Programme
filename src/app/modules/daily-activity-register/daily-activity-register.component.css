@@ -89,3 +89,23 @@ legend.scheduler-border {
 ::-webkit-scrollbar-thumb {
   background: grey;
 }
+
+/* .QA_section .QA_table tbody .danger {
+  color: #cd0202;
+}
+
+.QA_section .QA_table tbody .success {
+  color: #24d524;
+} */
+/* 
+.QA_section .QA_table tbody .danger .fa-check:hover {
+  color: #cd0202 !important;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.QA_section .QA_table tbody .success .fa-check:hover {
+  color: #24d524 !important;
+  cursor: pointer;
+  font-size: 1.5em;
+} */

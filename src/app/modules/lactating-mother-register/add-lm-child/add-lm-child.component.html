@@ -119,7 +119,7 @@
             <div class="form-group col-md">
               <label for="height6month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
                       'is-invalid': f.height6month.invalid && f.height6month.touched,
                       'is-valid':
                         f.height6month.valid &&
@@ -136,7 +136,7 @@
             <div class="form-group col-md">
               <label for="weight6month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
                       'is-invalid': f.weight6month.invalid && f.weight6month.touched,
                       'is-valid':
                         f.weight6month.valid &&
@@ -154,7 +154,7 @@
             <div class="form-group col-md">
               <label for="muac6month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
                       'is-invalid': f.muac6month.invalid && f.muac6month.touched,
                       'is-valid':
                         f.muac6month.valid &&
@@ -222,7 +222,7 @@
             <div class="form-group col-md">
               <label for="height12month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)"  [ngClass]="{
                           'is-invalid': f.height12month.invalid && f.height12month.touched,
                           'is-valid':
                             f.height12month.valid &&
@@ -239,7 +239,7 @@
             <div class="form-group col-md">
               <label for="weight12month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
                           'is-invalid': f.weight12month.invalid && f.weight12month.touched,
                           'is-valid':
                             f.weight12month.valid &&
@@ -256,7 +256,7 @@
             <div class="form-group col-md">
               <label for="muac12month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
                           'is-invalid': f.muac12month.invalid && f.muac12month.touched,
                           'is-valid':
                             f.muac12month.valid &&
@@ -312,7 +312,7 @@
             <div class="form-group col-md">
               <label for="height18month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
                         'is-invalid': f.height18month.invalid && f.height18month.touched,
                         'is-valid':
                           f.height18month.valid &&
@@ -329,7 +329,7 @@
             <div class="form-group col-md">
               <label for="weight18month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
                         'is-invalid': f.weight18month.invalid && f.weight18month.touched,
                         'is-valid':
                           f.weight18month.valid &&
@@ -346,7 +346,7 @@
             <div class="form-group col-md">
               <label for="muac18month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
                         'is-invalid': f.muac18month.invalid && f.muac18month.touched,
                         'is-valid':
                           f.muac18month.valid &&
@@ -412,7 +412,7 @@
             <div class="form-group col-md">
               <label for="height24month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
                         'is-invalid': f.height24month.invalid && f.height24month.touched,
                         'is-valid':
                           f.height24month.valid &&
@@ -429,7 +429,7 @@
             <div class="form-group col-md">
               <label for="weight24month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
                         'is-invalid': f.weight24month.invalid && f.weight24month.touched,
                         'is-valid':
                           f.weight24month.valid &&
@@ -446,7 +446,7 @@
             <div class="form-group col-md">
               <label for="muac24month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
                         'is-invalid': f.muac24month.invalid && f.muac24month.touched,
                         'is-valid':
                           f.muac24month.valid &&
