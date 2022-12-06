@@ -445,7 +445,14 @@
                                                         <h4><i class="fas fa-caret-right"></i>
                                                             {{items.subPurposeMasterName}}
                                                         </h4>
+                                                        <span
+                                                            *ngIf="item.mainPurposeMasterName.includes('For General Member') && followUpSSId!=null">Followed
+                                                            up SS Name : {{followUpSSName}}</span>
+                                                        <span
+                                                            *ngIf="item.mainPurposeMasterName.includes('For General Member') && followUpSSId == null">No
+                                                            SS mapped with this HH for follow up.</span>
                                                     </td>
+
 
                                                     <!-- Enable/Disable Using Lactating Mother and Main PurposeMasterName Status -->
                                                     <td
@@ -541,11 +548,28 @@
 
 
                                                     <!-- Enable/Disable Using For All and For General and Main PurposeMasterName Status -->
+
                                                     <td
                                                         *ngIf="items.answer == 'Y' && mode == 'E' && item.mainPurposeMasterName.includes('For General Member')">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault"
+                                                        <input *ngIf="followUpSSId ==null" class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)"
+                                                            [attr.disabled]="isDisabled" checked>
+                                                        <input *ngIf="followUpSSId !=null" class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
+
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For General Member')">
+                                                        <input *ngIf="followUpSSId ==null" class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)"
+                                                            [attr.disabled]="isDisabled">
+                                                        <input *ngIf="followUpSSId !=null" class="form-check-input"
+                                                            type="checkbox" value="" id="flexCheckDefault"
+                                                            (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td
@@ -553,13 +577,6 @@
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
                                                             (change)="changeVisitbox($event, items)" checked>
-                                                    </td>
-
-                                                    <td
-                                                        *ngIf="items.answer == 'N' && mode == 'E' && item.mainPurposeMasterName.includes('For General Member')">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheckDefault"
-                                                            (change)="changeVisitbox($event, items)">
                                                     </td>
 
                                                     <td

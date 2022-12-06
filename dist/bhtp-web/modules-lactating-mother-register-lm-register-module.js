@@ -433,7 +433,7 @@ class AddLmChildComponent {
             childId: (_b = (_a = this.data) === null || _a === void 0 ? void 0 : _a.childWiselactatingmotherList) === null || _b === void 0 ? void 0 : _b.childDetailId
         };
         this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe((res) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27;
             this.childMuacList = res === null || res === void 0 ? void 0 : res.responseObject;
             this.muacRegisterId6month = (_a = this.childMuacList.find(month => month.muacForMonth == "6")) === null || _a === void 0 ? void 0 : _a.muacRegisterId;
             this.muacRegisterId12month = (_b = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _b === void 0 ? void 0 : _b.muacRegisterId;
@@ -462,15 +462,15 @@ class AddLmChildComponent {
                     height18month: parseInt((_8 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _8 === void 0 ? void 0 : _8.height) == 0 ? null : (_9 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _9 === void 0 ? void 0 : _9.height,
                     height24month: parseInt((_10 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _10 === void 0 ? void 0 : _10.height) == 0 ? null : (_11 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _11 === void 0 ? void 0 : _11.height,
                     weight6month: parseInt((_12 = this.childMuacList.find(month => month.muacForMonth == "6")) === null || _12 === void 0 ? void 0 : _12.weight) == 0 ? null : (_13 = this.childMuacList.find(month => month.muacForMonth == "6")) === null || _13 === void 0 ? void 0 : _13.weight,
-                    weight12month: parseInt((_14 = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _14 === void 0 ? void 0 : _14.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12"),
-                    weight18month: parseInt((_15 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _15 === void 0 ? void 0 : _15.weight) == 0 ? null : (_16 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _16 === void 0 ? void 0 : _16.weight,
-                    weight24month: parseInt((_17 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _17 === void 0 ? void 0 : _17.weight) == 0 ? null : (_18 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _18 === void 0 ? void 0 : _18.weight,
-                    muac6month: (_19 = this.childMuacList.find(month => month.muacForMonth == "6")) === null || _19 === void 0 ? void 0 : _19.muac,
-                    muac12month: (_20 = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _20 === void 0 ? void 0 : _20.muac,
-                    muac18month: (_21 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _21 === void 0 ? void 0 : _21.muac,
-                    muac24month: (_22 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _22 === void 0 ? void 0 : _22.muac,
-                    firstVisitDate: (_24 = (_23 = this.data) === null || _23 === void 0 ? void 0 : _23.childWiselactatingmotherList) === null || _24 === void 0 ? void 0 : _24.childBasicStatusDto.firstVisitDate,
-                    secondVisitDate: (_26 = (_25 = this.data) === null || _25 === void 0 ? void 0 : _25.childWiselactatingmotherList) === null || _26 === void 0 ? void 0 : _26.childBasicStatusDto.secondVisitDate,
+                    weight12month: parseInt((_14 = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _14 === void 0 ? void 0 : _14.weight) == 0 ? null : (_15 = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _15 === void 0 ? void 0 : _15.weight,
+                    weight18month: parseInt((_16 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _16 === void 0 ? void 0 : _16.weight) == 0 ? null : (_17 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _17 === void 0 ? void 0 : _17.weight,
+                    weight24month: parseInt((_18 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _18 === void 0 ? void 0 : _18.weight) == 0 ? null : (_19 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _19 === void 0 ? void 0 : _19.weight,
+                    muac6month: (_20 = this.childMuacList.find(month => month.muacForMonth == "6")) === null || _20 === void 0 ? void 0 : _20.muac,
+                    muac12month: (_21 = this.childMuacList.find(month => month.muacForMonth == "12")) === null || _21 === void 0 ? void 0 : _21.muac,
+                    muac18month: (_22 = this.childMuacList.find(month => month.muacForMonth == "18")) === null || _22 === void 0 ? void 0 : _22.muac,
+                    muac24month: (_23 = this.childMuacList.find(month => month.muacForMonth == "24")) === null || _23 === void 0 ? void 0 : _23.muac,
+                    firstVisitDate: (_25 = (_24 = this.data) === null || _24 === void 0 ? void 0 : _24.childWiselactatingmotherList) === null || _25 === void 0 ? void 0 : _25.childBasicStatusDto.firstVisitDate,
+                    secondVisitDate: (_27 = (_26 = this.data) === null || _26 === void 0 ? void 0 : _26.childWiselactatingmotherList) === null || _27 === void 0 ? void 0 : _27.childBasicStatusDto.secondVisitDate,
                 });
             }
         });
@@ -675,6 +675,7 @@ class AddLmChildComponent {
             }
         }
         if (this.childBirthForm.valid) {
+            console.log(this.childBirthForm);
             if (this.data.editMode == false) {
                 let Dto = {
                     dataAccessDTO: this.httpService.dataAccessDTO,
@@ -694,9 +695,9 @@ class AddLmChildComponent {
                     muacDataList: [{
                             muacRegisterId: 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
-                            weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
-                            muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
+                            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "6",
                             muacRecordDate: this.childBirthForm.value.muacDate6
@@ -704,9 +705,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
-                            weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
-                            muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
+                            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "12",
                             muacRecordDate: this.childBirthForm.value.muacDate12
@@ -714,9 +715,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
-                            weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
-                            muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
+                            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "18",
                             muacRecordDate: this.childBirthForm.value.muacDate18
@@ -724,9 +725,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
-                            weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
-                            muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
+                            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "24",
                             muacRecordDate: this.childBirthForm.value.muacDate24
@@ -768,9 +769,9 @@ class AddLmChildComponent {
                     muacDataList: [{
                             muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height6month == null ? "0" : this.childBirthForm.value.height6month,
-                            weight: this.childBirthForm.value.weight6month == null ? "0" : this.childBirthForm.value.weight6month,
-                            muac: this.childBirthForm.value.muac6month == null ? "0" : this.childBirthForm.value.muac6month,
+                            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "6",
                             muacRecordDate: this.childBirthForm.value.muacDate6
@@ -778,9 +779,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height12month == null ? "0" : this.childBirthForm.value.height12month,
-                            weight: this.childBirthForm.value.weight12month == null ? "0" : this.childBirthForm.value.weight12month,
-                            muac: this.childBirthForm.value.muac12month == null ? "0" : this.childBirthForm.value.muac12month,
+                            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "12",
                             muacRecordDate: this.childBirthForm.value.muacDate12
@@ -788,9 +789,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height18month == null ? "0" : this.childBirthForm.value.height18month,
-                            weight: this.childBirthForm.value.weight18month == null ? "0" : this.childBirthForm.value.weight18month,
-                            muac: this.childBirthForm.value.muac18month == null ? "0" : this.childBirthForm.value.muac18month,
+                            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "18",
                             muacRecordDate: this.childBirthForm.value.muacDate18
@@ -798,9 +799,9 @@ class AddLmChildComponent {
                         {
                             muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
                             childId: this.data.childWiselactatingmotherList.childDetailId,
-                            height: this.childBirthForm.value.height24month == null ? "0" : this.childBirthForm.value.height24month,
-                            weight: this.childBirthForm.value.weight24month == null ? "0" : this.childBirthForm.value.weight24month,
-                            muac: this.childBirthForm.value.muac24month == null ? "0" : this.childBirthForm.value.muac24month,
+                            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+                            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+                            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
                             active_flag: "A",
                             muacForMonth: "24",
                             muacRecordDate: this.childBirthForm.value.muacDate24
@@ -847,9 +848,24 @@ class AddLmChildComponent {
     restrictTypeOfDate() {
         return false;
     }
+    heightKeyup(e) {
+        var t = e.target.value;
+        e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+        console.log(t);
+    }
+    weightKeyup(e) {
+        var t = e.target.value;
+        e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 4)) : t;
+        console.log(t);
+    }
+    muacKeyup(e) {
+        var t = e.target.value;
+        e.target.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 2)) : t;
+        console.log(t);
+    }
 }
 AddLmChildComponent.ɵfac = function AddLmChildComponent_Factory(t) { return new (t || AddLmChildComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_4__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_5__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"])); };
-AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AddLmChildComponent, selectors: [["app-add-lm-child"]], decls: 289, vars: 109, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["type", "radio", "value", "Home", "formControlName", "place"], ["type", "radio", "value", "Institution", "formControlName", "place"], [1, "form-group", "col-md"], ["for", "birthWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "birthWeight", "maxlength", "5", 1, "form-control", 3, "ngClass", "keypress"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "firstVisitDate"], ["type", "date", "formControlName", "firstVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["class", "form-group col-md-4", 4, "ngIf"], [3, "disabled", "opened", "closed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto6Complete"], ["for", "muacDate6"], [1, "text-danger"], ["type", "date", "formControlName", "muacDate6", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress"], ["for", "weight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["for", "muac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto12Complete"], ["for", "muacDate12"], ["type", "date", "formControlName", "muacDate12", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height12month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height12month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress"], ["for", "weight12month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["for", "muac12month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto18Complete"], ["for", "muacDate18"], ["type", "date", "formControlName", "muacDate18", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height18month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height18month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress"], ["for", "weight18month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["for", "muac18month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto24Complete"], ["for", "muacDate24"], ["type", "date", "formControlName", "muacDate24", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height24month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height24month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress"], ["for", "weight24month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], ["for", "muac24month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress"], [3, "opened", "closed"], [1, "form-group", "col-md-3"], ["for", "checkChildDeath"], ["formControlName", "checkChildDeath", "id", "checkChildDeath", 1, "form-select", 3, "change"], ["value", ""], ["value", "Y"], ["value", "N"], ["class", "form-group col-md", 4, "ngIf"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "secondVisitDate"], ["type", "date", "formControlName", "secondVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass"], ["for", "deathOfChildDate"], ["type", "date", "formControlName", "deathOfChildDate", 1, "form-control"], ["for", "comment"], ["type", "text", "formControlName", "comment", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "click"]], template: function AddLmChildComponent_Template(rf, ctx) { if (rf & 1) {
+AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AddLmChildComponent, selectors: [["app-add-lm-child"]], decls: 289, vars: 109, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["type", "radio", "value", "Home", "formControlName", "place"], ["type", "radio", "value", "Institution", "formControlName", "place"], [1, "form-group", "col-md"], ["for", "birthWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "birthWeight", "maxlength", "5", 1, "form-control", 3, "ngClass", "keypress"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "firstVisitDate"], ["type", "date", "formControlName", "firstVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["class", "form-group col-md-4", 4, "ngIf"], [3, "disabled", "opened", "closed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto6Complete"], ["for", "muacDate6"], [1, "text-danger"], ["type", "date", "formControlName", "muacDate6", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto12Complete"], ["for", "muacDate12"], ["type", "date", "formControlName", "muacDate12", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height12month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height12month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight12month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac12month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto18Complete"], ["for", "muacDate18"], ["type", "date", "formControlName", "muacDate18", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height18month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height18month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight18month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac18month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto24Complete"], ["for", "muacDate24"], ["type", "date", "formControlName", "muacDate24", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "height24month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height24month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight24month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac24month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], [3, "opened", "closed"], [1, "form-group", "col-md-3"], ["for", "checkChildDeath"], ["formControlName", "checkChildDeath", "id", "checkChildDeath", 1, "form-select", 3, "change"], ["value", ""], ["value", "Y"], ["value", "N"], ["class", "form-group col-md", 4, "ngIf"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], [4, "ngIf"], ["for", "secondVisitDate"], ["type", "date", "formControlName", "secondVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass"], ["for", "deathOfChildDate"], ["type", "date", "formControlName", "deathOfChildDate", 1, "form-control"], ["for", "comment"], ["type", "text", "formControlName", "comment", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "click"]], template: function AddLmChildComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2", 2);
@@ -970,7 +986,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](76, "Height (cm):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "input", 24);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_77_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_77_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_77_listener($event) { return ctx.heightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](78, AddLmChildComponent_div_78_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -981,7 +997,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](82, "Weight (kg):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](83, "input", 26);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_83_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_83_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_83_listener($event) { return ctx.weightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](84, AddLmChildComponent_div_84_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -995,7 +1011,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "input", 28);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_91_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_91_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_91_listener($event) { return ctx.muacKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](92, AddLmChildComponent_div_92_Template, 3, 2, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1072,7 +1088,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](140, "Height (cm):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](141, "input", 36);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_141_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_141_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_141_listener($event) { return ctx.heightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](142, AddLmChildComponent_div_142_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1083,7 +1099,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](146, "Weight (kg):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](147, "input", 38);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_147_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_147_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_147_listener($event) { return ctx.weightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](148, AddLmChildComponent_div_148_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1097,7 +1113,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](155, "input", 40);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_155_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_155_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_155_listener($event) { return ctx.muacKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](156, AddLmChildComponent_div_156_Template, 3, 2, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1152,7 +1168,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](188, "Height (cm):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](189, "input", 46);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_189_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_189_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_189_listener($event) { return ctx.heightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](190, AddLmChildComponent_div_190_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1163,7 +1179,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](194, "Weight (kg):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](195, "input", 48);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_195_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_195_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_195_listener($event) { return ctx.weightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](196, AddLmChildComponent_div_196_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1177,7 +1193,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](203, "input", 50);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_203_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_203_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_203_listener($event) { return ctx.muacKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](204, AddLmChildComponent_div_204_Template, 3, 2, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1254,7 +1270,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](252, "Height (cm):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](253, "input", 58);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_253_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_253_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_253_listener($event) { return ctx.heightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](254, AddLmChildComponent_div_254_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1265,7 +1281,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](258, "Weight (kg):");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](259, "input", 60);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_259_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_259_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_259_listener($event) { return ctx.weightKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](260, AddLmChildComponent_div_260_Template, 2, 1, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1279,7 +1295,7 @@ AddLmChildComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](267, "input", 62);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_267_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keypress", function AddLmChildComponent_Template_input_keypress_267_listener($event) { return ctx.validationService.onlyIntegerAndDot($event); })("keyup", function AddLmChildComponent_Template_input_keyup_267_listener($event) { return ctx.muacKeyup($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](268, AddLmChildComponent_div_268_Template, 3, 2, "div", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();

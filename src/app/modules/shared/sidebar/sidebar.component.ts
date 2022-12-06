@@ -197,6 +197,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/material-distribution-register']);
     }
 
+    if (routeId == 234) {
+      this.router.navigate(['/daily-activity-record']);
+    }
+
   }
 
   ngAfterViewInit(): void {

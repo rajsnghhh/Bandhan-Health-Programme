@@ -52,6 +52,8 @@ export class DailyActivityRegisterComponent implements OnInit {
   deleteMode: boolean;
   regionBranchHide: boolean;
   roleAccess: any;
+  followUpSSName: any;
+  followUpSSId: any;
 
   constructor(private fb: FormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
@@ -329,6 +331,8 @@ export class DailyActivityRegisterComponent implements OnInit {
     console.log(editDAR);
 
     this.editListCheck = item;
+    this.followUpSSName = item.followUpSSName;
+    this.followUpSSId = item.followUpSSId;
     this.darViewChildList = this.editListCheck.darChildList;
     console.log(this.darViewChildList, '  this.darViewChildList   this.darViewChildList ');
 
@@ -367,6 +371,10 @@ export class DailyActivityRegisterComponent implements OnInit {
 
 
   viewDARModal(editDAR, item) {
+    console.log(item);
+    this.followUpSSName = item.followUpSSName;
+    this.followUpSSId = item.followUpSSId;
+
     this.mode = 'V';
 
     this.editListCheck = item;

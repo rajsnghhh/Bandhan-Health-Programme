@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <h2 class="page-title">Daily Activity Record</h2>
+
+                <form class="form-signin" [formGroup]="darForm">
+                    <div class="row" *ngIf="regionBranchHide">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{'is-invalid': l.region.invalid && l.region.touched,
+                              'is-valid': l.region.valid && (l.region.dirty || l.region.touched) }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.region.errors" class="invalid-feedback">
+                                <div *ngIf="l.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="branch" id="branch"
+                                [ngClass]="{'is-invalid': l.branch.invalid
+                             && l.branch.touched,  'is-valid': l.branch.valid && (l.branch.dirty || l.branch.touched) }">
+                                <option value="">-- Select Branch --</option>
+                                <option value="allBranches" *ngIf="darForm.value.region">All Branches</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.branch.errors" class="invalid-feedback">
+                                <div *ngIf="l.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- <div class="form-group col-md" *ngIf="roleAccess!='HCO'">
+                            <label for="hco">HCO/ HCOI/ TL :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="hco" id="hco" [ngClass]="{'is-invalid': l.hco.invalid && l.hco.touched, 'is-valid': l.hco.valid && 
+                                (l.hco.dirty || l.hco.touched) }" (change)="changeHco($event.target.value)">
+                                <option value="">-- Select Role --</option>
+                                <option value="allStaffs">All Staffs</option>
+                                <option *ngFor="let hco of HcoITLList" value='{{hco.user_id}}'>
+                                    {{ hco.user_firstname}} {{hco.user_middlename}} {{hco.user_lastname}} -
+                                    {{hco.role_shortname}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.hco.errors" class="invalid-feedback">
+                                <div *ngIf="l.hco.errors.required">Role selection is required</div>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group col-md">
+                            <label for="fromDate">From Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" formControlName="fromDate"
+                                (keydown)="restrictTypeOfDate()" (change)="fromDateExpectToDate($event)"
+                                [ngClass]="{'is-invalid': l.fromDate.invalid
+                                && l.fromDate.touched,'is-valid': l.fromDate.valid && (l.fromDate.dirty || l.fromDate.touched) }">
+                            <div *ngIf="l.fromDate.errors" class="invalid-feedback">
+                                <div *ngIf="l.fromDate.errors.required">From Date selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="toDate">To Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" formControlName="toDate"
+                                (keydown)="restrictTypeOfDate()" (change)="toDateChange()" [ngClass]="{'is-invalid': l.toDate.invalid && 
+                                l.toDate.touched,'is-valid': l.toDate.valid && (l.toDate.dirty || l.toDate.touched) }"
+                                [min]="minToDate" [max]="maxToDate">
+                            <div *ngIf="l.toDate.errors" class="invalid-feedback">
+                                <div *ngIf="l.toDate.errors.required">To Date selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="fetchReport()"
+                                    style="float:right;margin-right: -22px;" [disabled]="!disabledFetchReport()">
+                                    Fetch Report
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
