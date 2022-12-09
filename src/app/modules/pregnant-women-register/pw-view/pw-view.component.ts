@@ -406,108 +406,106 @@ export class PwViewComponent implements OnInit {
       return;
     }
 
-    // if (this.pwRegisterForm.valid) {
-    //   if (this.data.createMode == true) {
-    //     let Dto = {
-    //       dataAccessDTO: this.httpService.dataAccessDTO,
-    //       pregnantWomanRegisterDto: {
-    //         pregnantWomanRegisterId: 0,
-    //         familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
-    //         initialWeight: this.pwRegisterForm.value.initialWeight,
-    //         lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-    //         expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-    //         antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-    //         firstAncCheckup: this.pwRegisterForm.value.anc1st,
-    //         secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-    //         thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-    //         fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-    //         pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-    //         weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-    //         delivery: this.pwRegisterForm.value.delivery,
-    //         miscarriage: this.pwRegisterForm.value.miscarriage,
-    //         abortion: this.pwRegisterForm.value.abortion,
-    //         actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-    //         livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-    //         placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-    //       },
-    //       familyDeathRegister: {
-    //         deathStatus: this.pwRegisterForm.value.womenDeath,
-    //         familyDeathComment: this.pwRegisterForm.value.deathReason,
-    //         family_death_register_id: 0,
-    //         timeOfDeath: this.pwRegisterForm.value.deathTime,
-    //       }
-    //     }
-    //     console.log(Dto, 'reqAdd')
-    //     this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
-    //       console.log(res, 'responseAdd')
-    //       if (res.status) {
-    //         this.dialogRef.close();
-    //         this.showSuccess('Success');
-    //       } else {
-    //         this.dialogRef.close();
-    //         this.showError(res.message);
-    //       }
-    //     }, error => {
-    //       this.dialogRef.close();
-    //       this.showError('Error')
-    //     });
-    //   } else {
-    //     let Dto = {
-    //       dataAccessDTO: this.httpService.dataAccessDTO,
-    //       pregnantWomanRegisterDto: {
-    //         pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
-    //         familyDetailId: this.data.familyDetailId,
-    //         initialWeight: this.pwRegisterForm.value.initialWeight,
-    //         lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-    //         expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-    //         antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-    //         firstAncCheckup: this.pwRegisterForm.value.anc1st,
-    //         secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-    //         thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-    //         fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-    //         pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-    //         weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-    //         delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
-    //         miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
-    //         abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
-    //         actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-    //         livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-    //         placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-    //       },
-    //       familyDeathRegister: {
-    //         deathStatus: this.pwRegisterForm.value.womenDeath,
-    //         familyDeathComment: this.pwRegisterForm.value.deathReason,
-    //         family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
-    //           ? 0
-    //           : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
-    //             ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
-    //             : 0,
-    //         timeOfDeath: this.pwRegisterForm.value.deathTime,
-    //       }
-    //     }
-    //     console.log(Dto, 'reqEdit')
-    //     this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
-    //       console.log(res, 'responseEdit')
-    //       if (res.status) {
-    //         this.dialogRef.close();
-    //         this.showSuccess('Success');
-    //       } else {
-    //         this.dialogRef.close();
-    //         this.showError(res.message);
-    //       }
-    //     }, error => {
-    //       this.dialogRef.close();
-    //       this.showError('Error')
-    //     });
-    //   }
-    // } else {
-    //   this.showError('Please fill-up the form correctly ');
-    // }
+    if (this.pwRegisterForm.valid) {
+      if (this.data.createMode == true) {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          pregnantWomanRegisterDto: {
+            pregnantWomanRegisterId: 0,
+            familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
+            initialWeight: this.pwRegisterForm.value.initialWeight,
+            lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+            expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+            antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+            firstAncCheckup: this.pwRegisterForm.value.anc1st,
+            secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+            thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+            fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+            pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+            weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+            delivery: this.pwRegisterForm.value.delivery,
+            miscarriage: this.pwRegisterForm.value.miscarriage,
+            abortion: this.pwRegisterForm.value.abortion,
+            actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+            livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+            placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+          },
+          familyDeathRegister: {
+            deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: 0,
+            timeOfDeath: this.pwRegisterForm.value.deathTime,
+          }
+        }
+        console.log(Dto, 'reqAdd')
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
+          console.log(res, 'responseAdd')
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError(res.message);
+          }
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        });
+      } else {
+        let Dto = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          pregnantWomanRegisterDto: {
+            pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
+            familyDetailId: this.data.familyDetailId,
+            initialWeight: this.pwRegisterForm.value.initialWeight,
+            lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+            expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+            antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+            firstAncCheckup: this.pwRegisterForm.value.anc1st,
+            secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+            thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+            fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+            pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+            weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+            delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
+            miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
+            abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
+            actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+            livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+            placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+          },
+          familyDeathRegister: {
+            deathStatus: this.pwRegisterForm.value.womenDeath,
+            familyDeathComment: this.pwRegisterForm.value.deathReason,
+            family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
+              ? 0
+              : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
+                ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
+                : 0,
+            timeOfDeath: this.pwRegisterForm.value.deathTime,
+          }
+        }
+        console.log(Dto, 'reqEdit')
+        this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
+          console.log(res, 'responseEdit')
+          if (res.status) {
+            this.dialogRef.close();
+            this.showSuccess('Success');
+          } else {
+            this.dialogRef.close();
+            this.showError(res.message);
+          }
+        }, error => {
+          this.dialogRef.close();
+          this.showError('Error')
+        });
+      }
+    } else {
+      this.showError('Please fill-up the form correctly ');
+    }
 
 
   }
-
-
 
   closeDialog() {
     this.dialogRef.close();

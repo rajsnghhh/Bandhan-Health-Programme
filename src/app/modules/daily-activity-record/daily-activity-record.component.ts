@@ -23,6 +23,7 @@ export class DailyActivityRecordComponent implements OnInit {
   lowerRankbranchId: any;
   minToDate: any;
   maxToDate: any;
+  dateWiseStaffDarDetails: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private httpService: HttpService, private dailyActRecord: DailyActivityRecordService, private toaster: ToastrService) { }
@@ -171,7 +172,10 @@ export class DailyActivityRecordComponent implements OnInit {
 
     this.dailyActRecord.recordViewByBranchId(obj).subscribe((res) => {
       this.darList = res.responseObject;
-      console.log(this.darList);
+      this.dateWiseStaffDarDetails = res.responseObject[0]?.dateWiseStaffDarDetails;
+      console.log(this.darList, 'darList');
+      console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
+
       if (this.darList?.length == 0) {
         this.showError('No data found !');
       }

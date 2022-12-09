@@ -88,6 +88,184 @@
 
                     </div>
                 </form>
+
+
+                <div class="white_box_tittle list_header">
+                    <div class="QA_table">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 13px;width: 13%;">Date</th>
+                                        <th style="font-size: 13px;width: 8%;">Total<br> Family<br> Visited</th>
+                                        <th style="font-size: 13px;width: 8%;">PW<br> Family</th>
+                                        <th style="font-size: 13px;width: 8%;">LM <br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">LM<br> Children</th>
+                                        <th style="font-size: 13px;width: 8%;">PEM <br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">RED <br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">YELLOW <br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">General-<br>Children<br>(2-5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General-<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 9%;">General-<br>Other</th>
+                                        <th style="font-size: 13px;width: 9%;">Target<br> Family<br>-With<br> SS</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br> Family<br>-With <br>SS</th>
+                                        <th style="font-size: 13px;width: 10%;">SS<br> Follow<br>Up <br>Answered</th>
+                                        <th style="font-size: 13px;width: 8%;">SS <br>Names</th>
+                                        <th style="font-size: 13px;width: 10%;">Escorted <br>Families<br> To<br> HCC
+                                        </th>
+                                        <th style="font-size: 13px;width: 12%;">Material<br> Distributed<br> - Families
+                                        </th>
+                                        <th style="font-size: 13px;width: 13%;">Refreshers <br>Training<br> - Completed
+                                        </th>
+                                        <th style="font-size: 13px;width: 12%;">Refreshers <br>Training
+                                            <br>Completed<br>- SS
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of dateWiseStaffDarDetails;index as i">
+                                        <td style="font-size: 13px;width: 13%;">{{item.date}}</td>
+                                        <td style="font-size: 13px;width: 8%;">{{item.totalFamilyVisited}}</td>
+                                        <td style="font-size: 13px;width: 8%;">{{item.pwCounsellingFamily}}</td>
+                                        <td style="font-size: 13px;width: 8%;">{{item.lmCounsellingFamily}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.lmChildrenCounselling}}</td>
+                                        <td style="font-size: 13px;width: 8%;">{{item.pemCounsellingFamily}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.redChildrenCounselling}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.yellowChildrenCounselling}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.generalFamilyCounselling2to5}}
+                                        </td>
+                                        <td style="font-size: 13px;width: 12%;">
+                                            {{item.generalFamilyCounsellingAdolescent}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.generalFamilyOther}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.targetFamiliesVisitedWithSS}}</td>
+                                        <td style="font-size: 13px;width: 9%;">{{item.generalFamiliesVisitedWithSS}}
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;">{{item.ssFollowUpAnsweredVisited}}</td>
+                                        <td style="font-size: 13px;width: 8%;">-</td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            {{item.escortingFamilyToHealthCareCenter}}</td>
+                                        <td style="font-size: 13px;width: 12%;">{{item.materialDistributedToFamilies}}
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;">
+                                            {{item.refresherTrainingCompletedOnDate}}</td>
+                                        <td style="font-size: 13px;width: 12%;">{{item.refresherTrainingCompletedBySS}}
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngFor="let dar of darList;index as i">
+                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                            <strong>Cumulative</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.totalFamilyVisitedSum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.pwCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.lmCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.pemCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.generalFamilyCounselling2to5Sum}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
+                                                {{dar.generalFamilyCounsellingAdolescentSum}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width:9%;">
+                                            <strong>{{dar.generalFamilyOtherSum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width:9%;">
+                                            <strong>{{dar.targetFamiliesVisitedWithSSSum}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width:9%;">
+                                            <strong>{{dar.generalFamiliesVisitedWithSSSum}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
+                                                {{dar.escortingFamilyToHealthCareCenterSum}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;">
+                                            <strong>{{dar.materialDistributedToFamiliesSum}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 13%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;"><strong>-</strong></td>
+                                    </tr>
+
+                                    <tr *ngFor="let dar of darList;index as i">
+                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                            <strong>Unique</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.totalFamilyVisitedUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.pwCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.lmCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.lmChildrenCounsellingUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <strong>{{dar.pemCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.redChildrenCounsellingUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.yellowChildrenCounsellingUnique}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;"><strong>
+                                                {{dar.generalFamilyCounselling2to5Unique}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
+                                                {{dar.generalFamilyCounsellingAdolescentUnique}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.generalFamilyOtherUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{dar.targetFamiliesVisitedWithSSUnique}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;"><strong>
+                                                {{dar.generalFamiliesVisitedWithSSUnique}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 10%;">
+                                            <strong>{{dar.ssFollowUpAnsweredVisitedUnique}}
+                                            </strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
+                                                {{dar.escortingFamilyToHealthCareCenterUnique}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
+                                                {{dar.materialDistributedToFamiliesUnique}}</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 13%;"><strong>-</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 12%;"><strong>-</strong>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

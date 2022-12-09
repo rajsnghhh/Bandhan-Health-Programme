@@ -63,7 +63,8 @@
         <div class="form-group col-md">
                 <label for="anc1st">1st ANC Checkup:</label>
                 <input type="date" class="form-control" formControlName="anc1st" placeholder="dd-mm-yyyy"
-                 [min]="Anc1stMin" [max]="today" (change)="anc1stDate($event.target.value)" (keydown)="restrictTypeOfDate()"/>
+                 [min]="Anc1stMin" [max]="today" [enableClearButton]="false" (change)="anc1stDate($event.target.value)" 
+                 (keydown)="restrictTypeOfDate()"/>
         </div>
         <div class="form-group col-md">
             <label for="anc2nd">2nd ANC checkup:</label>

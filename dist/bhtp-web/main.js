@@ -133,13 +133,13 @@ const environment = {
     // Test
     // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
     // New Test Server
-    apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+    // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
     // Training
     // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
     // Staging
     // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
     // New Staging Server
-    // apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
+    apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
     // Production
     // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
     // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
@@ -539,6 +539,9 @@ class SidebarComponent {
         if (routeId == 226 || routeId == 227 || routeId == 228 || routeId == 229) {
             this.router.navigate(['/material-distribution-register']);
         }
+        // if (routeId == 234) {
+        //   this.router.navigate(['/daily-activity-record']);
+        // }
     }
     ngAfterViewInit() {
         let a = document.querySelectorAll(".card-header");
@@ -2649,6 +2652,7 @@ const routes = [
     { path: 'error', component: _modules_shared_error_error_component__WEBPACK_IMPORTED_MODULE_3__["ErrorComponent"], canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'ss-training', loadChildren: () => Promise.all(/*! import() | modules-ss-training-ss-training-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~539ba798"), __webpack_require__.e("default~modules-branch-village-map-branch-village-map-module~modules-daily-activity-register-daily-a~944ed11e"), __webpack_require__.e("modules-ss-training-ss-training-module")]).then(__webpack_require__.bind(null, /*! ./modules/ss-training/ss-training.module */ "DWMF")).then(m => m.SsTrainingModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'material-distribution-register', loadChildren: () => Promise.all(/*! import() | modules-material-distribution-register-material-distribution-register-module */[__webpack_require__.e("default~modules-all-children-register-all-child-register-module~modules-baseline-survey-baseline-sur~539ba798"), __webpack_require__.e("default~modules-branch-village-map-branch-village-map-module~modules-daily-activity-register-daily-a~944ed11e"), __webpack_require__.e("modules-material-distribution-register-material-distribution-register-module")]).then(__webpack_require__.bind(null, /*! ./modules/material-distribution-register/material-distribution-register.module */ "OL2Z")).then(m => m.MaterialDistributionRegisterModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'daily-activity-record', loadChildren: () => __webpack_require__.e(/*! import() | modules-daily-activity-record-daily-activity-record-module */ "modules-daily-activity-record-daily-activity-record-module").then(__webpack_require__.bind(null, /*! ./modules/daily-activity-record/daily-activity-record.module */ "RkE6")).then(m => m.DailyActivityRecordModule), canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: '**', redirectTo: '' },
 ];
 class AppRoutingModule {
