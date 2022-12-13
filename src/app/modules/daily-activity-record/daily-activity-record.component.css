@@ -1,13 +1,13 @@
 
-  table tr th {
+  /* table tr th {
     border: 0.5px solid rgb(255, 255, 255);
-  }
+  } */
   
-  .QA_section .QA_table .table thead th
+  /* .QA_section .QA_table .table thead th
   , .QA_section .QA_table td {
     padding: 12px 0px;
   }
-  
+   */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -35,4 +35,28 @@ table thead, tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
+}
+
+.modal-content {
+  height: 430px;
+  overflow-x: hidden;
+  width: 1266px;
+  margin-left: -360px;
+}
+
+.QA_table .table thead th {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  border: 0px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0.5px solid rgb(255, 255, 255);
+  background: #499;
+  padding: 12px 0px;
 }

@@ -501,6 +501,8 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   deleteMuac(item, i) {
+    console.log(item);
+    
     const post = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -522,7 +524,7 @@ export class MuacRegisterCreateComponent implements OnInit {
           }
 
           else {
-            this.showError(response.responseObject);
+            this.showError(response.message);
           }
 
         })
@@ -535,13 +537,13 @@ export class MuacRegisterCreateComponent implements OnInit {
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Muac Camp', {
+    this.toaster.success(message, 'MUAC Camp', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Muac Camp', {
+    this.toaster.error(message, 'MUAC Camp', {
       timeOut: 3000,
     });
   }

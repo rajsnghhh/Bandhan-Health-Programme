@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -18,15 +19,24 @@ export class DailyActivityRecordComponent implements OnInit {
   branchList: Array<any> = [];
   regionBranchHide: boolean;
   villagesOfBranch: Array<any> = [];
-  darList: Array<any> = [];
+  darListByStaffID: Array<any> = [];
+  darListByBranchID: Array<any> = [];
+  darListByRegionID: Array<any> = [];
   roleAccess: any;
   lowerRankbranchId: any;
   minToDate: any;
   maxToDate: any;
   dateWiseStaffDarDetails: Array<any> = [];
+  modalContent: any;
+  modalReference: any;
+  dateWiseStaffDarDetailsModal: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
-    private httpService: HttpService, private dailyActRecord: DailyActivityRecordService, private toaster: ToastrService) { }
+    private httpService: HttpService, private dailyActRecord: DailyActivityRecordService,
+    private toaster: ToastrService, private modalService: NgbModal, config: NgbModalConfig,) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     let roleAccessDTO = JSON.parse(localStorage.getItem('user'));
@@ -146,9 +156,11 @@ export class DailyActivityRecordComponent implements OnInit {
     console.log(obj);
 
     this.dailyActRecord.recordViewByStaffId(obj).subscribe((res) => {
-      this.darList = res.responseObject;
-      console.log(this.darList);
-      if (this.darList?.length == 0) {
+      this.darListByStaffID = res.responseObject;
+      this.dateWiseStaffDarDetails = res.responseObject[0]?.dateWiseStaffDarDetails;
+      console.log(this.darListByStaffID, 'darListByStaffID');
+      console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
+      if (this.darListByStaffID?.length == 0) {
         this.showError('No data found !');
       }
 
@@ -171,12 +183,10 @@ export class DailyActivityRecordComponent implements OnInit {
     console.log(obj);
 
     this.dailyActRecord.recordViewByBranchId(obj).subscribe((res) => {
-      this.darList = res.responseObject;
-      this.dateWiseStaffDarDetails = res.responseObject[0]?.dateWiseStaffDarDetails;
-      console.log(this.darList, 'darList');
-      console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
+      this.darListByBranchID = res.responseObject;
+      console.log(this.darListByBranchID, 'darListByBranchID');
 
-      if (this.darList?.length == 0) {
+      if (this.darListByBranchID?.length == 0) {
         this.showError('No data found !');
       }
 
@@ -198,9 +208,9 @@ export class DailyActivityRecordComponent implements OnInit {
     console.log(obj);
 
     this.dailyActRecord.recordViewByRegionId(obj).subscribe((res) => {
-      this.darList = res.responseObject;
-      console.log(this.darList);
-      if (this.darList?.length == 0) {
+      this.darListByRegionID = res.responseObject;
+      console.log(this.darListByRegionID);
+      if (this.darListByRegionID?.length == 0) {
         this.showError('No data found !');
       }
 
@@ -226,6 +236,22 @@ export class DailyActivityRecordComponent implements OnInit {
 
     return flag;
   }
+
+  staffClickDateWiseRecords(item, staffDateWiseRecords) {
+    this.dateWiseStaffDarDetails = item.dateWiseStaffDarDetails;
+    console.log(item, this.dateWiseStaffDarDetails, '  this.dateWiseStaffDarDetails ');
+
+    this.modalContent = '';
+    this.dateWiseStaffDarDetailsModal = this.modalService.open(staffDateWiseRecords, {
+      windowClass: 'staffDateWiseRecords',
+    });
+
+  }
+
+  staffDateWiseRecordsModalDismiss() {
+    this.dateWiseStaffDarDetailsModal.close();
+  }
+
 
   showSuccess(message) {
     this.toaster.success(message, 'Daily-Activity Record', {
