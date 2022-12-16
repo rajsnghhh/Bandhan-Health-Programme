@@ -30,4 +30,25 @@ export class DailyActivityRecordService {
     return this.http.post(`${this.baseURL}dailyActivityRecord/viewByRegionId`, obj)
   }
 
+  recordDownloadExcelByStaffId(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivityRecord/viewByStaffIdExcel`, obj, {
+      observe: 'response',
+      responseType: "arraybuffer",
+    })
+  }
+
+  recordDownloadExcelByBranchId(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivityRecord/viewByBranchIdExcel`, obj, {
+      observe: 'response',
+      responseType: "arraybuffer",
+    })
+  }
+
+  recordDownloadExcelByRegionId(obj): any {
+    return this.http.post(`${this.baseURL}dailyActivityRecord/viewByRegionIdExcel`, obj, {
+      observe: 'response',
+      responseType: "arraybuffer",
+    })
+  }
+
 }

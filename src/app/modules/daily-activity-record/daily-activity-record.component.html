@@ -4,6 +4,18 @@
             <div class="white_box QA_section mb_30">
                 <h2 class="page-title">Daily Activity Record</h2>
 
+                <div class="row">
+                    <!-- *ngIf="(roleAccess !='HCO') &&
+                (darListByBranchID?.length>0 || darListByRegionID?.length>0)" -->
+                    <div class="form-group col-md">
+                        <button type="button" class="btn btn-success btn-sm" (click)="downloadExcelReport()"
+                            style="float:right;margin-right: 8px;margin-top: -55px;"
+                            [disabled]="!disabledFetchReport()"><i class="fas fa-solid fa-file-excel"></i>
+                            Download Excel
+                        </button>
+                    </div>
+                </div>
+
                 <form class="form-signin" [formGroup]="darForm">
                     <div class="row" *ngIf="regionBranchHide">
                         <div class="form-group col-md">
@@ -23,7 +35,7 @@
 
                         <div class="form-group col-md">
                             <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                            <select class="form-select" formControlName="branch" id="branch"
+                            <select class="form-select" formControlName="branch" id="branch" (change)="changeBranch()"
                                 [ngClass]="{'is-invalid': l.branch.invalid
                              && l.branch.touched,  'is-valid': l.branch.valid && (l.branch.dirty || l.branch.touched) }">
                                 <option value="">-- Select Branch --</option>
@@ -85,12 +97,12 @@
                                 </button>
                             </div>
                         </div>
-
                     </div>
+
                 </form>
 
-
-                <div class="white_box_tittle list_header" *ngIf="roleAccess == 'HCO'">
+                <div class="white_box_tittle list_header"
+                    *ngIf="roleAccess == 'HCO' && dateWiseStaffDarDetails?.length>0">
                     <div class="QA_table">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                             <table
@@ -99,36 +111,37 @@
 
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 13px;width: 13%;">Date</th>
-                                        <th style="font-size: 13px;width: 8%;">Total<br> Family<br> Visited</th>
-                                        <th style="font-size: 13px;width: 8%;">PW<br> Family</th>
-                                        <th style="font-size: 13px;width: 8%;">LM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">LM<br> Children</th>
-                                        <th style="font-size: 13px;width: 8%;">PEM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">RED <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">YELLOW <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 12%;">General-<br>Adolescent<br>(14-18yr)</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Other</th>
-                                        <th style="font-size: 13px;width: 9%;">Target<br> Family<br>-With<br> SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br> Family<br>-With <br>SS</th>
-                                        <th style="font-size: 13px;width: 10%;">SS<br> Follow<br>Up <br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS <br>Names</th>
-                                        <th style="font-size: 13px;width: 10%;">Escorted <br>Families<br> To<br> HCC
+                                        <th style="font-size: 13px;width: 16%;">Date</th>
+                                        <th style="font-size: 13px;width: 8%;">Total<br>Family<br>Visited</th>
+                                        <th style="font-size: 13px;width: 8%;">PW<br>Family</th>
+                                        <th style="font-size: 13px;width: 8%;">LM<br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">LM<br>Children</th>
+                                        <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">RED<br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">YELLOW<br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Children<br>(2-5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Other</th>
+                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 11%;">SS<br>Follow<br>Up<br>Answered</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 11%;">Escorted<br>Families<br>To<br>HCC
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Material<br> Distributed<br> - Families
+                                        <th style="font-size: 13px;width: 12%;">Material<br>Distributed<br>Families
                                         </th>
-                                        <th style="font-size: 13px;width: 13%;">Refreshers <br>Training<br> - Completed
+                                        <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Refreshers <br>Training
-                                            <br>Completed<br>- SS
+                                        <th style="font-size: 13px;width: 12%;">Refreshers<br>Training
+                                            <br>Completed<br>SS
                                         </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr *ngFor="let item of dateWiseStaffDarDetails;index as i">
-                                        <td style="font-size: 13px;width: 13%;">{{item.date}}</td>
+                                        <td style="font-size: 13px;width: 16%;">
+                                            {{item.date.split("-").reverse().join("-")}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.totalFamilyVisited}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.pwCounsellingFamily}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.lmCounsellingFamily}}</td>
@@ -144,9 +157,22 @@
                                         <td style="font-size: 13px;width: 9%;">{{item.targetFamiliesVisitedWithSS}}</td>
                                         <td style="font-size: 13px;width: 9%;">{{item.generalFamiliesVisitedWithSS}}
                                         </td>
-                                        <td style="font-size: 13px;width: 10%;">{{item.ssFollowUpAnsweredVisited}}</td>
-                                        <td style="font-size: 13px;width: 8%;">-</td>
-                                        <td style="font-size: 13px;width: 10%;">
+                                        <td style="font-size: 13px;width: 11%;">{{item.ssFollowUpAnsweredVisited}}</td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title">view</h3>
+                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length>0">
+                                                    <div class="card-header" *ngFor="let ss of item.followUpSSDetails">
+                                                        {{ss.ss_name}}
+                                                    </div>
+                                                </div>
+                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length==0">
+                                                    <div class="card-header">No SS Mapped
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="font-size: 13px;width: 11%;">
                                             {{item.escortingFamilyToHealthCareCenter}}</td>
                                         <td style="font-size: 13px;width: 12%;">{{item.materialDistributedToFamilies}}
                                         </td>
@@ -157,7 +183,7 @@
                                     </tr>
 
                                     <tr *ngFor="let dar of darListByStaffID;index as i">
-                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                        <td style="color: #666666;font-size: 13px;width: 16%;">
                                             <strong>Cumulative</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
@@ -192,9 +218,16 @@
                                             <strong>{{dar.generalFamiliesVisitedWithSSSum}}
                                             </strong>
                                         </td>
-                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>-</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
+                                        <td style="color: #666666;font-size: 13px;width: 11%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;"> <strong>-</strong>
+                                            <!-- <div class="popover__wrapper">
+                                                <h3 class="popover__title"><strong>view</strong></h3>
+                                                <div class="popover__content">
+                                                    <div class="card-header">No SS Mapped</div>
+                                                </div>
+                                            </div> -->
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 11%;"><strong>
                                                 {{dar.escortingFamilyToHealthCareCenterSum}}</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;">
                                             <strong>{{dar.materialDistributedToFamiliesSum}}
@@ -205,7 +238,7 @@
                                     </tr>
 
                                     <tr *ngFor="let dar of darListByStaffID;index as i">
-                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                        <td style="color: #666666;font-size: 13px;width: 16%;">
                                             <strong>Unique</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
@@ -243,13 +276,28 @@
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>
                                                 {{dar.generalFamiliesVisitedWithSSUnique}}</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width: 10%;">
+                                        <td style="color: #666666;font-size: 13px;width: 11%;">
                                             <strong>{{dar.ssFollowUpAnsweredVisitedUnique}}
                                             </strong>
                                         </td>
-                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title"><strong>view</strong></h3>
+                                                <div class="popover__content"
+                                                    *ngIf="dar.followUpSSDetailsUnique?.length>0">
+                                                    <div class="card-header"
+                                                        *ngFor="let ss of dar.followUpSSDetailsUnique">
+                                                        {{ss.ss_name}}
+                                                    </div>
+                                                </div>
+                                                <div class="popover__content"
+                                                    *ngIf="dar.followUpSSDetailsUnique?.length==0">
+                                                    <div class="card-header">No SS Mapped
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
+                                        <td style="color: #666666;font-size: 13px;width: 11%;"><strong>
                                                 {{dar.escortingFamilyToHealthCareCenterUnique}}</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
                                                 {{dar.materialDistributedToFamiliesUnique}}</strong></td>
@@ -266,8 +314,9 @@
                     </div>
                 </div>
 
-                <div class="white_box_tittle list_header">
-                    <div class="QA_table">
+                <div class="white_box_tittle list_header" *ngIf="(roleAccess !='HCO') &&
+                (darListByBranchID?.length>0 || darListByRegionID?.length>0)">
+                    <div class=" QA_table">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                             <table
                                 class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
@@ -276,112 +325,136 @@
                                 <thead>
                                     <tr>
                                         <th style="font-size: 13px;width: 13%;">Staff<br>Name</th>
-                                        <th style="font-size: 13px;width: 13%;">Type</th>
-                                        <th style="font-size: 13px;width: 8%;">Total<br> Family<br> Visited</th>
-                                        <th style="font-size: 13px;width: 8%;">PW<br> Family</th>
-                                        <th style="font-size: 13px;width: 8%;">LM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">LM<br> Children</th>
-                                        <th style="font-size: 13px;width: 8%;">PEM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">RED <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">YELLOW <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 12%;">General-<br>Adolescent<br>(14-18yr)</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Other</th>
-                                        <th style="font-size: 13px;width: 9%;">Target<br> Family<br>-With<br> SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br> Family<br>-With <br>SS</th>
-                                        <th style="font-size: 13px;width: 11%;">SS<br> Follow<br>Up <br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS <br>Names</th>
-                                        <th style="font-size: 13px;width: 10%;">Escorted <br>Families<br> To<br> HCC
+                                        <th style="font-size: 13px;width: 12%;">Type</th>
+                                        <th style="font-size: 13px;width: 9%;">Total<br>Family<br>Visited</th>
+                                        <th style="font-size: 13px;width: 8%;">PW<br>Family</th>
+                                        <th style="font-size: 13px;width: 8%;">LM<br>Family</th>
+                                        <th style="font-size: 13px;width: 10%;">LM<br>Children</th>
+                                        <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
+                                        <th style="font-size: 13px;width: 10%;">RED<br>Children</th>
+                                        <th style="font-size: 13px;width: 10%;">YELLOW<br>Children</th>
+                                        <th style="font-size: 13px;width: 10%;">General<br>Children<br>(2-5yr)</th>
+                                        <th style="font-size: 13px;width: 13%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Other</th>
+                                        <th style="font-size: 13px;width: 10%;">Target<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 12%;">SS<br>Follow<br>Up<br>Answered</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 10%;">Escorted<br>Families<br>To<br>HCC
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Material<br> Distributed<br> - Families
+                                        <th style="font-size: 13px;width: 13%;">Material<br>Distributed<br>Families
                                         </th>
-                                        <th style="font-size: 13px;width: 13%;">Refreshers <br>Training<br> - Completed
+                                        <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Refreshers <br>Training
-                                            <br>Completed<br>- SS
+                                        <th style="font-size: 13px;width: 14%;">
+                                            Refreshers<br>Training<br>Completed<br>SS
                                         </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr *ngFor="let item of darListByBranchID;index as i">
+                                    <tr *ngFor="let item of viewDARByRegionBranch;index as i">
                                         <td class="btn-link" style="font-size: 13px;width: 13%;word-wrap: break-word;
                                             color:#0d6efd; text-decoration: none; cursor: pointer;"
                                             (click)="staffClickDateWiseRecords(item, staffDateWiseRecords)">
                                             {{item.staffName}}</td>
-                                        <td style="font-size: 13px;width: 13%;">Cumulative<br>
-                                            <hr>Unique
+                                        <td style="font-size: 13px;width: 12%;">Cum.<br>
+                                            Unique
                                         </td>
-                                        <td style="font-size: 13px;width: 8%;">
+                                        <td style="font-size: 13px;width: 9%;">
                                             {{item.totalFamilyVisitedSum}}<br>
-                                            <hr>{{item.totalFamilyVisitedUnique}}
+                                            {{item.totalFamilyVisitedUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 8%;">
                                             {{item.pwCounsellingFamilySum}}<br>
-                                            <hr>{{item.pwCounsellingFamilyUnique}}
+                                            {{item.pwCounsellingFamilyUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 8%;">
                                             {{item.lmCounsellingFamilySum}}<br>
-                                            <hr>{{item.lmCounsellingFamilyUnique}}
+                                            {{item.lmCounsellingFamilyUnique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 9%;">-<br>
-                                            <hr>{{item.lmChildrenCounsellingUnique}}
+                                        <td style="font-size: 13px;width: 10%;">-<br>
+                                            {{item.lmChildrenCounsellingUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 8%;">
                                             {{item.pemCounsellingFamilySum}}<br>
-                                            <hr>{{item.pemCounsellingFamilyUnique}}
+                                            {{item.pemCounsellingFamilyUnique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 9%;">
+                                        <td style="font-size: 13px;width: 10%;">
                                             -<br>
-                                            <hr>{{item.redChildrenCounsellingUnique}}
+                                            {{item.redChildrenCounsellingUnique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 9%;">
+                                        <td style="font-size: 13px;width: 10%;">
                                             -<br>
-                                            <hr>{{item.yellowChildrenCounsellingUnique}}
+                                            {{item.yellowChildrenCounsellingUnique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 9%;">
+                                        <td style="font-size: 13px;width: 10%;">
                                             {{item.generalFamilyCounselling2to5Sum}}<br>
-                                            <hr>{{item.generalFamilyCounselling2to5Unique}}
+                                            {{item.generalFamilyCounselling2to5Unique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 12%;">
+                                        <td style="font-size: 13px;width: 13%;">
                                             {{item.generalFamilyCounsellingAdolescentSum}}<br>
-                                            <hr>{{item.generalFamilyCounsellingAdolescentUnique}}
+                                            {{item.generalFamilyCounsellingAdolescentUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 9%;">
                                             {{item.generalFamilyOtherSum}}<br>
-                                            <hr>{{item.generalFamilyOtherUnique}}
+                                            {{item.generalFamilyOtherUnique}}
                                         </td>
-                                        <td style="font-size: 13px;width: 9%;">
+                                        <td style="font-size: 13px;width: 10%;">
                                             {{item.targetFamiliesVisitedWithSSSum}}<br>
-                                            <hr>{{item.targetFamiliesVisitedWithSSUnique}}
+                                            {{item.targetFamiliesVisitedWithSSUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 9%;">
                                             {{item.generalFamiliesVisitedWithSSSum}}<br>
-                                            <hr>{{item.generalFamiliesVisitedWithSSUnique}}
-                                        </td>
-                                        <td style="font-size: 13px;width: 11%;">
-                                            -<br>
-                                            <hr>{{item.ssFollowUpAnsweredVisitedUnique}}
-                                        </td>
-                                        <td style="font-size: 13px;width: 8%;">View</td>
-                                        <td style="font-size: 13px;width: 10%;">
-                                            {{item.escortingFamilyToHealthCareCenterSum}}<br>
-                                            <hr>{{item.escortingFamilyToHealthCareCenterUnique}}
+                                            {{item.generalFamiliesVisitedWithSSUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 12%;">
+                                            -<br>
+                                            {{item.ssFollowUpAnsweredVisitedUnique}}
+                                        </td>
+
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <!-- <div class="popover__wrapper">
+                                                <h3 class="popover__title">view</h3>
+                                                <div class="popover__content">
+                                                    <div class="card-header">No SS Mapped</div>
+                                                </div>
+                                            </div> -->
+                                            <strong>-</strong>
+                                            <br>
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title">view</h3>
+                                                <div class="popover__content"
+                                                    *ngIf="item.followUpSSDetailsUnique.length>0">
+                                                    <div class="card-header"
+                                                        *ngFor="let ss of item.followUpSSDetailsUnique">{{ss.ss_name}}
+                                                    </div>
+                                                </div>
+                                                <div class="popover__content"
+                                                    *ngIf="item.followUpSSDetailsUnique.length==0">
+                                                    <div class="card-header">No SS Mapped
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td style="font-size: 13px;width: 10%;">
+                                            {{item.escortingFamilyToHealthCareCenterSum}}<br>
+                                            {{item.escortingFamilyToHealthCareCenterUnique}}
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;">
                                             {{item.materialDistributedToFamiliesSum}}<br>
-                                            <hr>{{item.materialDistributedToFamiliesUnique}}
+                                            {{item.materialDistributedToFamiliesUnique}}
                                         </td>
                                         <td style="font-size: 13px;width: 13%;">-<br>
-                                            <hr>-
+                                            -
                                         </td>
-                                        <td style="font-size: 13px;width: 12%;">-<br>
-                                            <hr>-
+                                        <td style="font-size: 13px;width: 14%;">-<br>
+                                            -
                                         </td>
                                     </tr>
 
                                 </tbody>
-
 
                             </table>
                         </div>
@@ -393,14 +466,13 @@
     </div>
 </div>
 
-
 <ng-template #staffDateWiseRecords>
 
     <div class="modal-content">
         <div class="modal-header">
 
             <div class="col-md">
-                <h3 class="modal-title" id="modal-basic-title">staffDateWiseRecords</h3>
+                <h3 class="modal-title" id="modal-basic-title">Staff Date Wise Records</h3>
             </div>
             <div class="col-md">
                 <span class="close" (click)="staffDateWiseRecordsModalDismiss()"
@@ -421,36 +493,37 @@
 
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 13px;width: 13%;">Date</th>
-                                        <th style="font-size: 13px;width: 8%;">Total<br> Family<br> Visited</th>
-                                        <th style="font-size: 13px;width: 8%;">PW<br> Family</th>
-                                        <th style="font-size: 13px;width: 8%;">LM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">LM<br> Children</th>
-                                        <th style="font-size: 13px;width: 8%;">PEM <br>Family</th>
-                                        <th style="font-size: 13px;width: 9%;">RED <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">YELLOW <br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 12%;">General-<br>Adolescent<br>(14-18yr)</th>
-                                        <th style="font-size: 13px;width: 9%;">General-<br>Other</th>
-                                        <th style="font-size: 13px;width: 9%;">Target<br> Family<br>-With<br> SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br> Family<br>-With <br>SS</th>
-                                        <th style="font-size: 13px;width: 10%;">SS<br> Follow<br>Up <br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS <br>Names</th>
-                                        <th style="font-size: 13px;width: 10%;">Escorted <br>Families<br> To<br> HCC
+                                        <th style="font-size: 13px;width: 16%;">Date</th>
+                                        <th style="font-size: 13px;width: 8%;">Total<br>Family<br>Visited</th>
+                                        <th style="font-size: 13px;width: 8%;">PW<br>Family</th>
+                                        <th style="font-size: 13px;width: 8%;">LM<br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">LM<br>Children</th>
+                                        <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
+                                        <th style="font-size: 13px;width: 9%;">RED<br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">YELLOW<br>Children</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Children<br>(2-5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Other</th>
+                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
+                                        <th style="font-size: 13px;width: 10%;">SS<br>Follow<br>Up<br>Answered</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 10%;">Escorted<br>Families<br>To<br>HCC
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Material<br> Distributed<br> - Families
+                                        <th style="font-size: 13px;width: 12%;">Material<br>Distributed<br>Families
                                         </th>
-                                        <th style="font-size: 13px;width: 13%;">Refreshers <br>Training<br> - Completed
+                                        <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
                                         </th>
-                                        <th style="font-size: 13px;width: 12%;">Refreshers <br>Training
-                                            <br>Completed<br>- SS
+                                        <th style="font-size: 13px;width: 12%;">
+                                            Refreshers<br>Training<br>Completed<br>SS
                                         </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr *ngFor="let item of dateWiseStaffDarDetails;index as i">
-                                        <td style="font-size: 13px;width: 13%;">{{item.date}}</td>
+                                        <td style="font-size: 13px;width: 16%;">
+                                            {{item.date.split("-").reverse().join("-")}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.totalFamilyVisited}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.pwCounsellingFamily}}</td>
                                         <td style="font-size: 13px;width: 8%;">{{item.lmCounsellingFamily}}</td>
@@ -467,7 +540,20 @@
                                         <td style="font-size: 13px;width: 9%;">{{item.generalFamiliesVisitedWithSS}}
                                         </td>
                                         <td style="font-size: 13px;width: 10%;">{{item.ssFollowUpAnsweredVisited}}</td>
-                                        <td style="font-size: 13px;width: 8%;">-</td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title">view</h3>
+                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length>0">
+                                                    <div class="card-header" *ngFor="let ss of item.followUpSSDetails">
+                                                        {{ss.ss_name}}
+                                                    </div>
+                                                </div>
+                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length==0">
+                                                    <div class="card-header">No SS Mapped
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td style="font-size: 13px;width: 10%;">
                                             {{item.escortingFamilyToHealthCareCenter}}</td>
                                         <td style="font-size: 13px;width: 12%;">{{item.materialDistributedToFamilies}}
@@ -478,103 +564,132 @@
                                         </td>
                                     </tr>
 
-                                    <tr *ngFor="let dar of darListByStaffID;index as i">
-                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                    <tr>
+                                        <td style="color: #666666;font-size: 13px;width: 16%;">
                                             <strong>Cumulative</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.totalFamilyVisitedSum}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.totalFamilyVisitedSum}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.pwCounsellingFamilySum}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.pwCounsellingFamilySum}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.lmCounsellingFamilySum}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.lmCounsellingFamilySum}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.pemCounsellingFamilySum}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.pemCounsellingFamilySum}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.generalFamilyCounselling2to5Sum}}
+                                            <strong>{{cumUniqueOnStaffClick.generalFamilyCounselling2to5Sum}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
-                                                {{dar.generalFamilyCounsellingAdolescentSum}}</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width:9%;">
-                                            <strong>{{dar.generalFamilyOtherSum}}</strong>
+                                                {{cumUniqueOnStaffClick.generalFamilyCounsellingAdolescentSum}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width:9%;">
-                                            <strong>{{dar.targetFamiliesVisitedWithSSSum}}
+                                            <strong>{{cumUniqueOnStaffClick.generalFamilyOtherSum}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width:9%;">
+                                            <strong>{{cumUniqueOnStaffClick.targetFamiliesVisitedWithSSSum}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width:9%;">
-                                            <strong>{{dar.generalFamiliesVisitedWithSSSum}}
+                                            <strong>{{cumUniqueOnStaffClick.generalFamiliesVisitedWithSSSum}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>-</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong></td>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <!-- <div class="popover__wrapper">
+                                                <h3 class="popover__title"><strong>view</strong></h3>
+                                                <div class="popover__content">
+                                                    <div class="card-header">No SS Mapped</div>
+                                                </div>
+                                            </div> -->-
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
-                                                {{dar.escortingFamilyToHealthCareCenterSum}}</strong></td>
+                                                {{cumUniqueOnStaffClick.escortingFamilyToHealthCareCenterSum}}</strong>
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;">
-                                            <strong>{{dar.materialDistributedToFamiliesSum}}
+                                            <strong>{{cumUniqueOnStaffClick.materialDistributedToFamiliesSum}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 13%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>-</strong></td>
                                     </tr>
 
-                                    <tr *ngFor="let dar of darListByStaffID;index as i">
-                                        <td style="color: #666666;font-size: 13px;width: 13%;">
+                                    <tr>
+                                        <td style="color: #666666;font-size: 13px;width: 16%;">
                                             <strong>Unique</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.totalFamilyVisitedUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.totalFamilyVisitedUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.pwCounsellingFamilyUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.pwCounsellingFamilyUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.lmCounsellingFamilyUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.lmCounsellingFamilyUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.lmChildrenCounsellingUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.lmChildrenCounsellingUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <strong>{{dar.pemCounsellingFamilyUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.pemCounsellingFamilyUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.redChildrenCounsellingUnique}}</strong>
+                                            <strong>{{cumUniqueOnStaffClick.redChildrenCounsellingUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.yellowChildrenCounsellingUnique}}
+                                            <strong>{{cumUniqueOnStaffClick.yellowChildrenCounsellingUnique}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>
-                                                {{dar.generalFamilyCounselling2to5Unique}}</strong></td>
+                                                {{cumUniqueOnStaffClick.generalFamilyCounselling2to5Unique}}</strong>
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
-                                                {{dar.generalFamilyCounsellingAdolescentUnique}}</strong></td>
-                                        <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.generalFamilyOtherUnique}}</strong>
+                                                {{cumUniqueOnStaffClick.generalFamilyCounsellingAdolescentUnique}}</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;">
-                                            <strong>{{dar.targetFamiliesVisitedWithSSUnique}}
+                                            <strong>{{cumUniqueOnStaffClick.generalFamilyOtherUnique}}</strong>
+                                        </td>
+                                        <td style="color: #666666;font-size: 13px;width: 9%;">
+                                            <strong>{{cumUniqueOnStaffClick.targetFamiliesVisitedWithSSUnique}}
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 9%;"><strong>
-                                                {{dar.generalFamiliesVisitedWithSSUnique}}</strong></td>
+                                                {{cumUniqueOnStaffClick.generalFamiliesVisitedWithSSUnique}}</strong>
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;">
-                                            <strong>{{dar.ssFollowUpAnsweredVisitedUnique}}
+                                            <strong>{{cumUniqueOnStaffClick.ssFollowUpAnsweredVisitedUnique}}
                                             </strong>
                                         </td>
-                                        <td style="color: #666666;font-size: 13px;width: 8%;"><strong>-</strong>
+                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title"><strong>view</strong></h3>
+                                                <div class="popover__content"
+                                                    *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length>0">
+                                                    <div class="card-header"
+                                                        *ngFor="let ss of cumUniqueOnStaffClick.followUpSSDetailsUnique">
+                                                        {{ss.ss_name}}
+                                                    </div>
+                                                </div>
+                                                <div class="popover__content"
+                                                    *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length==0">
+                                                    <div class="card-header">No SS Mapped
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
-                                                {{dar.escortingFamilyToHealthCareCenterUnique}}</strong></td>
+                                                {{cumUniqueOnStaffClick.escortingFamilyToHealthCareCenterUnique}}</strong>
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
-                                                {{dar.materialDistributedToFamiliesUnique}}</strong></td>
+                                                {{cumUniqueOnStaffClick.materialDistributedToFamiliesUnique}}</strong>
+                                        </td>
                                         <td style="color: #666666;font-size: 13px;width: 13%;"><strong>-</strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>-</strong>
@@ -592,6 +707,5 @@
         </div>
 
     </div>
-
 
 </ng-template>

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { DailyActivityRecordService } from './daily-activity-record.service';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-daily-activity-record',
@@ -30,6 +31,8 @@ export class DailyActivityRecordComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   dateWiseStaffDarDetailsModal: any;
+  viewDARByRegionBranch: Array<any> = [];
+  cumUniqueOnStaffClick: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private httpService: HttpService, private dailyActRecord: DailyActivityRecordService,
@@ -106,7 +109,15 @@ export class DailyActivityRecordComponent implements OnInit {
     this.darForm.controls.branch.setValue('');
   }
 
+  changeBranch() {
+    this.viewDARByRegionBranch = []
+  }
+
   fromDateExpectToDate(e) {
+    this.dateWiseStaffDarDetails = [];
+    this.darListByStaffID = [];
+    this.viewDARByRegionBranch = [];
+    this.darForm.controls.toDate.setValue('');
     if (e.target.value == '') {
       this.darForm.controls.toDate.setValue('');
     }
@@ -122,6 +133,9 @@ export class DailyActivityRecordComponent implements OnInit {
   }
 
   toDateChange() {
+    this.dateWiseStaffDarDetails = [];
+    this.darListByStaffID = [];
+    this.viewDARByRegionBranch = [];
     if (!this.darForm.value.fromDate) {
       this.showError('Please Select From Date');
       this.darForm.controls.toDate.setValue('');
@@ -145,6 +159,23 @@ export class DailyActivityRecordComponent implements OnInit {
 
   }
 
+  downloadExcelReport() {
+    let item = this.darForm.value;
+
+    if (this.roleAccess == 'HCO') {
+      this.recordDownloadExcelByStaffId();
+    } else {
+      if (item.branch == 'allBranches') {
+        this.recordDownloadExcelByRegionId();
+      }
+
+      if (item.branch != 'allBranches') {
+        this.recordDownloadExcelByBranchId();
+      }
+    }
+
+  }
+
   viewDailyRecordByStaffId() {
     let obj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -161,11 +192,37 @@ export class DailyActivityRecordComponent implements OnInit {
       console.log(this.darListByStaffID, 'darListByStaffID');
       console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
       if (this.darListByStaffID?.length == 0) {
-        this.showError('No data found !');
+        this.showError('Sorry, no data was found !');
       }
 
       if (res.status == false) {
         this.showError(res.message);
+      }
+
+    });
+
+  }
+
+  recordDownloadExcelByStaffId() {
+
+    let obj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      darFromDate: this.darForm.value.fromDate,
+      darToDate: this.darForm.value.toDate,
+      staffMasterId: this.httpService.dataAccessDTO.userId
+    }
+
+    console.log(obj);
+    this.dailyActRecord.recordDownloadExcelByStaffId(obj).subscribe((response: any, fileName: string) => {
+      // console.log(response.body.byteLength == 0);
+
+      if (response.body.byteLength == 0) {
+        this.showError('Sorry, no data was found !');
+      } else {
+        const blob = new Blob([response.body], { type: response.headers.get('content-type') });
+        fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];
+        const file = new File([blob], fileName, { type: response.headers.get('content-type') });
+        saveAs(file);
       }
 
     });
@@ -184,14 +241,40 @@ export class DailyActivityRecordComponent implements OnInit {
 
     this.dailyActRecord.recordViewByBranchId(obj).subscribe((res) => {
       this.darListByBranchID = res.responseObject;
+      this.viewDARByRegionBranch = res.responseObject
       console.log(this.darListByBranchID, 'darListByBranchID');
+      console.log(this.viewDARByRegionBranch, 'viewDARByBranch');
+
 
       if (this.darListByBranchID?.length == 0) {
-        this.showError('No data found !');
+        this.showError('Sorry, no data was found !');
       }
 
       if (res.status == false) {
         this.showError(res.message);
+      }
+    });
+
+  }
+
+  recordDownloadExcelByBranchId() {
+
+    let obj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      darFromDate: this.darForm.value.fromDate,
+      darToDate: this.darForm.value.toDate,
+      branchMasterId: this.darForm.value.branch ? this.darForm.value.branch : this.lowerRankbranchId
+    }
+
+    console.log(obj);
+    this.dailyActRecord.recordDownloadExcelByBranchId(obj).subscribe((response: any, fileName: string) => {
+      if (response.body.byteLength == 0) {
+        this.showError('Sorry, no data was found !');
+      } else {
+        const blob = new Blob([response.body], { type: response.headers.get('content-type') });
+        fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];
+        const file = new File([blob], fileName, { type: response.headers.get('content-type') });
+        saveAs(file);
       }
     });
 
@@ -209,15 +292,40 @@ export class DailyActivityRecordComponent implements OnInit {
 
     this.dailyActRecord.recordViewByRegionId(obj).subscribe((res) => {
       this.darListByRegionID = res.responseObject;
+      this.viewDARByRegionBranch = res.responseObject
+      console.log(this.viewDARByRegionBranch, 'viewDARByRegion');
       console.log(this.darListByRegionID);
+
       if (this.darListByRegionID?.length == 0) {
-        this.showError('No data found !');
+        this.showError('Sorry, no data was found !');
       }
 
       if (res.status == false) {
         this.showError(res.message);
       }
 
+    });
+
+  }
+
+  recordDownloadExcelByRegionId() {
+    let obj = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      darFromDate: this.darForm.value.fromDate,
+      darToDate: this.darForm.value.toDate,
+      regionMasterId: this.darForm.value.region
+    }
+
+    console.log(obj);
+    this.dailyActRecord.recordDownloadExcelByRegionId(obj).subscribe((response: any, fileName: string) => {
+      if (response.body.byteLength == 0) {
+        this.showError('Sorry, no data was found !');
+      } else {
+        const blob = new Blob([response.body], { type: response.headers.get('content-type') });
+        fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];
+        const file = new File([blob], fileName, { type: response.headers.get('content-type') });
+        saveAs(file);
+      }
     });
 
   }
@@ -239,7 +347,9 @@ export class DailyActivityRecordComponent implements OnInit {
 
   staffClickDateWiseRecords(item, staffDateWiseRecords) {
     this.dateWiseStaffDarDetails = item.dateWiseStaffDarDetails;
-    console.log(item, this.dateWiseStaffDarDetails, '  this.dateWiseStaffDarDetails ');
+    this.cumUniqueOnStaffClick = item;
+    console.log(this.dateWiseStaffDarDetails, '  this.dateWiseStaffDarDetails ');
+    console.log(this.cumUniqueOnStaffClick, ' this.cumUniqueOnStaffClick ');
 
     this.modalContent = '';
     this.dateWiseStaffDarDetailsModal = this.modalService.open(staffDateWiseRecords, {
@@ -270,3 +380,4 @@ export class DailyActivityRecordComponent implements OnInit {
   }
 
 }
+
