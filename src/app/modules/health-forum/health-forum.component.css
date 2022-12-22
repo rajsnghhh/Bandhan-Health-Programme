@@ -1,0 +1,136 @@
+.popover__wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.popover__wrapper:hover .popover__content {
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.popover__title {
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    color: #499;
+    text-align:center;
+    margin-bottom: auto;
+}
+
+.popover__content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    width: 200px !important;
+    transform: translate(0, 15px) !important;
+    background-color: white;
+    color: #828BB2;
+    box-shadow: 3px 4px 5px 3px rgba(117, 111, 117, 1);
+}
+
+.popover__content li {
+    padding: 0.3rem 1rem;
+}
+
+.popover__content:before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    left: calc(10% - 10px);
+    top: -10px;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent #bfbfbf transparent;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.card-header {
+    color: white;
+    background-color: #499;
+}
+
+.QA_table .table thead th {
+    border-bottom: 0 solid transparent;
+    background-color: #fff;
+    padding: 17px 30px;
+    line-height: 16px;
+    border: 0px solid transparent;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    text-transform: capitalize;
+    font-family: "Rajdhani", sans-serif;
+    background: #499;
+    padding: 12px 0px;
+    text-align: center;
+  }
+
+  .modal-content {
+    height: 430px;
+    width: 1080px;
+    margin-left: -275px;
+  }
+
+  .QA_table .table tbody td {
+    text-align: center;
+    padding: 4px;
+  }
+
+  .table>:not(:last-child)>:last-child>* {
+    border-bottom-color: white;
+}
+
+.search_inner button {
+    padding-right: 1px;
+    margin-left: 330px;
+    height: 63%;
+  } 
+  
+  .search_inner_fullscreen button {
+    padding-right: 1px;
+    margin-left: 625px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 60%;
+    background: transparent;
+    font-size: 12px;
+    padding-left: 19px;
+    font-size: 18px;
+    color: #2daab8;
+    border: 0;
+  }
+  
+  .serach_field_2 .search_inner button i {
+    font-size: 18px;
+    color: #2daab8;
+    margin-left: 250px;
+  }
+  
+  .search_inner input {
+    width: 70%;
+    margin-left: 593px;
+  }
+  
+  .search_inner_fullscreen input {
+    width: 74%;
+    margin-left: 755px;
+    font-size: 13px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 55px;
+    border: 1px solid #2daab8;
+    padding-right: 15px;
+  }
+
+  .fa-search {
+    margin-left: 120px;
+  }
+  
+ 

@@ -1106,6 +1106,7 @@ class MuacRegisterCreateComponent {
         console.log(this.selStartDate, 'selstartdate');
     }
     deleteMuac(item, i) {
+        console.log(item);
         const post = {
             activeStatus: "A",
             dataAccessDTO: this.httpService.dataAccessDTO,
@@ -1124,7 +1125,7 @@ class MuacRegisterCreateComponent {
                         this.showSuccess(response.message);
                     }
                     else {
-                        this.showError(response.responseObject);
+                        this.showError(response.message);
                     }
                 });
             }
@@ -1134,12 +1135,12 @@ class MuacRegisterCreateComponent {
         }
     }
     showSuccess(message) {
-        this.toaster.success(message, 'Muac Camp', {
+        this.toaster.success(message, 'MUAC Camp', {
             timeOut: 3000,
         });
     }
     showError(message) {
-        this.toaster.error(message, 'Muac Camp', {
+        this.toaster.error(message, 'MUAC Camp', {
             timeOut: 3000,
         });
     }

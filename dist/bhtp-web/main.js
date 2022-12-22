@@ -539,9 +539,9 @@ class SidebarComponent {
         if (routeId == 226 || routeId == 227 || routeId == 228 || routeId == 229) {
             this.router.navigate(['/material-distribution-register']);
         }
-        // if (routeId == 234) {
-        //   this.router.navigate(['/daily-activity-record']);
-        // }
+        if (routeId == 234) {
+            this.router.navigate(['/daily-activity-record']);
+        }
     }
     ngAfterViewInit() {
         let a = document.querySelectorAll(".card-header");

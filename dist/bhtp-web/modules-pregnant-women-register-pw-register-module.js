@@ -1677,7 +1677,7 @@ function PwViewComponent_div_41_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("min", ctx_r2.Anc1stMin)("max", ctx_r2.today);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("min", ctx_r2.Anc1stMin)("max", ctx_r2.today)("enableClearButton", false);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("min", ctx_r2.Anc2ndMin)("max", ctx_r2.today);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
@@ -2397,103 +2397,107 @@ class PwViewComponent {
             this.showError('Please fill-up Actual Date of Delivery ');
             return;
         }
-        // if (this.pwRegisterForm.valid) {
-        //   if (this.data.createMode == true) {
-        //     let Dto = {
-        //       dataAccessDTO: this.httpService.dataAccessDTO,
-        //       pregnantWomanRegisterDto: {
-        //         pregnantWomanRegisterId: 0,
-        //         familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
-        //         initialWeight: this.pwRegisterForm.value.initialWeight,
-        //         lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-        //         expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-        //         antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-        //         firstAncCheckup: this.pwRegisterForm.value.anc1st,
-        //         secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-        //         thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-        //         fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-        //         pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-        //         weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-        //         delivery: this.pwRegisterForm.value.delivery,
-        //         miscarriage: this.pwRegisterForm.value.miscarriage,
-        //         abortion: this.pwRegisterForm.value.abortion,
-        //         actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-        //         livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-        //         placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-        //       },
-        //       familyDeathRegister: {
-        //         deathStatus: this.pwRegisterForm.value.womenDeath,
-        //         familyDeathComment: this.pwRegisterForm.value.deathReason,
-        //         family_death_register_id: 0,
-        //         timeOfDeath: this.pwRegisterForm.value.deathTime,
-        //       }
-        //     }
-        //     console.log(Dto, 'reqAdd')
-        //     this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
-        //       console.log(res, 'responseAdd')
-        //       if (res.status) {
-        //         this.dialogRef.close();
-        //         this.showSuccess('Success');
-        //       } else {
-        //         this.dialogRef.close();
-        //         this.showError(res.message);
-        //       }
-        //     }, error => {
-        //       this.dialogRef.close();
-        //       this.showError('Error')
-        //     });
-        //   } else {
-        //     let Dto = {
-        //       dataAccessDTO: this.httpService.dataAccessDTO,
-        //       pregnantWomanRegisterDto: {
-        //         pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
-        //         familyDetailId: this.data.familyDetailId,
-        //         initialWeight: this.pwRegisterForm.value.initialWeight,
-        //         lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
-        //         expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
-        //         antenatalCheckup: this.pwRegisterForm.value.ancComplete,
-        //         firstAncCheckup: this.pwRegisterForm.value.anc1st,
-        //         secondAncCheckup: this.pwRegisterForm.value.anc2nd,
-        //         thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
-        //         fourthAncCheckup: this.pwRegisterForm.value.anc4th,
-        //         pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
-        //         weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
-        //         delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
-        //         miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
-        //         abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
-        //         actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
-        //         livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
-        //         placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
-        //       },
-        //       familyDeathRegister: {
-        //         deathStatus: this.pwRegisterForm.value.womenDeath,
-        //         familyDeathComment: this.pwRegisterForm.value.deathReason,
-        //         family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
-        //           ? 0
-        //           : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
-        //             ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
-        //             : 0,
-        //         timeOfDeath: this.pwRegisterForm.value.deathTime,
-        //       }
-        //     }
-        //     console.log(Dto, 'reqEdit')
-        //     this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res: any) => {
-        //       console.log(res, 'responseEdit')
-        //       if (res.status) {
-        //         this.dialogRef.close();
-        //         this.showSuccess('Success');
-        //       } else {
-        //         this.dialogRef.close();
-        //         this.showError(res.message);
-        //       }
-        //     }, error => {
-        //       this.dialogRef.close();
-        //       this.showError('Error')
-        //     });
-        //   }
-        // } else {
-        //   this.showError('Please fill-up the form correctly ');
-        // }
+        if (this.pwRegisterForm.valid) {
+            if (this.data.createMode == true) {
+                let Dto = {
+                    dataAccessDTO: this.httpService.dataAccessDTO,
+                    pregnantWomanRegisterDto: {
+                        pregnantWomanRegisterId: 0,
+                        familyDetailId: this.data.pregnantWomanRegisterData.familyDetailId,
+                        initialWeight: this.pwRegisterForm.value.initialWeight,
+                        lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+                        expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+                        antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+                        firstAncCheckup: this.pwRegisterForm.value.anc1st,
+                        secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+                        thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+                        fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+                        pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+                        weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+                        delivery: this.pwRegisterForm.value.delivery,
+                        miscarriage: this.pwRegisterForm.value.miscarriage,
+                        abortion: this.pwRegisterForm.value.abortion,
+                        actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+                        livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+                        placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+                    },
+                    familyDeathRegister: {
+                        deathStatus: this.pwRegisterForm.value.womenDeath,
+                        familyDeathComment: this.pwRegisterForm.value.deathReason,
+                        family_death_register_id: 0,
+                        timeOfDeath: this.pwRegisterForm.value.deathTime,
+                    }
+                };
+                console.log(Dto, 'reqAdd');
+                this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+                    console.log(res, 'responseAdd');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.dialogRef.close();
+                        this.showError(res.message);
+                    }
+                }, error => {
+                    this.dialogRef.close();
+                    this.showError('Error');
+                });
+            }
+            else {
+                let Dto = {
+                    dataAccessDTO: this.httpService.dataAccessDTO,
+                    pregnantWomanRegisterDto: {
+                        pregnantWomanRegisterId: this.data.pregnantWomanRegisterData.pregnantWomanRegisterId,
+                        familyDetailId: this.data.familyDetailId,
+                        initialWeight: this.pwRegisterForm.value.initialWeight,
+                        lastMenstrualPeriod: this.pwRegisterForm.value.lastMenstrualDate,
+                        expectedDateOfDelivery: this.pwRegisterForm.value.expectedDeliveryDate,
+                        antenatalCheckup: this.pwRegisterForm.value.ancComplete,
+                        firstAncCheckup: this.pwRegisterForm.value.anc1st,
+                        secondAncCheckup: this.pwRegisterForm.value.anc2nd,
+                        thirdAncCheckup: this.pwRegisterForm.value.anc3rd,
+                        fourthAncCheckup: this.pwRegisterForm.value.anc4th,
+                        pregnancyComplication: this.pwRegisterForm.value.pregnancyComplication,
+                        weightBeforeDelivery: this.pwRegisterForm.value.beforeDeliveryWeight,
+                        delivery: (this.pwRegisterForm.value.actualDeliveryDate || this.pwRegisterForm.value.miscarriage || this.pwRegisterForm.value.abortion) ? this.pwRegisterForm.value.delivery : null,
+                        miscarriage: this.pwRegisterForm.value.miscarriage == undefined ? null : this.pwRegisterForm.value.miscarriage,
+                        abortion: this.pwRegisterForm.value.abortion == undefined ? null : this.pwRegisterForm.value.abortion,
+                        actualDateOfDelivery: this.pwRegisterForm.value.actualDeliveryDate ? this.pwRegisterForm.value.actualDeliveryDate : null,
+                        livebirthOrStillbirth: this.pwRegisterForm.value.liveStill ? this.pwRegisterForm.value.liveStill : null,
+                        placeOfDelivery: this.pwRegisterForm.value.deliveryPlace ? this.pwRegisterForm.value.deliveryPlace : null
+                    },
+                    familyDeathRegister: {
+                        deathStatus: this.pwRegisterForm.value.womenDeath,
+                        familyDeathComment: this.pwRegisterForm.value.deathReason,
+                        family_death_register_id: this.data.pregnantWomanRegisterData.familyDeathRegister == null
+                            ? 0
+                            : this.data.pregnantWomanRegisterData.familyDeathRegister.deathStatus == 'Y'
+                                ? this.data.pregnantWomanRegisterData.familyDeathRegister.family_death_register_id
+                                : 0,
+                        timeOfDeath: this.pwRegisterForm.value.deathTime,
+                    }
+                };
+                console.log(Dto, 'reqEdit');
+                this.http.post(`${this.httpService.baseURL}pwr/saveOrUpdatePregnantWomanDetails`, Dto).subscribe((res) => {
+                    console.log(res, 'responseEdit');
+                    if (res.status) {
+                        this.dialogRef.close();
+                        this.showSuccess('Success');
+                    }
+                    else {
+                        this.dialogRef.close();
+                        this.showError(res.message);
+                    }
+                }, error => {
+                    this.dialogRef.close();
+                    this.showError('Error');
+                });
+            }
+        }
+        else {
+            this.showError('Please fill-up the form correctly ');
+        }
     }
     closeDialog() {
         this.dialogRef.close();
@@ -2512,7 +2516,7 @@ class PwViewComponent {
     }
 }
 PwViewComponent.ɵfac = function PwViewComponent_Factory(t) { return new (t || PwViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_5__["HttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_6__["ValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_7__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_8__["SidebarService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"])); };
-PwViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PwViewComponent, selectors: [["app-pw-view"]], decls: 96, vars: 26, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md"], ["for", "initialWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "initialWeight", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "change"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "lastMenstrualDate"], [1, "text-danger"], ["type", "date", "formControlName", "lastMenstrualDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "max", "ngClass", "change", "keydown"], ["for", "expectedDeliveryDate"], ["type", "date", "formControlName", "expectedDeliveryDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["type", "radio", "value", "Y", "formControlName", "ancComplete", 3, "click", "change"], ["type", "radio", "value", "N", "formControlName", "ancComplete", 3, "click", "change"], [4, "ngIf"], ["style", "color: #29a10b; font-weight: bold; margin: 0 40%;", 4, "ngIf"], ["for", "pregnancyComplication"], ["rows", "1", "formControlName", "pregnancyComplication", "maxlength", "100", 1, "form-control"], ["for", "beforeDeliveryWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "beforeDeliveryWeight", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "change"], ["type", "radio", "value", "Y", "formControlName", "delivery", 3, "click"], ["type", "radio", "value", "N", "formControlName", "delivery", 3, "click"], ["class", "row", 4, "ngIf"], [1, "form-group", "col-md-2"], ["type", "radio", "value", "Y", "formControlName", "womenDeath", 3, "change"], ["type", "radio", "value", "N", "formControlName", "womenDeath", 3, "change"], ["class", "form-group col-md", 4, "ngIf"], ["class", "form-group col-md-4", 4, "ngIf"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], ["for", "anc1st"], ["type", "date", "formControlName", "anc1st", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["for", "anc2nd"], ["type", "date", "formControlName", "anc2nd", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["for", "anc3rd"], ["type", "date", "formControlName", "anc3rd", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["for", "anc4th"], ["type", "date", "formControlName", "anc4th", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], [2, "color", "#29a10b", "font-weight", "bold", "margin", "0 40%"], ["type", "radio", "value", "miscarriage", "formControlName", "deliveryNo", 3, "ngClass", "click"], ["type", "radio", "value", "abortion", "formControlName", "deliveryNo", 3, "ngClass", "click"], ["class", "invalid-radio", 4, "ngIf"], [1, "invalid-radio"], ["for", "miscarriage"], ["type", "date", "formControlName", "miscarriage", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "abortion"], ["type", "date", "formControlName", "abortion", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "actualDeliveryDate"], ["type", "date", "formControlName", "actualDeliveryDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "change", "keydown"], ["type", "radio", "value", "Live", "formControlName", "liveStill", 3, "ngClass"], ["type", "radio", "value", "Still", "formControlName", "liveStill", 3, "ngClass"], ["type", "radio", "value", "Home", "formControlName", "deliveryPlace", 3, "ngClass"], ["type", "radio", "value", "Institution", "formControlName", "deliveryPlace", 3, "ngClass"], ["type", "radio", "value", "DP", "formControlName", "deathTime"], ["type", "radio", "value", "DL", "formControlName", "deathTime"], ["type", "radio", "value", "PP", "formControlName", "deathTime"], [1, "form-group", "col-md-4"], ["for", "deathReason"], ["rows", "3", "formControlName", "deathReason", "placeholder", "Enter Comment", "maxlength", "300", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "click"]], template: function PwViewComponent_Template(rf, ctx) { if (rf & 1) {
+PwViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PwViewComponent, selectors: [["app-pw-view"]], decls: 96, vars: 26, consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md"], ["for", "initialWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "initialWeight", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "change"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "lastMenstrualDate"], [1, "text-danger"], ["type", "date", "formControlName", "lastMenstrualDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "max", "ngClass", "change", "keydown"], ["for", "expectedDeliveryDate"], ["type", "date", "formControlName", "expectedDeliveryDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["type", "radio", "value", "Y", "formControlName", "ancComplete", 3, "click", "change"], ["type", "radio", "value", "N", "formControlName", "ancComplete", 3, "click", "change"], [4, "ngIf"], ["style", "color: #29a10b; font-weight: bold; margin: 0 40%;", 4, "ngIf"], ["for", "pregnancyComplication"], ["rows", "1", "formControlName", "pregnancyComplication", "maxlength", "100", 1, "form-control"], ["for", "beforeDeliveryWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "beforeDeliveryWeight", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "change"], ["type", "radio", "value", "Y", "formControlName", "delivery", 3, "click"], ["type", "radio", "value", "N", "formControlName", "delivery", 3, "click"], ["class", "row", 4, "ngIf"], [1, "form-group", "col-md-2"], ["type", "radio", "value", "Y", "formControlName", "womenDeath", 3, "change"], ["type", "radio", "value", "N", "formControlName", "womenDeath", 3, "change"], ["class", "form-group col-md", 4, "ngIf"], ["class", "form-group col-md-4", 4, "ngIf"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], ["for", "anc1st"], ["type", "date", "formControlName", "anc1st", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "enableClearButton", "change", "keydown"], ["for", "anc2nd"], ["type", "date", "formControlName", "anc2nd", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["for", "anc3rd"], ["type", "date", "formControlName", "anc3rd", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], ["for", "anc4th"], ["type", "date", "formControlName", "anc4th", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "change", "keydown"], [2, "color", "#29a10b", "font-weight", "bold", "margin", "0 40%"], ["type", "radio", "value", "miscarriage", "formControlName", "deliveryNo", 3, "ngClass", "click"], ["type", "radio", "value", "abortion", "formControlName", "deliveryNo", 3, "ngClass", "click"], ["class", "invalid-radio", 4, "ngIf"], [1, "invalid-radio"], ["for", "miscarriage"], ["type", "date", "formControlName", "miscarriage", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "abortion"], ["type", "date", "formControlName", "abortion", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "actualDeliveryDate"], ["type", "date", "formControlName", "actualDeliveryDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "ngClass", "min", "max", "change", "keydown"], ["type", "radio", "value", "Live", "formControlName", "liveStill", 3, "ngClass"], ["type", "radio", "value", "Still", "formControlName", "liveStill", 3, "ngClass"], ["type", "radio", "value", "Home", "formControlName", "deliveryPlace", 3, "ngClass"], ["type", "radio", "value", "Institution", "formControlName", "deliveryPlace", 3, "ngClass"], ["type", "radio", "value", "DP", "formControlName", "deathTime"], ["type", "radio", "value", "DL", "formControlName", "deathTime"], ["type", "radio", "value", "PP", "formControlName", "deathTime"], [1, "form-group", "col-md-4"], ["for", "deathReason"], ["rows", "3", "formControlName", "deathReason", "placeholder", "Enter Comment", "maxlength", "300", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "click"]], template: function PwViewComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h2", 2);
@@ -2584,7 +2588,7 @@ PwViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](41, PwViewComponent_div_41_Template, 19, 8, "div", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](41, PwViewComponent_div_41_Template, 19, 9, "div", 18);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](42, PwViewComponent_p_42_Template, 2, 0, "p", 19);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](43, "br");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "div", 6);
@@ -2700,7 +2704,7 @@ PwViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.MotherDeath == "Y");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.viewMode);
-    } }, directives: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogTitle"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogContent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RadioControlValueAccessor"]], styles: [".dialog-header[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%] {\r\n  background-color: #499;\r\n  display: inline-block;\r\n  padding: 10px;\r\n  position: relative;\r\n  color: #ffffff;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%]::before {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: -14px;\r\n  width: 0;\r\n  height: 0;\r\n  border-top: 7px solid #277;\r\n  border-right: 7px solid #277;\r\n  border-bottom: 7px solid #0000;\r\n  border-left: 7px solid #0000;\r\n}\r\n\r\n  .mat-dialog-container {\r\n  padding: 12px 17px;\r\n}\r\n\r\n.addEditBtn[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: left;\r\n}\r\n\r\n.invalid-radio[_ngcontent-%COMP%]{\r\n  color: red;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInB3LXZpZXcuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0VBQ3JCLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsY0FBYztBQUNoQjs7QUFDQTtFQUNFLFdBQVc7RUFDWCxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLE9BQU87RUFDUCxhQUFhO0VBQ2IsUUFBUTtFQUNSLFNBQVM7RUFDVCwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLDhCQUE4QjtFQUM5Qiw0QkFBNEI7QUFDOUI7O0FBQ0E7RUFDRSxrQkFBa0I7QUFDcEI7O0FBQ0E7RUFDRSxhQUFhO0VBQ2IscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UsVUFBVTtBQUNaIiwiZmlsZSI6InB3LXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5kaWFsb2ctaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxufVxyXG5cclxuLmRpYWxvZy10aXRsZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzQ5OTtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbn1cclxuLmRpYWxvZy10aXRsZTo6YmVmb3JlIHtcclxuICBjb250ZW50OiBcIlwiO1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBsZWZ0OiAwO1xyXG4gIGJvdHRvbTogLTE0cHg7XHJcbiAgd2lkdGg6IDA7XHJcbiAgaGVpZ2h0OiAwO1xyXG4gIGJvcmRlci10b3A6IDdweCBzb2xpZCAjMjc3O1xyXG4gIGJvcmRlci1yaWdodDogN3B4IHNvbGlkICMyNzc7XHJcbiAgYm9yZGVyLWJvdHRvbTogN3B4IHNvbGlkICMwMDAwO1xyXG4gIGJvcmRlci1sZWZ0OiA3cHggc29saWQgIzAwMDA7XHJcbn1cclxuOjpuZy1kZWVwIC5tYXQtZGlhbG9nLWNvbnRhaW5lciB7XHJcbiAgcGFkZGluZzogMTJweCAxN3B4O1xyXG59XHJcbi5hZGRFZGl0QnRuIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogbGVmdDtcclxufVxyXG5cclxuLmludmFsaWQtcmFkaW97XHJcbiAgY29sb3I6IHJlZDtcclxufVxyXG4iXX0= */"] });
+    } }, directives: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogTitle"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogContent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RadioControlValueAccessor"]], styles: [".dialog-header[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%] {\r\n  background-color: #499;\r\n  display: inline-block;\r\n  padding: 10px;\r\n  position: relative;\r\n  color: #ffffff;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%]::before {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: -14px;\r\n  width: 0;\r\n  height: 0;\r\n  border-top: 7px solid #277;\r\n  border-right: 7px solid #277;\r\n  border-bottom: 7px solid #0000;\r\n  border-left: 7px solid #0000;\r\n}\r\n\r\n  .mat-dialog-container {\r\n  padding: 12px 17px;\r\n}\r\n\r\n.addEditBtn[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: left;\r\n}\r\n\r\n.invalid-radio[_ngcontent-%COMP%]{\r\n  color: red;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInB3LXZpZXcuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0VBQ3JCLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsY0FBYztBQUNoQjs7QUFDQTtFQUNFLFdBQVc7RUFDWCxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLE9BQU87RUFDUCxhQUFhO0VBQ2IsUUFBUTtFQUNSLFNBQVM7RUFDVCwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLDhCQUE4QjtFQUM5Qiw0QkFBNEI7QUFDOUI7O0FBQ0E7RUFDRSxrQkFBa0I7QUFDcEI7O0FBQ0E7RUFDRSxhQUFhO0VBQ2IscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UsVUFBVTtBQUNaIiwiZmlsZSI6InB3LXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5kaWFsb2ctaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxufVxyXG5cclxuLmRpYWxvZy10aXRsZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzQ5OTtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbn1cclxuLmRpYWxvZy10aXRsZTo6YmVmb3JlIHtcclxuICBjb250ZW50OiBcIlwiO1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBsZWZ0OiAwO1xyXG4gIGJvdHRvbTogLTE0cHg7XHJcbiAgd2lkdGg6IDA7XHJcbiAgaGVpZ2h0OiAwO1xyXG4gIGJvcmRlci10b3A6IDdweCBzb2xpZCAjMjc3O1xyXG4gIGJvcmRlci1yaWdodDogN3B4IHNvbGlkICMyNzc7XHJcbiAgYm9yZGVyLWJvdHRvbTogN3B4IHNvbGlkICMwMDAwO1xyXG4gIGJvcmRlci1sZWZ0OiA3cHggc29saWQgIzAwMDA7XHJcbn1cclxuOjpuZy1kZWVwIC5tYXQtZGlhbG9nLWNvbnRhaW5lciB7XHJcbiAgcGFkZGluZzogMTJweCAxN3B4O1xyXG59XHJcbi5hZGRFZGl0QnRuIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogbGVmdDtcclxufVxyXG5cclxuLmludmFsaWQtcmFkaW97XHJcbiAgY29sb3I6IHJlZDtcclxufVxyXG5cclxuIl19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](PwViewComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{

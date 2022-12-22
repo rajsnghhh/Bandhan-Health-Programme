@@ -1,7 +1,7 @@
 .QA_table {
   overflow-x: hidden;
   height: 400px;
-  width: 1080px;
+  /* width: 1080px; */
 }
 
 .QA_section .QA_table .table thead th {

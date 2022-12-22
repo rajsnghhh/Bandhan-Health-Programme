@@ -45,6 +45,7 @@ const routes: Routes = [
   { path: 'ss-training', loadChildren: () => import('./modules/ss-training/ss-training.module').then(m => m.SsTrainingModule), canActivate: [AuthGuard] },
   { path: 'material-distribution-register', loadChildren: () => import('./modules/material-distribution-register/material-distribution-register.module').then(m => m.MaterialDistributionRegisterModule), canActivate: [AuthGuard] },
   { path: 'daily-activity-record', loadChildren: () => import('./modules/daily-activity-record/daily-activity-record.module').then(m => m.DailyActivityRecordModule), canActivate: [AuthGuard] },
+  { path: 'health-forum', loadChildren: () => import('./modules/health-forum/health-forum.module').then(m => m.HealthForumModule) },
   { path: '**', redirectTo: '' },
 ];
 

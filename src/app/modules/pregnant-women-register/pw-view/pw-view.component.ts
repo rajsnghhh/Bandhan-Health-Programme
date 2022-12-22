@@ -397,14 +397,52 @@ export class PwViewComponent implements OnInit {
     }
   }
 
-  onSave() {
-    console.log(this.pwRegisterForm)
-    this.pwRegisterForm.markAllAsTouched();
+  validation() {
+    if (this.pwRegisterForm.value.actualDeliveryDate) {
+      if (this.pwRegisterForm.value.actualDeliveryDate <= this.pwRegisterForm.value.lastMenstrualDate) {
+        this.showError('Actual Date of Delivery should be after Last Menstrual Period');
+        return;
+      }
+    }
+
+    if (this.pwRegisterForm.value.anc1st) {
+      if (this.pwRegisterForm.value.actualDeliveryDate < this.pwRegisterForm.value.anc1st) {
+        this.showError('Actual Date of Delivery should be on or after 1st ANC Checkup')
+      }
+      return;
+    }
+
+    if (this.pwRegisterForm.value.anc2nd) {
+      if (this.pwRegisterForm.value.actualDeliveryDate < this.pwRegisterForm.value.anc2nd) {
+        this.showError('Actual Date of Delivery should be on or after 2nd ANC Checkup')
+      }
+      return;
+    }
+
+    if (this.pwRegisterForm.value.anc3rd) {
+      if (this.pwRegisterForm.value.actualDeliveryDate < this.pwRegisterForm.value.anc3rd) {
+        this.showError('Actual Date of Delivery should be on or after 3rd ANC Checkup')
+      }
+      return;
+    }
+
+    if (this.pwRegisterForm.value.anc4th) {
+      if (this.pwRegisterForm.value.actualDeliveryDate < this.pwRegisterForm.value.anc4th) {
+        this.showError('Actual Date of Delivery should be on or after 4th ANC Checkup')
+      }
+      return;
+    }
 
     if (this.pwRegisterForm.get('delivery').value == 'Y' && this.pwRegisterForm.get('actualDeliveryDate').value == null) {
       this.showError('Please fill-up Actual Date of Delivery ');
       return;
     }
+  }
+
+  onSave() {
+    console.log(this.pwRegisterForm);
+    this.validation();
+    this.pwRegisterForm.markAllAsTouched();
 
     if (this.pwRegisterForm.valid) {
       if (this.data.createMode == true) {
@@ -503,7 +541,6 @@ export class PwViewComponent implements OnInit {
     } else {
       this.showError('Please fill-up the form correctly ');
     }
-
 
   }
 

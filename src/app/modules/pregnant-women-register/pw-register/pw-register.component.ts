@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
+import { ValidationService } from '../../shared/services/validation.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { PwStatusComponent } from '../pw-status/pw-status.component';
 import { SinglePwListComponent } from '../single-pw-list/single-pw-list.component';
@@ -55,7 +56,11 @@ export class PwRegisterComponent implements OnInit {
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
-    private activatedRoute: ActivatedRoute, private router: Router) { }
+    private activatedRoute: ActivatedRoute, private router: Router,public validationService: ValidationService,) { }
+
+    ngDoCheck(): void {
+      this.searchFullscreen = this.validationService.val;
+    }
 
   ngOnInit(): void {
 
