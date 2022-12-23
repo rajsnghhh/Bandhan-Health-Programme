@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ValidationService } from '../shared/services/validation.service';
@@ -15,6 +16,7 @@ import { HealthForumService } from './health-forum.service';
 })
 export class HealthForumComponent implements OnInit {
   healthForumForm: FormGroup;
+  createHFForm: FormGroup;
   regionBranchHide: boolean;
   lowerRankbranchId: any;
   regionList: Array<any> = [];
@@ -24,11 +26,16 @@ export class HealthForumComponent implements OnInit {
   modalContent: any;
   viewHFEventModal: any;
   viewFamilyDetailModal: any;
+  createHFModal: any;
   viewEventList: Array<any> = [];
   viewForumList: any;
   familyDetails: Array<any> = [];
   searchFullscreen: boolean;
   registerSearch: any;
+  dropdownSettings: IDropdownSettings = {};
+  areaList: Array<any> = [];
+  hourList: Array<any> = [];
+  minuteList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig,
@@ -69,6 +76,7 @@ export class HealthForumComponent implements OnInit {
     });
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
   }
 
   healthForumForms() {
@@ -153,6 +161,109 @@ export class HealthForumComponent implements OnInit {
     this.viewFamilyDetailModal.close();
   }
 
+  createHealthForum(createHF) {
+
+    this.areaList = [
+      { itemid: 1, itemtext: 'Hanoi' },
+      { itemid: 2, itemtext: 'Lang Son' },
+      { itemid: 3, itemtext: 'Vung Tau' },
+      { itemid: 4, itemtext: 'Hue' },
+      { itemid: 5, itemtext: 'Cu Chi' },
+    ];
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'itemid',
+      textField: 'itemtext',
+      selectAllText: 'Select All',
+      unSelectAllText: 'Unselect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.createHFForms();
+
+    this.modalContent = '';
+    this.createHFModal = this.modalService.open(createHF, {
+      windowClass: 'createHF',
+    });
+
+    this.hourLists();
+    this.minuteLists();
+  }
+
+  hourLists() {
+    for (let i = 1; i <= 12; i++) {
+      if (i < 10) {
+        this.hourList.push({ hourName: '0' + i, hourValue: '0' + i });
+      } else {
+        this.hourList.push({ hourName: i, hourValue: i });
+      }
+      console.log(this.hourList);
+    }
+  }
+
+  minuteLists() {
+    for (let i = 0; i <= 59; i++) {
+      if (i < 10) {
+        this.minuteList.push({ minuteName: '0' + i, minuteValue: '0' + i });
+      } else {
+        this.minuteList.push({ minuteName: i, minuteValue: i });
+      }
+      console.log(this.minuteList);
+    }
+  }
+
+  onItemSelect(item) {
+    console.log(item);
+    // this.selectedItems.push(item);
+    // this.MouFormData.patchValue({ donorList: this.selectedItems });
+  }
+  onSelectAll(item) {
+    console.log(item);
+    // this.selectedItems = items;
+    // this.MouFormData.patchValue({ donorList: this.selectedItems });
+  }
+  onItemDeSelect(item) {
+    console.log(item);
+    // console.log(item);
+    // const index: number = this.selectedItems.findIndex(
+    //   (x) => x.donorMasterId == item.donorMasterId
+    // );
+    // if (index !== -1) {
+    //   this.selectedItems.splice(index, 1);
+    // }
+    // this.MouFormData.patchValue({ donorList: this.selectedItems });
+  }
+  onItemDeSelectAll(item) {
+    console.log(item);
+    // this.selectedItems = items;
+    // this.MouFormData.patchValue({ donorList: this.selectedItems });
+  }
+
+  createHFForms() {
+    this.createHFForm = this.fb.group({
+      date: ['', Validators.required],
+      staffName: ['', Validators.required],
+      ssName: ['', Validators.required],
+      areaList: ['', Validators.required],
+      hour: ['', Validators.required],
+      minute: ['', Validators.required],
+      meridiem: ['', Validators.required],
+      topic: ['', Validators.required],
+      event: ['', Validators.required],
+    })
+
+  }
+
+  get c() {
+    return this.createHFForm.controls;
+  }
+
+
+  createHFModalDismiss() {
+    this.createHFModal.close();
+  }
+
   showSuccess(message) {
     this.toaster.success(message, 'Health Forum', {
       timeOut: 3000,
@@ -165,6 +276,9 @@ export class HealthForumComponent implements OnInit {
     });
   }
 
+  restrictTypeOfDate() {
+    return false;
+  }
 
 }
 
