@@ -21,5 +21,21 @@ export class HealthForumService {
   viewHealthForumsOfAEvent(obj): any {
     return this.http.post(`${this.baseURL}healthForum/viewHealthForumEventDetails`, obj)
   }
+
+  getAllStaffAndTheirSSOfABranch(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getAllStaffAndTheirSSOfABranch`, obj)
+  }
+
+  getTopicListAndAreasOfStaffAndOrSS(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/getHealthForumTopicListAndAreasOfStaffAndOrSS`, obj)
+  }
+
+  HFSaveOrUpdate(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/saveOrUpdate`, obj)
+  }
+
+  HFApprove(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/approve`, obj)
+  }
 }
 

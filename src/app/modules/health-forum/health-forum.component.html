@@ -5,13 +5,34 @@
             <div class="white_box QA_section mb_30">
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Health Forum</h2>
-                    <!-- 
-                        *ngIf="viewMaterialDistributionForm.value.gram && createMode" -->
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        (click)="createHealthForum(createHF)">
-                        <i class="fas fa-plus-circle" style="cursor: pointer">&nbsp;Create Health Forum</i>
+
+                    <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="search by staff or ss name ..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="!healthForumForm.value.branch">
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
+                            title="Create Health Forum"></i>
+                    </div>
+
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="healthForumForm.value.branch || lowerRankbranchId">
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
+                            title="Create Health Forum" (click)="createHealthForum(createHF)"></i>
+                    </div>
                 </div>
 
                 <form class="form-signin" [formGroup]="healthForumForm">
@@ -48,20 +69,6 @@
                         </div>
                     </div>
 
-                    <div class="box_right d-flex lms_block col-md-6">
-                        <div class="serach_field_2">
-                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                                <form active="#">
-                                    <div class="search_field">
-                                        <input type="text" name="search" placeholder="search by staff or ss name ..."
-                                            [(ngModel)]="registerSearch">
-                                    </div>
-                                    <button type="submit"> <i class="fa fa-search"></i> </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="white_box_tittle list_header">
                         <div class="QA_table">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -72,16 +79,18 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 4%;">Sl.<br>No.</th>
-                                            <th style="width: 8%;">Date<br>Scheduled</th>
-                                            <th style="width: 8%;">Date<br>Rescheduled</th>
-                                            <th style="width: 12%;">Staff Name</th>
-                                            <th style="width: 15%;">SS Name</th>
-                                            <th style="width: 15%;">Topic</th>
-                                            <th style="width: 5%;">Village<br>List</th>
-                                            <th style="width: 5%;">Event<br>Details</th>
-                                            <th style="width: 8%;">Total Family<br>Attended</th>
-                                            <th style="width: 10%;">Total Member<br>Attended</th>
+                                            <th style="width: 12%;">Date<br>Scheduled</th>
+                                            <th style="width: 12%;">Date<br>Rescheduled</th>
+                                            <th style="width: 17%;">Staff Name</th>
+                                            <th style="width: 22%;">SS Name</th>
+                                            <th style="width: 8%;">Topic</th>
+                                            <th style="width: 8%;">Village<br>List</th>
+                                            <th style="width: 8%;">Event<br>Details</th>
+                                            <th style="width: 11%;">Total Family<br>Attended</th>
+                                            <th style="width: 11%;">Total Member<br>Attended</th>
+                                            <th style="width: 15%;"> Action</th>
                                         </tr>
+
                                     </thead>
 
                                     <tbody>
@@ -89,19 +98,27 @@
                                             *ngFor="let health of viewHealthForumsOfBranch | healthForumFilter: {staffFirstName : 
                                         registerSearch, staffLastName :registerSearch, ssName : registerSearch}  ; index as i">
                                             <td style="width: 4%;"> {{i+1}}</td>
-                                            <td style="width: 8%;">
+                                            <td style="width: 12%;">
                                                 {{health.scheduleDetails.date.split("-").reverse().join("-")}}</td>
-                                            <td style="width: 8%;">{{health.rescheduleDetails ?
+                                            <td style="width: 12%;">{{health.rescheduleDetails ?
                                                 health.rescheduleDetails.rescheduleToDate.split("-").reverse().join("-")
-                                                :
-                                                '-'}}
+                                                : '-'}}
                                             </td>
-                                            <td style="width: 12%;">{{health.staffFirstName}}
+                                            <td style="width: 17%;">{{health.staffFirstName}}
                                                 {{health.staffLastName}}
                                             </td>
-                                            <td style="width: 15%;">{{health.ssName? health.ssName: '-'}}</td>
-                                            <td style="width: 15%;">{{health.topicDetails.topicName}}</td>
-                                            <td style="width: 5%;">
+                                            <td style="width: 22%;">{{health.ssName? health.ssName: '-'}}</td>
+                                            <td style="width: 8%;">
+                                                <div class="popover__wrapper">
+                                                    <h3 class="popover__title" style="color:#0d6efd;">view</h3>
+                                                    <div class="popover__content">
+                                                        <li style="word-wrap: break-word; text-align: left;">
+                                                            * {{health.topicDetails.topicName}}
+                                                        </li>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width: 8%;">
                                                 <div class="popover__wrapper">
                                                     <h3 class="popover__title" style="color:#0d6efd;">view</h3>
                                                     <div class="popover__content">
@@ -114,14 +131,21 @@
                                                 </div>
                                             </td>
                                             <td class="btn-link"
-                                                style="width: 5%; color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                                (click)="
-                                            viewHFEventDetails(HFeventDetails, health)">view</td>
-                                            <td style="width: 8%;">{{health.forumFamilyPresent}}</td>
-                                            <td style="width: 10%;">{{health.forumAdolescentGirlPresent+
+                                                style="width: 8%; color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="viewHFEventDetails(HFeventDetails, health)">view</td>
+                                            <td style="width: 11%;">{{health.forumFamilyPresent}}</td>
+                                            <td style="width: 11%;">{{health.forumAdolescentGirlPresent+
                                                 health.forumFamilyHeadPresent}}</td>
-
+                                            <td style="width: 15%;">
+                                                <i class="fas fa-edit" title="Edit Health Forum"
+                                                    (click)="editHealthForum(createHF, health)"></i>
+                                                <i class="fas fa-trash" title="Delete Health Forum"
+                                                    (click)="deleteHealthForum(health)"></i>
+                                                <i class="fas fa-check-circle" title="Approve Health Forum"
+                                                    (click)="approveHealthForum(health)"></i>
+                                            </td>
                                         </tr>
+
                                     </tbody>
 
                                 </table>
@@ -193,7 +217,6 @@
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
                                                 <div class="popover__content">
-                                                    <!-- <div class="card-header">Village List</div> -->
                                                     <li style="word-wrap: break-word; text-align: left;"
                                                         *ngFor="let disease of event.seasonalDiseaseDiscussedList; index as i">
                                                         {{i+1}}. {{disease.diseasesName}}
@@ -361,11 +384,12 @@
 
 <ng-template #createHF>
 
-    <div class="modal-contents">
+    <div class="modal-content">
         <div class="modal-header">
 
             <div class="col-md">
-                <h2 class="dialog-title">Create Health Forum</h2>
+                <h2 class="dialog-title" *ngIf="!editHFDetails?.healthForumMasterId;">Create Health Forum</h2>
+                <h2 class="dialog-title" *ngIf="editHFDetails?.healthForumMasterId;">Edit Health Forum</h2>
             </div>
             <div class="col-md">
                 <span class="close" (click)="createHFModalDismiss()"
@@ -376,12 +400,12 @@
 
         <div class="modal-body">
             <form class="form-signin" [formGroup]="createHFForm">
-                <div class="row">
 
+                <div class="row">
                     <div class="form-group col-md">
                         <label for="date">Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="date" class="form-control" formControlName="date" (keydown)="restrictTypeOfDate()"
-                            [ngClass]="{'is-invalid': c.date.invalid
+                        <input type="date" class="form-control" formControlName="date" [min]="minDate"
+                            (keydown)="restrictTypeOfDate()" (change)="changeDate()" [ngClass]="{'is-invalid': c.date.invalid
                             && c.date.touched,'is-valid': c.date.valid && (c.date.dirty || c.date.touched) }">
                         <div *ngIf="c.date.errors" class="invalid-feedback">
                             <div *ngIf="c.date.errors.required">Date selection is required</div>
@@ -390,32 +414,32 @@
 
                     <div class="form-group col-md">
                         <label for="staffName">Staff Name :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <select class="form-select" (change)="changestaffName($event.target.value)"
+                        <select class="form-select" (change)="changeStaff($event.target.value)"
                             formControlName="staffName" id="staffName" [ngClass]="{'is-invalid': c.staffName.invalid && c.staffName.touched,
                       'is-valid': c.staffName.valid && (c.staffName.dirty || c.staffName.touched) }">
                             <option value="">-- Select Staff Name --</option>
-                            <!-- <option *ngFor="let staffName of staffNameList" value="{{staffName.staffNameMasterId}}">
-                            {{staffName.staffNameName}}
-                        </option> -->
+                            <option *ngFor="let staff of staffList" value="{{staff.staffId}}">
+                                {{staff.staffFisrtName}} {{staff.staffMiddleName}} {{staff.staffLastName}}
+                            </option>
                         </select>
                         <div *ngIf="c.staffName.errors" class="invalid-feedback">
                             <div *ngIf="c.staffName.errors.required">Staff Name selection is required</div>
                         </div>
                     </div>
 
+                    <div class="form-group col-md">
+                        <label for="ssName">SS Name :</label>
+                        <select class="form-select" formControlName="ssName" id="ssName"
+                            (change)="changeSS($event.target.value)">
+                            <option value="">-- Select SS Name --</option>
+                            <option *ngFor="let ss of SSList" value="{{ss.ssId}}">
+                                {{ ss.ssName }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md">
-                        <label for="ssName">SS Name :</label>
-                        <select class="form-select" formControlName="ssName" id="ssName" (change)="changessName()">
-                            <option value="">-- Select SS Name --</option>
-                            <!-- <option *ngFor="let ssName of ssNameList" value="{{ssName.ssNameId}}">
-                                    {{ ssName.ssNameName }}
-                                </option> -->
-                        </select>
-                    </div>
-
                     <div class="form-group col-md">
                         <label for="area">Select Multiple Area :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <ng-multiselect-dropdown placeholder="-- Select Area(s) --" [settings]="dropdownSettings"
@@ -430,70 +454,16 @@
                             <div *ngIf="c.areaList.errors.required">Area selection is required</div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="form-group col-md">
-                        <fieldset class="scheduler-border">
-                            <legend class="scheduler-border">Schedule Start Time:&nbsp;<span
-                                    class="text-danger">*&nbsp;</span></legend>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <select class="form-select" formControlName="hour" id="hour" [ngClass]="{'is-invalid': c.hour.invalid && c.hour.touched,  'is-valid': 
-                                        c.hour.valid && (c.hour.dirty || c.hour.touched) }">
-                                        <option value="">-- Hour--</option>
-                                        <option *ngFor="let hours of hourList; index as i" value="{{hours.hourValue}}">
-                                            {{hours.hourName}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="c.hour.errors" class="invalid-feedback">
-                                        <div *ngIf="c.hour.errors.required">Select Hour</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <select class="form-select" formControlName="minute" id="minute" [ngClass]="{'is-invalid': c.minute.invalid && c.minute.touched,  'is-valid': 
-                                        c.minute.valid && (c.minute.dirty || c.minute.touched) }">
-                                        <option value="">-- Minute--</option>
-                                        <option *ngFor="let minutes of minuteList; index as i"
-                                            value="{{minutes.minuteValue}}">
-                                            {{minutes.minuteName}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="c.minute.errors" class="invalid-feedback">
-                                        <div *ngIf="c.minute.errors.required">Select Minute</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <select class="form-select" formControlName="meridiem" id="meridiem" [ngClass]="{'is-invalid': c.meridiem.invalid && c.meridiem.touched,  'is-valid': 
-                                        c.meridiem.valid && (c.meridiem.dirty || c.meridiem.touched) }">
-                                        <option value="">-- AM/PM --</option>
-                                        <option value="AM">AM</option>
-                                        <option value="PM">PM</option>
-                                    </select>
-                                    <div *ngIf="c.meridiem.errors" class="invalid-feedback">
-                                        <div *ngIf="c.meridiem.errors.required">Select Meridiem</div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </fieldset>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="form-group col-md">
                         <label for="topic">Topic :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <select style="width: 220px;" class="form-select" (change)="changetopic($event.target.value)"
-                            formControlName="topic" id="topic" [ngClass]="{'is-invalid': c.topic.invalid && c.topic.touched,
-                          'is-valid': c.topic.valid && (c.topic.dirty || c.topic.touched) }">
+                        <select class="form-select" formControlName="topic" id="topic"
+                            [ngClass]="{'is-invalid': 
+                        c.topic.invalid && c.topic.touched, 'is-valid': c.topic.valid && (c.topic.dirty || c.topic.touched) }">
                             <option value="">-- Select Topic --</option>
-                            <!-- <option *ngFor="let topic of topicList" value="{{topic.topicMasterId}}">
-                                {{topic.topicName}}
-                            </option> -->
+                            <option *ngFor="let topic of topicList" value="{{topic.ss_training_event_topic_id}}">
+                                {{topic.ss_training_event_topic_name}}
+                            </option>
                         </select>
                         <div *ngIf="c.topic.errors" class="invalid-feedback">
                             <div *ngIf="c.topic.errors.required">Topic selection is required</div>
@@ -514,9 +484,64 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Schedule Start Time:&nbsp;<span
+                                class="text-danger">*&nbsp;</span></legend>
+
+                        <div class="row">
+                            <div class="col-md">
+                                <select class="form-select" formControlName="hour" id="hour" [ngClass]="{'is-invalid': c.hour.invalid && c.hour.touched,  'is-valid': 
+                                        c.hour.valid && (c.hour.dirty || c.hour.touched) }">
+                                    <option value="">-- HH--</option>
+                                    <option *ngFor="let hours of hourList; index as i" value="{{hours.hourValue}}">
+                                        {{hours.hourName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="c.hour.errors" class="invalid-feedback">
+                                    <div *ngIf="c.hour.errors.required">Select Hour</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <select class="form-select" formControlName="minute" id="minute" [ngClass]="{'is-invalid': c.minute.invalid && c.minute.touched,  'is-valid': 
+                                        c.minute.valid && (c.minute.dirty || c.minute.touched) }">
+                                    <option value="">-- MM--</option>
+                                    <option *ngFor="let minutes of minuteList; index as i"
+                                        value="{{minutes.minuteValue}}">
+                                        {{minutes.minuteName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="c.minute.errors" class="invalid-feedback">
+                                    <div *ngIf="c.minute.errors.required">Select Minute</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <select class="form-select" formControlName="meridiem" id="meridiem" [ngClass]="{'is-invalid': c.meridiem.invalid && c.meridiem.touched,  'is-valid': 
+                                        c.meridiem.valid && (c.meridiem.dirty || c.meridiem.touched) }">
+                                    <option value="">-- AM/PM --</option>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                                <div *ngIf="c.meridiem.errors" class="invalid-feedback">
+                                    <div *ngIf="c.meridiem.errors.required">Select Meridiem</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
             </form>
         </div>
 
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary bttn" (click)="HfSaveOrUpdate()"
+                    [disabled]="!saveIsDisabled()">Save</button>
+            </div>
+        </div>
     </div>
 
 </ng-template>

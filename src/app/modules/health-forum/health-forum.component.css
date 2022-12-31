@@ -1,124 +1,101 @@
 .popover__wrapper {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .popover__wrapper:hover .popover__content {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    transform: translate(0, -20px);
-    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 }
 
 .popover__title {
-    font-size: 15px;
-    font-weight: 400;
-    text-decoration: none;
-    color: #499;
-    text-align:center;
-    margin-bottom: auto;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #499;
+  text-align: center;
+  margin-bottom: auto;
 }
 
 .popover__content {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    width: 200px !important;
-    transform: translate(0, 15px) !important;
-    background-color: white;
-    color: #828BB2;
-    box-shadow: 3px 4px 5px 3px rgba(117, 111, 117, 1);
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  width: 200px !important;
+  transform: translate(0, 15px) !important;
+  background-color: white;
+  color: #828BB2;
+  box-shadow: 3px 4px 5px 3px rgba(117, 111, 117, 1);
 }
 
 .popover__content li {
-    padding: 0.3rem 1rem;
+  padding: 0.3rem 1rem;
 }
 
 .popover__content:before {
-    position: absolute;
-    z-index: -1;
-    content: "";
-    left: calc(10% - 10px);
-    top: -10px;
-    border-style: solid;
-    border-width: 0 10px 10px 10px;
-    border-color: transparent transparent #bfbfbf transparent;
-    transition-duration: 0.3s;
-    transition-property: transform;
+  position: absolute;
+  z-index: -1;
+  content: "";
+  left: calc(10% - 10px);
+  top: -10px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #bfbfbf transparent;
+  transition-duration: 0.3s;
+  transition-property: transform;
 }
 
 .card-header {
-    color: white;
-    background-color: #499;
+  color: white;
+  background-color: #499;
 }
 
 .QA_table .table thead th {
-    border-bottom: 0 solid transparent;
-    background-color: #fff;
-    padding: 17px 30px;
-    line-height: 16px;
-    border: 0px solid transparent;
-    font-size: 15px;
-    font-weight: 600;
-    color: #ffffff;
-    white-space: nowrap;
-    text-transform: capitalize;
-    font-family: "Rajdhani", sans-serif;
-    background: #499;
-    padding: 12px 0px;
-    text-align: center;
-  }
-
-  .modal-content {
-    height: 430px;
-    width: 1080px;
-    margin-left: -275px;
-  }
-
-  .modal-contents {
-    height: 530px;
-    width: 495px;
-    /* overflow-y: auto; */
-    /* margin-left: -275px; */
-  }
-
-  .QA_table .table tbody td {
-    text-align: center;
-    padding: 4px;
-  }
-
-  .table>:not(:last-child)>:last-child>* {
-    border-bottom-color: white;
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  border: 0px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  background: #499;
+  padding: 12px 0px;
+  text-align: center;
 }
+
+.modal-content {
+  height: 430px;
+  width: 1080px;
+  margin-left: -275px;
+  overflow-y: auto;
+}
+
+.QA_table .table tbody td {
+  text-align: center;
+  padding: 4px;
+}
+
+.table>:not(:last-child)>:last-child>* {
+  border-bottom-color: white;
+}
+
 .search_inner button {
   padding-right: 1px;
-  margin-left: 540px;
+  margin-left: 390px;
+  margin-top: -8px;
 }
 
 .search_inner_fullscreen button {
   padding-right: 1px;
-  margin-left: 840px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 90%;
-  background: transparent;
-  font-size: 12px;
-  padding-left: 19px;
-  font-size: 18px;
-  color: #2daab8;
-  border: 0;
-}
-.search_inner button {
-  padding-right: 1px;
-  margin-left: 540px;
-}
-
-.search_inner_fullscreen button {
-  padding-right: 1px;
-  margin-left: 840px;
+  margin-left: 690px;
   position: absolute;
   left: 0;
   top: 0;
@@ -132,14 +109,14 @@
 }
 
 .search_inner input {
-  width: 70%;
-  margin-left: 690px;
-  margin-bottom: 5px;
+  width: 55%;
+  margin-left: 600px;
+  margin-bottom: 4px;
 }
 
 .search_inner_fullscreen input {
-  width: 74%;
-  margin-left: 850px;
+  width: 57%;
+  margin-left: 770px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -152,36 +129,38 @@
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: 140px;
+  margin-left: 200px;
 }
 
-  .fa-plus-circle {
-    color: #499;
-    font-size: 20px;
-  }
+.serach_field_2 .search_inner_fullscreen button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: 74px;
+  margin-bottom: 11px;
+}
 
-  .dialog-title {
-    background-color: #499;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    color: #ffffff;
-    margin-left: -30px;
-  }
-  
-  .dialog-title::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -14px;
-    width: 0;
-    height: 0;
-    border-top: 7px solid #277;
-    border-right: 7px solid #277;
-    border-bottom: 7px solid #0000;
-    border-left: 7px solid #0000;
-  }
+.dialog-title {
+  background-color: #499;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  color: #ffffff;
+  margin-left: -15px;
+}
+
+.dialog-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -14px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #277;
+  border-right: 7px solid #277;
+  border-bottom: 7px solid #0000;
+  border-left: 7px solid #0000;
+}
 
 ng-multiselect-dropdown {
   padding: 0px !important;
@@ -201,4 +180,10 @@ legend.scheduler-border {
   font-size: 1.2em !important;
   font-weight: bold !important;
   font-family: ui-sans-serif;
+}
+
+.fa-check-circle:hover {
+  color: darkgreen !important;
+  cursor: pointer;
+  font-size: 1.5em;
 }
