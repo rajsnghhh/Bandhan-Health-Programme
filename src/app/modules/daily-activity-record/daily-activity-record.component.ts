@@ -31,8 +31,12 @@ export class DailyActivityRecordComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   dateWiseStaffDarDetailsModal: any;
+  ssViewModal: any;
   viewDARByRegionBranch: Array<any> = [];
   cumUniqueOnStaffClick: any;
+  loader: boolean = false;
+  ssDetails: Array<any> = [];
+  ssDateOrUniqueShow: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private httpService: HttpService, private dailyActRecord: DailyActivityRecordService,
@@ -51,6 +55,7 @@ export class DailyActivityRecordComponent implements OnInit {
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;
+        this.loader = true;
         this.regionBranchHide = res.regionBranchHide;
       } else {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
@@ -62,9 +67,11 @@ export class DailyActivityRecordComponent implements OnInit {
           branchId: this.lowerRankbranchId
         }
         this.regionBranchHide = res.regionBranchHide;
+        this.loader = true;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
           if (res.sessionDTO.status == true) {
             this.villagesOfBranch = res.responseObject;
+            this.loader = true;
           }
         });
 
@@ -183,11 +190,13 @@ export class DailyActivityRecordComponent implements OnInit {
       darToDate: this.darForm.value.toDate,
       staffMasterId: this.httpService.dataAccessDTO.userId
     }
+    this.loader = false;
 
     console.log(obj);
 
     this.dailyActRecord.recordViewByStaffId(obj).subscribe((res) => {
       this.darListByStaffID = res.responseObject;
+      this.loader = true;
       this.dateWiseStaffDarDetails = res.responseObject[0]?.dateWiseStaffDarDetails;
       console.log(this.darListByStaffID, 'darListByStaffID');
       console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
@@ -211,9 +220,10 @@ export class DailyActivityRecordComponent implements OnInit {
       darToDate: this.darForm.value.toDate,
       staffMasterId: this.httpService.dataAccessDTO.userId
     }
-
+    this.loader = false;
     console.log(obj);
     this.dailyActRecord.recordDownloadExcelByStaffId(obj).subscribe((response: any, fileName: string) => {
+      this.loader = true;
       // console.log(response.body.byteLength == 0);
 
       if (response.body.byteLength == 0) {
@@ -236,10 +246,11 @@ export class DailyActivityRecordComponent implements OnInit {
       darToDate: this.darForm.value.toDate,
       branchMasterId: this.darForm.value.branch ? this.darForm.value.branch : this.lowerRankbranchId
     }
-
+    this.loader = false;
     console.log(obj);
 
     this.dailyActRecord.recordViewByBranchId(obj).subscribe((res) => {
+      this.loader = true;
       this.darListByBranchID = res.responseObject;
       this.viewDARByRegionBranch = res.responseObject
       console.log(this.darListByBranchID, 'darListByBranchID');
@@ -266,8 +277,10 @@ export class DailyActivityRecordComponent implements OnInit {
       branchMasterId: this.darForm.value.branch ? this.darForm.value.branch : this.lowerRankbranchId
     }
 
+    this.loader = false;
     console.log(obj);
     this.dailyActRecord.recordDownloadExcelByBranchId(obj).subscribe((response: any, fileName: string) => {
+      this.loader = true;
       if (response.body.byteLength == 0) {
         this.showError('Sorry, no data was found !');
       } else {
@@ -287,10 +300,11 @@ export class DailyActivityRecordComponent implements OnInit {
       darToDate: this.darForm.value.toDate,
       regionMasterId: this.darForm.value.region
     }
-
+    this.loader = false;
     console.log(obj);
 
     this.dailyActRecord.recordViewByRegionId(obj).subscribe((res) => {
+      this.loader = true;
       this.darListByRegionID = res.responseObject;
       this.viewDARByRegionBranch = res.responseObject
       console.log(this.viewDARByRegionBranch, 'viewDARByRegion');
@@ -315,9 +329,10 @@ export class DailyActivityRecordComponent implements OnInit {
       darToDate: this.darForm.value.toDate,
       regionMasterId: this.darForm.value.region
     }
-
+    this.loader = false;
     console.log(obj);
     this.dailyActRecord.recordDownloadExcelByRegionId(obj).subscribe((response: any, fileName: string) => {
+      this.loader = true;
       if (response.body.byteLength == 0) {
         this.showError('Sorry, no data was found !');
       } else {
@@ -356,6 +371,32 @@ export class DailyActivityRecordComponent implements OnInit {
       windowClass: 'staffDateWiseRecords',
     });
 
+  }
+
+  viewSSName(ssDetail, ssNames) {
+    this.ssDateOrUniqueShow = ssDetail;
+    console.log(this.ssDateOrUniqueShow,'this.ssDateOrUniqueShow');
+    
+    if (ssDetail.followUpSSDetailsUnique) {
+      this.ssDetails = ssDetail.followUpSSDetailsUnique;
+      // console.log(1);
+
+    } else {
+      this.ssDetails = ssDetail.followUpSSDetails;
+      // console.log(2);
+
+    }
+    console.log(this.ssDetails);
+
+    this.modalContent = '';
+    this.ssViewModal = this.modalService.open(ssNames, {
+      windowClass: 'ssNames',
+    });
+
+  }
+
+  ssViewModalDismiss() {
+    this.ssViewModal.close();
   }
 
   staffDateWiseRecordsModalDismiss() {

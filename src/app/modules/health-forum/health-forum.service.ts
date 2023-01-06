@@ -37,5 +37,13 @@ export class HealthForumService {
   HFApprove(obj): any {
     return this.http.post(`${this.baseURL}healthForum/approve`, obj)
   }
+
+  HForumEventPrerequisite(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/healthForumEventPrerequisite`, obj)
+  }
+
+  getListOfFamsOfAVillForHFEvent(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/getListOfFamiliesOfAVillageForHealthForum`, obj)
+  }
 }
 

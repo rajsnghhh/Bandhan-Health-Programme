@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -9,6 +11,7 @@ import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
+import { HealthForumAngularMatModalComponent } from './health-forum-angular-mat-modal/health-forum-angular-mat-modal.component';
 import { HealthForumService } from './health-forum.service';
 
 @Component({
@@ -19,6 +22,7 @@ import { HealthForumService } from './health-forum.service';
 export class HealthForumComponent implements OnInit {
   healthForumForm: FormGroup;
   createHFForm: FormGroup;
+  editHFEventForm: FormGroup;
   regionBranchHide: boolean;
   lowerRankbranchId: any;
   regionList: Array<any> = [];
@@ -29,6 +33,7 @@ export class HealthForumComponent implements OnInit {
   viewHFEventModal: any;
   viewFamilyDetailModal: any;
   createHFModal: any;
+  editHFEventModal: any;
   viewEventList: Array<any> = [];
   viewForumList: any;
   familyDetails: Array<any> = [];
@@ -46,11 +51,23 @@ export class HealthForumComponent implements OnInit {
   villageList: Array<any> = [];
   editHFDetails: any = {};
   editHFDetailsTime: Array<any> = [];
-  editVill: Array<any> = [];
+  loader: boolean = false;
+  page = 1;
+  pageSize = 6;
+  p: any;
+  visitorDetails = {
+    visitorInfo: [],
+  };
+  index: number = 0;
+  eventVillList: Array<any> = [];
+  eventVillListID: Array<any> = [];
+  eventDiseaseList: Array<any> = [];
+  eventFamList: Array<any> = [];
+  statusList: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig,
-    private toaster: ToastrService, public validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService,) {
+    private toaster: ToastrService, public validationService: ValidationService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService,) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -65,6 +82,7 @@ export class HealthForumComponent implements OnInit {
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;
+        this.loader = true;
         this.regionBranchHide = res.regionBranchHide;
       } else {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
@@ -118,9 +136,10 @@ export class HealthForumComponent implements OnInit {
     console.log(branchId, 'branchId');
     this.branchId = branchId;
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
-
+    this.loader = false;
     this.healthForumService.viewHealthForumsOfABranch(req).subscribe((res) => {
       this.viewHealthForumsOfBranch = res?.responseObject;
+      this.loader = true;
       console.log(this.viewHealthForumsOfBranch, 'this.viewHealthForumsOfBranch');
     });
     this.viewHealthForumsOfBranch = [];
@@ -207,6 +226,8 @@ export class HealthForumComponent implements OnInit {
 
   createHealthForum(createHF) {
     console.log(this.editHFDetails, 'editHFDetails');
+    this.hourList = [];
+    this.minuteList = [];
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -225,6 +246,7 @@ export class HealthForumComponent implements OnInit {
         this.createHFModal = this.modalService.open(createHF, {
           windowClass: 'createHF',
         });
+        this.loader = true;
       }, 1500);
     } else {
       this.modalContent = '';
@@ -251,7 +273,7 @@ export class HealthForumComponent implements OnInit {
     // if (this.createHFForm.value.staffName) {
     //   this.getTopicListAndAreasOfStaffAndOrSS();
     // }
-    if (this.editHFDetails?.scheduleDetails.date != this.createHFForm.value.date) {
+    if (this.editHFDetails?.scheduleDetails?.date != this.createHFForm.value.date) {
       this.createHFForm.controls.areaList.setValue('');
       this.createHFForm.controls.topic.setValue('');
     }
@@ -259,20 +281,20 @@ export class HealthForumComponent implements OnInit {
 
   changeStaff(staffId) {
     console.log(staffId, 'staffId');
-   
+
     if (!this.editHFDetails?.healthForumMasterId) {
       this.createHFForm.controls.areaList.setValue('');
       this.createHFForm.controls.topic.setValue('');
       this.createHFForm.controls.ssName.setValue('');
     }
 
-    if (this.editHFDetails?.staffDetails.staffId != this.createHFForm.value.staffName) {
+    if (this.editHFDetails?.staffDetails?.staffId != this.createHFForm.value.staffName) {
       this.createHFForm.controls.ssName.setValue('');
       this.createHFForm.controls.areaList.setValue('');
       this.createHFForm.controls.topic.setValue('');
     }
 
-   
+
 
     // if ( this.createHFForm.value.areaList) {
     //   console.log(this.areaList.forEach(x => { x }));
@@ -310,7 +332,7 @@ export class HealthForumComponent implements OnInit {
       this.createHFForm.controls.topic.setValue('');
     }
 
-    if (this.editHFDetails?.ssDetails.ssId != this.createHFForm.value.ssName) {
+    if (this.editHFDetails?.ssDetails?.ssId != this.createHFForm.value.ssName) {
       this.createHFForm.controls.areaList.setValue('');
       this.createHFForm.controls.topic.setValue('');
     }
@@ -326,8 +348,8 @@ export class HealthForumComponent implements OnInit {
 
   getTopicListAndAreasOfStaffAndOrSS() {
     this.areaList = [];
-   
-    
+
+
     if (!this.createHFForm.value.ssName) {
       this.createHFForm.controls.ssName.setValue('');
     }
@@ -383,6 +405,7 @@ export class HealthForumComponent implements OnInit {
   }
 
   createHFForms() {
+    this.editHFDetailsTime = [];
     if (this.editHFDetails?.healthForumMasterId) {
       var text = this.editHFDetails?.scheduleDetails?.time;
       text.trim().replace(" ", ":").trim().split(":").forEach(e => {
@@ -391,6 +414,8 @@ export class HealthForumComponent implements OnInit {
         } else {
           this.editHFDetailsTime.push(e);
         }
+        console.log(this.editHFDetailsTime);
+
       })
       console.log(this.editHFDetails.villageList);
       this.editHFDetails.villageList = this.editHFDetails.villageList.map(({
@@ -566,8 +591,8 @@ export class HealthForumComponent implements OnInit {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
-        this.createHFModalDismiss();
         this.changeBranch(this.branchId || this.lowerRankbranchId);
+        this.createHFModalDismiss();
       } else {
         this.showError(res.message);
       }
@@ -577,6 +602,7 @@ export class HealthForumComponent implements OnInit {
 
   editHealthForum(createHF, health: {}) {
     this.editHFDetails = health;
+    this.loader = false;
     this.createHealthForum(createHF)
   }
 
@@ -672,6 +698,157 @@ export class HealthForumComponent implements OnInit {
   restrictTypeOfDate() {
     return false;
   }
+
+  openDialog(health) {
+    this.dialog.open(HealthForumAngularMatModalComponent, {
+      width: '400px',
+      height: '250px',
+      data: { villLists: health }
+    });
+  }
+
+  editHFEvents(editHFEvent, event) {
+    console.log(event, 'event');
+    this.hourList = [];
+    this.minuteList = [];
+
+    this.editHFEventForms();
+
+    this.modalContent = '';
+    this.editHFEventModal = this.modalService.open(editHFEvent, {
+      windowClass: 'editHFEvent',
+    });
+
+
+    this.hourLists();
+    this.minuteLists();
+
+    this.visitorDetails.visitorInfo.push({
+      name: '',
+      designation: ''
+    });
+
+    let HFPrerequisite = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      branchId: this.branchId || this.lowerRankbranchId,
+      healthForumMasterId: this.viewForumList.healthForumMasterId
+    }
+
+    this.healthForumService.HForumEventPrerequisite(HFPrerequisite).subscribe((res: any) => {
+      console.log(res.responseObject);
+      this.eventDiseaseList = res.responseObject.seasonalDiseaseList;
+      this.eventVillList = res.responseObject.villageList;
+      console.log(this.eventDiseaseList, 'eventDiseaseList');
+      console.log(this.eventVillList, 'eventVillList');
+      this.eventVillList.forEach(x => {
+        this.eventVillListID.push(x.villageId);
+        console.log(this.eventVillListID, 'eventVillListID');
+      })
+
+      let famReq = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        villageId: [80],
+        healthForumMasterId: 25,
+      }
+
+      console.log(famReq);
+      this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
+        this.eventFamList = res.responseObject;
+        console.log(this.eventFamList, 'eventFamList');
+        this.eventFamList.forEach(x => {
+          x.familyList = x.familyList?.map(({
+            setStatus = '',
+            ...rest
+          }) => ({
+            setStatus,
+            ...rest
+          }));
+          this.setData(x.familyList);
+          // x.familyList.forEach(y => {
+          //   console.log(y.has2to5yearsoldChildren);
+          // });
+
+
+
+        })
+      })
+    });
+
+  }
+
+  setData(familyList) {
+    console.log(familyList);
+
+    familyList.forEach(x => {
+      this.statusList = [];
+      this.statusList.push({ status: x.has2to5yearsoldChildren, set: "2-5 yr" },
+        { status: x.hasAdolescentGirlChildren, set: "14-18 yr" }, { status: x.hasChildPresentInPem, set: "PEM" },
+        { status: x.presentInLactatingMother, set: "LM" }, { status: x.presentInPregnantWoman, set: "PW" })
+      // console.log(this.statusList);
+      var mainString = "";
+      this.statusList.forEach(x => {
+        if (x.status == "Y") {
+          mainString += x.set;
+          mainString += ", "
+        }
+      })
+      if (mainString.length < 1) {
+        // console.log(mainString);
+        x.setStatus = "-"
+      } else {
+        x.setStatus = mainString.substring(0, mainString.length - 2);
+        // console.log(x.setStatus);
+      }
+    })
+
+
+  }
+
+  addMoreVisitor() {
+    this.visitorDetails.visitorInfo.push({
+      name: '',
+      designation: ''
+    });
+
+  }
+
+  removeNewVisitor(i) {
+    this.visitorDetails.visitorInfo.splice(i, 1);
+  }
+
+
+  editHFEventModalDismiss() {
+    this.editHFEventModal.close();
+    this.visitorDetails.visitorInfo = []
+  }
+
+  editHFEventForms() {
+    this.editHFEventForm = this.fb.group({
+      startHour: ['', Validators.required],
+      startMin: ['', Validators.required],
+      startMeridiem: ['', Validators.required],
+      endHour: ['', Validators.required],
+      endMin: ['', Validators.required],
+      endMeridiem: ['', Validators.required],
+      staffPresent: ['', Validators.required],
+      ssPresent: ['', Validators.required],
+      eventConduction: ['', Validators.required],
+      lastMonTopic: ['', Validators.required],
+      thisMonTopic: ['', Validators.required],
+      seasonalDiscussion: ['', Validators.required],
+      seasonalDisease: ['', Validators.required],
+      gram: ['', Validators.required],
+    });
+  }
+
+  get e() {
+    return this.editHFEventForm.controls;
+  }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    this.index = tabChangeEvent.index;
+  }
+
 
 }
 

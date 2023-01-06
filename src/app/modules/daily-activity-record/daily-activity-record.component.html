@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -119,15 +120,16 @@
                                         <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
                                         <th style="font-size: 13px;width: 9%;">RED<br>Children</th>
                                         <th style="font-size: 13px;width: 9%;">YELLOW<br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 12%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 11%;">General<br>Family<br>(2 to 5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General<br>Family<br>(Ado. Girl)</th>
                                         <th style="font-size: 13px;width: 9%;">General<br>Other</th>
-                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 11%;">SS<br>Follow<br>Up<br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
-                                        <th style="font-size: 13px;width: 11%;">Escorted<br>Families<br>To<br>HCC
+                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>Visited<br>With SS
                                         </th>
+                                        <th style="font-size: 13px;width: 10%;">General<br>Family<br>Visited<br>With SS
+                                        </th>
+                                        <th style="font-size: 13px;width: 11%;">SS<br>Followed<br>Up</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 11%;">Families<br>Escorted</th>
                                         <th style="font-size: 13px;width: 12%;">Material<br>Distributed<br>Families
                                         </th>
                                         <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
@@ -158,20 +160,20 @@
                                         <td style="font-size: 13px;width: 9%;">{{item.generalFamiliesVisitedWithSS}}
                                         </td>
                                         <td style="font-size: 13px;width: 11%;">{{item.ssFollowUpAnsweredVisited}}</td>
+
                                         <td style="font-size: 13px;width: 8%;">
                                             <div class="popover__wrapper">
-                                                <h3 class="popover__title">view</h3>
-                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length>0">
-                                                    <div class="card-header" *ngFor="let ss of item.followUpSSDetails">
-                                                        {{ss.ss_name}}
-                                                    </div>
-                                                </div>
+                                                <h3 class="popover__title" *ngIf="item.followUpSSDetails.length>0"
+                                                    (click)="viewSSName(item, ssNames)">view</h3>
+                                                <h3 class="popover__title" *ngIf="item.followUpSSDetails.length==0">view
+                                                </h3>
                                                 <div class="popover__content" *ngIf="item.followUpSSDetails.length==0">
                                                     <div class="card-header">No SS Mapped
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
+
                                         <td style="font-size: 13px;width: 11%;">
                                             {{item.escortingFamilyToHealthCareCenter}}</td>
                                         <td style="font-size: 13px;width: 12%;">{{item.materialDistributedToFamilies}}
@@ -220,12 +222,6 @@
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 11%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;"> <strong>-</strong>
-                                            <!-- <div class="popover__wrapper">
-                                                <h3 class="popover__title"><strong>view</strong></h3>
-                                                <div class="popover__content">
-                                                    <div class="card-header">No SS Mapped</div>
-                                                </div>
-                                            </div> -->
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 11%;"><strong>
                                                 {{dar.escortingFamilyToHealthCareCenterSum}}</strong></td>
@@ -280,23 +276,20 @@
                                             <strong>{{dar.ssFollowUpAnsweredVisitedUnique}}
                                             </strong>
                                         </td>
-                                        <td style="color: #666666;font-size: 13px;width: 8%;">
+
+                                        <td style="font-size: 13px;width: 8%;">
                                             <div class="popover__wrapper">
-                                                <h3 class="popover__title"><strong>view</strong></h3>
-                                                <div class="popover__content"
-                                                    *ngIf="dar.followUpSSDetailsUnique?.length>0">
-                                                    <div class="card-header"
-                                                        *ngFor="let ss of dar.followUpSSDetailsUnique">
-                                                        {{ss.ss_name}}
-                                                    </div>
-                                                </div>
+                                                <h3 class="popover__title" *ngIf="dar.followUpSSDetailsUnique?.length>0"
+                                                    (click)="viewSSName(dar, ssNames)">view</h3>
+                                                <h3 class="popover__title"
+                                                    *ngIf="dar.followUpSSDetailsUnique?.length==0">view</h3>
                                                 <div class="popover__content"
                                                     *ngIf="dar.followUpSSDetailsUnique?.length==0">
-                                                    <div class="card-header">No SS Mapped
-                                                    </div>
+                                                    <div class="card-header">No SS Mapped </div>
                                                 </div>
                                             </div>
                                         </td>
+
                                         <td style="color: #666666;font-size: 13px;width: 11%;"><strong>
                                                 {{dar.escortingFamilyToHealthCareCenterUnique}}</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>
@@ -333,15 +326,16 @@
                                         <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
                                         <th style="font-size: 13px;width: 10%;">RED<br>Children</th>
                                         <th style="font-size: 13px;width: 10%;">YELLOW<br>Children</th>
-                                        <th style="font-size: 13px;width: 10%;">General<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 13%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 11%;">General<br>Family<br>(2 to 5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General<br>Family<br>(Ado. Girl)</th>
                                         <th style="font-size: 13px;width: 9%;">General<br>Other</th>
-                                        <th style="font-size: 13px;width: 10%;">Target<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 12%;">SS<br>Follow<br>Up<br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
-                                        <th style="font-size: 13px;width: 10%;">Escorted<br>Families<br>To<br>HCC
+                                        <th style="font-size: 13px;width: 10%;">Target<br>Family<br>Visited<br>With SS
                                         </th>
+                                        <th style="font-size: 13px;width: 10%;">General<br>Family<br>Visited<br>With SS
+                                        </th>
+                                        <th style="font-size: 13px;width: 11%;">SS<br>Followed<br>Up</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 10%;">Families<br>Escorted</th>
                                         <th style="font-size: 13px;width: 13%;">Material<br>Distributed<br>Families
                                         </th>
                                         <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
@@ -414,28 +408,22 @@
                                         </td>
 
                                         <td style="font-size: 13px;width: 8%;">
-                                            <!-- <div class="popover__wrapper">
-                                                <h3 class="popover__title">view</h3>
-                                                <div class="popover__content">
-                                                    <div class="card-header">No SS Mapped</div>
-                                                </div>
-                                            </div> -->
                                             <strong>-</strong>
                                             <br>
+
                                             <div class="popover__wrapper">
-                                                <h3 class="popover__title">view</h3>
+                                                <h3 class="popover__title" *ngIf="item.followUpSSDetailsUnique.length>0"
+                                                    (click)="viewSSName(item, ssNames)">view</h3>
+                                                <h3 class="popover__title"
+                                                    *ngIf="item.followUpSSDetailsUnique?.length==0">view
+                                                </h3>
                                                 <div class="popover__content"
-                                                    *ngIf="item.followUpSSDetailsUnique.length>0">
-                                                    <div class="card-header"
-                                                        *ngFor="let ss of item.followUpSSDetailsUnique">{{ss.ss_name}}
-                                                    </div>
-                                                </div>
-                                                <div class="popover__content"
-                                                    *ngIf="item.followUpSSDetailsUnique.length==0">
+                                                    *ngIf="item.followUpSSDetailsUnique?.length==0">
                                                     <div class="card-header">No SS Mapped
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </td>
 
                                         <td style="font-size: 13px;width: 10%;">
@@ -501,15 +489,16 @@
                                         <th style="font-size: 13px;width: 8%;">PEM<br>Family</th>
                                         <th style="font-size: 13px;width: 9%;">RED<br>Children</th>
                                         <th style="font-size: 13px;width: 9%;">YELLOW<br>Children</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br>Children<br>(2-5yr)</th>
-                                        <th style="font-size: 13px;width: 12%;">General<br>Adolescent<br>(14-18yr)</th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>(2 to 5yr)</th>
+                                        <th style="font-size: 13px;width: 12%;">General<br>Family<br>(Ado. Girl)</th>
                                         <th style="font-size: 13px;width: 9%;">General<br>Other</th>
-                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>With<br>SS</th>
-                                        <th style="font-size: 13px;width: 10%;">SS<br>Follow<br>Up<br>Answered</th>
-                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
-                                        <th style="font-size: 13px;width: 10%;">Escorted<br>Families<br>To<br>HCC
+                                        <th style="font-size: 13px;width: 9%;">Target<br>Family<br>Visited<br>With SS
                                         </th>
+                                        <th style="font-size: 13px;width: 9%;">General<br>Family<br>Visited<br>With SS
+                                        </th>
+                                        <th style="font-size: 13px;width: 11%;">SS<br>Followed<br>Up</th>
+                                        <th style="font-size: 13px;width: 8%;">SS<br>Names</th>
+                                        <th style="font-size: 13px;width: 10%;">Families<br>Escorted</th>
                                         <th style="font-size: 13px;width: 12%;">Material<br>Distributed<br>Families
                                         </th>
                                         <th style="font-size: 13px;width: 13%;">Refreshers<br>Training<br>Completed
@@ -541,18 +530,19 @@
                                         </td>
                                         <td style="font-size: 13px;width: 10%;">{{item.ssFollowUpAnsweredVisited}}</td>
                                         <td style="font-size: 13px;width: 8%;">
+
                                             <div class="popover__wrapper">
-                                                <h3 class="popover__title">view</h3>
-                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length>0">
-                                                    <div class="card-header" *ngFor="let ss of item.followUpSSDetails">
-                                                        {{ss.ss_name}}
-                                                    </div>
-                                                </div>
-                                                <div class="popover__content" *ngIf="item.followUpSSDetails.length==0">
+                                                <h3 class="popover__title" *ngIf="item.followUpSSDetails.length>0"
+                                                    (click)="viewSSName(item, ssNames)">view</h3>
+                                                <h3 class="popover__title" *ngIf="item.followUpSSDetails?.length==0">
+                                                    view
+                                                </h3>
+                                                <div class="popover__content" *ngIf="item.followUpSSDetails?.length==0">
                                                     <div class="card-header">No SS Mapped
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </td>
                                         <td style="font-size: 13px;width: 10%;">
                                             {{item.escortingFamilyToHealthCareCenter}}</td>
@@ -603,12 +593,7 @@
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>-</strong></td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
-                                            <!-- <div class="popover__wrapper">
-                                                <h3 class="popover__title"><strong>view</strong></h3>
-                                                <div class="popover__content">
-                                                    <div class="card-header">No SS Mapped</div>
-                                                </div>
-                                            </div> -->-
+                                            -
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
                                                 {{cumUniqueOnStaffClick.escortingFamilyToHealthCareCenterSum}}</strong>
@@ -668,21 +653,22 @@
                                             </strong>
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 8%;">
+
                                             <div class="popover__wrapper">
-                                                <h3 class="popover__title"><strong>view</strong></h3>
-                                                <div class="popover__content"
-                                                    *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length>0">
-                                                    <div class="card-header"
-                                                        *ngFor="let ss of cumUniqueOnStaffClick.followUpSSDetailsUnique">
-                                                        {{ss.ss_name}}
-                                                    </div>
-                                                </div>
+                                                <h3 class="popover__title"
+                                                    *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length>0"
+                                                    (click)="viewSSName(cumUniqueOnStaffClick, ssNames)">view</h3>
+                                                <h3 class="popover__title"
+                                                    *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length==0">
+                                                    view
+                                                </h3>
                                                 <div class="popover__content"
                                                     *ngIf="cumUniqueOnStaffClick.followUpSSDetailsUnique.length==0">
                                                     <div class="card-header">No SS Mapped
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 10%;"><strong>
                                                 {{cumUniqueOnStaffClick.escortingFamilyToHealthCareCenterUnique}}</strong>
@@ -694,6 +680,64 @@
                                         </td>
                                         <td style="color: #666666;font-size: 13px;width: 12%;"><strong>-</strong>
                                         </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>
+
+
+<ng-template #ssNames>
+
+    <div class="modal-contents">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title"><span *ngIf="ssDateOrUniqueShow.date">Date:</span>
+                    <span *ngIf="!ssDateOrUniqueShow.date">Staff Name:</span>
+                    {{ssDateOrUniqueShow.date ?
+                    ssDateOrUniqueShow.date.split("-").reverse().join("-"): ssDateOrUniqueShow.staffName}}
+                </h3>
+            </div>
+
+            <div class="col-md">
+                <span class="close" (click)="ssViewModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -25px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="white_box_tittle list_header">
+
+                <div class="white_box_tittle list_header">
+                    <div class="QA_table">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                <thead >
+                                    <tr>
+                                        <th style="width: 8%;">Sl. No.</th>
+                                        <th style="width: 25%;">SS Name</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="height: 115px;">
+                                    <tr *ngFor="let item of ssDetails;index as i">
+                                        <td style="width: 8%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{item.ss_name}}</td>
                                     </tr>
 
                                 </tbody>

@@ -32,6 +32,11 @@ table thead, tbody tr {
   margin-left: -360px;
 }
 
+.modal-contents {
+  height: 250px;
+  width: 100%;
+}
+
 .QA_table .table thead th {
   border-bottom: 0 solid transparent;
   background-color: #fff;
@@ -110,3 +115,4 @@ table thead, tbody tr {
   color: white;
   background-color: #499;
 }
+

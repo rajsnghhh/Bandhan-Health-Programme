@@ -7,16 +7,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { healthForumFilterPipe } from '../shared/sidebar/health-forum-search.pipe';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { LoaderModule } from '../shared/loader/loader.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HealthForumAngularMatModalComponent } from './health-forum-angular-mat-modal/health-forum-angular-mat-modal.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [HealthForumComponent, healthForumFilterPipe],
+  declarations: [HealthForumComponent, healthForumFilterPipe, HealthForumAngularMatModalComponent],
   imports: [
     CommonModule,
     HealthForumRoutingModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    FormsModule, 
-    NgMultiSelectDropDownModule.forRoot()
+    FormsModule, LoaderModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    NgxPaginationModule, MatDialogModule, MatTabsModule,
   ]
 })
 export class HealthForumModule { }
