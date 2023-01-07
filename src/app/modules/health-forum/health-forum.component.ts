@@ -31,6 +31,7 @@ export class HealthForumComponent implements OnInit {
   viewHealthForumsOfBranch: Array<any> = [];
   modalContent: any;
   viewHFEventModal: any;
+  saveFamRecordModal: any;
   viewFamilyDetailModal: any;
   createHFModal: any;
   editHFEventModal: any;
@@ -64,6 +65,7 @@ export class HealthForumComponent implements OnInit {
   eventDiseaseList: Array<any> = [];
   eventFamList: Array<any> = [];
   statusList: Array<any> = [];
+  adolescentGilrChildren: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig,
@@ -802,6 +804,29 @@ export class HealthForumComponent implements OnInit {
     })
 
 
+  }
+
+  SaveFamilyRecord(fami, famRecord) {
+    console.log(fami);
+    this.adolescentGilrChildren = []
+
+    this.adolescentGilrChildren.push({ ChildName: 'Ruhi', Age: '5 yrs 2mon 4 day' },
+      { ChildName: 'Ruhi2', Age: '5 yrs 2mon 4 day' }, { ChildName: 'Ruhi3', Age: '5 yrs 2mon 4 day' },
+      { ChildName: 'Ruhi4', Age: '5 yrs 2mon 4 day' }, { ChildName: 'Ruhi5', Age: '5 yrs 2mon 4 day' },
+      { ChildName: 'Ruhi6', Age: '5 yrs 2mon 4 day' }, { ChildName: 'Ruhi7', Age: '5 yrs 2mon 4 day' })
+
+    console.log(this.adolescentGilrChildren);
+
+
+    this.modalContent = '';
+    this.saveFamRecordModal = this.modalService.open(famRecord, {
+      windowClass: 'famRecord',
+    });
+
+  }
+
+  saveFamRecordModalDismiss() {
+    this.saveFamRecordModal.close();
   }
 
   addMoreVisitor() {

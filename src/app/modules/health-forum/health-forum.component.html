@@ -692,7 +692,7 @@
                         <div class="card" style="width: 690px;  background: whitesmoke; border: none;
                                             border-radius: 14px; height: 240px; margin-left: -75px;">
                             <div class="card-body" style="height: 40vh;">
-                                <h4 class="card-title">visitor Details :</h4>
+                                <h4 class="card-title">Visitor Details :</h4>
                                 <i class="fas fa-plus-circle" id="circle" (click)="addMoreVisitor()" style="cursor: pointer; float: right;
                                                 margin-top:-45px;"></i>
 
@@ -700,30 +700,32 @@
                                     <table class="table" id="table_wrapper">
                                         <thead id="header_fixed">
                                             <tr style="text-align: center;">
-                                                <th>Name</th>
-                                                <th>Designation</th>
-                                                <th>Remove</th>
+                                                <th style="width: 10rem;">Name</th>
+                                                <th style="width: 10rem;">Designation</th>
+                                                <th style="width: 3rem;">Remove</th>
                                             </tr>
                                         </thead>
 
-                                        <tbody id="tbodyy" style="text-align:center;">
+                                        <tbody id="tbody" style="text-align:center;">
                                             <tr *ngFor="let items of visitorDetails.visitorInfo; index as i">
                                                 <td> <input type="text" class="form-control" maxlength="20"
                                                         (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                                         style="text-transform:capitalize;"
                                                         (keypress)="validationService.titleCase($event)"
                                                         placeholder="e.g. xyz"
-                                                        [(ngModel)]="visitorDetails.visitorInfo[i].name">
+                                                        [(ngModel)]="visitorDetails.visitorInfo[i].name"
+                                                        style="width: 16rem;">
                                                 </td>
                                                 <td> <input type="text" class="form-control" maxlength="20"
                                                         (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                                         style="text-transform:capitalize;"
                                                         (keypress)="validationService.titleCase($event)"
                                                         placeholder="e.g. Engineer"
-                                                        [(ngModel)]="visitorDetails.visitorInfo[i].designation">
+                                                        [(ngModel)]="visitorDetails.visitorInfo[i].designation"
+                                                        style="width: 16rem; margin-left: 75px;">
                                                 </td>
                                                 <td><button type="button" class="btn btn-remove"
-                                                        (click)="removeNewVisitor(i)"><i
+                                                        (click)="removeNewVisitor(i)" style="width: 2rem;"><i
                                                             class="fas fa-minus-circle"></i></button>
                                                 </td>
                                             </tr>
@@ -739,7 +741,7 @@
                 <div class="row">
                     <div class="form-group col-md">
                         <div class="card"
-                            style="width: 540px;background: whitesmoke; border: none;border-radius: 14px;height: 370px;">
+                            style="width: 540px;background: whitesmoke; border: none;border-radius: 14px;height: 550px;">
                             <div class="card-body">
                                 <h4 class="card-title">Discussion Topic :</h4>
 
@@ -826,7 +828,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md" style="margin-top: -12px;">
+                                    <!-- <div class="form-group col-md" style="margin-top: -12px;">
                                         <label for="seasonalDisease">Seasonal Disease Name :&nbsp;<span
                                                 class="text-danger">*&nbsp;</span></label>
                                         <select class="form-select"
@@ -835,13 +837,48 @@
                                             [ngClass]="{'is-invalid': e.seasonalDisease.invalid && e.seasonalDisease.touched,
                                           'is-valid': e.seasonalDisease.valid && (e.seasonalDisease.dirty || e.seasonalDisease.touched) }">
                                             <option value="">-- Select Disease Name--</option>
+                                            <option *ngFor="let disease of eventDiseaseList; index as i"
+                                                value="{{disease.diseaseId}}">
+                                                {{disease.diseaseName}}<input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault"
+                                                (change)="unmapRemapSS($event, item.houseHoldDetailId)">
+                                            </option>
 
                                         </select>
                                         <div *ngIf="e.seasonalDisease.errors" class="invalid-feedback">
                                             <div *ngIf="e.seasonalDisease.errors.required">Please select seasonal
                                                 disease name</div>
                                         </div>
-                                    </div>
+                                    </div> -->
+
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Seasonal Disease Name</legend>
+                                        <div id="table_wrapper">
+                                            <table class="table table-striped" id="table_wrapper">
+                                                <thead id="header_fixed">
+                                                    <tr style="text-align: center;">
+                                                        <th style="width: 5%;">Sl. No.</th>
+                                                        <th style="width: 25%;">Name</th>
+                                                        <th style="width: 5%;">Select</th>
+                                                    </tr>
+
+                                                </thead>
+
+
+                                                <tbody style="text-align:center;" id="tbodyDisease">
+                                                    <tr *ngFor="let disease of eventDiseaseList; index as i;">
+                                                        <td style="width: 5%;">{{i+1}}</td>
+                                                        <td style="width: 25%;">{{disease.diseaseName}}</td>
+                                                        <td style="width: 5%;"><input class="form-check-input"
+                                                                type="checkbox" value="" id="flexCheckDefault"
+                                                                (change)="unmapRemapSS($event, item.houseHoldDetailId)">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </fieldset>
                                 </div>
 
                             </div>
@@ -850,12 +887,38 @@
 
                     <div class="form-group col-md">
                         <mat-tab-group animationDuration="500ms" (selectedTabChange)="tabChanged($event)">
-                            <mat-tab *ngFor="let vill of eventVillList; index as i">
+                            
+                            <mat-tab *ngFor="let vill of eventVillList; index as i" class="mat-tab-body mat-tab-body-active">
                                 <ng-template mat-tab-label>
                                     {{vill.villageName}}
                                 </ng-template>
                                 <ng-template matTabContent>
-                                    <div *ngFor="let fam of eventFamList; index as i">
+                                    <div id="table_wrapper">
+                                        <table class="table table-striped" id="table_wrapper">
+                                            <thead id="header_fixed">
+                                                <tr style="text-align: center;">
+                                                    <th>Family No.</th>
+                                                    <th>Name</th>
+                                                    <th>Status</th>
+                                                    <th>Enter Record</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="tbodyy" style="text-align:center;"
+                                                *ngFor="let fam of eventFamList; index as i">
+                                                <tr *ngFor="let fami of fam.familyList;">
+                                                    <td>{{fami.familyNumber}}</td>
+                                                    <td>{{fami.firstName}}{{fami.middleName}}
+                                                        {{fami.lastName}}</td>
+                                                    <td>{{fami.setStatus}}</td>
+                                                    <td><i class="fas fa-save" title="Enter Record"
+                                                            (click)="SaveFamilyRecord(fami, famRecord)"></i></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- <div *ngFor="let fam of eventFamList; index as i">
                                         <div class="card" *ngFor="let fami of fam.familyList;"
                                             style="width: 670px;background: whitesmoke; border: none;border-radius: 14px;height: 150px; margin-bottom:10px">
 
@@ -903,15 +966,12 @@
 
                                                 </div>
 
-                                                <!-- <div class="row"> -->
 
-
-                                                <!-- </div> -->
                                             </div>
 
 
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                 </ng-template>
                             </mat-tab>
@@ -926,58 +986,120 @@
     </div>
 </ng-template>
 
-<!-- <div id="table_wrapper">
-                                                    <table class="table" id="table_wrapper">
-                                                        <thead id="header_fixed">
-                                                            <tr style="text-align: center;">
-                                                                <th>Family No.</th>
-                                                                <th>Name</th>
-                                                                <th>Status</th>
-                                                                <th>Fam Head<br>Present</th>
-                                                            </tr>
-                                                        </thead>
+<ng-template #famRecord>
 
-                                                        <tbody id="tbodyy" style="text-align:center;" *ngFor="let fami of fam.familyList;">
-                                                            <tr>
-                                                                <td>{{fami.familyNumber}}</td>
-                                                                <td>{{fami.firstName}}{{fami.middleName}}
-                                                                    {{fami.lastName}}</td>
-                                                                <td>{{fami.setStatus}}</td>
-                                                                <td><input class="form-check-input" type="checkbox"
-                                                                        value="" id="flexCheckDefault"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <div class="row">
-                                                                    <div class="form-group col-md">
-                                                                        <label for="">
-                                                                            Family Head Present :&nbsp;<span
-                                                                                class="text-danger">*&nbsp;</span></label>
-                                                                    </div>
-                
-                                                                    <div class="form-group col-md">
-                                                                        <div class="form-check-inline">
-                                                                            <input class="form-check-input" type="radio" id="yes"
-                                                                                value="Y" formControlName="thisMonTopic"
-                                                                                (change)="changethisMonTopic($event)" />
-                                                                            <label class="form-check-label" for="">
-                                                                                &nbsp;&nbsp;Yes</label>
-                                                                        </div>
-                
-                                                                        <div class="form-check-inline">
-                                                                            &nbsp;&nbsp;&nbsp;
-                                                                            <input class="form-check-input" type="radio" id="no"
-                                                                                value="N" formControlName="thisMonTopic"
-                                                                                (change)="changethisMonTopic($event)" />
-                                                                            <label class="form-check-label" for="">
-                                                                                &nbsp;&nbsp;No</label>
-                                                                        </div>
-                
-                                                                    </div>
-                
-                                                                </div>
-                                                            </tr>
-                                                        </tbody>
+    <div class="modal-contain">
+        <div class="modal-header">
 
-                                                    </table>
+            <div class="col-md">
+                <h2 class="dialog-title">Enter Family Record</h2>
+            </div>
+            <div class="col-md">
+                <span class="close" (click)="saveFamRecordModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -25px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="card"
+                    style="width: 475px;background: whitesmoke; border: none;border-radius: 14px;height: 70px;margin-left: 8px">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <h4 class="card-title">Family Head Present :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span>
+                                </h4>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" id="yes" value="Y"
+                                        formControlName="thisMonTopic" (change)="changethisMonTopic($event)" />
+                                    <label class="form-check-label" for="">
+                                        &nbsp;&nbsp;Yes</label>
+                                </div>
+
+                                <div class="form-check-inline">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input class="form-check-input" type="radio" id="no" value="N"
+                                        formControlName="thisMonTopic" (change)="changethisMonTopic($event)" />
+                                    <label class="form-check-label" for="">
+                                        &nbsp;&nbsp;No</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Adolescent Girl Attended</legend>
+                    <div id="table_wrapper">
+                        <table class="table table-striped" id="table_wrapper">
+                            <thead id="header_fixed">
+                                <tr style="text-align: center;">
+                                    <th style="width: 2%;">Sl. No.</th>
+                                    <th style="width: 51%;">Child Name</th>
+                                    <th style="width: 46%;">Age</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tbodys">
+                                <table>
+                                    <tbody style="text-align:center;"
+                                        *ngFor="let adol of adolescentGilrChildren;index as i;">
+                                        <tr>
+                                            <td style="width: 2%;">{{i+1}}</td>
+                                            <td style="width: 51%;">{{adol.ChildName}}</td>
+                                            <td style="width: 46%;">{{adol.Age}}</td>
+                                        </tr>
+                                        <div class="row" style="background: whitesmoke;">
+                                            <div class="form-group col-md">
+                                                <h4 class="card-title">Adolescent Girl Attended :&nbsp;<span
+                                                        class="text-danger">*&nbsp;</span>
+                                                </h4>
+                                            </div>
+
+                                            <div class="form-group col-md">
+                                                <div class="form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="yes" value="Y"
+                                                        formControlName="thisMonTopic"
+                                                        (change)="changethisMonTopic($event)" />
+                                                    <label class="form-check-label" for="">
+                                                        &nbsp;&nbsp;Yes</label>
                                                 </div>
-                                                 -->
+
+                                                <div class="form-check-inline">
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <input class="form-check-input" type="radio" id="no" value="N"
+                                                        formControlName="thisMonTopic"
+                                                        (change)="changethisMonTopic($event)" />
+                                                    <label class="form-check-label" for="">
+                                                        &nbsp;&nbsp;No</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </tbody>
+                                </table>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+
+</ng-template>
