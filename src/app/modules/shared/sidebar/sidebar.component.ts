@@ -201,9 +201,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/daily-activity-record']);
     }
 
-    // if (routeId == 246 || routeId == 247 || routeId == 248 || routeId == 249) {
-    //   this.router.navigate(['/health-forum']);
-    // }
+    if (routeId == 246 || routeId == 247 || routeId == 248 || routeId == 249) {
+      this.router.navigate(['/health-forum']);
+    }
 
   }
 

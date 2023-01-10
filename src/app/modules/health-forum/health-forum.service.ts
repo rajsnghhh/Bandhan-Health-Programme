@@ -45,5 +45,9 @@ export class HealthForumService {
   getListOfFamsOfAVillForHFEvent(obj): any {
     return this.http.post(`${this.baseURL}healthForum/getListOfFamiliesOfAVillageForHealthForum`, obj)
   }
+
+  saveOrUpdateHealthForumEvent(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/saveOrUpdateHealthForumEvent`, obj)
+  }
 }
 
