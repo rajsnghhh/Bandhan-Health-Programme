@@ -82,14 +82,14 @@
                                             <th style="width: 4%;">Sl.<br>No.</th>
                                             <th style="width: 12%;">Date<br>Scheduled</th>
                                             <th style="width: 12%;">Date<br>Rescheduled</th>
-                                            <th style="width: 17%;">Staff Name</th>
+                                            <th style="width: 19%;">Staff Name</th>
                                             <th style="width: 22%;">SS Name</th>
                                             <th style="width: 8%;">Topic</th>
                                             <th style="width: 8%;">Village<br>List</th>
                                             <th style="width: 8%;">Event<br>Details</th>
                                             <th style="width: 11%;">Total Family<br>Attended</th>
                                             <th style="width: 11%;">Total Member<br>Attended</th>
-                                            <th style="width: 15%;"> Action</th>
+                                            <th style="width: 18%;"> Action</th>
                                         </tr>
 
                                     </thead>
@@ -105,7 +105,7 @@
                                                 health.rescheduleDetails.rescheduleToDate.split("-").reverse().join("-")
                                                 : '-'}}
                                             </td>
-                                            <td style="width: 17%;">{{health.staffFirstName}}
+                                            <td style="width: 19%;">{{health.staffFirstName}}
                                                 {{health.staffLastName}}
                                             </td>
                                             <td style="width: 22%;">{{health.ssName? health.ssName: '-'}}</td>
@@ -128,13 +128,15 @@
                                             <td style="width: 11%;">{{health.forumFamilyPresent}}</td>
                                             <td style="width: 11%;">{{health.forumAdolescentGirlPresent+
                                                 health.forumFamilyHeadPresent}}</td>
-                                            <td style="width: 15%;">
+                                            <td style="width: 18%;">
                                                 <i class="fas fa-edit" title="Edit Health Forum"
                                                     (click)="editHealthForum(createHF, health)"></i>
                                                 <i class="fas fa-trash" title="Delete Health Forum"
                                                     (click)="deleteHealthForum(health)"></i>
                                                 <i class="fas fa-check-circle" title="Approve Health Forum"
                                                     (click)="approveHealthForum(health)"></i>
+                                                <i class="fas fa-calendar" title="Reschedule Health Forum"
+                                                    (click)="rescheduleHealthForum(rescheduleHF, health)"></i>
                                             </td>
                                         </tr>
 
@@ -164,7 +166,7 @@
             </div>
             <div class="col-md">
                 <i class="fas fa-plus-circle"
-                    style="cursor: pointer; color: #499; font-size: 30px; margin-top: -39px;margin-left: -239px;"
+                    style="cursor: pointer; color: #499; font-size: 25px; margin-top: -39px;margin-left: -239px;"
                     title="Create Health Forum Event" (click)="createHFEvents(createEditHFEvent)"></i>
             </div>
             <div class="col-md">
@@ -233,7 +235,9 @@
                                             <i class="fas fa-edit" title="Edit Health Forum Event"
                                                 (click)="editHFEvents(createEditHFEvent, event)"></i>
                                             <i class="fas fa-trash" title="Delete Health Forum Event"
-                                                (click)="deleteHFEvent()"></i>
+                                                (click)="deleteHFEvent(event, i)"></i>
+                                            <i class="fas fa-check-circle" title="Approve Health Forum Event"
+                                                (click)="approveHealthForumEvent(event)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -631,44 +635,67 @@
                                             <label for="staffPresent">
                                                 Staff Present :&nbsp;<span
                                                     class="text-danger">*&nbsp;</span></label><br>
+                                            ({{HForumEventPrerequisite?.staffFirstName}}
+                                            {{HForumEventPrerequisite?.staffLastName}})<br>
 
                                             <div class="form-check-inline">
                                                 <input class="form-check-input" type="radio" id="yes" value="Y"
-                                                    formControlName="staffPresent">
+                                                    formControlName="staffPresent" (change)="staffPresentorNot($event)">
                                                 <label class="form-check-label" for="">
                                                     &nbsp;&nbsp;Yes</label>
+                                            </div>
 
-                                                <div class="form-check-inline">
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <input class="form-check-input" type="radio" id="no" value="N"
-                                                        formControlName="staffPresent">
-                                                    <label class="form-check-label" for="">
-                                                        &nbsp;&nbsp;No</label>
-                                                </div>
+                                            <div class="form-check-inline">
+                                                <input class="form-check-input" type="radio" id="no" value="N"
+                                                    formControlName="staffPresent" (change)="staffPresentorNot($event)">
+                                                <label class="form-check-label" for="">
+                                                    &nbsp;&nbsp;No</label>
                                             </div>
                                         </div>
 
                                         <div class="form-group col-md" style="margin-top: 15px;">
                                             <label for="ssPresent">
                                                 SS Present :&nbsp;<span class="text-danger">*&nbsp;</span></label><br>
+                                            ({{HForumEventPrerequisite?.ssName ? HForumEventPrerequisite?.ssName : 'No
+                                            SS
+                                            Present'}})<br>
 
                                             <div class="form-check-inline">
-                                                <input class="form-check-input" type="radio" id="yes" value="Y"
-                                                    formControlName="ssPresent">
+                                                <input class="form-check-input" type="radio" id="yess" value="Y"
+                                                    formControlName="ssPresent" (change)="ssPresentorNot($event)">
                                                 <label class="form-check-label" for="">
                                                     &nbsp;&nbsp;Yes</label>
+                                            </div>
 
-                                                <div class="form-check-inline">
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <input class="form-check-input" type="radio" id="no" value="N"
-                                                        formControlName="ssPresent">
-                                                    <label class="form-check-label" for="">
-                                                        &nbsp;&nbsp;No</label>
+                                            <div class="form-check-inline">
+                                                <input class="form-check-input" type="radio" id="no" value="N"
+                                                    formControlName="ssPresent" (change)="ssPresentorNot($event)">
+                                                <label class="form-check-label" for="">
+                                                    &nbsp;&nbsp;No</label>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group col-md" style="margin-top: 15px;"
+                                            *ngIf="!this.createEditHFEventForm.value.ssPresent && !this.createEditHFEventForm.value.staffPresent">
+                                            <label for="eventConduction">Event Conducted By :&nbsp;<span
+                                                    class="text-danger">*&nbsp;</span></label>
+                                            <select class="form-select" formControlName="eventConduction" disabled
+                                                id="eventConduction"
+                                                [ngClass]="{'is-invalid': e.eventConduction.invalid && e.eventConduction.touched,  'is-valid': 
+                                                            e.eventConduction.valid && (e.eventConduction.dirty || e.eventConduction.touched) }">
+                                                <option value="">-- Select --</option>
+                                                <option value="STAFF">Staff</option>
+                                                <option value="SS">SS</option>
+                                            </select>
+                                            <div *ngIf="e.eventConduction.errors" class="invalid-feedback">
+                                                <div *ngIf="e.eventConduction.errors.required">Select event conduction
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md" style="margin-top: 15px;">
+                                        <div class="form-group col-md" style="margin-top: 15px;"
+                                            *ngIf="this.createEditHFEventForm.value.ssPresent || this.createEditHFEventForm.value.staffPresent">
                                             <label for="eventConduction">Event Conducted By :&nbsp;<span
                                                     class="text-danger">*&nbsp;</span></label>
                                             <select class="form-select" formControlName="eventConduction"
@@ -755,13 +782,14 @@
                                         <label for="lastMonTopic">
                                             Recap Last Month's Topic :&nbsp;<span
                                                 class="text-danger">*&nbsp;</span></label>
-                                        <h5>(Planning for better health and how to reduce health expenditures)</h5>
+                                        <h5>({{HForumEventPrerequisite?.lastMonthHfTopicName
+                                            ? HForumEventPrerequisite?.lastMonthHfTopicName:'-' }})</h5>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <div class="form-check-inline">
                                             <input class="form-check-input" type="radio" id="yes" value="Y"
-                                                formControlName="lastMonTopic" (change)="changelastMonTopic($event)" />
+                                                formControlName="lastMonTopic" />
                                             <label class="form-check-label" for="">
                                                 &nbsp;&nbsp;Yes</label>
                                         </div>
@@ -769,7 +797,7 @@
                                         <div class="form-check-inline">
                                             &nbsp;&nbsp;&nbsp;
                                             <input class="form-check-input" type="radio" id="no" value="N"
-                                                formControlName="lastMonTopic" (change)="changelastMonTopic($event)" />
+                                                formControlName="lastMonTopic" />
                                             <label class="form-check-label" for="">
                                                 &nbsp;&nbsp;No</label>
                                         </div>
@@ -781,13 +809,14 @@
                                         <label for="thisMonTopic">
                                             Discussion on This Month's Topic :&nbsp;<span
                                                 class="text-danger">*&nbsp;</span></label>
-                                        <h5>(Planning for better health and how to reduce health expenditures)</h5>
+                                        <h5>({{HForumEventPrerequisite?.topicName ? HForumEventPrerequisite?.topicName :
+                                            '-' }})</h5>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <div class="form-check-inline">
                                             <input class="form-check-input" type="radio" id="yes" value="Y"
-                                                formControlName="thisMonTopic" (change)="changethisMonTopic($event)" />
+                                                formControlName="thisMonTopic" />
                                             <label class="form-check-label" for="">
                                                 &nbsp;&nbsp;Yes</label>
                                         </div>
@@ -795,7 +824,7 @@
                                         <div class="form-check-inline">
                                             &nbsp;&nbsp;&nbsp;
                                             <input class="form-check-input" type="radio" id="no" value="N"
-                                                formControlName="thisMonTopic" (change)="changethisMonTopic($event)" />
+                                                formControlName="thisMonTopic" />
                                             <label class="form-check-label" for="">
                                                 &nbsp;&nbsp;No</label>
                                         </div>
@@ -832,7 +861,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" *ngIf="createEditHFEventForm.value.seasonalDiscussion=='Y'">
 
                                     <fieldset class="scheduler-border">
                                         <legend class="scheduler-border">Seasonal Disease Name</legend>
@@ -850,9 +879,15 @@
                                                     <tr *ngFor="let disease of eventDiseaseList; index as i;">
                                                         <td style="width: 5%;">{{i+1}}</td>
                                                         <td style="width: 25%;">{{disease.diseaseName}}</td>
-                                                        <td style="width: 5%;"> <input class="form-check-input"
-                                                                type="checkbox" value="" id="flexCheckDefault"
-                                                                (change)="selectMultipleDisease($event,disease)"> </td>
+                                                        <td style="width: 5%;"> <input *ngIf="disease.isChecked== true"
+                                                                class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckDefault" checked
+                                                                (change)="selectMultipleDisease($event,disease)">
+                                                            <input *ngIf="disease.isChecked== false"
+                                                                class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckDefault"
+                                                                (change)="selectMultipleDisease($event,disease)">
+                                                        </td>
                                                         <!-- <td *ngIf="disease.isChecked == true" style="width: 5%;"> <input
                                                                 class="form-check-input" type="checkbox" value=""
                                                                 id="flexCheckDefault" [checked]="true"
@@ -892,9 +927,14 @@
                                                 <div class="col-md-5">
                                                     <h4 class="card-title">Family No. : {{fami.familyNumber}}</h4>
                                                 </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-5">
                                                     <h4 class="card-title">Name :
                                                         {{fami.firstName}}{{fami.middleName}} {{fami.lastName}}</h4>
+                                                </div>
+
+                                                <div class="col-md-2" style="color: red;"
+                                                    (click)="unselectFamily(fami, int)">
+                                                    Delete
                                                 </div>
                                             </div>
 
@@ -923,14 +963,30 @@
                                                             &nbsp;&nbsp;Yes</label>
                                                     </div>
 
-                                                    <div class="form-check-inline">
+                                                    <div class="form-check-inline"
+                                                        *ngIf="fami.adolescentGilrChildren.length == 0">
                                                         &nbsp;&nbsp;&nbsp;
                                                         <input *ngIf="fami.radioCheck == 'N'" class="form-check-input"
-                                                            type="radio" id="no" value="N"
+                                                            type="radio" id="famHeadNo" value="N"
+                                                            (change)="changefamilyHeadPresent($event, fami,vill)"
+                                                            [name]="int" disabled />
+                                                        <input *ngIf="fami.radioCheck != 'N'" class="form-check-input"
+                                                            type="radio" id="famHeadNo" value="N"
+                                                            (change)="changefamilyHeadPresent($event, fami,vill)"
+                                                            [name]="int" disabled />
+                                                        <label class="form-check-label" for="">
+                                                            &nbsp;&nbsp;No</label>
+                                                    </div>
+
+                                                    <div class="form-check-inline"
+                                                        *ngIf="fami.adolescentGilrChildren.length != 0">
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <input *ngIf="fami.radioCheck == 'N'" class="form-check-input"
+                                                            type="radio" id="famHeadNo" value="N"
                                                             (change)="changefamilyHeadPresent($event, fami,vill)"
                                                             [name]="int" checked />
                                                         <input *ngIf="fami.radioCheck != 'N'" class="form-check-input"
-                                                            type="radio" id="no" value="N"
+                                                            type="radio" id="famHeadNo" value="N"
                                                             (change)="changefamilyHeadPresent($event, fami,vill)"
                                                             [name]="int" />
                                                         <label class="form-check-label" for="">
@@ -965,7 +1021,9 @@
                                                                         {{adol.childName}}</td>
                                                                     <td style="width: 31%;">{{adol.age}}
                                                                     </td>
-                                                                    <td style="width: 7%;"><input
+
+                                                                    <td style="width: 7%;"
+                                                                        *ngIf="fami.radioCheck != 'NA'"><input
                                                                             *ngIf="adol.isChecked==true"
                                                                             class="form-check-input" type="checkbox"
                                                                             value="" id="flexCheckDefault"
@@ -975,6 +1033,20 @@
                                                                             class="form-check-input" type="checkbox"
                                                                             value="" id="flexCheckDefault"
                                                                             (change)="selectAdolescent($event, adol, fami)">
+                                                                    </td>
+
+                                                                    <td style="width: 7%;"
+                                                                        *ngIf="fami.radioCheck == 'NA'"><input
+                                                                            *ngIf="adol.isChecked==true"
+                                                                            class="form-check-input" type="checkbox"
+                                                                            value="" id="flexCheckDefault"
+                                                                            (change)="selectAdolescent($event, adol, fami)"
+                                                                            checked disabled>
+                                                                        <input *ngIf="adol.isChecked!=true"
+                                                                            class="form-check-input" type="checkbox"
+                                                                            value="" id="flexCheckDefault"
+                                                                            (change)="selectAdolescent($event, adol, fami)"
+                                                                            disabled>
                                                                     </td>
                                                                 </tr>
 
@@ -998,7 +1070,64 @@
 
         <div class="modal-footer">
             <div class="row">
-                <button type="button" class=" btn btn-primary btn-sm" (click)="saveEditHFEvent()">Save</button>
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveEditHFEvent()"
+                    [disabled]="!saveEditHFEventDisabled()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+
+<ng-template #rescheduleHF>
+
+    <div class="modal-HF">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">Reschedule Health Forum</h3>
+            </div>
+
+            <div class="col-md">
+                <span class="close" (click)="rescheduleHFModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body" style="height: 35vh; overflow-y: auto;">
+            <form class="form-signin" [formGroup]="rescheduleHFForm">
+
+                <div class="form-group col-md">
+                    <label for="date">Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="date" [min]="minDate"
+                        (keydown)="restrictTypeOfDate()" (change)="changeDate()" [ngClass]="{'is-invalid': r.date.invalid
+                            && r.date.touched,'is-valid': r.date.valid && (r.date.dirty || r.date.touched) }">
+                    <div *ngIf="r.date.errors" class="invalid-feedback">
+                        <div *ngIf="r.date.errors.required">Date selection is required</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md">
+                    <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <textarea rows="4" cols="50" style="resize: none; height: 5em;" class="form-control"
+                        formControlName="comment"
+                        [ngClass]="{'is-invalid': r.comment.invalid
+                            && r.comment.touched,'is-valid': r.comment.valid && (r.comment.dirty || r.comment.touched) }">
+                    </textarea>
+                    <div *ngIf="r.comment.errors" class="invalid-feedback">
+
+                        <div *ngIf="r.comment.errors.required">Comment is required</div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveRescheduled()">Save</button>
             </div>
         </div>
 

@@ -23,6 +23,7 @@ export class HealthForumComponent implements OnInit {
   healthForumForm: FormGroup;
   createHFForm: FormGroup;
   createEditHFEventForm: FormGroup;
+  rescheduleHFForm: FormGroup;
   regionBranchHide: boolean;
   lowerRankbranchId: any;
   regionList: Array<any> = [];
@@ -35,6 +36,7 @@ export class HealthForumComponent implements OnInit {
   viewFamilyDetailModal: any;
   createHFModal: any;
   editHFEventModal: any;
+  rescheduleHFModal: any;
   viewEventList: Array<any> = [];
   viewForumList: any;
   familyDetails: Array<any> = [];
@@ -67,12 +69,20 @@ export class HealthForumComponent implements OnInit {
   statusList: Array<any> = [];
   HForumEventPrerequisite: any;
   diseaseListID: Array<any> = [];
-  adolGirlList: Array<any> = [];
+  adolGirlListDisable: Array<any> = [];
   familyListData: Array<any> = [];
   year: any;
   month: any;
   day: any;
   editHF_eventDetails: any = {};
+  familyHeadPresentLenChk: Array<any> = [];
+  editStartHour: any;
+  editStartMin: any;
+  editEndHour: any;
+  editEndMin: any;
+  moreEventDetails: any;
+  rescheduleData: any;
+  // setmoreEventDetails: Array<any> = [];
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig,
@@ -170,6 +180,7 @@ export class HealthForumComponent implements OnInit {
 
   viewHFEventModalDismiss() {
     this.viewHFEventModal.close();
+
   }
 
   viewFamilyAttendedDetails(ViewFamilyDetails, event) {
@@ -693,6 +704,8 @@ export class HealthForumComponent implements OnInit {
 
   }
 
+
+
   showSuccess(message) {
     this.toaster.success(message, 'Health Forum', {
       timeOut: 3000,
@@ -718,119 +731,154 @@ export class HealthForumComponent implements OnInit {
   }
 
   createHFEvents(createEditHFEvent) {
-    console.log(this.editHF_eventDetails);
+    if (this.viewForumList.approvalStatus == 'A') {
+      // console.log(this.editHF_eventDetails, 'editHF_eventDetails');
 
-    this.hourList = [];
-    this.minuteList = [];
+      this.hourList = [];
+      this.minuteList = [];
 
-    this.createEditHFEventForms();
+      setTimeout(() => {
+        this.createEditHFEventForms(this.editHF_eventDetails);
 
-    this.modalContent = '';
-    this.editHFEventModal = this.modalService.open(createEditHFEvent, {
-      windowClass: 'createEditHFEvent',
-    });
+        this.modalContent = '';
+        this.editHFEventModal = this.modalService.open(createEditHFEvent, {
+          windowClass: 'createEditHFEvent',
+        });
+      }, 1500);
 
 
-    this.hourLists();
-    this.minuteLists();
 
-    this.visitorDetails.visitorInfo.push({
-      visitorName: '',
-      visitorDesignation: ''
-    });
 
-    let HFPrerequisite = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      branchId: this.branchId || this.lowerRankbranchId,
-      healthForumMasterId: this.viewForumList.healthForumMasterId
-    }
+      this.hourLists();
+      this.minuteLists();
+      // this.visitorDetails.visitorInfo = this.visitorDetails.visitorInfo.map(({
+      //   health_forum_event_visitor_map_id = 0,
+      //   active_flag = 'A',
+      //   ...rest
+      // }) => ({
+      //   health_forum_event_visitor_map_id, active_flag,
+      //   ...rest
+      // }));
+      // console.log(this.visitorDetails.visitorInfo);
+      this.visitorDetails.visitorInfo.push({
+        visitorName: '',
+        visitorDesignation: '',
+        health_forum_event_visitor_map_id: 0,
+        active_flag: 'A'
+      });
 
-    this.healthForumService.HForumEventPrerequisite(HFPrerequisite).subscribe((res: any) => {
-      this.HForumEventPrerequisite = res.responseObject;
-      console.log(this.HForumEventPrerequisite, 'HForumEventPrerequisite');
-      this.eventDiseaseList = res.responseObject.seasonalDiseaseList;
-      this.eventDiseaseList = this.eventDiseaseList?.map(({
-        isChecked = false,
-        ...rest
-      }) => ({
-        isChecked,
-        ...rest
-      }));
-      console.log(this.eventDiseaseList);
-
-      this.eventVillList = res.responseObject.villageList;
-      console.log(this.eventDiseaseList, 'eventDiseaseList');
-      console.log(this.eventVillList, 'eventVillList');
-      this.eventVillListID = [];
-      this.eventVillList.forEach(x => {
-        this.eventVillListID.push(x.villageId);
-        console.log(this.eventVillListID, 'eventVillListID');
-      })
-
-      let famReq = {
+      let HFPrerequisite = {
         dataAccessDTO: this.httpService.dataAccessDTO,
-        villageId: this.eventVillListID,
-        healthForumMasterId: this.viewForumList.healthForumMasterId,
+        branchId: this.branchId || this.lowerRankbranchId,
+        healthForumMasterId: this.viewForumList.healthForumMasterId
       }
 
-      this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
-        // this.eventFamList=[]
-        this.eventFamList = res.responseObject;
+      this.loader = false;
+      this.healthForumService.HForumEventPrerequisite(HFPrerequisite).subscribe((res: any) => {
+        this.loader = true;
+        this.HForumEventPrerequisite = res.responseObject;
 
-        console.log(this.eventVillList, 'eventVillList22');
-        console.log(this.eventFamList, 'eventFamList');
-        this.eventFamList?.forEach((x) => {
-          console.log(x);
+        // if (this.HForumEventPrerequisite.ssName != null) {
+        //   this.createEditHFEventForm.controls.ssPresent.setValue('');
+        // } else {
+        //   let yesDisabled = (document.getElementById("yess") as HTMLInputElement);
+        //   yesDisabled.disabled = true;
+        //   this.createEditHFEventForm.controls.ssPresent.setValue('N');
+        //   this.createEditHFEventForm.controls.staffPresent.setValue('Y');
+        //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+        // }
+        console.log(this.HForumEventPrerequisite, 'HForumEventPrerequisite');
+        this.eventDiseaseList = res.responseObject.seasonalDiseaseList;
+        this.eventDiseaseList = this.eventDiseaseList?.map(({
+          isChecked = false,
+          ...rest
+        }) => ({
+          isChecked,
+          ...rest
+        }));
+        // console.log(this.eventDiseaseList);
 
-          x.familyList = x.familyList?.map(({
-            setStatus = '',
-            radioCheck = 'NA',
-            villageId = '',
-            adolGirl = [],
-            ...rest
-          }) => ({
-            setStatus, radioCheck, villageId, adolGirl,
-            ...rest
-          }));
-          this.setData(x.familyList);
-
+        this.eventVillList = res.responseObject.villageList;
+        console.log(this.eventDiseaseList, 'eventDiseaseList');
+        // console.log(this.eventVillList, 'eventVillList');
+        this.eventVillListID = [];
+        this.eventVillList.forEach(x => {
+          this.eventVillListID.push(x.villageId);
+          // console.log(this.eventVillListID, 'eventVillListID');
         })
 
-        this.eventFamList = [];
-        this.eventVillList.forEach(item => {
-          this.eventFamList.push(res.responseObject?.find(items => items.villageId == item.villageId)?.familyList ?
-            res.responseObject?.find(items => items.villageId == item.villageId)?.familyList : [])
-          console.log(this.eventFamList);
-        });
+        let famReq = {
+          dataAccessDTO: this.httpService.dataAccessDTO,
+          villageId: this.eventVillListID,
+          healthForumMasterId: this.viewForumList.healthForumMasterId,
+        }
 
-        this.eventFamList.forEach((item) => {
-          item.forEach(items => {
-            items.adolescentGilrChildren = items.adolescentGilrChildren?.map(({
-              isChecked = false,
+        this.loader = false;
+        this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
+          this.eventFamList = res.responseObject;
+          this.loader = true;
+
+          // console.log(this.eventVillList, 'eventVillList22');
+          console.log(this.eventFamList, 'eventFamList');
+          this.eventFamList?.forEach((x) => {
+
+            // console.log(x);
+
+            x.familyList = x.familyList?.map(({
+              setStatus = '',
+              radioCheck = 'NA',
+              villageId = '',
+              adolGirl = [],
+              health_forum_event_family_map_id = 0,
               ...rest
             }) => ({
-              isChecked,
+              setStatus, radioCheck, villageId, adolGirl, health_forum_event_family_map_id,
               ...rest
             }));
+            this.setData(x.familyList);
 
-            // this.adolescentGilrChildren = items.adolescentGilrChildren;
-            console.log(items.adolescentGilrChildren);
+          })
+
+          this.eventFamList = [];
+          this.eventVillList.forEach(item => {
+            this.eventFamList.push(res.responseObject?.find(items => items.villageId == item.villageId)?.familyList ?
+              res.responseObject?.find(items => items.villageId == item.villageId)?.familyList : [])
+
+          });
+          // console.log(this.eventFamList);
+
+          this.eventFamList.forEach((item) => {
+            item.forEach(items => {
+              items.adolescentGilrChildren = items.adolescentGilrChildren?.map(({
+                isChecked = false,
+                health_forum_event_child_map_id = 0,
+                ...rest
+              }) => ({
+                isChecked, health_forum_event_child_map_id,
+                ...rest
+              }));
+
+              // console.log(items.adolescentGilrChildren);
+
+            })
+
           })
 
         })
 
+      });
 
+    } else {
+      this.showError('Health Forum is not approved')
 
-      })
-
-
-    });
+    }
 
   }
 
   editHFEvents(createEditHFEvent, event) {
-    console.log(event);
     this.editHF_eventDetails = event;
+    // console.log(this.editHF_eventDetails, 'this.editHF_eventDetails');
+
     this.createHFEvents(createEditHFEvent);
   }
 
@@ -868,19 +916,45 @@ export class HealthForumComponent implements OnInit {
   addMoreVisitor() {
     this.visitorDetails.visitorInfo.push({
       visitorName: '',
-      visitorDesignation: ''
+      visitorDesignation: '',
+      health_forum_event_visitor_map_id: 0,
+      active_flag: 'A'
     });
 
   }
 
   removeNewVisitor(i) {
-    this.visitorDetails.visitorInfo.splice(i, 1);
+    if (this.moreEventDetails) {
+      if (this.moreEventDetails.visitorDetailsList.length != 0) {
+        if (this.visitorDetails.visitorInfo[i].health_forum_event_visitor_map_id != 0) {
+          this.visitorDetails.visitorInfo[i].active_flag = "D";
+        } else {
+          this.visitorDetails.visitorInfo.splice(i, 1);
+        }
+      } else {
+        this.visitorDetails.visitorInfo.splice(i, 1);
+      }
+    } else {
+      this.visitorDetails.visitorInfo.splice(i, 1);
+    }
+
+    console.log(this.visitorDetails.visitorInfo);
   }
 
 
   editHFEventModalDismiss() {
+    this.familyHeadPresentLenChk = []
+
     // this.editHFEventModal.close();
     // this.visitorDetails.visitorInfo = []
+    // this.eventFamList.forEach(x => {
+    //   x.forEach(y => {
+    //     if (y.radioCheck != 'NA')
+    //       this.familyHeadPresentLenChk.push(y.radioCheck = 'NA');
+    //     console.log(this.familyHeadPresentLenChk);
+
+    //   })
+    // })
 
     var ID = this.editHF_eventDetails?.healthForumEventId;
 
@@ -888,7 +962,12 @@ export class HealthForumComponent implements OnInit {
       this.editHF_eventDetails = '';
       ID = 0;
       this.editHFEventModal.close();
-      this.visitorDetails.visitorInfo = []
+      this.visitorDetails.visitorInfo = [];
+      this.editStartHour = '';
+      this.editStartMin = '';
+      this.editEndHour = '';
+      this.editEndMin = '';
+      this.moreEventDetails = ''
     }
     else {
       this.editHFEventModal.close();
@@ -896,27 +975,246 @@ export class HealthForumComponent implements OnInit {
     }
   }
 
-  createEditHFEventForms() {
-    this.createEditHFEventForm = this.fb.group({
-      startHour: ['', Validators.required],
-      startMin: ['', Validators.required],
-      startMeridiem: ['', Validators.required],
-      endHour: ['', Validators.required],
-      endMin: ['', Validators.required],
-      endMeridiem: ['', Validators.required],
-      staffPresent: ['', Validators.required],
-      ssPresent: ['', Validators.required],
-      eventConduction: ['', Validators.required],
-      lastMonTopic: ['', Validators.required],
-      thisMonTopic: ['', Validators.required],
-      seasonalDiscussion: ['', Validators.required],
-      // familyHeadPresent: ['', Validators.required]
-    });
+  createEditHFEventForms(editHF_eventDetails) {
+    if (this.editHF_eventDetails?.healthForumEventId) {
+      // this.editStartHour = this.editHF_eventDetails?.startHour;
+      // this.editStartHour = this.editStartHour.toString();
+      // this.editStartMin = this.editHF_eventDetails?.startMinute;
+      // this.editStartMin = this.editStartMin.toString();
+      // this.editEndHour = this.editHF_eventDetails?.endHour;
+      // this.editEndHour = this.editEndHour.toString();
+      // this.editEndMin = this.editHF_eventDetails?.endMinute;
+      // this.editEndMin = this.editEndMin.toString();
+
+      // if (this.editStartHour.length < 2) {
+      //   this.editStartHour = '0' + this.editStartHour;
+      //   console.log(this.editStartHour, 'this.editStartHour');
+      // } else {
+      //   this.editStartHour = this.editHF_eventDetails?.startHour
+      // }
+
+      // if (this.editStartMin.length < 2) {
+      //   this.editStartMin = '0' + this.editStartMin;
+      //   console.log(this.editStartMin, 'this.editStartMin');
+      // } else {
+      //   this.editStartMin = this.editHF_eventDetails?.startMinute
+      // }
+
+      // if (this.editEndHour.length < 2) {
+      //   this.editEndHour = '0' + this.editEndHour;
+      //   console.log(this.editEndHour, 'this.editEndHour');
+      // } else {
+      //   this.editEndHour = this.editHF_eventDetails?.endHour
+      // }
+
+      // if (this.editEndMin.length < 2) {
+      //   this.editEndMin = '0' + this.editEndMin;
+      //   console.log(this.editEndMin, 'this.editEndMin');
+      // } else {
+      //   this.editEndMin = this.editHF_eventDetails?.endMinute
+      // }
+
+      let moreEventDetailsobj = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        healthForumEventId: this.editHF_eventDetails.healthForumEventId,
+        healthForumMasterId: this.viewForumList.healthForumMasterId
+      }
+
+
+      this.healthForumService.viewHealthForumsOfAEvent(moreEventDetailsobj).subscribe((res: any) => {
+        this.moreEventDetails = res.responseObject;
+        // console.log(this.moreEventDetails, 'this.moreEventDetails');
+        this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
+      });
+
+    } else {
+      this.createEditHFEventForm = this.fb.group({
+        startHour: ['', Validators.required],
+        startMin: ['', Validators.required],
+        startMeridiem: ['', Validators.required],
+        endHour: ['', Validators.required],
+        endMin: ['', Validators.required],
+        endMeridiem: ['', Validators.required],
+        staffPresent: ['', Validators.required],
+        ssPresent: ['', Validators.required],
+        eventConduction: ['', Validators.required],
+        lastMonTopic: ['', Validators.required],
+        thisMonTopic: ['', Validators.required],
+        seasonalDiscussion: ['', Validators.required]
+      });
+
+      this.createEditHFEventForm.markAllAsTouched();
+    }
+
+
   }
 
+  unselectFamily(fami, int) {
+    fami.radioCheck = 'NA';
+    fami.adolescentGilrChildren.forEach(z => {
+      z.active_flag = "D";
+    })
+    fami.adolGirl = [];
+    fami.adolescentGilrChildren.filter(x => x.active_flag == "D").forEach((z) => {
+      var t = [];
+      z.age.split(/[year,month,days]+/).forEach(x => {
+        t.push(x)
+        this.year = t[0];
+        this.month = t[1];
+        this.day = t[2];
+      })
+      console.log(this.year, this.month, this.day);
+      fami.adolGirl.push({
+        health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'D',
+        latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
+      });
+    })
+    console.log(fami);
+
+
+  }
+
+  setmoreEventDetails(data, editHF_eventDetails) {
+    console.log(data, 'moreEventDetails');
+    console.log(editHF_eventDetails, 'editHF_eventDetails');
+    // console.log(data.seasonalDiseaseDiscussedList);
+    // console.log(data.visitorDetailsList);
+    // console.log(this.visitorDetails.visitorInfo);
+
+    console.log(data.villageWiseFamilyList, 'data.villageWiseFamilyList');
+    setTimeout(() => {
+      console.log(this.eventFamList, 'eventFamList2222');
+      this.familyHeadPresentLenChk = [];
+      data.villageWiseFamilyList.forEach(x => {
+        x.familyList.forEach(t => {
+          this.eventFamList.forEach(y => {
+            y.forEach(e => {
+              e.villageId = x.villageId
+              if (e.familyDetailId == t.familyId) {
+                e.health_forum_event_family_map_id = t.health_forum_event_family_map_id
+              }
+            })
+            y.filter(z => z.familyDetailId == t.familyId).forEach(m => {
+              y.health_forum_event_family_map_id = x.health_forum_event_family_map_id
+              m.radioCheck = t.family_head_present;
+              this.familyHeadPresentLenChk.push(m);
+              console.log(this.familyHeadPresentLenChk, ' this.familyHeadPresentLenChk');
+
+              t.childrenList.forEach(er => {
+                m.adolescentGilrChildren.filter(v => v.childDetailId == er.childId).forEach(rr => {
+                  rr.isChecked = true;
+                  rr.health_forum_event_child_map_id = er.health_forum_event_child_map_id
+                })
+              })
+              setTimeout(() => {
+                m.adolGirl = []
+                m.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
+                  var t = [];
+                  z.age.split(/[year,month,days]+/).forEach(x => {
+                    t.push(x)
+                    this.year = t[0];
+                    this.month = t[1];
+                    this.day = t[2];
+                  })
+                  console.log(this.year, this.month, this.day);
+                  m.adolGirl.push({
+                    health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
+                    latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+                    latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
+                  });
+                })
+              }, 500);
+            })
+          })
+        })
+
+
+      })
+    }, 1000);
+
+    this.visitorDetails.visitorInfo = [];
+    data.visitorDetailsList.forEach(x => {
+      this.visitorDetails.visitorInfo.push({
+        visitorDesignation: x.visitorDesignation, visitorName: x.visitorName,
+        health_forum_event_visitor_map_id: x.health_forum_event_visitor_map_id, active_flag: 'A'
+      });
+    })
+
+    this.diseaseListID = []
+    data.seasonalDiseaseDiscussedList.forEach(x => {
+      this.eventDiseaseList.filter(v => v.diseaseId == x.diseaseId).forEach(z => {
+        z.isChecked = true;
+        this.diseaseListID.push({ health_forum_event_season_diseases_map_id: x.health_forum_event_season_diseases_map_id, diseaseId: z.diseaseId, active_flag: 'A' });
+        console.log(this.diseaseListID);
+
+      })
+    })
+    console.log(this.eventDiseaseList, 'eventDiseaseList');
+
+
+
+    this.editStartHour = this.editHF_eventDetails?.startHour;
+    this.editStartHour = this.editStartHour.toString();
+    this.editStartMin = this.editHF_eventDetails?.startMinute;
+    this.editStartMin = this.editStartMin.toString();
+    this.editEndHour = this.editHF_eventDetails?.endHour;
+    this.editEndHour = this.editEndHour.toString();
+    this.editEndMin = this.editHF_eventDetails?.endMinute;
+    this.editEndMin = this.editEndMin.toString();
+
+    if (this.editStartHour.length < 2) {
+      this.editStartHour = '0' + this.editStartHour;
+      // console.log(this.editStartHour, 'this.editStartHour');
+    } else {
+      this.editStartHour = this.editHF_eventDetails?.startHour
+    }
+
+    if (this.editStartMin.length < 2) {
+      this.editStartMin = '0' + this.editStartMin;
+      // console.log(this.editStartMin, 'this.editStartMin');
+    } else {
+      this.editStartMin = this.editHF_eventDetails?.startMinute
+    }
+
+    if (this.editEndHour.length < 2) {
+      this.editEndHour = '0' + this.editEndHour;
+      // console.log(this.editEndHour, 'this.editEndHour');
+    } else {
+      this.editEndHour = this.editHF_eventDetails?.endHour
+    }
+
+    if (this.editEndMin.length < 2) {
+      this.editEndMin = '0' + this.editEndMin;
+      // console.log(this.editEndMin, 'this.editEndMin');
+    } else {
+      this.editEndMin = this.editHF_eventDetails?.endMinute
+    }
+
+
+
+    this.createEditHFEventForm = this.fb.group({
+      startHour: [this.editStartHour ? this.editStartHour : '', Validators.required],
+      startMin: [this.editStartMin ? this.editStartMin : '', Validators.required],
+      startMeridiem: [editHF_eventDetails.startAmOrPm ? editHF_eventDetails.startAmOrPm : '', Validators.required],
+      endHour: [this.editEndHour ? this.editEndHour : '', Validators.required],
+      endMin: [this.editEndMin ? this.editEndMin : '', Validators.required],
+      endMeridiem: [editHF_eventDetails.endAmOrPm ? editHF_eventDetails.endAmOrPm : '', Validators.required],
+      staffPresent: [data?.wasStaffPresent ? data?.wasStaffPresent : '', Validators.required],
+      ssPresent: [data?.wasSsPresent ? data?.wasSsPresent : '', Validators.required],
+      eventConduction: [data?.conductedByStaffOrSS ? data?.conductedByStaffOrSS : '', Validators.required],
+      lastMonTopic: [data?.recapLastMonthTopic ? data?.recapLastMonthTopic : '', Validators.required],
+      thisMonTopic: [data?.discussionOnThisMonthTopic ? data?.discussionOnThisMonthTopic : '', Validators.required],
+      seasonalDiscussion: [data?.discussionOnAnySeasonalDisease ? data?.discussionOnAnySeasonalDisease : '', Validators.required]
+    });
+
+    this.createEditHFEventForm.markAllAsTouched();
+
+
+  }
 
   selectMultipleDisease(e, disease) {
-    this.diseaseListID = []
+    this.diseaseListID = [];
     console.log(e.target.checked, disease);
     if (e.target.checked == true) {
       disease.isChecked = true;
@@ -924,14 +1222,40 @@ export class HealthForumComponent implements OnInit {
       disease.isChecked = false;
     }
 
-    this.eventDiseaseList.forEach(x => {
-      if (x.isChecked == true) {
-        console.log(x.diseaseId);
-        this.diseaseListID.push({ health_forum_event_season_diseases_map_id: 0, diseaseId: x.diseaseId, active_flag: 'A' });
-        console.log(this.diseaseListID);
-      }
-    })
+    console.log(this.moreEventDetails);
 
+
+    if (!this.moreEventDetails) {
+      this.eventDiseaseList.forEach(x => {
+        if (x.isChecked == true) {
+          console.log(x.diseaseId);
+          this.diseaseListID.push({ health_forum_event_season_diseases_map_id: 0, diseaseId: x.diseaseId, active_flag: 'A' });
+          console.log(this.diseaseListID);
+        }
+      })
+    } else {
+      this.eventDiseaseList.forEach(e => {
+        if (this.moreEventDetails.seasonalDiseaseDiscussedList.length != 0) {
+          if (this.moreEventDetails.seasonalDiseaseDiscussedList.filter(v => v.diseaseId == e.diseaseId).length == 0) {
+            if (e.isChecked == true) {
+              console.log(e.diseaseId);
+              this.diseaseListID.push({ health_forum_event_season_diseases_map_id: 0, diseaseId: e.diseaseId, active_flag: 'A' });
+              console.log(this.diseaseListID);
+            }
+          } else {
+            this.moreEventDetails.seasonalDiseaseDiscussedList.filter(v => v.diseaseId == e.diseaseId).forEach(r => {
+              if (e.isChecked == true) {
+                this.diseaseListID.push({ health_forum_event_season_diseases_map_id: r.health_forum_event_season_diseases_map_id, diseaseId: r.diseaseId, active_flag: 'A' });
+              } else {
+                this.diseaseListID.push({ health_forum_event_season_diseases_map_id: r.health_forum_event_season_diseases_map_id, diseaseId: r.diseaseId, active_flag: 'D' });
+              }
+            })
+          }
+        }
+      })
+    }
+
+    console.log(this.eventDiseaseList);
   }
 
   selectAdolescent(e, adolescent, fami) {
@@ -946,6 +1270,7 @@ export class HealthForumComponent implements OnInit {
 
     console.log(this.eventFamList);
     fami.adolGirl = [];
+
     fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
       var t = [];
       z.age.split(/[year,month,days]+/).forEach(x => {
@@ -956,7 +1281,7 @@ export class HealthForumComponent implements OnInit {
       })
       console.log(this.year, this.month, this.day);
       fami.adolGirl.push({
-        health_forum_event_child_map_id: 0, childId: z.childDetailId, active_flag: 'A',
+        health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
         latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
         latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
       });
@@ -966,81 +1291,188 @@ export class HealthForumComponent implements OnInit {
   }
 
   changefamilyHeadPresent(e, family, vill) {
-    console.log(vill.villageId);
 
+    // console.log(vill.villageId);
     console.log(family);
     family.radioCheck = e.target.value;
     family.villageId = vill.villageId;
-    // family.adolGirl = 
-    console.log(this.eventFamList);
+    this.familyHeadPresentLenChk = [];
+    this.eventFamList.forEach(x => {
+      x.forEach(y => {
+        if (y.radioCheck != 'NA')
+          this.familyHeadPresentLenChk.push(y);
+        console.log(this.familyHeadPresentLenChk);
+
+      })
+    })
+
+
+    // console.log(this.eventFamList);
+    // this.eventFamList.forEach(x => {
+    //   x.forEach(y => {
+    //     // console.log(y);
+
+    //     if (y.adolescentGilrChildren.length > 0) {
+    //       if (y.radioCheck != 'NA') {
+    //         if (y.adolGirl.length == 0) {
+    //           this.adolGirlListDisable.push(y);
+    //           console.log(this.adolGirlListDisable);
+
+    //           // this.showError('Minimum one adolescent selection is required as family head is present');
+    //           // return;
+    //         }
+
+    //       }
+    //     }
+    //   })
+    // });
+
+
+  }
+
+  staffPresentorNot(e) {
+    console.log(e);
+    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+      this.showError('Staff or SS both should not be NO');
+      this.createEditHFEventForm.controls.eventConduction.setValue('');
+      this.createEditHFEventForm.controls.staffPresent.setValue('');
+      this.createEditHFEventForm.controls.ssPresent.setValue('');
+    }
+  }
+
+  ssPresentorNot(e) {
+    console.log(e);
+    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+      this.createEditHFEventForm.controls.eventConduction.setValue('');
+    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+      this.showError('Staff or SS both should not be NO');
+      this.createEditHFEventForm.controls.eventConduction.setValue('');
+      this.createEditHFEventForm.controls.staffPresent.setValue('');
+      this.createEditHFEventForm.controls.ssPresent.setValue('');
+    }
 
   }
 
   saveEditHFEvent() {
-    this.familyListData = []
-    this.visitorDetails.visitorInfo = this.visitorDetails.visitorInfo.map(({
-      health_forum_event_visitor_map_id = 0,
-      active_flag = 'A',
-      ...rest
-    }) => ({
-      health_forum_event_visitor_map_id, active_flag,
-      ...rest
-    }));
-    console.log(this.visitorDetails.visitorInfo);
+    this.familyListData = [];
+    console.log(this.eventFamList);
 
-
-    // this.eventFamList.forEach(x => {
-    //   x.forEach(y => {
-    //     console.log(y.adolescentGilrChildren);
-    //     y.adolescentGilrChildren.forEach(z => {
-    //       if (z.isChecked == true) {
-    //         console.log(z);
-    //         var t = [];
-    //         z.age.split(/[year,month,days]+/).forEach(x => {
-    //           t.push(x)
-    //           this.year = t[0];
-    //           this.month = t[1];
-    //           this.day = t[2];
-    //         })
-    //         console.log(this.year, this.month, this.day);
-    //         this.adolGirlList.push({
-    //           health_forum_event_child_map_id: 0, childId: z.childDetailId, active_flag: 'A',
-    //           latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(), latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
-    //         });
-    //         console.log(this.adolGirlList);
-    //       }
-
-    //     })
-
-    //   })
-    // });
-
+    var arr = []
+    var i = 0
     this.eventFamList.forEach(item => {
       item.forEach(x => {
+        arr.push(x)
         if (x.radioCheck != 'NA') {
-          this.familyListData.push({
-            health_forum_event_family_map_id: 0, familyId: x.familyDetailId, villageId: x.villageId,
-            presentInPregnantWoman: x.presentInPregnantWoman,
-            presentInLactatingMother: x.presentInLactatingMother,
-            hasChildPresentInPem: x.hasChildPresentInPem,
-            has2to5yearsOldChildren: x.has2to5yearsoldChildren,
-            hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
-            family_head_present: x.radioCheck,
-            adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
-            active_flag: 'A',
-            childrenList: x.adolGirl
-          })
+          if (x.adolescentGilrChildren.length > 0) {
+            if (x.adolGirl.length == 0) {
+              i++
+              if (i == 1) {
+                this.showError('Minimum one adolescent selection is required as family head is present');
+                return;
+              } else {
+                return;
+              }
+            } else {
+              this.familyListData.push({
+                health_forum_event_family_map_id: x.health_forum_event_family_map_id, familyId: x.familyDetailId, villageId: x.villageId,
+                presentInPregnantWoman: x.presentInPregnantWoman,
+                presentInLactatingMother: x.presentInLactatingMother,
+                hasChildPresentInPem: x.hasChildPresentInPem,
+                has2to5yearsOldChildren: x.has2to5yearsoldChildren,
+                hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
+                family_head_present: x.radioCheck,
+                adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                active_flag: 'A',
+                childrenList: x.adolGirl
+              })
+            }
+          } else {
+            this.familyListData.push({
+              health_forum_event_family_map_id: x.health_forum_event_family_map_id, familyId: x.familyDetailId, villageId: x.villageId,
+              presentInPregnantWoman: x.presentInPregnantWoman,
+              presentInLactatingMother: x.presentInLactatingMother,
+              hasChildPresentInPem: x.hasChildPresentInPem,
+              has2to5yearsOldChildren: x.has2to5yearsoldChildren,
+              hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
+              family_head_present: x.radioCheck,
+              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              active_flag: 'A',
+              childrenList: x.adolGirl
+            })
+          }
+        } else {
+          if (x.health_forum_event_family_map_id != 0) {
+            this.familyListData.push({
+              health_forum_event_family_map_id: x.health_forum_event_family_map_id, familyId: x.familyDetailId, villageId: x.villageId,
+              presentInPregnantWoman: x.presentInPregnantWoman,
+              presentInLactatingMother: x.presentInLactatingMother,
+              hasChildPresentInPem: x.hasChildPresentInPem,
+              has2to5yearsOldChildren: x.has2to5yearsoldChildren,
+              hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
+              family_head_present: x.radioCheck,
+              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              active_flag: x.health_forum_event_family_map_id == 0 ? 'A' : 'D',
+              childrenList: x.adolGirl
+            })
+          }
         }
-
       })
-
-
     })
 
 
+
+
+    setTimeout(() => {
+      var ch = []
+      var tt = []
+      arr.filter(er => er.radioCheck != "NA").forEach(x => {
+        if (x.adolescentGilrChildren.length != 0) {
+          if (x.adolGirl.length == 0) {
+            ch.push({ isChecked: false })
+          } else {
+            tt.push(x.adolGirl)
+            ch.push({ isChecked: true })
+          }
+        }
+      })
+
+
+      if (ch.length == tt.length) {
+        this.saveEvent()
+      }
+    }, 200);
+  }
+
+
+  saveEvent() {
+    // console.log(this.moreEventDetails, 'pkkaset');
+
+    // this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
+    var tt = []
+    this.visitorDetails.visitorInfo.forEach(x => {
+      if (x.visitorName == "") {
+        tt.push();
+      } else {
+        tt.push(x);
+      }
+
+    })
+
+    console.log(tt);
+
     let savEditReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      healthForumEventId: 0,
+      healthForumEventId: this.moreEventDetails?.healthForumEventId ? this.moreEventDetails?.healthForumEventId : 0,
       active_flag: 'A',
       healthForumMasterId: this.viewForumList.healthForumMasterId,
       startTimeHour: this.createEditHFEventForm.value.startHour,
@@ -1058,7 +1490,7 @@ export class HealthForumComponent implements OnInit {
       discussionOnThisMonthTopic: this.createEditHFEventForm.value.thisMonTopic,
       discussionOnAnySeasonalDisease: this.createEditHFEventForm.value.seasonalDiscussion,
       seasonalDiseaseDiscussedList: this.diseaseListID,
-      visitorDetailsList: this.visitorDetails.visitorInfo,
+      visitorDetailsList: tt.length == 0 ? [] : this.visitorDetails.visitorInfo,
       familyList: this.familyListData
 
     }
@@ -1068,26 +1500,206 @@ export class HealthForumComponent implements OnInit {
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
+        this.editHFEventModalDismiss();
         // this.changeBranch(this.branchId || this.lowerRankbranchId);
       } else {
         this.showError(res.message);
       }
     })
+  }
+
+
+  saveEditHFEventDisabled() {
+    // console.log(this.familyHeadPresentLenChk);
+
+    let flag = true;
+    if (this.familyHeadPresentLenChk.length < 1) {
+      flag = false;
+    }
+
+    if (!this.createEditHFEventForm.value.startHour) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.startMin) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.startMeridiem) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.endHour) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.endMin) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.endMeridiem) {
+      flag = false;
+    } else if (this.createEditHFEventForm.value.staffPresent != 'Y' && this.createEditHFEventForm.value.ssPresent != 'Y') {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.eventConduction) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.lastMonTopic) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.thisMonTopic) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.seasonalDiscussion) {
+      flag = false;
+    } else if (this.createEditHFEventForm.value.seasonalDiscussion == 'Y') {
+      if (this.diseaseListID.length < 1) {
+        flag = false;
+      }
+    }
 
 
 
+    return flag;
   }
 
   get e() {
     return this.createEditHFEventForm.controls;
   }
 
+  changeseasonalDiscussion() {
+    this.diseaseListID = [];
+    console.log(this.eventDiseaseList);
+    this.eventDiseaseList.forEach(x => {
+      if (x.isChecked == true) {
+        console.log(x.isChecked = false);
+      }
+    })
+    console.log(this.eventDiseaseList);
+
+  }
+
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
     this.index = tabChangeEvent.index;
   }
 
+  deleteHFEvent(event, i) {
+    console.log(event);
+
+    let delReq = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      healthForumEventId: event.healthForumEventId,
+      active_flag: 'D',
+      healthForumMasterId: this.viewForumList.healthForumMasterId,
+      startTimeHour: event.startHour,
+      startTimeMinute: event.startMinute,
+      startTimeAmORPm: event.startAmOrPm,
+      endTimeHour: event.endHour,
+      endTimeMinute: event.endMinute,
+      endTimeAmOrPm: event.endAmOrPm,
+      // wasStaffPresent: event.staffPresent,
+      // staffId: this.HForumEventPrerequisite.staffId,
+      // wasSsPresent: this.createEditHFEventForm.value.ssPresent,
+      // ssId: this.HForumEventPrerequisite.ssId,
+      // conductedByStaffOrSS: this.createEditHFEventForm.value.eventConduction,
+      // recapLastMonthTopic: this.createEditHFEventForm.value.lastMonTopic,
+      // discussionOnThisMonthTopic: this.createEditHFEventForm.value.thisMonTopic,
+      // discussionOnAnySeasonalDisease: this.createEditHFEventForm.value.seasonalDiscussion,
+      // seasonalDiseaseDiscussedList: event.seasonalDiseaseDiscussedList,
+      // visitorDetailsList: tt.length == 0 ? [] : this.visitorDetails.visitorInfo,
+      // familyList: this.familyListData
+
+    }
+
+    console.log(delReq, 'delReq');
+    this.healthForumService.saveOrUpdateHealthForumEvent(delReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.viewEventList.splice(i, 1);
+        // this.editHFEventModalDismiss();
+        // this.changeBranch(this.branchId || this.lowerRankbranchId);
+      } else {
+        this.showError(res.message);
+      }
+    })
+
+  }
+
+  rescheduleHealthForum(rescheduleHF, health) {
+    this.rescheduleData = health;
+    console.log(this.rescheduleData);
+
+
+    this.modalContent = '';
+    this.rescheduleHFModal = this.modalService.open(rescheduleHF, {
+      windowClass: 'rescheduleHF',
+    });
+    this.rescheduleHFForms();
+  }
+
+  rescheduleHFModalDismiss() {
+    this.rescheduleHFModal.close();
+  }
+
+  rescheduleHFForms() {
+    this.rescheduleHFForm = this.fb.group({
+      date: ['', Validators.required],
+      comment: ['', Validators.required],
+    });
+  }
+
+  get r() {
+    return this.rescheduleHFForm.controls;
+  }
+
+  saveRescheduled() {
+    console.log(this.rescheduleData.scheduleDetails.time);
+    var text = this.rescheduleData.scheduleDetails.time;
+    var tt = [];
+    text.trim().replace(" ", ":").trim().split(":").forEach(e => {
+      if (e.length < 2) {
+        tt.push("0" + e);
+      } else {
+        tt.push(e);
+      }
+      console.log(tt);
+
+    })
+    let req = {
+      dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: this.rescheduleData.healthForumMasterId,
+      date: this.rescheduleHFForm.value.date,
+      scheduleStartHour: tt[0],
+      scheduleStartMinute: tt[1],
+      amOrPm: tt[2],
+      comment: this.rescheduleHFForm.value.comment
+    };
+
+    this.healthForumService.rescheduleHealthForum(req).subscribe((res) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.rescheduleHFModal.close();
+        this.changeBranch(this.branchId || this.lowerRankbranchId);
+      } else {
+        this.showError(res.message);
+      }
+
+    });
+
+  }
+
+  approveHealthForumEvent(event) {
+    console.log(event);
+    let req = {
+      dataAccessDTO: this.httpService.dataAccessDTO,  healthForumMasterId: this.viewForumList.healthForumMasterId
+    }
+
+    this.healthForumService.approveARescheduleHealthForum(req).subscribe((res) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+      } else {
+        this.showError(res.message);
+      }
+
+    });
+  }
 
 }
+
+
+
+
+
+
 
 
 

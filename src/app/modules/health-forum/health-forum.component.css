@@ -73,6 +73,11 @@
   overflow-y: auto;
 }
 
+.modal-HF {
+  height: 360px;
+  width: 498px;
+}
+
 .modal-contents {
   height: 450px;
   width: 490px;

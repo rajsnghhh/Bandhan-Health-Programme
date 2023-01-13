@@ -49,5 +49,13 @@ export class HealthForumService {
   saveOrUpdateHealthForumEvent(obj): any {
     return this.http.post(`${this.baseURL}healthForum/saveOrUpdateHealthForumEvent`, obj)
   }
+
+  rescheduleHealthForum(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/rescheduleHealthForum`, obj)
+  }
+  
+  approveARescheduleHealthForum(obj): any {
+    return this.http.post(`${this.baseURL}healthForum/approveARescheduleHealthForum`, obj)
+  }
 }
 
