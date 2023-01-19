@@ -204,6 +204,12 @@ legend.scheduler-border {
   font-size: 1.5em;
 }
 
+.fa-calendar:hover {
+  color: midnightblue !important;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
 .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
   margin-left: 2px;
   border-top-left-radius: 7px;
@@ -212,7 +218,8 @@ legend.scheduler-border {
   border-bottom-right-radius: 7px;
 }
 
-.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
+.input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   border-top-left-radius: 7px;
@@ -286,12 +293,13 @@ legend.scheduler-border {
 
 #tbodyDisease {
   display: block;
-  height: 65px;
+  height: 116px;
   overflow: scroll;
   overflow-x: hidden;
 }
 
-table thead, tbody tr {
+table thead,
+tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
@@ -300,6 +308,12 @@ table thead, tbody tr {
 ::ng-deep .mat-tab-header {
   margin-left: -75px;
 }
+
+/* ::ng-deep.mat-tab-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 55px;
+} */
 
 ::ng-deep .mat-tab-body-wrapper {
   position: relative;
@@ -326,3 +340,6 @@ legend.scheduler-border {
   font-weight: bold !important;
   font-family: ui-sans-serif;
 }
+
+
+

@@ -20,6 +20,8 @@ export class RoleAccessComponent implements OnInit {
   subFunctionList: Array<any> = [];
   searchFullscreen: boolean;
   loader: boolean = true;
+  // accessList: Array<any> = [];
+
 
 
   constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: FormBuilder,
@@ -113,8 +115,15 @@ export class RoleAccessComponent implements OnInit {
       });
     }
 
+    // this.accessList=[]
     this.roleList = this.subFunctionList.find((role) => role.subMenuName == subFunctionName)?.roleAccessDtoList;
     console.log(this.roleList, 'roleList');
+//     this.roleList.forEach(x => {
+//       this.accessList.push(x.accessDtoList);
+//     })
+// console.log(  this.accessList);
+
+
   }
 
   assignAccess(accessDtoList, i, e) {

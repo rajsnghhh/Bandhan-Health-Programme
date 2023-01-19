@@ -41,7 +41,7 @@ export const environment = {
   // apiUrl: 'http://192.168.153.58:6180/bhp/api/v1/'
 
   // Chayan Machine
-  // apiUrl: 'http://192.168.153.111:6180/bhp/api/v1/'
+  // apiUrl: 'http://192.168.153.160:6180/bhp/api/v1/'
 };
 
 /*

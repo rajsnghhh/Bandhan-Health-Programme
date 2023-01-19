@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -42,11 +43,13 @@ export class HealthForumComponent implements OnInit {
   familyDetails: Array<any> = [];
   searchFullscreen: boolean;
   registerSearch: any;
+  eventSearch: any;
   dropdownSettings: IDropdownSettings = {};
   areaList: Array<any> = [];
   hourList: Array<any> = [];
   minuteList: Array<any> = [];
   minDate: any;
+  setDate: any;
   branchId: any;
   staffList: Array<any> = [];
   SSList: Array<any> = [];
@@ -66,6 +69,7 @@ export class HealthForumComponent implements OnInit {
   eventVillListID: Array<any> = [];
   eventDiseaseList: Array<any> = [];
   eventFamList: Array<any> = [];
+  setFamList: Array<any> = [];
   statusList: Array<any> = [];
   HForumEventPrerequisite: any;
   diseaseListID: Array<any> = [];
@@ -82,10 +86,21 @@ export class HealthForumComponent implements OnInit {
   editEndMin: any;
   moreEventDetails: any;
   rescheduleData: any;
-  // setmoreEventDetails: Array<any> = [];
+  viewMode: boolean;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  approveMode: boolean;
+  rescheduleMode: boolean;
+  rescheduleApprovalMode: boolean;
+  eventViewMode: boolean;
+  eventCreateMode: boolean;
+  eventUpdateMode: boolean;
+  eventDeleteMode: boolean;
+
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
-    private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig,
+    private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig, private router: Router,
     private toaster: ToastrService, public validationService: ValidationService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService,) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -125,6 +140,61 @@ export class HealthForumComponent implements OnInit {
     });
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/health-forum']) : this.router.navigate(['/error']);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    this.approveMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'approve')?.accessType ? true : false;
+
+    this.rescheduleMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'reschedule')?.accessType ? true : false;
+
+    this.rescheduleApprovalMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'reschedule approval')?.accessType ? true : false;
+
+    this.eventViewMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'event view')?.accessType ? true : false;
+
+    this.eventCreateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'event create')?.accessType ? true : false;
+
+    this.eventUpdateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'event update')?.accessType ? true : false;
+
+    this.eventDeleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+      .find(accessType => accessType.accessType == 'event delete')?.accessType ? true : false;
 
   }
 
@@ -647,7 +717,7 @@ export class HealthForumComponent implements OnInit {
   }
 
   deleteHealthForum(health) {
-    this.confirmationDialogService.confirm('', 'Are you sure you want to delete forum ?')
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this forum ?')
       .then(() => this.delete(health)
       )
       .catch(() => '');
@@ -816,6 +886,9 @@ export class HealthForumComponent implements OnInit {
         this.loader = false;
         this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
           this.eventFamList = res.responseObject;
+          this.setFamList = res.responseObject;
+
+
           this.loader = true;
 
           // console.log(this.eventVillList, 'eventVillList22');
@@ -1104,6 +1177,7 @@ export class HealthForumComponent implements OnInit {
               t.childrenList.forEach(er => {
                 m.adolescentGilrChildren.filter(v => v.childDetailId == er.childId).forEach(rr => {
                   rr.isChecked = true;
+                  rr.age = er.ageYears + " year " + er.ageMonths + " month " + er.ageDays + " day "
                   rr.health_forum_event_child_map_id = er.health_forum_event_child_map_id
                 })
               })
@@ -1306,26 +1380,41 @@ export class HealthForumComponent implements OnInit {
       })
     })
 
+  }
 
-    // console.log(this.eventFamList);
-    // this.eventFamList.forEach(x => {
-    //   x.forEach(y => {
-    //     // console.log(y);
 
-    //     if (y.adolescentGilrChildren.length > 0) {
-    //       if (y.radioCheck != 'NA') {
-    //         if (y.adolGirl.length == 0) {
-    //           this.adolGirlListDisable.push(y);
-    //           console.log(this.adolGirlListDisable);
+  viewFilterByFamilyList(e) {
+    console.log(e);
 
-    //           // this.showError('Minimum one adolescent selection is required as family head is present');
-    //           // return;
-    //         }
+    if (e == 'selectedFam') {
+      var notSel = []
+      this.setFamList.forEach(x => {
+        console.log(x);
+        notSel.push(x.familyList.filter(x => x.radioCheck != 'NA'))
+      })
+      this.eventFamList = notSel
+      console.log(this.eventFamList);
+    } else if (e == 'unselectedFam') {
+      var notSel = []
+      this.setFamList.forEach(x => {
+        console.log(x);
 
-    //       }
-    //     }
-    //   })
-    // });
+        notSel.push(x.familyList.filter(x => x.radioCheck == 'NA'))
+
+      })
+      this.eventFamList = notSel
+      console.log(this.eventFamList);
+    } else {
+      var notSel = []
+      this.setFamList.forEach(x => {
+        console.log(x);
+
+        notSel.push(x.familyList)
+
+      })
+      this.eventFamList = notSel
+      console.log(this.eventFamList);
+    }
 
 
   }
@@ -1495,6 +1584,11 @@ export class HealthForumComponent implements OnInit {
 
     }
 
+    if (savEditReq.familyList.filter(x => x.active_flag == 'A').length == 0) {
+      this.showError('Please select at least one family');
+      return;
+    }
+
     console.log(savEditReq, 'savEditReq');
     this.healthForumService.saveOrUpdateHealthForumEvent(savEditReq).subscribe((res: any) => {
       console.log(res);
@@ -1571,8 +1665,15 @@ export class HealthForumComponent implements OnInit {
   }
 
   deleteHFEvent(event, i) {
-    console.log(event);
 
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+      .then(() => this.delete_event(event, i)
+      )
+      .catch(() => '');
+    console.log(event);
+  }
+
+  delete_event(event, i) {
     let delReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       healthForumEventId: event.healthForumEventId,
@@ -1610,19 +1711,23 @@ export class HealthForumComponent implements OnInit {
         this.showError(res.message);
       }
     })
-
   }
 
   rescheduleHealthForum(rescheduleHF, health) {
     this.rescheduleData = health;
     console.log(this.rescheduleData);
+    if (this.rescheduleData.eventList.length < 2) {
+      this.setDate = moment().format("YYYY-MM-DD");
+      this.modalContent = '';
+      this.rescheduleHFModal = this.modalService.open(rescheduleHF, {
+        windowClass: 'rescheduleHF',
+      });
+      this.rescheduleHFForms();
+    } else {
+      this.showError('HF cannot be rescheduled');
+      return;
+    }
 
-
-    this.modalContent = '';
-    this.rescheduleHFModal = this.modalService.open(rescheduleHF, {
-      windowClass: 'rescheduleHF',
-    });
-    this.rescheduleHFForms();
   }
 
   rescheduleHFModalDismiss() {
@@ -1638,6 +1743,18 @@ export class HealthForumComponent implements OnInit {
 
   get r() {
     return this.rescheduleHFForm.controls;
+  }
+
+  rescheduleSave() {
+    let flag = true;
+    if (!this.rescheduleHFForm.value.date) {
+      flag = false;
+    } else if (!this.rescheduleHFForm.value.comment) {
+      flag = false;
+    }
+
+    return flag;
+
   }
 
   saveRescheduled() {
@@ -1676,10 +1793,10 @@ export class HealthForumComponent implements OnInit {
 
   }
 
-  approveHealthForumEvent(event) {
-    console.log(event);
+  approveARescheduleHealthForum(health) {
+    console.log(health);
     let req = {
-      dataAccessDTO: this.httpService.dataAccessDTO,  healthForumMasterId: this.viewForumList.healthForumMasterId
+      dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId
     }
 
     this.healthForumService.approveARescheduleHealthForum(req).subscribe((res) => {
@@ -1692,6 +1809,7 @@ export class HealthForumComponent implements OnInit {
 
     });
   }
+
 
 }
 

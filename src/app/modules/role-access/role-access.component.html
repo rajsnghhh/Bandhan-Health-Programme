@@ -59,9 +59,9 @@
                                         style="table-layout: fixed; text-align:center; padding: 0px;">
                                         <thead id="header_fixed">
                                             <tr>
-                                                <th style="padding: 11px; width: 40%;">Role Function</th>
-                                                <th style="padding: 11px;"></th>
+                                                <th style="padding: 11px; width: 10%;">Role Function</th>
                                                 <th style="padding: 11px;">Role Access</th>
+                                                <th style="padding: 11px;"></th>
                                                 <th style="padding: 11px;"></th>
                                                 <th style="padding: 11px;"></th>
                                             </tr>
@@ -70,7 +70,7 @@
                                         <tbody>
 
                                             <tr *ngFor="let items of roleList ; index as i">
-                                                <td>{{items.roleName}}</td>
+                                                <td>{{items.roleShortname}}</td>
 
                                                 <td *ngFor="let itemss of items.accessDtoList ; index as i">
                                                     {{itemss.subMenuAccessType}}&nbsp;
