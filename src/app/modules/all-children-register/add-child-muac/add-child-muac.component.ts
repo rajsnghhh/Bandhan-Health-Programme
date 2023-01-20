@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { SidebarService } from '../../shared/sidebar/sidebar.service';
   styleUrls: ['./add-child-muac.component.css']
 })
 export class AddChildMuacComponent implements OnInit {
-  muacForm: FormGroup;
+  muacForm: UntypedFormGroup;
   editMode: boolean;
   muacCampList: Array<any> = [];
   campDate: boolean;
@@ -29,7 +29,7 @@ export class AddChildMuacComponent implements OnInit {
   childDob: string;
   muacCampID: any;
 
-  constructor(private fb: FormBuilder, public validationService: ValidationService,
+  constructor(private fb: UntypedFormBuilder, public validationService: ValidationService,
     private httpService: HttpService, private http: HttpClient, private toaster: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddChildMuacComponent>,
     private sidebarService: SidebarService, private muacService: MuacRegisterService,) {

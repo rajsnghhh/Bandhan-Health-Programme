@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,8 +13,8 @@ import { RemapUserSsService } from './remap-user-ss.service';
   styleUrls: ['./remap-user-ss.component.css']
 })
 export class RemapUserSsComponent implements OnInit {
-  remapUserSSForm: FormGroup;
-  modalForm: FormGroup;
+  remapUserSSForm: UntypedFormGroup;
+  modalForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   hcoList: Array<any> = [];
@@ -34,7 +34,7 @@ export class RemapUserSsComponent implements OnInit {
   ssNameFilter: any;
   ssLists: Array<any> = [];
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserSSService: RemapUserSsService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private remapUserSSService: RemapUserSsService,
     private toaster: ToastrService, private modalService: NgbModal, private router: Router, private sidebarService: SidebarService,
     config: NgbModalConfig) {
     config.backdrop = 'static';

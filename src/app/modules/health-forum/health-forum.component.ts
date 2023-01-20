@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
@@ -21,10 +21,10 @@ import { HealthForumService } from './health-forum.service';
   styleUrls: ['./health-forum.component.css']
 })
 export class HealthForumComponent implements OnInit {
-  healthForumForm: FormGroup;
-  createHFForm: FormGroup;
-  createEditHFEventForm: FormGroup;
-  rescheduleHFForm: FormGroup;
+  healthForumForm: UntypedFormGroup;
+  createHFForm: UntypedFormGroup;
+  createEditHFEventForm: UntypedFormGroup;
+  rescheduleHFForm: UntypedFormGroup;
   regionBranchHide: boolean;
   lowerRankbranchId: any;
   regionList: Array<any> = [];
@@ -99,7 +99,7 @@ export class HealthForumComponent implements OnInit {
   eventDeleteMode: boolean;
 
 
-  constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig, private router: Router,
     private toaster: ToastrService, public validationService: ValidationService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService,) {
     config.backdrop = 'static';

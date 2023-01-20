@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
@@ -14,7 +14,7 @@ import { SsUnmapService } from './ss-unmap.service';
   styleUrls: ['./ss-unmap.component.css']
 })
 export class SsUnmapComponent implements OnInit {
-  ssUnmapForm: FormGroup;
+  ssUnmapForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   hcouserList: Array<any> = [];
@@ -28,7 +28,7 @@ export class SsUnmapComponent implements OnInit {
   userList: Array<any> = [];
   hcoUserNameFilter: any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private ssUnmapService: SsUnmapService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private ssUnmapService: SsUnmapService,
     private confirmationDialogService: ConfirmationDialogService, private toaster: ToastrService,
     public validationService: ValidationService, private sidebarService: SidebarService, private router: Router) { }
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { MouService } from '../mou.service';
 export class MouCreateComponent implements OnInit, OnDestroy {
   dropdownSettings: IDropdownSettings;
   donorList: any;
-  MouFormData: FormGroup;
+  MouFormData: UntypedFormGroup;
   selectedItems: Donor[] = [];
   editDataSub: Subscription;
   editMode: boolean;
@@ -27,7 +27,7 @@ export class MouCreateComponent implements OnInit, OnDestroy {
     public mouService: MouService,
     private router: ActivatedRoute,
     private route: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public validationService: ValidationService,
     private httpService: HttpService,
     private toastr: ToastrService

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterContentInit, Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { ValidationService } from '../../shared/services/validation.service';
 export class AddLmChildComponent implements OnInit, AfterContentInit {
 
   panelOpenState: boolean;
-  childBirthForm: FormGroup;
+  childBirthForm: UntypedFormGroup;
   childDeath: any;
   after6m: boolean;
   after12m: boolean;
@@ -43,7 +43,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   enableSecondVisitDate: boolean = false;
 
 
-  constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
+  constructor(public validationService: ValidationService, private fb: UntypedFormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddLmChildComponent>) {
     dialogRef.disableClose = true;

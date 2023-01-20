@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -16,8 +16,8 @@ import { BranchVillageMapService } from './branch-village-map.service';
   styleUrls: ['./branch-village-map.component.css']
 })
 export class BranchVillageMapComponent implements OnInit {
-  branchVillageForm: FormGroup;
-  mapVillForm: FormGroup;
+  branchVillageForm: UntypedFormGroup;
+  mapVillForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   mappedVillageList: Array<any> = [];
@@ -56,7 +56,7 @@ export class BranchVillageMapComponent implements OnInit {
   districtNAme: any;
   searchFullscreen: boolean;
 
-  constructor(private fb: FormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private branchVillMapService: BranchVillageMapService, private httpService: HttpService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
     private sidebarService: SidebarService, private http: HttpClient, private validationService: ValidationService, private router: Router,
     config: NgbModalConfig) {

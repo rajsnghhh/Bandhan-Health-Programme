@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { saveAs } from "file-saver";
   styleUrls: ['./daily-activity-record.component.css']
 })
 export class DailyActivityRecordComponent implements OnInit {
-  darForm: FormGroup;
+  darForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   regionBranchHide: boolean;
@@ -38,7 +38,7 @@ export class DailyActivityRecordComponent implements OnInit {
   ssDetails: Array<any> = [];
   ssDateOrUniqueShow: any;
 
-  constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
+  constructor(private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private httpService: HttpService, private dailyActRecord: DailyActivityRecordService,
     private toaster: ToastrService, private modalService: NgbModal, config: NgbModalConfig,) {
     config.backdrop = 'static';

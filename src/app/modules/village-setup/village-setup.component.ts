@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,8 +15,8 @@ import { VillageSetupService } from './village-setup.service';
   styleUrls: ['./village-setup.component.css']
 })
 export class VillageSetupComponent implements OnInit {
-  villageForm: FormGroup;
-  villCreateForm: FormGroup;
+  villageForm: UntypedFormGroup;
+  villCreateForm: UntypedFormGroup;
   stateList: Array<any> = [];
   districtList: Array<any> = [];
   blockList: Array<any> = [];
@@ -43,7 +43,7 @@ export class VillageSetupComponent implements OnInit {
   role: any;
 
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private villageService: VillageSetupService,
     private sidebarService: SidebarService, private modalService: NgbModal, private validationService: ValidationService,
     private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
 

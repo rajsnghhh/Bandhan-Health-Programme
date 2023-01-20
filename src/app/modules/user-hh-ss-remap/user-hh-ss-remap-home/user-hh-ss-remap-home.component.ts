@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
@@ -14,7 +14,7 @@ import { SidebarService } from '../../shared/sidebar/sidebar.service';
   styleUrls: ['./user-hh-ss-remap-home.component.css']
 })
 export class UserHhSsRemapHomeComponent implements OnInit {
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   fromUserList: Array<any> = [];
@@ -23,7 +23,7 @@ export class UserHhSsRemapHomeComponent implements OnInit {
   branchId: any;
   loader: boolean = true;
 
-  constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder,
+  constructor(private httpService: HttpService, private http: HttpClient, private fb: UntypedFormBuilder,
     private sidebarService: SidebarService, private confirmationDialogService: ConfirmationDialogService,
     private baselineService: BaselineSurveyService, private toaster: ToastrService, private router: Router) { }
 

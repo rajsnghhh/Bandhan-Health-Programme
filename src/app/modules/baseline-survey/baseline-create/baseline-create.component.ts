@@ -1,6 +1,6 @@
 
 import { Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,7 @@ import { LocationComponent } from '../location/location.component';
   styleUrls: ['./baseline-create.component.css']
 })
 export class BaselineCreateComponent implements OnInit, DoCheck {
-  baselineSurvey: FormGroup;
+  baselineSurvey: UntypedFormGroup;
   haveChildren: string = 'N';
   childbelow18: string;
   childbelow5: string;
@@ -49,7 +49,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
   @ViewChild(LocationComponent) locationComponent: LocationComponent;
   timeToTentativeEndDate: any;
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
+  constructor(private fb: UntypedFormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
     public sidebarService: SidebarService, private router: Router,) { }
 

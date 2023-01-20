@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -14,9 +14,9 @@ import { CloseBaselineService } from './close-baseline.service';
   styleUrls: ['./close-baseline.component.css']
 })
 export class CloseBaselineComponent implements OnInit {
-  closeBaselineForm: FormGroup;
-  restartModalForm: FormGroup;
-  modalForm: FormGroup;
+  closeBaselineForm: UntypedFormGroup;
+  restartModalForm: UntypedFormGroup;
+  modalForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   modalContent: any;
@@ -29,7 +29,7 @@ export class CloseBaselineComponent implements OnInit {
   page = 1;
   pageSize = 6;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private closeBaselineService: CloseBaselineService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private closeBaselineService: CloseBaselineService,
     private modalService: NgbModal, config: NgbModalConfig, private toaster: ToastrService, private router: Router,
     private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService) {
     config.backdrop = 'static';

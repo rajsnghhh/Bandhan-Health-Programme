@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -12,10 +12,10 @@ import { HttpService } from '../../core/http/http.service';
 })
 export class PwStatusComponent implements OnInit {
 
-  pwStatusForm: FormGroup;
+  pwStatusForm: UntypedFormGroup;
   pwName: string;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private http: HttpClient, private toaster: ToastrService, private httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PwStatusComponent>) {
     dialogRef.disableClose = true;
   }

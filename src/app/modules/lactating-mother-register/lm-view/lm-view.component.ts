@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
@@ -18,7 +18,7 @@ import { AddLmChildComponent } from '../add-lm-child/add-lm-child.component';
 })
 export class LmViewComponent implements OnInit, DoCheck {
 
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -45,7 +45,7 @@ export class LmViewComponent implements OnInit, DoCheck {
   gpID: any;
   villageID: any;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
+  constructor(private httpService: HttpService, private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, public datepipe: DatePipe,
     public validationService: ValidationService, private activatedRoute: ActivatedRoute, private router: Router) { }
 

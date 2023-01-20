@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,8 +13,8 @@ import { RemapUserHhService } from './remap-user-hh.service';
   styleUrls: ['./remap-user-hh.component.css']
 })
 export class RemapUserHhComponent implements OnInit {
-  remapUserHhForm: FormGroup;
-  modalForm: FormGroup;
+  remapUserHhForm: UntypedFormGroup;
+  modalForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   hcoList: Array<any> = [];
@@ -34,7 +34,7 @@ export class RemapUserHhComponent implements OnInit {
   };
   ssNameFilter: any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private remapUserHHService: RemapUserHhService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private remapUserHHService: RemapUserHhService,
     private toaster: ToastrService, private modalService: NgbModal, private router: Router, private sidebarService: SidebarService) { }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BaselineSurveyService } from '../baseline-survey/baseline-survey.service';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
@@ -25,7 +25,7 @@ export class AllChildRegisterComponent implements OnInit {
   villageMasterId: any;
   childDetailId: any;
 
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -46,7 +46,7 @@ export class AllChildRegisterComponent implements OnInit {
   page = 1;
   pageSize = 6;
 
-  constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
+  constructor(private httpService: HttpService, private http: HttpClient, private fb: UntypedFormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private router: Router,
     public validationService: ValidationService, private toaster: ToastrService,) { }
 

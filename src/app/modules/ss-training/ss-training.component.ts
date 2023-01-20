@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./ss-training.component.css']
 })
 export class SsTrainingComponent implements OnInit {
-  viewSSTrainingEventForm: FormGroup;
-  createSSTrainingEventForm: FormGroup;
+  viewSSTrainingEventForm: UntypedFormGroup;
+  createSSTrainingEventForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -60,7 +60,7 @@ export class SsTrainingComponent implements OnInit {
   trainingEventID: any;
   loader: boolean = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
+  constructor(private fb: UntypedFormBuilder, private http: HttpClient, private sidebarService: SidebarService, private toaster: ToastrService,
     private httpService: HttpService, private ssTrainingService: SsTrainingService, private modalService: NgbModal, config: NgbModalConfig,
     private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) {
     config.backdrop = 'static';

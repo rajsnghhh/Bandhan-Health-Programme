@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 })
 
 export class DailyActivityRegisterComponent implements OnInit {
-  locationForm: FormGroup;
-  editForm: FormGroup;
+  locationForm: UntypedFormGroup;
+  editForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -55,7 +55,7 @@ export class DailyActivityRegisterComponent implements OnInit {
   followUpSSName: any;
   followUpSSId: any;
 
-  constructor(private fb: FormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
+  constructor(private fb: UntypedFormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
     private modalService: NgbModal, private confirmationDialogService: ConfirmationDialogService, private router: Router, config: NgbModalConfig) {
     config.backdrop = 'static';

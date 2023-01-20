@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,7 @@ import { AppVersionService } from './app-version.service';
   styleUrls: ['./app-version.component.css']
 })
 export class AppVersionComponent implements OnInit {
-  appVerForm: FormGroup;
+  appVerForm: UntypedFormGroup;
   modalContent: any;
   modalReference: any;
   appVerList: Array<any> = [];
@@ -25,7 +25,7 @@ export class AppVersionComponent implements OnInit {
   viewModalData: any;
 
   constructor(private appService: AppVersionService, private httpService: HttpService, private modalService: NgbModal,
-    private fb: FormBuilder, private sidebarService: SidebarService, private router: Router, private toaster: ToastrService, config: NgbModalConfig) {
+    private fb: UntypedFormBuilder, private sidebarService: SidebarService, private router: Router, private toaster: ToastrService, config: NgbModalConfig) {
     config.backdrop = 'static';
     config.keyboard = false;
   }

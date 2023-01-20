@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, AfterViewInit, Component, Inject, OnInit, Optional } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -15,7 +15,7 @@ import { ValidationService } from '../../shared/services/validation.service';
   styleUrls: ['./user-create-form.component.css']
 })
 export class UserCreateFormComponent implements OnInit {
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
 
 
   selectMultiRegion: boolean;
@@ -37,7 +37,7 @@ export class UserCreateFormComponent implements OnInit {
   // baseBranchList: Array<any> = [];
 
   constructor(@Optional() public dialogRef: MatDialogRef<UserCreateFormComponent>, public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService, private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService, private fb: UntypedFormBuilder,
     public validationService: ValidationService, private modalService: NgbModal, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService,
   ) {

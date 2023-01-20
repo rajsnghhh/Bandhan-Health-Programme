@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -12,12 +12,12 @@ import { ValidationService } from '../../shared/services/validation.service';
   styleUrls: ['./block-setup-form.component.css']
 })
 export class BlockSetupFormComponent implements OnInit {
-  blockForm: FormGroup;
+  blockForm: UntypedFormGroup;
   stateList: Array<any> = [];
   stateWiseDistrictList: Array<any> = [];
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private toaster: ToastrService,
+  constructor(private fb: UntypedFormBuilder, private http: HttpClient, private toaster: ToastrService,
     private httpService: HttpService, public validationService: ValidationService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<BlockSetupFormComponent>) {
     dialogRef.disableClose = true;

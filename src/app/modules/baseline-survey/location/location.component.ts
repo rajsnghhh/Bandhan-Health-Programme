@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../core/http/http.service';
 import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { BaselineSurveyService } from '../baseline-survey.service';
@@ -12,7 +12,7 @@ import CryptoJS from 'crypto-js';
   styleUrls: ['./location.component.css'],
 })
 export class LocationComponent implements OnInit {
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -32,7 +32,7 @@ export class LocationComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService
   ) { }

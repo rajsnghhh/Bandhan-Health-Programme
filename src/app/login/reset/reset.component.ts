@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
@@ -14,14 +14,14 @@ import { Reset } from '../user';
   styleUrls: ['./reset.component.css']
 })
 export class ResetComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = false;
   submitted = false;
   show: boolean = false;
   loader: boolean = true;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: LoginService,

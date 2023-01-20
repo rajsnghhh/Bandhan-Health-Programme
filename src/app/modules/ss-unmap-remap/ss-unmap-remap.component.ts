@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -14,8 +14,8 @@ import { SsUnmapRemapService } from './ss-unmap-remap.service';
   styleUrls: ['./ss-unmap-remap.component.css']
 })
 export class SsUnmapRemapComponent implements OnInit {
-  ssUnmapRemapForm: FormGroup;
-  modalForm: FormGroup;
+  ssUnmapRemapForm: UntypedFormGroup;
+  modalForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   userList: Array<any> = [];
@@ -37,7 +37,7 @@ export class SsUnmapRemapComponent implements OnInit {
   loader: boolean = true;
   ssNameFilter: any;
 
-  constructor(private fb: FormBuilder, private ssUnmapRemapService: SsUnmapRemapService,
+  constructor(private fb: UntypedFormBuilder, private ssUnmapRemapService: SsUnmapRemapService,
     private httpService: HttpService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
     private modalService: NgbModal, private sidebarService: SidebarService, private router: Router) { }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from 'src/app/modules/core/http/http.service';
@@ -12,12 +12,12 @@ import { ValidationService } from 'src/app/modules/shared/services/validation.se
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
-  changePasswordForm: FormGroup;
+  changePasswordForm: UntypedFormGroup;
   loading = false;
   showOldPassword: boolean = false;
   showNewPassword: boolean = false;
 
-  constructor(public validationService: ValidationService, private fb: FormBuilder, private httpService: HttpService,
+  constructor(public validationService: ValidationService, private fb: UntypedFormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ChangePasswordComponent>) {
     dialogRef.disableClose = true;

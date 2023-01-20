@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -18,9 +18,9 @@ import { MaterialDistributionRegisterService } from './material-distribution-reg
 })
 export class MaterialDistributionRegisterComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
-  viewMaterialDistributionForm: FormGroup;
-  createMaterialDistributionForm: FormGroup;
-  filterswasthyaSahayikaForm: FormGroup;
+  viewMaterialDistributionForm: UntypedFormGroup;
+  createMaterialDistributionForm: UntypedFormGroup;
+  filterswasthyaSahayikaForm: UntypedFormGroup;
   regionBranchHide: boolean;
   regionList: Array<any> = [];
   lowerRoleBranchId: any;
@@ -67,7 +67,7 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   eligibleFamilyDetails: any;
   loader: boolean = true;
 
-  constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private materialDistributionService: MaterialDistributionRegisterService, private modalService: NgbModal, config: NgbModalConfig,
     private validationService: ValidationService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
     private router: Router) {

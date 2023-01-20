@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class PwRegisterComponent implements OnInit {
   allPregnantWomenList: Array<any> = [];
   nonPregnantWomenList: Array<any> = [];
 
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -54,7 +54,7 @@ export class PwRegisterComponent implements OnInit {
   updateMode: boolean;
   createMode: boolean;
 
-  constructor(private httpService: HttpService, private http: HttpClient, private fb: FormBuilder, private sidebarService: SidebarService,
+  constructor(private httpService: HttpService, private http: HttpClient, private fb: UntypedFormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
     private activatedRoute: ActivatedRoute, private router: Router,public validationService: ValidationService,) { }
 

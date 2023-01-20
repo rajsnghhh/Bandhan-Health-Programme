@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -16,9 +16,9 @@ import { PemRegisterService } from '../pem-register.service';
 })
 
 export class PemRegisterCreateComponent implements OnInit, DoCheck {
-  pemForm: FormGroup;
-  editPemForm: FormGroup;
-  locationForm: FormGroup;
+  pemForm: UntypedFormGroup;
+  editPemForm: UntypedFormGroup;
+  locationForm: UntypedFormGroup;
   pemDetails: any;
   pemDataSave: any;
   childId: any;
@@ -72,7 +72,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
   villageID: any;
   villageid: any;
 
-  constructor(private fb: FormBuilder, private pemService: PemRegisterService, private http: HttpClient,
+  constructor(private fb: UntypedFormBuilder, private pemService: PemRegisterService, private http: HttpClient,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     public validationService: ValidationService, private sidebarService: SidebarService, config: NgbModalConfig,
     private activatedRoute: ActivatedRoute, private router: Router) {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 
 export class ChildrenRegisterCreateComponent implements OnInit {
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().substring(0, 10);
   minDate: any;
   modalContent: any
@@ -67,7 +67,7 @@ export class ChildrenRegisterCreateComponent implements OnInit {
   branchEnddateDetailDTO: any;
   timeToTentativeEndDate: any;
 
-  constructor(private fb: FormBuilder, private childService: ChildrenRegisterService,
+  constructor(private fb: UntypedFormBuilder, private childService: ChildrenRegisterService,
     private http: HttpClient, private modalService: NgbModal, public validationService: ValidationService,
     private httpService: HttpService, private toaster: ToastrService, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, private router: Router) { }

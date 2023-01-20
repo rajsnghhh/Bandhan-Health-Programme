@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,7 @@ import CryptoJS from 'crypto-js';
 })
 
 export class BaselineViewComponent implements OnInit {
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   baselineDetails: Array<any> = [];
   modalContent: any;
   modalReference: any;
@@ -57,7 +57,7 @@ export class BaselineViewComponent implements OnInit {
   timeToTentativeEndDate: any;
   branchID: any;
 
-  constructor(private fb: FormBuilder, private baselineService: BaselineSurveyService,
+  constructor(private fb: UntypedFormBuilder, private baselineService: BaselineSurveyService,
     private modalService: NgbModal, private toaster: ToastrService, private httpService: HttpService,
     private confirmationDialogService: ConfirmationDialogService, private http: HttpClient, private route: Router, public validationService: ValidationService, public sidebarService: SidebarService) { }
 

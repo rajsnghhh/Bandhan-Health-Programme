@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +21,7 @@ export class FamilyInfoCreateComponent implements OnInit {
   totalFamilyCount: any;
   totalFamilyMembersCount: any;
   donorName: any;
-  baselineSurvey: FormGroup;
+  baselineSurvey: UntypedFormGroup;
   haveChildren: string = 'N';
   childbelow18: string;
   childbelow5: string;
@@ -65,7 +65,7 @@ export class FamilyInfoCreateComponent implements OnInit {
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal,
+  constructor(private fb: UntypedFormBuilder, private modalService: NgbModal,
     private familyService: FamilyInfoService, private httpService: HttpService, public validationService: ValidationService,
     private toaster: ToastrService, private routes: ActivatedRoute, private route: Router) { }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { SidebarService } from '../../shared/sidebar/sidebar.service';
 })
 export class PwViewComponent implements OnInit {
 
-  pwRegisterForm: FormGroup;
+  pwRegisterForm: UntypedFormGroup;
   checkAncComplete: boolean;
   Anc1stMin: any;
   Anc2ndMin: any;
@@ -33,7 +33,7 @@ export class PwViewComponent implements OnInit {
   miscarriageAbortionMinDate: string;
   viewMode: boolean;
 
-  constructor(private http: HttpClient, private httpService: HttpService, private fb: FormBuilder,
+  constructor(private http: HttpClient, private httpService: HttpService, private fb: UntypedFormBuilder,
     public validationService: ValidationService, private toaster: ToastrService, private sidebarService: SidebarService,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PwViewComponent>) {
     dialogRef.disableClose = true;

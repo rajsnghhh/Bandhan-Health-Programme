@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -16,8 +16,8 @@ import { SsService } from './ss.service';
   styleUrls: ['./ss-setup.component.css']
 })
 export class SsSetupComponent implements OnInit {
-  ssForm: FormGroup;
-  ssCreateForm: FormGroup;
+  ssForm: UntypedFormGroup;
+  ssCreateForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   staffWiseSSLists: Array<any> = [];
@@ -45,7 +45,7 @@ export class SsSetupComponent implements OnInit {
   regionBranchHide: boolean;
   branchID: any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal, private http: HttpClient,
     private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
 

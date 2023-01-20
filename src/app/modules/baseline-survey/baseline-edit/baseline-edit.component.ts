@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -13,7 +13,7 @@ import { BaselineSurveyService } from '../baseline-survey.service';
   styleUrls: ['./baseline-edit.component.css']
 })
 export class BaselineEditComponent implements OnInit {
-  baselineSurvey: FormGroup;
+  baselineSurvey: UntypedFormGroup;
   houseHoldId: any;
   familyField: string;
   famType: any;
@@ -37,7 +37,7 @@ export class BaselineEditComponent implements OnInit {
   blockName: any;
   gpName: any;
 
-  constructor(private routes: ActivatedRoute, private fb: FormBuilder, private toaster: ToastrService,
+  constructor(private routes: ActivatedRoute, private fb: UntypedFormBuilder, private toaster: ToastrService,
     public validationService: ValidationService, private httpService: HttpService, private baselineService: BaselineSurveyService
     , private sidebarService: SidebarService) { }
 

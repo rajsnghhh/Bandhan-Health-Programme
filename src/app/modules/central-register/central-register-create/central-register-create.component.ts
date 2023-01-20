@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -15,7 +15,7 @@ import { CentralRegisterService } from '../central-register.service';
 })
 export class CentralRegisterCreateComponent implements OnInit {
   dropdownSettings: IDropdownSettings;
-  centralRegister: FormGroup;
+  centralRegister: UntypedFormGroup;
   modalContent: any;
   modalReference: any;
   modalIndex: any;
@@ -36,7 +36,7 @@ export class CentralRegisterCreateComponent implements OnInit {
     childInfo: [],
   };
 
-  constructor(private fb: FormBuilder, private router: Router, private modalService: NgbModal,
+  constructor(private fb: UntypedFormBuilder, private router: Router, private modalService: NgbModal,
     private centralService: CentralRegisterService, private httpService: HttpService,
     public validationService: ValidationService, private toastr: ToastrService) { }
 

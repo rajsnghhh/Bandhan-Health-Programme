@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
@@ -12,7 +12,7 @@ import { SidebarService } from '../../shared/sidebar/sidebar.service';
   styleUrls: ['./beneficiary-info.component.css']
 })
 export class BeneficiaryInfoComponent implements OnInit {
-  locationForm: FormGroup;
+  locationForm: UntypedFormGroup;
   projectList: Array<any> = [];
   stateList: Array<any> = [];
   stateWiseDistrictList: Array<any> = [];
@@ -47,7 +47,7 @@ export class BeneficiaryInfoComponent implements OnInit {
   roleType: any;
 
 
-  constructor(private fb: FormBuilder, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService, private sidebarService: SidebarService, private router: Router) { }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { BlockSetupFormComponent } from '../block-setup-form/block-setup-form.co
   styleUrls: ['./block-home.component.css']
 })
 export class BlockHomeComponent implements OnInit {
-  stateSelectForm: FormGroup;
+  stateSelectForm: UntypedFormGroup;
   stateList: Array<any> = [];
   stateWiseDistrictList: Array<any> = [];
   districtWiseBlockList: Array<any> = [];
@@ -26,7 +26,7 @@ export class BlockHomeComponent implements OnInit {
   updateAccess: boolean;
   deleteAccess: boolean;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService,
     private http: HttpClient, private toaster: ToastrService,
     private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
     private sidebarService: SidebarService, private router: Router) { }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from 'src/app/modules/core/http/http.service';
 import { RoleAccessService } from './role-access.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./role-access.component.css']
 })
 export class RoleAccessComponent implements OnInit {
-  roleAccessForm: FormGroup;
+  roleAccessForm: UntypedFormGroup;
   roleList: Array<any> = [];
   roleFunctionMapView: any;
   mainFunctionList: Array<any> = [];
@@ -24,7 +24,7 @@ export class RoleAccessComponent implements OnInit {
 
 
 
-  constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: FormBuilder,
+  constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: UntypedFormBuilder,
     private toaster: ToastrService, private validationService: ValidationService, private sidebarService: SidebarService,
     private router: Router) { }
 

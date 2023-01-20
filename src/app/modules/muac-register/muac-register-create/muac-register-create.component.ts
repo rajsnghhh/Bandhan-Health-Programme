@@ -1,7 +1,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -17,8 +17,8 @@ import { MuacRegisterService } from '../muac-register.service';
 })
 
 export class MuacRegisterCreateComponent implements OnInit {
-  locationForm: FormGroup;
-  viewChildrenListMuacForm: FormGroup;
+  locationForm: UntypedFormGroup;
+  viewChildrenListMuacForm: UntypedFormGroup;
   muacList: any;
   muacCampList: Array<any> = [];
   modalContent: any;
@@ -73,7 +73,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   villageName: any;
 
   constructor(private httpService: HttpService, private muacService: MuacRegisterService,
-    private modalService: NgbModal, private toaster: ToastrService, private fb: FormBuilder, config: NgbModalConfig,
+    private modalService: NgbModal, private toaster: ToastrService, private fb: UntypedFormBuilder, config: NgbModalConfig,
     private sidebarService: SidebarService, private http: HttpClient, private router: Router) {
     config.backdrop = 'static';
     config.keyboard = false;

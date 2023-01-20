@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,7 @@ import { UserCreateFormComponent } from '../user-create/user-create-form.compone
   styleUrls: ['./user-table.component.css']
 })
 export class UserTableComponent implements OnInit {
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   userList: Array<any> = [];
@@ -27,7 +27,7 @@ export class UserTableComponent implements OnInit {
   updateAccess: boolean;
   deleteAccess: boolean;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private httpService: HttpService,
+  constructor(public dialog: MatDialog, private fb: UntypedFormBuilder, private httpService: HttpService,
     private http: HttpClient, private baselineService: BaselineSurveyService, private toaster: ToastrService,
     private confirmationDialogService: ConfirmationDialogService, private sidebarService: SidebarService, private router: Router) { }
 

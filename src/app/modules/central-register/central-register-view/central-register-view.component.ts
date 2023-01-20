@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaselineSurveyService } from '../../baseline-survey/baseline-survey.service';
 import { HttpService } from '../../core/http/http.service';
@@ -16,7 +16,7 @@ import CryptoJS from 'crypto-js';
 })
 
 export class CentralRegisterViewComponent implements OnInit, DoCheck {
-  centralViewForm: FormGroup;
+  centralViewForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   centralDetails: Array<any> = [];
@@ -40,7 +40,7 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
   timeToTentativeEndDate: any;
 
   constructor(private centralService: CentralRegisterService, private http: HttpService, private route: Router,
-    public validationService: ValidationService, private fb: FormBuilder, public sidebarService: SidebarService,
+    public validationService: ValidationService, private fb: UntypedFormBuilder, public sidebarService: SidebarService,
     private httpClient: HttpClient, private baselineService: BaselineSurveyService) { }
 
   ngDoCheck(): void {

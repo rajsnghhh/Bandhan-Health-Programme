@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { RegionSetupComponent } from '../region-setup/region-setup.component';
   styleUrls: ['./region-branch-home.component.css']
 })
 export class RegionBranchHomeComponent implements OnInit {
-  stateSelectForm: FormGroup;
+  stateSelectForm: UntypedFormGroup;
   stateList: Array<any> = [];
   regionAndBranchList: Array<any> = [];
   stateMasterId: any;
@@ -26,7 +26,7 @@ export class RegionBranchHomeComponent implements OnInit {
   updateAccess: boolean;
   deleteAccess: boolean;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private http: HttpClient,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private http: HttpClient,
     private router: Router, private toaster: ToastrService,
     private confirmationDialogService: ConfirmationDialogService, public dialog: MatDialog,
     private sidebarService: SidebarService,) { }

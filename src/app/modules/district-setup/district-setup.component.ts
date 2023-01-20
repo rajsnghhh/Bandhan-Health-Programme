@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,8 +15,8 @@ import { DistrictSetupService } from './district-setup.service';
   styleUrls: ['./district-setup.component.css']
 })
 export class DistrictSetupComponent implements OnInit {
-  districtForm: FormGroup;
-  districtCreateForm: FormGroup;
+  districtForm: UntypedFormGroup;
+  districtCreateForm: UntypedFormGroup;
   stateList: Array<any> = [];
   districtList: Array<any> = [];
   page = 1;
@@ -32,7 +32,7 @@ export class DistrictSetupComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, private districtService: DistrictSetupService,
+  constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private districtService: DistrictSetupService,
     private modalService: NgbModal, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,
     private validationService: ValidationService, private sidebarService: SidebarService, private router: Router) { }
 
