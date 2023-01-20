@@ -1636,7 +1636,7 @@ export class HealthForumComponent implements OnInit {
       return;
     }
 
-
+    
 
 
     console.log(savEditReq, 'savEditReq');
@@ -1701,26 +1701,22 @@ export class HealthForumComponent implements OnInit {
   changeseasonalDiscussion() {
     this.diseaseListID = [];
     var arr = []
-    if (this.editHF_eventDetails?.healthForumEventId) {
+    if(this.editHF_eventDetails?.healthForumEventId){
       console.log('id');
       this.moreEventDetails.seasonalDiseaseDiscussedList.forEach(a => {
-        this.eventDiseaseList.filter(y => y.diseaseId == a.diseaseId).forEach(z => {
-          arr.push({health_forum_event_season_diseases_map_id: a.health_forum_event_season_diseases_map_id, diseaseId: z.diseaseId, active_flag: 'A' });
-          console.log(z);
-        })
-
+        this.eventDiseaseList.filter
       })
-      // this.eventDiseaseList.forEach(x => {
-      //   console.log(x);
-      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList);
-
-      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList.filter(y => y.diseaseId == x.diseaseId));
-
-      //   // .forEach(z =>{
-      //   // arr.push(z);
-      //   // console.log(z);
-      //   // })
-      // })
+      this.eventDiseaseList.forEach(x => {
+        console.log(x);
+        console.log(this.moreEventDetails.seasonalDiseaseDiscussedList);
+        
+        console.log(this.moreEventDetails.seasonalDiseaseDiscussedList.filter(y => y.diseaseId == x.diseaseId));
+        
+        // .forEach(z =>{
+        // arr.push(z);
+        // console.log(z);
+        // })
+      })
     }
     console.log(this.eventDiseaseList);
     this.eventDiseaseList.forEach(x => {
@@ -1729,13 +1725,13 @@ export class HealthForumComponent implements OnInit {
       }
     })
     console.log(this.eventDiseaseList);
-    setTimeout(() => {
-      console.log(arr);
-
-      this.diseaseListID = arr;
-      console.log(this.diseaseListID);
-    }, 500);
-
+   setTimeout(() => {
+    console.log(arr);
+    
+    this.diseaseListID = arr;
+    console.log(this.diseaseListID);
+   }, 500);
+    
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
