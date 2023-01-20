@@ -12,10 +12,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HealthForumAngularMatModalComponent } from './health-forum-angular-mat-modal/health-forum-angular-mat-modal.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { healthForumeventFilterPipe } from '../shared/sidebar/event-forum-seach.pipe';
 
 @NgModule({
-  declarations: [HealthForumComponent, healthForumFilterPipe, healthForumeventFilterPipe, HealthForumAngularMatModalComponent],
+  declarations: [HealthForumComponent, healthForumFilterPipe, HealthForumAngularMatModalComponent],
   imports: [
     CommonModule,
     HealthForumRoutingModule,

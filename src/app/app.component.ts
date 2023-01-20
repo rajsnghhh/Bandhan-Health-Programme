@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 import { ChangePasswordComponent } from './login/change-password/change-password.component';
 import { LoginService } from './login/login.service';
 import { User } from './login/user';
@@ -16,13 +17,16 @@ export class AppComponent {
   title = 'bhp-web';
   fullscreenData: boolean;
   user: User;
+  baseURL = environment.apiUrl;
 
   constructor(public validationService: ValidationService, private accountService: LoginService,
     private confirmationDialogService: ConfirmationDialogService, private baselineService: BaselineSurveyService,
     public dialog: MatDialog,
   ) {
     this.accountService.user.subscribe((x) => { this.user = x; });
-    console.log(this.user, 'appComponent')
+    console.log(this.user, 'appComponent');
+    console.log(this.baseURL);
+    
   }
 
   fullscreenMethod(data) {

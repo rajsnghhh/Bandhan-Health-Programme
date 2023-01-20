@@ -42,19 +42,19 @@
 
 .nav_bar{
   background-color: #ffff;
-  margin-left: -330px; 
-  margin-bottom: 40px; 
-  width: 220%;
-  padding-left: 28%;
+  margin-left: -24px; 
+  margin-bottom: 30px; 
+  width: 103%;
+  /* padding-left: 28%; */
 }
 .nav_header{
   color: #499; 
-  font-size: 30px; 
+  font-size: 27px; 
   margin-left: 16px;
   padding-right: 34%;
 }
 .nav_user_icon{
-  font-size:40px;
+  font-size:35px;
   color: #8b4545;
 }
 

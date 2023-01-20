@@ -7,10 +7,18 @@
         [ngClass]="fullscreenData ? 'footer_part_fullscreen main_content_fullscreen ' : 'main_content'">
 
         <mat-toolbar *ngIf="user" class="nav_bar">
-            <span class="nav_header">Bandhan Health Program
-            </span>
 
-            <i class="fas fa-user-circle nav_user_icon" mat-button [matMenuTriggerFor]="menu" title="My Profile"></i>
+            <div class="col-md">
+                <span class="nav_header" *ngIf="baseURL.includes(67)">Bandhan Health Program (Dev)</span>
+                <span class="nav_header" *ngIf="baseURL.includes(71)">Bandhan Health Program (Test)</span>
+                <span class="nav_header" *ngIf="baseURL.includes(102)">Bandhan Health Program (Staging)</span>
+                <span class="nav_header" *ngIf="baseURL.includes('training')">Bandhan Health Program (Training)</span>
+                <span class="nav_header" *ngIf="baseURL.includes('prod')">Bandhan Health Program</span>
+            </div>
+            <div class="col-md">
+                <span class="close" style="float: right;"> <i class="fas fa-user-circle nav_user_icon" mat-button
+                        [matMenuTriggerFor]="menu" title="My Profile"></i></span>
+            </div>
 
             <mat-menu #menu="matMenu">
                 <div class="userMenu">
