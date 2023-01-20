@@ -1353,11 +1353,19 @@ export class HealthForumComponent implements OnInit {
               }
             })
           }
+        } else {
+          if (e.isChecked == true) {
+            console.log(e.diseaseId);
+            this.diseaseListID.push({ health_forum_event_season_diseases_map_id: 0, diseaseId: e.diseaseId, active_flag: 'A' });
+            console.log(this.diseaseListID);
+          }
         }
       })
     }
 
     console.log(this.eventDiseaseList);
+    console.log(this.diseaseListID);
+
   }
 
   selectAdolescent(e, adolescent, fami) {
@@ -1585,6 +1593,17 @@ export class HealthForumComponent implements OnInit {
 
     })
 
+    if (this.moreEventDetails.seasonalDiseaseDiscussedList) {
+      if (this.createEditHFEventForm.value.seasonalDiscussion == 'N') {
+        this.diseaseListID.forEach(f => {
+          this.moreEventDetails.seasonalDiseaseDiscussedList.filter(x => x.diseaseId == f.diseaseId).forEach(z => {
+            f.active_flag = 'D';
+          })
+        })
+
+      }
+    }
+
     console.log(tt);
 
     let savEditReq = {
@@ -1616,6 +1635,9 @@ export class HealthForumComponent implements OnInit {
       this.showError('Please select at least one family');
       return;
     }
+
+
+
 
     console.log(savEditReq, 'savEditReq');
     this.healthForumService.saveOrUpdateHealthForumEvent(savEditReq).subscribe((res: any) => {
@@ -1662,7 +1684,7 @@ export class HealthForumComponent implements OnInit {
     } else if (!this.createEditHFEventForm.value.seasonalDiscussion) {
       flag = false;
     } else if (this.createEditHFEventForm.value.seasonalDiscussion == 'Y') {
-      if (this.diseaseListID.length < 1) {
+      if (this.diseaseListID.filter(x => x.active_flag == 'A').length < 1) {
         flag = false;
       }
     }
@@ -1678,6 +1700,28 @@ export class HealthForumComponent implements OnInit {
 
   changeseasonalDiscussion() {
     this.diseaseListID = [];
+    var arr = []
+    if (this.editHF_eventDetails?.healthForumEventId) {
+      console.log('id');
+      this.moreEventDetails.seasonalDiseaseDiscussedList.forEach(a => {
+        this.eventDiseaseList.filter(y => y.diseaseId == a.diseaseId).forEach(z => {
+          arr.push({health_forum_event_season_diseases_map_id: a.health_forum_event_season_diseases_map_id, diseaseId: z.diseaseId, active_flag: 'A' });
+          console.log(z);
+        })
+
+      })
+      // this.eventDiseaseList.forEach(x => {
+      //   console.log(x);
+      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList);
+
+      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList.filter(y => y.diseaseId == x.diseaseId));
+
+      //   // .forEach(z =>{
+      //   // arr.push(z);
+      //   // console.log(z);
+      //   // })
+      // })
+    }
     console.log(this.eventDiseaseList);
     this.eventDiseaseList.forEach(x => {
       if (x.isChecked == true) {
@@ -1685,6 +1729,12 @@ export class HealthForumComponent implements OnInit {
       }
     })
     console.log(this.eventDiseaseList);
+    setTimeout(() => {
+      console.log(arr);
+
+      this.diseaseListID = arr;
+      console.log(this.diseaseListID);
+    }, 500);
 
   }
 
