@@ -801,6 +801,7 @@ export class HealthForumComponent implements OnInit {
   }
 
   createHFEvents(createEditHFEvent) {
+    this.visitorDetails.visitorInfo = []
     this.hourList = [];
     this.minuteList = [];
     this.hourLists();
@@ -924,7 +925,7 @@ export class HealthForumComponent implements OnInit {
         this.editHFEventModal = this.modalService.open(createEditHFEvent, {
           windowClass: 'createEditHFEvent',
         });
-      }, 1500);
+      }, 2000);
 
     }
 
@@ -1153,7 +1154,12 @@ export class HealthForumComponent implements OnInit {
   unselectFamily(fami, int) {
     fami.radioCheck = 'NA';
     fami.adolescentGilrChildren.forEach(z => {
+      console.log(z);
+
       z.active_flag = "D";
+      z.isChecked = false;
+
+
     })
     fami.adolGirl = [];
     fami.adolescentGilrChildren.filter(x => x.active_flag == "D").forEach((z) => {
@@ -1168,7 +1174,7 @@ export class HealthForumComponent implements OnInit {
       fami.adolGirl.push({
         health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'D',
         latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
+        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
       });
     })
     console.log(fami);
@@ -1223,7 +1229,7 @@ export class HealthForumComponent implements OnInit {
                   m.adolGirl.push({
                     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
                     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-                    latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
+                    latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
                   });
                 })
               }, 500);
@@ -1393,7 +1399,7 @@ export class HealthForumComponent implements OnInit {
       fami.adolGirl.push({
         health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
         latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem
+        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
       });
     })
     console.log(fami);
@@ -1499,7 +1505,7 @@ export class HealthForumComponent implements OnInit {
         arr.push(x)
         if (x.radioCheck != 'NA') {
           if (x.adolescentGilrChildren.length > 0) {
-            if (x.adolGirl.length == 0) {
+            if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
               i++
               if (i == 1) {
                 this.showError('Minimum one adolescent selection is required as family head is present');
@@ -1562,7 +1568,7 @@ export class HealthForumComponent implements OnInit {
       var tt = []
       arr.filter(er => er.radioCheck != "NA").forEach(x => {
         if (x.adolescentGilrChildren.length != 0) {
-          if (x.adolGirl.length == 0) {
+          if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
             ch.push({ isChecked: false })
           } else {
             tt.push(x.adolGirl)
@@ -1636,7 +1642,7 @@ export class HealthForumComponent implements OnInit {
       return;
     }
 
-    
+
 
 
     console.log(savEditReq, 'savEditReq');
@@ -1645,6 +1651,7 @@ export class HealthForumComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.editHFEventModalDismiss();
+        this.viewHFEventModalDismiss();
         this.changeBranch(this.branchId || this.lowerRankbranchId);
       } else {
         this.showError(res.message);
@@ -1701,22 +1708,25 @@ export class HealthForumComponent implements OnInit {
   changeseasonalDiscussion() {
     this.diseaseListID = [];
     var arr = []
-    if(this.editHF_eventDetails?.healthForumEventId){
+    if (this.editHF_eventDetails?.healthForumEventId) {
       console.log('id');
       this.moreEventDetails.seasonalDiseaseDiscussedList.forEach(a => {
-        this.eventDiseaseList.filter
+        this.eventDiseaseList.filter(y => y.diseaseId == a.diseaseId).forEach(z => {
+          arr.push({ health_forum_event_season_diseases_map_id: a.health_forum_event_season_diseases_map_id, diseaseId: z.diseaseId, active_flag: 'A' });
+          console.log(z);
+        })
       })
-      this.eventDiseaseList.forEach(x => {
-        console.log(x);
-        console.log(this.moreEventDetails.seasonalDiseaseDiscussedList);
-        
-        console.log(this.moreEventDetails.seasonalDiseaseDiscussedList.filter(y => y.diseaseId == x.diseaseId));
-        
-        // .forEach(z =>{
-        // arr.push(z);
-        // console.log(z);
-        // })
-      })
+      // this.eventDiseaseList.forEach(x => {
+      //   console.log(x);
+      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList);
+
+      //   console.log(this.moreEventDetails.seasonalDiseaseDiscussedList.filter(y => y.diseaseId == x.diseaseId));
+
+      //   // .forEach(z =>{
+      //   // arr.push(z);
+      //   // console.log(z);
+      //   // })
+      // })
     }
     console.log(this.eventDiseaseList);
     this.eventDiseaseList.forEach(x => {
@@ -1725,13 +1735,13 @@ export class HealthForumComponent implements OnInit {
       }
     })
     console.log(this.eventDiseaseList);
-   setTimeout(() => {
-    console.log(arr);
-    
-    this.diseaseListID = arr;
-    console.log(this.diseaseListID);
-   }, 500);
-    
+    setTimeout(() => {
+      console.log(arr);
+
+      this.diseaseListID = arr;
+      console.log(this.diseaseListID);
+    }, 500);
+
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
