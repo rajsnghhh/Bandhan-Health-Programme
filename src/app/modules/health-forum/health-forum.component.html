@@ -490,6 +490,34 @@
                 </div>
 
                 <div class="form-group col-md">
+
+                    <fieldset class="scheduler-border" style="height: 190px;">
+                        <legend class="scheduler-border">Last Month Topics</legend>
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 5%;">Sl. No.</th>
+                                        <th style="width: 25%;">Topic Name</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align:center;" id="tbodyDisease">
+                                    <tr *ngFor="let topic of lastMonthRefresherTrainingTopic; index as i;">
+                                        <td style="width: 5%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{topic.ss_training_event_topic_name}}</td>
+                                    </tr>
+                                    <tr *ngIf="lastMonthRefresherTrainingTopic == null">
+                                        <td>No Data Present</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group col-md">
                     <label for="event">No. of Event Proposed :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <select class="form-select" formControlName="event" id="event" [ngClass]="{'is-invalid': c.event.invalid && c.event.touched,  'is-valid': 
                                         c.event.valid && (c.event.dirty || c.event.touched) }">

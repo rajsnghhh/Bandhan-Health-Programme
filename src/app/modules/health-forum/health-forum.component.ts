@@ -80,6 +80,7 @@ export class HealthForumComponent implements OnInit {
   day: any;
   editHF_eventDetails: any = {};
   familyHeadPresentLenChk: Array<any> = [];
+  lastMonthRefresherTrainingTopic: Array<any> = [];
   editStartHour: any;
   editStartMin: any;
   editEndHour: any;
@@ -452,6 +453,8 @@ export class HealthForumComponent implements OnInit {
     this.healthForumService.getTopicListAndAreasOfStaffAndOrSS(req).subscribe((res: any) => {
       console.log(res.responseObject);
       this.topicList = res.responseObject?.allTopics;
+      this.lastMonthRefresherTrainingTopic = res.responseObject?.lastMonthRefresherTrainingTopic;
+      console.log(this.lastMonthRefresherTrainingTopic, 'this.lastMonthRefresherTrainingTopic');
       console.log(this.topicList, ' this.topicList');
       this.areaList = res.responseObject?.villageDetails;
       this.areaList = this.areaList?.map(({
@@ -693,8 +696,34 @@ export class HealthForumComponent implements OnInit {
 
   editHealthForum(createHF, health: {}) {
     this.editHFDetails = health;
-    this.loader = false;
-    this.createHealthForum(createHF)
+    console.log(this.editHFDetails);
+    var currentTime = new Date().toJSON().slice(0, 10);
+
+    if (this.editHFDetails?.rescheduleDetails?.rescheduleToDate) {
+      if (this.editHFDetails?.rescheduleDetails?.rescheduleToDate < currentTime) {
+        this.showError('HF of past date can not be edited');
+        return;
+      } else if (this.editHFDetails.eventList.length != 0) {
+        this.showError('Not accessible as event is created');
+        return;
+      } else {
+        this.loader = false;
+        this.createHealthForum(createHF);
+      }
+
+    } else {
+      if (this.editHFDetails.scheduleDetails.date < currentTime) {
+        this.showError('HF of past date can not be edited');
+        return;
+      } else if (this.editHFDetails.eventList.length != 0) {
+        this.showError('Not accessible as event is created');
+        return;
+      } else {
+        this.loader = false;
+        this.createHealthForum(createHF);
+      }
+    }
+
   }
 
   get c() {
@@ -717,10 +746,36 @@ export class HealthForumComponent implements OnInit {
   }
 
   deleteHealthForum(health) {
-    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this forum ?')
-      .then(() => this.delete(health)
-      )
-      .catch(() => '');
+    var currentTime = new Date().toJSON().slice(0, 10);
+
+    if (health?.rescheduleDetails?.rescheduleToDate) {
+      if (health?.rescheduleDetails?.rescheduleToDate < currentTime) {
+        this.showError('HF of past date can not be deleted');
+        return;
+      } else if (health.eventList.length != 0) {
+        this.showError('Not accessible as event is created');
+        return;
+      } else {
+        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this forum ?')
+          .then(() => this.delete(health)
+          )
+          .catch(() => '');
+      }
+    } else {
+      if (health?.scheduleDetails?.date < currentTime) {
+        this.showError('HF of past date can not be deleted');
+        return;
+      } else if (health.eventList.length != 0) {
+        this.showError('Not accessible as event is created');
+        return;
+      } else {
+        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this forum ?')
+          .then(() => this.delete(health)
+          )
+          .catch(() => '');
+      }
+    }
+
   }
 
   delete(health) {
@@ -732,9 +787,6 @@ export class HealthForumComponent implements OnInit {
       ssId: health.ssDetails.ssId,
       topicId: health.topicDetails.topicId,
       date: health.scheduleDetails.date,
-      // scheduleStartHour: this.createHFForm.value.hour,
-      // scheduleStartMinute: this.createHFForm.value.minute,
-      // amOrPm: this.createHFForm.value.meridiem,
       noOfEventProposed: health.noOfEventProposed,
       active_flag: 'D',
       villageList: health.villageList
@@ -756,20 +808,46 @@ export class HealthForumComponent implements OnInit {
 
   approveHealthForum(health) {
     console.log(health);
-    if (health.approvalStatus == 'A') {
-      this.showError('Forum is already approved')
-      return;
+    var currentTime = new Date().toJSON().slice(0, 10);
+
+    if (health?.rescheduleDetails?.rescheduleToDate) {
+      if (health?.rescheduleDetails?.rescheduleToDate < currentTime) {
+        this.showError('HF of past date can not be approved');
+        return;
+      } else if (health.approvalStatus == 'A') {
+        this.showError('HF is already approved')
+        return;
+      } else {
+        let appObj = { dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId, isApproved: false }
+        this.healthForumService.HFApprove(appObj).subscribe((res: any) => {
+          console.log(res);
+          if (res.status == true) {
+            this.showSuccess('Approved Successfully');
+            this.changeBranch(this.branchId || this.lowerRankbranchId);
+          } else {
+            this.showError(res.message);
+          }
+        })
+      }
     } else {
-      let appObj = { dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId, isApproved: false }
-      this.healthForumService.HFApprove(appObj).subscribe((res: any) => {
-        console.log(res);
-        if (res.status == true) {
-          this.showSuccess('Approved Successfully');
-          this.changeBranch(this.branchId || this.lowerRankbranchId);
-        } else {
-          this.showError(res.message);
-        }
-      })
+      if (health?.scheduleDetails?.date < currentTime) {
+        this.showError('HF of past date can not be approved');
+        return;
+      } else if (health.approvalStatus == 'A') {
+        this.showError('HF is already approved')
+        return;
+      } else {
+        let appObj = { dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId, isApproved: false }
+        this.healthForumService.HFApprove(appObj).subscribe((res: any) => {
+          console.log(res);
+          if (res.status == true) {
+            this.showSuccess('Approved Successfully');
+            this.changeBranch(this.branchId || this.lowerRankbranchId);
+          } else {
+            this.showError(res.message);
+          }
+        })
+      }
     }
 
   }
@@ -1174,7 +1252,7 @@ export class HealthForumComponent implements OnInit {
       fami.adolGirl.push({
         health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'D',
         latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
+        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
       });
     })
     console.log(fami);
@@ -1229,7 +1307,7 @@ export class HealthForumComponent implements OnInit {
                   m.adolGirl.push({
                     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
                     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-                    latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
+                    latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
                   });
                 })
               }, 500);
@@ -1399,7 +1477,7 @@ export class HealthForumComponent implements OnInit {
       fami.adolGirl.push({
         health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
         latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem,isChecked : z.isChecked
+        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
       });
     })
     console.log(fami);
@@ -1599,10 +1677,10 @@ export class HealthForumComponent implements OnInit {
 
     })
 
-    if (this.moreEventDetails.seasonalDiseaseDiscussedList) {
+    if (this.moreEventDetails?.seasonalDiseaseDiscussedList) {
       if (this.createEditHFEventForm.value.seasonalDiscussion == 'N') {
         this.diseaseListID.forEach(f => {
-          this.moreEventDetails.seasonalDiseaseDiscussedList.filter(x => x.diseaseId == f.diseaseId).forEach(z => {
+          this.moreEventDetails?.seasonalDiseaseDiscussedList.filter(x => x.diseaseId == f.diseaseId).forEach(z => {
             f.active_flag = 'D';
           })
         })
@@ -1893,7 +1971,6 @@ export class HealthForumComponent implements OnInit {
 
     });
   }
-
 
 }
 
