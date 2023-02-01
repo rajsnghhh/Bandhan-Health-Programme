@@ -84,14 +84,14 @@
                                             <th style="width: 12%;">Date<br>Rescheduled</th>
                                             <th style="width: 19%;">Staff Name</th>
                                             <th style="width: 22%;">SS Name</th>
-                                            <th style="width: 8%;">Topic</th>
-                                            <th style="width: 8%;">Village<br>List</th>
-                                            <th style="width: 8%;" *ngIf="eventViewMode">Event<br>Details</th>
-                                            <th style="width: 11%;">Total Family<br>Attended</th>
-                                            <th style="width: 11%;">Total Member<br>Attended</th>
+                                            <th style="width: 7%;">Topic</th>
+                                            <th style="width: 7%;">Village<br>List</th>
+                                            <th style="width: 7%;" *ngIf="eventViewMode">Event<br>Details</th>
+                                            <th style="width: 7%;">Event<br>App./ C</th>
+                                            <th style="width: 9%;">Family<br>Attended</th>
+                                            <th style="width: 9%;">Member<br>Attended</th>
                                             <th style="width: 22%;">Action</th>
                                         </tr>
-
                                     </thead>
 
                                     <tbody>
@@ -109,7 +109,7 @@
                                                 {{health.staffLastName}}
                                             </td>
                                             <td style="width: 22%;">{{health.ssName? health.ssName: '-'}}</td>
-                                            <td style="width: 8%;">
+                                            <td style="width: 7%;">
                                                 <div class="popover__wrapper">
                                                     <h3 class="popover__title" style="color:#0d6efd;">view</h3>
                                                     <div class="popover__content">
@@ -120,14 +120,16 @@
                                                 </div>
                                             </td>
                                             <td class="btn-link"
-                                                style="width: 8%; color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                style="width: 7%; color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="openDialog(health.villageList)">view</td>
                                             <td class=" btn-link"
-                                                style="width: 8%; color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                style="width: 7%; color:#0d6efd; text-decoration: none; cursor: pointer;"
                                                 (click)="viewHFEventDetails(HFeventDetails, health)"
                                                 *ngIf="eventViewMode">view</td>
-                                            <td style="width: 11%;">{{health.forumFamilyPresent}}</td>
-                                            <td style="width: 11%;">{{health.forumAdolescentGirlPresent+
+                                            <td style="width: 7%;">{{health.noOfEventProposed}}/
+                                                {{health.eventList.length}}</td>
+                                            <td style="width: 9%;">{{health.forumFamilyPresent}}</td>
+                                            <td style="width: 9%;">{{health.forumAdolescentGirlPresent+
                                                 health.forumFamilyHeadPresent}}</td>
                                             <td style="width: 22%;">
                                                 <i class="fas fa-edit" title="Edit Health Forum"
@@ -144,7 +146,6 @@
                                                     *ngIf="rescheduleMode"></i>
                                             </td>
                                         </tr>
-
                                     </tbody>
 
                                 </table>
@@ -194,35 +195,35 @@
 
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%;">Sl. No.</th>
-                                        <th style="width: 10%;">Date</th>
-                                        <th style="width: 10%;">Family View/<br>Attended</th>
-                                        <th style="width: 8%;">Fam. Head<br>Present</th>
-                                        <th style="width: 8%;">Adol. Girl<br>Present</th>
-                                        <th style="width: 8%;">Conducted By</th>
+                                        <th style="width: 3%;">Sl.<br>No.</th>
+                                        <th style="width: 9%;">Date</th>
+                                        <th style="width: 7%;">Family View<br>(Attended)</th>
+                                        <th style="width: 7%;">Fam. Head<br>Present</th>
+                                        <th style="width: 6%;">Adol. Girl<br>Present</th>
+                                        <th style="width: 6%;">Conducted<br>By</th>
                                         <th style="width: 15%;">Topic Discussed</th>
-                                        <th style="width: 10%;">Seasonal Disease<br>Discussed</th>
-                                        <th style="width: 8%;">Start<br>Time</th>
-                                        <th style="width: 8%;">End<br>Time</th>
-                                        <th style="width: 10%;">Action</th>
+                                        <th style="width: 9%;">Seasonal Disease<br>Discussed</th>
+                                        <th style="width: 8%;">Visitors<br>Details</th>
+                                        <th style="width: 7%;">Start<br>Time</th>
+                                        <th style="width: 7%;">End<br>Time</th>
+                                        <th style="width: 8%;">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody style="text-align: center;">
                                     <tr *ngFor="let event of viewEventList;index as i">
-                                        <td style="width: 5%;">{{i+1}}</td>
-                                        <td style="width: 10%;">{{event.createdOn.split("-").reverse().join("-")}}</td>
-                                        <td style="width: 10%;"><span class="btn-link"
+                                        <td style="width: 3%;">{{i+1}}</td>
+                                        <td style="width: 9%;">{{event.createdOn.split("-").reverse().join("-")}}</td>
+                                        <td style="width: 7%;"><span class="btn-link"
                                                 style="color:#0d6efd; text-decoration: none; cursor: pointer;" (click)="
                                             viewFamilyAttendedDetails(ViewFamilyDetails, event)">view</span>&nbsp;
                                             <span>({{event.forumEventFamilyPresent}})</span>
-
                                         </td>
-                                        <td style="width: 8%;">{{event.forumEventFamilyHeadPresent}}</td>
-                                        <td style="width: 8%;">{{event.forumEventAdolescentGirlPresent}}</td>
-                                        <td style="width: 8%;">{{event.eventConductedBy}}</td>
+                                        <td style="width: 7%;">{{event.forumEventFamilyHeadPresent}}</td>
+                                        <td style="width: 6%;">{{event.forumEventAdolescentGirlPresent}}</td>
+                                        <td style="width: 6%;">{{event.eventConductedBy}}</td>
                                         <td style="width: 15%;">{{viewForumList.topicDetails.topicName}}</td>
-                                        <td style="width: 10%;">
+                                        <td style="width: 9%;">
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
                                                 <div class="popover__content">
@@ -234,17 +235,28 @@
                                             </div>
                                         </td>
                                         <td style="width: 8%;">
+                                            <div class="popover__wrapper">
+                                                <h3 class="popover__title" style="color:#0d6efd;">view</h3>
+                                                <div class="popover__content">
+                                                    <!-- <li style="word-wrap: break-word; text-align: left;"
+                                                        *ngFor="let disease of event.seasonalDiseaseDiscussedList; index as i">
+                                                        {{i+1}}. {{disease.diseasesName}}
+                                                    </li> -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="width: 7%;">
                                             {{event.startHour.toString().length > 1 ? event.startHour :
                                             '0'+event.startHour}}:{{event.startMinute.toString().length > 1 ?
                                             event.startMinute : '0'+event.startMinute}}
                                             {{event.startAmOrPm}}</td>
-                                        <td style="width: 8%;">
+                                        <td style="width: 7%;">
                                             {{event.endHour.toString().length > 1 ? event.endHour :
                                             '0'+event.endHour}}:{{event.endMinute.toString().length > 1 ?
                                             event.endMinute :
                                             '0'+event.endMinute }}
                                             {{event.endAmOrPm}}</td>
-                                        <td style="width: 10%;">
+                                        <td style="width: 8%;">
                                             <i class="fas fa-edit" title="Edit Health Forum Event"
                                                 (click)="editHFEvents(createEditHFEvent, event)"
                                                 *ngIf="eventUpdateMode"></i>
@@ -294,11 +306,10 @@
                                     <tr>
                                         <th style="width: 4%;">Family<br>No.</th>
                                         <th style="width: 13%;">Family Head Name</th>
-                                        <th style="width: 12%;">Village</th>
-                                        <th style="width: 13%;">Status Of Family</th>
-                                        <th style="width: 5%;">Family Head<br>Present</th>
-                                        <th style="width: 5%;">Adolescent Girl<br>Name</th>
+                                        <th style="width: 15%;">Village</th>
+                                        <th style="width: 22%;">Status Of Family</th>
                                         <th style="width: 6%;">Adolescent Girl<br>Present</th>
+                                        <th style="width: 5%;">Family Head<br>Present</th>
                                     </tr>
                                 </thead>
 
@@ -308,8 +319,8 @@
                                         <td style="width: 4%;">{{fam.familyNumber}}</td>
                                         <td style="width: 13%;">{{fam.familyFirstName}} {{fam.familyMiddleName}}
                                             {{fam.familyLastName}}</td>
-                                        <td style="width: 12%;">{{fami.villageName}}</td>
-                                        <td style="width: 13%;">
+                                        <td style="width: 15%;">{{fami.villageName}}</td>
+                                        <td style="width: 22%;">
                                             {{fam.hasChildPresentInPem =='Y' && fam.presentInLactatingMother
                                             =='Y' && fam.presentInPregnantWoman == 'Y' && fam.has2to5yearsOldChildren ==
                                             'Y' ?
@@ -389,19 +400,21 @@
                                             fam.presentInPregnantWoman.includes('N') &&
                                             fam.has2to5yearsOldChildren== 'Y'? 'PEM, 2-5 yr' : '' }}
                                         </td>
-                                        <td style="width: 5%;">{{fam.family_head_present}}</td>
-                                        <td style="width: 5%;">
-                                            <div class="popover__wrapper">
-                                                <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                <div class="popover__content">
+                                        <td style="width: 6%;">{{fam.hasAdolescentGirlChildren}}&nbsp;&nbsp;<div
+                                                class="popover__wrapper">
+                                                <h3 class="popover__title" style="color:#0d6efd;"
+                                                    *ngIf="fam.hasAdolescentGirlChildren == 'Y'">(view)</h3>
+                                                    <h3 class="popover__title" style="color:#8b959f;"
+                                                    *ngIf="fam.hasAdolescentGirlChildren == 'N'">(view)</h3>
+                                                <div class="popover__content" *ngIf="fam.hasAdolescentGirlChildren == 'Y'">
                                                     <li style="word-wrap: break-word; text-align: left;"
-                                                       *ngFor="let child of fam.childrenList; index as chi">
+                                                        *ngFor="let child of fam.childrenList; index as chi">
                                                         {{chi+1}}. {{child.childName}}
                                                     </li>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td style="width: 6%;">{{fam.hasAdolescentGirlChildren}}</td>
+                                        <td style="width: 5%;">{{fam.family_head_present}}</td>
                                     </tr>
                                 </tbody>
 
@@ -960,16 +973,6 @@
                                                                     id="flexCheckDefault"
                                                                     (change)="selectMultipleDisease($event,disease)">
                                                             </td>
-                                                            <!-- <td *ngIf="disease.isChecked == true" style="width: 5%;"> <input
-                                                                    class="form-check-input" type="checkbox" value=""
-                                                                    id="flexCheckDefault" [checked]="true"
-                                                                    (change)="selectMultipleDisease($event,i)"> </td>
-    
-                                                            <td *ngIf="disease.isChecked == false" style="width: 5%;">
-                                                                <input class="form-check-input" type="checkbox" value=""
-                                                                    id="flexCheckDefault" [checked]="false"
-                                                                    (change)="selectMultipleDisease($event,i)">
-                                                            </td> -->
                                                         </tr>
                                                     </tbody>
 
@@ -1156,7 +1159,6 @@
                     </div>
                 </div>
 
-
             </form>
         </div>
 
@@ -1199,7 +1201,6 @@
                         <div *ngIf="r.date.errors.required">Date selection is required</div>
                     </div>
                 </div>
-
 
                 <div class="form-group col-md">
                     <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>

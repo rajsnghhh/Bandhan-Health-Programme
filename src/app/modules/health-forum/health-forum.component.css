@@ -71,6 +71,7 @@
   width: 1080px;
   margin-left: -275px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .modal-HF {
