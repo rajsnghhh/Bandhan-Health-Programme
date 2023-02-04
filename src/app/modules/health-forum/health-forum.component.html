@@ -226,10 +226,17 @@
                                         <td style="width: 9%;">
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                <div class="popover__content">
+                                                <div class="popover__content"
+                                                    *ngIf="event.seasonalDiseaseDiscussedList.length>0">
                                                     <li style="word-wrap: break-word; text-align: left;"
                                                         *ngFor="let disease of event.seasonalDiseaseDiscussedList; index as i">
                                                         {{i+1}}. {{disease.diseasesName}}
+                                                    </li>
+                                                </div>
+                                                <div class="popover__content"
+                                                    *ngIf="event.seasonalDiseaseDiscussedList.length==00">
+                                                    <li style="word-wrap: break-word; text-align: left;">
+                                                        No Data Found
                                                     </li>
                                                 </div>
                                             </div>
@@ -237,11 +244,17 @@
                                         <td style="width: 8%;">
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                <div class="popover__content">
-                                                    <!-- <li style="word-wrap: break-word; text-align: left;"
-                                                        *ngFor="let disease of event.seasonalDiseaseDiscussedList; index as i">
-                                                        {{i+1}}. {{disease.diseasesName}}
-                                                    </li> -->
+                                                <div class="popover__content" *ngIf="event.visitorDetails.length>0">
+                                                    <li style="word-wrap: break-word; text-align: left;" *ngFor="let visitor of event.visitorDetails
+                                                        ; index as i">
+                                                        {{i+1}}. {{visitor.visitorName}}
+                                                        ({{visitor.visitorDesignation}})
+                                                    </li>
+                                                </div>
+                                                <div class="popover__content" *ngIf="event.visitorDetails.length==0">
+                                                    <li style="word-wrap: break-word; text-align: left;">
+                                                        No Data Found
+                                                    </li>
                                                 </div>
                                             </div>
                                         </td>
@@ -404,9 +417,10 @@
                                                 class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;"
                                                     *ngIf="fam.hasAdolescentGirlChildren == 'Y'">(view)</h3>
-                                                    <h3 class="popover__title" style="color:#8b959f;"
+                                                <h3 class="popover__title" style="color:#8b959f;"
                                                     *ngIf="fam.hasAdolescentGirlChildren == 'N'">(view)</h3>
-                                                <div class="popover__content" *ngIf="fam.hasAdolescentGirlChildren == 'Y'">
+                                                <div class="popover__content"
+                                                    *ngIf="fam.hasAdolescentGirlChildren == 'Y'">
                                                     <li style="word-wrap: break-word; text-align: left;"
                                                         *ngFor="let child of fam.childrenList; index as chi">
                                                         {{chi+1}}. {{child.childName}}
