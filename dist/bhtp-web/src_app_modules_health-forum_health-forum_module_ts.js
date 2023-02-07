@@ -1294,7 +1294,7 @@ function HealthForumComponent_ng_template_72_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](70, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](71, "select", 111)(72, "option", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](73, "-- Select Event--");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](73, "-- Select Event --");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](74, "option", 112);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](75, "1");
@@ -2919,7 +2919,11 @@ class HealthForumComponent {
         minute: [this.editHFDetailsTime[1], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
         meridiem: [this.editHFDetailsTime[2], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
         topic: [this.editHFDetails.topicDetails.topicId, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
-        event: [this.editHFDetails.noOfEventProposed, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
+        // event: [this.editHFDetails.noOfEventProposed, Validators.required],
+        event: [{
+          value: this.editHFDetails.noOfEventProposed,
+          disabled: this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? true : false
+        }, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
       });
       // console.log(this.editHFDetails.topicDetails.topicId);
       this.createHFForm.markAllAsTouched();
@@ -2943,24 +2947,43 @@ class HealthForumComponent {
   }
   saveIsDisabled() {
     let flag = true;
-    if (!this.createHFForm.value.date) {
-      flag = false;
-    } else if (!this.createHFForm.value.staffName) {
-      flag = false;
-    } else if (!this.createHFForm.value.areaList) {
-      flag = false;
-    } else if (!this.createHFForm.value.topic) {
-      flag = false;
-    } else if (!this.createHFForm.value.event) {
-      flag = false;
-    } else if (!this.createHFForm.value.hour) {
-      flag = false;
-    } else if (!this.createHFForm.value.minute) {
-      flag = false;
-    } else if (!this.createHFForm.value.meridiem) {
-      flag = false;
+    if (this.editHFDetails?.rescheduleDetails?.rescheduleToDate) {
+      if (!this.createHFForm.value.date) {
+        flag = false;
+      } else if (!this.createHFForm.value.staffName) {
+        flag = false;
+      } else if (!this.createHFForm.value.areaList) {
+        flag = false;
+      } else if (!this.createHFForm.value.topic) {
+        flag = false;
+      } else if (!this.createHFForm.value.hour) {
+        flag = false;
+      } else if (!this.createHFForm.value.minute) {
+        flag = false;
+      } else if (!this.createHFForm.value.meridiem) {
+        flag = false;
+      }
+      return flag;
+    } else {
+      if (!this.createHFForm.value.date) {
+        flag = false;
+      } else if (!this.createHFForm.value.staffName) {
+        flag = false;
+      } else if (!this.createHFForm.value.areaList) {
+        flag = false;
+      } else if (!this.createHFForm.value.topic) {
+        flag = false;
+      } else if (!this.createHFForm.value.event) {
+        flag = false;
+      } else if (!this.createHFForm.value.hour) {
+        flag = false;
+      } else if (!this.createHFForm.value.minute) {
+        flag = false;
+      } else if (!this.createHFForm.value.meridiem) {
+        flag = false;
+      }
+      return flag;
     }
-    return flag;
   }
   HfSaveOrUpdate() {
     console.log(this.editHFDetails, 'editHFDetails');
@@ -2986,7 +3009,18 @@ class HealthForumComponent {
       amOrPm: this.createHFForm.value.meridiem,
       noOfEventProposed: this.createHFForm.value.event,
       active_flag: 'A',
-      villageList: tt
+      villageList: tt,
+      rescheduleDetails: this.editHFDetails?.rescheduleDetails ? {
+        comment: this.editHFDetails?.rescheduleDetails.comment,
+        rescheduleApprovalStatus: this.editHFDetails?.rescheduleDetails?.rescheduleApprovalStatus,
+        rescheduleApprovedOn: this.editHFDetails?.rescheduleDetails?.rescheduleApprovedOn,
+        rescheduleApproverFirstName: this.editHFDetails?.rescheduleDetails?.rescheduleApproverFirstName,
+        rescheduleApproverId: this.editHFDetails?.rescheduleDetails?.rescheduleApproverId,
+        rescheduleApproverLastName: this.editHFDetails?.rescheduleDetails?.rescheduleApproverLastName,
+        rescheduleMasterId: this.editHFDetails?.rescheduleDetails?.rescheduleMasterId,
+        rescheduleTime: this.editHFDetails?.rescheduleDetails?.rescheduleTime,
+        rescheduleToDate: this.createHFForm.value.date
+      } : null
     };
     console.log(saveObj, 'savObj');
     if (saveObj.villageList.length == 0) {
@@ -3747,28 +3781,91 @@ class HealthForumComponent {
     }
     console.log(this.eventFamList);
     fami.adolGirl = [];
-    fami.adolescentGilrChildren.filter(x => x.isChecked).forEach(z => {
-      var t = [];
-      z.age.split(/[year,month,days]+/).forEach(x => {
-        t.push(x);
-        this.year = t[0];
-        this.month = t[1];
-        this.day = t[2];
-      });
-      console.log(this.year, this.month, this.day);
-      fami.adolGirl.push({
-        health_forum_event_child_map_id: z.health_forum_event_child_map_id,
-        childId: z.childDetailId,
-        active_flag: 'A',
-        latestMuac: z.latestMuac,
-        ageYears: this.year.trim(),
-        ageMonths: this.month.trim(),
-        ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId,
-        present_status: z.presentInPem,
-        isChecked: z.isChecked
-      });
+    fami.adolescentGilrChildren.forEach(z => {
+      if (z.health_forum_event_child_map_id != 0) {
+        if (z.isChecked) {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x);
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          });
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id,
+            childId: z.childDetailId,
+            active_flag: 'A',
+            latestMuac: z.latestMuac,
+            ageYears: this.year.trim(),
+            ageMonths: this.month.trim(),
+            ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId,
+            present_status: z.presentInPem,
+            isChecked: z.isChecked
+          });
+        } else {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x);
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          });
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id,
+            childId: z.childDetailId,
+            active_flag: 'D',
+            latestMuac: z.latestMuac,
+            ageYears: this.year.trim(),
+            ageMonths: this.month.trim(),
+            ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId,
+            present_status: z.presentInPem,
+            isChecked: z.isChecked
+          });
+        }
+      } else {
+        if (z.isChecked) {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x);
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          });
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id,
+            childId: z.childDetailId,
+            active_flag: 'A',
+            latestMuac: z.latestMuac,
+            ageYears: this.year.trim(),
+            ageMonths: this.month.trim(),
+            ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId,
+            present_status: z.presentInPem,
+            isChecked: z.isChecked
+          });
+        }
+      }
     });
+    // fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
+    //   var t = [];
+    //   z.age.split(/[year,month,days]+/).forEach(x => {
+    //     t.push(x)
+    //     this.year = t[0];
+    //     this.month = t[1];
+    //     this.day = t[2];
+    //   })
+    //   console.log(this.year, this.month, this.day);
+    //   fami.adolGirl.push({
+    //     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
+    //     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+    //     latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
+    //   });
+    // })
     console.log(fami);
   }
   changefamilyHeadPresent(e, family, vill) {
@@ -3853,12 +3950,29 @@ class HealthForumComponent {
         if (x.radioCheck != 'NA') {
           if (x.adolescentGilrChildren.length > 0) {
             if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
-              i++;
-              if (i == 1) {
-                this.showError('Minimum one adolescent selection is required as family head is present');
-                return;
+              if (x.radioCheck == "N") {
+                i++;
+                if (i == 1) {
+                  this.showError('Minimum one adolescent selection is required as family head is present');
+                  return;
+                } else {
+                  return;
+                }
               } else {
-                return;
+                this.familyListData.push({
+                  health_forum_event_family_map_id: x.health_forum_event_family_map_id,
+                  familyId: x.familyDetailId,
+                  villageId: x.villageId,
+                  presentInPregnantWoman: x.presentInPregnantWoman,
+                  presentInLactatingMother: x.presentInLactatingMother,
+                  hasChildPresentInPem: x.hasChildPresentInPem,
+                  has2to5yearsOldChildren: x.has2to5yearsoldChildren,
+                  hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
+                  family_head_present: x.radioCheck,
+                  adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                  active_flag: 'A',
+                  childrenList: x.adolGirl
+                });
               }
             } else {
               this.familyListData.push({
@@ -3917,10 +4031,17 @@ class HealthForumComponent {
       var tt = [];
       arr.filter(er => er.radioCheck != "NA").forEach(x => {
         if (x.adolescentGilrChildren.length != 0) {
-          if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
-            ch.push({
-              isChecked: false
-            });
+          if (x.radioCheck == "N") {
+            if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
+              ch.push({
+                isChecked: false
+              });
+            } else {
+              tt.push(x.adolGirl);
+              ch.push({
+                isChecked: true
+              });
+            }
           } else {
             tt.push(x.adolGirl);
             ch.push({
@@ -4151,20 +4272,30 @@ class HealthForumComponent {
   rescheduleHFForms() {
     this.rescheduleHFForm = this.fb.group({
       date: [this.rescheduleData?.rescheduleDetails?.rescheduleToDate ? this.rescheduleData?.rescheduleDetails?.rescheduleToDate : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
-      comment: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
+      comment: [this.rescheduleData?.rescheduleDetails?.comment ? this.rescheduleData?.rescheduleDetails?.comment : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
     });
+    if (this.rescheduleData?.rescheduleDetails?.rescheduleToDate) {
+      this.rescheduleHFForm.controls['comment'].disable();
+    }
   }
   get r() {
     return this.rescheduleHFForm.controls;
   }
   rescheduleSave() {
     let flag = true;
-    if (!this.rescheduleHFForm.value.date) {
-      flag = false;
-    } else if (!this.rescheduleHFForm.value.comment) {
-      flag = false;
+    if (this.rescheduleData?.rescheduleDetails?.rescheduleToDate) {
+      if (!this.rescheduleHFForm.value.date) {
+        flag = false;
+      }
+      return flag;
+    } else {
+      if (!this.rescheduleHFForm.value.date) {
+        flag = false;
+      } else if (!this.rescheduleHFForm.value.comment) {
+        flag = false;
+      }
+      return flag;
     }
-    return flag;
   }
   saveRescheduled() {
     console.log(this.rescheduleData);

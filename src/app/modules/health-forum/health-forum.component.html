@@ -234,7 +234,7 @@
                                                     </li>
                                                 </div>
                                                 <div class="popover__content"
-                                                    *ngIf="event?.seasonalDiseaseDiscussedList?.length==00">
+                                                    *ngIf="event?.seasonalDiseaseDiscussedList?.length==0 || event?.seasonalDiseaseDiscussedList == null">
                                                     <li style="word-wrap: break-word; text-align: left;">
                                                         No Data Found
                                                     </li>
@@ -413,14 +413,14 @@
                                             fam.presentInPregnantWoman.includes('N') &&
                                             fam.has2to5yearsOldChildren== 'Y'? 'PEM, 2-5 yr' : '' }}
                                         </td>
-                                        <td style="width: 6%;">{{fam.hasAdolescentGirlChildren}}&nbsp;&nbsp;<div
+                                        <td style="width: 6%;">{{fam.adolescent_girl_attended}}&nbsp;&nbsp;<div
                                                 class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;"
-                                                    *ngIf="fam.hasAdolescentGirlChildren == 'Y'">(view)</h3>
+                                                    *ngIf="fam.adolescent_girl_attended == 'Y'">(view)</h3>
                                                 <h3 class="popover__title" style="color:#8b959f;"
-                                                    *ngIf="fam.hasAdolescentGirlChildren == 'N'">(view)</h3>
+                                                    *ngIf="fam.adolescent_girl_attended == 'N'">(view)</h3>
                                                 <div class="popover__content"
-                                                    *ngIf="fam.hasAdolescentGirlChildren == 'Y'">
+                                                    *ngIf="fam.adolescent_girl_attended == 'Y'">
                                                     <li style="word-wrap: break-word; text-align: left;"
                                                         *ngFor="let child of fam.childrenList; index as chi">
                                                         {{chi+1}}. {{child.childName}}
@@ -760,7 +760,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md" style="margin-top: 15px;"
+                                        <!-- <div class="form-group col-md" style="margin-top: 15px;"
                                             *ngIf="!this.createEditHFEventForm.value.ssPresent && !this.createEditHFEventForm.value.staffPresent">
                                             <label for="eventConduction">Event Conducted By :&nbsp;<span
                                                     class="text-danger">*&nbsp;</span></label>
@@ -777,10 +777,10 @@
                                                 <div *ngIf="e.eventConduction.errors.required">Select event conduction
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="form-group col-md" style="margin-top: 15px;"
-                                            *ngIf="this.createEditHFEventForm.value.ssPresent || this.createEditHFEventForm.value.staffPresent">
+                                        <!--  *ngIf="this.createEditHFEventForm.value.ssPresent || this.createEditHFEventForm.value.staffPresent" -->
+                                        <div class="form-group col-md" style="margin-top: 15px;">
                                             <label for="eventConduction">Event Conducted By :&nbsp;<span
                                                     class="text-danger">*&nbsp;</span></label>
                                             <select class="form-select" formControlName="eventConduction"
@@ -788,10 +788,15 @@
                                                 [ngClass]="{'is-invalid': e.eventConduction.invalid && e.eventConduction.touched,  'is-valid': 
                                                             e.eventConduction.valid && (e.eventConduction.dirty || e.eventConduction.touched) }">
                                                 <option value="">-- Select --</option>
-                                                <option value="STAFF">Staff</option>
-                                                <option value="SS" *ngIf="HForumEventPrerequisite?.ssName != null">SS
+                                                <option value="STAFF"
+                                                    *ngIf="this.createEditHFEventForm.value.staffPresent == 'Y'">Staff
+                                                </option>
+                                                <option value="SS"
+                                                    *ngIf="this.createEditHFEventForm.value.ssPresent == 'Y' && HForumEventPrerequisite?.ssName != null">
+                                                    SS
                                                 </option>
                                             </select>
+
                                             <div *ngIf="e.eventConduction.errors" class="invalid-feedback">
                                                 <div *ngIf="e.eventConduction.errors.required">Select event conduction
                                                 </div>
@@ -1131,8 +1136,8 @@
                                                                         </td>
 
                                                                         <td style="width: 7%;"
-                                                                            *ngIf="fami.radioCheck != 'NA'"><input
-                                                                                *ngIf="adol.isChecked==true"
+                                                                            *ngIf="fami.radioCheck != 'NA'">
+                                                                            <input *ngIf="adol.isChecked==true"
                                                                                 class="form-check-input" type="checkbox"
                                                                                 value="" id="flexCheckDefault"
                                                                                 (change)="selectAdolescent($event, adol, fami)"
@@ -1144,8 +1149,8 @@
                                                                         </td>
 
                                                                         <td style="width: 7%;"
-                                                                            *ngIf="fami.radioCheck == 'NA'"><input
-                                                                                *ngIf="adol.isChecked==true"
+                                                                            *ngIf="fami.radioCheck == 'NA'">
+                                                                            <input *ngIf="adol.isChecked==true"
                                                                                 class="form-check-input" type="checkbox"
                                                                                 value="" id="flexCheckDefault"
                                                                                 (change)="selectAdolescent($event, adol, fami)"
@@ -1219,7 +1224,7 @@
                 <div class="form-group col-md">
                     <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <textarea rows="4" cols="50" style="resize: none; height: 5em;" class="form-control"
-                        formControlName="comment" 
+                        formControlName="comment"
                         [ngClass]="{'is-invalid': r.comment.invalid
                             && r.comment.touched,'is-valid': r.comment.valid && (r.comment.dirty || r.comment.touched) }">
                     </textarea>

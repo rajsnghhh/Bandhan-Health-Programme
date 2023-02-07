@@ -507,10 +507,8 @@ export class HealthForumComponent implements OnInit {
         minute: [this.editHFDetailsTime[1], Validators.required],
         meridiem: [this.editHFDetailsTime[2], Validators.required],
         topic: [this.editHFDetails.topicDetails.topicId, Validators.required],
-        // event: [this.editHFDetails.noOfEventProposed, Validators.required],
         event: [{
-          value: this.editHFDetails.noOfEventProposed, disabled:
-            this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? true : false
+          value: this.editHFDetails.noOfEventProposed, disabled: this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? true : false
         }, Validators.required],
       });
       // console.log(this.editHFDetails.topicDetails.topicId);
@@ -824,15 +822,18 @@ export class HealthForumComponent implements OnInit {
     if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
       if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
         this.showError('HF event is only accessible for present day');
+        this.editHF_eventDetails = [];
         return;
       }
     } else {
       if (this.viewForumList?.scheduleDetails?.date != currentTime) {
         this.showError('HF event is only accessible for present day');
+        this.editHF_eventDetails = [];
         return;
       }
     }
 
+    this.createEditHFEventForms(this.editHF_eventDetails);
     if (this.editHF_eventDetails?.healthForumEventId) {
       this.visitorDetails.visitorInfo = [];
       this.hourList = [];
@@ -891,8 +892,6 @@ export class HealthForumComponent implements OnInit {
           // console.log(this.eventVillList, 'eventVillList22');
           console.log(this.eventFamList, 'eventFamList');
           this.eventFamList?.forEach((x) => {
-
-            // console.log(x);
 
             x.familyList = x.familyList?.map(({
               setStatus = '',
@@ -1167,10 +1166,9 @@ export class HealthForumComponent implements OnInit {
         healthForumMasterId: this.viewForumList.healthForumMasterId
       }
 
-
       this.healthForumService.viewHealthForumsOfAEvent(moreEventDetailsobj).subscribe((res: any) => {
         this.moreEventDetails = res.responseObject;
-        // console.log(this.moreEventDetails, 'this.moreEventDetails');
+        console.log(this.moreEventDetails, 'this.moreEventDetails');
         this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
       });
 
@@ -1228,11 +1226,11 @@ export class HealthForumComponent implements OnInit {
     console.log(data, 'moreEventDetails');
     console.log(editHF_eventDetails, 'editHF_eventDetails');
 
-    console.log(data.villageWiseFamilyList, 'data.villageWiseFamilyList');
+    console.log(data?.villageWiseFamilyList, 'data.villageWiseFamilyList');
     setTimeout(() => {
       console.log(this.eventFamList, 'eventFamList2222');
       this.familyHeadPresentLenChk = [];
-      data.villageWiseFamilyList.forEach(x => {
+      data?.villageWiseFamilyList.forEach(x => {
         x.familyList.forEach(t => {
           this.eventFamList.forEach(y => {
             y.forEach(e => {
@@ -1279,7 +1277,7 @@ export class HealthForumComponent implements OnInit {
     }, 1000);
 
     this.visitorDetails.visitorInfo = [];
-    data.visitorDetailsList.forEach(x => {
+    data?.visitorDetailsList.forEach(x => {
       this.visitorDetails.visitorInfo.push({
         visitorDesignation: x.visitorDesignation, visitorName: x.visitorName,
         health_forum_event_visitor_map_id: x.health_forum_event_visitor_map_id, active_flag: 'A'
@@ -1287,7 +1285,7 @@ export class HealthForumComponent implements OnInit {
     })
 
     this.diseaseListID = []
-    data.seasonalDiseaseDiscussedList.forEach(x => {
+    data?.seasonalDiseaseDiscussedList.forEach(x => {
       this.eventDiseaseList.filter(v => v.diseaseId == x.diseaseId).forEach(z => {
         z.isChecked = true;
         this.diseaseListID.push({ health_forum_event_season_diseases_map_id: x.health_forum_event_season_diseases_map_id, diseaseId: z.diseaseId, active_flag: 'A' });
@@ -1334,6 +1332,11 @@ export class HealthForumComponent implements OnInit {
       this.editEndMin = this.editHF_eventDetails?.endMinute
     }
 
+    console.log(data?.wasStaffPresent);
+    console.log(data?.wasSsPresent);
+    console.log(data?.conductedByStaffOrSS);
+
+
     this.createEditHFEventForm = this.fb.group({
       startHour: [this.editStartHour ? this.editStartHour : '', Validators.required],
       startMin: [this.editStartMin ? this.editStartMin : '', Validators.required],
@@ -1348,6 +1351,10 @@ export class HealthForumComponent implements OnInit {
       thisMonTopic: [data?.discussionOnThisMonthTopic ? data?.discussionOnThisMonthTopic : '', Validators.required],
       seasonalDiscussion: [data?.discussionOnAnySeasonalDisease ? data?.discussionOnAnySeasonalDisease : '', Validators.required]
     });
+
+    // if (data?.conductedByStaffOrSS ) {
+    //   this.createEditHFEventForm.value.eventConduction ='STAFF'
+    // }
 
     this.createEditHFEventForm.markAllAsTouched();
   }
@@ -1466,21 +1473,6 @@ export class HealthForumComponent implements OnInit {
       }
     })
 
-    // fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
-    //   var t = [];
-    //   z.age.split(/[year,month,days]+/).forEach(x => {
-    //     t.push(x)
-    //     this.year = t[0];
-    //     this.month = t[1];
-    //     this.day = t[2];
-    //   })
-    //   console.log(this.year, this.month, this.day);
-    //   fami.adolGirl.push({
-    //     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
-    //     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-    //     latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
-    //   });
-    // })
     console.log(fami);
 
   }
@@ -1502,7 +1494,6 @@ export class HealthForumComponent implements OnInit {
     })
 
   }
-
 
   viewFilterByFamilyList(e) {
     console.log(e);
@@ -1539,35 +1530,45 @@ export class HealthForumComponent implements OnInit {
   }
 
   staffPresentorNot(e) {
-    console.log(e);
-    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    this.createEditHFEventForm.controls.eventConduction.setValue('');
+    if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
       this.showError('Staff or SS both should not be NO');
       this.createEditHFEventForm.controls.eventConduction.setValue('');
       this.createEditHFEventForm.controls.staffPresent.setValue('');
       this.createEditHFEventForm.controls.ssPresent.setValue('');
+      return;
     }
+    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    // } 
   }
 
   ssPresentorNot(e) {
-    console.log(e);
-    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    this.createEditHFEventForm.controls.eventConduction.setValue('');
+    if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
       this.showError('Staff or SS both should not be NO');
       this.createEditHFEventForm.controls.eventConduction.setValue('');
       this.createEditHFEventForm.controls.staffPresent.setValue('');
       this.createEditHFEventForm.controls.ssPresent.setValue('');
+      return;
     }
+    // console.log(e);
+    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.showError('Staff or SS both should not be NO');
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    //   this.createEditHFEventForm.controls.staffPresent.setValue('');
+    //   this.createEditHFEventForm.controls.ssPresent.setValue('');
+    // }
 
   }
 
@@ -1680,9 +1681,6 @@ export class HealthForumComponent implements OnInit {
 
 
   saveEvent() {
-    // console.log(this.moreEventDetails, 'pkkaset');
-
-    // this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
     var tt = []
     this.visitorDetails.visitorInfo.forEach(x => {
       if (x.visitorName == "") {
@@ -1753,8 +1751,6 @@ export class HealthForumComponent implements OnInit {
 
 
   saveEditHFEventDisabled() {
-    // console.log(this.familyHeadPresentLenChk);
-
     let flag = true;
     if (this.familyHeadPresentLenChk.length < 1) {
       flag = false;
@@ -1787,6 +1783,19 @@ export class HealthForumComponent implements OnInit {
         flag = false;
       }
     }
+
+    this.visitorDetails.visitorInfo.forEach(y => {
+      if (y.visitorName) {
+        if (!y.visitorDesignation) {
+          flag = false;
+        }
+      } else if (y.visitorDesignation) {
+        if (!y.visitorName) {
+          flag = false;
+        }
+      }
+    })
+
     return flag;
   }
 
