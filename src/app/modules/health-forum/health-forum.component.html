@@ -138,9 +138,9 @@
                                                     (click)="deleteHealthForum(health)" *ngIf="deleteMode"></i>
                                                 <i class="fas fa-check-circle" title="Approve Health Forum"
                                                     (click)="approveHealthForum(health)" *ngIf="approveMode"></i>
-                                                <i class="fas fa-check-circle" title="Approve Reschedule Health Forum"
+                                                <!-- <i class="fas fa-check-circle" title="Approve Reschedule Health Forum"
                                                     (click)="approveARescheduleHealthForum(health)"
-                                                    *ngIf="rescheduleApprovalMode"></i>
+                                                    *ngIf="rescheduleApprovalMode"></i> -->
                                                 <i class="fas fa-calendar" title="Reschedule Health Forum"
                                                     (click)="rescheduleHealthForum(rescheduleHF, health)"
                                                     *ngIf="rescheduleMode"></i>
@@ -227,14 +227,14 @@
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
                                                 <div class="popover__content"
-                                                    *ngIf="event.seasonalDiseaseDiscussedList.length>0">
+                                                    *ngIf="event?.seasonalDiseaseDiscussedList?.length>0">
                                                     <li style="word-wrap: break-word; text-align: left;"
                                                         *ngFor="let disease of event.seasonalDiseaseDiscussedList; index as i">
                                                         {{i+1}}. {{disease.diseasesName}}
                                                     </li>
                                                 </div>
                                                 <div class="popover__content"
-                                                    *ngIf="event.seasonalDiseaseDiscussedList.length==00">
+                                                    *ngIf="event?.seasonalDiseaseDiscussedList?.length==00">
                                                     <li style="word-wrap: break-word; text-align: left;">
                                                         No Data Found
                                                     </li>
@@ -244,14 +244,14 @@
                                         <td style="width: 8%;">
                                             <div class="popover__wrapper">
                                                 <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                <div class="popover__content" *ngIf="event.visitorDetails.length>0">
+                                                <div class="popover__content" *ngIf="event?.visitorDetails?.length>0">
                                                     <li style="word-wrap: break-word; text-align: left;" *ngFor="let visitor of event.visitorDetails
                                                         ; index as i">
                                                         {{i+1}}. {{visitor.visitorName}}
                                                         ({{visitor.visitorDesignation}})
                                                     </li>
                                                 </div>
-                                                <div class="popover__content" *ngIf="event.visitorDetails.length==0">
+                                                <div class="popover__content" *ngIf="event?.visitorDetails?.length==0">
                                                     <li style="word-wrap: break-word; text-align: left;">
                                                         No Data Found
                                                     </li>
@@ -560,7 +560,7 @@
                     <label for="event">No. of Event Proposed :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <select class="form-select" formControlName="event" id="event" [ngClass]="{'is-invalid': c.event.invalid && c.event.touched,  'is-valid': 
                                         c.event.valid && (c.event.dirty || c.event.touched) }">
-                        <option value="">-- Select Event--</option>
+                        <option value="">-- Select Event --</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </select>
@@ -1219,12 +1219,11 @@
                 <div class="form-group col-md">
                     <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <textarea rows="4" cols="50" style="resize: none; height: 5em;" class="form-control"
-                        formControlName="comment"
+                        formControlName="comment" 
                         [ngClass]="{'is-invalid': r.comment.invalid
                             && r.comment.touched,'is-valid': r.comment.valid && (r.comment.dirty || r.comment.touched) }">
                     </textarea>
                     <div *ngIf="r.comment.errors" class="invalid-feedback">
-
                         <div *ngIf="r.comment.errors.required">Comment is required</div>
                     </div>
                 </div>

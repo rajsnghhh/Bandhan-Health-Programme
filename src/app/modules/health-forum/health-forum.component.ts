@@ -91,12 +91,11 @@ export class HealthForumComponent implements OnInit {
   deleteMode: boolean;
   approveMode: boolean;
   rescheduleMode: boolean;
-  rescheduleApprovalMode: boolean;
+  // rescheduleApprovalMode: boolean;
   eventViewMode: boolean;
   eventCreateMode: boolean;
   eventUpdateMode: boolean;
   eventDeleteMode: boolean;
-
 
   constructor(private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient, private httpService: HttpService,
     private healthForumService: HealthForumService, private modalService: NgbModal, config: NgbModalConfig, private router: Router,
@@ -170,10 +169,10 @@ export class HealthForumComponent implements OnInit {
       .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
       .find(accessType => accessType.accessType == 'reschedule')?.accessType ? true : false;
 
-    this.rescheduleApprovalMode = this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
-      .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
-      .find(accessType => accessType.accessType == 'reschedule approval')?.accessType ? true : false;
+    // this.rescheduleApprovalMode = this.sidebarService.subMenuList
+    //   .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
+    //   .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
+    //   .find(accessType => accessType.accessType == 'reschedule approval')?.accessType ? true : false;
 
     this.eventViewMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
@@ -413,8 +412,8 @@ export class HealthForumComponent implements OnInit {
   getTopicListAndAreasOfStaffAndOrSS() {
     this.areaList = [];
 
-    if (!this.createHFForm.value.ssName) {
-      this.createHFForm.controls.ssName.setValue('');
+    if (!this.createHFForm?.value?.ssName) {
+      this.createHFForm?.controls.ssName.setValue('');
     }
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO, healthForumDate: this.createHFForm?.value.date,
@@ -493,13 +492,14 @@ export class HealthForumComponent implements OnInit {
       console.log(this.editHFDetails.villageList);
 
       setTimeout(() => {
-        this.editHFDetails.villageList.forEach(e => {
+        this.editHFDetails?.villageList?.forEach(e => {
           this.areaList.find(v => v.villageMasterId == e.villageMasterId).isChecked = true;
         })
       }, 1000);
 
       this.createHFForm = this.fb.group({
-        date: [this.editHFDetails.scheduleDetails.date, Validators.required],
+        date: [this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? this.editHFDetails?.rescheduleDetails?.rescheduleToDate :
+          this.editHFDetails.scheduleDetails.date, Validators.required],
         staffName: [this.editHFDetails.staffDetails.staffId, Validators.required],
         ssName: [this.editHFDetails.ssDetails.ssId ? this.editHFDetails.ssDetails.ssId : ''],
         areaList: [this.editHFDetails.villageList ? this.editHFDetails.villageList : '', Validators.required],
@@ -507,7 +507,11 @@ export class HealthForumComponent implements OnInit {
         minute: [this.editHFDetailsTime[1], Validators.required],
         meridiem: [this.editHFDetailsTime[2], Validators.required],
         topic: [this.editHFDetails.topicDetails.topicId, Validators.required],
-        event: [this.editHFDetails.noOfEventProposed, Validators.required],
+        // event: [this.editHFDetails.noOfEventProposed, Validators.required],
+        event: [{
+          value: this.editHFDetails.noOfEventProposed, disabled:
+            this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? true : false
+        }, Validators.required],
       });
       // console.log(this.editHFDetails.topicDetails.topicId);
       this.createHFForm.markAllAsTouched();
@@ -534,24 +538,44 @@ export class HealthForumComponent implements OnInit {
 
   saveIsDisabled() {
     let flag = true;
-    if (!this.createHFForm.value.date) {
-      flag = false;
-    } else if (!this.createHFForm.value.staffName) {
-      flag = false;
-    } else if (!this.createHFForm.value.areaList) {
-      flag = false;
-    } else if (!this.createHFForm.value.topic) {
-      flag = false;
-    } else if (!this.createHFForm.value.event) {
-      flag = false;
-    } else if (!this.createHFForm.value.hour) {
-      flag = false;
-    } else if (!this.createHFForm.value.minute) {
-      flag = false;
-    } else if (!this.createHFForm.value.meridiem) {
-      flag = false;
+    if (this.editHFDetails?.rescheduleDetails?.rescheduleToDate) {
+      if (!this.createHFForm.value.date) {
+        flag = false;
+      } else if (!this.createHFForm.value.staffName) {
+        flag = false;
+      } else if (!this.createHFForm.value.areaList) {
+        flag = false;
+      } else if (!this.createHFForm.value.topic) {
+        flag = false;
+      } else if (!this.createHFForm.value.hour) {
+        flag = false;
+      } else if (!this.createHFForm.value.minute) {
+        flag = false;
+      } else if (!this.createHFForm.value.meridiem) {
+        flag = false;
+      }
+      return flag;
+    } else {
+      if (!this.createHFForm.value.date) {
+        flag = false;
+      } else if (!this.createHFForm.value.staffName) {
+        flag = false;
+      } else if (!this.createHFForm.value.areaList) {
+        flag = false;
+      } else if (!this.createHFForm.value.topic) {
+        flag = false;
+      } else if (!this.createHFForm.value.event) {
+        flag = false;
+      } else if (!this.createHFForm.value.hour) {
+        flag = false;
+      } else if (!this.createHFForm.value.minute) {
+        flag = false;
+      } else if (!this.createHFForm.value.meridiem) {
+        flag = false;
+      }
+      return flag;
     }
-    return flag;
+
   }
 
   HfSaveOrUpdate() {
@@ -580,7 +604,18 @@ export class HealthForumComponent implements OnInit {
       amOrPm: this.createHFForm.value.meridiem,
       noOfEventProposed: this.createHFForm.value.event,
       active_flag: 'A',
-      villageList: tt
+      villageList: tt,
+      rescheduleDetails: this.editHFDetails?.rescheduleDetails ? {
+        comment: this.editHFDetails?.rescheduleDetails.comment,
+        rescheduleApprovalStatus: this.editHFDetails?.rescheduleDetails?.rescheduleApprovalStatus,
+        rescheduleApprovedOn: this.editHFDetails?.rescheduleDetails?.rescheduleApprovedOn,
+        rescheduleApproverFirstName: this.editHFDetails?.rescheduleDetails?.rescheduleApproverFirstName,
+        rescheduleApproverId: this.editHFDetails?.rescheduleDetails?.rescheduleApproverId,
+        rescheduleApproverLastName: this.editHFDetails?.rescheduleDetails?.rescheduleApproverLastName,
+        rescheduleMasterId: this.editHFDetails?.rescheduleDetails?.rescheduleMasterId,
+        rescheduleTime: this.editHFDetails?.rescheduleDetails?.rescheduleTime,
+        rescheduleToDate: this.createHFForm.value.date
+      } : null
     }
 
     console.log(saveObj, 'savObj');
@@ -722,12 +757,12 @@ export class HealthForumComponent implements OnInit {
       if (health?.rescheduleDetails?.rescheduleToDate < currentTime) {
         this.showError('HF of past date can not be approved');
         return;
-      } else if (health.approvalStatus == 'A') {
+      } else if (health?.rescheduleDetails?.rescheduleApprovalStatus == 'A') {
         this.showError('HF is already approved')
         return;
       } else {
-        let appObj = { dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId, isApproved: false }
-        this.healthForumService.HFApprove(appObj).subscribe((res: any) => {
+        let req = { dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId }
+        this.healthForumService.approveARescheduleHealthForum(req).subscribe((res) => {
           console.log(res);
           if (res.status == true) {
             this.showSuccess('Approved Successfully');
@@ -735,7 +770,7 @@ export class HealthForumComponent implements OnInit {
           } else {
             this.showError(res.message);
           }
-        })
+        });
       }
     } else {
       if (health?.scheduleDetails?.date < currentTime) {
@@ -810,13 +845,13 @@ export class HealthForumComponent implements OnInit {
         health_forum_event_visitor_map_id: 0,
         active_flag: 'A'
       });
-  
+
       let HFPrerequisite = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         branchId: this.branchId || this.lowerRankbranchId,
         healthForumMasterId: this.viewForumList.healthForumMasterId
       }
-  
+
       this.loader = false;
       this.healthForumService.HForumEventPrerequisite(HFPrerequisite).subscribe((res: any) => {
         this.HForumEventPrerequisite = res.responseObject;
@@ -831,7 +866,7 @@ export class HealthForumComponent implements OnInit {
           ...rest
         }));
         // console.log(this.eventDiseaseList);
-  
+
         this.eventVillList = res.responseObject.villageList;
         console.log(this.eventDiseaseList, 'eventDiseaseList');
         // console.log(this.eventVillList, 'eventVillList');
@@ -840,25 +875,25 @@ export class HealthForumComponent implements OnInit {
           this.eventVillListID.push(x.villageId);
           // console.log(this.eventVillListID, 'eventVillListID');
         })
-  
+
         let famReq = {
           dataAccessDTO: this.httpService.dataAccessDTO,
           villageId: this.eventVillListID,
           healthForumMasterId: this.viewForumList.healthForumMasterId,
         }
-  
+
         this.loader = false;
         this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
           this.eventFamList = res.responseObject;
           this.setFamList = res.responseObject;
           // this.loader = true;
-  
+
           // console.log(this.eventVillList, 'eventVillList22');
           console.log(this.eventFamList, 'eventFamList');
           this.eventFamList?.forEach((x) => {
-  
+
             // console.log(x);
-  
+
             x.familyList = x.familyList?.map(({
               setStatus = '',
               radioCheck = 'NA',
@@ -871,17 +906,17 @@ export class HealthForumComponent implements OnInit {
               ...rest
             }));
             this.setData(x.familyList);
-  
+
           })
-  
+
           this.eventFamList = [];
           this.eventVillList.forEach(item => {
             this.eventFamList.push(res.responseObject?.find(items => items.villageId == item.villageId)?.familyList ?
               res.responseObject?.find(items => items.villageId == item.villageId)?.familyList : [])
-  
+
           });
           // console.log(this.eventFamList);
-  
+
           this.eventFamList.forEach((item) => {
             item.forEach(items => {
               items.adolescentGilrChildren = items.adolescentGilrChildren?.map(({
@@ -892,15 +927,15 @@ export class HealthForumComponent implements OnInit {
                 isChecked, health_forum_event_child_map_id,
                 ...rest
               }));
-  
+
               // console.log(items.adolescentGilrChildren);
-  
+
             })
-  
+
           })
-  
+
         })
-  
+
       });
       setTimeout(() => {
         this.createEditHFEventForms(this.editHF_eventDetails);
@@ -912,7 +947,18 @@ export class HealthForumComponent implements OnInit {
       }, 2000);
     }
 
-    if (!this.editHF_eventDetails?.healthForumEventId && this.viewForumList.approvalStatus == 'A') {
+    if (!this.editHF_eventDetails?.healthForumEventId) {
+      if (this.viewForumList.rescheduleDetails) {
+        if (this.viewForumList.rescheduleDetails.rescheduleApprovalStatus != 'A') {
+          this.showError('Health Forum is not approved');
+          return;
+        }
+      } else {
+        if (this.viewForumList.approvalStatus != 'A') {
+          this.showError('Health Forum is not approved');
+          return;
+        }
+      }
       this.visitorDetails.visitorInfo = [];
       this.hourList = [];
       this.minuteList = [];
@@ -924,13 +970,13 @@ export class HealthForumComponent implements OnInit {
         health_forum_event_visitor_map_id: 0,
         active_flag: 'A'
       });
-  
+
       let HFPrerequisite = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         branchId: this.branchId || this.lowerRankbranchId,
         healthForumMasterId: this.viewForumList.healthForumMasterId
       }
-  
+
       this.loader = false;
       this.healthForumService.HForumEventPrerequisite(HFPrerequisite).subscribe((res: any) => {
         this.HForumEventPrerequisite = res.responseObject;
@@ -945,7 +991,7 @@ export class HealthForumComponent implements OnInit {
           ...rest
         }));
         // console.log(this.eventDiseaseList);
-  
+
         this.eventVillList = res.responseObject.villageList;
         console.log(this.eventDiseaseList, 'eventDiseaseList');
         // console.log(this.eventVillList, 'eventVillList');
@@ -954,25 +1000,25 @@ export class HealthForumComponent implements OnInit {
           this.eventVillListID.push(x.villageId);
           // console.log(this.eventVillListID, 'eventVillListID');
         })
-  
+
         let famReq = {
           dataAccessDTO: this.httpService.dataAccessDTO,
           villageId: this.eventVillListID,
           healthForumMasterId: this.viewForumList.healthForumMasterId,
         }
-  
+
         this.loader = false;
         this.healthForumService.getListOfFamsOfAVillForHFEvent(famReq).subscribe((res: any) => {
           this.eventFamList = res.responseObject;
           this.setFamList = res.responseObject;
           this.loader = true;
-  
+
           // console.log(this.eventVillList, 'eventVillList22');
           console.log(this.eventFamList, 'eventFamList');
           this.eventFamList?.forEach((x) => {
-  
+
             // console.log(x);
-  
+
             x.familyList = x.familyList?.map(({
               setStatus = '',
               radioCheck = 'NA',
@@ -985,17 +1031,17 @@ export class HealthForumComponent implements OnInit {
               ...rest
             }));
             this.setData(x.familyList);
-  
+
           })
-  
+
           this.eventFamList = [];
           this.eventVillList.forEach(item => {
             this.eventFamList.push(res.responseObject?.find(items => items.villageId == item.villageId)?.familyList ?
               res.responseObject?.find(items => items.villageId == item.villageId)?.familyList : [])
-  
+
           });
           // console.log(this.eventFamList);
-  
+
           this.eventFamList.forEach((item) => {
             item.forEach(items => {
               items.adolescentGilrChildren = items.adolescentGilrChildren?.map(({
@@ -1006,24 +1052,21 @@ export class HealthForumComponent implements OnInit {
                 isChecked, health_forum_event_child_map_id,
                 ...rest
               }));
-  
+
               // console.log(items.adolescentGilrChildren);
-  
+
             })
-  
+
           })
-  
+
         })
-  
+
       });
       this.createEditHFEventForms(this.editHF_eventDetails);
       this.modalContent = '';
       this.editHFEventModal = this.modalService.open(createEditHFEvent, {
         windowClass: 'createEditHFEvent',
       });
-    } else if (!this.editHF_eventDetails?.healthForumEventId && this.viewForumList.approvalStatus != 'A') {
-      this.showError('Health Forum is not approved');
-      return;
     }
 
   }
@@ -1373,21 +1416,71 @@ export class HealthForumComponent implements OnInit {
     console.log(this.eventFamList);
     fami.adolGirl = [];
 
-    fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
-      var t = [];
-      z.age.split(/[year,month,days]+/).forEach(x => {
-        t.push(x)
-        this.year = t[0];
-        this.month = t[1];
-        this.day = t[2];
-      })
-      console.log(this.year, this.month, this.day);
-      fami.adolGirl.push({
-        health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
-        latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-        latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
-      });
+    fami.adolescentGilrChildren.forEach(z => {
+      if (z.health_forum_event_child_map_id != 0) {
+        if (z.isChecked) {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x)
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          })
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
+            latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
+          });
+        } else {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x)
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          })
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'D',
+            latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
+          });
+        }
+      } else {
+        if (z.isChecked) {
+          var t = [];
+          z.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x)
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          })
+          console.log(this.year, this.month, this.day);
+          fami.adolGirl.push({
+            health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
+            latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+            latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
+          });
+        }
+      }
     })
+
+    // fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
+    //   var t = [];
+    //   z.age.split(/[year,month,days]+/).forEach(x => {
+    //     t.push(x)
+    //     this.year = t[0];
+    //     this.month = t[1];
+    //     this.day = t[2];
+    //   })
+    //   console.log(this.year, this.month, this.day);
+    //   fami.adolGirl.push({
+    //     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
+    //     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
+    //     latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
+    //   });
+    // })
     console.log(fami);
 
   }
@@ -1490,12 +1583,27 @@ export class HealthForumComponent implements OnInit {
         if (x.radioCheck != 'NA') {
           if (x.adolescentGilrChildren.length > 0) {
             if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
-              i++
-              if (i == 1) {
-                this.showError('Minimum one adolescent selection is required as family head is present');
-                return;
+              if (x.radioCheck == "N") {
+                i++
+                if (i == 1) {
+                  this.showError('Minimum one adolescent selection is required as family head is present');
+                  return;
+                } else {
+                  return;
+                }
               } else {
-                return;
+                this.familyListData.push({
+                  health_forum_event_family_map_id: x.health_forum_event_family_map_id, familyId: x.familyDetailId, villageId: x.villageId,
+                  presentInPregnantWoman: x.presentInPregnantWoman,
+                  presentInLactatingMother: x.presentInLactatingMother,
+                  hasChildPresentInPem: x.hasChildPresentInPem,
+                  has2to5yearsOldChildren: x.has2to5yearsoldChildren,
+                  hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
+                  family_head_present: x.radioCheck,
+                  adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                  active_flag: 'A',
+                  childrenList: x.adolGirl
+                })
               }
             } else {
               this.familyListData.push({
@@ -1549,8 +1657,13 @@ export class HealthForumComponent implements OnInit {
       var tt = []
       arr.filter(er => er.radioCheck != "NA").forEach(x => {
         if (x.adolescentGilrChildren.length != 0) {
-          if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
-            ch.push({ isChecked: false })
+          if (x.radioCheck == "N") {
+            if (x.adolGirl.filter(e => e.isChecked == true).length == 0) {
+              ch.push({ isChecked: false })
+            } else {
+              tt.push(x.adolGirl)
+              ch.push({ isChecked: true })
+            }
           } else {
             tt.push(x.adolGirl)
             ch.push({ isChecked: true })
@@ -1816,9 +1929,13 @@ export class HealthForumComponent implements OnInit {
 
   rescheduleHFForms() {
     this.rescheduleHFForm = this.fb.group({
-      date: ['', Validators.required],
-      comment: ['', Validators.required],
+      date: [this.rescheduleData?.rescheduleDetails?.rescheduleToDate ? this.rescheduleData?.rescheduleDetails?.rescheduleToDate : '', Validators.required],
+      comment: [this.rescheduleData?.rescheduleDetails?.comment ? this.rescheduleData?.rescheduleDetails?.comment : '', Validators.required],
     });
+    if (this.rescheduleData?.rescheduleDetails?.rescheduleToDate) {
+      this.rescheduleHFForm.controls['comment'].disable();
+    }
+
   }
 
   get r() {
@@ -1827,17 +1944,24 @@ export class HealthForumComponent implements OnInit {
 
   rescheduleSave() {
     let flag = true;
-    if (!this.rescheduleHFForm.value.date) {
-      flag = false;
-    } else if (!this.rescheduleHFForm.value.comment) {
-      flag = false;
+    if (this.rescheduleData?.rescheduleDetails?.rescheduleToDate) {
+      if (!this.rescheduleHFForm.value.date) {
+        flag = false;
+      }
+      return flag;
+    } else {
+      if (!this.rescheduleHFForm.value.date) {
+        flag = false;
+      } else if (!this.rescheduleHFForm.value.comment) {
+        flag = false;
+      }
+      return flag;
     }
-
-    return flag;
 
   }
 
   saveRescheduled() {
+    console.log(this.rescheduleData);
     console.log(this.rescheduleData.scheduleDetails.time);
     var text = this.rescheduleData.scheduleDetails.time;
     var tt = [];
@@ -1850,56 +1974,49 @@ export class HealthForumComponent implements OnInit {
       console.log(tt);
 
     })
-    let req = {
-      dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: this.rescheduleData.healthForumMasterId,
-      date: this.rescheduleHFForm.value.date,
-      scheduleStartHour: tt[0],
-      scheduleStartMinute: tt[1],
-      amOrPm: tt[2],
-      comment: this.rescheduleHFForm.value.comment
-    };
 
-    this.healthForumService.rescheduleHealthForum(req).subscribe((res) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-        this.rescheduleHFModal.close();
-        this.changeBranch(this.branchId || this.lowerRankbranchId);
-      } else {
-        this.showError(res.message);
-      }
+    if (!this.rescheduleData.rescheduleDetails) {
+      let reschedule_req = {
+        dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: this.rescheduleData.healthForumMasterId,
+        date: this.rescheduleHFForm.value.date,
+        scheduleStartHour: tt[0],
+        scheduleStartMinute: tt[1],
+        amOrPm: tt[2],
+        comment: this.rescheduleHFForm.value.comment
+      };
 
-    });
+      this.healthForumService.rescheduleHealthForum(reschedule_req).subscribe((res) => {
+        console.log(res);
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.rescheduleHFModal.close();
+          this.changeBranch(this.branchId || this.lowerRankbranchId);
+        } else {
+          this.showError(res.message);
+        }
 
-  }
+      });
+    } else {
+      let edit_reschedule_req = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        healthForumMasterId: this.rescheduleData.healthForumMasterId,
+        rescheduleMasterId: this.rescheduleData.rescheduleDetails.rescheduleMasterId,
+        againRescheduledToDate: this.rescheduleHFForm.value.date,
+      };
 
-  approveARescheduleHealthForum(health) {
-    console.log(health);
-    let req = {
-      dataAccessDTO: this.httpService.dataAccessDTO, healthForumMasterId: health.healthForumMasterId
+      this.healthForumService.editARescheduledHealthForum(edit_reschedule_req).subscribe((res) => {
+        console.log(res);
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.rescheduleHFModal.close();
+          this.changeBranch(this.branchId || this.lowerRankbranchId);
+        } else {
+          this.showError(res.message);
+        }
+
+      });
+
     }
 
-    this.healthForumService.approveARescheduleHealthForum(req).subscribe((res) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-      } else {
-        this.showError(res.message);
-      }
-
-    });
   }
-
 }
-
-
-
-// if (this.HForumEventPrerequisite.ssName != null) {
-      //   this.createEditHFEventForm.controls.ssPresent.setValue('');
-      // } else {
-      //   let yesDisabled = (document.getElementById("yess") as HTMLInputElement);
-      //   yesDisabled.disabled = true;
-      //   this.createEditHFEventForm.controls.ssPresent.setValue('N');
-      //   this.createEditHFEventForm.controls.staffPresent.setValue('Y');
-      //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-      // }

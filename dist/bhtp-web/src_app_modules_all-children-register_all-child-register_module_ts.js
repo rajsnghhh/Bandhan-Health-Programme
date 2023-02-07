@@ -1646,7 +1646,7 @@ function ViewMuaclistComponent_div_7_tr_20_Template(rf, ctx) {
     const item_r5 = ctx.$implicit;
     const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](item_r5.muacRecordDate);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](item_r5.muacRecordDate.split("-").reverse().join("-"));
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](item_r5.muacCampDto.muacCampNumber ? item_r5.muacCampDto.muacCampNumber : "-");
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
