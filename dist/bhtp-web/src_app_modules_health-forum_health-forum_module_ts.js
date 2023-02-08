@@ -672,7 +672,7 @@ function HealthForumComponent_ng_template_68_tr_61_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (event_r56 == null ? null : event_r56.seasonalDiseaseDiscussedList == null ? null : event_r56.seasonalDiseaseDiscussedList.length) > 0);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (event_r56 == null ? null : event_r56.seasonalDiseaseDiscussedList == null ? null : event_r56.seasonalDiseaseDiscussedList.length) == 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (event_r56 == null ? null : event_r56.seasonalDiseaseDiscussedList == null ? null : event_r56.seasonalDiseaseDiscussedList.length) == 0 || (event_r56 == null ? null : event_r56.seasonalDiseaseDiscussedList) == null);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (event_r56 == null ? null : event_r56.visitorDetails == null ? null : event_r56.visitorDetails.length) > 0);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
@@ -846,13 +846,13 @@ function HealthForumComponent_ng_template_70_tbody_34_tr_1_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolateV"]([" ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren == "Y" ? "PEM, LM, PW, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren == "Y" ? "PEM, LM, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren.includes("N") ? "PEM" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren.includes("N") ? "" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren == "Y" ? "LM, PW, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren.includes("N") ? "PW" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren.includes("N") ? "LM" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren == "Y" ? "PEM, PW, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren.includes("N") ? "PEM, LM, PW" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren.includes("N") ? "PEM, LM" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren == "Y" ? "PW, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren == "Y" ? "2-5 yr" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren.includes("N") ? "LM, PW" : "", " ", fam_r85.hasChildPresentInPem.includes("N") && fam_r85.presentInLactatingMother == "Y" && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren == "Y" ? "LM, 2-5 yr" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman == "Y" && fam_r85.has2to5yearsOldChildren.includes("N") ? "PEM, PW" : "", " ", fam_r85.hasChildPresentInPem == "Y" && fam_r85.presentInLactatingMother.includes("N") && fam_r85.presentInPregnantWoman.includes("N") && fam_r85.has2to5yearsOldChildren == "Y" ? "PEM, 2-5 yr" : "", " "]);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("", fam_r85.hasAdolescentGirlChildren, "\u00A0\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("", fam_r85.adolescent_girl_attended, "\u00A0\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.hasAdolescentGirlChildren == "Y");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.adolescent_girl_attended == "Y");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.hasAdolescentGirlChildren == "N");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.adolescent_girl_attended == "N");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.hasAdolescentGirlChildren == "Y");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fam_r85.adolescent_girl_attended == "Y");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](fam_r85.family_head_present);
   }
@@ -1422,10 +1422,10 @@ function HealthForumComponent_ng_template_74_option_22_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const hours_r155 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", hours_r155.hourValue);
+    const hours_r156 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", hours_r156.hourValue);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", hours_r155.hourName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", hours_r156.hourName, " ");
   }
 }
 function HealthForumComponent_ng_template_74_option_26_Template(rf, ctx) {
@@ -1435,10 +1435,10 @@ function HealthForumComponent_ng_template_74_option_26_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const minutes_r157 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", minutes_r157.minuteValue);
+    const minutes_r158 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", minutes_r158.minuteValue);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", minutes_r157.minuteName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", minutes_r158.minuteName, " ");
   }
 }
 function HealthForumComponent_ng_template_74_option_44_Template(rf, ctx) {
@@ -1448,10 +1448,10 @@ function HealthForumComponent_ng_template_74_option_44_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const hours_r159 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", hours_r159.hourValue);
+    const hours_r160 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", hours_r160.hourValue);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", hours_r159.hourName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", hours_r160.hourName, " ");
   }
 }
 function HealthForumComponent_ng_template_74_option_48_Template(rf, ctx) {
@@ -1461,159 +1461,84 @@ function HealthForumComponent_ng_template_74_option_48_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const minutes_r161 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", minutes_r161.minuteValue);
+    const minutes_r162 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpropertyInterpolate"]("value", minutes_r162.minuteValue);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", minutes_r161.minuteName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", minutes_r162.minuteName, " ");
   }
 }
 function HealthForumComponent_ng_template_74_label_85_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "label", 173);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](1, "input", 174);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "label", 176);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](1, "input", 177);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, " Yes ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
 function HealthForumComponent_ng_template_74_label_86_Template(rf, ctx) {
   if (rf & 1) {
-    const _r164 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "label", 144)(1, "input", 175);
+    const _r165 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "label", 144)(1, "input", 178);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_label_86_Template_input_change_1_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r164);
-      const ctx_r163 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r163.ssPresentorNot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r165);
+      const ctx_r164 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r164.ssPresentorNot($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, " Yes ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_div_91_option_10_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_option_99_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "option", 180);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, "SS ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "option", 179);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, "Staff ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_div_91_div_11_div_1_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_option_100_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "option", 180);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, " SS ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+}
+function HealthForumComponent_ng_template_74_div_101_div_1_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, "Select event conduction ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_div_91_div_11_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_div_101_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 49);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_div_91_div_11_div_1_Template, 2, 0, "div", 50);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_div_101_div_1_Template, 2, 0, "div", 50);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r166 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
+    const ctx_r152 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r166.e.eventConduction.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r152.e.eventConduction.errors.required);
   }
 }
-function HealthForumComponent_ng_template_74_div_91_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_tr_119_button_6_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 135)(1, "label", 176);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "Event Conducted By :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "span", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4, "*\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "select", 177)(6, "option", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7, "-- Select --");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](8, "option", 178);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](9, "Staff");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](10, HealthForumComponent_ng_template_74_div_91_option_10_Template, 2, 0, "option", 179);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](11, HealthForumComponent_ng_template_74_div_91_div_11_Template, 2, 1, "div", 45);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const ctx_r150 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction2"](3, _c0, ctx_r150.e.eventConduction.invalid && ctx_r150.e.eventConduction.touched, ctx_r150.e.eventConduction.valid && (ctx_r150.e.eventConduction.dirty || ctx_r150.e.eventConduction.touched)));
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (ctx_r150.HForumEventPrerequisite == null ? null : ctx_r150.HForumEventPrerequisite.ssName) != null);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r150.e.eventConduction.errors);
-  }
-}
-function HealthForumComponent_ng_template_74_div_92_option_10_Template(rf, ctx) {
-  if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "option", 180);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, "SS ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-}
-function HealthForumComponent_ng_template_74_div_92_div_11_div_1_Template(rf, ctx) {
-  if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, "Select event conduction ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-}
-function HealthForumComponent_ng_template_74_div_92_div_11_Template(rf, ctx) {
-  if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 49);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_div_92_div_11_div_1_Template, 2, 0, "div", 50);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const ctx_r169 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r169.e.eventConduction.errors.required);
-  }
-}
-function HealthForumComponent_ng_template_74_div_92_Template(rf, ctx) {
-  if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 135)(1, "label", 176);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "Event Conducted By :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "span", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4, "*\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "select", 181)(6, "option", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7, "-- Select --");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](8, "option", 178);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](9, "Staff");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](10, HealthForumComponent_ng_template_74_div_92_option_10_Template, 2, 0, "option", 179);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](11, HealthForumComponent_ng_template_74_div_92_div_11_Template, 2, 1, "div", 45);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const ctx_r151 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction2"](3, _c0, ctx_r151.e.eventConduction.invalid && ctx_r151.e.eventConduction.touched, ctx_r151.e.eventConduction.valid && (ctx_r151.e.eventConduction.dirty || ctx_r151.e.eventConduction.touched)));
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (ctx_r151.HForumEventPrerequisite == null ? null : ctx_r151.HForumEventPrerequisite.ssName) != null);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r151.e.eventConduction.errors);
-  }
-}
-function HealthForumComponent_ng_template_74_tr_110_button_6_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r177 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "button", 186);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_tr_110_button_6_Template_button_click_0_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r177);
-      const i_r172 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
-      const ctx_r175 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r175.removeNewVisitor(i_r172));
+    const _r173 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "button", 185);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_tr_119_button_6_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r173);
+      const i_r168 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
+      const ctx_r171 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r171.removeNewVisitor(i_r168));
     });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](1, "i", 187);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](1, "i", 186);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_tr_110_button_7_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_tr_119_button_7_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "button", 188)(1, "i", 189);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "button", 187)(1, "i", 188);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2, "Deleted");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
@@ -1623,86 +1548,86 @@ const _c1 = function () {
     standalone: true
   };
 };
-function HealthForumComponent_ng_template_74_tr_110_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_tr_119_Template(rf, ctx) {
   if (rf & 1) {
-    const _r179 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "tr")(1, "td")(2, "input", 182);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("keypress", function HealthForumComponent_ng_template_74_tr_110_Template_input_keypress_2_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const ctx_r178 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r178.validationService.onlyAlphabetsAndSpace($event));
-    })("keypress", function HealthForumComponent_ng_template_74_tr_110_Template_input_keypress_2_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const ctx_r180 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r180.validationService.titleCase($event));
-    })("ngModelChange", function HealthForumComponent_ng_template_74_tr_110_Template_input_ngModelChange_2_listener($event) {
-      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const i_r172 = restoredCtx.index;
-      const ctx_r181 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r181.visitorDetails.visitorInfo[i_r172].visitorName = $event);
+    const _r175 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "tr")(1, "td")(2, "input", 181);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("keypress", function HealthForumComponent_ng_template_74_tr_119_Template_input_keypress_2_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const ctx_r174 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r174.validationService.onlyAlphabetsAndSpace($event));
+    })("keypress", function HealthForumComponent_ng_template_74_tr_119_Template_input_keypress_2_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const ctx_r176 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r176.validationService.titleCase($event));
+    })("ngModelChange", function HealthForumComponent_ng_template_74_tr_119_Template_input_ngModelChange_2_listener($event) {
+      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const i_r168 = restoredCtx.index;
+      const ctx_r177 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r177.visitorDetails.visitorInfo[i_r168].visitorName = $event);
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "td")(4, "input", 183);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("keypress", function HealthForumComponent_ng_template_74_tr_110_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const ctx_r182 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r182.validationService.onlyAlphabetsAndSpace($event));
-    })("keypress", function HealthForumComponent_ng_template_74_tr_110_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const ctx_r183 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r183.validationService.titleCase($event));
-    })("ngModelChange", function HealthForumComponent_ng_template_74_tr_110_Template_input_ngModelChange_4_listener($event) {
-      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r179);
-      const i_r172 = restoredCtx.index;
-      const ctx_r184 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r184.visitorDetails.visitorInfo[i_r172].visitorDesignation = $event);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "td")(4, "input", 182);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("keypress", function HealthForumComponent_ng_template_74_tr_119_Template_input_keypress_4_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const ctx_r178 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r178.validationService.onlyAlphabetsAndSpace($event));
+    })("keypress", function HealthForumComponent_ng_template_74_tr_119_Template_input_keypress_4_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const ctx_r179 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r179.validationService.titleCase($event));
+    })("ngModelChange", function HealthForumComponent_ng_template_74_tr_119_Template_input_ngModelChange_4_listener($event) {
+      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r175);
+      const i_r168 = restoredCtx.index;
+      const ctx_r180 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r180.visitorDetails.visitorInfo[i_r168].visitorDesignation = $event);
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](6, HealthForumComponent_ng_template_74_tr_110_button_6_Template, 2, 0, "button", 184);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_tr_110_button_7_Template, 3, 0, "button", 185);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](6, HealthForumComponent_ng_template_74_tr_119_button_6_Template, 2, 0, "button", 183);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_tr_119_button_7_Template, 3, 0, "button", 184);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const i_r172 = ctx.index;
-    const ctx_r152 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    const i_r168 = ctx.index;
+    const ctx_r153 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModelOptions", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction0"](6, _c1))("ngModel", ctx_r152.visitorDetails.visitorInfo[i_r172].visitorName);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModelOptions", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction0"](6, _c1))("ngModel", ctx_r153.visitorDetails.visitorInfo[i_r168].visitorName);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModelOptions", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction0"](7, _c1))("ngModel", ctx_r152.visitorDetails.visitorInfo[i_r172].visitorDesignation);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModelOptions", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction0"](7, _c1))("ngModel", ctx_r153.visitorDetails.visitorInfo[i_r168].visitorDesignation);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r152.visitorDetails.visitorInfo[i_r172].active_flag != "D");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r153.visitorDetails.visitorInfo[i_r168].active_flag != "D");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r152.visitorDetails.visitorInfo[i_r172].active_flag == "D");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r153.visitorDetails.visitorInfo[i_r168].active_flag == "D");
   }
 }
-function HealthForumComponent_ng_template_74_div_171_tr_15_input_6_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_div_180_tr_15_input_6_Template(rf, ctx) {
   if (rf & 1) {
-    const _r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    const _r188 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 191);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_div_180_tr_15_input_6_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r188);
+      const disease_r182 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+      const ctx_r186 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r186.selectMultipleDisease($event, disease_r182));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+}
+function HealthForumComponent_ng_template_74_div_180_tr_15_input_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r191 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 192);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_div_171_tr_15_input_6_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r192);
-      const disease_r186 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
-      const ctx_r190 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r190.selectMultipleDisease($event, disease_r186));
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_div_180_tr_15_input_7_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r191);
+      const disease_r182 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+      const ctx_r189 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r189.selectMultipleDisease($event, disease_r182));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_div_171_tr_15_input_7_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r195 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 193);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_div_171_tr_15_input_7_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r195);
-      const disease_r186 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
-      const ctx_r193 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](3);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r193.selectMultipleDisease($event, disease_r186));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-}
-function HealthForumComponent_ng_template_74_div_171_tr_15_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_div_180_tr_15_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "tr")(1, "td", 86);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2);
@@ -1711,24 +1636,24 @@ function HealthForumComponent_ng_template_74_div_171_tr_15_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "td", 86);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](6, HealthForumComponent_ng_template_74_div_171_tr_15_input_6_Template, 1, 0, "input", 190);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_div_171_tr_15_input_7_Template, 1, 0, "input", 191);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](6, HealthForumComponent_ng_template_74_div_180_tr_15_input_6_Template, 1, 0, "input", 189);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_div_180_tr_15_input_7_Template, 1, 0, "input", 190);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const disease_r186 = ctx.$implicit;
-    const i_r187 = ctx.index;
+    const disease_r182 = ctx.$implicit;
+    const i_r183 = ctx.index;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](i_r187 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](i_r183 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](disease_r186.diseaseName);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](disease_r182.diseaseName);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", disease_r186.isChecked == true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", disease_r182.isChecked == true);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", disease_r186.isChecked == false);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", disease_r182.isChecked == false);
   }
 }
-function HealthForumComponent_ng_template_74_div_171_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_div_180_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 2)(1, "fieldset", 103)(2, "legend", 104);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](3, "Seasonal Disease Name");
@@ -1743,400 +1668,400 @@ function HealthForumComponent_ng_template_74_div_171_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](13, "Select");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](14, "tbody", 109);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](15, HealthForumComponent_ng_template_74_div_171_tr_15_Template, 8, 4, "tr", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](15, HealthForumComponent_ng_template_74_div_180_tr_15_Template, 8, 4, "tr", 29);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()();
   }
   if (rf & 2) {
-    const ctx_r153 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    const ctx_r154 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](15);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", ctx_r153.eventDiseaseList);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", ctx_r154.eventDiseaseList);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_1_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](0);
   }
   if (rf & 2) {
-    const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", vill_r196.villageName, " ");
+    const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", vill_r192.villageName, " ");
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_22_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_22_Template(rf, ctx) {
   if (rf & 1) {
-    const _r211 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    const _r207 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 205);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_22_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r207);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r205 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r205.changefamilyHeadPresent($event, fami_r198, vill_r192));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
+  }
+}
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_23_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r212 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 206);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_22_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r211);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r209 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r209.changefamilyHeadPresent($event, fami_r202, vill_r196));
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_23_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r212);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r210 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r210.changefamilyHeadPresent($event, fami_r198, vill_r192));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_23_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_2_Template(rf, ctx) {
   if (rf & 1) {
-    const _r216 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 207);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_23_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r216);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r214 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r214.changefamilyHeadPresent($event, fami_r202, vill_r196));
+    const _r219 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 208);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_2_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r219);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r217 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r217.changefamilyHeadPresent($event, fami_r198, vill_r192));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_2_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_3_Template(rf, ctx) {
   if (rf & 1) {
-    const _r223 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 209);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_2_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r223);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r221 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r221.changefamilyHeadPresent($event, fami_r202, vill_r196));
+    const _r224 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 208);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_3_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r224);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r222 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r222.changefamilyHeadPresent($event, fami_r198, vill_r192));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_3_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r228 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 209);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_3_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r228);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r226 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r226.changefamilyHeadPresent($event, fami_r202, vill_r196));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
-  }
-}
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 137);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_2_Template, 1, 1, "input", 208);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_input_3_Template, 1, 1, "input", 208);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_2_Template, 1, 1, "input", 207);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_input_3_Template, 1, 1, "input", 207);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "label", 139);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](5, " \u00A0\u00A0No");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck == "N");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck == "N");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck != "N");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck != "N");
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_2_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_2_Template(rf, ctx) {
   if (rf & 1) {
-    const _r236 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    const _r232 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 211);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_2_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r232);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r230 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r230.changefamilyHeadPresent($event, fami_r198, vill_r192));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
+  }
+}
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r237 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 212);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_2_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r236);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r234 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r234.changefamilyHeadPresent($event, fami_r202, vill_r196));
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_3_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r237);
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const vill_r192 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r235 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r235.changefamilyHeadPresent($event, fami_r198, vill_r192));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
+    const int_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r199);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_3_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r241 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 213);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_3_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r241);
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const vill_r196 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r239 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r239.changefamilyHeadPresent($event, fami_r202, vill_r196));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const int_r203 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).index;
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("name", int_r203);
-  }
-}
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 137);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](1, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_2_Template, 1, 1, "input", 210);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_input_3_Template, 1, 1, "input", 211);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_2_Template, 1, 1, "input", 209);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_input_3_Template, 1, 1, "input", 210);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "label", 139);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](5, " \u00A0\u00A0No");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck == "N");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck == "N");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck != "N");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck != "N");
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r250 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 191);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r250);
+      const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r248 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r248.selectAdolescent($event, adol_r242, fami_r198));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+}
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r254 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 192);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template_input_change_0_listener($event) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template_input_change_0_listener($event) {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r254);
-      const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
       const ctx_r252 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r252.selectAdolescent($event, adol_r246, fami_r202));
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r252.selectAdolescent($event, adol_r242, fami_r198));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r258 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 193);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r258);
-      const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r256 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r256.selectAdolescent($event, adol_r246, fami_r202));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-}
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "td", 26);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template, 1, 0, "input", 190);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template, 1, 0, "input", 191);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_1_Template, 1, 0, "input", 189);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_input_2_Template, 1, 0, "input", 190);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r246.isChecked == true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r242.isChecked == true);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r246.isChecked != true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r242.isChecked != true);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r261 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 218);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template_input_change_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r261);
+      const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const ctx_r259 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r259.selectAdolescent($event, adol_r242, fami_r198));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+  }
+}
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r265 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 219);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template_input_change_0_listener($event) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template_input_change_0_listener($event) {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r265);
-      const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+      const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
       const ctx_r263 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r263.selectAdolescent($event, adol_r246, fami_r202));
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r263.selectAdolescent($event, adol_r242, fami_r198));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r269 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "input", 220);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template_input_change_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r269);
-      const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
-      const ctx_r267 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r267.selectAdolescent($event, adol_r246, fami_r202));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-  }
-}
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "td", 26);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template, 1, 0, "input", 217);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template, 1, 0, "input", 218);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_1_Template, 1, 0, "input", 216);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_input_2_Template, 1, 0, "input", 217);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const adol_r246 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    const adol_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r246.isChecked == true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r242.isChecked == true);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r246.isChecked != true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", adol_r242.isChecked != true);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "tr")(1, "td", 214);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "tr")(1, "td", 213);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](3, "td", 108);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "td", 215);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "td", 214);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](6);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_7_Template, 3, 2, "td", 27);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](8, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_td_8_Template, 3, 2, "td", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](7, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_7_Template, 3, 2, "td", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](8, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_td_8_Template, 3, 2, "td", 27);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const adol_r246 = ctx.$implicit;
-    const ide_r247 = ctx.index;
-    const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
+    const adol_r242 = ctx.$implicit;
+    const ide_r243 = ctx.index;
+    const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2).$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](ide_r247 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate"](ide_r243 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", adol_r246.childName, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"](" ", adol_r242.childName, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("", adol_r246.age, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("", adol_r242.age, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck != "NA");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck != "NA");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck == "NA");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck == "NA");
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 2)(1, "fieldset", 104)(2, "legend", 104);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](3, "Adolescent Girl Attended ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "div", 105)(5, "table", 106)(6, "thead", 107)(7, "tr", 76)(8, "th", 214);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](4, "div", 105)(5, "table", 106)(6, "thead", 107)(7, "tr", 76)(8, "th", 213);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](9, "Sl. No.");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](10, "th", 108);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](11, "Child Name");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](12, "th", 215);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](12, "th", 214);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](13, "Age");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](14, "th", 26);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](15, "Select");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](16, "tbody", 216);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](17, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_tr_17_Template, 9, 5, "tr", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](16, "tbody", 215);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](17, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_tr_17_Template, 9, 5, "tr", 29);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()();
   }
   if (rf & 2) {
-    const fami_r202 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
+    const fami_r198 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](17);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", fami_r202.adolescentGilrChildren);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", fami_r198.adolescentGilrChildren);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_Template(rf, ctx) {
   if (rf & 1) {
-    const _r275 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 197)(1, "div", 134)(2, "div", 2)(3, "div", 198)(4, "h4", 149);
+    const _r271 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 196)(1, "div", 134)(2, "div", 2)(3, "div", 197)(4, "h4", 152);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "div", 168)(7, "h4", 149);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](6, "div", 171)(7, "h4", 152);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](8);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](9, "div", 199)(10, "i", 200);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_Template_i_click_10_listener() {
-      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r275);
-      const fami_r202 = restoredCtx.$implicit;
-      const int_r203 = restoredCtx.index;
-      const ctx_r274 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r274.unselectFamily(fami_r202, int_r203));
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](9, "div", 198)(10, "i", 199);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_Template_i_click_10_listener() {
+      const restoredCtx = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r271);
+      const fami_r198 = restoredCtx.$implicit;
+      const int_r199 = restoredCtx.index;
+      const ctx_r270 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](4);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r270.unselectFamily(fami_r198, int_r199));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](11, "div", 2)(12, "div", 198)(13, "h4", 149);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](11, "div", 2)(12, "div", 197)(13, "h4", 152);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](14);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](15, "div", 201)(16, "label", 126);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](15, "div", 200)(16, "label", 126);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](17, " Family Head Present :\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](18, "span", 41);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](19, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](20, "div", 202)(21, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](22, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_22_Template, 1, 1, "input", 203);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](23, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_input_23_Template, 1, 1, "input", 204);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](20, "div", 201)(21, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](22, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_22_Template, 1, 1, "input", 202);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](23, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_input_23_Template, 1, 1, "input", 203);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](24, "label", 139);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](25, " \u00A0\u00A0Yes");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](26, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_26_Template, 6, 2, "div", 205);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](27, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_27_Template, 6, 2, "div", 205);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](26, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_26_Template, 6, 2, "div", 204);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](27, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_27_Template, 6, 2, "div", 204);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](28, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_div_28_Template, 18, 1, "div", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](28, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_div_28_Template, 18, 1, "div", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const fami_r202 = ctx.$implicit;
+    const fami_r198 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("Family No. : ", fami_r202.familyNumber, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("Family No. : ", fami_r198.familyNumber, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate3"]("Name : ", fami_r202.firstName, "", fami_r202.middleName, " ", fami_r202.lastName, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate3"]("Name : ", fami_r198.firstName, "", fami_r198.middleName, " ", fami_r198.lastName, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](6);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("Status : ", fami_r202.setStatus, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtextInterpolate1"]("Status : ", fami_r198.setStatus, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck == "Y");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck == "Y");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.radioCheck != "Y");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.radioCheck != "Y");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.adolescentGilrChildren.length == 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.adolescentGilrChildren.length == 0);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.adolescentGilrChildren.length != 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.adolescentGilrChildren.length != 0);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r202.adolescentGilrChildren.length > 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", fami_r198.adolescentGilrChildren.length > 0);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](0, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_div_0_Template, 29, 10, "div", 196);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](0, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_div_0_Template, 29, 10, "div", 195);
   }
   if (rf & 2) {
-    const i_r197 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
-    const ctx_r199 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", ctx_r199.eventFamList[i_r197]);
+    const i_r193 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]().index;
+    const ctx_r195 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", ctx_r195.eventFamList[i_r193]);
   }
 }
-function HealthForumComponent_ng_template_74_mat_tab_187_Template(rf, ctx) {
+function HealthForumComponent_ng_template_74_mat_tab_196_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "mat-tab");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_1_Template, 1, 1, "ng-template", 194);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_187_ng_template_2_Template, 1, 1, "ng-template", 195);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](1, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_1_Template, 1, 1, "ng-template", 193);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, HealthForumComponent_ng_template_74_mat_tab_196_ng_template_2_Template, 1, 1, "ng-template", 194);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
 }
 function HealthForumComponent_ng_template_74_Template(rf, ctx) {
   if (rf & 1) {
-    const _r278 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    const _r274 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 124)(1, "div", 66)(2, "div", 67);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](3, HealthForumComponent_ng_template_74_h2_3_Template, 2, 0, "h2", 91);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](4, HealthForumComponent_ng_template_74_h2_4_Template, 2, 0, "h2", 91);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "div", 67)(6, "span", 70);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_Template_span_click_6_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r277 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r277.editHFEventModalDismiss());
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r273 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r273.editHFEventModalDismiss());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7, "\u00D7");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
@@ -2202,9 +2127,9 @@ function HealthForumComponent_ng_template_74_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](67, "br");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](68, "div", 137)(69, "input", 138);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_69_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r279 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r279.staffPresentorNot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r275 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r275.staffPresentorNot($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](70, "label", 139);
@@ -2212,9 +2137,9 @@ function HealthForumComponent_ng_template_74_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](72, "div", 137)(73, "input", 140);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_73_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r280 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r280.staffPresentorNot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r276 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r276.staffPresentorNot($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](74, "label", 139);
@@ -2234,145 +2159,155 @@ function HealthForumComponent_ng_template_74_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](87, "div", 137)(88, "label", 144)(89, "input", 145);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_89_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r281 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r281.ssPresentorNot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r277 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r277.ssPresentorNot($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](90, " No ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](91, HealthForumComponent_ng_template_74_div_91_Template, 12, 6, "div", 146);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](92, HealthForumComponent_ng_template_74_div_92_Template, 12, 6, "div", 146);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](93, "div", 39)(94, "div", 147)(95, "div", 148)(96, "h4", 149);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](97, "Visitor Details :");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](98, "i", 150);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_Template_i_click_98_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r282 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r282.addMoreVisitor());
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](99, "div", 105)(100, "table", 151)(101, "thead", 107)(102, "tr", 76)(103, "th", 152);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](104, "Name");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](105, "th", 152);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](106, "Designation");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](107, "th", 153);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](108, "Remove");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](109, "tbody", 154);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](110, HealthForumComponent_ng_template_74_tr_110_Template, 8, 8, "tr", 29);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](111, "div", 2)(112, "div", 155);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](113, "div", 2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](114, "div", 2)(115, "div", 156)(116, "div", 134)(117, "h4", 149);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](118, "Discussion Topic :");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](119, "div", 2)(120, "div", 157)(121, "label", 158);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](122, " Recap Last Month's Topic :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](123, "span", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](124, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](91, "div", 135)(92, "label", 146);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](93, "Event Conducted By :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](94, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](95, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](125, "h5");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](126);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](127, "div", 159)(128, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](129, "input", 160);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](130, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](131, " \u00A0\u00A0Yes");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](132, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](133, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](134, "input", 161);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](135, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](136, " \u00A0\u00A0No");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](137, "div", 2)(138, "div", 157)(139, "label", 162);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](140, " Discussion on This Month's Topic :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](141, "span", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](142, "*\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](143, "h5");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](144);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](145, "div", 159)(146, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](147, "input", 163);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](148, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](149, " \u00A0\u00A0Yes");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](150, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](151, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](152, "input", 164);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](153, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](154, " \u00A0\u00A0No");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](155, "div", 2)(156, "div", 157)(157, "label", 165);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](158, " Any Discussion on Seasonal Diseases :\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](159, "span", 41);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](160, "*\u00A0");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](161, "div", 159)(162, "div", 137)(163, "input", 166);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_163_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r283 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r283.changeseasonalDiscussion($event));
-    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](96, "select", 147)(97, "option", 43);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](98, "-- Select --");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](164, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](165, " \u00A0\u00A0Yes");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](166, "div", 137);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](167, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](168, "input", 167);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_168_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r284 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r284.changeseasonalDiscussion($event));
-    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](99, HealthForumComponent_ng_template_74_option_99_Template, 2, 0, "option", 148);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](100, HealthForumComponent_ng_template_74_option_100_Template, 2, 0, "option", 149);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](169, "label", 139);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](170, " \u00A0\u00A0No");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](171, HealthForumComponent_ng_template_74_div_171_Template, 16, 1, "div", 17);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](172, "div", 155)(173, "div", 2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](174, "div", 168);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](175, "div", 168)(176, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](177, "View Family List By :");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](178, "select", 169);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_select_change_178_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r285 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r285.viewFilterByFamilyList($event.target.value));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](179, "option", 43);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](180, "-- All Family --");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](181, "option", 170);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](182, "Selected Family");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](183, "option", 171);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](184, "Unselected Family");
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](185, "div", 2)(186, "mat-tab-group", 172);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("selectedTabChange", function HealthForumComponent_ng_template_74_Template_mat_tab_group_selectedTabChange_186_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r286 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r286.tabChanged($event));
-    });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](187, HealthForumComponent_ng_template_74_mat_tab_187_Template, 3, 0, "mat-tab", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](101, HealthForumComponent_ng_template_74_div_101_Template, 2, 1, "div", 45);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](188, "div", 121)(189, "div", 2)(190, "button", 122);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_Template_button_click_190_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r278);
-      const ctx_r287 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r287.saveEditHFEvent());
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](102, "div", 39)(103, "div", 150)(104, "div", 151)(105, "h4", 152);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](106, "Visitor Details :");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](107, "i", 153);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_Template_i_click_107_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r278 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r278.addMoreVisitor());
     });
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](191, "Save");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](108, "div", 105)(109, "table", 154)(110, "thead", 107)(111, "tr", 76)(112, "th", 155);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](113, "Name");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](114, "th", 155);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](115, "Designation");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](116, "th", 156);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](117, "Remove");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](118, "tbody", 157);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](119, HealthForumComponent_ng_template_74_tr_119_Template, 8, 8, "tr", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](120, "div", 2)(121, "div", 158);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](122, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](123, "div", 2)(124, "div", 159)(125, "div", 134)(126, "h4", 152);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](127, "Discussion Topic :");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](128, "div", 2)(129, "div", 160)(130, "label", 161);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](131, " Recap Last Month's Topic :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](132, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](133, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](134, "h5");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](135);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](136, "div", 162)(137, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](138, "input", 163);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](139, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](140, " \u00A0\u00A0Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](141, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](142, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](143, "input", 164);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](144, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](145, " \u00A0\u00A0No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](146, "div", 2)(147, "div", 160)(148, "label", 165);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](149, " Discussion on This Month's Topic :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](150, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](151, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](152, "h5");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](153);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](154, "div", 162)(155, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](156, "input", 166);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](157, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](158, " \u00A0\u00A0Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](159, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](160, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](161, "input", 167);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](162, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](163, " \u00A0\u00A0No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](164, "div", 2)(165, "div", 160)(166, "label", 168);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](167, " Any Discussion on Seasonal Diseases :\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](168, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](169, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](170, "div", 162)(171, "div", 137)(172, "input", 169);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_172_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r279 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r279.changeseasonalDiscussion($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](173, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](174, " \u00A0\u00A0Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](175, "div", 137);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](176, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](177, "input", 170);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_input_change_177_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r280 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r280.changeseasonalDiscussion($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](178, "label", 139);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](179, " \u00A0\u00A0No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](180, HealthForumComponent_ng_template_74_div_180_Template, 16, 1, "div", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](181, "div", 158)(182, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](183, "div", 171);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](184, "div", 171)(185, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](186, "View Family List By :");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](187, "select", 172);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("change", function HealthForumComponent_ng_template_74_Template_select_change_187_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r281 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r281.viewFilterByFamilyList($event.target.value));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](188, "option", 43);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](189, "-- All Family --");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](190, "option", 173);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](191, "Selected Family");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](192, "option", 174);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](193, "Unselected Family");
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](194, "div", 2)(195, "mat-tab-group", 175);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("selectedTabChange", function HealthForumComponent_ng_template_74_Template_mat_tab_group_selectedTabChange_195_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r282 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r282.tabChanged($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](196, HealthForumComponent_ng_template_74_mat_tab_196_Template, 3, 0, "mat-tab", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()()()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](197, "div", 121)(198, "div", 2)(199, "button", 122);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_74_Template_button_click_199_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r274);
+      const ctx_r283 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r283.saveEditHFEvent());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](200, "Save");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
   }
   if (rf & 2) {
@@ -2399,10 +2334,14 @@ function HealthForumComponent_ng_template_74_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (ctx_r12.HForumEventPrerequisite == null ? null : ctx_r12.HForumEventPrerequisite.ssName) == null);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", (ctx_r12.HForumEventPrerequisite == null ? null : ctx_r12.HForumEventPrerequisite.ssName) != null);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", !ctx_r12.createEditHFEventForm.value.ssPresent && !ctx_r12.createEditHFEventForm.value.staffPresent);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction2"](22, _c0, ctx_r12.e.eventConduction.invalid && ctx_r12.e.eventConduction.touched, ctx_r12.e.eventConduction.valid && (ctx_r12.e.eventConduction.dirty || ctx_r12.e.eventConduction.touched)));
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r12.createEditHFEventForm.value.staffPresent == "Y");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r12.createEditHFEventForm.value.ssPresent || ctx_r12.createEditHFEventForm.value.staffPresent);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r12.createEditHFEventForm.value.ssPresent == "Y" && (ctx_r12.HForumEventPrerequisite == null ? null : ctx_r12.HForumEventPrerequisite.ssName) != null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r12.e.eventConduction.errors);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](18);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngForOf", ctx_r12.visitorDetails.visitorInfo);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](16);
@@ -2431,9 +2370,9 @@ function HealthForumComponent_ng_template_76_div_16_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r288 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    const ctx_r284 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r288.r.date.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r284.r.date.errors.required);
   }
 }
 function HealthForumComponent_ng_template_76_div_24_div_1_Template(rf, ctx) {
@@ -2450,58 +2389,58 @@ function HealthForumComponent_ng_template_76_div_24_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r289 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
+    const ctx_r285 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r289.r.comment.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", ctx_r285.r.comment.errors.required);
   }
 }
 function HealthForumComponent_ng_template_76_Template(rf, ctx) {
   if (rf & 1) {
-    const _r293 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 221)(1, "div", 66)(2, "div", 67)(3, "h3", 68);
+    const _r289 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 220)(1, "div", 66)(2, "div", 67)(3, "h3", 68);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](4, "Reschedule Health Forum");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "div", 67)(6, "span", 222);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](5, "div", 67)(6, "span", 221);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_76_Template_span_click_6_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r293);
-      const ctx_r292 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r292.rescheduleHFModalDismiss());
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r289);
+      const ctx_r288 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r288.rescheduleHFModalDismiss());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](7, "\u00D7");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](8, "div", 223)(9, "form", 16)(10, "div", 39)(11, "label", 93);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](8, "div", 222)(9, "form", 16)(10, "div", 39)(11, "label", 93);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](12, "Date :\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](13, "span", 41);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](14, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](15, "input", 94);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("keydown", function HealthForumComponent_ng_template_76_Template_input_keydown_15_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r293);
-      const ctx_r294 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r294.restrictTypeOfDate());
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r289);
+      const ctx_r290 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r290.restrictTypeOfDate());
     })("change", function HealthForumComponent_ng_template_76_Template_input_change_15_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r293);
-      const ctx_r295 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r295.changeDate());
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r289);
+      const ctx_r291 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r291.changeDate());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](16, HealthForumComponent_ng_template_76_div_16_Template, 2, 1, "div", 45);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](17, "div", 39)(18, "label", 224);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](17, "div", 39)(18, "label", 223);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](19, "Comments :\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](20, "span", 41);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](21, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](22, "textarea", 225);
+    _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](22, "textarea", 224);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](23, "                    ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](24, HealthForumComponent_ng_template_76_div_24_Template, 2, 1, "div", 45);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](25, "div", 121)(26, "div", 2)(27, "button", 122);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function HealthForumComponent_ng_template_76_Template_button_click_27_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r293);
-      const ctx_r296 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r296.saveRescheduled());
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r289);
+      const ctx_r292 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵresetView"](ctx_r292.saveRescheduled());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](28, "Save");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()()();
@@ -2774,6 +2713,8 @@ class HealthForumComponent {
     };
     this.createHFForms();
     if (this.editHFDetails.healthForumMasterId) {
+      let dateString = new Date();
+      this.minDate = moment__WEBPACK_IMPORTED_MODULE_0__(dateString).add(0, "days").format("YYYY-MM-DD");
       setTimeout(() => {
         this.modalContent = '';
         this.createHFModal = this.modalService.open(createHF, {
@@ -2782,13 +2723,13 @@ class HealthForumComponent {
         this.loader = true;
       }, 1500);
     } else {
+      let dateString = new Date();
+      this.minDate = moment__WEBPACK_IMPORTED_MODULE_0__(dateString).add(1, "days").format("YYYY-MM-DD");
       this.modalContent = '';
       this.createHFModal = this.modalService.open(createHF, {
         windowClass: 'createHF'
       });
     }
-    let dateString = new Date();
-    this.minDate = moment__WEBPACK_IMPORTED_MODULE_0__(dateString).add(1, "days").format("YYYY-MM-DD");
     this.hourLists();
     this.minuteLists();
     this.getAllStaffAndTheirSSOfABranch();
@@ -2919,7 +2860,6 @@ class HealthForumComponent {
         minute: [this.editHFDetailsTime[1], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
         meridiem: [this.editHFDetailsTime[2], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
         topic: [this.editHFDetails.topicDetails.topicId, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
-        // event: [this.editHFDetails.noOfEventProposed, Validators.required],
         event: [{
           value: this.editHFDetails.noOfEventProposed,
           disabled: this.editHFDetails?.rescheduleDetails?.rescheduleToDate ? true : false
@@ -3202,17 +3142,31 @@ class HealthForumComponent {
   }
   createHFEvents(createEditHFEvent) {
     var currentTime = new Date().toJSON().slice(0, 10);
-    if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
-      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
-        this.showError('HF event is only accessible for present day');
+    console.log(this.editHF_eventDetails);
+    if (this.editHF_eventDetails?.healthForumEventId) {
+      console.log('edit wala h');
+      if (this.editHF_eventDetails.createdOn != currentTime) {
+        this.showError('Event update is only accessible  on' + ' ' + this.editHF_eventDetails?.createdOn?.split("-").reverse().join("-"));
+        this.editHF_eventDetails = [];
         return;
       }
     } else {
-      if (this.viewForumList?.scheduleDetails?.date != currentTime) {
-        this.showError('HF event is only accessible for present day');
-        return;
+      console.log('create wala h');
+      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
+        if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
+          this.showError('Event create is only accessible on' + ' ' + this.viewForumList?.rescheduleDetails?.rescheduleToDate.split("-").reverse().join("-"));
+          this.editHF_eventDetails = [];
+          return;
+        }
+      } else {
+        if (this.viewForumList?.scheduleDetails?.date != currentTime) {
+          this.showError('Event create is only accessible on' + ' ' + this.viewForumList?.scheduleDetails?.date.split("-").reverse().join("-"));
+          this.editHF_eventDetails = [];
+          return;
+        }
       }
     }
+    this.createEditHFEventForms(this.editHF_eventDetails);
     if (this.editHF_eventDetails?.healthForumEventId) {
       this.visitorDetails.visitorInfo = [];
       this.hourList = [];
@@ -3266,7 +3220,6 @@ class HealthForumComponent {
           // console.log(this.eventVillList, 'eventVillList22');
           console.log(this.eventFamList, 'eventFamList');
           this.eventFamList?.forEach(x => {
-            // console.log(x);
             x.familyList = x.familyList?.map(({
               setStatus = '',
               radioCheck = 'NA',
@@ -3522,7 +3475,7 @@ class HealthForumComponent {
       };
       this.healthForumService.viewHealthForumsOfAEvent(moreEventDetailsobj).subscribe(res => {
         this.moreEventDetails = res.responseObject;
-        // console.log(this.moreEventDetails, 'this.moreEventDetails');
+        console.log(this.moreEventDetails, 'this.moreEventDetails');
         this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
       });
     } else {
@@ -3578,11 +3531,11 @@ class HealthForumComponent {
   setmoreEventDetails(data, editHF_eventDetails) {
     console.log(data, 'moreEventDetails');
     console.log(editHF_eventDetails, 'editHF_eventDetails');
-    console.log(data.villageWiseFamilyList, 'data.villageWiseFamilyList');
+    console.log(data?.villageWiseFamilyList, 'data.villageWiseFamilyList');
     setTimeout(() => {
       console.log(this.eventFamList, 'eventFamList2222');
       this.familyHeadPresentLenChk = [];
-      data.villageWiseFamilyList.forEach(x => {
+      data?.villageWiseFamilyList.forEach(x => {
         x.familyList.forEach(t => {
           this.eventFamList.forEach(y => {
             y.forEach(e => {
@@ -3634,7 +3587,7 @@ class HealthForumComponent {
       });
     }, 1000);
     this.visitorDetails.visitorInfo = [];
-    data.visitorDetailsList.forEach(x => {
+    data?.visitorDetailsList.forEach(x => {
       this.visitorDetails.visitorInfo.push({
         visitorDesignation: x.visitorDesignation,
         visitorName: x.visitorName,
@@ -3643,7 +3596,7 @@ class HealthForumComponent {
       });
     });
     this.diseaseListID = [];
-    data.seasonalDiseaseDiscussedList.forEach(x => {
+    data?.seasonalDiseaseDiscussedList.forEach(x => {
       this.eventDiseaseList.filter(v => v.diseaseId == x.diseaseId).forEach(z => {
         z.isChecked = true;
         this.diseaseListID.push({
@@ -3687,6 +3640,9 @@ class HealthForumComponent {
     } else {
       this.editEndMin = this.editHF_eventDetails?.endMinute;
     }
+    console.log(data?.wasStaffPresent);
+    console.log(data?.wasSsPresent);
+    console.log(data?.conductedByStaffOrSS);
     this.createEditHFEventForm = this.fb.group({
       startHour: [this.editStartHour ? this.editStartHour : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
       startMin: [this.editStartMin ? this.editStartMin : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
@@ -3701,6 +3657,9 @@ class HealthForumComponent {
       thisMonTopic: [data?.discussionOnThisMonthTopic ? data?.discussionOnThisMonthTopic : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
       seasonalDiscussion: [data?.discussionOnAnySeasonalDisease ? data?.discussionOnAnySeasonalDisease : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
     });
+    // if (data?.conductedByStaffOrSS ) {
+    //   this.createEditHFEventForm.value.eventConduction ='STAFF'
+    // }
     this.createEditHFEventForm.markAllAsTouched();
   }
   selectMultipleDisease(e, disease) {
@@ -3851,21 +3810,6 @@ class HealthForumComponent {
         }
       }
     });
-    // fami.adolescentGilrChildren.filter(x => x.isChecked).forEach((z) => {
-    //   var t = [];
-    //   z.age.split(/[year,month,days]+/).forEach(x => {
-    //     t.push(x)
-    //     this.year = t[0];
-    //     this.month = t[1];
-    //     this.day = t[2];
-    //   })
-    //   console.log(this.year, this.month, this.day);
-    //   fami.adolGirl.push({
-    //     health_forum_event_child_map_id: z.health_forum_event_child_map_id, childId: z.childDetailId, active_flag: 'A',
-    //     latestMuac: z.latestMuac, ageYears: this.year.trim(), ageMonths: this.month.trim(), ageDays: this.day.trim(),
-    //     latestMuacRegisterId: z.latestMuacRegisterId, present_status: z.presentInPem, isChecked: z.isChecked
-    //   });
-    // })
     console.log(fami);
   }
   changefamilyHeadPresent(e, family, vill) {
@@ -3910,35 +3854,47 @@ class HealthForumComponent {
     }
   }
   staffPresentorNot(e) {
-    console.log(e);
-    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    this.createEditHFEventForm.controls.eventConduction.setValue('');
+    if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
       this.showError('Staff or SS both should not be NO');
       this.createEditHFEventForm.controls.eventConduction.setValue('');
       this.createEditHFEventForm.controls.staffPresent.setValue('');
       this.createEditHFEventForm.controls.ssPresent.setValue('');
+      return;
     }
+    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    // } 
   }
+
   ssPresentorNot(e) {
-    console.log(e);
-    if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-      this.createEditHFEventForm.controls.eventConduction.setValue('');
-    } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    this.createEditHFEventForm.controls.eventConduction.setValue('');
+    if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
       this.showError('Staff or SS both should not be NO');
       this.createEditHFEventForm.controls.eventConduction.setValue('');
       this.createEditHFEventForm.controls.staffPresent.setValue('');
       this.createEditHFEventForm.controls.ssPresent.setValue('');
+      return;
     }
+    // console.log(e);
+    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
+    //   this.showError('Staff or SS both should not be NO');
+    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
+    //   this.createEditHFEventForm.controls.staffPresent.setValue('');
+    //   this.createEditHFEventForm.controls.ssPresent.setValue('');
+    // }
   }
+
   saveEditHFEvent() {
     this.familyListData = [];
     console.log(this.eventFamList);
@@ -3953,7 +3909,7 @@ class HealthForumComponent {
               if (x.radioCheck == "N") {
                 i++;
                 if (i == 1) {
-                  this.showError('Minimum one adolescent selection is required as family head is present');
+                  this.showError('Minimum one adolescent selection is required as family head present is NO');
                   return;
                 } else {
                   return;
@@ -4056,8 +4012,6 @@ class HealthForumComponent {
     }, 200);
   }
   saveEvent() {
-    // console.log(this.moreEventDetails, 'pkkaset');
-    // this.setmoreEventDetails(this.moreEventDetails, editHF_eventDetails);
     var tt = [];
     this.visitorDetails.visitorInfo.forEach(x => {
       if (x.visitorName == "") {
@@ -4117,7 +4071,6 @@ class HealthForumComponent {
     });
   }
   saveEditHFEventDisabled() {
-    // console.log(this.familyHeadPresentLenChk);
     let flag = true;
     if (this.familyHeadPresentLenChk.length < 1) {
       flag = false;
@@ -4149,6 +4102,17 @@ class HealthForumComponent {
         flag = false;
       }
     }
+    this.visitorDetails.visitorInfo.forEach(y => {
+      if (y.visitorName) {
+        if (!y.visitorDesignation) {
+          flag = false;
+        }
+      } else if (y.visitorDesignation) {
+        if (!y.visitorName) {
+          flag = false;
+        }
+      }
+    });
     return flag;
   }
   get e() {
@@ -4187,23 +4151,36 @@ class HealthForumComponent {
     this.index = tabChangeEvent.index;
   }
   deleteHFEvent(event, i) {
+    console.log(event);
     var currentTime = new Date().toJSON().slice(0, 10);
-    if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
-      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
-        this.showError('HF event deletion can only happen on HF created date');
-        return;
-      } else {
-        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?').then(() => this.delete_event(event, i)).catch(() => '');
-      }
+    if (event?.createdOn != currentTime) {
+      this.showError('Event delete is only accessible on' + ' ' + event?.createdOn.split("-").reverse().join("-"));
+      return;
     } else {
-      if (this.viewForumList?.scheduleDetails?.date != currentTime) {
-        this.showError('HF event deletion can only happen on HF created date');
-        return;
-      } else {
-        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?').then(() => this.delete_event(event, i)).catch(() => '');
-      }
+      this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?').then(() => this.delete_event(event, i)).catch(() => '');
     }
   }
+  // if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
+  //   if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
+  //     this.showError('HF event deletion can only happen on HF created date');
+  //     return;
+  //   } else {
+  //     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+  //       .then(() => this.delete_event(event, i)
+  //       )
+  //       .catch(() => '');
+  //   }
+  // } else {
+  //   if (this.viewForumList?.scheduleDetails?.date != currentTime) {
+  //     this.showError('HF event deletion can only happen on HF created date');
+  //     return;
+  //   } else {
+  //     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+  //       .then(() => this.delete_event(event, i)
+  //       )
+  //       .catch(() => '');
+  //   }
+  // }
   delete_event(event, i) {
     let delReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -4358,7 +4335,7 @@ HealthForumComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
   selectors: [["app-health-forum"]],
   decls: 78,
   vars: 21,
-  consts: [[3, "hidden"], [1, "container"], [1, "row"], [1, "col-md-12"], [1, "white_box", "QA_section", "mb_30"], ["id", "header-fixed", 2, "display", "flex"], [1, "page-title"], [1, "box_right", "d-flex", "lms_block", "col-md-6"], [1, "serach_field_2"], [3, "ngClass"], ["active", "#"], [1, "search_field"], ["type", "text", "name", "search", "placeholder", "search by staff or ss name ...", 3, "ngModel", "ngModelChange"], ["type", "submit"], [1, "fa", "fa-search"], ["class", "form-group col-md", "style", "display: flex; justify-content:flex-end", 4, "ngIf"], [1, "form-signin", 3, "formGroup"], ["class", "row", 4, "ngIf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], ["id", "DataTables_Table_0_wrapper", 1, "dataTables_wrapper", "no-footer"], ["role", "grid", "aria-describedby", "DataTables_Table_0_info", 1, "table", "lms_table_active", "dataTable", "no-footer", "dtr-inline", "collapsed", "table", "table-striped", 2, "table-layout", "fixed"], [2, "width", "4%"], [2, "width", "12%"], [2, "width", "19%"], [2, "width", "22%"], [2, "width", "7%"], ["style", "width: 7%;", 4, "ngIf"], [2, "width", "9%"], [4, "ngFor", "ngForOf"], [1, "d-flex", "justify-content-end", "p-1", "current", "ngx-pagination1", 3, "pageChange", "pageBoundsCorrection"], ["HFeventDetails", ""], ["ViewFamilyDetails", ""], ["createHF", ""], ["createEditHFEvent", ""], ["rescheduleHF", ""], [1, "form-group", "col-md", 2, "display", "flex", "justify-content", "flex-end"], ["title", "Create Health Forum", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#a8d7d7", "font-size", "30px", "margin-top", "5px"], ["title", "Create Health Forum", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#499", "font-size", "30px", "margin-top", "5px", 3, "click"], [1, "form-group", "col-md"], ["for", "region"], [1, "text-danger"], ["formControlName", "region", "id", "region", 1, "form-select", 3, "ngClass", "change"], ["value", ""], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "branch"], ["formControlName", "branch", "id", "branch", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [1, "invalid-feedback"], [4, "ngIf"], [1, "popover__wrapper"], [1, "popover__title", 2, "color", "#0d6efd"], [1, "popover__content"], [2, "word-wrap", "break-word", "text-align", "left"], [1, "btn-link", 2, "width", "7%", "color", "#0d6efd", "text-decoration", "none", "cursor", "pointer", 3, "click"], ["class", " btn-link", "style", "width: 7%; color:#0d6efd; text-decoration: none; cursor: pointer;", 3, "click", 4, "ngIf"], ["class", "fas fa-edit", "title", "Edit Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-trash", "title", "Delete Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-check-circle", "title", "Approve Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-calendar", "title", "Reschedule Health Forum", 3, "click", 4, "ngIf"], ["title", "Edit Health Forum", 1, "fas", "fa-edit", 3, "click"], ["title", "Delete Health Forum", 1, "fas", "fa-trash", 3, "click"], ["title", "Approve Health Forum", 1, "fas", "fa-check-circle", 3, "click"], ["title", "Reschedule Health Forum", 1, "fas", "fa-calendar", 3, "click"], [1, "modal-content"], [1, "modal-header"], [1, "col-md"], ["id", "modal-basic-title", 1, "modal-title"], ["class", "fas fa-plus-circle", "style", "cursor: pointer; color: #499; font-size: 25px; margin-top: -39px;margin-left: -239px;", "title", "Create Health Forum Event", 3, "click", 4, "ngIf"], [1, "close", 2, "cursor", "pointer", "font-size", "35px", "float", "right", "margin-top", "-25px", 3, "click"], [1, "modal-body"], [2, "width", "3%"], [2, "width", "6%"], [2, "width", "15%"], [2, "width", "8%"], [2, "text-align", "center"], ["title", "Create Health Forum Event", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#499", "font-size", "25px", "margin-top", "-39px", "margin-left", "-239px", 3, "click"], [1, "btn-link", 2, "color", "#0d6efd", "text-decoration", "none", "cursor", "pointer", 3, "click"], ["class", "popover__content", 4, "ngIf"], ["class", "fas fa-edit", "title", "Edit Health Forum Event", 3, "click", 4, "ngIf"], ["class", "fas fa-trash", "title", "Delete Health Forum Event", 3, "click", 4, "ngIf"], ["style", "word-wrap: break-word; text-align: left;", 4, "ngFor", "ngForOf"], ["title", "Edit Health Forum Event", 1, "fas", "fa-edit", 3, "click"], ["title", "Delete Health Forum Event", 1, "fas", "fa-trash", 3, "click"], [2, "width", "13%"], [2, "width", "5%"], ["class", "popover__title", "style", "color:#0d6efd;", 4, "ngIf"], ["class", "popover__title", "style", "color:#8b959f;", 4, "ngIf"], [1, "popover__title", 2, "color", "#8b959f"], [1, "modal-contents"], ["class", "dialog-title", 4, "ngIf"], [1, "modal-body", 2, "height", "40vh", "overflow-y", "auto"], ["for", "date"], ["type", "date", "formControlName", "date", 1, "form-control", 3, "min", "ngClass", "keydown", "change"], ["for", "staffName"], ["formControlName", "staffName", "id", "staffName", 1, "form-select", 3, "ngClass", "change"], ["for", "ssName"], ["formControlName", "ssName", "id", "ssName", 1, "form-select", 3, "change"], ["for", "area"], ["placeholder", "-- Select Area(s) --", "formControlName", "areaList", 1, "form-control", "dropdown-multiselect__caret", 3, "settings", "data", "ngClass", "onSelect", "onSelectAll", "onDeSelect", "onDeSelectAll"], ["for", "topic"], ["formControlName", "topic", "id", "topic", 1, "form-select", 3, "ngClass"], [1, "scheduler-border", 2, "height", "190px"], [1, "scheduler-border"], ["id", "table_wrapper"], ["id", "table_wrapper", 1, "table", "table-striped"], ["id", "header_fixed"], [2, "width", "25%"], ["id", "tbodyDisease", 2, "text-align", "center"], ["for", "event"], ["formControlName", "event", "id", "event", 1, "form-select", 3, "ngClass"], ["value", "1"], ["value", "2"], ["for", "startTime"], [1, "input-group", "input-group-sm", "mb-3"], ["id", "inputGroup-sizing-sm", "formControlName", "hour", "id", "hour", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["id", "inputGroup-sizing-sm", "formControlName", "minute", "id", "minute", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["id", "inputGroup-sizing-sm", "formControlName", "meridiem", "id", "meridiem", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["value", "AM"], ["value", "PM"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-primary", "btn-sm", 3, "disabled", "click"], [1, "dialog-title"], [1, "modal-conten"], [1, "modal-body", 2, "height", "62vh", "overflow-y", "auto"], ["for", ""], ["id", "inputGroup-sizing-sm", "formControlName", "startHour", "id", "startHour", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "startMin", "id", "startMin", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "startMeridiem", "id", "startMeridiem", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endHour", "id", "endHour", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endMin", "id", "endMin", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endMeridiem", "id", "endMeridiem", 1, "input-group-text", 2, "width", "24%"], [1, "card", 2, "width", "540px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "150px", "margin-left", "15px"], [1, "card-body"], [1, "form-group", "col-md", 2, "margin-top", "15px"], ["for", "staffPresent"], [1, "form-check-inline"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "staffPresent", 1, "form-check-input", 3, "change"], ["for", "", 1, "form-check-label"], ["type", "radio", "id", "no", "value", "N", "formControlName", "staffPresent", 1, "form-check-input", 3, "change"], ["for", "ssPresent"], ["class", "radio", "disabled", "", 4, "ngIf"], ["class", "radio", 4, "ngIf"], [1, "radio"], ["type", "radio", "value", "N", "formControlName", "ssPresent", 1, "form-check-input", 3, "change"], ["class", "form-group col-md", "style", "margin-top: 15px;", 4, "ngIf"], [1, "card", 2, "width", "690px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "240px", "margin-left", "-75px"], [1, "card-body", 2, "height", "40vh"], [1, "card-title"], ["id", "circle", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "float", "right", "margin-top", "-45px", 3, "click"], ["id", "table_wrapper", 1, "table"], [2, "width", "10rem"], [2, "width", "3rem"], ["id", "tbody", 2, "text-align", "center"], [1, "form-group", "col-md-6"], [1, "card", 2, "width", "540px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "auto", "margin-left", "15px"], [1, "form-group", "col-md-8"], ["for", "lastMonTopic"], [1, "form-group", "col-md-4"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "lastMonTopic", 1, "form-check-input"], ["type", "radio", "id", "no", "value", "N", "formControlName", "lastMonTopic", 1, "form-check-input"], ["for", "thisMonTopic"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "thisMonTopic", 1, "form-check-input"], ["type", "radio", "id", "no", "value", "N", "formControlName", "thisMonTopic", 1, "form-check-input"], ["for", "seasonalDiscussion"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "seasonalDiscussion", 1, "form-check-input", 3, "change"], ["type", "radio", "id", "no", "value", "N", "formControlName", "seasonalDiscussion", 1, "form-check-input", 3, "change"], [1, "col-md-6"], [1, "form-select", 3, "change"], ["value", "selectedFam"], ["value", "unselectedFam"], ["animationDuration", "500ms", 3, "selectedTabChange"], ["disabled", "", 1, "radio"], ["type", "radio", "value", "Y", "disabled", "", 1, "form-check-input"], ["type", "radio", "value", "Y", "formControlName", "ssPresent", 1, "form-check-input", 3, "change"], ["for", "eventConduction"], ["formControlName", "eventConduction", "disabled", "", "id", "eventConduction", 1, "form-select", 3, "ngClass"], ["value", "STAFF"], ["value", "SS", 4, "ngIf"], ["value", "SS"], ["formControlName", "eventConduction", "id", "eventConduction", 1, "form-select", 3, "ngClass"], ["type", "text", "maxlength", "20", "placeholder", "e.g. xyz", 1, "form-control", 2, "width", "16rem", 3, "ngModelOptions", "ngModel", "keypress", "ngModelChange"], ["type", "text", "maxlength", "20", "placeholder", "e.g. Engineer", 1, "form-control", 2, "width", "16rem", "margin-left", "75px", 3, "ngModelOptions", "ngModel", "keypress", "ngModelChange"], ["type", "button", "class", "btn btn-remove", "style", "width: 2rem;", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-remove", "style", "width: 2rem;", 4, "ngIf"], ["type", "button", 1, "btn", "btn-remove", 2, "width", "2rem", 3, "click"], [1, "fas", "fa-minus-circle", 2, "color", "red !important", "font-size", "20px", "margin-left", "65px"], ["type", "button", 1, "btn", "btn-remove", 2, "width", "2rem"], [1, "fas", 2, "color", "#f57676 !important", "font-size", "20px", "margin-left", "45px"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", 3, "change", 4, "ngIf"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", 3, "change", 4, "ngIf"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", 1, "form-check-input", 3, "change"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", 1, "form-check-input", 3, "change"], ["mat-tab-label", "", "style", "margin-left: 5px;"], ["matTabContent", ""], ["class", "card", "style", "width: 670px;background: whitesmoke; border: none;border-radius: 14px;height: auto; margin-bottom:10px", 4, "ngFor", "ngForOf"], [1, "card", 2, "width", "670px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "auto", "margin-bottom", "10px"], [1, "col-md-5"], [1, "col-md-1"], ["title", "Unselect Family Head Present", 1, "fas", "fa-trash", 3, "click"], [1, "col-md-4"], [1, "col-md-3"], ["class", "form-check-input", "type", "radio", "id", "yes", "value", "Y", "checked", "", 3, "name", "change", 4, "ngIf"], ["class", "form-check-input", "type", "radio", "id", "yes", "value", "Y", 3, "name", "change", 4, "ngIf"], ["class", "form-check-inline", 4, "ngIf"], ["type", "radio", "id", "yes", "value", "Y", "checked", "", 1, "form-check-input", 3, "name", "change"], ["type", "radio", "id", "yes", "value", "Y", 1, "form-check-input", 3, "name", "change"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", "disabled", "", 3, "name", "change", 4, "ngIf"], ["type", "radio", "id", "famHeadNo", "value", "N", "disabled", "", 1, "form-check-input", 3, "name", "change"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", "checked", "", 3, "name", "change", 4, "ngIf"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", 3, "name", "change", 4, "ngIf"], ["type", "radio", "id", "famHeadNo", "value", "N", "checked", "", 1, "form-check-input", 3, "name", "change"], ["type", "radio", "id", "famHeadNo", "value", "N", 1, "form-check-input", 3, "name", "change"], [2, "width", "2%"], [2, "width", "31%"], ["id", "tbodyy", 2, "text-align", "center"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", "disabled", "", 3, "change", 4, "ngIf"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "disabled", "", 3, "change", 4, "ngIf"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", "disabled", "", 1, "form-check-input", 3, "change"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "disabled", "", 1, "form-check-input", 3, "change"], [1, "modal-HF"], [1, "close", 2, "cursor", "pointer", "font-size", "35px", "float", "right", "margin-top", "-18px", 3, "click"], [1, "modal-body", 2, "height", "35vh", "overflow-y", "auto"], ["for", "comment"], ["rows", "4", "cols", "50", "formControlName", "comment", 1, "form-control", 2, "resize", "none", "height", "5em", 3, "ngClass"]],
+  consts: [[3, "hidden"], [1, "container"], [1, "row"], [1, "col-md-12"], [1, "white_box", "QA_section", "mb_30"], ["id", "header-fixed", 2, "display", "flex"], [1, "page-title"], [1, "box_right", "d-flex", "lms_block", "col-md-6"], [1, "serach_field_2"], [3, "ngClass"], ["active", "#"], [1, "search_field"], ["type", "text", "name", "search", "placeholder", "search by staff or ss name ...", 3, "ngModel", "ngModelChange"], ["type", "submit"], [1, "fa", "fa-search"], ["class", "form-group col-md", "style", "display: flex; justify-content:flex-end", 4, "ngIf"], [1, "form-signin", 3, "formGroup"], ["class", "row", 4, "ngIf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], ["id", "DataTables_Table_0_wrapper", 1, "dataTables_wrapper", "no-footer"], ["role", "grid", "aria-describedby", "DataTables_Table_0_info", 1, "table", "lms_table_active", "dataTable", "no-footer", "dtr-inline", "collapsed", "table", "table-striped", 2, "table-layout", "fixed"], [2, "width", "4%"], [2, "width", "12%"], [2, "width", "19%"], [2, "width", "22%"], [2, "width", "7%"], ["style", "width: 7%;", 4, "ngIf"], [2, "width", "9%"], [4, "ngFor", "ngForOf"], [1, "d-flex", "justify-content-end", "p-1", "current", "ngx-pagination1", 3, "pageChange", "pageBoundsCorrection"], ["HFeventDetails", ""], ["ViewFamilyDetails", ""], ["createHF", ""], ["createEditHFEvent", ""], ["rescheduleHF", ""], [1, "form-group", "col-md", 2, "display", "flex", "justify-content", "flex-end"], ["title", "Create Health Forum", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#a8d7d7", "font-size", "30px", "margin-top", "5px"], ["title", "Create Health Forum", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#499", "font-size", "30px", "margin-top", "5px", 3, "click"], [1, "form-group", "col-md"], ["for", "region"], [1, "text-danger"], ["formControlName", "region", "id", "region", 1, "form-select", 3, "ngClass", "change"], ["value", ""], [3, "value", 4, "ngFor", "ngForOf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "branch"], ["formControlName", "branch", "id", "branch", 1, "form-select", 3, "ngClass", "change"], [3, "value"], [1, "invalid-feedback"], [4, "ngIf"], [1, "popover__wrapper"], [1, "popover__title", 2, "color", "#0d6efd"], [1, "popover__content"], [2, "word-wrap", "break-word", "text-align", "left"], [1, "btn-link", 2, "width", "7%", "color", "#0d6efd", "text-decoration", "none", "cursor", "pointer", 3, "click"], ["class", " btn-link", "style", "width: 7%; color:#0d6efd; text-decoration: none; cursor: pointer;", 3, "click", 4, "ngIf"], ["class", "fas fa-edit", "title", "Edit Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-trash", "title", "Delete Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-check-circle", "title", "Approve Health Forum", 3, "click", 4, "ngIf"], ["class", "fas fa-calendar", "title", "Reschedule Health Forum", 3, "click", 4, "ngIf"], ["title", "Edit Health Forum", 1, "fas", "fa-edit", 3, "click"], ["title", "Delete Health Forum", 1, "fas", "fa-trash", 3, "click"], ["title", "Approve Health Forum", 1, "fas", "fa-check-circle", 3, "click"], ["title", "Reschedule Health Forum", 1, "fas", "fa-calendar", 3, "click"], [1, "modal-content"], [1, "modal-header"], [1, "col-md"], ["id", "modal-basic-title", 1, "modal-title"], ["class", "fas fa-plus-circle", "style", "cursor: pointer; color: #499; font-size: 25px; margin-top: -39px;margin-left: -239px;", "title", "Create Health Forum Event", 3, "click", 4, "ngIf"], [1, "close", 2, "cursor", "pointer", "font-size", "35px", "float", "right", "margin-top", "-25px", 3, "click"], [1, "modal-body"], [2, "width", "3%"], [2, "width", "6%"], [2, "width", "15%"], [2, "width", "8%"], [2, "text-align", "center"], ["title", "Create Health Forum Event", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "color", "#499", "font-size", "25px", "margin-top", "-39px", "margin-left", "-239px", 3, "click"], [1, "btn-link", 2, "color", "#0d6efd", "text-decoration", "none", "cursor", "pointer", 3, "click"], ["class", "popover__content", 4, "ngIf"], ["class", "fas fa-edit", "title", "Edit Health Forum Event", 3, "click", 4, "ngIf"], ["class", "fas fa-trash", "title", "Delete Health Forum Event", 3, "click", 4, "ngIf"], ["style", "word-wrap: break-word; text-align: left;", 4, "ngFor", "ngForOf"], ["title", "Edit Health Forum Event", 1, "fas", "fa-edit", 3, "click"], ["title", "Delete Health Forum Event", 1, "fas", "fa-trash", 3, "click"], [2, "width", "13%"], [2, "width", "5%"], ["class", "popover__title", "style", "color:#0d6efd;", 4, "ngIf"], ["class", "popover__title", "style", "color:#8b959f;", 4, "ngIf"], [1, "popover__title", 2, "color", "#8b959f"], [1, "modal-contents"], ["class", "dialog-title", 4, "ngIf"], [1, "modal-body", 2, "height", "40vh", "overflow-y", "auto"], ["for", "date"], ["type", "date", "formControlName", "date", 1, "form-control", 3, "min", "ngClass", "keydown", "change"], ["for", "staffName"], ["formControlName", "staffName", "id", "staffName", 1, "form-select", 3, "ngClass", "change"], ["for", "ssName"], ["formControlName", "ssName", "id", "ssName", 1, "form-select", 3, "change"], ["for", "area"], ["placeholder", "-- Select Area(s) --", "formControlName", "areaList", 1, "form-control", "dropdown-multiselect__caret", 3, "settings", "data", "ngClass", "onSelect", "onSelectAll", "onDeSelect", "onDeSelectAll"], ["for", "topic"], ["formControlName", "topic", "id", "topic", 1, "form-select", 3, "ngClass"], [1, "scheduler-border", 2, "height", "190px"], [1, "scheduler-border"], ["id", "table_wrapper"], ["id", "table_wrapper", 1, "table", "table-striped"], ["id", "header_fixed"], [2, "width", "25%"], ["id", "tbodyDisease", 2, "text-align", "center"], ["for", "event"], ["formControlName", "event", "id", "event", 1, "form-select", 3, "ngClass"], ["value", "1"], ["value", "2"], ["for", "startTime"], [1, "input-group", "input-group-sm", "mb-3"], ["id", "inputGroup-sizing-sm", "formControlName", "hour", "id", "hour", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["id", "inputGroup-sizing-sm", "formControlName", "minute", "id", "minute", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["id", "inputGroup-sizing-sm", "formControlName", "meridiem", "id", "meridiem", 1, "form-select", 2, "width", "9rem", 3, "ngClass"], ["value", "AM"], ["value", "PM"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-primary", "btn-sm", 3, "disabled", "click"], [1, "dialog-title"], [1, "modal-conten"], [1, "modal-body", 2, "height", "62vh", "overflow-y", "auto"], ["for", ""], ["id", "inputGroup-sizing-sm", "formControlName", "startHour", "id", "startHour", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "startMin", "id", "startMin", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "startMeridiem", "id", "startMeridiem", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endHour", "id", "endHour", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endMin", "id", "endMin", 1, "input-group-text", 2, "width", "24%"], ["id", "inputGroup-sizing-sm", "formControlName", "endMeridiem", "id", "endMeridiem", 1, "input-group-text", 2, "width", "24%"], [1, "card", 2, "width", "540px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "150px", "margin-left", "15px"], [1, "card-body"], [1, "form-group", "col-md", 2, "margin-top", "15px"], ["for", "staffPresent"], [1, "form-check-inline"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "staffPresent", 1, "form-check-input", 3, "change"], ["for", "", 1, "form-check-label"], ["type", "radio", "id", "no", "value", "N", "formControlName", "staffPresent", 1, "form-check-input", 3, "change"], ["for", "ssPresent"], ["class", "radio", "disabled", "", 4, "ngIf"], ["class", "radio", 4, "ngIf"], [1, "radio"], ["type", "radio", "value", "N", "formControlName", "ssPresent", 1, "form-check-input", 3, "change"], ["for", "eventConduction"], ["formControlName", "eventConduction", "id", "eventConduction", 1, "form-select", 3, "ngClass"], ["value", "STAFF", 4, "ngIf"], ["value", "SS", 4, "ngIf"], [1, "card", 2, "width", "690px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "240px", "margin-left", "-75px"], [1, "card-body", 2, "height", "40vh"], [1, "card-title"], ["id", "circle", 1, "fas", "fa-plus-circle", 2, "cursor", "pointer", "float", "right", "margin-top", "-45px", 3, "click"], ["id", "table_wrapper", 1, "table"], [2, "width", "10rem"], [2, "width", "3rem"], ["id", "tbody", 2, "text-align", "center"], [1, "form-group", "col-md-6"], [1, "card", 2, "width", "540px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "auto", "margin-left", "15px"], [1, "form-group", "col-md-8"], ["for", "lastMonTopic"], [1, "form-group", "col-md-4"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "lastMonTopic", 1, "form-check-input"], ["type", "radio", "id", "no", "value", "N", "formControlName", "lastMonTopic", 1, "form-check-input"], ["for", "thisMonTopic"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "thisMonTopic", 1, "form-check-input"], ["type", "radio", "id", "no", "value", "N", "formControlName", "thisMonTopic", 1, "form-check-input"], ["for", "seasonalDiscussion"], ["type", "radio", "id", "yes", "value", "Y", "formControlName", "seasonalDiscussion", 1, "form-check-input", 3, "change"], ["type", "radio", "id", "no", "value", "N", "formControlName", "seasonalDiscussion", 1, "form-check-input", 3, "change"], [1, "col-md-6"], [1, "form-select", 3, "change"], ["value", "selectedFam"], ["value", "unselectedFam"], ["animationDuration", "500ms", 3, "selectedTabChange"], ["disabled", "", 1, "radio"], ["type", "radio", "value", "Y", "disabled", "", 1, "form-check-input"], ["type", "radio", "value", "Y", "formControlName", "ssPresent", 1, "form-check-input", 3, "change"], ["value", "STAFF"], ["value", "SS"], ["type", "text", "maxlength", "20", "placeholder", "e.g. xyz", 1, "form-control", 2, "width", "16rem", 3, "ngModelOptions", "ngModel", "keypress", "ngModelChange"], ["type", "text", "maxlength", "20", "placeholder", "e.g. Engineer", 1, "form-control", 2, "width", "16rem", "margin-left", "75px", 3, "ngModelOptions", "ngModel", "keypress", "ngModelChange"], ["type", "button", "class", "btn btn-remove", "style", "width: 2rem;", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-remove", "style", "width: 2rem;", 4, "ngIf"], ["type", "button", 1, "btn", "btn-remove", 2, "width", "2rem", 3, "click"], [1, "fas", "fa-minus-circle", 2, "color", "red !important", "font-size", "20px", "margin-left", "65px"], ["type", "button", 1, "btn", "btn-remove", 2, "width", "2rem"], [1, "fas", 2, "color", "#f57676 !important", "font-size", "20px", "margin-left", "45px"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", 3, "change", 4, "ngIf"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", 3, "change", 4, "ngIf"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", 1, "form-check-input", 3, "change"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", 1, "form-check-input", 3, "change"], ["mat-tab-label", "", "style", "margin-left: 5px;"], ["matTabContent", ""], ["class", "card", "style", "width: 670px;background: whitesmoke; border: none;border-radius: 14px;height: auto; margin-bottom:10px", 4, "ngFor", "ngForOf"], [1, "card", 2, "width", "670px", "background", "whitesmoke", "border", "none", "border-radius", "14px", "height", "auto", "margin-bottom", "10px"], [1, "col-md-5"], [1, "col-md-1"], ["title", "Unselect Family Head Present", 1, "fas", "fa-trash", 3, "click"], [1, "col-md-4"], [1, "col-md-3"], ["class", "form-check-input", "type", "radio", "id", "yes", "value", "Y", "checked", "", 3, "name", "change", 4, "ngIf"], ["class", "form-check-input", "type", "radio", "id", "yes", "value", "Y", 3, "name", "change", 4, "ngIf"], ["class", "form-check-inline", 4, "ngIf"], ["type", "radio", "id", "yes", "value", "Y", "checked", "", 1, "form-check-input", 3, "name", "change"], ["type", "radio", "id", "yes", "value", "Y", 1, "form-check-input", 3, "name", "change"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", "disabled", "", 3, "name", "change", 4, "ngIf"], ["type", "radio", "id", "famHeadNo", "value", "N", "disabled", "", 1, "form-check-input", 3, "name", "change"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", "checked", "", 3, "name", "change", 4, "ngIf"], ["class", "form-check-input", "type", "radio", "id", "famHeadNo", "value", "N", 3, "name", "change", 4, "ngIf"], ["type", "radio", "id", "famHeadNo", "value", "N", "checked", "", 1, "form-check-input", 3, "name", "change"], ["type", "radio", "id", "famHeadNo", "value", "N", 1, "form-check-input", 3, "name", "change"], [2, "width", "2%"], [2, "width", "31%"], ["id", "tbodyy", 2, "text-align", "center"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", "disabled", "", 3, "change", 4, "ngIf"], ["class", "form-check-input", "type", "checkbox", "value", "", "id", "flexCheckDefault", "disabled", "", 3, "change", 4, "ngIf"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "checked", "", "disabled", "", 1, "form-check-input", 3, "change"], ["type", "checkbox", "value", "", "id", "flexCheckDefault", "disabled", "", 1, "form-check-input", 3, "change"], [1, "modal-HF"], [1, "close", 2, "cursor", "pointer", "font-size", "35px", "float", "right", "margin-top", "-18px", 3, "click"], [1, "modal-body", 2, "height", "35vh", "overflow-y", "auto"], ["for", "comment"], ["rows", "4", "cols", "50", "formControlName", "comment", 1, "form-control", 2, "resize", "none", "height", "5em", 3, "ngClass"]],
   template: function HealthForumComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](0, "app-loader", 0);
@@ -4441,7 +4418,7 @@ HealthForumComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](68, HealthForumComponent_ng_template_68_Template, 62, 2, "ng-template", null, 31, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](70, HealthForumComponent_ng_template_70_Template, 35, 1, "ng-template", null, 32, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](72, HealthForumComponent_ng_template_72_Template, 110, 54, "ng-template", null, 33, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](74, HealthForumComponent_ng_template_74_Template, 192, 20, "ng-template", null, 34, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](74, HealthForumComponent_ng_template_74_Template, 201, 25, "ng-template", null, 34, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](76, HealthForumComponent_ng_template_76_Template, 29, 13, "ng-template", null, 35, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
     }
     if (rf & 2) {

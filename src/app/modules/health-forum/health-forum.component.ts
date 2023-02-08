@@ -91,7 +91,6 @@ export class HealthForumComponent implements OnInit {
   deleteMode: boolean;
   approveMode: boolean;
   rescheduleMode: boolean;
-  // rescheduleApprovalMode: boolean;
   eventViewMode: boolean;
   eventCreateMode: boolean;
   eventUpdateMode: boolean;
@@ -168,11 +167,6 @@ export class HealthForumComponent implements OnInit {
       .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
       .find(accessType => accessType.accessType == 'reschedule')?.accessType ? true : false;
-
-    // this.rescheduleApprovalMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'reschedule approval')?.accessType ? true : false;
 
     this.eventViewMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
@@ -340,6 +334,8 @@ export class HealthForumComponent implements OnInit {
     this.createHFForms();
 
     if (this.editHFDetails.healthForumMasterId) {
+      let dateString = new Date();
+      this.minDate = moment(dateString).add(0, "days").format("YYYY-MM-DD");
       setTimeout(() => {
         this.modalContent = '';
         this.createHFModal = this.modalService.open(createHF, {
@@ -348,14 +344,13 @@ export class HealthForumComponent implements OnInit {
         this.loader = true;
       }, 1500);
     } else {
+      let dateString = new Date();
+      this.minDate = moment(dateString).add(1, "days").format("YYYY-MM-DD");
       this.modalContent = '';
       this.createHFModal = this.modalService.open(createHF, {
         windowClass: 'createHF',
       });
     }
-
-    let dateString = new Date();
-    this.minDate = moment(dateString).add(1, "days").format("YYYY-MM-DD");
 
     this.hourLists();
     this.minuteLists();
@@ -819,17 +814,29 @@ export class HealthForumComponent implements OnInit {
 
   createHFEvents(createEditHFEvent) {
     var currentTime = new Date().toJSON().slice(0, 10);
-    if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
-      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
-        this.showError('HF event is only accessible for present day');
+    console.log(this.editHF_eventDetails);
+
+    if (this.editHF_eventDetails?.healthForumEventId) {
+      console.log('edit wala h');
+      if (this.editHF_eventDetails.createdOn != currentTime) {
+        this.showError('Event update is only accessible  on' + ' ' + this.editHF_eventDetails?.createdOn?.split("-").reverse().join("-"))
         this.editHF_eventDetails = [];
         return;
       }
     } else {
-      if (this.viewForumList?.scheduleDetails?.date != currentTime) {
-        this.showError('HF event is only accessible for present day');
-        this.editHF_eventDetails = [];
-        return;
+      console.log('create wala h');
+      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
+        if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
+          this.showError('Event create is only accessible on' + ' ' + this.viewForumList?.rescheduleDetails?.rescheduleToDate.split("-").reverse().join("-"));
+          this.editHF_eventDetails = [];
+          return;
+        }
+      } else {
+        if (this.viewForumList?.scheduleDetails?.date != currentTime) {
+          this.showError('Event create is only accessible on' + ' ' + this.viewForumList?.scheduleDetails?.date.split("-").reverse().join("-"));
+          this.editHF_eventDetails = [];
+          return;
+        }
       }
     }
 
@@ -888,7 +895,6 @@ export class HealthForumComponent implements OnInit {
           this.eventFamList = res.responseObject;
           this.setFamList = res.responseObject;
           // this.loader = true;
-
           // console.log(this.eventVillList, 'eventVillList22');
           console.log(this.eventFamList, 'eventFamList');
           this.eventFamList?.forEach((x) => {
@@ -1352,10 +1358,6 @@ export class HealthForumComponent implements OnInit {
       seasonalDiscussion: [data?.discussionOnAnySeasonalDisease ? data?.discussionOnAnySeasonalDisease : '', Validators.required]
     });
 
-    // if (data?.conductedByStaffOrSS ) {
-    //   this.createEditHFEventForm.value.eventConduction ='STAFF'
-    // }
-
     this.createEditHFEventForm.markAllAsTouched();
   }
 
@@ -1478,8 +1480,6 @@ export class HealthForumComponent implements OnInit {
   }
 
   changefamilyHeadPresent(e, family, vill) {
-
-    // console.log(vill.villageId);
     console.log(family);
     family.radioCheck = e.target.value;
     family.villageId = vill.villageId;
@@ -1538,13 +1538,6 @@ export class HealthForumComponent implements OnInit {
       this.createEditHFEventForm.controls.ssPresent.setValue('');
       return;
     }
-    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    // } 
   }
 
   ssPresentorNot(e) {
@@ -1556,19 +1549,6 @@ export class HealthForumComponent implements OnInit {
       this.createEditHFEventForm.controls.ssPresent.setValue('');
       return;
     }
-    // console.log(e);
-    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.showError('Staff or SS both should not be NO');
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    //   this.createEditHFEventForm.controls.staffPresent.setValue('');
-    //   this.createEditHFEventForm.controls.ssPresent.setValue('');
-    // }
 
   }
 
@@ -1587,7 +1567,7 @@ export class HealthForumComponent implements OnInit {
               if (x.radioCheck == "N") {
                 i++
                 if (i == 1) {
-                  this.showError('Minimum one adolescent selection is required as family head is present');
+                  this.showError('Minimum one adolescent selection is required as family head present is NO');
                   return;
                 } else {
                   return;
@@ -1837,31 +1817,18 @@ export class HealthForumComponent implements OnInit {
   }
 
   deleteHFEvent(event, i) {
+    console.log(event);
 
     var currentTime = new Date().toJSON().slice(0, 10);
-
-    if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
-      if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
-        this.showError('HF event deletion can only happen on HF created date');
-        return;
-      } else {
-        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-          .then(() => this.delete_event(event, i)
-          )
-          .catch(() => '');
-      }
+    if (event?.createdOn != currentTime) {
+      this.showError('Event delete is only accessible on' + ' ' + event?.createdOn.split("-").reverse().join("-"));
+      return;
     } else {
-      if (this.viewForumList?.scheduleDetails?.date != currentTime) {
-        this.showError('HF event deletion can only happen on HF created date');
-        return;
-      } else {
-        this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-          .then(() => this.delete_event(event, i)
-          )
-          .catch(() => '');
-      }
+      this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+        .then(() => this.delete_event(event, i)
+        )
+        .catch(() => '');
     }
-
   }
 
   delete_event(event, i) {

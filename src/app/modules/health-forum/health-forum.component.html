@@ -138,9 +138,6 @@
                                                     (click)="deleteHealthForum(health)" *ngIf="deleteMode"></i>
                                                 <i class="fas fa-check-circle" title="Approve Health Forum"
                                                     (click)="approveHealthForum(health)" *ngIf="approveMode"></i>
-                                                <!-- <i class="fas fa-check-circle" title="Approve Reschedule Health Forum"
-                                                    (click)="approveARescheduleHealthForum(health)"
-                                                    *ngIf="rescheduleApprovalMode"></i> -->
                                                 <i class="fas fa-calendar" title="Reschedule Health Forum"
                                                     (click)="rescheduleHealthForum(rescheduleHF, health)"
                                                     *ngIf="rescheduleMode"></i>
@@ -760,26 +757,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- <div class="form-group col-md" style="margin-top: 15px;"
-                                            *ngIf="!this.createEditHFEventForm.value.ssPresent && !this.createEditHFEventForm.value.staffPresent">
-                                            <label for="eventConduction">Event Conducted By :&nbsp;<span
-                                                    class="text-danger">*&nbsp;</span></label>
-                                            <select class="form-select" formControlName="eventConduction" disabled
-                                                id="eventConduction"
-                                                [ngClass]="{'is-invalid': e.eventConduction.invalid && e.eventConduction.touched,  'is-valid': 
-                                                            e.eventConduction.valid && (e.eventConduction.dirty || e.eventConduction.touched) }">
-                                                <option value="">-- Select --</option>
-                                                <option value="STAFF">Staff</option>
-                                                <option value="SS" *ngIf="HForumEventPrerequisite?.ssName != null">SS
-                                                </option>
-                                            </select>
-                                            <div *ngIf="e.eventConduction.errors" class="invalid-feedback">
-                                                <div *ngIf="e.eventConduction.errors.required">Select event conduction
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-                                        <!--  *ngIf="this.createEditHFEventForm.value.ssPresent || this.createEditHFEventForm.value.staffPresent" -->
                                         <div class="form-group col-md" style="margin-top: 15px;">
                                             <label for="eventConduction">Event Conducted By :&nbsp;<span
                                                     class="text-danger">*&nbsp;</span></label>
