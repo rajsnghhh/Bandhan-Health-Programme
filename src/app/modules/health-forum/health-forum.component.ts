@@ -108,6 +108,8 @@ export class HealthForumComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(true);
+    
     this.healthForumForms();
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       this.lowerRankbranchId = res.branchId;
