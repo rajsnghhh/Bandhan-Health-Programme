@@ -109,7 +109,7 @@ export class HealthForumComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(true);
-    
+
     this.healthForumForms();
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       this.lowerRankbranchId = res.branchId;
@@ -1583,7 +1583,7 @@ export class HealthForumComponent implements OnInit {
                   has2to5yearsOldChildren: x.has2to5yearsoldChildren,
                   hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
                   family_head_present: x.radioCheck,
-                  adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                  adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
                   active_flag: 'A',
                   childrenList: x.adolGirl
                 })
@@ -1597,7 +1597,7 @@ export class HealthForumComponent implements OnInit {
                 has2to5yearsOldChildren: x.has2to5yearsoldChildren,
                 hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
                 family_head_present: x.radioCheck,
-                adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
                 active_flag: 'A',
                 childrenList: x.adolGirl
               })
@@ -1611,7 +1611,7 @@ export class HealthForumComponent implements OnInit {
               has2to5yearsOldChildren: x.has2to5yearsoldChildren,
               hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
               family_head_present: x.radioCheck,
-              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
               active_flag: 'A',
               childrenList: x.adolGirl
             })
@@ -1626,7 +1626,7 @@ export class HealthForumComponent implements OnInit {
               has2to5yearsOldChildren: x.has2to5yearsoldChildren,
               hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
               family_head_present: x.radioCheck,
-              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
               active_flag: x.health_forum_event_family_map_id == 0 ? 'A' : 'D',
               childrenList: x.adolGirl
             })

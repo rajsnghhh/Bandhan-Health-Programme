@@ -2527,6 +2527,7 @@ class HealthForumComponent {
     this.searchFullscreen = this.validationService.val;
   }
   ngOnInit() {
+    console.log(true);
     this.healthForumForms();
     this.sidebarService.checkRoledetailDTO().then(res => {
       this.lowerRankbranchId = res.branchId;
@@ -2560,10 +2561,6 @@ class HealthForumComponent {
     this.deleteMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
     this.approveMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'approve')?.accessType ? true : false;
     this.rescheduleMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'reschedule')?.accessType ? true : false;
-    // this.rescheduleApprovalMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'reschedule approval')?.accessType ? true : false;
     this.eventViewMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'event view')?.accessType ? true : false;
     this.eventCreateMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'event create')?.accessType ? true : false;
     this.eventUpdateMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'event update')?.accessType ? true : false;
@@ -3657,9 +3654,6 @@ class HealthForumComponent {
       thisMonTopic: [data?.discussionOnThisMonthTopic ? data?.discussionOnThisMonthTopic : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
       seasonalDiscussion: [data?.discussionOnAnySeasonalDisease ? data?.discussionOnAnySeasonalDisease : '', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required]
     });
-    // if (data?.conductedByStaffOrSS ) {
-    //   this.createEditHFEventForm.value.eventConduction ='STAFF'
-    // }
     this.createEditHFEventForm.markAllAsTouched();
   }
   selectMultipleDisease(e, disease) {
@@ -3813,7 +3807,6 @@ class HealthForumComponent {
     console.log(fami);
   }
   changefamilyHeadPresent(e, family, vill) {
-    // console.log(vill.villageId);
     console.log(family);
     family.radioCheck = e.target.value;
     family.villageId = vill.villageId;
@@ -3862,15 +3855,7 @@ class HealthForumComponent {
       this.createEditHFEventForm.controls.ssPresent.setValue('');
       return;
     }
-    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    // } 
   }
-
   ssPresentorNot(e) {
     this.createEditHFEventForm.controls.eventConduction.setValue('');
     if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
@@ -3880,21 +3865,7 @@ class HealthForumComponent {
       this.createEditHFEventForm.controls.ssPresent.setValue('');
       return;
     }
-    // console.log(e);
-    // if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('STAFF');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('SS');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'Y' && this.createEditHFEventForm.value.ssPresent == 'Y') {
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    // } else if (this.createEditHFEventForm.value.staffPresent == 'N' && this.createEditHFEventForm.value.ssPresent == 'N') {
-    //   this.showError('Staff or SS both should not be NO');
-    //   this.createEditHFEventForm.controls.eventConduction.setValue('');
-    //   this.createEditHFEventForm.controls.staffPresent.setValue('');
-    //   this.createEditHFEventForm.controls.ssPresent.setValue('');
-    // }
   }
-
   saveEditHFEvent() {
     this.familyListData = [];
     console.log(this.eventFamList);
@@ -3925,7 +3896,7 @@ class HealthForumComponent {
                   has2to5yearsOldChildren: x.has2to5yearsoldChildren,
                   hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
                   family_head_present: x.radioCheck,
-                  adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                  adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
                   active_flag: 'A',
                   childrenList: x.adolGirl
                 });
@@ -3941,7 +3912,7 @@ class HealthForumComponent {
                 has2to5yearsOldChildren: x.has2to5yearsoldChildren,
                 hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
                 family_head_present: x.radioCheck,
-                adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+                adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
                 active_flag: 'A',
                 childrenList: x.adolGirl
               });
@@ -3957,7 +3928,7 @@ class HealthForumComponent {
               has2to5yearsOldChildren: x.has2to5yearsoldChildren,
               hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
               family_head_present: x.radioCheck,
-              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
               active_flag: 'A',
               childrenList: x.adolGirl
             });
@@ -3974,7 +3945,7 @@ class HealthForumComponent {
               has2to5yearsOldChildren: x.has2to5yearsoldChildren,
               hasAdolescentGirlChildren: x.hasAdolescentGirlChildren,
               family_head_present: x.radioCheck,
-              adolescent_girl_attended: x.adolGirl.length > 0 ? 'Y' : 'N',
+              adolescent_girl_attended: x.adolGirl.filter(x => x.isChecked == true).length > 0 ? 'Y' : 'N',
               active_flag: x.health_forum_event_family_map_id == 0 ? 'A' : 'D',
               childrenList: x.adolGirl
             });
@@ -4160,27 +4131,6 @@ class HealthForumComponent {
       this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?').then(() => this.delete_event(event, i)).catch(() => '');
     }
   }
-  // if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
-  //   if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
-  //     this.showError('HF event deletion can only happen on HF created date');
-  //     return;
-  //   } else {
-  //     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-  //       .then(() => this.delete_event(event, i)
-  //       )
-  //       .catch(() => '');
-  //   }
-  // } else {
-  //   if (this.viewForumList?.scheduleDetails?.date != currentTime) {
-  //     this.showError('HF event deletion can only happen on HF created date');
-  //     return;
-  //   } else {
-  //     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-  //       .then(() => this.delete_event(event, i)
-  //       )
-  //       .catch(() => '');
-  //   }
-  // }
   delete_event(event, i) {
     let delReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
